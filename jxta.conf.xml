@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-archive>
+	<dependencies>
+		<dependency dependsOn="communication.car" />
+	</dependencies>
+	<components>
+		<component classname="net.weta.components.peer.PeerService" objectname="weta-g:component=p2p,type=jxta" />
+	</components>
+	<configuration>
+	<startup>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="PeerName">
+			<!-- PEER NAME -->
+			<arg type="java.lang.String">csw-interface</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="JxtaHome">
+			<!-- jxta home configuration directory -->
+			<arg type="java.lang.String">.jxta</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="Description">
+			<!-- peer description -->
+			<arg type="java.lang.String">desc</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="Principal">
+			<!-- jxta principal -->
+			<arg type="java.lang.String">principal</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="Password">
+			<!-- jxta password -->
+			<arg type="java.lang.String">password</arg>
+		</call>
+
+		<!-- the proxy address for the peer -->
+<!--		<call objectname="weta-g:component=p2p,type=jxta" attribute="PeerProxyAddr">
+			<arg type="java.lang.String">localhost:81</arg>
+		</call> -->
+
+		<!-- JXTA DEBUG -->
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="DebugLevel">
+			<!-- possible values: error, warn, info, debug, user default -->
+			<arg type="java.lang.String">error</arg>
+		</call>
+
+		<!-- SERVICES -->
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="EnableProxy">
+			<!-- act proxy for JXME -->
+			<arg type="boolean">false</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="IsRelay">
+			<!-- act as relay -->
+			<arg type="boolean">false</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="IsRendezvous">
+			<!-- act as rendezvous -->
+			<arg type="boolean">false</arg>
+		</call>
+		
+		<!-- HTTP -->
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="HttpClientEnable">
+			<!-- enable outgoing connections -->
+			<arg type="boolean">true</arg>
+		</call>
+
+		<!-- set if http mode is manual -->		
+		<!--
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="HttpIntfAddr">
+			<arg type="java.lang.String"></arg>
+		</call>
+		-->
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="HttpMode">
+			<!-- manual or auto -->
+			<arg type="java.lang.String">auto</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="HttpPort">
+			<!-- port -->
+			<arg type="int">11114</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="HttpServerEnable">
+			<!-- enable incomming connections -->
+			<arg type="boolean">true</arg>
+		</call>
+		
+		<!-- address for incomming connections (optional) -->
+		<!--
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="HttpServerAddr">
+			<arg type="java.lang.String"></arg>
+		</call>
+		-->
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="HttpServerPort">
+			<!-- port for incomming connections -->
+			<arg type="int">11114</arg>
+		</call>
+
+		<!-- TCP -->
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="TcpClientEnable">
+			<arg type="boolean">true</arg>
+		</call>
+		
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="TcpIntfAddr">
+			<arg type="java.lang.String">localhost</arg>
+		</call>
+		
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="TcpMode">
+			<arg type="java.lang.String">manual</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="TcpMulticastEnable">
+			<arg type="boolean">true</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="TcpPort">
+			<arg type="int">50000</arg>
+		</call>
+
+		<!-- optional -->		
+		
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="TcpServerAddr">
+			<arg type="java.lang.String">localhost</arg>
+		</call>
+		
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="TcpServerPort">
+			<arg type="int">50000</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="TcpServerEnable">
+			<arg type="boolean">true</arg>
+		</call>
+
+		<!-- RENDEZVOUS -->
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="UseOnlySeedsRdv">
+			<arg type="boolean">true</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="SeedRendezvous">
+			<arg type="java.lang.String">tcp://146.140.211.70:9900</arg>
+		</call>
+
+		<!-- RELAY -->
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="UseRelay">
+			<arg type="boolean">true</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="UseOnlySeedsRelay">
+			<arg type="boolean">true</arg>
+		</call>
+		<call objectname="weta-g:component=p2p,type=jxta" attribute="SeedRelay">
+			<arg type="java.lang.String">tcp://146.140.211.70:9900</arg>
+		</call>
+
+	</startup>
+	</configuration>
+</component-archive>
+
+
