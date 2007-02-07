@@ -45,9 +45,9 @@ public class GetRecByIdAnalyserTest extends TestCase {
        
         assertTrue(getRecByIdRequestValid);
         
-        assertEquals("2, 6, 8", sessionParameters.getIds());
+        assertEquals("F3659A31-26C3-4017-BF82-6DCB483460D6", sessionParameters.getIds());
         
-        assertEquals("summary", sessionParameters.getElementSetName());
+        assertEquals("full", sessionParameters.getElementSetName());
         
         
         
