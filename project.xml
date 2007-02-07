@@ -280,16 +280,6 @@
                 </resource>
             </resources>
         </unitTest>
-        <resources>
-            <resource>
-                <directory>src/conf/</directory>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/xml/</directory>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
     </build>
     <reports>
         <report>maven-junit-report-plugin</report>
