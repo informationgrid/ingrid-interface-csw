@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://maven.apache.org/xsd/maven-project-3.0.0.xsd">
     <pomVersion>3</pomVersion>
-    <artifactId>ingrid-ibus-cswinterface</artifactId>
-    <name>ingrid-ibus-cswinterface</name>
+    <artifactId>ingrid-interface-csw</artifactId>
+    <name>ingrid-interface-csw</name>
     <groupId>ingrid</groupId>
     <currentVersion>0.1-SNAPSHOT</currentVersion>
     <organization />
@@ -11,7 +11,7 @@
     <shortDescription>Catalogue Service Web (CSW) interface.</shortDescription>
     <issueTrackingUrl>http://jira.media-style.com/browse/INGRID</issueTrackingUrl>
     <siteAddress>https://213.144.28.209:444/svn/ingrid/ingrid-ibus-cswinterface</siteAddress>
-    <siteDirectory>/srv/www/htdocs/ingrid/ingrid-ibus-cswinterface</siteDirectory>
+    <siteDirectory>/srv/www/htdocs/ingrid/ingrid-interface-csw</siteDirectory>
     <mailingLists>
         <mailingList>
             <name>${pom.name} Dev List</name>
@@ -31,9 +31,15 @@
                 <role>developer</role>
             </roles>
         </developer>
+        <developer>
+            <name>Joachim Müller</name>
+            <id>0</id>
+            <email>joachim(at)wemove.com</email>
+            <organization>wemove digital solutions</organization>
+        </developer>
     </developers>
     <repository>
-        <connection>scm:svn:https://mb@127.0.0.1:444/svn/ingrid/ingrid-ibus-cswinterface</connection>
+        <connection>scm:svn:https://127.0.0.1:444/svn/ingrid/ingrid-interface-csw/trunk</connection>
     </repository>
     <dependencies>
         <dependency>
