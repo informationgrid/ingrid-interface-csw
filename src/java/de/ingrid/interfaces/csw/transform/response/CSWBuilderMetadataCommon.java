@@ -4,6 +4,7 @@
 package de.ingrid.interfaces.csw.transform.response;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
@@ -11,7 +12,6 @@ import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
 
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.udk.UtilsDate;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
@@ -39,27 +39,61 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         return parent;
     }
 
-    protected Element addContact(Element parent, IngridHit hit) throws Exception {
-        IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
-        String[] addressIds = (String[]) detail.get("t012_obj_adr.adr_id");
-        String[] addressTypes = (String[]) detail.get("t012_obj_adr.typ");
-        return addContact(parent, addressIds, addressTypes, hit.getPlugId());
+    protected void addContact(Element parent, IngridHit hit) throws Exception {
+        addContact(parent, hit, null);
     }
 
+    protected void addContact(Element parent, IngridHit hit, String ns) throws Exception {
+        addSMXMLContact(parent.addElement(getNSElementName(ns, "contact")), hit);
+    }
+
+    /**
+     * Adds a CSW file identifier to a given element.
+     * 
+     * @param parent
+     *            The Element to add the identifier to.
+     * @param hit
+     *            The IngridHit.
+     * @param doc
+     *            The Document.
+     * @return The parent element.
+     */
+    protected void addFileIdentifier(Element parent, String id, String ns) {
+        this.addSMXMLCharacterString(parent.addElement(getNSElementName(ns, "fileIdentifier")), id);
+    }
+
+    protected void addFileIdentifier(Element parent, String id) {
+        addFileIdentifier(parent, id, null);
+    }
+    
+    
+
     protected void addLanguage(Element metaData, IngridHit hit) {
+        addLanguage(metaData, hit, null);
+    }
+
+    protected void addLanguage(Element metaData, IngridHit hit, String ns) {
         String metadataLang =  IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_LANGUAGE);
         if (metadataLang.equals("121")) {
             metadataLang = "de";
         } else {
             metadataLang = "en";
         }
-        this.addSMXMLCharacterString(metaData.addElement(this.getNSPrefix().concat(":language")), metadataLang);
+        this.addSMXMLCharacterString(metaData.addElement(getNSElementName(ns, "language")), metadataLang);
+    }
+    
+    
+    protected void addDateStamp(Element metaData, IngridHit hit) {
+        addDateStamp(metaData, hit, null);
     }
 
-    protected void addDateStamp(Element metaData, IngridHit hit) {
+    protected void addDateStamp(Element metaData, IngridHit hit, String ns) {
         String creationDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_MOD_TIME);
-        creationDate = DATE_TIME_FORMAT.format(UtilsDate.parseDateString(creationDate));
-        metaData.addElement(this.getNSPrefix().concat(":dateStamp")).addElement("smXML:Date").addText(creationDate);
+        Date d = UtilsDate.parseDateString(creationDate);
+        if (d != null) {
+            creationDate = DATE_TIME_FORMAT.format(d);
+            metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("smXML:Date").addText(creationDate);
+        }
     }
     
     protected void addCitationReferenceDates(Element parent, IngridHit hit) {
@@ -69,23 +103,27 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         if (referenceDate != null) {
             for (int i = 0; i < referenceDate.length; i++) {
                 String creationDate = referenceDate[i];
-                creationDate = DATE_TIME_FORMAT.format(UtilsDate.parseDateString(creationDate));
-                Element ciDate = parent.addElement("smXML:date").addElement("smXML:CI_Date");
-                ciDate.addElement("smXML:Date").addText(creationDate);
-                String codeListValue;
-                if (referenceDateTypes[i].equals("1")) {
-                    codeListValue = "creation";
-                } else if (referenceDateTypes[i].equals("2")) {
-                    codeListValue = "publication";
-                } else if (referenceDateTypes[i].equals("3")) {
-                    codeListValue = "revision";
-                } else {
-                    log.warn("Invalid UDK dataset reference date type: " + referenceDateTypes[i] + ".");
-                    codeListValue = "unspecified";
+                Date d = UtilsDate.parseDateString(creationDate);
+                if (d != null) {
+                    creationDate = DATE_TIME_FORMAT.format(d);
+                    Element ciDate = parent.addElement("date").addElement("smXML:CI_Date");
+                    ciDate.addElement("smXML:Date").addText(creationDate);
+                    String codeListValue;
+                    if (referenceDateTypes[i].equals("1")) {
+                        codeListValue = "creation";
+                    } else if (referenceDateTypes[i].equals("2")) {
+                        codeListValue = "publication";
+                    } else if (referenceDateTypes[i].equals("3")) {
+                        codeListValue = "revision";
+                    } else {
+                        log.warn("Invalid UDK dataset reference date type: " + referenceDateTypes[i] + ".");
+                        codeListValue = "unspecified";
+                    }
+                    ciDate.addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
+                            "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+                            "codeListValue", codeListValue);
+                    
                 }
-                ciDate.addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
-                        "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
-                        "codeListValue", codeListValue);
             }
         }
     }
@@ -135,9 +173,9 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         
     }
     
-    protected void addExtent (Element parent, IngridHit hit) {
+    protected void addExtent (Element parent, IngridHit hit, String ns) {
         // extend
-        Element exExent = parent.addElement("smXML:extent").addElement("smXML:EX_Extent");
+        Element exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("smXML:EX_Extent");
         // T01_object.loc_descr MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/description
         super.addSMXMLCharacterString(exExent.addElement("smXML:description"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_LOC_DESCR));
         
@@ -169,14 +207,20 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         Element timePeriod = exExent.addElement("smXML:TM_Primitive").addElement("gml:relatedTime").addElement("gml:TimePeriod");
         // T01_object.time_from MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/temporalElement/EX_TemporalExtent/extent/TM_Primitive/gml:relatedTime/gml:TimePeriod/gml:beginPosition/gml:TimeInstant/gml:timePosition
         String myDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_FROM);
-        myDate = DATE_TIME_FORMAT.format(UtilsDate.parseDateString(myDate));
-        timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-            .addText(myDate);
+        Date d = UtilsDate.parseDateString(myDate);
+        if (d != null) {
+            myDate = DATE_TIME_FORMAT.format(d);
+            timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
+                .addText(myDate);
+        }
         // T01_object.time_to MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/temporalElement/EX_TemporalExtent/extent/TM_Primitive/gml:relatedTime/gml:TimePeriod/gml:endPosition/gml:TimeInstant/gml:timePosition
         myDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_TO);
-        myDate = DATE_TIME_FORMAT.format(UtilsDate.parseDateString(myDate));
-        timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-            .addText(myDate);
+        d = UtilsDate.parseDateString(myDate);
+        if (d != null) {
+            myDate = DATE_TIME_FORMAT.format(d);
+            timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
+                .addText(myDate);
+        }
 
         String[] coordinatesBezug = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_BEZUG);
         String[] coordinatesGeoX1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_GEO_X1);
@@ -227,13 +271,15 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
     }
     
     
-    protected Element addContact(Element parent, String[] addressIds, String[] addressTypes, String plugId)
+    private void addSMXMLContact(Element parent, IngridHit hit)
             throws Exception {
+        
+        String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
+        String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
         for (int i = 0; i < addressTypes.length; i++) {
             // get complete address information
-            IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], plugId);
-            Element contact = addContactTag(parent);
-            Element party = contact.addElement("smXML:CI_ResponsibleParty");
+            IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], hit.getPlugId());
+            Element party = parent.addElement("smXML:CI_ResponsibleParty");
             Element e = party.addElement("smXML:individualName");
             this.addSMXMLCharacterString(e, IngridQueryHelper.getCompletePersonName(address));
             e = party.addElement("smXML:organisationName");
@@ -273,7 +319,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             this.addSMXMLCharacterString(e, IngridQueryHelper.getDetailValueAsString(address,
                     IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID));
             ArrayList emails = (ArrayList) communications.get("email");
-            for (int j = 0; j < phoneNumbers.size(); j++) {
+            for (int j = 0; j < emails.size(); j++) {
                 e = CIAddress.addElement("smXML:electronicMailAddress");
                 this.addSMXMLCharacterString(e, (String) emails.get(j));
             }
@@ -287,10 +333,6 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 this.addSMXMLCharacterString(e, (String) url.get(0));
             }
         }
-        return parent;
-
     }
-
-    protected abstract Element addContactTag(Element parent);
 
 }

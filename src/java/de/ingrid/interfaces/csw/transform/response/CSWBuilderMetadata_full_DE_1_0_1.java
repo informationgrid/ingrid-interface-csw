@@ -4,6 +4,7 @@
 package de.ingrid.interfaces.csw.transform.response;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,7 +30,6 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
         this.setNSPrefix("iso19115full");
         
         // define used name spaces
-        Namespace csw = new Namespace("", "http://www.opengis.net/cat/csw");
         Namespace smXML = new Namespace("smXML", "http://metadata.dgiwg.org/smXML");
         Namespace iso19115full = new Namespace("iso19115full", "http://schemas.opengis.net/iso19115full");
         Namespace iso19119 = new Namespace("iso19119", "http://schemas.opengis.net/iso19119");
@@ -50,19 +50,18 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
         Element metaData = DocumentFactory.getInstance().createElement("iso19115full:MD_Metadata",
         "http://schemas.opengis.net/iso19115full");
-        metaData.add(csw);
         metaData.add(iso19115full);
         metaData.add(smXML);
         metaData.add(iso19119);
         metaData.add(gml);
 
-        this.addFileIdentifier(metaData, objectId);
-        this.addLanguage(metaData, hit);
+        this.addFileIdentifier(metaData, objectId, this.getNSPrefix());
+        this.addLanguage(metaData, hit, this.getNSPrefix());
         this.addCharacterSet(metaData, hit);
         this.addParentIdentifier(metaData, hit);
         this.addHierarchyLevel(metaData.addElement("iso19115full:hierarchyLevel"), typeName);
-        this.addContact(metaData, hit);
-        this.addDateStamp(metaData, hit);
+        this.addContact(metaData, hit, this.nsPrefix);
+        this.addDateStamp(metaData, hit, this.nsPrefix);
         this.addSMXMLCharacterString(metaData.addElement("iso19115full:metadataStandardName"), IngridQueryHelper
                 .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_STANDARD_NAME));
         this.addSMXMLCharacterString(metaData.addElement("iso19115full:metadataStandardVersion"), IngridQueryHelper
@@ -187,12 +186,15 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
             this.addSMXMLCharacterString(ciCitation.addElement("smXML:title"), keycTitles[i]);
             // T011_obj_geo_keyc.key_date MD_Metadata/full:contentInfo/MD_FeatureCatalogueDescription/featureCatalogueCitation/CI_Citation/date/CI_Date/date/Date UND .../CI_Date/date/DateType/CI_DateTypeCode/....
             String myDate = keycDates[i];
-            myDate = DATE_TIME_FORMAT.format(UtilsDate.parseDateString(myDate));
-            Element ciDate = ciCitation.addElement("smXML:date").addElement("smXML:CI_Date");
-            ciDate.addElement("smXML:Date").addText(myDate);
-            ciDate.addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
-                    "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
-                    "codeListValue", "creation");
+            Date d = UtilsDate.parseDateString(myDate);
+            if (d != null) {
+                myDate = DATE_TIME_FORMAT.format(d);
+                Element ciDate = ciCitation.addElement("smXML:date").addElement("smXML:CI_Date");
+                ciDate.addElement("smXML:Date").addText(myDate);
+                ciDate.addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
+                        "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+                        "codeListValue", "creation");
+            }
             // T011_obj_geo_keyc.edition MD_Metadata/full:contentInfo/MD_FeatureCatalogueDescription/featureCatalogueCitation/CI_Citation/edition/CharacterString
             this.addSMXMLCharacterString(ciCitation.addElement("smXML:edition"), keycEditions[i]);
             // T011_obj_geo_supplinfo.feature_type  MD_Metadata/contentInfo/MD_FeatureCatalogueDescription[featureCatalogueCitation/CI_Citation/title]/featureTypes/LocalName
@@ -332,7 +334,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
         // iso19119:operatesOn
         cswServiceIdentification.addElement("iso19119:operatesOn").addElement("smXML:Reference").addAttribute("uuidref", IngridQueryHelper.getParentIdentifier(hit));
 
-        super.addExtent(cswServiceIdentification, hit);
+        super.addExtent(cswServiceIdentification, hit, "iso19119");
 
         cswServiceIdentification.addElement("iso19119:couplingType").addElement("iso19119:CSW_CouplingType")
         .addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_CouplingType").addAttribute(
@@ -450,29 +452,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
             } catch (NumberFormatException e) {}
         }
         
-        super.addExtent(mdDataIdentification, hit);
-    }
-
-    protected Element addContactTag(Element e) {
-        Element contact = e.addElement("iso19115full:contact");
-        return contact;
-    }
-
-    /**
-     * Adds a CSW brief file identifier to a given element.
-     * 
-     * @param parent
-     *            The Element to add the identifier to.
-     * @param hit
-     *            The IngridHit.
-     * @param doc
-     *            The Document.
-     * @return The parent element.
-     */
-    protected Element addFileIdentifier(Element parent, String id) {
-        Element e = parent.addElement("iso19115full:fileIdentifier");
-        this.addSMXMLCharacterString(e, id);
-        return parent;
+        super.addExtent(mdDataIdentification, hit, "smXML");
     }
 
 }

@@ -10,7 +10,6 @@ import org.dom4j.Element;
 import org.dom4j.Namespace;
 
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -26,7 +25,6 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
         this.setNSPrefix("iso19115summary");
 
         // define used name spaces
-        Namespace csw = new Namespace("", "http://www.opengis.net/cat/csw");
         Namespace smXML = new Namespace("smXML", "http://metadata.dgiwg.org/smXML");
         Namespace iso19115summary = new Namespace("iso19115summary", "http://schemas.opengis.net/iso19115summary");
         Namespace iso19119 = new Namespace("iso19119", "http://schemas.opengis.net/iso19119");
@@ -46,14 +44,13 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
 
         Element metaData = DocumentFactory.getInstance().createElement("iso19115summary:MD_Metadata",
         "http://schemas.opengis.net/iso19115summary");
-        metaData.add(csw);
         metaData.add(iso19115summary);
         metaData.add(smXML);
         metaData.add(iso19119);
 
         this.addFileIdentifier(metaData, objectId);
         this.addLanguage(metaData, hit);
-        this.addHierarchyLevel(metaData.addElement("iso19115summary:hierarchyLevel"), typeName);
+        this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
         this.addContact(metaData, hit);
         this.addDateStamp(metaData, hit);
         if (typeName.equals("dataset")) {
@@ -67,47 +64,47 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
     }
 
     private void addCitation(Element parent, IngridHit hit) {
-        Element ciCitation = parent.addElement("smXML:citation")
+        Element ciCitation = parent.addElement("citation")
         .addElement("iso19115summary:CI_Citation");
         // add title
-        this.addSMXMLCharacterString(ciCitation.addElement("smXML:title"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addSMXMLCharacterString(ciCitation.addElement("title"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
         // add dates (creation, revision etc.)
         super.addCitationReferenceDates(ciCitation, hit);
     }
     
     private void addIdentificationInfoService(Element metaData, IngridHit hit) {
-        Element cswServiceIdentification = metaData.addElement("iso19115summary:identificationInfo").addElement(
-                "iso19119:CSW_ServiceIdentification");
+        Element svServiceIdentification = metaData.addElement("identificationInfo").addElement(
+                "iso19115summary:SV_ServiceIdentification");
 
         // add citation construct
-        this.addCitation(cswServiceIdentification, hit);
+        this.addCitation(svServiceIdentification, hit);
 
         
         // add abstract
-        this.addSMXMLCharacterString(cswServiceIdentification.addElement("iso19115summary:abstract"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addSMXMLCharacterString(svServiceIdentification.addElement("abstract"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
 
         // add resourceConstraint
-        this.addSMXMLCharacterString(cswServiceIdentification.addElement("iso19115summary:resourceConstraints").addElement("smXML:MD_Constraints").addElement("smXML:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addSMXMLCharacterString(svServiceIdentification.addElement("resourceConstraints").addElement("smXML:MD_Constraints").addElement("smXML:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE));
         
         
-        this.addSMXMLCharacterString(cswServiceIdentification.addElement("iso19119:serviceType"), IngridQueryHelper
+        this.addSMXMLCharacterString(svServiceIdentification.addElement("serviceType"), IngridQueryHelper
                         .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE));
 
         String[] serviceTypeVersions = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_VERSION);
         if (serviceTypeVersions != null) {
             for (int i=0; i< serviceTypeVersions.length; i++) {
-                this.addSMXMLCharacterString(cswServiceIdentification.addElement("iso19119:serviceTypeVersion"), serviceTypeVersions[i]);
+                this.addSMXMLCharacterString(svServiceIdentification.addElement("serviceTypeVersion"), serviceTypeVersions[i]);
             }
         }
 
-        cswServiceIdentification.addElement("iso19119:couplingType").addElement("iso19119:CSW_CouplingType")
+/*        svServiceIdentification.addElement("iso19119:couplingType").addElement("iso19119:CSW_CouplingType")
         .addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_CouplingType").addAttribute(
                 "codeListValue",
                 IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF));
-        
+*/        
         /*
          * Allgemeine ServiceIdentification Struktur, abgeleitet von GISTEC code
          * 
@@ -161,59 +158,40 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
     }
 
     private void addIdentificationInfoDataset(Element metaData, IngridHit hit) {
-        Element mdDataIdentification = metaData.addElement("iso19115summary:identificationInfo").addElement(
-                "smXML:MD_DataIdentification");
+        Element mdDataIdentification = metaData.addElement("identificationInfo").addElement(
+                "iso19115summary:MD_DataIdentification");
 
         // add citation construct
         this.addCitation(mdDataIdentification, hit);
 
         // add abstract
-        this.addSMXMLCharacterString(mdDataIdentification.addElement("iso19115summary:abstract"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addSMXMLCharacterString(mdDataIdentification.addElement("abstract"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
 
         // add resourceConstraint
-        this.addSMXMLCharacterString(mdDataIdentification.addElement("iso19115summary:resourceConstraints").addElement("smXML:MD_Constraints").addElement("smXML:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addSMXMLCharacterString(mdDataIdentification.addElement("resourceConstraints").addElement("smXML:MD_Constraints").addElement("smXML:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE));
         
         // add pointOfContact
         // implemented only in full profile
         
         // add language
-        String dataLang =  IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
+/*        String dataLang =  IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
         if (dataLang.equals("121")) {
             dataLang = "de";
         } else {
             dataLang = "en";
         }
         this.addSMXMLCharacterString(mdDataIdentification.addElement("iso19115summary:language"), dataLang);
+*/        
         
-        Long code;
+/*        Long code;
         try {
             code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY));
             String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(527), code, new Long(94));
             mdDataIdentification.addElement("iso19115summary:topicCategory").addElement("smXML:MD_TopicCategoryCode").addText(codeVal);
         } catch (NumberFormatException e) {}
+*/        
     }
 
-    protected Element addContactTag(Element e) {
-        Element contact = e.addElement("iso19115summary:contact");
-        return contact;
-    }
-
-    /**
-     * Adds a CSW brief file identifier to a given element.
-     * 
-     * @param parent
-     *            The Element to add the identifier to.
-     * @param hit
-     *            The IngridHit.
-     * @param doc
-     *            The Document.
-     * @return The parent element.
-     */
-    protected Element addFileIdentifier(Element parent, String id) {
-        Element e = parent.addElement("iso19115summary:fileIdentifier");
-        this.addSMXMLCharacterString(e, id);
-        return parent;
-    }
 }

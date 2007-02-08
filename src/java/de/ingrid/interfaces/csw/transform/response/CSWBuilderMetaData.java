@@ -123,4 +123,13 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
         this.nsPrefix = nsPrefix;
     }
     
+    protected String getNSElementName(String ns, String elName) {
+        if (ns != null) {
+            return ns.concat(":").concat(elName);
+        } else {
+            return elName;
+        }
+    }
+    
+    
 }

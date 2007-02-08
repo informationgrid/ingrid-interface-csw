@@ -519,15 +519,14 @@ public class IngridQueryHelper {
     }
 
     public static HashMap getCommunications(IngridHit addressHit) {
-        IngridHitDetail address = (IngridHitDetail) addressHit.get("detail");
 
         ArrayList phoneNumber = new ArrayList();
         ArrayList faxNumber = new ArrayList();
         ArrayList email = new ArrayList();
         ArrayList url = new ArrayList();
 
-        String[] commTypes = (String[]) address.get(IngridQueryHelper.HIT_KEY_ADDRESS_COMM_TYPE);
-        String[] commValues = (String[]) address.get(IngridQueryHelper.HIT_KEY_ADDRESS_COMM_VALUE);
+        String[] commTypes = IngridQueryHelper.getDetailValueAsArray(addressHit, IngridQueryHelper.HIT_KEY_ADDRESS_COMM_TYPE);
+        String[] commValues = IngridQueryHelper.getDetailValueAsArray(addressHit, IngridQueryHelper.HIT_KEY_ADDRESS_COMM_VALUE);
         for (int j = 0; j < commTypes.length; j++) {
             if (commTypes[j].equalsIgnoreCase("Telefon")) {
                 phoneNumber.add(commValues[j]);

@@ -25,7 +25,6 @@ public class CSWBuilderMetadata_brief_DE_1_0_1 extends CSWBuilderMetadataCommon 
         this.setNSPrefix("iso19115brief");
         
         // define used name spaces
-        Namespace csw = new Namespace("", "http://www.opengis.net/cat/csw");
         Namespace smXML = new Namespace("smXML", "http://metadata.dgiwg.org/smXML");
         Namespace iso19115brief = new Namespace("iso19115brief", "http://schemas.opengis.net/iso19115brief");
         Namespace iso19119 = new Namespace("iso19119", "http://schemas.opengis.net/iso19119");
@@ -46,13 +45,12 @@ public class CSWBuilderMetadata_brief_DE_1_0_1 extends CSWBuilderMetadataCommon 
 
         Element metaData = DocumentFactory.getInstance().createElement("iso19115brief:MD_Metadata",
                 "http://schemas.opengis.net/iso19115brief");
-        metaData.add(csw);
         metaData.add(iso19115brief);
         metaData.add(smXML);
         metaData.add(iso19119);
 
         this.addFileIdentifier(metaData, objectId);
-        this.addHierarchyLevel(metaData.addElement("iso19115brief:hierarchyLevel"), typeName);
+        this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
         this.addContact(metaData, hit);
         if (typeName.equals("dataset")) {
             this.addIdentificationInfoDataset(metaData, hit);
@@ -92,28 +90,6 @@ public class CSWBuilderMetadata_brief_DE_1_0_1 extends CSWBuilderMetadataCommon 
         // T011_obj_geo_topic_cat.topic_category
         mdDataIdentification.addElement("smXML:topicCategory").addElement("smXML:MD_TopicCategoryCode").addText(
                 IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY));
-    }
-
-    protected Element addContactTag(Element e) {
-        Element contact = e.addElement("iso19115brief:contact");
-        return contact;
-    }
-
-    /**
-     * Adds a CSW brief file identifier to a given element.
-     * 
-     * @param parent
-     *            The Element to add the identifier to.
-     * @param hit
-     *            The IngridHit.
-     * @param doc
-     *            The Document.
-     * @return The parent element.
-     */
-    protected Element addFileIdentifier(Element parent, String id) {
-        Element e = parent.addElement("iso19115brief:fileIdentifier");
-        this.addSMXMLCharacterString(e, id);
-        return parent;
     }
 
 }
