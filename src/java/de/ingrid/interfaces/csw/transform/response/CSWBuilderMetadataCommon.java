@@ -44,7 +44,78 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
     }
 
     protected void addContact(Element parent, IngridHit hit, String ns) throws Exception {
-        addSMXMLContact(parent.addElement(getNSElementName(ns, "contact")), hit);
+
+        String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
+        String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
+        for (int i = 0; i < addressTypes.length; i++) {
+            // get complete address information
+            IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], hit.getPlugId());
+            Element party = parent.addElement(getNSElementName(ns, "contact")).addElement("smXML:CI_ResponsibleParty");
+            
+            // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
+            //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
+            try {
+                Long code = Long.valueOf(addressTypes[i]);
+                String codeVal;
+                if (code.longValue() == 999) {
+                    codeVal = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_ADR_SPECIAL_NAME);
+                } else {
+                    if (code.longValue() == 0) {
+                        code = new Long(7);
+                    }
+                    codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(505), code, new Long(94));
+                }
+                if (codeVal.length() > 0) {
+                    party.addElement("smXML:role").addElement("smXML:CI_RoleCode")
+                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                    .addAttribute("codeListValue", codeVal);
+                }
+            } catch (NumberFormatException e) {}
+            
+            this.addSMXMLCharacterString(party.addElement("smXML:individualName"), IngridQueryHelper.getCompletePersonName(address));
+            this.addSMXMLCharacterString(party.addElement("smXML:organisationName"), IngridQueryHelper.getDetailValueAsString(address,
+                    IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION));
+            this.addSMXMLCharacterString(party.addElement("smXML:positionName"), IngridQueryHelper.getDetailValueAsString(address,
+                    IngridQueryHelper.HIT_KEY_ADDRESS_JOB));
+            Element CIContact = party.addElement("smXML:contactInfo").addElement("smXML:CI_Contact");
+
+            HashMap communications = IngridQueryHelper.getCommunications(address);
+            ArrayList phoneNumbers = (ArrayList) communications.get("phone");
+            ArrayList faxNumbers = (ArrayList) communications.get("fax");
+            if (phoneNumbers.size() > 0 || faxNumbers.size() > 0) {
+                Element CI_Telephone = CIContact.addElement("smXML:phone").addElement("smXML:CI_Telephone");
+                for (int j = 0; j < phoneNumbers.size(); j++) {
+                    this.addSMXMLCharacterString(CI_Telephone.addElement("smXML:voice"), (String) phoneNumbers.get(j));
+                }
+                for (int j = 0; j < faxNumbers.size(); j++) {
+                    this.addSMXMLCharacterString(CI_Telephone.addElement("smXML:facsimile"), (String) faxNumbers.get(j));
+                }
+            }
+
+            Element CIAddress = CIContact.addElement("smXML:address").addElement("smXML:CI_Address");
+            this.addSMXMLCharacterString(CIAddress.addElement("smXML:deliveryPoint"), IngridQueryHelper.getDetailValueAsString(address,
+                    IngridQueryHelper.HIT_KEY_ADDRESS_STREET));
+            this.addSMXMLCharacterString(CIAddress.addElement("smXML:city"), IngridQueryHelper.getDetailValueAsString(address,
+                    IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
+            this.addSMXMLCharacterString(CIAddress.addElement("smXML:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
+                    IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
+            this.addSMXMLCharacterString(CIAddress.addElement("smXML:country"), IngridQueryHelper.getDetailValueAsString(address,
+                    IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID));
+            ArrayList emails = (ArrayList) communications.get("email");
+            for (int j = 0; j < emails.size(); j++) {
+                this.addSMXMLCharacterString(CIAddress.addElement("smXML:electronicMailAddress"), (String) emails.get(j));
+            }
+
+            // CSW 2.0 unterstützt nur eine online resource
+            ArrayList url = (ArrayList) communications.get("url");
+            if (url.size() > 0) {
+                Element CI_OnlineResource = CIContact.addElement("smXML:onlineResource").addElement(
+                        "smXML:CI_OnlineResource");
+                this.addSMXMLCharacterString(CI_OnlineResource.addElement("smXML:linkage"), (String) url.get(0));
+            }
+        }    
+    
+    
     }
 
     /**
@@ -268,71 +339,6 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 }
             }
         }        
-    }
-    
-    
-    private void addSMXMLContact(Element parent, IngridHit hit)
-            throws Exception {
-        
-        String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
-        String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
-        for (int i = 0; i < addressTypes.length; i++) {
-            // get complete address information
-            IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], hit.getPlugId());
-            Element party = parent.addElement("smXML:CI_ResponsibleParty");
-            Element e = party.addElement("smXML:individualName");
-            this.addSMXMLCharacterString(e, IngridQueryHelper.getCompletePersonName(address));
-            e = party.addElement("smXML:organisationName");
-            this.addSMXMLCharacterString(e, IngridQueryHelper.getDetailValueAsString(address,
-                    IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION));
-            e = party.addElement("smXML:positionName");
-            this.addSMXMLCharacterString(e, IngridQueryHelper.getDetailValueAsString(address,
-                    IngridQueryHelper.HIT_KEY_ADDRESS_JOB));
-            Element CIContact = party.addElement("smXML:contactInfo").addElement("smXML:CI_Contact");
-
-            HashMap communications = IngridQueryHelper.getCommunications(address);
-            ArrayList phoneNumbers = (ArrayList) communications.get("phone");
-            ArrayList faxNumbers = (ArrayList) communications.get("fax");
-            if (phoneNumbers.size() > 0 || faxNumbers.size() > 0) {
-                Element CI_Telephone = CIContact.addElement("smXML:phone").addElement("smXML:CI_Telephone");
-                for (int j = 0; j < phoneNumbers.size(); j++) {
-                    e = CI_Telephone.addElement("smXML:voice");
-                    this.addSMXMLCharacterString(e, (String) phoneNumbers.get(j));
-                }
-                for (int j = 0; j < faxNumbers.size(); j++) {
-                    e = CI_Telephone.addElement("smXML:facsimile");
-                    this.addSMXMLCharacterString(e, (String) faxNumbers.get(j));
-                }
-            }
-
-            Element CIAddress = CIContact.addElement("smXML:address").addElement("smXML:CI_Address");
-            e = CIAddress.addElement("smXML:deliveryPoint");
-            this.addSMXMLCharacterString(e, IngridQueryHelper.getDetailValueAsString(address,
-                    IngridQueryHelper.HIT_KEY_ADDRESS_STREET));
-            e = CIAddress.addElement("smXML:city");
-            this.addSMXMLCharacterString(e, IngridQueryHelper.getDetailValueAsString(address,
-                    IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
-            e = CIAddress.addElement("smXML:postalCode");
-            this.addSMXMLCharacterString(e, IngridQueryHelper.getDetailValueAsString(address,
-                    IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
-            e = CIAddress.addElement("smXML:country");
-            this.addSMXMLCharacterString(e, IngridQueryHelper.getDetailValueAsString(address,
-                    IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID));
-            ArrayList emails = (ArrayList) communications.get("email");
-            for (int j = 0; j < emails.size(); j++) {
-                e = CIAddress.addElement("smXML:electronicMailAddress");
-                this.addSMXMLCharacterString(e, (String) emails.get(j));
-            }
-
-            // CSW 2.0 unterstützt nur eine online resource
-            ArrayList url = (ArrayList) communications.get("url");
-            if (url.size() > 0) {
-                Element CI_OnlineResource = CIContact.addElement("smXML:onlineResource").addElement(
-                        "smXML:CI_OnlineResource");
-                e = CI_OnlineResource.addElement("smXML:linkage");
-                this.addSMXMLCharacterString(e, (String) url.get(0));
-            }
-        }
     }
 
 }
