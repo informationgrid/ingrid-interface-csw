@@ -60,9 +60,35 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 if (code.longValue() == 999) {
                     codeVal = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_ADR_SPECIAL_NAME);
                 } else {
+                    /* mapping of UDK addresstypes to CSW address types
+                    
+                    UDK | CSW (codelist 505)| Name
+                    0 | 7 | Auskunft
+                    1 | 3 | Datenhalter
+                    2 | 2 | Datenverantwortung
+                    3 | 1 | Anbieter
+                    4 | 4 | Benutzer
+                    5 | 5 | Vertrieb
+                    6 | 6 | Herkunft
+                    7 | 8 | Datenerfassung
+                    8 | 9 | Auswertung
+                    9 | 10 | Herausgeber
+                    999 | keine Entsprechung, mapping auf codeListValue | Sonstige Angaben
+                     */
                     if (code.longValue() == 0) {
                         code = new Long(7);
+                    } else if (code.longValue() == 1) {
+                        code = new Long(3);
+                    } else if (code.longValue() == 3) {
+                        code = new Long(1);
+                    } else if (code.longValue() == 7) {
+                        code = new Long(8);
+                    } else if (code.longValue() == 8) {
+                        code = new Long(9);
+                    } else if (code.longValue() == 9) {
+                        code = new Long(10);
                     }
+
                     codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(505), code, new Long(94));
                 }
                 if (codeVal.length() > 0) {
