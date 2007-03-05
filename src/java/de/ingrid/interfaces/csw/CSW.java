@@ -205,11 +205,12 @@ public class CSW {
             throws Exception {
 
         int requestedHits = sessionParameters.getMaxRecords();
+        int startPosition = sessionParameters.getStartPosition();
 
         ingridQuery = setDataTypeCSW(ingridQuery);
         ingridQuery = setSourceType(ingridQuery, sessionParameters);
 
-        IngridHits hits = callBus(ingridQuery, requestedHits);
+        IngridHits hits = callBus(ingridQuery, requestedHits, startPosition);
         long totalHits = hits.length();
         log.info("Hits for CSW: " + totalHits);
 
@@ -332,13 +333,13 @@ public class CSW {
      * @throws Exception
      *             e
      */
-    private IngridHits callBus(final IngridQuery ingridQuery, final int requestedHits) throws Exception {
+    private IngridHits callBus(final IngridQuery ingridQuery, final int requestedHits, final int startPosition) throws Exception {
         String str_timeOut = cswConfig.getString(CSWInterfaceConfig.TIMEOUT);
         int timeOut = Integer.parseInt(str_timeOut);
 
         // set pageNo to the first page (zero)
-        int pageNo = 0;
-
+        int pageNo = (int) (startPosition / requestedHits) + 1;
+        
         // set to requestedHits
         int hitsPerPage = requestedHits;
         IngridHits hits = null;
