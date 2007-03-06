@@ -47,6 +47,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
 
         String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
         String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
+        String[] specialNames = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ADR_SPECIAL_NAME);
         for (int i = 0; i < addressTypes.length; i++) {
             // get complete address information
             IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], hit.getPlugId());
@@ -55,43 +56,29 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
             //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
             try {
-                Long code = Long.valueOf(addressTypes[i]);
+                /* mapping of UDK addresstypes to CSW address types
+                
+                UDK | CSW (codelist 505)| Name
+                0 | 7 | Auskunft
+                1 | 3 | Datenhalter
+                2 | 2 | Datenverantwortung
+                3 | 1 | Anbieter
+                4 | 4 | Benutzer
+                5 | 5 | Vertrieb
+                6 | 6 | Herkunft
+                7 | 8 | Datenerfassung
+                8 | 9 | Auswertung
+                9 | 10 | Herausgeber
+                999 | keine Entsprechung, mapping auf codeListValue | Sonstige Angaben
+                 */
+                Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
                 String codeVal;
                 if (code.longValue() == 999) {
-                    codeVal = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_ADR_SPECIAL_NAME);
+                    codeVal = specialNames[i];
                 } else {
-                    /* mapping of UDK addresstypes to CSW address types
-                    
-                    UDK | CSW (codelist 505)| Name
-                    0 | 7 | Auskunft
-                    1 | 3 | Datenhalter
-                    2 | 2 | Datenverantwortung
-                    3 | 1 | Anbieter
-                    4 | 4 | Benutzer
-                    5 | 5 | Vertrieb
-                    6 | 6 | Herkunft
-                    7 | 8 | Datenerfassung
-                    8 | 9 | Auswertung
-                    9 | 10 | Herausgeber
-                    999 | keine Entsprechung, mapping auf codeListValue | Sonstige Angaben
-                     */
-                    if (code.longValue() == 0) {
-                        code = new Long(7);
-                    } else if (code.longValue() == 1) {
-                        code = new Long(3);
-                    } else if (code.longValue() == 3) {
-                        code = new Long(1);
-                    } else if (code.longValue() == 7) {
-                        code = new Long(8);
-                    } else if (code.longValue() == 8) {
-                        code = new Long(9);
-                    } else if (code.longValue() == 9) {
-                        code = new Long(10);
-                    }
-
                     codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(505), code, new Long(94));
                 }
-                if (codeVal.length() > 0) {
+                if (codeVal != null && codeVal.length() > 0) {
                     party.addElement("smXML:role").addElement("smXML:CI_RoleCode")
                     .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
                     .addAttribute("codeListValue", codeVal);
