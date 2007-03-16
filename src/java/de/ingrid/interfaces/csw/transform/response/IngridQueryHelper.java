@@ -287,6 +287,9 @@ public class IngridQueryHelper {
 
     public static IngridHit getCompleteAddress(String addrId, String iPlugId) throws Exception {
         IngridHit address = getAddressHit(addrId, iPlugId);
+        if (address == null) {
+            return null;
+        }
         IngridHitDetail addressDetail = (IngridHitDetail) address.get("detail");
         String addrClass = IngridQueryHelper.getDetailValue(addressDetail, IngridQueryHelper.HIT_KEY_ADDRESS_CLASS);
         if (addrClass.equals("2") || addrClass.equals("1")) {
@@ -357,6 +360,7 @@ public class IngridQueryHelper {
         if (result.size() > 0) {
             return (IngridHit) result.get(0);
         } else {
+            log.info("Unable to retrieve address (addrId: " + addrId + ") from iPlug '" + getAddressPlugIdFromPlugId(iPlugId) + "'!");
             return null;
         }
     }
