@@ -374,7 +374,7 @@ public class IngridQueryHelper {
             int page = 0;
             do {
                 page++;
-                hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 20, page, 20, 3000);
+                hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 20, page, 0, 3000);
                 IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus().getDetails(hits.getHits(),
                         query, requestedMetaData);
                 for (int j = 0; j < details.length; j++) {
