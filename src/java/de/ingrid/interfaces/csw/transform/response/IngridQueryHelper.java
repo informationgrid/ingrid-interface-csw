@@ -130,9 +130,11 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_SERV_OPERATION_NAME = "T011_obj_serv_operation.name";
 
+    public static final String HIT_KEY_OBJECT_SERV_OPERATION_DESCR = "T011_obj_serv_operation.descr";
+    
     public static final String HIT_KEY_OBJECT_SERV_OP_PLATFORM = "T011_obj_serv_op_platform.platform";
 
-    public static final String HIT_KEY_OBJECT_SERV_INVOVATION_NAME = "T011_obj_serv_operation.invocation_name";
+    public static final String HIT_KEY_OBJECT_SERV_INVOCATION_NAME = "T011_obj_serv_operation.invocation_name";
 
     public static final String HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT = "T011_obj_serv_op_connpoint.connect_point";
 
@@ -156,6 +158,8 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_SERV_HISTORY = "T011_obj_serv.history";
 
+    public static final String HIT_KEY_OBJECT_SERV_ENVIROMENT = "T011_obj_serv.environment";
+    
     public static final String HIT_KEY_OBJECT_VECTOR_TOPOLOGY_LEVEL = "T011_obj_geo.vector_topology_level";
 
     public static final String HIT_KEY_OBJECT_VECTOR_GEOMETRIC_OBJECT_COUNT = "T011_obj_geo_vector.geometric_object_count";
@@ -220,7 +224,7 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_COORDINATES_GEO_Y2 = "T019_coordinates.geo_y2";
 
-    public static final String HIT_KEY_OBJECT_TOWNSHIP_NO = "T011_township.township_no";
+    public static final String HIT_KEY_OBJECT_TOWNSHIP_NO = "areaid";
 
     public static final String HIT_KEY_OBJECT_ST_BOX_X1 = "T01_st_bbox.x1";
 
@@ -242,8 +246,8 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_METADATA_STANDARD_VERSION, HIT_KEY_OBJECT_DATASET_ALTERNATE_TITLE, HIT_KEY_OBJECT_INFO_NOTE,
             HIT_KEY_OBJECT_TIME_STATUS, HIT_KEY_OBJECT_DATASET_USAGE, HIT_KEY_OBJECT_SEARCH_SEARCHTERM,
             HIT_KEY_OBJECT_SEARCH_TYPE, HIT_KEY_OBJECT_TIME_DESCR, HIT_KEY_OBJECT_TIME_PERIOD,
-            HIT_KEY_OBJECT_TIME_INTERVAL, HIT_KEY_OBJECT_SERV_OPERATION_NAME, HIT_KEY_OBJECT_SERV_OP_PLATFORM,
-            HIT_KEY_OBJECT_SERV_INVOVATION_NAME, HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT,
+            HIT_KEY_OBJECT_TIME_INTERVAL, HIT_KEY_OBJECT_SERV_OPERATION_NAME, HIT_KEY_OBJECT_SERV_OPERATION_DESCR, HIT_KEY_OBJECT_SERV_OP_PLATFORM,
+            HIT_KEY_OBJECT_SERV_INVOCATION_NAME, HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT,
             HIT_KEY_OBJECT_SERV_OP_PARAM_NAME, HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION,
             HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR, HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL,
             HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY, HIT_KEY_OBJECT_GEO_SPECIAL_BASE, HIT_KEY_OBJECT_GEO_DATA_BASE,

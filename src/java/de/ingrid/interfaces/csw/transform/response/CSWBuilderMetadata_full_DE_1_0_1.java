@@ -241,7 +241,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
     private void addDataQualityInfoService(Element metaData, IngridHit hit) {
         Element dqQualityInfo = metaData.addElement("iso19115full:dataQualityInfo").addElement("smXML:DQ_DataQuality");
         // T011_obj_geo.special_base -> MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/udk:LI_Lineage/statement
-        Element liLineage = dqQualityInfo.addElement("smXML:lineage").addElement("LI_Lineage");
+        Element liLineage = dqQualityInfo.addElement("smXML:lineage").addElement("smXML:LI_Lineage");
         // (dataset) T011_obj_serv.base -> MD_Metadata/dataQualityInfo/DQ_DataQuality/lineage/LI_Lineage/source/LI_Source/description
         this.addSMXMLCharacterString(liLineage.addElement("smXML:source").addElement("smXML:LI_Source").addElement("smXML:description"), IngridQueryHelper
                 .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_BASE));

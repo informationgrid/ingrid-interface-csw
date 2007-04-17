@@ -220,6 +220,9 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata -> iso19119:operationName -> String
         this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:operationName"), IngridQueryHelper
                 .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_NAME));
+        // iso19119:operationMetadata -> iso19119:SV_OperationMetadata -> iso19119:operationDescription -> String
+        this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:operationDescription"), IngridQueryHelper
+                .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_DESCR));
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata ->(1:n) iso19119:DCP -> iso19119:SV_DCPList/@codeListValue
         String[] platforms = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PLATFORM);
         for (int i=0; i< platforms.length; i++) {
@@ -229,7 +232,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         }
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata -> iso19119:invocationName -> String
         this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:invocationName"), IngridQueryHelper
-                .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_INVOVATION_NAME));
+                .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_INVOCATION_NAME));
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata ->(1:n) iso19119:connectPoint -> smXML:CI_OnlineResource
         String[] connectPoints = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT);
         for (int i=0; i< connectPoints.length; i++) {
@@ -343,13 +346,21 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 if (stBBoxLocTownNo[j].equals(townshipNo[i])) {
                     Element exGeographicBoundingBox = geographicElement.addElement("smXML:EX_GeographicBoundingBox");
                     // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/smXML:approximateLongitude/smXML:Decimal
-                    super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:westBoundLongitude").addElement("smXML:approximateLongitude"), stBoxX1[i]);
+                    if (stBoxX1.length == stBBoxLocTownNo.length) {
+                    	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:westBoundLongitude").addElement("smXML:approximateLongitude"), stBoxX1[i]);
+                    }
                     // T01_st_bbox.x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.eastBoundLongitude/smXML:approximateLongitude/smXML:Decimal
-                    super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:eastBoundLongitude").addElement("smXML:approximateLongitude"), stBoxX2[i]);
+                    if (stBoxX2.length == stBBoxLocTownNo.length) {
+                    	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:eastBoundLongitude").addElement("smXML:approximateLongitude"), stBoxX2[i]);
+                    }
                     // T01_st_bbox.y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.southBoundLongitude/smXML:approximateLongitude/smXML:Decimal
-                    super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:southBoundLongitude").addElement("smXML:approximateLongitude"), stBoxY1[i]);
+                    if (stBoxY2.length == stBBoxLocTownNo.length) {
+                    	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:southBoundLongitude").addElement("smXML:approximateLongitude"), stBoxY2[i]);
+                    }
                     // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLongitude/smXML:approximateLongitude/smXML:Decimal
-                    super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:northBoundLongitude").addElement("smXML:approximateLongitude"), stBoxY2[i]);
+                    if (stBoxY2.length == stBBoxLocTownNo.length) {
+                    	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:northBoundLongitude").addElement("smXML:approximateLongitude"), stBoxY1[i]);
+                    }
                     break;
                 }
             }
