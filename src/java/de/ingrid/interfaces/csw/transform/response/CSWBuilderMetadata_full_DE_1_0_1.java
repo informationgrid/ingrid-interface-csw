@@ -190,8 +190,8 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
             if (d != null) {
                 myDate = DATE_TIME_FORMAT.format(d);
                 Element ciDate = ciCitation.addElement("smXML:date").addElement("smXML:CI_Date");
-                ciDate.addElement("smXML:Date").addText(myDate);
-                ciDate.addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
+                ciDate.addElement("smXML:date").addElement("smXML:Date").addText(myDate);
+                ciDate.addElement("smXML:dateType").addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
                         "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
                         "codeListValue", "creation");
             }
@@ -362,7 +362,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
             String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(518), code, new Long(94));
             if (codeVal.length() > 0) {
                 parent.addElement("smXML:status").addElement("smXML:MD_ProgressCode").addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode")
-                .addElement("codeListValue", codeVal);
+                .addAttribute("codeListValue", codeVal);
             }
         } catch (NumberFormatException e) {}
         
@@ -405,7 +405,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
         
         // resource maintenance
         Element mdMaintenanceInformation = parent.addElement("smXML:resourceMaintenance").addElement("smXML:MD_MaintenanceInformation");
-        this.addSMXMLCharacterString(mdMaintenanceInformation.addElement("maintenanceNote"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addSMXMLCharacterString(mdMaintenanceInformation.addElement("smXML:maintenanceNote"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_TIME_DESCR));
         try {
             Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_PERIOD));
@@ -419,8 +419,22 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
         // userDefinedMaintenanceFrequency
         String timeInterval = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_INTERVAL);
         if (timeInterval.length() > 0) {
-            timeInterval = timeInterval.concat(" ").concat(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_INTERVAL));
-            mdMaintenanceInformation.addElement("smXML:userDefinedMaintenanceFrequency").addElement("smXML:TM_PeriodDuration").addText(timeInterval);
+       		String timeAlle = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_ALLE);
+       		String period19108 = "P";
+       		if (timeInterval.equalsIgnoreCase("Tage")) {
+       			period19108 = period19108.concat(timeAlle).concat("D");
+       		} else if (timeInterval.equalsIgnoreCase("Jahre")) {
+       			period19108 = period19108.concat(timeAlle).concat("Y");
+       		} else if (timeInterval.equalsIgnoreCase("Monate")) {
+       			period19108 = period19108.concat(timeAlle).concat("M");
+       		} else if (timeInterval.equalsIgnoreCase("Stunden")) {
+       			period19108 = period19108.concat("T").concat(timeAlle).concat("H");
+       		} else if (timeInterval.equalsIgnoreCase("Minuten")) {
+       			period19108 = period19108.concat("T").concat(timeAlle).concat("M");
+       		} else if (timeInterval.equalsIgnoreCase("Sekunden")) {
+       			period19108 = period19108.concat("T").concat(timeAlle).concat("S");
+       		}
+            mdMaintenanceInformation.addElement("smXML:userDefinedMaintenanceFrequency").addElement("smXML:TM_PeriodDuration").addText(period19108);
         }
         
     }

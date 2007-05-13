@@ -217,14 +217,7 @@ public class ResponseTransformer {
             }
 
             elemCurr = domDocument.createElement(targetName);
-            // encode value (e.g. UTF-8)
-            String txtEncoding = cswConfig.getString(CSWInterfaceConfig.RESPONSE_ENCODING);
-            if (txtEncoding.equals("NONE")) {
-                elemTxtCurr = domDocument.createTextNode(value);
-            } else {
-                elemTxtCurr = domDocument.createTextNode(URLEncoder.encode(value, cswConfig
-                        .getString(CSWInterfaceConfig.RESPONSE_ENCODING)));
-            }
+            elemTxtCurr = domDocument.createTextNode(value);
             // log.debug("content: " + targetName + ": " +
             // elemTxtCurr.getNodeValue());
             elemCurr.appendChild(elemTxtCurr);

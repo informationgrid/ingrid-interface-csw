@@ -192,8 +192,8 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 Date d = UtilsDate.parseDateString(creationDate);
                 if (d != null) {
                     creationDate = DATE_TIME_FORMAT.format(d);
-                    Element ciDate = parent.addElement("date").addElement("smXML:CI_Date");
-                    ciDate.addElement("smXML:Date").addText(creationDate);
+                    Element ciDate = parent.addElement("smXML:date").addElement("smXML:CI_Date");
+                    ciDate.addElement("smXML:date").addElement("smXML:Date").addText(creationDate);
                     String codeListValue;
                     if (referenceDateTypes[i].equals("1")) {
                         codeListValue = "creation";
@@ -205,7 +205,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                         log.warn("Invalid UDK dataset reference date type: " + referenceDateTypes[i] + ".");
                         codeListValue = "unspecified";
                     }
-                    ciDate.addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
+                    ciDate.addElement("smXML:dateType").addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
                             "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
                             "codeListValue", codeListValue);
                     
@@ -268,7 +268,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         // T01_object.loc_descr MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/description
         super.addSMXMLCharacterString(exExent.addElement("smXML:description"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_LOC_DESCR));
         
-        Element exVerticalExtent = exExent.addElement("smXML:verticalElement").addElement("EX_VerticalExtent");
+        Element exVerticalExtent = exExent.addElement("smXML:verticalElement").addElement("smXML:EX_VerticalExtent");
         // T01_object.vertical_extent_minimum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.minimumValue
         super.addSMXMLReal(exVerticalExtent.addElement("smXML:minimumValue"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MINIMUM));
         // T01_object.vertical_extent_maximum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.maximumValue
@@ -279,7 +279,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
             String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
             if (codeVal.length() > 0) {
-                super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:unitOfMeasure").addElement("smXML:unitOfMeasure").addElement("smXML:uomName"), codeVal);
+                super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:unitOfMeasure").addElement("smXML:UomLength").addElement("smXML:uomName"), codeVal);
             }
         } catch (NumberFormatException e) {}
 
@@ -293,22 +293,36 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         } catch (NumberFormatException e) {}
         
         
-        Element timePeriod = exExent.addElement("smXML:TM_Primitive").addElement("gml:relatedTime").addElement("gml:TimePeriod");
+        Element timePeriod = exExent.addElement("smXML:temporalElement").addElement("smXML:EX_TemporalExtent").addElement("smXML:extent").addElement("smXML:TM_Primitive").addElement("gml:relatedTime").addElement("gml:TimePeriod");
         // T01_object.time_from MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/temporalElement/EX_TemporalExtent/extent/TM_Primitive/gml:relatedTime/gml:TimePeriod/gml:beginPosition/gml:TimeInstant/gml:timePosition
-        String myDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_FROM);
-        Date d = UtilsDate.parseDateString(myDate);
-        if (d != null) {
-            myDate = DATE_TIME_FORMAT.format(d);
-            timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-                .addText(myDate);
+        
+        String myDateType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_TYPE);
+        String beginDate = null;
+        String endDate = null;
+        if (myDateType != null && myDateType.equals("von")) {
+        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T1);
+        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T2);
+        } else if (myDateType != null && myDateType.equals("seit")) {
+        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T1);
+        } else if (myDateType != null && myDateType.equals("am")) {
+        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
+        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
         }
-        // T01_object.time_to MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/temporalElement/EX_TemporalExtent/extent/TM_Primitive/gml:relatedTime/gml:TimePeriod/gml:endPosition/gml:TimeInstant/gml:timePosition
-        myDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_TO);
-        d = UtilsDate.parseDateString(myDate);
-        if (d != null) {
-            myDate = DATE_TIME_FORMAT.format(d);
-            timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-                .addText(myDate);
+        if (beginDate != null) {
+            Date d = UtilsDate.parseDateString(beginDate);
+            if (d != null) {
+            	beginDate = DATE_TIME_FORMAT.format(d);
+                timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
+                    .addText(beginDate);
+            }
+        }
+        if (endDate != null) {
+            Date d = UtilsDate.parseDateString(endDate);
+            if (d != null) {
+            	endDate = DATE_TIME_FORMAT.format(d);
+                timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
+                    .addText(endDate);
+            }
         }
 
         String[] coordinatesBezug = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_BEZUG);

@@ -16,6 +16,7 @@ public final class TestRequests {
     private static final String GETREC_WORD = "GetRecords";
 
     // SOAP 1.2 requests:
+    
 
     public static final String GETCAP1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"

@@ -124,14 +124,7 @@ public final class SOAPTools {
 		if (source.getNodeType() == org.w3c.dom.Node.TEXT_NODE) {
 			// TODO  not really correct
 			try {
-       	     String txtEncoding = cswConfig.getString(CSWInterfaceConfig.RESPONSE_ENCODING);
-      	     if (txtEncoding.equals("NONE")) {
-      	    	dest.getParentElement().addTextNode(source.getNodeValue());
-      	     } else {
-      	    	dest.getParentElement().addTextNode(URLEncoder.encode(source.getNodeValue(), txtEncoding));
-      	     }
-			} catch (UnsupportedEncodingException e) {
-				log.error("SOAPTools UnsupportedEncodingException: " + e);
+   	    	 dest.getParentElement().addTextNode(source.getNodeValue());
 			} catch (DOMException e) {
 				log.error("SOAPTools DOMException: " + e);
 			} catch (SOAPException e) {
@@ -162,14 +155,7 @@ public final class SOAPTools {
 					 copyNode(list.item(i), newNode, env);
 				} else {
 					try {
-			       	     String txtEncoding = cswConfig.getString(CSWInterfaceConfig.RESPONSE_ENCODING);
-			      	     if (txtEncoding.equals("NONE")) {
-			      	    	((SOAPElement) dest).addTextNode(list.item(i).getNodeValue());
-			      	     } else {
-			      	    	((SOAPElement) dest).addTextNode(URLEncoder.encode(list.item(i).getNodeValue(), txtEncoding));
-			      	     }
-					} catch (UnsupportedEncodingException e) {
-						log.error("UnsupportedEncodingException: " + e.getMessage(), e);
+		      	    	((SOAPElement) dest).addTextNode(list.item(i).getNodeValue());
 					} catch (DOMException e) {
 						log.error("DOMException: " + e.getMessage(), e);
 					} catch (SOAPException e) {
