@@ -17,10 +17,10 @@
       <ows:Keyword>CS-W</ows:Keyword>
       <ows:Keyword>ISO19119</ows:Keyword>
       <ows:Keyword>ISO19115</ows:Keyword>
-      <ows:Keyword>GIStec</ows:Keyword>
+      <ows:Keyword>wemove</ows:Keyword>
       <ows:Keyword>Catalog Service</ows:Keyword>
       <ows:Keyword>metadata</ows:Keyword>
-      <ows:Type codeSpace="http://www.gistec-online.de">theme</ows:Type>
+      <ows:Type codeSpace="http://www.wemove.com">theme</ows:Type>
     </ows:Keywords>
     <ows:Fees>NONE</ows:Fees>
     <ows:AccessConstraints>NONE</ows:AccessConstraints>
@@ -42,9 +42,9 @@
           <ows:AdministrativeArea>State of Hesse</ows:AdministrativeArea>
           <ows:PostalCode>60322</ows:PostalCode>
           <ows:Country>Germany</ows:Country>
-          <ows:ElectronicMailAddress>dirk.schwarzmann@wemove.com</ows:ElectronicMailAddress>
+          <ows:ElectronicMailAddress>contact@wemove.com</ows:ElectronicMailAddress>
         </ows:Address>
-        <ows:OnlineResource xlink:href="mailto:dirk.schwarzmann@wemove.com"/>
+        <ows:OnlineResource xlink:href="mailto:contact@wemove.com"/>
       </ows:ContactInfo>
     </ows:ServiceContact>
   </ows:ServiceProvider>
@@ -52,15 +52,15 @@
     <ows:Operation name="GetCapabilities">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="http://localhost:8080/csw/csw"/>
-          <ows:Post xlink:href="http://localhost:8080/csw/csw"/>
+          <ows:Get xlink:href="http://www.portalu.de/csw"/>
+          <ows:Post xlink:href="http://www.portalu.de/csw"/>
         </ows:HTTP>
       </ows:DCP>
     </ows:Operation>
     <ows:Operation name="DescribeRecord">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Post xlink:href="http://localhost:8080/csw/csw"/>
+          <ows:Post xlink:href="http://www.portalu.de/csw"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="typeName">
@@ -76,7 +76,7 @@
     <ows:Operation name="GetRecords">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Post xlink:href="http://localhost:8080/csw/csw"/>
+          <ows:Post xlink:href="http://www.portalu.de/csw"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="TypeName">
@@ -106,7 +106,7 @@
     <ows:Operation name="GetRecordById">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Post xlink:href="http://localhost:8080/csw/csw"/>
+          <ows:Post xlink:href="http://www.portalu.de/csw"/>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="ElementSetName">

@@ -97,6 +97,20 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
         return parent;
     }
 
+    /**
+     * Add a smXML positive Integer to the parent.
+     * 
+     * @param parent
+     * @param value
+     * @return
+     */
+    protected Element addSMXMLPositiveInteger(Element parent, String value) {
+        parent.addElement("smXML:positiveInteger").addText(value);
+        return parent;
+    }
+    
+    
+
     
     /**
      * Transform the dom4j document of this class into a w3c.dom.Document.
