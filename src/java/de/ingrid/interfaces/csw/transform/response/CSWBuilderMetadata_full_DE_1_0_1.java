@@ -276,9 +276,14 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 			// T011_obj_geo_keyc.edition
 			// MD_Metadata/full:contentInfo/MD_FeatureCatalogueDescription/featureCatalogueCitation/CI_Citation/edition/CharacterString
 			this.addSMXMLCharacterString(ciCitation.addElement("smXML:edition"), keycEditions[i]);
-			// T011_obj_geo_supplinfo.feature_type
-			// MD_Metadata/contentInfo/MD_FeatureCatalogueDescription[featureCatalogueCitation/CI_Citation/title]/featureTypes/LocalName
-			// kann im CSW schema nicht zugeordnet werden
+		}
+		// T011_obj_geo_supplinfo.feature_type
+		// MD_Metadata/contentInfo/MD_FeatureCatalogueDescription[featureCatalogueCitation/CI_Citation/title]/featureTypes/LocalName
+		String[] udkFeatureTypes = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SUPPLINFO_FEATURE_TYPE);
+		Element featureTypes = mdFeatureCatalogueDescription.addElement("smXML:featureTypes");
+		for (int i = 0; i < udkFeatureTypes.length; i++) {
+			this.addSMXMLCharacterString(featureTypes.addElement("smXML:LocalName"), udkFeatureTypes[i]);
 		}
 
 	}
@@ -353,7 +358,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		Element dqQualityInfo = metaData.addElement("iso19115full:dataQualityInfo").addElement("smXML:DQ_DataQuality");
 		// T011_obj_geo.special_base ->
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/udk:LI_Lineage/statement
-		Element liLineage = dqQualityInfo.addElement("smXML:lineage").addElement("LI_Lineage");
+		Element liLineage = dqQualityInfo.addElement("smXML:lineage").addElement("smXML:LI_Lineage");
 		this.addSMXMLCharacterString(liLineage.addElement("smXML:statement"), IngridQueryHelper.getDetailValueAsString(
 				hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_SPECIAL_BASE));
 		// (dataset) T011_obj_geo.data_base ->
@@ -367,16 +372,39 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 				.addElement("smXML:description"), IngridQueryHelper.getDetailValueAsString(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_GEO_METHOD));
 
+		Element report = dqQualityInfo.addElement("smXML:report");
 		// T011_obj_geo.rec_grade ->
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/report/DQ_CompletenessCommission/DQ_QuantitativeResult/value/Record
-		dqQualityInfo.addElement("smXML:report").addElement("smXML:DQ_CompletenessCommission").addElement(
-				"smXML:DQ_QuantitativeResult").addElement("smXML:value").addElement("smXML:Record").addText(
+		report.addElement("smXML:DQ_CompletenessCommission").addElement("smXML:DQ_QuantitativeResult").addElement(
+				"smXML:value").addElement("smXML:Record").addText(
 				IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_REC_GRADE));
+
+		// T011_obj_geo.pos_accuracy_vertical ->
+		// MD_Metadata/dataQualityInfo/DQ_DataQuality/report/DQ_RelativeInternalPositionalAccuracy[measureDescription/CharacterString='vertical']/DQ_QuantitativeResult.value
+
+		String verticalAccuracy = IngridQueryHelper.getDetailValueAsString(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL);
+		if (verticalAccuracy.length() > 0) {
+			Element dqRelativeInternalPositionalAccuracy = report
+					.addElement("smXML:DQ_RelativeInternalPositionalAccuracy");
+			this.addSMXMLCharacterString(dqRelativeInternalPositionalAccuracy.addElement("smXML:measureDescription"),
+					"vertical");
+			dqRelativeInternalPositionalAccuracy.addElement("smXML:DQ_QuantitativeResult").addElement("smXML:value")
+					.addElement("smXML:Record").addText(verticalAccuracy);
+		}
 
 		// T011_obj_geo.rec_exact ->
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/report/DQ_RelativeInternalPositionalAccuracy[measureDescription/CharacterString='geographic']/DQ_QuantitativeResult/value/Record
-		// T011_obj_geo.pos_accuracy_vertical ->
-		// MD_Metadata/dataQualityInfo/DQ_DataQuality/report/DQ_RelativeInternalPositionalAccuracy[measureDescription/CharacterString='vertical']/DQ_QuantitativeResult.value
+		String geographicAccuracy = IngridQueryHelper.getDetailValueAsString(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_GEO_REC_EXACT);
+		if (geographicAccuracy.length() > 0) {
+			Element dqRelativeInternalPositionalAccuracy = report
+					.addElement("smXML:DQ_RelativeInternalPositionalAccuracy");
+			this.addSMXMLCharacterString(dqRelativeInternalPositionalAccuracy.addElement("smXML:measureDescription"),
+					"geographic");
+			dqRelativeInternalPositionalAccuracy.addElement("smXML:DQ_QuantitativeResult").addElement("smXML:value")
+					.addElement("smXML:Record").addText(geographicAccuracy);
+		}
 
 	}
 
@@ -608,26 +636,36 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 			} catch (NumberFormatException e) {
 			}
 		}
-		
+
 		// add spacial resolution
-		// T011_obj_geo_scale.scale -> iso19115full:identificationInfo/smXML:MD_DataIdentification/smXML:spatialResolution/smXML:MD_Resolution/smXML:equivalentScale/smXML:MD_RepresentativeFraction/smXML:denominator/positiveInteger
-		// T011_obj_geo_scale.resolution_ground -> iso19115full:identificationInfo/smXML:MD_DataIdentification/smXML:spatialResolution/smXML:MD_Resolution/smXML:distance/smXML:Distance/smXML:value//Decimal
-		// T011_obj_geo_scale.resolution_scan -> iso19115full:identificationInfo/smXML:MD_DataIdentification/smXML:spatialResolution/smXML:MD_Resolution/smXML:distance/smXML:Distance/smXML:value/Decimal
-		String[] spacialResolutionScale = IngridQueryHelper.getDetailValueAsArray(hit,	IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCALE);
-		String[] spacialResolutionGround = IngridQueryHelper.getDetailValueAsArray(hit,	IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_GROUND);
-		String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,	IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCAN);
+		// T011_obj_geo_scale.scale ->
+		// iso19115full:identificationInfo/smXML:MD_DataIdentification/smXML:spatialResolution/smXML:MD_Resolution/smXML:equivalentScale/smXML:MD_RepresentativeFraction/smXML:denominator/positiveInteger
+		// T011_obj_geo_scale.resolution_ground ->
+		// iso19115full:identificationInfo/smXML:MD_DataIdentification/smXML:spatialResolution/smXML:MD_Resolution/smXML:distance/smXML:Distance/smXML:value//Decimal
+		// T011_obj_geo_scale.resolution_scan ->
+		// iso19115full:identificationInfo/smXML:MD_DataIdentification/smXML:spatialResolution/smXML:MD_Resolution/smXML:distance/smXML:Distance/smXML:value/Decimal
+		String[] spacialResolutionScale = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCALE);
+		String[] spacialResolutionGround = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_GROUND);
+		String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCAN);
 		for (int i = 0; i < spacialResolutionScale.length; i++) {
-			Element mdSpacialResolution = mdDataIdentification.addElement("smXML:spatialResolution").addElement("smXML:MD_Resolution");
-			
-			this.addSMXMLPositiveInteger(mdSpacialResolution.addElement("smXML:equivalentScale").addElement("smXML:MD_RepresentativeFraction").addElement("smXML:denominator"), spacialResolutionScale[i]);
-			
+			Element mdSpacialResolution = mdDataIdentification.addElement("smXML:spatialResolution").addElement(
+					"smXML:MD_Resolution");
+
+			this.addSMXMLPositiveInteger(mdSpacialResolution.addElement("smXML:equivalentScale").addElement(
+					"smXML:MD_RepresentativeFraction").addElement("smXML:denominator"), spacialResolutionScale[i]);
+
 			Element distance = mdSpacialResolution.addElement("smXML:distance").addElement("smXML:Distance");
 			this.addSMXMLDecimal(distance.addElement("smXML:value"), spacialResolutionGround[i]);
-			this.addSMXMLCharacterString(distance.addElement("smXML:uom").addElement("smXML:UomLength").addElement("smXML:uomName"), "meter");
-			
+			this.addSMXMLCharacterString(distance.addElement("smXML:uom").addElement("smXML:UomLength").addElement(
+					"smXML:uomName"), "meter");
+
 			distance = mdSpacialResolution.addElement("smXML:distance").addElement("smXML:Distance");
 			this.addSMXMLDecimal(distance.addElement("smXML:value"), spacialResolutionScan[i]);
-			this.addSMXMLCharacterString(distance.addElement("smXML:uom").addElement("smXML:UomLength").addElement("smXML:uomName"), "dpi");
+			this.addSMXMLCharacterString(distance.addElement("smXML:uom").addElement("smXML:UomLength").addElement(
+					"smXML:uomName"), "dpi");
 		}
 
 		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,
