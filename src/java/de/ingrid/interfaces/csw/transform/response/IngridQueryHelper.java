@@ -106,6 +106,8 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_OBJ_FROM_ID = "t012_obj_obj.object_from_id";
 
+    public static final String HIT_KEY_OBJECT_OBJ_TYPE = "t012_obj_obj.typ";
+    
     public static final String HIT_KEY_OBJECT_METADATA_STANDARD_NAME = "T01_object.metadata_standard_name";
 
     public static final String HIT_KEY_OBJECT_METADATA_STANDARD_VERSION = "T01_object.metadata_standard_version";
@@ -272,7 +274,7 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_DATASET_REFERENCE_DATE, HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE, HIT_KEY_OBJECT_MOD_TIME,
             HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE, HIT_KEY_OBJECT_DATA_LANGUAGE,
             HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_DATASET_CHARACTER_SET, HIT_KEY_OBJECT_OBJ_TO_ID,
-            HIT_KEY_OBJECT_OBJ_FROM_ID, HIT_KEY_OBJECT_METADATA_STANDARD_NAME,
+            HIT_KEY_OBJECT_OBJ_FROM_ID, HIT_KEY_OBJECT_OBJ_TYPE, HIT_KEY_OBJECT_METADATA_STANDARD_NAME,
             HIT_KEY_OBJECT_METADATA_STANDARD_VERSION, HIT_KEY_OBJECT_DATASET_ALTERNATE_TITLE, HIT_KEY_OBJECT_INFO_NOTE,
             HIT_KEY_OBJECT_TIME_STATUS, HIT_KEY_OBJECT_DATASET_USAGE, HIT_KEY_OBJECT_LEGIST, HIT_KEY_OBJECT_SEARCH_SEARCHTERM,
             HIT_KEY_OBJECT_SEARCH_TYPE, HIT_KEY_OBJECT_TIME_DESCR, HIT_KEY_OBJECT_TIME_PERIOD,
@@ -596,9 +598,10 @@ public class IngridQueryHelper {
     public static String getParentIdentifier(IngridHit hit) {
         String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
         String[] fromIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_FROM_ID);
+        String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
         String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
         for (int i = 0; i < toIds.length; i++) {
-            if (objId.equals(toIds[i])) {
+            if (objId.equals(toIds[i]) && refType[i].equals("1")) {
                 return fromIds[i];
             }
         }
