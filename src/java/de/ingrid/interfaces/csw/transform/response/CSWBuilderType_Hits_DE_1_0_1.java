@@ -19,7 +19,7 @@ public class CSWBuilderType_Hits_DE_1_0_1 extends CSWBuilderType {
 
     public Element build() throws Exception {
 
-        Element rootElement = DocumentFactory.getInstance().createElement("GetRecordsResponse");
+        Element rootElement = DocumentFactory.getInstance().createElement("csw:GetRecordsResponse", "http://www.opengis.net/cat/csw");
         this.getResponseHeader_GetRecords(rootElement, hits);
 
         return rootElement;
@@ -36,17 +36,17 @@ public class CSWBuilderType_Hits_DE_1_0_1 extends CSWBuilderType {
      * @return The 'SearchResults' element of the CSW response.
      */
     private Element getResponseHeader_GetRecords(Element parent, IngridHits hits) {
-        parent.addElement("RequestId");
+        parent.addElement("csw:RequestId");
         String searchStatus;
         if (hits.getHits().length < hits.length()) {
             searchStatus = "subset";
         } else {
             searchStatus = "complete";
         }
-        Element e = parent.addElement("SearchStatus").addAttribute("status", searchStatus);
+        Element e = parent.addElement("csw:SearchStatus").addAttribute("status", searchStatus);
         GregorianCalendar calendar = new GregorianCalendar();
         e.addAttribute("timestamp", DATE_TIME_FORMAT.format(calendar.getTime()));
-        return parent.addElement("SearchResults").addAttribute("resultSetId", "")
+        return parent.addElement("csw:SearchResults").addAttribute("resultSetId", "")
                 .addAttribute("elementSet", "").addAttribute("numberOfRecordsMatched", Long.toString(hits.length()))
                 .addAttribute("numberOfRecordsReturned", Integer.toString(hits.getHits().length));
     }
