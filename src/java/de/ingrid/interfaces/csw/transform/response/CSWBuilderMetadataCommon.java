@@ -345,40 +345,35 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:northBoundLongitude").addElement("smXML:approximateLongitude"), coordinatesGeoY2[i]);
         }
 
-        String[] townshipNo = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_TOWNSHIP_NO);
-        String[] stBBoxLocTownNo = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO);
+        String[] stTownship = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP);
         String[] stBoxX1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_X1);
         String[] stBoxX2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_X2);
         String[] stBoxY1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_Y1);
         String[] stBoxY2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_Y2);
 
-        for (int i=0; i< townshipNo.length; i++) {
+        for (int i=0; i< stTownship.length; i++) {
             Element geographicElement = exExent.addElement("smXML:geographicElement");
             // T011_township.township_no MD_Metadata/smXML:identificationInfo/iso19119:CSW_ServiceIdentification/iso19119:extent/smXML:EX_Extent/smXML:geographicElement/smXML:EX_GeographicDescription/smXML:geographicIdentifier/smXML:RS_Identifier/code/smXML:CharacterString
-            super.addSMXMLCharacterString(geographicElement.addElement("smXML:EX_GeographicDescription").addElement("smXML:geographicIdentifier").addElement("smXML:RS_Identifier").addElement("smXML:code"), townshipNo[i]);
-            for (int j=0; j< stBBoxLocTownNo.length; j++) {
-                if (stBBoxLocTownNo[j].equals(townshipNo[i])) {
-                    Element exGeographicBoundingBox = geographicElement.addElement("smXML:EX_GeographicBoundingBox");
-                    // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/smXML:approximateLongitude/smXML:Decimal
-                    if (stBoxX1.length == stBBoxLocTownNo.length) {
-                    	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:westBoundLongitude").addElement("smXML:approximateLongitude"), stBoxX1[i]);
-                    }
-                    // T01_st_bbox.x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.eastBoundLongitude/smXML:approximateLongitude/smXML:Decimal
-                    if (stBoxX2.length == stBBoxLocTownNo.length) {
-                    	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:eastBoundLongitude").addElement("smXML:approximateLongitude"), stBoxX2[i]);
-                    }
-                    // T01_st_bbox.y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.southBoundLongitude/smXML:approximateLongitude/smXML:Decimal
-                    if (stBoxY2.length == stBBoxLocTownNo.length) {
-                    	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:southBoundLongitude").addElement("smXML:approximateLongitude"), stBoxY2[i]);
-                    }
-                    // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLongitude/smXML:approximateLongitude/smXML:Decimal
-                    if (stBoxY2.length == stBBoxLocTownNo.length) {
-                    	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:northBoundLongitude").addElement("smXML:approximateLongitude"), stBoxY1[i]);
-                    }
-                    break;
-                }
+            super.addSMXMLCharacterString(geographicElement.addElement("smXML:EX_GeographicDescription").addElement("smXML:geographicIdentifier").addElement("smXML:RS_Identifier").addElement("smXML:code"), stTownship[i]);
+            
+            Element exGeographicBoundingBox = geographicElement.addElement("smXML:EX_GeographicBoundingBox");
+            // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/smXML:approximateLongitude/smXML:Decimal
+            if (stBoxX1.length == stTownship.length) {
+            	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:westBoundLongitude").addElement("smXML:approximateLongitude"), stBoxX1[i]);
             }
-        }        
+            // T01_st_bbox.x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.eastBoundLongitude/smXML:approximateLongitude/smXML:Decimal
+            if (stBoxX2.length == stTownship.length) {
+            	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:eastBoundLongitude").addElement("smXML:approximateLongitude"), stBoxX2[i]);
+            }
+            // T01_st_bbox.y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.southBoundLongitude/smXML:approximateLongitude/smXML:Decimal
+            if (stBoxY2.length == stTownship.length) {
+            	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:southBoundLongitude").addElement("smXML:approximateLongitude"), stBoxY2[i]);
+            }
+            // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLongitude/smXML:approximateLongitude/smXML:Decimal
+            if (stBoxY2.length == stTownship.length) {
+            	super.addSMXMLDecimal(exGeographicBoundingBox.addElement("smXML:northBoundLongitude").addElement("smXML:approximateLongitude"), stBoxY1[i]);
+            }
+        }
     }
 
 }
