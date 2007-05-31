@@ -4,7 +4,6 @@
 package de.ingrid.interfaces.csw.transform.response;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,7 +13,6 @@ import org.dom4j.Namespace;
 
 import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.udk.UtilsDate;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
