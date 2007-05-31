@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
 
+import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.udk.UtilsDate;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
@@ -175,10 +176,8 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
 
     protected void addDateStamp(Element metaData, IngridHit hit, String ns) {
         String creationDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_MOD_TIME);
-        Date d = UtilsDate.parseDateString(creationDate);
-        if (d != null) {
-            creationDate = DATE_TIME_FORMAT.format(d);
-            metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("smXML:Date").addText(creationDate);
+        if (creationDate != null && creationDate.length() > 0) {
+            metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
         }
     }
     
@@ -189,11 +188,9 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         if (referenceDate != null) {
             for (int i = 0; i < referenceDate.length; i++) {
                 String creationDate = referenceDate[i];
-                Date d = UtilsDate.parseDateString(creationDate);
-                if (d != null) {
-                    creationDate = DATE_TIME_FORMAT.format(d);
+                if (creationDate != null && creationDate.length() > 0) {
                     Element ciDate = parent.addElement("smXML:date").addElement("smXML:CI_Date");
-                    ciDate.addElement("smXML:date").addElement("smXML:Date").addText(creationDate);
+                    ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
                     String codeListValue;
                     if (referenceDateTypes[i].equals("1")) {
                         codeListValue = "creation";
@@ -309,20 +306,12 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
         }
         if (beginDate != null) {
-            Date d = UtilsDate.parseDateString(beginDate);
-            if (d != null) {
-            	beginDate = DATE_TIME_FORMAT.format(d);
-                timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-                    .addText(beginDate);
-            }
+            timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
+                .addText(Udk2CswDateFieldParser.instance().parse(beginDate));
         }
         if (endDate != null) {
-            Date d = UtilsDate.parseDateString(endDate);
-            if (d != null) {
-            	endDate = DATE_TIME_FORMAT.format(d);
-                timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-                    .addText(endDate);
-            }
+            timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
+                .addText(Udk2CswDateFieldParser.instance().parse(endDate));
         }
 
         String[] coordinatesBezug = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_BEZUG);

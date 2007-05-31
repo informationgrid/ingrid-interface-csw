@@ -12,6 +12,7 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
 
+import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.udk.UtilsDate;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
@@ -111,12 +112,8 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 			this.addSMXMLCharacterString(portrayalCICitation.addElement("smXML:title"), portrayalCatalogInfoTitles[i]);
 			String myDate = portrayalCatalogInfoDates[i];
 			if (myDate != null && myDate.length() > 0) {
-				Date d = UtilsDate.parseDateString(myDate);
-				if (d != null) {
-					myDate = DATE_TIME_FORMAT.format(d);
-				}
 				Element ciDate = portrayalCICitation.addElement("smXML:date").addElement("smXML:CI_Date");
-				ciDate.addElement("smXML:date").addElement("smXML:Date").addText(myDate);
+				ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(myDate));
 				ciDate.addElement("smXML:dateType").addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
 						"codeListValue", "creation");
@@ -263,12 +260,8 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 			// UND .../CI_Date/date/DateType/CI_DateTypeCode/....
 			String myDate = keycDates[i];
 			if (myDate != null && myDate.length() > 0) {
-				Date d = UtilsDate.parseDateString(myDate);
-				if (d != null) {
-					myDate = DATE_TIME_FORMAT.format(d);
-				}
 				Element ciDate = ciCitation.addElement("smXML:date").addElement("smXML:CI_Date");
-				ciDate.addElement("smXML:date").addElement("smXML:Date").addText(myDate);
+				ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(myDate));
 				ciDate.addElement("smXML:dateType").addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
 						"codeListValue", "creation");
