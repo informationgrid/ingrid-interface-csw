@@ -4,7 +4,7 @@
     <artifactId>ingrid-interface-csw</artifactId>
     <name>ingrid-interface-csw</name>
     <groupId>ingrid</groupId>
-    <currentVersion>0.1-SNAPSHOT</currentVersion>
+    <currentVersion>0.1.0</currentVersion>
     <organization />
     <inceptionYear>2005</inceptionYear>
     <logo>/images/logo.gif</logo>
@@ -126,7 +126,7 @@
         <dependency>
             <groupId>axis</groupId>
             <artifactId>axis</artifactId>
-            <version>1.2.1</version>
+            <version>1.4</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -135,7 +135,7 @@
         <dependency>
             <groupId>axis</groupId>
             <artifactId>axis-jaxrpc</artifactId>
-            <version>1.2.1</version>
+            <version>1.4</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -144,7 +144,7 @@
         <dependency>
             <groupId>axis</groupId>
             <artifactId>axis-saaj</artifactId>
-            <version>1.2.1</version>
+            <version>1.4</version>
             <type>jar</type>
             <properties>
                 <war.bundle>true</war.bundle>
