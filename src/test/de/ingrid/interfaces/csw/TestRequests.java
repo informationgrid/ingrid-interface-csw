@@ -741,6 +741,55 @@ public final class TestRequests {
             + "</GetRecord>" +
 
             " </soapenv:Body>\n" + "</soapenv:Envelope>";
+    
+    
+    public static final String GETRECORDS_WILDCARD = 
+
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
+                + "                   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
+                + "                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                " <soapenv:Body>\n" +
+                "<" + GETREC_WORD + " maxRecords=\"4\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+                + "      requestId=\"csw:1\" resultType=\"results\" service=\"CSW\" startPosition=\"1\"\n"
+                + "        version=\"2.0.0\" xmlns=\"http://www.opengis.net/cat/csw\">\n"
+                + "<Query typeNames=\"csw:dataset\">\n" + "<ElementSetName typeNames=\"\">brief</ElementSetName>\n"
+                + "<Constraint version=\"1.0.0\">\n" 
+                + "<ogc:Filter xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\">"
+                + "  <PropertyIsEqualTo escape=\"\\\" singleChar=\"?\" wildCard=\"*\">"
+                + "    <PropertyName>Identifier</PropertyName>"
+                + "    <Literal>*3*</Literal>"
+                + "  </PropertyIsEqualTo>"
+                + "</ogc:Filter>"
+                + "</Constraint>\n" 
+                + "<SortBy>\n" 
+                + "<SortProperty>\n" + "<PropertyName>title</PropertyName>\n" + "<SortOrder>ASC</SortOrder>\n" + "</SortProperty>\n" + "</SortBy>" 
+                + "</Query>\n" + "</" + GETREC_WORD + ">\n" 
+                + " </soapenv:Body>\n" + "</soapenv:Envelope>";
+
+    public static final String GETRECORDS_MODIFIED = 
+
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
+                + "                   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
+                + "                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                " <soapenv:Body>\n" +
+                "<" + GETREC_WORD + " maxRecords=\"4\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+                + "      requestId=\"csw:1\" resultType=\"results\" service=\"CSW\" startPosition=\"1\"\n"
+                + "        version=\"2.0.0\" xmlns=\"http://www.opengis.net/cat/csw\">\n"
+                + "<Query typeNames=\"csw:dataset\">\n" + "<ElementSetName typeNames=\"\">brief</ElementSetName>\n"
+                + "<Constraint version=\"1.0.0\">\n" 
+                + "<ogc:Filter xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\">"
+                + "  <PropertyIsGreaterThan>"
+                + "    <PropertyName>Modified</PropertyName>"
+                + "    <Literal>19901231</Literal>"
+                + "  </PropertyIsGreaterThan>"
+                + "</ogc:Filter>"
+                + "</Constraint>\n" 
+                + "<SortBy>\n" 
+                + "<SortProperty>\n" + "<PropertyName>title</PropertyName>\n" + "<SortOrder>ASC</SortOrder>\n" + "</SortProperty>\n" + "</SortBy>" 
+                + "</Query>\n" + "</" + GETREC_WORD + ">\n" 
+                + " </soapenv:Body>\n" + "</soapenv:Envelope>";
 
     public static final Properties KVPGETCAP1 = new Properties();
 

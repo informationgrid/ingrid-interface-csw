@@ -20,6 +20,7 @@ import de.ingrid.interfaces.csw.exceptions.CSWMissingParameterValueException;
 import de.ingrid.interfaces.csw.exceptions.CSWNoApplicableCodeException;
 import de.ingrid.interfaces.csw.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.tools.PatternTools;
+import de.ingrid.interfaces.csw.utils.UtilsCSWDate;
 
 /**
  * 
@@ -610,7 +611,11 @@ public class FilterToIngridQueryString {
 			not = false;
 		}
 
-		runExpr(co.getFirstExpression());
+		Expression properyNameExpression = co.getFirstExpression();
+		Expression valueExpression = co.getSecondExpression();
+		String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
+		
+		runExpr(properyNameExpression);
 
 		// Quick fix by Dirk Schwarzmann to apply the mapped property of
 		// "CreationDate"
@@ -624,19 +629,23 @@ public class FilterToIngridQueryString {
 			sb.replace(creationDatePos, creationDatePos + str_creationDate.length(), "t1:");
 		}
 
-		// Don´t add a comparator string in case of the creationDate identifier
-		// because the semantic is given by the term "t1"
-		if (orEqualTo) {
-			if (!creationDateFound) {
-				sb.append(this.greaterThanOrEqualTo);
-			}
+		if (UtilsCSWDate.isCSWDate(value)) {
+			sb.append("[").append(UtilsCSWDate.getDBDateStyle(value)).append(" TO 3000-01-01]");
 		} else {
-			if (!creationDateFound) {
-				sb.append(this.greaterThan);
+			// Don´t add a comparator string in case of the creationDate identifier
+			// because the semantic is given by the term "t1"
+			if (orEqualTo) {
+				if (!creationDateFound) {
+					sb.append(this.greaterThanOrEqualTo);
+				}
+			} else {
+				if (!creationDateFound) {
+					sb.append(this.greaterThan);
+				}
 			}
+			runExpr(valueExpression);
 		}
 
-		runExpr(co.getSecondExpression());
 		log.debug("exiting, property=" + sb.toString());
 	}
 
@@ -873,7 +882,7 @@ public class FilterToIngridQueryString {
 			outprop = "t0110_avail_format.name";
 			// TODO citation identifier
 		} else if (inprop.equals("Identifier")) {
-			outprop = "citId";
+			outprop = "zip";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/descriptiveKeywords/MD_Keywords/keyword
 		} else if (inprop.equals("Subject")) {
 			outprop = "t04_search.searchterm";

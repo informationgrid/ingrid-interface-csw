@@ -60,19 +60,25 @@ public class RequestTransformerTest extends TestCase {
        
         
         ingridQuery = requestTransformer.transform(soapElementFilter);
-        
         assertNotNull(ingridQuery);
-        
-       
-    
-        
         queryString = ingridQueryToString.transform(ingridQuery);
-        
-        
         assertEquals("(AND ( AND fische  AND halle NOT ( OR saale  OR hufeisensee )))", queryString);
         
         
         //System.out.println("get records as ingrid query string: " + queryString);
+        
+        soapElementFilter = getSOAPElementFilterFromString(TestRequests.GETRECORDS_WILDCARD);
+        ingridQuery = requestTransformer.transform(soapElementFilter);
+        assertNotNull(ingridQuery);
+        queryString = ingridQueryToString.transform(ingridQuery);
+        assertEquals("( AND t01_object.obj_id:3* )", queryString);
+
+        soapElementFilter = getSOAPElementFilterFromString(TestRequests.GETRECORDS_MODIFIED);
+        ingridQuery = requestTransformer.transform(soapElementFilter);
+        assertNotNull(ingridQuery);
+        queryString = ingridQueryToString.transform(ingridQuery);
+        assertEquals("( AND t01_object.mod_time:[1990-12-31 TO 3000-01-01] )", queryString);
+        
         
     }
     
