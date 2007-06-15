@@ -32,9 +32,17 @@ public class CSWServletTestLocal extends XMLTestCase {
         
         soapMessageRequest = AxisTools.createSOAPMessage(TestRequests.GETCAP1);
         assertNotNull(soapMessageRequest);
-        //call onMessage without tomcat running
         soapMessageResponse = (Message) cswServlet.onMessage(soapMessageRequest);
         assertTrue(soapMessageResponse.getSOAPBody().toString().indexOf("<ows:Keywords>") > -1);
+
+        soapMessageRequest = AxisTools.createSOAPMessage(TestRequests.DESCREC1);
+        soapMessageResponse = (Message) cswServlet.onMessage(soapMessageRequest);
+        assertTrue(soapMessageResponse.getSOAPBody().toString().indexOf("<xs:complexType name=\"MD_Metadata_Type\">") > -1);
+
+        soapMessageRequest = AxisTools.createSOAPMessage(TestRequests.DESCREC2);
+        soapMessageResponse = (Message) cswServlet.onMessage(soapMessageRequest);
+        assertTrue(soapMessageResponse.getSOAPBody().toString().indexOf("<xs:complexType name=\"MD_Metadata_Type\">") > -1);
+        
         
         // initialize ibus
         IBus bus = null;
