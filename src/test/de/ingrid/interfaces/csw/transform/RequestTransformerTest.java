@@ -71,7 +71,7 @@ public class RequestTransformerTest extends TestCase {
         ingridQuery = requestTransformer.transform(soapElementFilter);
         assertNotNull(ingridQuery);
         queryString = ingridQueryToString.transform(ingridQuery);
-        assertEquals("( AND t01_object.obj_id:3* )", queryString);
+        assertEquals("( AND zip:3* )", queryString);
 
         soapElementFilter = getSOAPElementFilterFromString(TestRequests.GETRECORDS_MODIFIED);
         ingridQuery = requestTransformer.transform(soapElementFilter);
