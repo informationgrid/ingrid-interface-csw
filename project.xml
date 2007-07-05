@@ -103,12 +103,6 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>ingrid</groupId>
-            <artifactId>ingrid-iplug-udk</artifactId>
-            <version>${pom.currentVersion}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.4</version>
