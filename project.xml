@@ -4,7 +4,7 @@
     <artifactId>ingrid-interface-csw</artifactId>
     <name>ingrid-interface-csw</name>
     <groupId>ingrid</groupId>
-    <currentVersion>0.1.0</currentVersion>
+    <currentVersion>1.0.0</currentVersion>
     <organization />
     <inceptionYear>2005</inceptionYear>
     <logo>/images/logo.gif</logo>
@@ -39,73 +39,73 @@
         </developer>
     </developers>
     <repository>
-        <connection>scm:svn:https://127.0.0.1:444/svn/ingrid/ingrid-interface-csw/trunk</connection>
+        <connection>scm:svn:https://127.0.0.1:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-1.0.0</connection>
     </repository>
     <dependencies>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-utils</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-ibus</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-ibus-client</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-dsc</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-fpn</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-se</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-sns</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-g2k</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-tamino</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-udk</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${pom.currentVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
