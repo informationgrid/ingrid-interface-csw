@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MD_Metadata xmlns="http://schemas.opengis.net/iso19115full" xmlns:csw="http://www.opengis.net/cat/csw" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.opengis.net/iso19115full
+../iso19115_full.xsd">
+	<fileIdentifier>
+		<smXML:CharacterString/>
+	</fileIdentifier>
+	<!-- ***** LANGUAGE (metadata) ***** -->
+	<language>
+		<smXML:CharacterString>de</smXML:CharacterString>
+	</language>
+	<!-- ***** CHARACTER SET (metadata)***** -->
+	<characterSet>
+		<smXML:MD_CharacterSetCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_CharacterSetCode" codeListValue="uft8"/>
+	</characterSet>
+	<!-- ***** HIERARCHY LEVEL (metadata) ***** -->
+	<hierarchyLevel>
+		<smXML:MD_ScopeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_ScopeCode" codeListValue="dataset"/>
+	</hierarchyLevel>
+	<!-- ***** HIERARCHY LEVEL NAME (browse by theme) ***** -->
+	<hierarchyLevelName>
+		<smXML:CharacterString>UTI</smXML:CharacterString>
+	</hierarchyLevelName>
+	<!-- ***** CONTACT (metadata) ***** -->
+	<contact>
+		<smXML:CI_ResponsibleParty>
+			<smXML:individualName>
+				<smXML:CharacterString>Herr Mustermann</smXML:CharacterString>
+			</smXML:individualName>
+			<smXML:organisationName>
+				<smXML:CharacterString>Muster Firma</smXML:CharacterString>
+			</smXML:organisationName>
+			<smXML:positionName>
+				<smXML:CharacterString>Bereichsleiter</smXML:CharacterString>
+			</smXML:positionName>
+			<smXML:contactInfo>
+				<smXML:CI_Contact>
+					<smXML:phone>
+						<smXML:CI_Telephone>
+							<smXML:voice>
+								<smXML:CharacterString>+49-123-456-789</smXML:CharacterString>
+							</smXML:voice>
+							<smXML:facsimile>
+								<smXML:CharacterString>+49-123-456-7890</smXML:CharacterString>
+							</smXML:facsimile>
+						</smXML:CI_Telephone>
+					</smXML:phone>
+					<smXML:address>
+						<smXML:CI_Address>
+							<smXML:deliveryPoint>
+								<smXML:CharacterString>Musterstr. 4-6</smXML:CharacterString>
+							</smXML:deliveryPoint>
+							<smXML:city>
+								<smXML:CharacterString>Musterstadt</smXML:CharacterString>
+							</smXML:city>
+							<smXML:administrativeArea>
+								<smXML:CharacterString>NRW</smXML:CharacterString>
+							</smXML:administrativeArea>
+							<smXML:postalCode>
+								<smXML:CharacterString>44137</smXML:CharacterString>
+							</smXML:postalCode>
+							<smXML:country>
+								<smXML:CharacterString>Deutschland</smXML:CharacterString>
+							</smXML:country>
+							<smXML:electronicMailAddress>
+								<smXML:CharacterString>muster@musterstadt.de</smXML:CharacterString>
+							</smXML:electronicMailAddress>
+						</smXML:CI_Address>
+					</smXML:address>
+					<smXML:onlineResource>
+						<smXML:CI_OnlineResource>
+							<smXML:linkage>
+								<smXML:URL>http://www.musterstadt.de</smXML:URL>
+							</smXML:linkage>
+						</smXML:CI_OnlineResource>
+					</smXML:onlineResource>
+				</smXML:CI_Contact>
+			</smXML:contactInfo>
+			<smXML:role>
+				<smXML:CI_RoleCode codeList="http://metadata.dgiwg.org/codelistRegistry?CI_RoleCode" codeListValue="author"/>
+			</smXML:role>
+		</smXML:CI_ResponsibleParty>
+	</contact>
+	<!-- ***** DATE (metadata) ***** -->
+	<dateStamp>
+		<smXML:Date>2005-06-24</smXML:Date>
+	</dateStamp>
+	<!-- ***** STANDARD (metadata) ***** -->
+	<metadataStandardName>
+		<smXML:CharacterString>ISO19115</smXML:CharacterString>
+	</metadataStandardName>
+	<!-- ***** STANDARD VERSION (metadata) ***** -->
+	<metadataStandardVersion>
+		<smXML:CharacterString>2003</smXML:CharacterString>
+	</metadataStandardVersion>
+	<identificationInfo>
+		<smXML:MD_DataIdentification>
+			<smXML:citation>
+				<smXML:CI_Citation>
+					<!-- ***** TITLE (resource) ***** -->
+					<smXML:title>
+						<smXML:CharacterString>Test</smXML:CharacterString>
+					</smXML:title>
+					<smXML:alternateTitle>
+						<smXML:CharacterString>Alternativer Titel</smXML:CharacterString>
+					</smXML:alternateTitle>
+					<!-- ***** CREATION DATE (resource) ***** -->
+					<smXML:date>
+						<smXML:CI_Date>
+							<smXML:date>
+								<smXML:Date>2000-01-01</smXML:Date>
+							</smXML:date>
+							<smXML:dateType>
+								<smXML:CI_DateTypeCode codeList="http://metadata.dgiwg.org/codelistRegistry?CI_DateTypeCode" codeListValue="creation"/>
+							</smXML:dateType>
+						</smXML:CI_Date>
+					</smXML:date>
+					<!-- ***** REVISION DATE ***** -->
+					<smXML:date>
+						<smXML:CI_Date>
+							<smXML:date>
+								<smXML:Date>2005-06-24</smXML:Date>
+							</smXML:date>
+							<smXML:dateType>
+								<smXML:CI_DateTypeCode codeList="http://metadata.dgiwg.org/codelistRegistry?CI_DateTypeCode" codeListValue="revision"/>
+							</smXML:dateType>
+						</smXML:CI_Date>
+					</smXML:date>
+					<smXML:edition>
+						<smXML:CharacterString>dummy</smXML:CharacterString>
+					</smXML:edition>
+					<smXML:editionDate>
+						<smXML:Date>2000-12-31</smXML:Date>
+					</smXML:editionDate>
+					<smXML:identifier>
+						<smXML:MD_Identifier>
+							<smXML:code>
+								<smXML:CharacterString/>
+							</smXML:code>
+						</smXML:MD_Identifier>
+					</smXML:identifier>
+					<!-- ***** CITED RESPONSIBLE PARTY (resource) ***** -->
+					<smXML:citedResponsibleParty>
+						<smXML:CI_ResponsibleParty>
+							<smXML:individualName>
+								<smXML:CharacterString>Herr Mustermann</smXML:CharacterString>
+							</smXML:individualName>
+							<smXML:organisationName>
+								<smXML:CharacterString>Muster Firma</smXML:CharacterString>
+							</smXML:organisationName>
+							<smXML:positionName>
+								<smXML:CharacterString>Bereichsleiter</smXML:CharacterString>
+							</smXML:positionName>
+							<smXML:contactInfo>
+								<smXML:CI_Contact>
+									<smXML:phone>
+										<smXML:CI_Telephone>
+											<smXML:voice>
+												<smXML:CharacterString>+49-123-456-789</smXML:CharacterString>
+											</smXML:voice>
+											<smXML:facsimile>
+												<smXML:CharacterString>+49-123-456-7890</smXML:CharacterString>
+											</smXML:facsimile>
+										</smXML:CI_Telephone>
+									</smXML:phone>
+									<smXML:address>
+										<smXML:CI_Address>
+											<smXML:deliveryPoint>
+												<smXML:CharacterString>Musterstr. 4-6</smXML:CharacterString>
+											</smXML:deliveryPoint>
+											<smXML:city>
+												<smXML:CharacterString>Musterstadt</smXML:CharacterString>
+											</smXML:city>
+											<smXML:administrativeArea>
+												<smXML:CharacterString>NRW</smXML:CharacterString>
+											</smXML:administrativeArea>
+											<smXML:postalCode>
+												<smXML:CharacterString>44137</smXML:CharacterString>
+											</smXML:postalCode>
+											<smXML:country>
+												<smXML:CharacterString>Deutschland</smXML:CharacterString>
+											</smXML:country>
+											<smXML:electronicMailAddress>
+												<smXML:CharacterString>muster@musterstadt.de</smXML:CharacterString>
+											</smXML:electronicMailAddress>
+										</smXML:CI_Address>
+									</smXML:address>
+									<smXML:onlineResource>
+										<smXML:CI_OnlineResource>
+											<smXML:linkage>
+												<smXML:URL>http://www.musterstadt.de</smXML:URL>
+											</smXML:linkage>
+										</smXML:CI_OnlineResource>
+									</smXML:onlineResource>
+								</smXML:CI_Contact>
+							</smXML:contactInfo>
+							<smXML:role>
+								<smXML:CI_RoleCode codeList="http://metadata.dgiwg.org/codelistRegistry?CI_RoleCode" codeListValue="owner"/>
+							</smXML:role>
+						</smXML:CI_ResponsibleParty>
+					</smXML:citedResponsibleParty>
+					<smXML:presentationForm>
+						<smXML:CI_PresentationFormCode codeList="http://metadata.dgiwg.org/codelistRegistry?CI_PresentationFormCode" codeListValue="documentDigital"/>
+					</smXML:presentationForm>
+					<smXML:series>
+						<smXML:CI_Series>
+							<smXML:name>
+								<smXML:CharacterString>Name der Reihe</smXML:CharacterString>
+							</smXML:name>
+							<smXML:issueIdentification>
+								<smXML:CharacterString>Heft</smXML:CharacterString>
+							</smXML:issueIdentification>
+							<smXML:page>
+								<smXML:CharacterString>Seite</smXML:CharacterString>
+							</smXML:page>
+						</smXML:CI_Series>
+					</smXML:series>
+					<smXML:otherCitationDetails>
+						<smXML:CharacterString>weitere Angaben</smXML:CharacterString>
+					</smXML:otherCitationDetails>
+					<smXML:collectiveTitle>
+						<smXML:CharacterString>Titel der Sammlung</smXML:CharacterString>
+					</smXML:collectiveTitle>
+					<smXML:ISBN>
+						<smXML:CharacterString>ISBN-1234</smXML:CharacterString>
+					</smXML:ISBN>
+					<smXML:ISSN>
+						<smXML:CharacterString>ISSN-1234</smXML:CharacterString>
+					</smXML:ISSN>
+				</smXML:CI_Citation>
+			</smXML:citation>
+			<!-- ***** ABSTRACT (resource) ***** -->
+			<smXML:abstract>
+				<smXML:CharacterString>Zusammenfassung zum Metadatensatz</smXML:CharacterString>
+			</smXML:abstract>
+			<smXML:purpose>
+				<smXML:CharacterString>Zweck bzw. Ziel</smXML:CharacterString>
+			</smXML:purpose>
+			<smXML:credit>
+				<smXML:CharacterString></smXML:CharacterString>
+			</smXML:credit>
+			<smXML:status>
+				<smXML:MD_ProgressCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_ProgressCode" codeListValue="completed"/>
+			</smXML:status>
+			<!-- ***** POINT OF CONTACT ***** -->
+			<smXML:pointOfContact>
+				<smXML:CI_ResponsibleParty>
+					<smXML:individualName>
+						<smXML:CharacterString>Herr Mustermann</smXML:CharacterString>
+					</smXML:individualName>
+					<smXML:organisationName>
+						<smXML:CharacterString>Muster Firma</smXML:CharacterString>
+					</smXML:organisationName>
+					<smXML:positionName>
+						<smXML:CharacterString>Bereichsleiter</smXML:CharacterString>
+					</smXML:positionName>
+					<smXML:contactInfo>
+						<smXML:CI_Contact>
+							<smXML:phone>
+								<smXML:CI_Telephone>
+									<smXML:voice>
+										<smXML:CharacterString>+49-123-456-789</smXML:CharacterString>
+									</smXML:voice>
+									<smXML:facsimile>
+										<smXML:CharacterString>+49-123-456-7890</smXML:CharacterString>
+									</smXML:facsimile>
+								</smXML:CI_Telephone>
+							</smXML:phone>
+							<smXML:address>
+								<smXML:CI_Address>
+									<smXML:deliveryPoint>
+										<smXML:CharacterString>Musterstr. 4-6</smXML:CharacterString>
+									</smXML:deliveryPoint>
+									<smXML:city>
+										<smXML:CharacterString>Musterstadt</smXML:CharacterString>
+									</smXML:city>
+									<smXML:administrativeArea>
+										<smXML:CharacterString>NRW</smXML:CharacterString>
+									</smXML:administrativeArea>
+									<smXML:postalCode>
+										<smXML:CharacterString>44137</smXML:CharacterString>
+									</smXML:postalCode>
+									<smXML:country>
+										<smXML:CharacterString>Deutschland</smXML:CharacterString>
+									</smXML:country>
+									<smXML:electronicMailAddress>
+										<smXML:CharacterString>muster@musterstadt.de</smXML:CharacterString>
+									</smXML:electronicMailAddress>
+								</smXML:CI_Address>
+							</smXML:address>
+							<smXML:onlineResource>
+								<smXML:CI_OnlineResource>
+									<smXML:linkage>
+										<smXML:URL>http://www.musterstadt.de</smXML:URL>
+									</smXML:linkage>
+								</smXML:CI_OnlineResource>
+							</smXML:onlineResource>
+						</smXML:CI_Contact>
+					</smXML:contactInfo>
+					<smXML:role>
+						<smXML:CI_RoleCode codeList="http://metadata.dgiwg.org/codelistRegistry?CI_RoleCode" codeListValue="pointOfContact"/>
+					</smXML:role>
+				</smXML:CI_ResponsibleParty>
+			</smXML:pointOfContact>
+			<!-- ***** KEYWORDS ***** -->
+			<!-- ***** DISCIPLINE ***** -->
+			<smXML:descriptiveKeywords>
+				<smXML:MD_Keywords>
+					<smXML:keyword>
+						<smXML:CharacterString>Geologie</smXML:CharacterString>
+					</smXML:keyword>
+					<smXML:type>
+						<smXML:MD_KeywordTypeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_KeywordTypeCode" codeListValue="discipline"/>
+					</smXML:type>
+					<smXML:thesaurusName>
+						<smXML:CI_Citation>
+							<smXML:title>
+								<smXML:CharacterString/>
+							</smXML:title>
+							<smXML:date>
+								<smXML:CI_Date>
+									<smXML:date>
+										<smXML:Date>2005-06-24</smXML:Date>
+									</smXML:date>
+									<smXML:dateType>
+										<smXML:CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="creation"/>
+									</smXML:dateType>
+								</smXML:CI_Date>
+							</smXML:date>
+						</smXML:CI_Citation>
+					</smXML:thesaurusName>
+				</smXML:MD_Keywords>
+			</smXML:descriptiveKeywords>
+			<!-- ***** PLACE ***** -->
+			<smXML:descriptiveKeywords>
+				<smXML:MD_Keywords>
+					<smXML:keyword>
+						<smXML:CharacterString>Deutschland</smXML:CharacterString>
+					</smXML:keyword>
+					<smXML:type>
+						<smXML:MD_KeywordTypeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_KeywordTypeCode" codeListValue="place"/>
+					</smXML:type>
+				</smXML:MD_Keywords>
+			</smXML:descriptiveKeywords>
+			<!-- ***** STRATUM (layer) ***** -->
+			<smXML:descriptiveKeywords>
+				<smXML:MD_Keywords>
+					<smXML:keyword>
+						<smXML:CharacterString>Bodenkarte</smXML:CharacterString>
+					</smXML:keyword>
+					<smXML:type>
+						<smXML:MD_KeywordTypeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_KeywordTypeCode" codeListValue="stratum"/>
+					</smXML:type>
+				</smXML:MD_Keywords>
+			</smXML:descriptiveKeywords>
+			<!-- ***** TEMPORAL ***** -->
+			<smXML:descriptiveKeywords>
+				<smXML:MD_Keywords>
+					<smXML:keyword>
+						<smXML:CharacterString>jährlich</smXML:CharacterString>
+					</smXML:keyword>
+					<smXML:type>
+						<smXML:MD_KeywordTypeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_KeywordTypeCode" codeListValue="temporal"/>
+					</smXML:type>
+				</smXML:MD_Keywords>
+			</smXML:descriptiveKeywords>
+			<!-- ***** THEME ***** -->
+			<smXML:descriptiveKeywords>
+				<smXML:MD_Keywords>
+					<smXML:keyword>
+						<smXML:CharacterString>Muster</smXML:CharacterString>
+					</smXML:keyword>
+					<smXML:keyword>
+						<smXML:CharacterString>Datensatz</smXML:CharacterString>
+					</smXML:keyword>
+					<smXML:keyword>
+						<smXML:CharacterString>Test</smXML:CharacterString>
+					</smXML:keyword>
+					<smXML:type>
+						<smXML:MD_KeywordTypeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_KeywordTypeCode" codeListValue="theme"/>
+					</smXML:type>
+				</smXML:MD_Keywords>
+			</smXML:descriptiveKeywords>
+			<!-- ***** GRAPHIC OVERVIEW ***** -->
+			<smXML:graphicOverview>
+				<smXML:MD_BrowseGraphic>
+					<smXML:fileName>
+						<smXML:CharacterString>http://katalog......jpg</smXML:CharacterString>
+					</smXML:fileName>
+					<smXML:fileDescription>
+						<smXML:CharacterString>Karte im Vorschaumodus</smXML:CharacterString>
+					</smXML:fileDescription>
+					<smXML:fileType>
+						<smXML:CharacterString>jpeg</smXML:CharacterString>
+					</smXML:fileType>
+				</smXML:MD_BrowseGraphic>
+			</smXML:graphicOverview>
+			<!-- ***** USE CONSTRAINTS ***** -->
+			<smXML:resourceConstraints>
+				<smXML:MD_Constraints>
+					<smXML:useLimitation>
+						<smXML:CharacterString>kostenpflichtig</smXML:CharacterString>
+					</smXML:useLimitation>
+				</smXML:MD_Constraints>
+			</smXML:resourceConstraints>
+			<!-- ***** LEGAL CONSTRAINTS ***** -->
+			<smXML:resourceConstraints>
+				<smXML:MD_LegalConstraints>
+					<smXML:accessConstraints>
+						<smXML:MD_RestrictionCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_RestrictionCode" codeListValue="license"/>
+					</smXML:accessConstraints>
+					<smXML:useConstraints>
+						<smXML:MD_RestrictionCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_RestrictionCode" codeListValue="patent"/>
+					</smXML:useConstraints>
+					<smXML:otherConstraints>
+						<smXML:CharacterString>per Anfrage</smXML:CharacterString>
+					</smXML:otherConstraints>
+				</smXML:MD_LegalConstraints>
+			</smXML:resourceConstraints>
+			<!-- ***** RESOURCE MAINTENANCE (Pflege, Haltung) ***** -->
+			<smXML:resourceMaintenance>
+				<smXML:MD_MaintenanceInformation>
+					<smXML:maintenanceAndUpdateFrequency>
+						<smXML:MD_MaintenanceFrequencyCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_MaintenanceFrequencyCode" codeListValue="unknown"/>
+					</smXML:maintenanceAndUpdateFrequency>
+					<smXML:dateOfNextUpdate>
+						<smXML:Date>2099-12-31</smXML:Date>
+					</smXML:dateOfNextUpdate>
+					<!--
+					<smXML:userDefinedMaintenanceFrequency/>
+					-->
+					<smXML:updateScope>
+						<smXML:MD_ScopeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_ScopeCode" codeListValue="dataset"/>
+					</smXML:updateScope>
+					<!--
+					<smXML:updateScopeDescription/>
+					-->
+					<smXML:maintenanceNote>
+						<smXML:CharacterString>Anmerkungen zur Pflege/Erhaltung</smXML:CharacterString>
+					</smXML:maintenanceNote>
+				</smXML:MD_MaintenanceInformation>
+			</smXML:resourceMaintenance>
+			<smXML:resourceFormat>
+				<smXML:MD_Format>
+					<smXML:name>
+						<smXML:CharacterString>Ressource-Format</smXML:CharacterString>
+					</smXML:name>
+					<smXML:version>
+						<smXML:CharacterString>Ressource-Format-Version</smXML:CharacterString>
+					</smXML:version>
+				</smXML:MD_Format>
+			</smXML:resourceFormat>
+			<smXML:spatialRepresentationType>
+				<smXML:MD_SpatialRepresentationTypeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_SpatialRepresentationTypeCode" codeListValue="vector"/>
+			</smXML:spatialRepresentationType>
+			<smXML:spatialResolution>
+				<smXML:MD_Resolution>
+					<smXML:equivalentScale>
+						<smXML:MD_RepresentativeFraction>
+							<smXML:denominator>
+								<smXML:positiveInteger>100000</smXML:positiveInteger>
+							</smXML:denominator>
+						</smXML:MD_RepresentativeFraction>
+					</smXML:equivalentScale>
+				</smXML:MD_Resolution>
+			</smXML:spatialResolution>
+			<smXML:language>
+				<smXML:CharacterString>de</smXML:CharacterString>
+			</smXML:language>
+			<smXML:characterSet>
+				<smXML:MD_CharacterSetCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_CharacterSetCode" codeListValue="utf8"/>
+			</smXML:characterSet>
+			<smXML:topicCategory>
+				<smXML:MD_TopicCategoryCode>utilitiesCommunication</smXML:MD_TopicCategoryCode>
+			</smXML:topicCategory>
+			<smXML:environmentDescription>
+				<smXML:CharacterString>Beschreibung der Umgebung</smXML:CharacterString>
+			</smXML:environmentDescription>
+			<smXML:extent>
+				<smXML:EX_Extent>
+					<smXML:description>
+						<smXML:CharacterString>Beschreibung der Ausdehnung</smXML:CharacterString>
+					</smXML:description>
+					<smXML:verticalElement>
+						<smXML:EX_VerticalExtent>
+							<smXML:minimumValue>
+								<smXML:Real>0.00</smXML:Real>
+							</smXML:minimumValue>
+							<smXML:maximumValue>
+								<smXML:Real>1000.00</smXML:Real>
+							</smXML:maximumValue>
+							<smXML:unitOfMeasure>
+								<smXML:UomLength>
+									<smXML:uomName>
+										<smXML:CharacterString>meter</smXML:CharacterString>
+									</smXML:uomName>
+									<smXML:conversionTolSOstandardUnit>
+										<smXML:Real>1.00</smXML:Real>
+									</smXML:conversionTolSOstandardUnit>
+								</smXML:UomLength>
+							</smXML:unitOfMeasure>
+							<smXML:verticalDatum>
+								<smXML:RS_Identifier>
+									<smXML:code>
+										<smXML:CharacterString>DHDN</smXML:CharacterString>
+									</smXML:code>
+								</smXML:RS_Identifier>
+							</smXML:verticalDatum>
+						</smXML:EX_VerticalExtent>
+					</smXML:verticalElement>
+					<!--
+					<smXML:temporalElement>
+						<smXML:EX_TemporalExtent>
+							<smXML:extent>
+								<smXML:TM_Primitive/>
+							</smXML:extent>
+						</smXML:EX_TemporalExtent>
+					</smXML:temporalElement>
+					-->
+					<smXML:geographicElement>
+						<smXML:EX_GeographicBoundingBox>
+							<smXML:extentTypeCode>
+								<smXML:Boolean>true</smXML:Boolean>
+							</smXML:extentTypeCode>
+							<smXML:westBoundLongitude>
+								<smXML:approximateLongitude>8.00</smXML:approximateLongitude>
+							</smXML:westBoundLongitude>
+							<smXML:eastBoundLongitude>
+								<smXML:approximateLongitude>11.66</smXML:approximateLongitude>
+							</smXML:eastBoundLongitude>
+							<smXML:southBoundLatitude>
+								<smXML:approximateLatitude>49.32</smXML:approximateLatitude>
+							</smXML:southBoundLatitude>
+							<smXML:northBoundLatitude>
+								<smXML:approximateLatitude>52.58</smXML:approximateLatitude>
+							</smXML:northBoundLatitude>
+						</smXML:EX_GeographicBoundingBox>
+					</smXML:geographicElement>
+					<smXML:geographicElement>
+						<smXML:EX_GeographicDescription>
+							<smXML:geographicIdentifier>
+								<smXML:MD_Identifier>
+									<smXML:code>
+										<smXML:CharacterString>Deutschland</smXML:CharacterString>
+									</smXML:code>
+								</smXML:MD_Identifier>
+							</smXML:geographicIdentifier>
+						</smXML:EX_GeographicDescription>
+					</smXML:geographicElement>
+					<!--
+					<smXML:temporalElement>
+						<smXML:EX_TemporalExtent>
+							<smXML:extent>
+								<smXML:TM_Primitive></smXML:TM_Primitive>
+							</smXML:extent>
+						</smXML:EX_TemporalExtent>
+					</smXML:temporalElement>
+					-->
+				</smXML:EX_Extent>
+			</smXML:extent>
+		</smXML:MD_DataIdentification>
+	</identificationInfo>
+	<!-- ***** DATA QUALITY ****-->
+	<dataQualityInfo>
+		<smXML:DQ_DataQuality>
+			<!-- ***** SCOPE ***** -->
+			<smXML:scope>
+				<smXML:DQ_Scope>
+					<smXML:level>
+						<smXML:MD_ScopeCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_ScopeCode" codeListValue="dataset"/>
+					</smXML:level>
+					<smXML:extent>
+						<smXML:EX_Extent>
+							<smXML:description>
+								<smXML:CharacterString>Beschreibung der Ausdehnung (scope = Abgrenzung)</smXML:CharacterString>
+							</smXML:description>
+						</smXML:EX_Extent>
+					</smXML:extent>
+					<smXML:levelDescription>
+						<smXML:MD_MaintenanceInformation>
+							<smXML:maintenanceAndUpdateFrequency>
+								<smXML:MD_MaintenanceFrequencyCode codeList="http://metadata.dgiwg.org/codelistRegistry?MD_MaintenanceFrequencyCode" codeListValue="unknown"/>
+							</smXML:maintenanceAndUpdateFrequency>
+						</smXML:MD_MaintenanceInformation>
+					</smXML:levelDescription>
+				</smXML:DQ_Scope>
+			</smXML:scope>
+			<!-- ***** LINEAGE ***** -->
+			<smXML:lineage>
+				<smXML:LI_Lineage>
+					<smXML:statement>
+						<smXML:CharacterString>weitere Informationen zur Darstellung</smXML:CharacterString>
+					</smXML:statement>
+					<smXML:source>
+						<smXML:LI_Source>
+							<smXML:description>
+								<smXML:CharacterString>Darstellungsquelle</smXML:CharacterString>
+							</smXML:description>
+							<smXML:scaleDenominator>
+								<smXML:MD_RepresentativeFraction>
+									<smXML:denominator>
+										<smXML:positiveInteger>10000</smXML:positiveInteger>
+									</smXML:denominator>
+								</smXML:MD_RepresentativeFraction>
+							</smXML:scaleDenominator>
+						</smXML:LI_Source>
+					</smXML:source>
+					<smXML:processStep>
+						<smXML:LI_ProcessStep>
+							<smXML:description>
+								<smXML:CharacterString>Beschreibung des Arbeitsgangs</smXML:CharacterString>
+							</smXML:description>
+							<smXML:rationale>
+								<smXML:CharacterString>rationale</smXML:CharacterString>
+							</smXML:rationale>
+							<!--
+							<smXML:dateTime>
+								<smXML:DateTime>
+									
+								</smXML:DateTime>
+							</smXML:dateTime>
+							-->
+						</smXML:LI_ProcessStep>
+					</smXML:processStep>
+				</smXML:LI_Lineage>
+			</smXML:lineage>
+			<!-- ***** REPORT ***** -->
+			<!--
+			<smXML:report>
+				<smXML:_DQ_Element>
+					<smXML:_DQ_Result></smXML:_DQ_Result>
+				</smXML:_DQ_Element>
+			</smXML:report>
+			-->
+		</smXML:DQ_DataQuality>
+	</dataQualityInfo>
+	<distributionInfo>
+		<smXML:MD_Distribution>
+			<smXML:distributionFormat>
+				<smXML:MD_Format>
+					<smXML:name>
+						<smXML:CharacterString>Vertriebsformat</smXML:CharacterString>
+					</smXML:name>
+					<smXML:version>
+						<smXML:CharacterString>Vertriebsformat-Version</smXML:CharacterString>
+					</smXML:version>
+				</smXML:MD_Format>
+			</smXML:distributionFormat>
+			<smXML:distributor>
+				<smXML:MD_Distributor>
+					<smXML:distributorContact>
+						<smXML:CI_ResponsibleParty>
+							<smXML:individualName>
+								<smXML:CharacterString>Herr Mustermann</smXML:CharacterString>
+							</smXML:individualName>
+							<smXML:organisationName>
+								<smXML:CharacterString>Muster Firma</smXML:CharacterString>
+							</smXML:organisationName>
+							<smXML:positionName>
+								<smXML:CharacterString>Bereichsleiter</smXML:CharacterString>
+							</smXML:positionName>
+							<smXML:contactInfo>
+								<smXML:CI_Contact>
+									<smXML:phone>
+										<smXML:CI_Telephone>
+											<smXML:voice>
+												<smXML:CharacterString>+49-123-456-789</smXML:CharacterString>
+											</smXML:voice>
+											<smXML:facsimile>
+												<smXML:CharacterString>+49-123-456-7890</smXML:CharacterString>
+											</smXML:facsimile>
+										</smXML:CI_Telephone>
+									</smXML:phone>
+									<smXML:address>
+										<smXML:CI_Address>
+											<smXML:deliveryPoint>
+												<smXML:CharacterString>Musterstr. 4-6</smXML:CharacterString>
+											</smXML:deliveryPoint>
+											<smXML:city>
+												<smXML:CharacterString>Musterstadt</smXML:CharacterString>
+											</smXML:city>
+											<smXML:administrativeArea>
+												<smXML:CharacterString>NRW</smXML:CharacterString>
+											</smXML:administrativeArea>
+											<smXML:postalCode>
+												<smXML:CharacterString>44137</smXML:CharacterString>
+											</smXML:postalCode>
+											<smXML:country>
+												<smXML:CharacterString>Deutschland</smXML:CharacterString>
+											</smXML:country>
+											<smXML:electronicMailAddress>
+												<smXML:CharacterString>muster@musterstadt.de</smXML:CharacterString>
+											</smXML:electronicMailAddress>
+										</smXML:CI_Address>
+									</smXML:address>
+									<smXML:onlineResource>
+										<smXML:CI_OnlineResource>
+											<smXML:linkage>
+												<smXML:URL>http://www.musterstadt.de</smXML:URL>
+											</smXML:linkage>
+										</smXML:CI_OnlineResource>
+									</smXML:onlineResource>
+								</smXML:CI_Contact>
+							</smXML:contactInfo>
+							<smXML:role>
+								<smXML:CI_RoleCode codeList="http://metadata.dgiwg.org/codelistRegistry?CI_RoleCode" codeListValue="distributor"/>
+							</smXML:role>
+						</smXML:CI_ResponsibleParty>
+					</smXML:distributorContact>
+					<smXML:distributorFormat>
+						<smXML:MD_Format>
+							<smXML:name>
+								<smXML:CharacterString>Vertriebsformat (im Tag Distributor)</smXML:CharacterString>
+							</smXML:name>
+							<smXML:version>
+								<smXML:CharacterString>Vertriebsformat-Version (im Tag Distributor)</smXML:CharacterString>
+							</smXML:version>
+						</smXML:MD_Format>
+					</smXML:distributorFormat>
+					<smXML:distributionOrderProcess>
+						<smXML:MD_StandardOrderProcess>
+							<smXML:fees>
+								<smXML:CharacterString>per Anfrage</smXML:CharacterString>
+							</smXML:fees>
+							<smXML:orderingInstructions>
+								<smXML:CharacterString>per Anfrage</smXML:CharacterString>
+							</smXML:orderingInstructions>
+							<smXML:turnaround>
+								<smXML:CharacterString>dummy</smXML:CharacterString>
+							</smXML:turnaround>
+						</smXML:MD_StandardOrderProcess>
+					</smXML:distributionOrderProcess>
+				</smXML:MD_Distributor>
+			</smXML:distributor>
+			<smXML:transferOptions>
+				<smXML:MD_DigitalTransferOptions>
+					<smXML:unitsOfDistribution>
+						<smXML:CharacterString>Vertriebsart</smXML:CharacterString>
+					</smXML:unitsOfDistribution>
+					<smXML:onLine>
+						<smXML:CI_OnlineResource>
+							<smXML:linkage>
+								<smXML:URL>http://www.musterstadt.de</smXML:URL>
+							</smXML:linkage>
+						</smXML:CI_OnlineResource>
+					</smXML:onLine>
+					<!--
+					<smXML:offLine>
+						<smXML:MD_Medium>
+							<smXML:name>
+								<smXML:CharacterString>test</smXML:CharacterString>
+							</smXML:name>
+						</smXML:MD_Medium>
+					</smXML:offLine>	
+					-->
+					<smXML:transferSize>
+						<smXML:CharacterString>40.6 MB</smXML:CharacterString>
+					</smXML:transferSize>
+				</smXML:MD_DigitalTransferOptions>
+			</smXML:transferOptions>
+		</smXML:MD_Distribution>
+	</distributionInfo>
+</MD_Metadata>
