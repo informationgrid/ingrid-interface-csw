@@ -45,6 +45,8 @@ public class CSWInterfaceConfig extends PropertiesConfiguration {
     public static final String MAX_RECORDS = "maxRecords";
     
     public static final String TIMEOUT = "timeOut";
+
+	public static final String FILE_POST_PROCESSOR = "transform.xsl.post.processor";
     
     private static IBus myIBus = null;
 

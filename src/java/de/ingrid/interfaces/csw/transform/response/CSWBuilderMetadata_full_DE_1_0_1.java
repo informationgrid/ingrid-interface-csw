@@ -444,7 +444,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 	}
 
-	private void addIdentificationInfoService(Element metaData, IngridHit hit) {
+	private void addIdentificationInfoService(Element metaData, IngridHit hit) throws Exception {
 		Element cswServiceIdentification = metaData.addElement("iso19115full:identificationInfo").addElement(
 				"iso19119:CSW_ServiceIdentification");
 
@@ -476,7 +476,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 	}
 
-	private void addGenericMetadataIndentification(Element parent, IngridHit hit) {
+	private void addGenericMetadataIndentification(Element parent, IngridHit hit) throws Exception {
 		// add citation construct
 		this.addCitation(parent, hit);
 
@@ -602,7 +602,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		this.addSMXMLCharacterString(parent.addElement("smXML:language"), dataLang);
 	}
 
-	private void addIdentificationInfoDataset(Element metaData, IngridHit hit) {
+	private void addIdentificationInfoDataset(Element metaData, IngridHit hit) throws Exception {
 		Element mdDataIdentification = metaData.addElement("iso19115full:identificationInfo").addElement(
 				"smXML:MD_DataIdentification");
 

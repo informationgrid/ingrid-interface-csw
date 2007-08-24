@@ -39,10 +39,14 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
     }
 
     protected void addContact(Element parent, IngridHit hit) throws Exception {
-        addContact(parent, hit, null);
+    	addContactBlock(parent.addElement(getNSElementName(null, "contact")).addElement("smXML:CI_ResponsibleParty"), hit);
     }
 
-    protected void addContact(Element parent, IngridHit hit, String ns) throws Exception {
+    protected void addContact(Element parent, IngridHit hit, String ns ) throws Exception {
+    	this.addContactBlock(parent.addElement(getNSElementName(ns, "contact")).addElement("smXML:CI_ResponsibleParty"), hit);
+    }
+    
+    protected void addContactBlock(Element parent, IngridHit hit) throws Exception {
 
         String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
         String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
@@ -51,7 +55,6 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             // get complete address information
             IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], hit.getPlugId());
             if (address != null) {
-                Element party = parent.addElement(getNSElementName(ns, "contact")).addElement("smXML:CI_ResponsibleParty");
                 
                 // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
                 //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
@@ -79,18 +82,18 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                         codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(505), code, new Long(94));
                     }
                     if (codeVal != null && codeVal.length() > 0) {
-                        party.addElement("smXML:role").addElement("smXML:CI_RoleCode")
+                        parent.addElement("smXML:role").addElement("smXML:CI_RoleCode")
                         .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
                         .addAttribute("codeListValue", codeVal);
                     }
                 } catch (NumberFormatException e) {}
                 
-                this.addSMXMLCharacterString(party.addElement("smXML:individualName"), IngridQueryHelper.getCompletePersonName(address));
-                this.addSMXMLCharacterString(party.addElement("smXML:organisationName"), IngridQueryHelper.getDetailValueAsString(address,
+                this.addSMXMLCharacterString(parent.addElement("smXML:individualName"), IngridQueryHelper.getCompletePersonName(address));
+                this.addSMXMLCharacterString(parent.addElement("smXML:organisationName"), IngridQueryHelper.getDetailValueAsString(address,
                         IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION));
-                this.addSMXMLCharacterString(party.addElement("smXML:positionName"), IngridQueryHelper.getDetailValueAsString(address,
+                this.addSMXMLCharacterString(parent.addElement("smXML:positionName"), IngridQueryHelper.getDetailValueAsString(address,
                         IngridQueryHelper.HIT_KEY_ADDRESS_JOB));
-                Element CIContact = party.addElement("smXML:contactInfo").addElement("smXML:CI_Contact");
+                Element CIContact = parent.addElement("smXML:contactInfo").addElement("smXML:CI_Contact");
     
                 HashMap communications = IngridQueryHelper.getCommunications(address);
                 ArrayList phoneNumbers = (ArrayList) communications.get("phone");
