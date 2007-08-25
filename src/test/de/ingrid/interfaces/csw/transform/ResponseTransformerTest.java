@@ -29,12 +29,12 @@ public class ResponseTransformerTest extends TestCase {
         
         
       System.setProperty("javax.xml.parsers.DocumentBuilderFactory", 
-      //"org.apache.xerces.jaxp.DocumentBuilderFactoryImpl");
-      "org.apache.crimson.jaxp.DocumentBuilderFactoryImpl");
+      "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl");
+//      "org.apache.crimson.jaxp.DocumentBuilderFactoryImpl");
 
      System.setProperty("org.xml.sax.parser", 
-             //"org.apache.xerces.parsers.SAXParser");
-     "org.apache.crimson.jaxp.SAXParserImpl");
+             "org.apache.xerces.parsers.SAXParser");
+//     "org.apache.crimson.jaxp.SAXParserImpl");
         
         ResponseTransformer responseTransformer = new ResponseTransformer();
         
