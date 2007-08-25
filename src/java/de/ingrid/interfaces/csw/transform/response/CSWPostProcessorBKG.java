@@ -35,7 +35,7 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 			HashMap namespaces = new HashMap();
 			namespaces.put( "iso19115full", "http://schemas.opengis.net/iso19115full");
 			namespaces.put( "smXML", "http://metadata.dgiwg.org/smXML");
-			
+			namespaces.put( "gml", "http://www.opengis.net/gml");
 			
 			// *************************************************************************************
 			// copy point of contact address to iso19115full:identificationInfo/smXML:pointOfContact
@@ -54,7 +54,9 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 				dstElement.add(srcElementCopy);
 	        }
 			
+			// *************************************************************************************
 			// add value of //smXML:MD_SpatialRepresentationTypeCode[@codeValue] as Text Tag to smXML:MD_SpatialRepresentationTypeCode
+			// *************************************************************************************
 			srcXPath = new Dom4jXPath( "//smXML:MD_SpatialRepresentationTypeCode");
 			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
 			srcElementList = srcXPath.selectNodes(in);
@@ -62,6 +64,21 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 	            Element srcElement = (Element) it.next();
 	            srcElement.addText(srcElement.attributeValue("codeListValue"));
 	        }
+			
+			// *************************************************************************************
+			// copy values of gml:TimePeriod/gml:beginPosition/gml:TimeInstant/gml:timePosition to gml:TimePeriod/gml:begin
+			// and gml:TimePeriod/gml:endPosition/gml:TimeInstant/gml:timePosition to gml:TimePeriod/gml:end
+			// *************************************************************************************
+			srcXPath = new Dom4jXPath( "//gml:TimePeriod");
+			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			srcElementList = srcXPath.selectNodes(in);
+			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+	            Element srcElement = (Element) it.next();
+	            srcElement.addElement("gml:begin").addText(srcElement.valueOf("gml:beginPosition/gml:TimeInstant/gml:timePosition"));
+	            srcElement.addElement("gml:end").addText(srcElement.valueOf("gml:endPosition/gml:TimeInstant/gml:timePosition"));
+	        }
+			
+			
 			
 		} catch (Exception e) {
 			log.error("Error processing document.", e);

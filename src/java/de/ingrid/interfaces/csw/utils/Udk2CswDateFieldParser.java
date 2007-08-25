@@ -46,11 +46,11 @@ public class Udk2CswDateFieldParser implements FieldParser {
 			} else if (value.matches("[0-9][0-9][0-9][0-9]0000")) {
 			    df.applyPattern("yyyy");
 			    cswFormat.applyPattern("yyyy");
-				return cswFormat.format(df.parse(value));
+				return cswFormat.format(df.parse(value.substring(0, 4)));
 			} else if (value.matches("[0-9][0-9][0-9][0-9][0-1][0-9]00")) {
 			    df.applyPattern("yyyyMM");
 			    cswFormat.applyPattern("yyyy-MM");
-				return cswFormat.format(df.parse(value));
+				return cswFormat.format(df.parse(value.substring(0, 6)));
 			} else if (value.matches("[0-9][0-9][0-9][0-9][0-1][0-9][0-3][0-9]")) {
 			    df.applyPattern("yyyyMMdd");
 			    cswFormat.applyPattern("yyyy-MM-dd");
