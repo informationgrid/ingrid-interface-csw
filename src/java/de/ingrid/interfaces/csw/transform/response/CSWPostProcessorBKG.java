@@ -32,32 +32,37 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 			log.debug("input:" + in.asXML());
 		}
 		try {
-			HashMap map = new HashMap();
-			map.put( "iso19115full", "http://schemas.opengis.net/iso19115full");
-			map.put( "smXML", "http://metadata.dgiwg.org/smXML");
-			  
-			XPath xpath = new Dom4jXPath( "//iso19115full:contact/smXML:CI_ResponsibleParty[//smXML:CI_RoleCode[@codeListValue=\"Point of Contact\"]]");
-			xpath.setNamespaceContext( new SimpleNamespaceContext( map));
-			  
-			List list = xpath.selectNodes( in);			
+			HashMap namespaces = new HashMap();
+			namespaces.put( "iso19115full", "http://schemas.opengis.net/iso19115full");
+			namespaces.put( "smXML", "http://metadata.dgiwg.org/smXML");
 			
-			if (log.isDebugEnabled()) {
-				log.debug("Search for '//iso19115full:contact/smXML:CI_ResponsibleParty[//smXML:CI_RoleCode[@codeListValue=\"Point of Contact\"]]' ... found " + list.size() + "elements.");
-			}
+			
+			// *************************************************************************************
+			// copy point of contact address to iso19115full:identificationInfo/smXML:pointOfContact
+			// *************************************************************************************
+			XPath srcXPath = new Dom4jXPath( "//iso19115full:contact/smXML:CI_ResponsibleParty[//smXML:CI_RoleCode[@codeListValue=\"Point of Contact\"]]");
+			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			  
+			List srcElementList = srcXPath.selectNodes( in);			
 
-			XPath xpath2 = new Dom4jXPath( "//iso19115full:identificationInfo");
-			xpath2.setNamespaceContext( new SimpleNamespaceContext( map));
+			XPath dstXPath = new Dom4jXPath( "//iso19115full:identificationInfo");
+			dstXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			Element dstElement = ((Element)dstXPath.selectSingleNode(in)).addElement("smXML:pointOfContact");
 			
-			Element e = (Element)xpath2.selectSingleNode(in);
-			if (log.isDebugEnabled()) {
-				log.debug("get '//iso19115full:identificationInfo':" + e.getName());
-			}
-			for (Iterator it = list.iterator(); it.hasNext(); ) {
-	            e.addElement("smXML:pointOfContact").add((Element) it.next());
-	    		if (log.isDebugEnabled()) {
-	    			log.debug("added pointOfContact:" + e.asXML());
-	    		}
+			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+	            Element srcElementCopy = ((Element) it.next()).createCopy();
+				dstElement.add(srcElementCopy);
 	        }
+			
+			// add value of //smXML:MD_SpatialRepresentationTypeCode[@codeValue] as Text Tag to smXML:MD_SpatialRepresentationTypeCode
+			srcXPath = new Dom4jXPath( "//smXML:MD_SpatialRepresentationTypeCode");
+			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			srcElementList = srcXPath.selectNodes(in);
+			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+	            Element srcElement = (Element) it.next();
+	            srcElement.addText(srcElement.attributeValue("codeListValue"));
+	        }
+			
 		} catch (Exception e) {
 			log.error("Error processing document.", e);
 		}
