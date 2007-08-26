@@ -34,9 +34,11 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 		try {
 			HashMap namespaces = new HashMap();
 			namespaces.put( "iso19115full", "http://schemas.opengis.net/iso19115full");
+			namespaces.put( "iso19115summary", "http://schemas.opengis.net/iso19115summary");
+			namespaces.put( "iso19115brief", "http://schemas.opengis.net/iso19115brief");
+			namespaces.put( "iso19119", "http://schemas.opengis.net/iso19119");
 			namespaces.put( "smXML", "http://metadata.dgiwg.org/smXML");
 			namespaces.put( "gml", "http://www.opengis.net/gml");
-			
 			// *************************************************************************************
 			// copy point of contact address to iso19115full:identificationInfo/smXML:pointOfContact
 			// *************************************************************************************
@@ -47,12 +49,15 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 
 			XPath dstXPath = new Dom4jXPath( "//iso19115full:identificationInfo");
 			dstXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
-			Element dstElement = ((Element)dstXPath.selectSingleNode(in)).addElement("smXML:pointOfContact");
+			Object result = dstXPath.selectSingleNode(in);
+			if (result != null) {
+				Element dstElement = ((Element)result).addElement("smXML:pointOfContact");
 			
-			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
-	            Element srcElementCopy = ((Element) it.next()).createCopy();
-				dstElement.add(srcElementCopy);
-	        }
+				for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+		            Element srcElementCopy = ((Element) it.next()).createCopy();
+					dstElement.add(srcElementCopy);
+		        }
+			}
 			
 			// *************************************************************************************
 			// add value of //smXML:MD_SpatialRepresentationTypeCode[@codeValue] as Text Tag to smXML:MD_SpatialRepresentationTypeCode
@@ -78,7 +83,38 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 	            srcElement.addElement("gml:end").addText(srcElement.valueOf("gml:endPosition/gml:TimeInstant/gml:timePosition"));
 	        }
 			
+			// *************************************************************************************
+			// copy values of //smXML:citation/smXML:CI_Citation/smXML:date/smXML:CI_Date/smXML:date/smXML:Date
+			// to //smXML:citation/smXML:CI_Citation/smXML:date
+			// *************************************************************************************
+			srcXPath = new Dom4jXPath( "//smXML:citation/smXML:CI_Citation/smXML:date");
+			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			srcElementList = srcXPath.selectNodes(in);
 			
+			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+	            Element srcElement = (Element) it.next();
+	            String date = srcElement.valueOf("smXML:CI_Date/smXML:date/smXML:Date");
+	            srcElement.remove(srcElement.element("smXML:CI_Date"));
+	            srcElement.addText(date);
+	        }
+
+			// *************************************************************************************
+			// copy values of //citation/iso19115summary:CI_Citation/smXML:date/smXML:CI_Date/smXML:date/smXML:Date
+			// to //citation/iso19115summary:CI_Citation/smXML:date
+			// *************************************************************************************
+			srcXPath = new Dom4jXPath( "//citation/iso19115summary:CI_Citation");
+			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			srcElementList = srcXPath.selectNodes(in);
+			
+			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+	            Element srcElement = (Element) it.next();
+	            String date = srcElement.valueOf("smXML:date/smXML:CI_Date/smXML:date/smXML:Date");
+	            Element tobeRemoved = srcElement.element("date");
+	            if (tobeRemoved != null) {
+	            	tobeRemoved.detach();
+		            srcElement.addElement("smXML:date").addText(date);
+	            }
+	        }
 			
 		} catch (Exception e) {
 			log.error("Error processing document.", e);
