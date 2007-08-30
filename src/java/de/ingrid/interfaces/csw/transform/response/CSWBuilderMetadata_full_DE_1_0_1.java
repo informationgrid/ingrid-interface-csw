@@ -428,7 +428,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_ALTERNATE_TITLE));
 
 		// add dates (creation, revision etc.)
-		super.addCitationReferenceDates(ciCitation, hit);
+		super.addCitationReferenceDates(ciCitation, hit, "smXML");
 
 		// citedResponsibleParty not implemented, because only
 		// UDK classes 1 and 3 are supported. citedResponsibleParty always maps

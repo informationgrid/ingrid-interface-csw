@@ -127,7 +127,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 if (url.size() > 0) {
                     Element CI_OnlineResource = CIContact.addElement("smXML:onlineResource").addElement(
                             "smXML:CI_OnlineResource");
-                    this.addSMXMLCharacterString(CI_OnlineResource.addElement("smXML:linkage"), (String) url.get(0));
+                    this.addSMXMLUrl(CI_OnlineResource.addElement("smXML:linkage"), (String) url.get(0));
                 }
             }
         }    
@@ -182,7 +182,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         }
     }
     
-    protected void addCitationReferenceDates(Element parent, IngridHit hit) {
+    protected void addCitationReferenceDates(Element parent, IngridHit hit, String ns) {
         // add dates (creation, revision etc.)
         String[] referenceDate = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_REFERENCE_DATE);
         String[] referenceDateTypes = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE);
@@ -190,7 +190,12 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             for (int i = 0; i < referenceDate.length; i++) {
                 String creationDate = referenceDate[i];
                 if (creationDate != null && creationDate.length() > 0) {
-                    Element ciDate = parent.addElement("smXML:date").addElement("smXML:CI_Date");
+                	Element ciDate;
+                	if (ns != null) {
+                		ciDate = parent.addElement(ns + ":date").addElement("smXML:CI_Date");
+                	} else {
+                		ciDate = parent.addElement("date").addElement("smXML:CI_Date");
+                	}
                     ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
                     String codeListValue;
                     if (referenceDateTypes[i].equals("1")) {

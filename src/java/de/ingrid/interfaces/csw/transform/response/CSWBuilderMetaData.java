@@ -58,6 +58,18 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
     }
 
     /**
+     * Add a smXML URL to a parent element.
+     * 
+     * @param parent
+     * @param value
+     * @return The parent element.
+     */
+    protected Element addSMXMLUrl(Element parent, String value) {
+        parent.addElement("smXML:URL").addText(value);
+        return parent;
+    }
+    
+    /**
      * Add a smXML Boolean to a parent element
      * 
      * @param parent

@@ -28,6 +28,7 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
         Namespace smXML = new Namespace("smXML", "http://metadata.dgiwg.org/smXML");
         Namespace iso19115summary = new Namespace("iso19115summary", "http://schemas.opengis.net/iso19115summary");
         Namespace iso19119 = new Namespace("iso19119", "http://schemas.opengis.net/iso19119");
+        Namespace csw = new Namespace("csw", "http://www.opengis.net/cat/csw");
 
         String objectId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
         String udkClass = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_CLASS);
@@ -47,6 +48,7 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
         metaData.add(iso19115summary);
         metaData.add(smXML);
         metaData.add(iso19119);
+        metaData.add(csw);
 
         this.addFileIdentifier(metaData, objectId);
         this.addLanguage(metaData, hit);
@@ -70,7 +72,7 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
         this.addSMXMLCharacterString(ciCitation.addElement("title"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
         // add dates (creation, revision etc.)
-        super.addCitationReferenceDates(ciCitation, hit);
+        super.addCitationReferenceDates(ciCitation, hit, null);
     }
     
     private void addIdentificationInfoService(Element metaData, IngridHit hit) {

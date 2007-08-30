@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.Namespace;
+import org.dom4j.QName;
 import org.jaxen.SimpleNamespaceContext;
 import org.jaxen.XPath;
 import org.jaxen.dom4j.Dom4jXPath;
@@ -44,9 +46,7 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 			// *************************************************************************************
 			XPath srcXPath = new Dom4jXPath( "//iso19115full:contact/smXML:CI_ResponsibleParty[//smXML:CI_RoleCode[@codeListValue=\"Point of Contact\"]]");
 			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
-			  
 			List srcElementList = srcXPath.selectNodes( in);			
-
 			XPath dstXPath = new Dom4jXPath( "//iso19115full:identificationInfo");
 			dstXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
 			Object result = dstXPath.selectSingleNode(in);
@@ -82,39 +82,59 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 	            srcElement.addElement("gml:begin").addText(srcElement.valueOf("gml:beginPosition/gml:TimeInstant/gml:timePosition"));
 	            srcElement.addElement("gml:end").addText(srcElement.valueOf("gml:endPosition/gml:TimeInstant/gml:timePosition"));
 	        }
-			
-			// *************************************************************************************
-			// copy values of //smXML:citation/smXML:CI_Citation/smXML:date/smXML:CI_Date/smXML:date/smXML:Date
-			// to //smXML:citation/smXML:CI_Citation/smXML:date
-			// *************************************************************************************
-			srcXPath = new Dom4jXPath( "//smXML:citation/smXML:CI_Citation/smXML:date");
-			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
-			srcElementList = srcXPath.selectNodes(in);
-			
-			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
-	            Element srcElement = (Element) it.next();
-	            String date = srcElement.valueOf("smXML:CI_Date/smXML:date/smXML:Date");
-	            srcElement.remove(srcElement.element("smXML:CI_Date"));
-	            srcElement.addText(date);
-	        }
 
 			// *************************************************************************************
-			// copy values of //citation/iso19115summary:CI_Citation/smXML:date/smXML:CI_Date/smXML:date/smXML:Date
-			// to //citation/iso19115summary:CI_Citation/smXML:date
+			// copy values of //smXML:status/smXML:MD_ProgressCode@codeListValue to //smXML:status/smXML:MD_ProgressCode
 			// *************************************************************************************
-			srcXPath = new Dom4jXPath( "//citation/iso19115summary:CI_Citation");
+			srcXPath = new Dom4jXPath( "//smXML:status/smXML:MD_ProgressCode");
 			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
 			srcElementList = srcXPath.selectNodes(in);
-			
 			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
 	            Element srcElement = (Element) it.next();
-	            String date = srcElement.valueOf("smXML:date/smXML:CI_Date/smXML:date/smXML:Date");
-	            Element tobeRemoved = srcElement.element("date");
-	            if (tobeRemoved != null) {
-	            	tobeRemoved.detach();
-		            srcElement.addElement("smXML:date").addText(date);
-	            }
+	            srcElement.addText(srcElement.attributeValue("codeListValue"));
 	        }
+			
+			// *************************************************************************************
+			// copy  //smXML:MD_Distribution/smXML:distributor/smXML:MD_Distributor/smXML:distributorFormat/smXML:MD_Format 
+			// to //smXML:MD_Distribution/smXML:distributionFormat/smXML:MD_Format
+			// *************************************************************************************
+			srcXPath = new Dom4jXPath( "//smXML:MD_Distribution");
+			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			srcElementList = srcXPath.selectNodes(in);
+			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+	            Element srcElement = (Element) it.next();
+	            Element elToCopy = srcElement.element("distributor").element("MD_Distributor").element("distributorFormat").element("MD_Format").createCopy();
+	            srcElement.addElement("smXML:distributionFormat").add(elToCopy);
+	        }
+			
+			// *************************************************************************************
+			// copy values of //smXML:MD_MediumNameCode@codeListValue to //smXML:MD_MediumNameCode
+			// *************************************************************************************
+			srcXPath = new Dom4jXPath( "//smXML:MD_MediumNameCode");
+			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			srcElementList = srcXPath.selectNodes(in);
+			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+	            Element srcElement = (Element) it.next();
+	            srcElement.addText(srcElement.attributeValue("codeListValue"));
+	        }
+			
+			// *************************************************************************************
+			// copy distributor address to //smXML:MD_Distributor
+			// *************************************************************************************
+			srcXPath = new Dom4jXPath( "//iso19115full:contact/smXML:CI_ResponsibleParty[//smXML:CI_RoleCode[@codeListValue=\"Distributor\"]]");
+			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			srcElementList = srcXPath.selectNodes( in);			
+			dstXPath = new Dom4jXPath( "//smXML:MD_Distributor");
+			dstXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
+			result = dstXPath.selectSingleNode(in);
+			if (result != null) {
+				Element dstElement = ((Element)result);
+			
+				for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
+		            Element srcElementCopy = ((Element) it.next()).createCopy();
+					dstElement.add(srcElementCopy);
+		        }
+			}
 			
 		} catch (Exception e) {
 			log.error("Error processing document.", e);
