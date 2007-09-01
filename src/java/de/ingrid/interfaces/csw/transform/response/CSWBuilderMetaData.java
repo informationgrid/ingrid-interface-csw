@@ -53,7 +53,7 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
      * @return The parent element.
      */
     protected Element addSMXMLCharacterString(Element parent, String value) {
-        parent.addElement("smXML:CharacterString").addText(value);
+        parent.addElement("smXML:CharacterString").addText(value.replaceAll("&(?![a-z]+;)", "&amp;"));
         return parent;
     }
 
@@ -120,9 +120,6 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
         parent.addElement("smXML:positiveInteger").addText(value);
         return parent;
     }
-    
-    
-
     
     /**
      * Transform the dom4j document of this class into a w3c.dom.Document.

@@ -603,7 +603,8 @@ public class IngridQueryHelper {
         String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
         String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
         for (int i = 0; i < toIds.length; i++) {
-            if (objId.equals(toIds[i]) && refType[i].equals("1")) {
+            // '0' = parent, '1' = reference
+        	if (objId.equals(toIds[i]) && refType[i].equals("0")) {
                 return fromIds[i];
             }
         }
