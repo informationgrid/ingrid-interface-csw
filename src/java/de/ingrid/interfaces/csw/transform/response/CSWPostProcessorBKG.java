@@ -44,7 +44,7 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 			// *************************************************************************************
 			// copy point of contact address to iso19115full:identificationInfo/smXML:pointOfContact
 			// *************************************************************************************
-			XPath srcXPath = new Dom4jXPath( "//iso19115full:contact/smXML:CI_ResponsibleParty[//smXML:CI_RoleCode[@codeListValue=\"Point of Contact\"]]");
+			XPath srcXPath = new Dom4jXPath( "//iso19115full:contact/smXML:CI_ResponsibleParty[smXML:role/smXML:CI_RoleCode[@codeListValue=\"Point of Contact\"]]");
 			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
 			List srcElementList = srcXPath.selectNodes( in);			
 			XPath dstXPath = new Dom4jXPath( "//iso19115full:identificationInfo");
@@ -103,8 +103,14 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 			srcElementList = srcXPath.selectNodes(in);
 			for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
 	            Element srcElement = (Element) it.next();
-	            Element elToCopy = srcElement.element("distributor").element("MD_Distributor").element("distributorFormat").element("MD_Format").createCopy();
-	            srcElement.addElement("smXML:distributionFormat").add(elToCopy);
+	            try {
+		            Element elToCopy = srcElement.element("distributor").element("MD_Distributor").element("distributorFormat").element("MD_Format").createCopy();
+		            srcElement.addElement("smXML:distributionFormat").add(elToCopy);
+	            } catch (Exception e) {
+	            	if (log.isDebugEnabled()) {
+	            		log.debug("No element 'MD_Format' found below //smXML:MD_Distribution!");
+	            	}
+	            }
 	        }
 			
 			// *************************************************************************************
@@ -121,14 +127,14 @@ public class CSWPostProcessorBKG implements CSWPostProcessor {
 			// *************************************************************************************
 			// copy distributor address to //smXML:MD_Distributor
 			// *************************************************************************************
-			srcXPath = new Dom4jXPath( "//iso19115full:contact/smXML:CI_ResponsibleParty[//smXML:CI_RoleCode[@codeListValue=\"Distributor\"]]");
+			srcXPath = new Dom4jXPath( "//iso19115full:contact/smXML:CI_ResponsibleParty[smXML:role/smXML:CI_RoleCode[@codeListValue=\"Distributor\"]]");
 			srcXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
 			srcElementList = srcXPath.selectNodes( in);			
 			dstXPath = new Dom4jXPath( "//smXML:MD_Distributor");
 			dstXPath.setNamespaceContext( new SimpleNamespaceContext( namespaces));
 			result = dstXPath.selectSingleNode(in);
 			if (result != null) {
-				Element dstElement = ((Element)result);
+				Element dstElement = ((Element)result).addElement("smXML:distributorContact");
 			
 				for (Iterator it = srcElementList.iterator(); it.hasNext(); ) {
 		            Element srcElementCopy = ((Element) it.next()).createCopy();
