@@ -236,13 +236,13 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_TOWNSHIP_NO = "areaid";
 
-    public static final String HIT_KEY_OBJECT_ST_BOX_X1 = "T01_st_bbox.x1";
+    public static final String HIT_KEY_OBJECT_ST_BOX_X1 = "x1";
 
-    public static final String HIT_KEY_OBJECT_ST_BOX_X2 = "T01_st_bbox.x2";
+    public static final String HIT_KEY_OBJECT_ST_BOX_X2 = "x2";
 
-    public static final String HIT_KEY_OBJECT_ST_BOX_Y1 = "T01_st_bbox.y1";
+    public static final String HIT_KEY_OBJECT_ST_BOX_Y1 = "y1";
 
-    public static final String HIT_KEY_OBJECT_ST_BOX_Y2 = "T01_st_bbox.y2";
+    public static final String HIT_KEY_OBJECT_ST_BOX_Y2 = "y2";
 
     public static final String HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP = "t01_st_township.township";
     

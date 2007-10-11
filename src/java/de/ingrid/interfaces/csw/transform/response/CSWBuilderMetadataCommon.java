@@ -341,7 +341,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             exGeographicBoundingBox.addElement("smXML:northBoundLatitude").addElement("smXML:approximateLatitude").addText(coordinatesGeoY2[i]);
         }
 
-        String[] stTownship = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP);
+        String[] stTownship = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO);
         String[] stBoxX1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_X1);
         String[] stBoxX2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_X2);
         String[] stBoxY1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_Y1);
@@ -366,7 +366,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             	exGeographicBoundingBox.addElement("smXML:southBoundLatitude").addElement("smXML:approximateLatitude").addText(stBoxY2[i]);
             }
             // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLatitude/smXML:approximateLatitude
-            if (stBoxY2.length == stTownship.length) {
+            if (stBoxY1.length == stTownship.length) {
             	exGeographicBoundingBox.addElement("smXML:northBoundLatitude").addElement("smXML:approximateLatitude").addText(stBoxY1[i]);
             }
         }
