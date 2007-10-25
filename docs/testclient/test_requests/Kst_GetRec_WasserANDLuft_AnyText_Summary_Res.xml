@@ -1,0 +1,1033 @@
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw">
+   <csw:RequestId/>
+   <csw:SearchStatus status="subset" timestamp="2007-06-01T09:33:44"/>
+   <csw:SearchResults elementSet="" numberOfRecordsMatched="35" numberOfRecordsReturned="10" resultSetId="">
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1D4B1D94-247D-4FDF-9390-2DB261FC1721</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium f&#xFC;r Umwelt und Forsten, Abteilung 6 (MUF)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Gewerbeaufsicht, Immissionsschutz, Chemikaliensicherheit, Gentechnik</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>++49 (0)6131 16 46 11</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>++49 (0)6131 16 46 44</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Kaiser-Friedrich-Stra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Mainz</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>55116</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@muf.rlp.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-04-27T16:29:18</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Hinweise zur effizienten Energienutzung in Industrieanlagen</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Vom Ministerium f&#xFC;r Umwelt und Forsten initiiertes Projekte zum effizienten Umgang bzw. zur effizienten Umwandlung von Energie in Industrieanlagen.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">C3755572-703F-45F4-98CA-3150B95B16CF</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium f&#xFC;r Umwelt und Forsten, Abteilung 6 (MUF)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Gewerbeaufsicht, Immissionsschutz, Chemikaliensicherheit, Gentechnik</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>++49 (0)6131 16 46 11</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>++49 (0)6131 16 46 44</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Kaiser-Friedrich-Stra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Mainz</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>55116</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@muf.rlp.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-04-27T16:31:41</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Sicherheits, Gesundheits und Umweltschutz-Leitfaden (SGU)</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Der SGU-Leitfaden erm&#xF6;glicht es Kleinbetrieben eigenst&#xE4;ndig die Einhaltung der wesentlichen Umwelt- und Arbeitsschutzbestimmungen zu &#xFC;berpr&#xFC;fen, Schwachstellen und L&#xFC;cken im Betrieb festzustellen und zu beseitigen. Auch wird der Aufbau eines Umwelt- und Arbeits- schutzmanagementsystems ebenso erleichtert wie die Zusammenarbeit zwischen Unternehmern, Arbeitnehmern und Aufsichtsbeh&#xF6;rden gef&#xF6;rdert wird. Der Leitfaden zeigt dar&#xFC;berhinaus M&#xF6;glichkeiten auf, wie Kosten eingespart werden k&#xF6;nnen, sei es bei Energie, Abfall oder Wasser, sei es durch die Verringerung der Ausfallzeiten der Besch&#xE4;ftigten durch arbeitsbedingte Krankheiten oder Arbeitsunf&#xE4;lle.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">79415EE6-757F-11D3-A355-BE3BE1E79139</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Staatliches Amt f&#xFC;r Umwelt und Natur Neubrandenburg (StAUN NB)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>(0395)380-5000</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>(0395) 380-5020</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Neustrelitzer Str.120</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Neubrandenburg</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>17033</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@staunnb.mv-regierung.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.mv-regierung.de/staeun/neubrandenburg/</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2002-01-15T15:20:12</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachbibliothek (StAUN Neubrandenburg)</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">&#xDC;bersicht &#xFC;ber den Literaturbestand im StAUN Neubrandenburg</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">6129C748-9FCC-4551-BEDC-386D1CD20851</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr  Werner Hei&#xDF;ler</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 5 - Informationstechnisches Zentrum Umwelt, Referat 53 - UIS-Fachsysteme</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0721/5600-1478</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-1515</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Griesbachstra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76185</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Werner.Heissler@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-11-28T15:09:21</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Umwelt-Datenbanken und -Karten online</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2006-11-27T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Mit dem dynamischen Internet-Dienst &quot;Umwelt-Datenbanken und -Karten online&quot; er&#xF6;ffnet die Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz zu ausgew&#xE4;hlten Umweltthemen f&#xFC;r jeden B&#xFC;rger den direkten Zugang zu ihren Sachdatenbanken und digitalen Kartenbest&#xE4;nden. Ma&#xDF;gabe hierf&#xFC;r ist das Landesumweltinformationsgesetz vom 6.3.2006. Die Daten stammen aus Mess- und Erhebungsprogrammen der LUBW sowie einem Informationsverbund von Umweltdienststellen des Landes und des kommunalen Bereichs (IuK-Verbund Land / Kommunen).  Themenbereiche sind: Luft, Radioaktivit&#xE4;t, Klima, Abfall, Natur und Landschaft, Boden und Geologie sowie Geobasisdaten.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Berichts- und Auswertesystem</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">3944C918-FB0C-11D3-BB0E-00105A378751</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau  Jutta Witt-Hock</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 4 - Wasser und Altlasten, Referat 44 - Altlasten, Schadensf&#xE4;lle</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0721/5600-1272</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-1521</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Griesbachstra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76185</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Jutta.Witt-Hock@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-05-05T10:01:56</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Altlasten-Fachinformationen im World-Wide Web (AlfaWeb)</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2006-03-01T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">AlfaWeb ist ein Kompendium, das alle LUBW-Materialien zur Altlastenbearbeitung, eine Vielzahl von Gesetzestexten sowie ausgew&#xE4;hlte Formulare enth&#xE4;lt. Als Besonderheit erm&#xF6;glichen speziell entwickelte sog. &quot;Fachzug&#xE4;nge&quot; eine schnelle und gezielte Erschlie&#xDF;ung gew&#xFC;nschter Informationen. Daneben sind eine Reihe unabh&#xE4;ngiger Einzelprogramme integriert (wie z.B. &quot;Referenzkatalog Altlasten/Schadensfallsanierung&quot; (RefAS), &quot;Branchenkatalog&quot; (BKAT) und ein Berechnungsprogramm zur Ermittlung der Emissions/Immissionslage nach der VwV-Orientierungswerte (I-E-CALC)).  Alle Dokumente sind in eine Hypertextstruktur eingebettet, d.h. sie wurden in handhabbare Einheiten (Unterkapitel) zerlegt und nach strukturellen und inhaltlichen Gesichtspunkten untereinander verzeigert. Die Berichte sind sowohl als Hypertext-Dokument als auch als Druckdatei abrufbar. Von praxiserfahrenen Fachleuten wurden zur gezielten Informationsbeschaffung 3 themenbezogene Fachzug&#xE4;nge entwickelt: Systematische Vorgehensweise, Recht sowie Methoden + Techniken. Die Schlagwortsuche erm&#xF6;glicht den Zugang &#xFC;ber eine alphabetische Liste von Fachbegriffen, die aus den in AlfaWeb enthaltenen Berichten aufgebaut wurde. &#xDC;ber eine Volltextsuche k&#xF6;nnen alle Dokumente gefunden werden, welche die vom Benutzer vorgegebenen Begriffe enthalten.   AlfaWeb steht im INTRANET des Umweltministeriums (http://xfaweb.lubw.bwl.de/alfaweb/) und im INTERNET zur Verf&#xFC;gung: (http://www.xfaweb.baden-wuerttemberg.de/alfaweb/) </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">5F3F2F77-24E6-4251-8F97-6CDA0BAF68C9</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau  Renate Ebel</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 5 - Informationstechnisches Zentrum Umwelt, Referat 53 - UIS-Fachsysteme</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0721/5600-1303</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-1515</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Griesbachstra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76185</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Renate.Ebel@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-06-27T15:47:19</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Informationsanbieter aus Baden-W&#xFC;rttemberg im Umweltportal Deutschland PortalU</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2006-06-27T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Das Umweltportal Deutschland PortalU erschlie&#xDF;t Informationen, die auf den Webseiten zahlreicher &#xF6;ffentlicher Einrichtungen verteilt vorliegen. Es dient so als Informationsbroker f&#xFC;r Umweltinformationen in Deutschland.  Hinter diesem Angebot stehen &#xFC;ber eine Million Webseiten, Datenbankeintr&#xE4;ge (dynamische Webangebote) und Adresseintr&#xE4;ge, unter anderem auch dem Umweltdatenkatalog (UDK). Mehr als 100 Anbieter von Umweltinformationen aus Beh&#xF6;rden und anderen &#xF6;ffentlichen Einrichtungen aus Bund und L&#xE4;ndern sind in PortalU zusammengeschlossen. Aus Baden-W&#xFC;rttemberg sind dies bisher: die Anbieter, die auch Umweltinformationen f&#xFC;r das Umweltportal Baden-W&#xFC;rttemberg liefern. Hauptanbieter sind die Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz LUBW und das Umweltministerium Baden-W&#xFC;rttemberg.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Auskunfts- und Nachweissystem, &#xDC;bergeordnete Komponente</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">6E2C5082-DADA-11D3-BACC-00104B168367</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr  Mark Hailwood</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 3 - Technischer Arbeits- und Umweltschutz, Referat 31 - Umwelttechnologie</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0721/5600-2309</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-2339</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Hertzstra&#xDF;e 173</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76187</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Mark.Hailwood@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-28T13:53:31</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Betriebsbereich-Kataster &quot;St&#xF6;rfall-Verordnung&quot; (BetrKat)</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2006-04-10T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Das Betriebsbereich-Kataster &quot;St&#xF6;rfall-Verordnung&quot; dient zur landesweiten Erfassung, Auswertung und Darstellung der Daten aller Betriebsbereiche, die der St&#xF6;rfall-Verordnung (12. BImSchV) unterliegen. Neben der Unterst&#xFC;tzung der &#xDC;berwachungs- und Immissionsschutzbeh&#xF6;rden dient das Kataster der Berichterstattung an die Europ&#xE4;ische Kommission &#xFC;ber das Bundesumweltministerium gem&#xE4;&#xDF; den Vorgaben der Kommission.  Das Kataster besteht aus: a) Datenerfassung mittels des St&#xF6;rfallV-Modus des IS-GAA b) Datenhaltung in einer ORACLE Datenbank c) Datenauswertung mithilfe der Werkzeuge des Berichtssystems (BRS) </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>Datenerfassung erfolgt ausschlie&#xDF;lich in den Regierungspr&#xE4;sidien und der LUBW. Datenauswertung erfolgt bei der LUBW f&#xFC;r die Berichtspflichten und bei den Regierungspr&#xE4;sidien im Rahmen ihrer Vollzugst&#xE4;tigkeiten. Eine Erweiterung der Nutzung bedarf der Zustimmung des Lenkungsausschusses.</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Datenhaltungs- und Verteilungssystem, Berichtssystem, Fachinformationssystem</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">E7D2FE38-DAEE-11D3-BACC-00104B168367</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr  Alfred Neu</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 3 - Technischer Arbeits- und Umweltschutz, Referat 32 - Radioaktivit&#xE4;t, Strahlenschutz</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0721/5600-2226</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-2339</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Hertzstra&#xDF;e 173</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76187</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Alfred.Neu@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-03T12:05:58</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Radioaktivit&#xE4;tsdatenbank (RAD)</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2000-02-04T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2006-03-01T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Aufgabenbereich: Ziel der Radioaktivit&#xE4;ts-Datenbank (RAD) als fachliches Berichtssystem ist es, ein einheitliches Werkzeug zur Interpretation und Darstellung von Radioaktivit&#xE4;tsmesswerten unterschiedlicher Herkunft zur Verf&#xFC;gung zu stellen. Zudem dient sie im Ereignisfall zur Lagebeurteilung und zum direkten Zugriff auf noch nicht freigegebene Daten. Zur Zeit sind in der Radioaktivit&#xE4;ts-Datenbank haupts&#xE4;chlich die Werte der Umgebungs&#xFC;berwachung gespeichert.  Die Radioaktivit&#xE4;ts-Datenbank (RadDB) hat die Aufgabe der zentralen Datenhaltung und Auswertung der im Land Baden-W&#xFC;rttemberg erhobenen Labor- und Feldmessdaten auf Radioaktivit&#xE4;t. Wesentliche Ziele der Radioaktivit&#xE4;ts-Datenbank sind,  ein einheitliches Fachinformationssystem zur Interpretation und Darstellung von  Radioaktivit&#xE4;tsmessdaten f&#xFC;r Fachanwender und  die Bereitstellung der Daten f&#xFC;r &#xFC;bergeordnete UIS-Systeme und damit f&#xFC;r die &#xD6;ffentlichkeit zur Verf&#xFC;gung zu stellen. Die radiologischen Daten werden im Rahmen der verschiedenen Vollzugszust&#xE4;ndigkeiten und bei Forschungsvorhaben erhobenen. Hauptlieferanten solcher Radioaktivit&#xE4;tsmesswerte sind das Radioaktivit&#xE4;tsmesslabor der LUBW, die Chemischen und Veterin&#xE4;r- Untersuchungsanstalten (CVUA), die Betreiber von kerntechnischen Anlagen, die Feuerwehr, sowie Universit&#xE4;ten, Fachhochschulen und der Technische &#xDC;berwachungsverein (T&#xDC;V). Es handelt sich dabei vor allem um Messdaten aus den Medien Luft, Niederschlag, Boden, Pflanzen, Wasser, Lebensmitteln und Abfallmedien. In Erg&#xE4;nzung zur KF&#xDC; dient die Radioaktivit&#xE4;ts-Datenbank im Ereignisfall auch als Basis f&#xFC;r Lagedarstellungen.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachdatenbank, Fachspezifisches Auswertesystem</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">486118FC-3F6E-4481-9FE0-D792569BFDD1</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau  Andrea Mehling</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 2 - &#xD6;kologie, Boden, Naturschutz, Referat 21 - Grundsatz, Forschung, Nachhaltigkeit</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0721/5600-1469</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-1414</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Griesbachstra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76185</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>andrea.mehling@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2003-10-28T09:56:10</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Umweltforschung-Fachinformationen im World-Wide Web (FofaWeb)</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2003-10-28T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2003-10-28T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Ziel von FofaWeb ist der Transfer der Ergebnisse der Umweltforschung Baden-W&#xFC;rttemberg zur Umsetzung und Weiterentwicklung in der Wirtschaft, Wissenschaft und Verwaltung. Die Themen umfassen die Umwelttechnik, den Gesundheits-, Umwelt- und Ressourcenschutz, das umweltvertr&#xE4;gliche Wohnen und die Fl&#xE4;chen- und Raumnutzung. Daneben finden sich Forschungsergebnisse zu den Aspekten einer nachhaltigen Entwicklung im Kontext &#xD6;konomie und sozialem Engagement. &#xDC;ber verschiedene Zug&#xE4;nge (XfaWeb-Explorer, Volltextsuche, Schlagwortsuche, Fachzugang) ist der Zugriff auf gew&#xFC;nschte Themen m&#xF6;glich. Im Internet steht FofaWeb als Mitglied der Systemfamilie XfaWeb unter http://www.uvm.baden-wuerttemberg.de/xfaweb und im Intranet unter http://xfaweb.lfu.bwl.de/xfaweb zur Verf&#xFC;gung. Die Forschungsberichte werden chronologisch und alphabetisch geordnet in einer Lang- (pdf-File) und einer Kurzversion (html-File) angeboten.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1C5491DC-F243-11D2-9A86-080000507261</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr  Manfred M&#xFC;ller</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 5 - Informationstechnisches Zentrum Umwelt, Referat 53 - UIS-Fachsysteme</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0721/5600-1360</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-1515</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Griesbachstra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76185</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Manfred.Mueller@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   RIPS-Pool-Administrator</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 5 - Informationstechnisches Zentrum Umwelt, Referat 53 - UIS-Fachsysteme</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-1515</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Griesbachstra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76185</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>ripspool.Mail@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-04T09:05:53</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">R&#xE4;umliches Informations- und Planungssystem (RIPS)</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>1998-06-22T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2002-08-06T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Die raumbezogene Datenverarbeitung im UIS BW wird durch die querschnittsorientierte Komponente &quot;R&#xE4;umliches Informations- und Planungssystem (RIPS)&quot; sichergestellt. RIPS hat die Aufgabe, allen UIS-Nutzern Zugriff auf raumbezogene Daten zu erm&#xF6;glichen. Dazu wurden inzwischen mehrere GIS-Werkzeuge entwickelt: ein Meta-Auskunftssystem f&#xFC;r Geodaten, interaktive Benutzeroberfl&#xE4;chen zur Geodatenerfassung, Auswertung und Pr&#xE4;sentation. Zudem wurde der RIPS-Pool als Geo-Datenhaltungssystem f&#xFC;r raumbezogenen Fach- und Basisdaten mit Ausgabeschnittstellen u.a. f&#xFC;r dezentrale  PC- und Internet-basierte Mappingsysteme aufgebaut. Im Rahmen der Arbeiten f&#xFC;r das Vorhaben WAABIS wurde ein auf ORACLE lauff&#xE4;higer Geodatenserver mit der Internetkomponente GISterm und einer ArcView-Schnittstelle realisiert und bei ca. 70 Dienststellen (Kreise, RP u.a.)  in Betrieb genommen.  Aufgabenbereich: Basisdaten der Vermessungsverwaltung und digitalisierte Fachdaten mit Raumbezug werden nach entsprechender Qualit&#xE4;tssicherung in den zentralen RIPS-Pool &#xFC;bernommen und hier f&#xFC;r unterschiedliche Nutzergruppen verf&#xFC;gbar gemacht. Der Zugriff auf die raumbezogenen Daten erfolgt &#xFC;ber online-Schnittstellen, f&#xFC;r die Ausgabe an unterschiedliche Nutzergruppen werden verschiedene Formate unterst&#xFC;tzt.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>verwaltungsintern komplett zug&#xE4;nglich, Abgabe an Dritte je nach Nutzungsberechtigung. Das System steht allen UIS-Nutzern uneingeschr&#xE4;nkt zur Verf&#xFC;gung</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Datenhaltungs- und Verteilungssystem, Geographisches Informationssystem, Geodatenserver</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+   </csw:SearchResults>
+  </csw:GetRecordsResponse>
+ </soapenv:Body>
+</soapenv:Envelope>

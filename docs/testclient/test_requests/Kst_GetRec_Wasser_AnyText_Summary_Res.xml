@@ -1,0 +1,1104 @@
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw">
+   <csw:RequestId/>
+   <csw:SearchStatus status="subset" timestamp="2007-06-01T09:33:13"/>
+   <csw:SearchResults elementSet="" numberOfRecordsMatched="336" numberOfRecordsReturned="10" resultSetId="">
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">8701E1C8-3F95-11D3-9A86-080000507261</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr  Steffen Giese</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Th&#xFC;ringer Landesanstalt f&#xFC;r Umwelt und Geologie, Abteilung 6: Geologischer Landesdienst, Grundwasser, Referat 63: Hydrogeologie, Grundwasserschutz</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>03641-684-541</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>03641684-222 /- 333</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>G&#xF6;schwitzer Str. 41</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Jena</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>07745</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>s.giese@tlugjena.thueringen.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-03-10T13:17:47</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">GEOFEM (Programmsystem)</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Programmsystem zur Berechnung und Ausgabe von Wasserhaushaltsdaten  </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>Datenzug&#xE4;nglichkeit: verwaltungsintern zug&#xE4;nglich,  sowie CD-ROM &quot;GEOFEM light '98&quot; in der TLUG k&#xE4;uflich zu erwerben</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">GEOFEM</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">30A01316-CB11-4F28-9D70-385913FF46A7</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium f&#xFC;r Umwelt, Saarland, Abteilung E Technischer Umweltschutz und Zukunftsenergien, Referat E/2 (Wasser und Abwasser)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>&lt;ol&gt;&lt;li&gt;Wasserwirtschaft&lt;/li&gt;&lt;li&gt;Gew&#xE4;sserkundliche Dienste&lt;/li&gt;&lt;li&gt;Schutz und Bewirtschaftung des Grundwassers, Wasserversorgungsanlagen&lt;/li&gt;&lt;li&gt;Umgang mit wassergef&#xE4;hrdenden Stoffen&lt;/li&gt;&lt;li&gt;Schutz und Bewirtschaftung der Oberfl&#xE4;chengew&#xE4;sser&lt;/li&gt;&lt;li&gt;Konzeption der Abwasserableitung und Behandlung&lt;/li&gt;&lt;li&gt;Abwasseranlagen, EVS (Abwasserwirtschaft), fachliche Projektpr&#xFC;fung&lt;/li&gt;&lt;li&gt;Fragen des Hochwasserschutzes und der Hochwasservorsorge&lt;/li&gt;&lt;li&gt;Mitwirkung bei der Gew&#xE4;sseraufsicht&lt;/li&gt;&lt;li&gt;Ausbau und Unterhaltung von Gew&#xE4;ssern&lt;/li&gt;&lt;/ol&gt;  </smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0681-501-</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0681-501-4521</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Keplerstr. 18</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Saarbr&#xFC;cken</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>66117</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@umwelt.saarland.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.umwelt.saarland.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Publisher"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Umwelt- und Arbeitsschutz, Gesch&#xE4;ftsbereich 2 - Wasser, Fachbereich 2.4 - Gew&#xE4;sser&#xF6;kologie</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0681/3000-984</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0681/3000-941</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Malstatter Str. 17</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Saarbr&#xFC;cken</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>66117</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>lua@lua.saarland.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.lua.saarland.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-06T14:07:09</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:MD_DataIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Gew&#xE4;sserg&#xFC;tekarte des Saarlandes</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2005-09-01T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Seit 1975 werden im Saarland im Abstand von 5 Jahren Gew&#xE4;sserg&#xFC;tekarten nach bundeseinheitlichen Kriterien der L&#xE4;nderarbeitsgemeinschaft Wasser (LAWA) erstellt. Die Gew&#xE4;sserg&#xFC;tekarte Saarland ist die aktualisierte Fassung der Gew&#xE4;sserg&#xFC;tekarte 2000. Die Datengrundlage hierzu stellt das Gew&#xE4;sserg&#xFC;tekataster (chemischer und biologischer Zustand saarl&#xE4;ndischer Flie&#xDF;gew&#xE4;sser) dar, welches beim Landesamt f&#xFC;r Umwelt- und Arbeitsschutz gef&#xFC;hrt wird.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>Im Internet verf&#xFC;gbar</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+      </iso19115summary:MD_DataIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">FF770EBB-2533-44DD-86EB-0AFF608A9A69</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Umwelt- und Arbeitsschutz, Gesch&#xE4;ftsbereich 2 - Wasser, Fachbereich 2.1 - Hydrogeologie und Grundwassernutzung</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString> </smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0681/8500-1219</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0681/8500-1384</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Don-Bosco-Str. 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Saarbr&#xFC;cken</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>66119</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>lua@lua.saarland.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.lua.saarland.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-05-04T11:26:08</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:MD_DataIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">H&#xDC;K 100 Hydrogeologische Karte des Saarlandes 1:100 000</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2006-01-01T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Die H&#xDC;K 100 des Saarlandes mit Erl&#xE4;uterungen 3 Bl&#xE4;tter: - Wasserleitverm&#xF6;gen - Geologische &#xDC;bersicht - Grundwasserbeschaffenheit  </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>Datengewinnung: analog, liegt vor als: Karte, beziehbar: analog</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+      </iso19115summary:MD_DataIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">5AEC2DB7-CE55-11D3-8BF6-00105A493192</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Arnd Br&#xE4;unig</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>S&#xE4;chsisches Landesamt f&#xFC;r Umwelt und Geologie, Abteilung 4 (Natur, Landschaft, Boden)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Referent f&#xFC;r Bodenschutz</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>(03731) - 294 228</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>(03731) - 22 918</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Zur Wetterwarte 11</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Dresden</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>01109</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>arnd.braeunig@lfug.smul.sachsen.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-13T09:36:48</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Simulationsmodell zur Bodenerosion durch Wasser</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Programmname: EROSION 2D/3D Prozessorientiertes physikalisch begr&#xFC;ndetes und computergest&#xFC;tztes Simulationsmodell zur Modellierung der Wassererosion f&#xFC;r Hangprofile (E2D) und in Gew&#xE4;ssereinzugsgebieten (E3D).</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Modell E3D /ArcGIS</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">0C12204F-5626-4A2E-94F4-514424F093A1</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Publisher"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Umwelt- und Arbeitsschutz, Gesch&#xE4;ftsbereich 2 - Wasser, Fachbereich 2.1 - Hydrogeologie und Grundwassernutzung</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString> </smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0681/8500-1219</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0681/8500-1384</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Don-Bosco-Str. 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Saarbr&#xFC;cken</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>66119</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>lua@lua.saarland.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.lua.saarland.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium f&#xFC;r Umwelt, Saarland, Abteilung E Technischer Umweltschutz und Zukunftsenergien, Referat E/4 (Rechtsangelegenheiten der Abteilung)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>&lt;ol&gt;&lt;li&gt;Rechtsetzungsverfahren (Gesetze, Verordnungen) sowie Erlass von Richtlinien und Merkbl&#xE4;ttern&lt;/li&gt;&lt;li&gt;Fachrechtliche Angelegenheiten&lt;/li&gt;&lt;li&gt;Aufsichten&lt;/li&gt;&lt;li&gt;Widerspruchs- und Klageverfahren, Rechtsgutachten&lt;/li&gt;&lt;li&gt;Zust&#xE4;ndigkeiten im Wasserrecht&lt;/li&gt;&lt;li&gt;Zust&#xE4;ndigkeiten im Abfallrecht&lt;/li&gt;&lt;li&gt;Zust&#xE4;ndigkeiten im Bodenschutzrecht&lt;/li&gt;&lt;li&gt;Gesch&#xE4;ftsstelle der L&#xE4;nderarbeitsgemeinschaft Abfall (LAGA)&lt;/li&gt;&lt;/ol&gt;</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0681-501-4774</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0681-501-4521</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Keplerstr. 18</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Saarbr&#xFC;cken</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>66117</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@umwelt.saarland.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.umwelt.saarland.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-06T14:10:09</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:MD_DataIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Bestandskarte saarl&#xE4;ndischer  Wasserschutzgebiete</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2005-01-01T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="publication"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Die Karte der Wasserschutzgebiete im Ma&#xDF;stab 1:25.000 stellt den Bestand an ausgewiesenen Wasserschutzgebieten in der aktuell g&#xFC;ltigen Fassung dar. Unterschieden wird nach Zone I bis III. Die angeh&#xE4;ngten Attributinformationen sind: Name des Wasserschutzgebietes, Nummer, Schutzzone, Verordnungsdatum, Amtsblattstelle und Erfasser. </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+      </iso19115summary:MD_DataIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">5AEC2A62-CE55-11D3-8BF6-00105A493192</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Geographieoberrat Bernd Siemer</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>S&#xE4;chsisches Landesamt f&#xFC;r Umwelt und Geologie, Abteilung 4 (Natur, Landschaft, Boden)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Referent f&#xFC;r Bodenschutz</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>(03731) - 294 232</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>(03731) - 22 918</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Zur Wetterwarte 11</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Dresden</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>01109</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>bernd.siemer@lfug.smul.sachsen.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-13T09:35:30</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Komplexe Auswertungsmethoden zu Bodenfunktionen</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Mit Hilfe dieser Methoden k&#xF6;nnen Daten zur folgenden Sachverhalten ermittelt werden: Biotopentwicklungspotential, Bodenkundliche Feuchtestufe, Kalkbedarf f&#xFC;r Waldb&#xF6;den, Nat&#xFC;rliche Ertragsleistung, Nat&#xFC;rliche Vegetation, Pflanzenverf&#xFC;gbares Bodenwasser, Potentielle Erosionsgef&#xE4;hrdung durch Wasser und Wind, Potentielle Verdichtungsempfindlichkeit, Standortbezogenes ackerbauliches Ertragspotential, Standortgerechte Bodenbearbeitung von Ackerb&#xF6;den, Standortspezifisches N&#xE4;hrstoffpotential, Versauerungsgef&#xE4;hrdung und Verschl&#xE4;mmungsneigung.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Modell /MeMas /Access</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">45317E2F-C447-4D0B-B8F8-75E90A33AD1E</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium f&#xFC;r Umwelt, Saarland, Abteilung E Technischer Umweltschutz und Zukunftsenergien, Referat E/4 (Rechtsangelegenheiten der Abteilung)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>&lt;ol&gt;&lt;li&gt;Rechtsetzungsverfahren (Gesetze, Verordnungen) sowie Erlass von Richtlinien und Merkbl&#xE4;ttern&lt;/li&gt;&lt;li&gt;Fachrechtliche Angelegenheiten&lt;/li&gt;&lt;li&gt;Aufsichten&lt;/li&gt;&lt;li&gt;Widerspruchs- und Klageverfahren, Rechtsgutachten&lt;/li&gt;&lt;li&gt;Zust&#xE4;ndigkeiten im Wasserrecht&lt;/li&gt;&lt;li&gt;Zust&#xE4;ndigkeiten im Abfallrecht&lt;/li&gt;&lt;li&gt;Zust&#xE4;ndigkeiten im Bodenschutzrecht&lt;/li&gt;&lt;li&gt;Gesch&#xE4;ftsstelle der L&#xE4;nderarbeitsgemeinschaft Abfall (LAGA)&lt;/li&gt;&lt;/ol&gt;</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0681-501-4774</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0681-501-4521</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Keplerstr. 18</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Saarbr&#xFC;cken</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>66117</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@umwelt.saarland.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.umwelt.saarland.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Publisher"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Umwelt- und Arbeitsschutz, Gesch&#xE4;ftsbereich 5 - Natur und Boden, Fachbereich 5.3 - Gew&#xE4;sserentwicklung, Hochwasserschutz</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString> </smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0681/8500-1132</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0681/8500-1384</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Don-Bosco-Str. 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Saarbr&#xFC;cken</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>66119</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>lua@lua.saarland.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.lua.saarland.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-06T14:03:46</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:MD_DataIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Karte der &#xDC;berschwemmungsfl&#xE4;chen der Gew&#xE4;sser II. und III. Ordnung</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2003-07-01T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">In der Karte der &#xDC;berschwemmungsfl&#xE4;chen der Gew&#xE4;sser II. und III. Ordnung werden die per Verordnung festgelegten &#xDC;berschwemmungsgebietsfl&#xE4;chen abgegrenzt. Neben der Bezeichnung  des &#xDC;berschwemmungsgebietes werden Angaben zum Gew&#xE4;sserbezug, zum Stand der Verordnung und zur Gr&#xF6;&#xDF;e des jeweiligen &#xDC;berschwemmungsgebietes (in ha) pr&#xE4;sentiert.  </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+      </iso19115summary:MD_DataIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">C3755572-703F-45F4-98CA-3150B95B16CF</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium f&#xFC;r Umwelt und Forsten, Abteilung 6 (MUF)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Gewerbeaufsicht, Immissionsschutz, Chemikaliensicherheit, Gentechnik</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>++49 (0)6131 16 46 11</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>++49 (0)6131 16 46 44</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Kaiser-Friedrich-Stra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Mainz</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>55116</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@muf.rlp.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-04-27T16:31:41</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Sicherheits, Gesundheits und Umweltschutz-Leitfaden (SGU)</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Der SGU-Leitfaden erm&#xF6;glicht es Kleinbetrieben eigenst&#xE4;ndig die Einhaltung der wesentlichen Umwelt- und Arbeitsschutzbestimmungen zu &#xFC;berpr&#xFC;fen, Schwachstellen und L&#xFC;cken im Betrieb festzustellen und zu beseitigen. Auch wird der Aufbau eines Umwelt- und Arbeits- schutzmanagementsystems ebenso erleichtert wie die Zusammenarbeit zwischen Unternehmern, Arbeitnehmern und Aufsichtsbeh&#xF6;rden gef&#xF6;rdert wird. Der Leitfaden zeigt dar&#xFC;berhinaus M&#xF6;glichkeiten auf, wie Kosten eingespart werden k&#xF6;nnen, sei es bei Energie, Abfall oder Wasser, sei es durch die Verringerung der Ausfallzeiten der Besch&#xE4;ftigten durch arbeitsbedingte Krankheiten oder Arbeitsunf&#xE4;lle.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1C40026C-E237-4C72-8C6A-D4F4E2C33FDC</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Struktur- und Genehmigungsdirektion Nord, Abteilung 3 (SGD Nord), Referat 34 (SGD Nord)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Wahrnehmung von &#xF6;ffentlich-rechtlichen und privatrechtlichen Angelegenheiten sowie der Eigent&#xFC;merinteressen bei landeseigenen Grundst&#xFC;cken  Vorhalten wasserwirtschaftlicher abfallwirtschaftlicher und bodenschutzrechlicher Grundlagen und Daten Berichtspflichten Berichte nach nationalen Richtlinien Berichte nach internationalen Richtlinien Berichte nach supranationalen Richtlinien  Beratung, Information, Mitwirkung bei der &#xD6;ffentlichkeitsarbeit Veranstaltungen, Vortr&#xE4;ge Ausstellungen Informationsschriften, Projektdokumentationen Fachspezifische EDV  Sammeln, Auswerten, Bewerten und Darstellen von Abfl&#xFC;ssen und Wasserst&#xE4;nden Sammeln, Auswerten, Bewerten und Darstellen von Strukturg&#xFC;tedaten sowie von Daten &#xFC;ber die &#xF6;komorphologische Gew&#xE4;sserbeschaffenheit Sammeln, Erheben und Bewerten von Menge- und G&#xFC;tedaten (physikalische, chemische, radiologische, biologische Gew&#xE4;sserbeschaffenheit) ober- und unterirdischer Gew&#xE4;sser  Daten &#xFC;ber das gentoxische Potential in Gew&#xE4;ssern und Abwassereinleitungen Daten &#xFC;ber die Gew&#xE4;sserversauerung Daten &#xFC;ber endokrin wirkende Stoffe in Gew&#xE4;ssern Daten &#xFC;ber das Abbauverhalten von Schadstoffen in Boden und Grundwasser Grundlagen und Daten &#xFC;ber Anlagen zum Umgang mit wassergef&#xE4;hrdenden Stoffen  Betriebe mit wassergef&#xE4;hrdenden Stoffen in Wasserschutzgebieten  Wasserspiegellagen und Niederschlags-Abflussbeziehungen  Untersuchung und Bewertung von Wasserproben Untersuchung vor Ort T&#xE4;tigkeit als Sachverst&#xE4;ndiger / sachverst&#xE4;ndiger Zeuge  Bewirtschaftungsvorgaben f&#xFC;r die Gew&#xE4;sser Mitwirkung bei der Aufstellung und Fortschreibung von wasserwirtschaftlichen Fachpl&#xE4;nen und Programmen Mitwirkung bei der Aufstellung von wasserwirtschaftlichen Rahmenpl&#xE4;nen  Planung, Bau, Betrieb und Unterhaltung von hydrologischen  Messeinrichtungen Hydrologischer Messdienst (Wasserst&#xE4;nde, Abfl&#xFC;sse, Niederschlag)   Grundsatzfragen Erhaltung und Entwicklung naturnaher Gew&#xE4;sser,  Gew&#xE4;sser&#xF6;kologie (AKTION BLAU) Gew&#xE4;sserpflege, naturnahe Gestaltung Aufstellung und Umsetzung von Gew&#xE4;sserentwicklungspl&#xE4;nen f&#xFC;r Gew&#xE4;sser I. und II. Ordnung, Beratung und Unterst&#xFC;tzung von Gemeinden und Landkreisen,  Erhaltung und Verbesserung der &#xF6;komorphologischen Gew&#xE4;sserbeschaffenheit, Erhaltung und Verbesserung der Gew&#xE4;sserstrukturg&#xFC;te, Biotopvernetzung,  Gew&#xE4;sserrandstreifen, Auenentwicklung,  wasserwirtschaftliche Fachplanungen und Programme  Hinwirken auf die Erhaltung und Verbesserung der &#xF6;kologischen Funktion der Gew&#xE4;sser, Hinwirken auf die Verminderung von Eingriffen in den Wasserhaushalt, Beratung von Unterhaltungspflichtigen   Hinwirken auf den bedachten Umgang mit Wasser (wassersparende/-freie Produktionsverfahren, Kreislauff&#xFC;hrung, dezentrale Bewirtschaftung von Niederschlagswasser) Kreislauff&#xFC;hrung,  dezentrales R&#xFC;ckhalten von Niederschlagswasser, Verdunstung, Versickerung, sachgerechte Nutzung als Brauchwasser etc., Vermeidung der Inanspruchnahme von Retentionsr&#xE4;umen Niederschlagswasserbewirtschaftung bei Inanspruchnahme von Fl&#xE4;chen, Vermeidung von Eingriffen in den Lebensraum Gew&#xE4;sser (Gew&#xE4;sserbett, Ufer, Aue)   Hochwassermeldedienst (nur Regionalstelle KO f&#xFC;r Nahe, Lahn, Sieg und RS TR f&#xFC;r Mosel Saar, Sauer)  Beratung der Wasser- und Deichwehren  Mitwirkung bei der Aufstellung und Fortschreibung &#xF6;rtlicher und &#xFC;ber&#xF6;rtlicher Hochwassermeldepl&#xE4;ne    Staatlicher Wasserbau, Hochwasserschutz, Planung, Bau und Unterhaltung &#xFC;ber&#xF6;rtlicher und &#xF6;rtlicher Hochwasserschutzma&#xDF;nahmen bei Gew&#xE4;ssern I. Ordnung   Ausnahmegenehmigungen bei Ma&#xDF;nahmen in &#xDC;berschwemmungs-Gebieten: Fachliche Beurteilung, Erteilen der Genehmigung  Bewirtschaftung der Grundwasserressourcen,  Bewahrung der Schutzziele in  Wasserschutz- und Heilquellenschutzgebieten   Sicherung wasserwirtschaftlich bedeutsamer Gebiete (WSG): Fachliche Abgrenzung der Schutzzonen, &#xDC;berarbeitung der Abgrenzungen von Wasser- und Heilquellengebieten, Festsetzung von Duldungspflichten, Verboten, Ausnahmegenehmigung bei Ma&#xDF;nahmen in Wasserschutzgebieten   Bewirtschaftungsvorgaben f&#xFC;r das Grundwasser, Mitwirkung bei der Aufstellung und Fortschreibung von wasserwirtschaftlichen Fachpl&#xE4;nen (Wasserversorgungsplanung) und Programmen, Ermittlungen und Vorgaben in Einzelf&#xE4;llen, Grundwassermodelle, Beratung bei der Umsetzung, Vermeidung, Verminderung von Stoffeintr&#xE4;gen, Beratung der Landwirtschaft   Mitwirkung an den Entscheidungen der unteren Wasserbeh&#xF6;rden   Genehmigung und &#xDC;berwachung von &#xF6;ffentlichen  Wasserversorgungsanlagen (&#xA7; 47 LWG): Fachl. Beurteilung und Bewertung Sachverst&#xE4;ndigenaufgaben und Genehmigung zum Bau und Betrieb von Aufbereitungsanlagen  und Hochbeh&#xE4;ltern, &#xDC;berwachung des Grundwassers und Kontrolle der Nutzungen   Ausbau und Unterhaltung von Gew&#xE4;ssern I. und II. Ordnung (&#xA7; 64 Abs.3 LWG) Aufstellung von Gew&#xE4;sserplegepl&#xE4;nen f&#xFC;r die Gew&#xE4;sser I. und II. Ordnung    Zulassung/Beschr&#xE4;nkung/ R&#xFC;cknahme/Widerruf von Gew&#xE4;sserbenutzungen,  Erteilung von Bewilligungen,  Beurteilung der Auswirkungen auf den Wasserhaushalt und die Gew&#xE4;sser&#xF6;kologie, Entscheidung &#xFC;ber Art, Ma&#xDF; und Zweck der jeweiligen Gew&#xE4;sserbenutzung, Anpassung wasserrechtlicher Zulassungen an neue Anforderungen,  Beratung &#xF6;ffentlich-rechtlicher Tr&#xE4;ger und Dritter bei der Planung u. Umsetzung wasserwirtschaftl. bedeuts. Ma&#xDF;nahmen   Mitwirkung bei Verfahren, Fachliche Beurteilung, Erteilen der Genehmigung  &#xDC;berwachung von Gew&#xE4;sserbenutzungen, d.s. Einleiten von Stoffen, Entnehmen und Ableiten von Grundwasser, Aufstauen, Absenken und Umleiten von Grundwasser; Eigen&#xFC;berwachungen, &#xDC;berwachung und Schau von Wasserschutzgebieten, Heilquellenschutzgebieten,  &#xDC;berwachung der Erf&#xFC;llung wasserbeh&#xF6;rdlicher Anordnungen bei der Sanierung von Schadensf&#xE4;llen, bei der Beseitigung rechtswidriger Zust&#xE4;nde, Bau&#xFC;berwachung und Bauabnahmen   Herstellen des Einvernehmens der oberen Wasserbeh&#xF6;rde, Beteiligung bei Verfahren Dritter (z.B. Ausbau von Bundeswasserstra&#xDF;en, Ausbau von Stra&#xDF;en, Bauleitplanung, Flurbereinigung und Raumordnung), Sicherung wasserwirtschaftlich bedeutsamer Gebiete  Umsetzung der EU-Wasserrahmenrichtlinie    Gew&#xE4;sserzustand, Ufer und Randstreifen, Erfassung und Dokumentation, Ma&#xDF;nahmen zur Verbesserung von Strukturg&#xFC;te, &#xD6;komorphologie, Biotopvernetzung, Umsetzung und Erfolgskontrolle     Durchf&#xFC;hrung von Plangenehmigungsverfahren: Fachliche Beurteilung der Auswirkungen auf Wasserhaushalt, Gew&#xE4;sser&#xF6;ko- und Gew&#xE4;ssermorphologie, Sicherstellen des Hochwasserabflusses, Bau&#xFC;berwachung und Bauabnahmen   Genehmigung von Anlagen im und am Gew&#xE4;sser Fachliche Beurteilung undSachverst&#xE4;ndigenaufgaben       F&#xF6;rderung wasserwirtschaftlicher Ma&#xDF;nahmen: Mitwirkung bei der Aufstellung des mittelfristigen Investitionsprogramms Antragspr&#xFC;fung, Steuerung und &#xDC;berwachung der Auszahlung, Pr&#xFC;fung der Verwendungsnachweise   Eignungsfeststellung von Anlagen zum Umgang mit wassergef&#xE4;hrdenden Stoffen, Sachverst&#xE4;ndigenaufgaben bei Genehmigungs- und Anzeigeverfahren, Mitwirkung bei wasserbeh&#xF6;rdlichen Entscheidungen, Beurteilung und Behandlung von Schadensf&#xE4;llen mit wassergef&#xE4;hrdenden Stoffen, Festlegung des Untersuchungsbedarf zur Gefahrfeststellung, Anordnung der erforderlichen Ma&#xDF;nahmen bei akuten Schadensf&#xE4;llen, Anordnung der erforderlichen Ma&#xDF;nahmen bei Altlasten  Kontrolle von Anlagen zum Umgang mit wassergef&#xE4;hrdenden Stoffen, Kontrolle von Anlagen in milit&#xE4;rischen Liegenschaften Meldedienst bei Schadensf&#xE4;llen mit wassergef&#xE4;hrdenden Stoffen (Rufbereitschaft), Mitwirkung bei der Aufstellung und Umsetzung internationaler Warnpl&#xE4;ne   Bewertung der Auswirkungen bei Schadensf&#xE4;llen mit wassergef&#xE4;hrdenden Stoffen, Information und Warnung nach den Ma&#xDF;gaben des Meldeplanes, Gew&#xE4;sseraufsicht, Ermittlungen und Vorgaben in Einzelf&#xE4;llen, Beratung bei der Umsetzung wasserwirtschaftlicher  Fachplanungen und Programme, Genehmigung von Abwasseranlagen (&#xA7; 54 LWG), Durchf&#xFC;hren des Verfahrens, Abwasserbeseitigungskonzepte Freistellen von der Abwasserbeseitigungspflicht (&#xA7; 53 LWG) Gew&#xE4;sseraufsicht,  Wasserbeh&#xF6;rdliche  Anordnungen bei Missst&#xE4;nden, &#xDC;berwachung der M&#xE4;ngelbeseitigung, &#xDC;berwachung von Gew&#xE4;sserbenutzungen, Abwassereinleitungen, Indirekteinleitungen, Eigen&#xFC;berwachungen, &#xDC;berwachung von Abwasseranlagen, Bau&#xFC;berwachung und Bauabnahmen von Abwasseranlagen   Hinwirken auf die z&#xFC;gige Aufstellung und Realisierung von Abwasserbeseitigungskonzepten sowie auf Bau und Betrieb von Abwasseranlagen (Erstausstattung), Hinwirken auf Sanierung, Erweiterung von Abwasseranlagen (N&#xE4;hrstoffelimination etc.) Verbesserung der Eigen&#xFC;berwachung, Hinwirken auf Abwasservermeidung, -vorbehandlung Hinwirken auf rechtzeitige Erfassung und Sanierung von undichten Kan&#xE4;len, Hinwirken auf die Erhaltung und Wiederherstellung der &#xF6;kologischen Funktion der Oberfl&#xE4;chengew&#xE4;sser Abwasserbeseitigungspl&#xE4;ne   Beratung von Abfallerzeugern und -besitzern sowie der unteren Abfallbeh&#xF6;rden und der &#xF6;ffentlich-rechtlichen Entsorgungstr&#xE4;ger Vermeidung, Verwertung von Abfall, Abfallschl&#xFC;sselungen   Anordnungen zur unmittelbaren Gefahrenabwehr,  Sofortanordnungen &#xDC;berwachung der Entsorgung von Abf&#xE4;llen, Einhalten der abfallrechtlichen Vorschriften durch Abfallerzeuger und -besitzer &#xDC;berwachung der Entsorgungswege, Umweltgerechte und schadlose Verwertung Bestellung des Betriebsbeauftragten f&#xFC;r Abfall Bearbeitung von Anzeigen Einsammlungs-, Transport- und Maklergenehmigungen Abfallentsorgungsanlagen   Beratung der Ma&#xDF;nahmetr&#xE4;ger und Mitwirkung im Zulassungsverfahren (bei Erkundung geeigneter Standorte, Planung, Bau und Betrieb von Anlagen)    Bau&#xFC;berwachung und Bauabnahme Betriebs- und Nachsorge&#xFC;berwachung Beratung, Bewertung, Sanierung im Bereich des Bodenschutzes    Beurteilung und Bewertung von Altlasten, Altstandorten, Konversionsfl&#xE4;chen und Abfalldeponien im Hinblick auf den Grundwasserschutz </smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>++49 (0)651 46 01 400</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>++49 (0)651 46 01 421</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Deworastr. 8</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Trier</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>54290</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@sgdnord.rlp.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2005-03-15T10:43:19</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Hochwassermeldezentrum Mosel</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Hochwasservorhersage f&#xFC;r die Mosel, Saar und Sauer</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">6A61A5E0-386B-49C3-B570-1411292CA1EF</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Struktur- und Genehmigungsdirektion Nord, Abteilung 3 (SGD Nord), Referat 34 (SGD Nord)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Wahrnehmung von &#xF6;ffentlich-rechtlichen und privatrechtlichen Angelegenheiten sowie der Eigent&#xFC;merinteressen bei landeseigenen Grundst&#xFC;cken  Vorhalten wasserwirtschaftlicher abfallwirtschaftlicher und bodenschutzrechlicher Grundlagen und Daten Berichtspflichten Berichte nach nationalen Richtlinien Berichte nach internationalen Richtlinien Berichte nach supranationalen Richtlinien  Beratung, Information, Mitwirkung bei der &#xD6;ffentlichkeitsarbeit Veranstaltungen, Vortr&#xE4;ge Ausstellungen Informationsschriften, Projektdokumentationen Fachspezifische EDV  Sammeln, Auswerten, Bewerten und Darstellen von Abfl&#xFC;ssen und Wasserst&#xE4;nden Sammeln, Auswerten, Bewerten und Darstellen von Strukturg&#xFC;tedaten sowie von Daten &#xFC;ber die &#xF6;komorphologische Gew&#xE4;sserbeschaffenheit Sammeln, Erheben und Bewerten von Menge- und G&#xFC;tedaten (physikalische, chemische, radiologische, biologische Gew&#xE4;sserbeschaffenheit) ober- und unterirdischer Gew&#xE4;sser  Daten &#xFC;ber das gentoxische Potential in Gew&#xE4;ssern und Abwassereinleitungen Daten &#xFC;ber die Gew&#xE4;sserversauerung Daten &#xFC;ber endokrin wirkende Stoffe in Gew&#xE4;ssern Daten &#xFC;ber das Abbauverhalten von Schadstoffen in Boden und Grundwasser Grundlagen und Daten &#xFC;ber Anlagen zum Umgang mit wassergef&#xE4;hrdenden Stoffen  Betriebe mit wassergef&#xE4;hrdenden Stoffen in Wasserschutzgebieten  Wasserspiegellagen und Niederschlags-Abflussbeziehungen  Untersuchung und Bewertung von Wasserproben Untersuchung vor Ort T&#xE4;tigkeit als Sachverst&#xE4;ndiger / sachverst&#xE4;ndiger Zeuge  Bewirtschaftungsvorgaben f&#xFC;r die Gew&#xE4;sser Mitwirkung bei der Aufstellung und Fortschreibung von wasserwirtschaftlichen Fachpl&#xE4;nen und Programmen Mitwirkung bei der Aufstellung von wasserwirtschaftlichen Rahmenpl&#xE4;nen  Planung, Bau, Betrieb und Unterhaltung von hydrologischen  Messeinrichtungen Hydrologischer Messdienst (Wasserst&#xE4;nde, Abfl&#xFC;sse, Niederschlag)   Grundsatzfragen Erhaltung und Entwicklung naturnaher Gew&#xE4;sser,  Gew&#xE4;sser&#xF6;kologie (AKTION BLAU) Gew&#xE4;sserpflege, naturnahe Gestaltung Aufstellung und Umsetzung von Gew&#xE4;sserentwicklungspl&#xE4;nen f&#xFC;r Gew&#xE4;sser I. und II. Ordnung, Beratung und Unterst&#xFC;tzung von Gemeinden und Landkreisen,  Erhaltung und Verbesserung der &#xF6;komorphologischen Gew&#xE4;sserbeschaffenheit, Erhaltung und Verbesserung der Gew&#xE4;sserstrukturg&#xFC;te, Biotopvernetzung,  Gew&#xE4;sserrandstreifen, Auenentwicklung,  wasserwirtschaftliche Fachplanungen und Programme  Hinwirken auf die Erhaltung und Verbesserung der &#xF6;kologischen Funktion der Gew&#xE4;sser, Hinwirken auf die Verminderung von Eingriffen in den Wasserhaushalt, Beratung von Unterhaltungspflichtigen   Hinwirken auf den bedachten Umgang mit Wasser (wassersparende/-freie Produktionsverfahren, Kreislauff&#xFC;hrung, dezentrale Bewirtschaftung von Niederschlagswasser) Kreislauff&#xFC;hrung,  dezentrales R&#xFC;ckhalten von Niederschlagswasser, Verdunstung, Versickerung, sachgerechte Nutzung als Brauchwasser etc., Vermeidung der Inanspruchnahme von Retentionsr&#xE4;umen Niederschlagswasserbewirtschaftung bei Inanspruchnahme von Fl&#xE4;chen, Vermeidung von Eingriffen in den Lebensraum Gew&#xE4;sser (Gew&#xE4;sserbett, Ufer, Aue)   Hochwassermeldedienst (nur Regionalstelle KO f&#xFC;r Nahe, Lahn, Sieg und RS TR f&#xFC;r Mosel Saar, Sauer)  Beratung der Wasser- und Deichwehren  Mitwirkung bei der Aufstellung und Fortschreibung &#xF6;rtlicher und &#xFC;ber&#xF6;rtlicher Hochwassermeldepl&#xE4;ne    Staatlicher Wasserbau, Hochwasserschutz, Planung, Bau und Unterhaltung &#xFC;ber&#xF6;rtlicher und &#xF6;rtlicher Hochwasserschutzma&#xDF;nahmen bei Gew&#xE4;ssern I. Ordnung   Ausnahmegenehmigungen bei Ma&#xDF;nahmen in &#xDC;berschwemmungs-Gebieten: Fachliche Beurteilung, Erteilen der Genehmigung  Bewirtschaftung der Grundwasserressourcen,  Bewahrung der Schutzziele in  Wasserschutz- und Heilquellenschutzgebieten   Sicherung wasserwirtschaftlich bedeutsamer Gebiete (WSG): Fachliche Abgrenzung der Schutzzonen, &#xDC;berarbeitung der Abgrenzungen von Wasser- und Heilquellengebieten, Festsetzung von Duldungspflichten, Verboten, Ausnahmegenehmigung bei Ma&#xDF;nahmen in Wasserschutzgebieten   Bewirtschaftungsvorgaben f&#xFC;r das Grundwasser, Mitwirkung bei der Aufstellung und Fortschreibung von wasserwirtschaftlichen Fachpl&#xE4;nen (Wasserversorgungsplanung) und Programmen, Ermittlungen und Vorgaben in Einzelf&#xE4;llen, Grundwassermodelle, Beratung bei der Umsetzung, Vermeidung, Verminderung von Stoffeintr&#xE4;gen, Beratung der Landwirtschaft   Mitwirkung an den Entscheidungen der unteren Wasserbeh&#xF6;rden   Genehmigung und &#xDC;berwachung von &#xF6;ffentlichen  Wasserversorgungsanlagen (&#xA7; 47 LWG): Fachl. Beurteilung und Bewertung Sachverst&#xE4;ndigenaufgaben und Genehmigung zum Bau und Betrieb von Aufbereitungsanlagen  und Hochbeh&#xE4;ltern, &#xDC;berwachung des Grundwassers und Kontrolle der Nutzungen   Ausbau und Unterhaltung von Gew&#xE4;ssern I. und II. Ordnung (&#xA7; 64 Abs.3 LWG) Aufstellung von Gew&#xE4;sserplegepl&#xE4;nen f&#xFC;r die Gew&#xE4;sser I. und II. Ordnung    Zulassung/Beschr&#xE4;nkung/ R&#xFC;cknahme/Widerruf von Gew&#xE4;sserbenutzungen,  Erteilung von Bewilligungen,  Beurteilung der Auswirkungen auf den Wasserhaushalt und die Gew&#xE4;sser&#xF6;kologie, Entscheidung &#xFC;ber Art, Ma&#xDF; und Zweck der jeweiligen Gew&#xE4;sserbenutzung, Anpassung wasserrechtlicher Zulassungen an neue Anforderungen,  Beratung &#xF6;ffentlich-rechtlicher Tr&#xE4;ger und Dritter bei der Planung u. Umsetzung wasserwirtschaftl. bedeuts. Ma&#xDF;nahmen   Mitwirkung bei Verfahren, Fachliche Beurteilung, Erteilen der Genehmigung  &#xDC;berwachung von Gew&#xE4;sserbenutzungen, d.s. Einleiten von Stoffen, Entnehmen und Ableiten von Grundwasser, Aufstauen, Absenken und Umleiten von Grundwasser; Eigen&#xFC;berwachungen, &#xDC;berwachung und Schau von Wasserschutzgebieten, Heilquellenschutzgebieten,  &#xDC;berwachung der Erf&#xFC;llung wasserbeh&#xF6;rdlicher Anordnungen bei der Sanierung von Schadensf&#xE4;llen, bei der Beseitigung rechtswidriger Zust&#xE4;nde, Bau&#xFC;berwachung und Bauabnahmen   Herstellen des Einvernehmens der oberen Wasserbeh&#xF6;rde, Beteiligung bei Verfahren Dritter (z.B. Ausbau von Bundeswasserstra&#xDF;en, Ausbau von Stra&#xDF;en, Bauleitplanung, Flurbereinigung und Raumordnung), Sicherung wasserwirtschaftlich bedeutsamer Gebiete  Umsetzung der EU-Wasserrahmenrichtlinie    Gew&#xE4;sserzustand, Ufer und Randstreifen, Erfassung und Dokumentation, Ma&#xDF;nahmen zur Verbesserung von Strukturg&#xFC;te, &#xD6;komorphologie, Biotopvernetzung, Umsetzung und Erfolgskontrolle     Durchf&#xFC;hrung von Plangenehmigungsverfahren: Fachliche Beurteilung der Auswirkungen auf Wasserhaushalt, Gew&#xE4;sser&#xF6;ko- und Gew&#xE4;ssermorphologie, Sicherstellen des Hochwasserabflusses, Bau&#xFC;berwachung und Bauabnahmen   Genehmigung von Anlagen im und am Gew&#xE4;sser Fachliche Beurteilung undSachverst&#xE4;ndigenaufgaben       F&#xF6;rderung wasserwirtschaftlicher Ma&#xDF;nahmen: Mitwirkung bei der Aufstellung des mittelfristigen Investitionsprogramms Antragspr&#xFC;fung, Steuerung und &#xDC;berwachung der Auszahlung, Pr&#xFC;fung der Verwendungsnachweise   Eignungsfeststellung von Anlagen zum Umgang mit wassergef&#xE4;hrdenden Stoffen, Sachverst&#xE4;ndigenaufgaben bei Genehmigungs- und Anzeigeverfahren, Mitwirkung bei wasserbeh&#xF6;rdlichen Entscheidungen, Beurteilung und Behandlung von Schadensf&#xE4;llen mit wassergef&#xE4;hrdenden Stoffen, Festlegung des Untersuchungsbedarf zur Gefahrfeststellung, Anordnung der erforderlichen Ma&#xDF;nahmen bei akuten Schadensf&#xE4;llen, Anordnung der erforderlichen Ma&#xDF;nahmen bei Altlasten  Kontrolle von Anlagen zum Umgang mit wassergef&#xE4;hrdenden Stoffen, Kontrolle von Anlagen in milit&#xE4;rischen Liegenschaften Meldedienst bei Schadensf&#xE4;llen mit wassergef&#xE4;hrdenden Stoffen (Rufbereitschaft), Mitwirkung bei der Aufstellung und Umsetzung internationaler Warnpl&#xE4;ne   Bewertung der Auswirkungen bei Schadensf&#xE4;llen mit wassergef&#xE4;hrdenden Stoffen, Information und Warnung nach den Ma&#xDF;gaben des Meldeplanes, Gew&#xE4;sseraufsicht, Ermittlungen und Vorgaben in Einzelf&#xE4;llen, Beratung bei der Umsetzung wasserwirtschaftlicher  Fachplanungen und Programme, Genehmigung von Abwasseranlagen (&#xA7; 54 LWG), Durchf&#xFC;hren des Verfahrens, Abwasserbeseitigungskonzepte Freistellen von der Abwasserbeseitigungspflicht (&#xA7; 53 LWG) Gew&#xE4;sseraufsicht,  Wasserbeh&#xF6;rdliche  Anordnungen bei Missst&#xE4;nden, &#xDC;berwachung der M&#xE4;ngelbeseitigung, &#xDC;berwachung von Gew&#xE4;sserbenutzungen, Abwassereinleitungen, Indirekteinleitungen, Eigen&#xFC;berwachungen, &#xDC;berwachung von Abwasseranlagen, Bau&#xFC;berwachung und Bauabnahmen von Abwasseranlagen   Hinwirken auf die z&#xFC;gige Aufstellung und Realisierung von Abwasserbeseitigungskonzepten sowie auf Bau und Betrieb von Abwasseranlagen (Erstausstattung), Hinwirken auf Sanierung, Erweiterung von Abwasseranlagen (N&#xE4;hrstoffelimination etc.) Verbesserung der Eigen&#xFC;berwachung, Hinwirken auf Abwasservermeidung, -vorbehandlung Hinwirken auf rechtzeitige Erfassung und Sanierung von undichten Kan&#xE4;len, Hinwirken auf die Erhaltung und Wiederherstellung der &#xF6;kologischen Funktion der Oberfl&#xE4;chengew&#xE4;sser Abwasserbeseitigungspl&#xE4;ne   Beratung von Abfallerzeugern und -besitzern sowie der unteren Abfallbeh&#xF6;rden und der &#xF6;ffentlich-rechtlichen Entsorgungstr&#xE4;ger Vermeidung, Verwertung von Abfall, Abfallschl&#xFC;sselungen   Anordnungen zur unmittelbaren Gefahrenabwehr,  Sofortanordnungen &#xDC;berwachung der Entsorgung von Abf&#xE4;llen, Einhalten der abfallrechtlichen Vorschriften durch Abfallerzeuger und -besitzer &#xDC;berwachung der Entsorgungswege, Umweltgerechte und schadlose Verwertung Bestellung des Betriebsbeauftragten f&#xFC;r Abfall Bearbeitung von Anzeigen Einsammlungs-, Transport- und Maklergenehmigungen Abfallentsorgungsanlagen   Beratung der Ma&#xDF;nahmetr&#xE4;ger und Mitwirkung im Zulassungsverfahren (bei Erkundung geeigneter Standorte, Planung, Bau und Betrieb von Anlagen)    Bau&#xFC;berwachung und Bauabnahme Betriebs- und Nachsorge&#xFC;berwachung Beratung, Bewertung, Sanierung im Bereich des Bodenschutzes    Beurteilung und Bewertung von Altlasten, Altstandorten, Konversionsfl&#xE4;chen und Abfalldeponien im Hinblick auf den Grundwasserschutz </smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>++49 (0)651 46 01 400</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>++49 (0)651 46 01 421</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Deworastr. 8</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Trier</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>54290</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@sgdnord.rlp.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2005-03-18T08:36:35</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Gefahrenatlas Mosel</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Darstellung der Hochwassergef&#xE4;hrdung in Gefahrenklassen f&#xFC;r die Gew&#xE4;sser Mosel, Saar, Sauer, Our, Nims, Pr&#xFC;m, Kyll</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+   </csw:SearchResults>
+  </csw:GetRecordsResponse>
+ </soapenv:Body>
+</soapenv:Envelope>

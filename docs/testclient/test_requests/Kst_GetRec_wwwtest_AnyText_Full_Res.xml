@@ -1,0 +1,1163 @@
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw">
+   <csw:RequestId/>
+   <csw:SearchStatus status="complete" timestamp="2007-08-22T13:36:47"/>
+   <csw:SearchResults elementSet="" numberOfRecordsMatched="2" numberOfRecordsReturned="2" resultSetId="">
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">6CF2886F-0124-4A4C-B76B-38CC1D3D0D85</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Wasser- und Schiffahrtsdirektion Mitte</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0511/91150</smXML:CharacterString>
+           </smXML:voice>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Am Waterlooplatz 5</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Hannover</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>30169</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-12-01T15:01:18</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>wwwtest 3</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString>Kurzbezeichung wwwtest 3</smXML:CharacterString>
+         </smXML:alternateTitle>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>1999-11-11</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="publication"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Beschreibung wwwtest 3</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Herstellungszweck wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile
+23. Bundesimmissionsschutzverordnung
+Abfallkl&#xE4;rschlammverordnung (AbfKl&#xE4;rV)
+AdV-Plenumsbeschlu&#xDF; von1994</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:status xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="fortnightly"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString>Eignung wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Damhirsch</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Damm</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Dammbau</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Daseinsvorsorge</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Dampfkesselanlage</smXML:CharacterString>
+         </smXML:keyword>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString>Nutzung wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString>Zeitbezug Erl&#xE4;uterung wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+         <smXML:userDefinedMaintenanceFrequency>
+          <smXML:TM_PeriodDuration>P2D</smXML:TM_PeriodDuration>
+         </smXML:userDefinedMaintenanceFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Servicetyp wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+       </iso19119:serviceType>
+       <iso19119:serviceTypeVersion>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.4</smXML:CharacterString>
+       </iso19119:serviceTypeVersion>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString>Raumbezug Erl&#xE4;uterung wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real>-12.2</smXML:Real>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real>-13.4</smXML:Real>
+           </smXML:maximumValue>
+           <smXML:unitOfMeasure>
+            <smXML:UomLength>
+             <smXML:uomName>
+              <smXML:CharacterString>Metre</smXML:CharacterString>
+             </smXML:uomName>
+            </smXML:UomLength>
+           </smXML:unitOfMeasure>
+           <smXML:verticalDatum>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Normaal Amsterdams Peil</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:verticalDatum>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>2000-12-22</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+               <gml:endPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>2000-12-22</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:endPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Gro&#xDF;raum Hannover</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>9.36150359361736</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>10.40275081064</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>53.0103541633527</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>53.2999564205162</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>L&#xFC;neburger Heide</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>9.28322785039548</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>9.62111840466807</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>53.1467519795411</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>53.3997902428286</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Oldenburger M&#xFC;nsterland</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>7.83359544048605</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>8.38553119417946</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>52.2367896333526</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>52.6158976766619</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString>Basisdaten  wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString>Historie wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString></smXML:CharacterString>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>wwwtest 2</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString>0.1</smXML:CharacterString>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString>300 dpi</smXML:CharacterString>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString>test</smXML:CharacterString>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString>Kosten wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString>Bestellinfo wwwtest 3
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="CD Rom"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString>c:\temp</smXML:CharacterString>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString>700</smXML:CharacterString>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">27A5661B-0B89-4C5E-85E2-95528B7A1453</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Wasser- und Schiffahrtsdirektion Mitte</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0511/91150</smXML:CharacterString>
+           </smXML:voice>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Am Waterlooplatz 5</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Hannover</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>30169</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-11-17T10:10:27</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <smXML:MD_DataIdentification xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:citation>
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>wwwtest 4</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString>Kurzbezeichung wwwtest 4</smXML:CharacterString>
+         </smXML:alternateTitle>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>1999-11-11</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="publication"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract>
+        <smXML:CharacterString>Beschreibung wwwtest 4</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose>
+        <smXML:CharacterString>Herstellungszweck wwwtest 4
+zweite Zeile
+dritte Zeile
+vierte Zeile
+23. Bundesimmissionsschutzverordnung
+Abfallkl&#xE4;rschlammverordnung (AbfKl&#xE4;rV)
+AdV-Plenumsbeschlu&#xDF; von1994</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:status>
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="fortnightly"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage>
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString>Eignung wwwtest 4
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords>
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Damhirsch</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Damm</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Dammbau</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:descriptiveKeywords>
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Daseinsvorsorge</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Dampfkesselanlage</smXML:CharacterString>
+         </smXML:keyword>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints>
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString>Nutzung wwwtest 4
+zweite Zeile
+dritte Zeile 
+Vierte Zeile</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance>
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString>Zeitbezug Erl&#xE4;uterung wwwtest 4
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+         <smXML:userDefinedMaintenanceFrequency>
+          <smXML:TM_PeriodDuration>P2D</smXML:TM_PeriodDuration>
+         </smXML:userDefinedMaintenanceFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language>
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <smXML:spatialRepresentationType>
+        <smXML:MD_SpatialRepresentationTypeCode codeList="http://www.tc211.org/ISO19115/resources/codeList.xml?MD_SpatialRepresentationTypeCode" codeListValue="vector"/>
+       </smXML:spatialRepresentationType>
+       <smXML:spatialResolution>
+        <smXML:MD_Resolution>
+         <smXML:equivalentScale>
+          <smXML:MD_RepresentativeFraction>
+           <smXML:denominator>
+            <smXML:positiveInteger>5000</smXML:positiveInteger>
+           </smXML:denominator>
+          </smXML:MD_RepresentativeFraction>
+         </smXML:equivalentScale>
+         <smXML:distance>
+          <smXML:Distance>
+           <smXML:value>
+            <smXML:Decimal>1000.23</smXML:Decimal>
+           </smXML:value>
+           <smXML:uom>
+            <smXML:UomLength>
+             <smXML:uomName>
+              <smXML:CharacterString>meter</smXML:CharacterString>
+             </smXML:uomName>
+            </smXML:UomLength>
+           </smXML:uom>
+          </smXML:Distance>
+         </smXML:distance>
+         <smXML:distance>
+          <smXML:Distance>
+           <smXML:value>
+            <smXML:Decimal>300.99</smXML:Decimal>
+           </smXML:value>
+           <smXML:uom>
+            <smXML:UomLength>
+             <smXML:uomName>
+              <smXML:CharacterString>dpi</smXML:CharacterString>
+             </smXML:uomName>
+            </smXML:UomLength>
+           </smXML:uom>
+          </smXML:Distance>
+         </smXML:distance>
+        </smXML:MD_Resolution>
+       </smXML:spatialResolution>
+       <smXML:spatialResolution>
+        <smXML:MD_Resolution>
+         <smXML:equivalentScale>
+          <smXML:MD_RepresentativeFraction>
+           <smXML:denominator>
+            <smXML:positiveInteger>100000</smXML:positiveInteger>
+           </smXML:denominator>
+          </smXML:MD_RepresentativeFraction>
+         </smXML:equivalentScale>
+         <smXML:distance>
+          <smXML:Distance>
+           <smXML:value>
+            <smXML:Decimal>100</smXML:Decimal>
+           </smXML:value>
+           <smXML:uom>
+            <smXML:UomLength>
+             <smXML:uomName>
+              <smXML:CharacterString>meter</smXML:CharacterString>
+             </smXML:uomName>
+            </smXML:UomLength>
+           </smXML:uom>
+          </smXML:Distance>
+         </smXML:distance>
+         <smXML:distance>
+          <smXML:Distance>
+           <smXML:value>
+            <smXML:Decimal>120</smXML:Decimal>
+           </smXML:value>
+           <smXML:uom>
+            <smXML:UomLength>
+             <smXML:uomName>
+              <smXML:CharacterString>dpi</smXML:CharacterString>
+             </smXML:uomName>
+            </smXML:UomLength>
+           </smXML:uom>
+          </smXML:Distance>
+         </smXML:distance>
+        </smXML:MD_Resolution>
+       </smXML:spatialResolution>
+       <smXML:topicCategory>
+        <smXML:MD_TopicCategoryCode>Inland Waters</smXML:MD_TopicCategoryCode>
+       </smXML:topicCategory>
+       <smXML:extent>
+        <smXML:EX_Extent>
+         <smXML:description>
+          <smXML:CharacterString>Raumbezug Erl&#xE4;uterung wwwtest 4
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real>1</smXML:Real>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real>100</smXML:Real>
+           </smXML:maximumValue>
+           <smXML:unitOfMeasure>
+            <smXML:UomLength>
+             <smXML:uomName>
+              <smXML:CharacterString>Kilometre</smXML:CharacterString>
+             </smXML:uomName>
+            </smXML:UomLength>
+           </smXML:unitOfMeasure>
+           <smXML:verticalDatum>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Normaal Amsterdams Peil</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:verticalDatum>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>2000-12-22</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Gro&#xDF;raum Hannover</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>9.36150359361736</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>10.40275081064</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>53.0103541633527</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>53.2999564205162</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>L&#xFC;neburger Heide</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>9.28322785039548</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>9.62111840466807</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>53.1467519795411</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>53.3997902428286</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Oldenburger M&#xFC;nsterland</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>7.83359544048605</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>8.38553119417946</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>52.2367896333526</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal>52.6158976766619</smXML:Decimal>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </smXML:extent>
+      </smXML:MD_DataIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:portrayalCatalogueInfo>
+      <smXML:MD_PortrayalCatalogueReference xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:portrayalCatalogueCitation>
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Ganzfl&#xE4;chige Biotopkartierung 94</smXML:CharacterString>
+         </smXML:title>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>13.12.1994</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:edition>
+          <smXML:CharacterString>0.8</smXML:CharacterString>
+         </smXML:edition>
+        </smXML:CI_Citation>
+       </smXML:portrayalCatalogueCitation>
+      </smXML:MD_PortrayalCatalogueReference>
+     </iso19115full:portrayalCatalogueInfo>
+     <iso19115full:portrayalCatalogueInfo>
+      <smXML:MD_PortrayalCatalogueReference xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:portrayalCatalogueCitation>
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Symbolkatalog Test</smXML:CharacterString>
+         </smXML:title>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>12.12.2000</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:edition>
+          <smXML:CharacterString>1.0</smXML:CharacterString>
+         </smXML:edition>
+        </smXML:CI_Citation>
+       </smXML:portrayalCatalogueCitation>
+      </smXML:MD_PortrayalCatalogueReference>
+     </iso19115full:portrayalCatalogueInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:statement>
+          <smXML:CharacterString>Fachliche Grundlage
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+         </smXML:statement>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString>Datengrundlage
+zweite Zeile
+dritte Zeile
+vierte Zeile</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString>Herstellungsprozess
+zweite Zeile
+dritte Zeile 
+Vierte Zeile</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+       <smXML:report>
+        <smXML:DQ_CompletenessCommission>
+         <smXML:DQ_QuantitativeResult>
+          <smXML:value>
+           <smXML:Record>11</smXML:Record>
+          </smXML:value>
+         </smXML:DQ_QuantitativeResult>
+        </smXML:DQ_CompletenessCommission>
+        <smXML:DQ_RelativeInternalPositionalAccuracy>
+         <smXML:measureDescription>
+          <smXML:CharacterString>vertical</smXML:CharacterString>
+         </smXML:measureDescription>
+         <smXML:DQ_QuantitativeResult>
+          <smXML:value>
+           <smXML:Record>1.25</smXML:Record>
+          </smXML:value>
+         </smXML:DQ_QuantitativeResult>
+        </smXML:DQ_RelativeInternalPositionalAccuracy>
+        <smXML:DQ_RelativeInternalPositionalAccuracy>
+         <smXML:measureDescription>
+          <smXML:CharacterString>geographic</smXML:CharacterString>
+         </smXML:measureDescription>
+         <smXML:DQ_QuantitativeResult>
+          <smXML:value>
+           <smXML:Record>0.234</smXML:Record>
+          </smXML:value>
+         </smXML:DQ_QuantitativeResult>
+        </smXML:DQ_RelativeInternalPositionalAccuracy>
+       </smXML:report>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString>9</smXML:CharacterString>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+       <smXML:geometricObjects>
+        <smXML:MD_GeometricObjects>
+         <smXML:geometricObjectType>
+          <smXML:MD_GeometricObjectTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_GeometricObjectTypeCode" codeListValue="1"/>
+         </smXML:geometricObjectType>
+         <smXML:geometricObjectCount>
+          <smXML:CharacterString>239</smXML:CharacterString>
+         </smXML:geometricObjectCount>
+        </smXML:MD_GeometricObjects>
+       </smXML:geometricObjects>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:referenceSystemInfo>
+      <smXML:MD_ReferenceSystem xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:referenceSystemIdentifier>
+        <smXML:RS_Identifier>
+         <smXML:code>
+          <smXML:CharacterString>EPSG:4178 / Pulkovo 1942(83) / geographisch</smXML:CharacterString>
+         </smXML:code>
+        </smXML:RS_Identifier>
+       </smXML:referenceSystemIdentifier>
+      </smXML:MD_ReferenceSystem>
+     </iso19115full:referenceSystemInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureCatalogueCitation>
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>von Drachenfels 94</smXML:CharacterString>
+         </smXML:title>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>23.09.1994</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:edition>
+          <smXML:CharacterString>1</smXML:CharacterString>
+         </smXML:edition>
+        </smXML:CI_Citation>
+       </smXML:featureCatalogueCitation>
+       <smXML:featureCatalogueCitation>
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Kartierschl&#xFC;ssel</smXML:CharacterString>
+         </smXML:title>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>14.12.1999</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:edition>
+          <smXML:CharacterString>2.3</smXML:CharacterString>
+         </smXML:edition>
+        </smXML:CI_Citation>
+       </smXML:featureCatalogueCitation>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>wwwtest 2</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString>0.1</smXML:CharacterString>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString>300 dpi</smXML:CharacterString>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString>test</smXML:CharacterString>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString>Kosten wwwtest 4
+zweite Zeile
+dritte Zeile 
+Vierte Zeile</smXML:CharacterString>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString>Bestellinfo wwwtest 4
+zweite Zeile
+dritte Zeile 
+Vierte Zeile</smXML:CharacterString>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL> http://www.bsh.de/</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Bundesamt f&#xFC;r Seeschifffahrt und Hydrographie</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString>Erl&#xE4;uterung URL Verweis</smXML:CharacterString>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.hamburg.baw.de
+
+</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Bundesanstalt f&#xFC;r Wasserbau - Dienststelle Hamburg</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString>Die Dienststelle Hamburg (Abteilung Wasserbau im K&#xFC;stenbereich) ber&#xE4;t die Dienststellen der WSV im K&#xFC;stenbereich auf den Gebieten des Wasserbaus sowie des Erd- und Grundbaus. Sie f&#xFC;hrt Messungen in der Natur, Laboruntersuchungen und theoretische Studien durch und ber&#xE4;t anhand von gesammelten Erfahrungen sowie im Wasserbau insbesondere mit Hilfe von physikalischen und mathematischen Modellen. Auf den genannten Gebieten werden auch normative Arbeiten sowie Forschungs- und Entwicklungsaufgaben ausgef&#xFC;hrt. 
+
+</smXML:CharacterString>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="CD Rom"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString>c:\temp</smXML:CharacterString>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString>74</smXML:CharacterString>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+   </csw:SearchResults>
+  </csw:GetRecordsResponse>
+ </soapenv:Body>
+</soapenv:Envelope>

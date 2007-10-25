@@ -1,0 +1,367 @@
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw">
+   <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+    <iso19115full:fileIdentifier>
+     <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">55E85353-D48F-11D3-BAF0-0060971A0BF7</smXML:CharacterString>
+    </iso19115full:fileIdentifier>
+    <iso19115full:language>
+     <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+    </iso19115full:language>
+    <iso19115full:characterSet>
+     <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+    </iso19115full:characterSet>
+    <iso19115full:parentIdentifier>
+     <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">19493E02-DD57-11D3-BACD-00104B168367</smXML:CharacterString>
+    </iso19115full:parentIdentifier>
+    <iso19115full:hierarchyLevel>
+     <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+    </iso19115full:hierarchyLevel>
+    <iso19115full:contact>
+     <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+      <smXML:role>
+       <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+      </smXML:role>
+      <smXML:individualName>
+       <smXML:CharacterString>Herr Dr. Klaus-Peter Schulz</smXML:CharacterString>
+      </smXML:individualName>
+      <smXML:organisationName>
+       <smXML:CharacterString>Umweltministerium Baden-Württemberg (UM), Abteilung 5 - Wasser und Boden, Referat 52 - Altlasten, Förderangelegenheiten / WAABIS-Geschäftsstelle</smXML:CharacterString>
+      </smXML:organisationName>
+      <smXML:positionName>
+       <smXML:CharacterString/>
+      </smXML:positionName>
+      <smXML:contactInfo>
+       <smXML:CI_Contact>
+        <smXML:phone>
+         <smXML:CI_Telephone>
+          <smXML:voice>
+           <smXML:CharacterString>0711/126-1525</smXML:CharacterString>
+          </smXML:voice>
+          <smXML:facsimile>
+           <smXML:CharacterString>0711/126-1529</smXML:CharacterString>
+          </smXML:facsimile>
+         </smXML:CI_Telephone>
+        </smXML:phone>
+        <smXML:address>
+         <smXML:CI_Address>
+          <smXML:deliveryPoint>
+           <smXML:CharacterString>Kernerplatz 9</smXML:CharacterString>
+          </smXML:deliveryPoint>
+          <smXML:city>
+           <smXML:CharacterString>Stuttgart</smXML:CharacterString>
+          </smXML:city>
+          <smXML:postalCode>
+           <smXML:CharacterString>70182</smXML:CharacterString>
+          </smXML:postalCode>
+          <smXML:country>
+           <smXML:CharacterString>D</smXML:CharacterString>
+          </smXML:country>
+          <smXML:electronicMailAddress>
+           <smXML:CharacterString>Klaus-Peter.Schulz@um.bwl.de</smXML:CharacterString>
+          </smXML:electronicMailAddress>
+         </smXML:CI_Address>
+        </smXML:address>
+       </smXML:CI_Contact>
+      </smXML:contactInfo>
+     </smXML:CI_ResponsibleParty>
+    </iso19115full:contact>
+    <iso19115full:dateStamp>
+     <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-12-01T14:04:39</smXML:Date>
+    </iso19115full:dateStamp>
+    <iso19115full:metadataStandardName>
+     <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+    </iso19115full:metadataStandardName>
+    <iso19115full:metadataStandardVersion>
+     <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+    </iso19115full:metadataStandardVersion>
+    <iso19115full:identificationInfo>
+     <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+      <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:CI_Citation>
+        <smXML:title>
+         <smXML:CharacterString>Informationssystem Wasser, Abfall, Altlasten, Boden (WAABIS)</smXML:CharacterString>
+        </smXML:title>
+        <smXML:alternateTitle>
+         <smXML:CharacterString>WAABIS</smXML:CharacterString>
+        </smXML:alternateTitle>
+        <smXML:date>
+         <smXML:CI_Date>
+          <smXML:date>
+           <smXML:Date>2000-01-27T00:00:00</smXML:Date>
+          </smXML:date>
+          <smXML:dateType>
+           <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+          </smXML:dateType>
+         </smXML:CI_Date>
+        </smXML:date>
+        <smXML:date>
+         <smXML:CI_Date>
+          <smXML:date>
+           <smXML:Date>2004-12-01T00:00:00</smXML:Date>
+          </smXML:date>
+          <smXML:dateType>
+           <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+          </smXML:dateType>
+         </smXML:CI_Date>
+        </smXML:date>
+       </smXML:CI_Citation>
+      </smXML:citation>
+      <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:CharacterString>WAABIS ist ein seit 1997 entwickelter Systemkomplex, in dem alle wesentlichen hoheitlichen Fachanwendungen aus den Umweltbereichen Wasser, Abfall, Altlasten und Boden zusammengeführt werden. Nutzer sind die staatlichen und kommunalen Überwachungs- und Vollzugsbehörden (Stadt- und Landkreise als untere Verwaltungsbehörden, Gewässerdirektionen, Staatliche Gewerbeaufsichtsämter und Regierungspräsidien, ferner die Landesanstalt für Umweltschutz, das Landesamt für Geologie, Rohstoffe und Bergbau sowie weitere Landesbehörden).  WAABIS ist modular aufgebaut und besteht (derzeit insbesondere) aus folgenden Komponenten: · Wasserrechtsverfahren, Automatisiertes Wasserbuch · Anlagenbezogener Gewässerschutz - Vollzug Klärschlammverordnung - Vollzug VAWS · FIS Altlasten, Schadensfälle, Bodenbelastungen · Gewässerinformationssystem · Grundwasserdatenbank · FIS Bodenschutz · Geosystem Wasserwirtschaft/Bodenschutz - Vollzug Wasserentnahmeentgelt - Vollzug Abwasserabgabe · WAABIS-Berichtssystem · Labordaten-Übertragungssystem  Wegen der tiefgreifenden Reform der Umweltverwaltung in Baden-Württemberg zum 1.1.2005 (u. a. Eingliederung der Gewässerdirektionen und der Staatlichen Gewerbeaufsichtsämter teils in die unteren Verwaltungsbehörden, teils in die Regierungspräsidien) besteht die Absicht, WAABIS und das Informationssystem der Gewerbeaufsicht (IS-GAA) in den nächsten Jahren stufenweise zusammenzuführen.</smXML:CharacterString>
+      </smXML:abstract>
+      <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:CharacterString/>
+      </smXML:purpose>
+      <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:MD_Usage>
+        <smXML:specificUsage>
+         <smXML:CharacterString/>
+        </smXML:specificUsage>
+       </smXML:MD_Usage>
+      </smXML:resourceSpecificUsage>
+      <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:MD_Keywords>
+        <smXML:keyword>
+         <smXML:CharacterString>Gewässer</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Bodenschutz</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Abfallrecht</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Informationssystem</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Wasserrecht</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Altablagerung</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Bodenbelastung</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Grundwasser</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Wasserwirtschaft</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Gewässerschutz</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Abfallwirtschaft</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Hochwasserschutz</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Ökologie</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Gewässerkunde</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Bodenschädigung</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:title>
+         <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+        </smXML:title>
+        <smXML:type>
+         <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+        </smXML:type>
+       </smXML:MD_Keywords>
+      </smXML:descriptiveKeywords>
+      <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:MD_Keywords>
+        <smXML:keyword>
+         <smXML:CharacterString>WAABIS</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Altlasten</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Wasserbuch</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Berichtssystem</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Labordaten</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Abwasser</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Schädliche Bodenveränderung</smXML:CharacterString>
+        </smXML:keyword>
+        <smXML:keyword>
+         <smXML:CharacterString>Gewässerökologie</smXML:CharacterString>
+        </smXML:keyword>
+       </smXML:MD_Keywords>
+      </smXML:descriptiveKeywords>
+      <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:MD_Constraints>
+        <smXML:useLimitation>
+         <smXML:CharacterString/>
+        </smXML:useLimitation>
+       </smXML:MD_Constraints>
+      </smXML:resourceConstraints>
+      <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:MD_MaintenanceInformation>
+        <smXML:maintenanceNote>
+         <smXML:CharacterString>Das System wird in mehreren Phasen entwickelt. Der Regelbetrieb der Phase 1 hat am 1.1.2000 begonnen.</smXML:CharacterString>
+        </smXML:maintenanceNote>
+       </smXML:MD_MaintenanceInformation>
+      </smXML:resourceMaintenance>
+      <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:CharacterString>de</smXML:CharacterString>
+      </smXML:language>
+      <iso19119:serviceType>
+       <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem, Berichtssystem</smXML:CharacterString>
+      </iso19119:serviceType>
+      <iso19119:operationMetadata>
+       <iso19119:SV_OperationMetadata>
+        <iso19119:operationName>
+         <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+        </iso19119:operationName>
+        <iso19119:operationDescription>
+         <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+        </iso19119:operationDescription>
+        <iso19119:invocationName>
+         <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+        </iso19119:invocationName>
+       </iso19119:SV_OperationMetadata>
+      </iso19119:operationMetadata>
+      <iso19119:operatesOn>
+       <smXML:Reference uuidref="19493E02-DD57-11D3-BACD-00104B168367" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+      </iso19119:operatesOn>
+      <iso19119:extent>
+       <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:description>
+         <smXML:CharacterString/>
+        </smXML:description>
+        <smXML:verticalElement>
+         <smXML:EX_VerticalExtent>
+          <smXML:minimumValue>
+           <smXML:Real/>
+          </smXML:minimumValue>
+          <smXML:maximumValue>
+           <smXML:Real/>
+          </smXML:maximumValue>
+         </smXML:EX_VerticalExtent>
+        </smXML:verticalElement>
+        <smXML:temporalElement>
+         <smXML:EX_TemporalExtent>
+          <smXML:extent>
+           <smXML:TM_Primitive>
+            <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+             <gml:TimePeriod/>
+            </gml:relatedTime>
+           </smXML:TM_Primitive>
+          </smXML:extent>
+         </smXML:EX_TemporalExtent>
+        </smXML:temporalElement>
+        <smXML:geographicElement>
+         <smXML:EX_GeographicDescription>
+          <smXML:geographicIdentifier>
+           <smXML:RS_Identifier>
+            <smXML:code>
+             <smXML:CharacterString>08</smXML:CharacterString>
+            </smXML:code>
+           </smXML:RS_Identifier>
+          </smXML:geographicIdentifier>
+         </smXML:EX_GeographicDescription>
+         <smXML:EX_GeographicBoundingBox/>
+        </smXML:geographicElement>
+       </smXML:EX_Extent>
+      </iso19119:extent>
+      <iso19119:couplingType>
+       <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0, 0, 0, 0, 0, 0, 0"/>
+      </iso19119:couplingType>
+     </iso19119:CSW_ServiceIdentification>
+    </iso19115full:identificationInfo>
+    <iso19115full:dataQualityInfo>
+     <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+      <smXML:lineage>
+       <smXML:LI_Lineage>
+        <smXML:source>
+         <smXML:LI_Source>
+          <smXML:description>
+           <smXML:CharacterString/>
+          </smXML:description>
+         </smXML:LI_Source>
+        </smXML:source>
+        <smXML:processStep>
+         <smXML:LI_ProcessStep>
+          <smXML:description>
+           <smXML:CharacterString/>
+          </smXML:description>
+         </smXML:LI_ProcessStep>
+        </smXML:processStep>
+       </smXML:LI_Lineage>
+      </smXML:lineage>
+     </smXML:DQ_DataQuality>
+    </iso19115full:dataQualityInfo>
+    <iso19115full:spatialRepresentationInfo>
+     <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+      <smXML:topologyLevel>
+       <smXML:MD_TopologyLevelCode>
+        <smXML:CharacterString/>
+       </smXML:MD_TopologyLevelCode>
+      </smXML:topologyLevel>
+     </smXML:MD_VectorSpatialRepresentation>
+    </iso19115full:spatialRepresentationInfo>
+    <iso19115full:contentInfo>
+     <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+      <smXML:includedWithDataset>
+       <smXML:Boolean>false</smXML:Boolean>
+      </smXML:includedWithDataset>
+      <smXML:featureTypes/>
+     </smXML:MD_FeatureCatalogueDescription>
+    </iso19115full:contentInfo>
+    <iso19115full:distributionInfo>
+     <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+      <smXML:distributor>
+       <smXML:MD_Distributor>
+        <smXML:distributionOrderProcess>
+         <smXML:MD_StandardOrderProcess>
+          <smXML:fees>
+           <smXML:CharacterString/>
+          </smXML:fees>
+          <smXML:orderingInstructions>
+           <smXML:CharacterString/>
+          </smXML:orderingInstructions>
+         </smXML:MD_StandardOrderProcess>
+        </smXML:distributionOrderProcess>
+       </smXML:MD_Distributor>
+      </smXML:distributor>
+      <smXML:transferOptions>
+       <smXML:MD_DigitalTransferOptions>
+        <smXML:online>
+         <smXML:CI_OnlineResource>
+          <smXML:linkage>
+           <smXML:URL>http://www.lubw.baden-wuerttemberg.de/local/waabis/</smXML:URL>
+          </smXML:linkage>
+          <smXML:name>
+           <smXML:CharacterString>Informationssystem Wasser, Abfall, Altlasten, Boden (WAABIS)</smXML:CharacterString>
+          </smXML:name>
+          <smXML:description>
+           <smXML:CharacterString/>
+          </smXML:description>
+          <smXML:function>
+           <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+          </smXML:function>
+         </smXML:CI_OnlineResource>
+        </smXML:online>
+       </smXML:MD_DigitalTransferOptions>
+      </smXML:transferOptions>
+     </smXML:MD_Distribution>
+    </iso19115full:distributionInfo>
+   </iso19115full:MD_Metadata>
+  </csw:GetRecordByIdResponse>
+ </soapenv:Body>
+</soapenv:Envelope>

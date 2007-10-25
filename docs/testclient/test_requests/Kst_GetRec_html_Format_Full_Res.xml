@@ -1,0 +1,3946 @@
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw">
+   <csw:RequestId/>
+   <csw:SearchStatus status="subset" timestamp="2007-06-04T14:17:53"/>
+   <csw:SearchResults elementSet="" numberOfRecordsMatched="33" numberOfRecordsReturned="10" resultSetId="">
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">524CE678-012B-4620-B1A1-2A595AF9181C</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt für Umwelt, Messungen und Naturschutz Baden-Württemberg, Abteilung 3 - Technischer Arbeits- und Umweltschutz, Referat 35 - Abfallwirtschaft</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0721/5600-2280</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-2339</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Hertzstraße 173</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76187</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Abteilung3.Post@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-01-09T10:41:33</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Abfall-Fachinformationen im World-Wide Web (AbfaWeb)</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString>AbfaWeb BW</smXML:CharacterString>
+         </smXML:alternateTitle>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2003-09-29T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2004-01-09T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Ziel des Vorhabens AbfaWeb (Abfall-Fachinformationen im World-Wide-Web) ist es, Fachberichte und Rechtsvorschriften zur Abfall- und Kreislaufwirtschaft so aufzubereiten, dass die für die Umsetzung des Abfallrechts zuständigen Behörden, Städte und Kommunen in ihrer täglichen Arbeit unterstützt und entlastet werden. Darüber hinaus soll aber auch interessierten Bürgern sowie Ingenieurbüros Gelegenheit gegeben werden, sich über die Kreislauf- und Abfallwirtschaft gezielt und effektiv zu informieren.</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Kreislaufwirtschafts- und Abfallgesetz (KrW-/AbfG)
+Landesabfallgesetz (LAbfG)</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Abfallwirtschaft</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Kreislaufwirtschaft</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Deponie</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Abfallbehandlung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Abfallvermeidung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString>AbfaWeb ist über den WWW-Server des Ministeriums für Umwelt und Verkehr öffentlich und im Intranet zugänglich.</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString/>
+         </smXML:maintenanceNote>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString/>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>2003-10-31T00:00:00</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>08</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0, 0, 0, 0, 0, 0, 0"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString>k. A.</smXML:CharacterString>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.xfaweb.baden-wuerttemberg.de/abfaweb/</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Abfall-Fachinformationen im World-Wide Web (AbfaWeb)</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">59A18301-4530-4C45-9C9C-8630AAFC9B5F</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau  Katrin Kempe</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Sächsisches Landesamt für Umwelt und Geologie, Abteilung 3</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>(0351) 8928-238</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>(0351) 8928-245</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Zur Wetterwarte 11</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Dresden</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>01109</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Katrin.Kempe@lfug.smul.sachsen.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Publisher"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Sächsisches Landesamt für Umwelt und Geologie</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>(0351) 8928-0</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>(0351) 8928-225</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Zur Wetterwarte 11, Haus 114</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Dresden</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>01109</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@lfug.smul.sachsen.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Custodian"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau Dr. Uta Schröter</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Sächsisches Landesamt für Umwelt und Geologie, Abteilung 3</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>(0351) 8928-381</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>(0351) 8928-245</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Zur Wetterwarte 11</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Dresden</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>01109</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>uta.schroeter@lfug.smul.sachsen.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-03T08:26:25</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <smXML:MD_DataIdentification xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:citation>
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Wasserschutzgebiete (Sachsen)</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString/>
+         </smXML:alternateTitle>
+         <smXML:date>
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2005-06-30T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract>
+        <smXML:CharacterString>Festgesetzte Wasserschutzgebiete (Schutzzonen I, II, II A, II B, III, III A, III B) - Trinkwasserschutzgebiete für Grundwasserfassungen, Fließgewässer und Talsperren - Heilquellenschutzgebiete</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose>
+        <smXML:CharacterString>Gesetz zur Ordnung des Wasserhaushaltes (Wasserhaushaltsgesetz - WHG)
+Sächsisches Wassergesetz (SächsWG)</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:status>
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="continual"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage>
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords>
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Wasserschutzgebiet</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Wasserschutz</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Trinkwasserschutzgebiet</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Wasserdargebot</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Wassergewinnung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Talsperre</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Trinkwasser</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Heilwasser</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Quelle (Gewässer)</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Trinkwasserversorgung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:descriptiveKeywords>
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Interaktive Karte</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Heilquellenschutzgebiet</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Trinkwasserschutzzone</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Trinkwasserbereitstellung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Trinkwassertalsperre</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Heilquellenschutzzone</smXML:CharacterString>
+         </smXML:keyword>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints>
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString>Interaktive Karte: Die Karte hat den Datenstand vom 30.06.2005. Es sind ausschließlich Wasserschutzgebiete erfasst, die zu diesem Zeitpunkt Bestandskraft hatten. Die kartenmäßige Darstellung dient ausschließlich der Information. Sie bildet keine rechtliche Grundlage für wie auch immer lautende Sachverhalte. Rechtlich verbindliche Auskünfte zu Wasserschutzgebieten nach §§ 46 und 48 SächsWG sind bei den jeweils zuständigen Wasserbehörden zu erfragen. Bei Verdichtung der Daten und Änderungen des Maßstabes können Verfälschungen der Daten eintreten.  Ein Zoom ist nur auf den Erfassungsmaßstab zulässig, flurstücksgenaue Auswertungen /  Darstellungen der Daten sind unzulässig.  GIS-Daten: Die Daten sind urheberrechtlich geschützt. Eine Weitergabe der Daten an Dritte ist nur mit ausdrücklicher Genehmigung des LfUG zulässig. Werden die Daten oder aus diesen Daten abgeleitete Daten für Präsentations-, Informations- oder Veröffentlichungszwecke verwendet, so ist bei jeder Präsentation und auf jeder Darstellung die Herkunft der Daten an deutlich sichtbarer Stelle wie folgt anzuzeigen: "Darstellung auf der Grundlage von Daten und mit Erlaubnis des Sächsischen Landesamtes für Umwelt und Geologie, Dresden".  Jede Haftung der Dateneigentümer für Schäden aller Art aus der Überlassung und Weiterverarbeitung der Daten ist ausgeschlossen.</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance>
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString>aktueller Stand 06/2005</smXML:CharacterString>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+         <smXML:userDefinedMaintenanceFrequency>
+          <smXML:TM_PeriodDuration>P1Y</smXML:TM_PeriodDuration>
+         </smXML:userDefinedMaintenanceFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language>
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <smXML:spatialRepresentationType>
+        <smXML:MD_SpatialRepresentationTypeCode codeList="http://www.tc211.org/ISO19115/resources/codeList.xml?MD_SpatialRepresentationTypeCode" codeListValue="vector"/>
+       </smXML:spatialRepresentationType>
+       <smXML:spatialResolution>
+        <smXML:MD_Resolution>
+         <smXML:equivalentScale>
+          <smXML:MD_RepresentativeFraction>
+           <smXML:denominator>
+            <smXML:positiveInteger>25000</smXML:positiveInteger>
+           </smXML:denominator>
+          </smXML:MD_RepresentativeFraction>
+         </smXML:equivalentScale>
+         <smXML:distance>
+          <smXML:Distance>
+           <smXML:value>
+            <smXML:Decimal/>
+           </smXML:value>
+           <smXML:uom>
+            <smXML:UomLength>
+             <smXML:uomName>
+              <smXML:CharacterString>meter</smXML:CharacterString>
+             </smXML:uomName>
+            </smXML:UomLength>
+           </smXML:uom>
+          </smXML:Distance>
+         </smXML:distance>
+         <smXML:distance>
+          <smXML:Distance>
+           <smXML:value>
+            <smXML:Decimal/>
+           </smXML:value>
+           <smXML:uom>
+            <smXML:UomLength>
+             <smXML:uomName>
+              <smXML:CharacterString>dpi</smXML:CharacterString>
+             </smXML:uomName>
+            </smXML:UomLength>
+           </smXML:uom>
+          </smXML:Distance>
+         </smXML:distance>
+        </smXML:MD_Resolution>
+       </smXML:spatialResolution>
+       <smXML:topicCategory>
+        <smXML:MD_TopicCategoryCode>Environment</smXML:MD_TopicCategoryCode>
+       </smXML:topicCategory>
+       <smXML:extent>
+        <smXML:EX_Extent>
+         <smXML:description>
+          <smXML:CharacterString/>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>1995-01-01T00:00:00</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>14</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </smXML:extent>
+      </smXML:MD_DataIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:statement>
+          <smXML:CharacterString> </smXML:CharacterString>
+         </smXML:statement>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString>Die Karte wurde auf Datengrundlagen folgender Behörden erstellt:  - Regierungspräsidien/Umweltfachbereiche,  - Landratsämter / Untere Wasserbehörden,  - Landestalsperrenverwaltung Sachsen - Sächsisches Landesamt für Umwelt und Geologie. Datenzusammenführung/Datenaufbereitung: Sächsisches Landesamt für Umwelt und Geologie</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString>Datenqualität: 1 : 25.000  (teilweise 1:10.000)</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+       <smXML:report>
+        <smXML:DQ_CompletenessCommission>
+         <smXML:DQ_QuantitativeResult>
+          <smXML:value>
+           <smXML:Record>100</smXML:Record>
+          </smXML:value>
+         </smXML:DQ_QuantitativeResult>
+        </smXML:DQ_CompletenessCommission>
+       </smXML:report>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes>
+        <smXML:LocalName>
+         <smXML:CharacterString/>
+        </smXML:LocalName>
+       </smXML:featureTypes>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>Shape</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString>ArcView 3 und ArcGIS 8</smXML:CharacterString>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString>zip</smXML:CharacterString>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML (interaktive Karte)</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString>ArcIMS</smXML:CharacterString>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.umwelt.sachsen.de/de/wu/umwelt/lfug/lfug-internet/infosysteme/arcims/website/wsg/viewer.htm</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>   Interaktive Karte Wasserschutzgebiete</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.umwelt.sachsen.de/de/wu/umwelt/lfug/lfug-internet/wasser_8651.html</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Internetseite des LfUG, Bereich Wasserschutzgebiete</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="Online"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">5063B37F-4643-415A-88E8-56C0AA5D0F59</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Volker Thiele</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesumweltamt Nordrhein-Westfalen, Fachbereich 31, Planender Umweltschutz, Klimafolgewirkungen, Umweltberichterstattung</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0201 7995-1345</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0201 7995-1574</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Wallneyer Str. 6</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Essen</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>45133</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>volker.thiele@lua.nrw.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Administration"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau  Pauline Richter</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesumweltamt Nordrhein-Westfalen, Fachbereich 65, Informationssysteme Wasser und Abfall</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Systemadministration der Instanz UDK-LUA</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0201 7995-2139</smXML:CharacterString>
+           </smXML:voice>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Wallneyer Str. 6</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Essen</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>45133</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>pauline.richter@lua.nrw.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2005-11-21T11:02:07</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Umweltdatenkatalog im Landesumweltamt (Instanz UDK-LUA)</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString>UDK-LUA</smXML:CharacterString>
+         </smXML:alternateTitle>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Ziele: Der Umweltdatenkatalog ist ein Metainformationssystem zur Dokumentation von Datenbestände und DV-Verfahren, von Projekten und Programmen sowie von Berichten, Gutachten und anderen Schriften. Der UDK NRW wurde in der Umweltverwaltung von NRW eingeführt. Die Zentraladministration wird vom Landesamt für Datenverarbeitung und Statistik Nordrhein-Westfalen (LDS) durchgeführt.Der UDK-LUA umfasst die Metainformationen über die Datenbestände und DV-Verfahren des LUA.  Berichtsform: Webanwendung  Adressat/Nutzer: LUA, MURL, andere Fachbehörden, Öffentlichkeit  Beteiligte Fachbereiche/Externe: FB 65      MUNLV, LDS, LÖBF, GD, LVermA </smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Gespräch im MURL am 20.06.1996/Vermerk PG_UDK/60912th1.DOC vom 10.10.1996 Erlass des MUNLV VI B 5-50.90.02.10.01 vom 24.01.2000 Aufgabenerlass des LUA Nr. 1.2.4.4
+Erlass</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:status xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="fortnightly"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Metainformation</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Dokumentationswesen</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Umwelt-Datenkatalog</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString/>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString/>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">kein</smXML:CharacterString>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString/>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>1998-01-01T00:00:00</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>05</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0, 0, 0"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString>1996 ist NRW der Bund/Länder Kooperation UDK beigetreten. Das LUA wurde beauftragt, die Eignung der durch die Bund/Länder-Kooperation entwickelten UDK-Software für NRW zu prüfen und ein Konzept für die Einführung des UDK in NRW zu erarbeiten.  1999 wurde die Software UDK 4.0 von der Bund/Länderkooperation UDK freigegeben. 1996/1997 wurde ein Pilotvorhabens im LUA auf Basis der Versionen 3.0 und 4.0 durchgeführt. 1999 wurde das Konzept für die Einrichtung des UDK im LUA erstellt und ein Prototyp des UDK-LUA auf einem Arbeitsplatzrechner sowohl als Einzelplatzversion als auch als Client-Server-Version auf Basis INGRES/ODBC realisiert.  2000 wurde die Ersterfassung für den UDK LUA  durchgeführt. Mit Bereitstellung der Daten der Ersterfassung wurde der UDK 4.1 eingeführt. 2001 wurde auf Grundlage des UDK-LUA der UDK-NRW eingeführt. Die Datenbank wird zentral vom LDS auf Basis ORACLE verwaltet. Auf die Portierung auf INGRES wurde verzichtet.  Ab 2001 Fortschreibung und Pflege der Datenbestände unter Federführung MUNLV VII 1.</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString>keine</smXML:CharacterString>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="Online"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">6030FDAF-BD91-4DBC-9AD0-F30F901956D7</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau  Anna-Maria Willemsen</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium für Umwelt und Naturschutz, Landwirtschaft und Verbraucherschutz des Landes Nordrhein-Westfalen, Referat VII 1, Umweltinformationssysteme, Umweltberichterstattung, Aufgabencontrolling, Forschung</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0211/4566-623</smXML:CharacterString>
+           </smXML:voice>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Schwannstr. 3</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Düsseldorf</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>40476</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@munlv.nrw.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr  Joachim Siebold</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium für Umwelt und Naturschutz, Landwirtschaft und Verbraucherschutz des Landes Nordrhein-Westfalen, Referat VII 1, Umweltinformationssysteme, Umweltberichterstattung, Aufgabencontrolling, Forschung</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0211/4566-603</smXML:CharacterString>
+           </smXML:voice>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Schwannstr. 3</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Düsseldorf</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>40476</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@munlv.nrw.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-11-19T09:00:01</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Umweltdatenkatalog im Ministerium für Umwelt und Naturschutz, Landwirtschaft und Verbraucherschutz (Innstanz UDK-MUNLV)</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString/>
+         </smXML:alternateTitle>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Die Datenbestände und DV-Verfahren des Ministeriums für Umwelt und Naturschutz, Landwirtschaft und Verbraucherschutz (MUNLV) werden im UDK-NRW geführt. Zur dezentralen Erfassung und Verwaltung der UDK-Objekte des MUNLV wurde die Instanz UDK-MUNLV eingerichtet.</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Erlass des MUNLV
+Erlass
+Kabinettbeschluss</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:status xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="fortnightly"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Umwelt-Datenkatalog</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Informationsmanagement</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Umweltbehörde</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString>Die Metainformationen des UDK-LUA werden z.ZT, in ACCESS-DB´s verwaltet. Über den Aktualisierungszyklus werden die Metainformationen mit der zentralen DB im LDS konsistent gehlaten. Die Metainformationen können über das Internet abgerufen werden.</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString>Über ein Zusatzmodul des UDk werden die Daten dem Zentralkatalogadministrator (LDS) übergeben. Dadurch erhält das LUA von dort alle Aktualisierungen der anderen am UDK teilnehmenden Behörden in NRW.</smXML:CharacterString>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString>Meist ist als Raumbezug nur das Land NRW angegeben</smXML:CharacterString>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>2000-10-01T00:00:00</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>05</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString>Die Datenbestände und DV-Verfahren der jeweiligen Landesbehördenwerden im UDK_NRW dokumentiert. Der UDK-NRW ist dezentral organisiert. Für die erfassenden Stellen wurden UDK-Instanzen eingeführt. Die Erfassung und Pflege der Metainformationen werden zentral  vorgenommen (siehe Administration).</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString/>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="Online"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">80ACE86D-18AA-4993-938F-BB71404D8DF4</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau Dipl.-Ing. Brigitte Oleszynski-Wichmann</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesumweltamt Nordrhein-Westfalen, Fachbereich 45, Umweltradioaktivität und RFÜ; Licht; Geräusche und Erschütterungen</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0201 7995-2330</smXML:CharacterString>
+           </smXML:voice>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Wallneyer Str. 6</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Essen</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>45133</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>brigitte.oleszynski-wichmann@lua.nrw.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-09-11T11:44:42</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>IMIS - Mess- und Informationssystem zur Überwachung der Umweltradioaktivität</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString/>
+         </smXML:alternateTitle>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Nach dem Reaktorunfall von Tschernobyl 1986 beschloss die Bundesregierung mit Einführung des Strahlenschutzvorsorgegesetzes (StrVG) ein Umweltuntersuchungsprogramm zur Radioaktivitätsbestimmung (Routine- und Intensivprogramm).  Hierzu wurde von dem Bund ein integriertes Mess- und Informationssystem IMIS eingerichtet, das der Überwachung der Umweltradioaktivität nach dem Strahlenschutzvorsorgegesetz dient. Das LUA wurde die amtliche Messstelle (LMSt) nach StrVG für die Bezirksregierung Köln zur flächendeckenden Messung der Radioaktivität in der Umwelt und außerdem Messstelle für die in-situ Messungen in ganz NRW.</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Strahlenschutzvorsorgegesetz §3   Routine- und Intensivmessprogramm (Bundesauftragsverwaltung)  IIIA7 vom 09.06.1987 MURL
+Erlass
+Strahlenschutzvorsorgegesetz (StrVG)</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:status xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="fortnightly"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Radioaktivität</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Strahlenschutzvorsorgegesetz</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Umweltinformationssystem</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Lebensmittelüberwachung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>In-Situ-Verfahren</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Umweltbelastung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>IMIS</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Umweltradioaktivität</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Landesmessstelle</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Lua-dv-verfahren</smXML:CharacterString>
+         </smXML:keyword>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString>Auskunftgebende Stelle für Landesdaten (Messergebnisse) ist das MUNLV.</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString>In einem Probeentnahmeplan sind die jährlich durchzuführenden Messungen nach Probenahmeort, Analysenart, Häufigkeit und Medium vorgeschrieben.</smXML:CharacterString>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem, Datenverbundsystem</smXML:CharacterString>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString>Jede LMSt besitzt räumlich eine Zuständigkeit für jeweils einen Regierungsbezirk:  - LMSt LUA: BR Köln  - LMSt Landesanstalt für Arbeitsschutz (LAfA): BR Düsseldorf  - LMSt Eichamt Dortmund: BR Arnsberg  - LMSt Staatliche Veterinäruntersuchungsamt Detmold: BR Detmold  - LMSt Chemische Landes- und Staatliches Veterinäruntersuchungsamt Münster: BR Münster</smXML:CharacterString>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>1988-01-01T00:00:00</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>059</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>057</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>051</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>055</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>053</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>05</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0, 0, 0, 0"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString>Probenahmepläne, Probenahmestellen, Messergebnisse, Topographische Daten</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString>1986-1992: Betrieb des landeseigenen Notsystems  ab 1992: Betrieb des bundeseigenen IMIS-Systems</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString>keine</smXML:CharacterString>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString>keine</smXML:CharacterString>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString>keine</smXML:CharacterString>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.bfs.de</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Homepage des Bundesamtes für Strahlenschutz</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="Online"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">D54620CA-54C0-426C-9F7F-76662B838A42</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesanstalt für Ökologie, Bodenordnung und Forsten</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>02361 - 305-0</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:voice>
+            <smXML:CharacterString>0049-02361-305-0</smXML:CharacterString>
+           </smXML:voice>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Castroper Str. 30</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Recklinghausen</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>45659</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@loebf.nrw.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-07-19T09:06:31</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Umweltdatenkatalog in der Landesanstalt für Ökologie, Bodenordnung und Forsten (Instanz UDK-LÖBF)</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString/>
+         </smXML:alternateTitle>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Der Umweltdatenkatalog NRW ist das Metainformationssystem zur Dokumentation der Datenbestände und DV-Verfahren für NRW. Die Datenbestände und DV-Verfahren der Landesanstalt für Ökologie, Bodenordnung und Forsten (LÖBF) werden im UDK-NRW geführt. Zur dezentralen Erfassung und Verwaltung der UDK-Objekte der LÖBF wurde die Instanz UDK-LÖBF eingerichtet.</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Erlass des MUNLV
+Erlass
+Kabinettbeschluss</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:status xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="fortnightly"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Umwelt-Datenkatalog</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Informationsmanagement</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Umweltbehörde</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString>Über den Aktualisierungszyklus werden die Metainformationen mit der zentralen DB im LDS konsistent gehalten. Die Metainformationen können über das Internet abgerufen werden.</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString>Über ein Zusatzmodul des UDK werden die Daten dem Zentralkatalogadministrator (LDS) übergeben. Danach erhält die LÖBFvon dort alle Aktualisierungen der anderen am UDK teilnehmenden Behörden NRW (Aktualisierungszyklus).</smXML:CharacterString>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString/>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>2000-10-01T00:00:00</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>05</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString>Die Datenbestände und DV-Verfahren der jeweiligen Landesbehörden werden im UDK-NRW dokumentiert. Der UDK-NRW ist dezentral organisiert. Für die erfassenden Stellen wurden UDK-Instanzen eingeführt. Die Erfassung und Pflege der Metainformationen werden zentral vorgenommen ( siehe Administration).</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString/>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.udk.munlv.nrw.de/wwwudk/UDKServlet</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Umweltdatenkataolg NRW im Internet</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="Online"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">05F9A5D8-D866-11D2-AB09-00E0292DC06B</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Owner"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>UBA - Umweltbundesamt, FG II 5.2 Immissionssituation, ETC Partner Klima</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>+49-(0)340-2103-3536</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>+49-(0)340-2104-3536</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Wörlitzer Platz 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Dessau</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06844</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr  Bernd Strobel</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>UBA - Umweltbundesamt, FG II 5.2 Immissionssituation, ETC Partner Klima</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>+49-(0)30-8903-3560</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>+49-(0)30-8903-2285</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString/>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Berlin</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString/>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>bernd.strobel@uba.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2000-09-14T10:26:03</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>IS U+E - Informationssystem Umwelt und Energie</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString/>
+         </smXML:alternateTitle>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Das Informationssystem U+E dient vorrangig der Vorbereitung und Unterstützung der Klimaschutzpolitik der Bundesregierung. Da Klimaveränderungen zu einem großen Teil durch Energieverbrauch hervorgerufen werden, sind Daten und Informationen zu umweltverträglicher Energieversorgung, Auswirkungen von Maßnahmen zum Energiesparen und zur Minderung von energiebedingten Emissionen von Treibhausgasen und für die Vorbereitung von wirtschaftlichen und ordnungsrechtlichen Instrumenten zur Förderung der rationellen Energienutzungen zusammenzutragen und methodisch, z.B. zur Erarbeitung von Szenarien und Prognosen auszuwerten. Das IS U+E wird benötigt, um Beiträge zur politischen Argumentation bei der rationellen Energieverwendung effizienter liefern zu können (Klimareduktionsstrategien, Bewertungen von Energieeffizenz, Wirkungen von Maßnahmen und Instrumenten) und den Berichtspflichten nachkommen zu können (Nationalbericht zur Klimarahmenkonvention, EU-CO2-Monitoring, EU-Großfeuerungsanlagenverordnung, Immissionsschutzbericht, Zuarbeit zum Emission Topic Center der Europäischen Umweltagentur, Daten zur Umwelt).  Eine hohe Komplexität der Aufgabe ergibt sich einerseits durch die unterschiedlichen Informationsquellen, wie z.B. die Energiebilanz für Deutschland (herausgegeben von AG Energiebilanzen), die internationalen Energiebilanzen (herausgegeben von der Internationalen Energieagentur), Verbrauchs- und Produktionsstatistiken (herausgegeben von Branchenvertretungen), Wirkungsgrade von Energietechniken, Methodiken von Forschungsinstitutionen. Andererseits werden die o.g. Aufgaben im Bereich Umwelt und Energie im UBA federführend durch drei Fachgebiete wahrgenommen. Zwischen- und Endergebnisse werden mit weiteren Facheinheiten in den Bereichen Klimaschutz, Verkehr, Ökobilanzen ausgetauscht. Deshalb müssen die Arbeitsergebnisse der einzelnen Fachgebiete sowie zugrundeliegende Informationen innerhalb des Bereichs Umwelt und Energie gegenseitig verfügbar sein. Im IS U+E sollen vorrangig Arbeitsergebnisse in Form von Diagrammen, Textbausteinen, Zusammenfassungen von Berichten und Stellungnahmen, Zitate, usw. in Form von Text, Tabellen, Grafiken verfügbar sein. Außerdem sollen Grundlagedaten, wie Energiebilanz für Deutschland, internationale Energiebilanzen, (Energie-) Abkürzungen, (Energie-)Adressen, (Energie-)Aktenzeichen, (Energie-) Fachwörterbuch bereitgestellt werden. Es ist vorgesehen, daß die wichtigsten Arbeitsergebnisse in hochaggregierter, für Zielgruppen aufbereiteter Form vom IS U+E für das UBA-Intranet und für das WWW-Angebot des UBA im Internet bereitgestellt werden.</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString/>
+       </smXML:purpose>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Emissionsminderung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Schadstoffemission</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Energiebedarf</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Energieversorgung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Energiebilanz</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Emissionsdaten</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Klimaschutz</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Umweltpolitik</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Zustandsdaten (einschl. Mathematischer Modelle)</smXML:CharacterString>
+         </smXML:keyword>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString/>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString/>
+         </smXML:maintenanceNote>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString/>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod/>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Bundesrepublik Deutschland</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="3210"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString>Arbeitsergebnisse der Facheinheiten des UBA, die für den Umweltindikator Energieverbrauch zuständig sind.</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString/>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>ACCESS</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString/>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="unknown"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">7F11F32C-DBEA-11D4-97E8-00609719E3B4</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Owner"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Klima-Bündnis der europäischen Städte / Alianza del Clima e.V., Europäische Geschäftsstelle</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>+49-(0)69-717139-0</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>+49-(0)69-717139-93</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Glavanistr. 28</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Frankfurt am Main</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>60486</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>europe@klimabuendnis.org</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.klimabuendnis.org</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Wolfgang Hofstetter</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Klima-Bündnis der europäischen Städte / Alianza del Clima e.V., Europäische Geschäftsstelle</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString/>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>+49-(0)69-717139-13</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>+49-(0)69-717139-93</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Glavanistr. 28</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Frankfurt am Main</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>60486</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>w.hofstetter@klimabuendnis.org</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2003-10-14T15:44:12</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Klimaschutz im Internet</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString/>
+         </smXML:alternateTitle>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>"Klimaschutz im Internet" auf der Website www.klimaschutz.de ist das Internet-Portal für Informationen zum Klimaschutz. Das Klima-Bündnis der europäischen Städte konzipierte und erstellte die Site im Rahmen des Projektes "Vernetzung kommunaler Klimaschutzaktivitäten mittels Internet in Zusammenarbeit mit wissenschaftlichen Einrichtungen und der Stadt". Das Projekt wurde aus Mitteln des Bundesumweltministeriums und des Umweltbundesamtes gefördert.  Das Informationssystem klimaschutz.de stellt verschiedenste fachliche Hintergrundinformationen zum Klimaschutz insbesondere auf lokaler Ebene bereit und trägt so zur Transparenz und zum Verständnis von Klimaschutzbemühungen bei und fordert zum eigenen Handeln auf. Die BesucherInnen von klimaschutz.de finden Handlungsempfehlungen für konkrete Maßnahmen, z.B. auf kommunaler Ebene. Zahlreiche Beispiele zum kommunalen Klimaschutz, die laufend aktualisiert werden, regen zur Nachahmung an. Angesprochen werden sowohl MitarbeiterInnen kommunaler Verwaltungen als auch Aktive in der Kommunalpolitik, in zweiter Linie auch der einzelne Bürger und die einzelne Bürgerin. Neben eigenen Angeboten des Klima-Bündnis sind relevante Links zu anderen Organisationen der internationalen, nationalen und kommunalen Klimaschutzpolitik wie auch zu Nichtregierungsorganisationen zu finden.  Das elektronische Informationssystem zum Klimaschutz www.klimaschutz.de  wird vom Klima-Bündnis der europäischen Städte entsprechend der sich fortentwickelnden Klimaschutzlandschaft kontinuierlich aktualisiert.  Derzeit wird das Informationssystem inhaltlich und optisch grundlegend überarbeitet. Die kommunalen Beispiele (in deutsch und / oder englisch) werden als Datenbank aufbereitet und sind dann über Schlagworte und geographische Bezüge recherchierbar. Der Re-Launch der gesamten Site ist für Anfang 2003 geplant.  </smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Öffentlich zugänglich über Internet. Bei Nutzung muss (gebührenfrei) das Copyright eingeholt werden.</smXML:CharacterString>
+       </smXML:purpose>
+       <smXML:status xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="fortnightly"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Klimaschutz</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Klimaänderung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Klimatologie</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Treibhauseffekt</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Umweltpolitik</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Anthropogene Klimaänderung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Verkehr</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Personennahverkehr</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Öffentliches Verkehrsmittel</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Öffentlichkeitsarbeit</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Klimaforschung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Kommunaler Klimaschutz</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Energie</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Klimaschutzmaßnahmen</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Energie sparen</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Erneuerbare Energien</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Schulen</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Kommune</smXML:CharacterString>
+         </smXML:keyword>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString/>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString>Das Informationssystem "Klimaschutz im Internet" wird zur Zeit gründlich überarbeitet</smXML:CharacterString>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+         <smXML:userDefinedMaintenanceFrequency>
+          <smXML:TM_PeriodDuration>PM</smXML:TM_PeriodDuration>
+         </smXML:userDefinedMaintenanceFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString/>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod>
+               <gml:beginPosition>
+                <gml:TimeInstant>
+                 <gml:timePosition>1996-01-01T00:00:00</gml:timePosition>
+                </gml:TimeInstant>
+               </gml:beginPosition>
+              </gml:TimePeriod>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Bundesrepublik Deutschland</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>Mitteleuropa</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox>
+           <smXML:westBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:westBoundLongitude>
+           <smXML:eastBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:eastBoundLongitude>
+           <smXML:southBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:southBoundLongitude>
+           <smXML:northBoundLongitude>
+            <smXML:approximateLongitude>
+             <smXML:Decimal/>
+            </smXML:approximateLongitude>
+           </smXML:northBoundLongitude>
+          </smXML:EX_GeographicBoundingBox>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue=""/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString>UBA-Förderung (Verbändetitel) 1996</smXML:CharacterString>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString/>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>ACCESS</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString/>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.klimaschutz.de</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Klimaschutz im Internet</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString>Elektronisches Info-System zum Klimaschutz</smXML:CharacterString>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.klimabuendnis.org</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Homepage des Klima-Bündnis der europäischen Städte</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString>Homepage des Vereins</smXML:CharacterString>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.aim-solarcity.net</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Informations- und Monitoringsystem zu erneuerbaren Energien</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString>In englischer Sprache</smXML:CharacterString>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.kinder-meilen.de</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Kindermeilen-Kampagne: Auf Kinderfüßen durch die Welt</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString>Website zur Ergänzung der Kampagne 2002 für LehrerInnen, ErzieherInnen, Eltern und Kinder. Darstellung von Kinderarbeiten (Zeichnungen, Gutachten)</smXML:CharacterString>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.22september.de</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>"In die Stadt - ohne mein Auto" am 22. September</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString>Website zur Ergänzung der Kampagne zum jährlich stattfindenden europaweiten Aktionstag. Darstellung von kommunalen Aktionen für Kommunen in NRW. Außerhalb des Kampagnenzeitraumres nicht aktualisiert. </smXML:CharacterString>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.regenwaldmenschen.de</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Waldwelten - Menschen im Regenwald von Ecuador</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString>Virtuelle Ausstellung über das Leben und die Pflanzennutzung indigener Völker im Regenwald von Ecuador. </smXML:CharacterString>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="Online"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1D4B1D94-247D-4FDF-9390-2DB261FC1721</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium für Umwelt und Forsten, Abteilung 6 (MUF)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Gewerbeaufsicht, Immissionsschutz, Chemikaliensicherheit, Gentechnik</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>++49 (0)6131 16 46 11</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>++49 (0)6131 16 46 44</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Kaiser-Friedrich-Straße 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Mainz</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>55116</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@muf.rlp.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-04-27T16:29:18</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Hinweise zur effizienten Energienutzung in Industrieanlagen</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString/>
+         </smXML:alternateTitle>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Vom Ministerium für Umwelt und Forsten initiiertes Projekte zum effizienten Umgang bzw. zur effizienten Umwandlung von Energie in Industrieanlagen.</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString/>
+       </smXML:purpose>
+       <smXML:status xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="continual"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Energieeinsparung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Schadstoffemission</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Kohlendioxid</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Industrieanlage</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Heizung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Minderungspotential</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>CO2-Emission</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>KMU</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Energie</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Energieeinsparmöglichkeit</smXML:CharacterString>
+         </smXML:keyword>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString/>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString>Projekt wird seit 2003 von Transferstelle Bingen  (FH Bingen) und Universität Kaiserslautern fortgeführt.</smXML:CharacterString>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="irregular"/>
+         </smXML:maintenanceAndUpdateFrequency>
+         <smXML:userDefinedMaintenanceFrequency>
+          <smXML:TM_PeriodDuration>P0Y</smXML:TM_PeriodDuration>
+         </smXML:userDefinedMaintenanceFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString/>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod/>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>07</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString/>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.energie-industrie.de</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>Effiziente Energienutzung in Industrieanlagen</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="Online"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+    <iso19115full:MD_Metadata xmlns:gml="http://www.opengis.net/gml" xmlns:iso19115full="http://schemas.opengis.net/iso19115full" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML" xmlns:udk="http://www.kst.portalu.de/udk">
+     <iso19115full:fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">8136B006-B531-401E-90B8-325E0E144083</smXML:CharacterString>
+     </iso19115full:fileIdentifier>
+     <iso19115full:language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </iso19115full:language>
+     <iso19115full:characterSet>
+      <smXML:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="8859part1" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:characterSet>
+     <iso19115full:parentIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:parentIdentifier>
+     <iso19115full:hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </iso19115full:hierarchyLevel>
+     <iso19115full:contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Ministerium für Umwelt und Forsten, Abteilung 6 (MUF)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Gewerbeaufsicht, Immissionsschutz, Chemikaliensicherheit, Gentechnik</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>++49 (0)6131 16 46 11</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>++49 (0)6131 16 46 44</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Kaiser-Friedrich-Straße 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Mainz</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>55116</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>poststelle@muf.rlp.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </iso19115full:contact>
+     <iso19115full:dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-04-27T16:31:15</smXML:Date>
+     </iso19115full:dateStamp>
+     <iso19115full:metadataStandardName>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">ISO 19115</smXML:CharacterString>
+     </iso19115full:metadataStandardName>
+     <iso19115full:metadataStandardVersion>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">1.0</smXML:CharacterString>
+     </iso19115full:metadataStandardVersion>
+     <iso19115full:identificationInfo>
+      <iso19119:CSW_ServiceIdentification xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:citation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CI_Citation>
+         <smXML:title>
+          <smXML:CharacterString>Gesundheitliche Beeinträchtigungen durch elektrische, magnetische oder elektromagnetische Felder - EMF Watchdog</smXML:CharacterString>
+         </smXML:title>
+         <smXML:alternateTitle>
+          <smXML:CharacterString/>
+         </smXML:alternateTitle>
+        </smXML:CI_Citation>
+       </smXML:citation>
+       <smXML:abstract xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>Der "Mainzer EMF-Wachhund" hat es sich zur Aufgabe gesetzt, zusammen mit der Bevölkerung ein wachsames Auge auf gesundheitliche Störungen zu werfen, die mit elektrischen, magnetischen oder elektromagnetischen Feldern in Zusammenhang gebracht werden. Die Initiative wird von der Universität Mainz betreut, da sich hier Wissenschaftler und Ärzte verschiedener Disziplinen seit langem mit biologischen Wirkungen von elektromagnetischen Feldern beschäftigt haben und mit den einschlägigen Sorgen Betroffener vertraut sind. Der Mainzer EMF-Wachhund ist eine Meldestelle, an die sich alle wenden können, die sich durch elektromagnetische Felder körperlich und/oder psychisch beeinträchtigt glauben. Jede Meldung wird genau registriert und wissenschaftlich analysiert.</smXML:CharacterString>
+       </smXML:abstract>
+       <smXML:purpose xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString/>
+       </smXML:purpose>
+       <smXML:status xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="fortnightly"/>
+       </smXML:status>
+       <smXML:resourceSpecificUsage xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Usage>
+         <smXML:specificUsage>
+          <smXML:CharacterString/>
+         </smXML:specificUsage>
+        </smXML:MD_Usage>
+       </smXML:resourceSpecificUsage>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>Magnetfeld</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Elektrisches Feld</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Gesundheit</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Strahlenschutz</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Nichtionisierende Strahlung</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Elektromagnetisches Feld</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:title>
+          <smXML:CharacterString>UDK-Thesaurus</smXML:CharacterString>
+         </smXML:title>
+         <smXML:type>
+          <smXML:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="Theme"/>
+         </smXML:type>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:descriptiveKeywords xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Keywords>
+         <smXML:keyword>
+          <smXML:CharacterString>EMF</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Magnetisches Feld</smXML:CharacterString>
+         </smXML:keyword>
+         <smXML:keyword>
+          <smXML:CharacterString>Strahlung (nichtionisierend)</smXML:CharacterString>
+         </smXML:keyword>
+        </smXML:MD_Keywords>
+       </smXML:descriptiveKeywords>
+       <smXML:resourceConstraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_Constraints>
+         <smXML:useLimitation>
+          <smXML:CharacterString/>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </smXML:resourceConstraints>
+       <smXML:resourceMaintenance xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:MD_MaintenanceInformation>
+         <smXML:maintenanceNote>
+          <smXML:CharacterString/>
+         </smXML:maintenanceNote>
+         <smXML:maintenanceAndUpdateFrequency>
+          <smXML:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+         </smXML:maintenanceAndUpdateFrequency>
+         <smXML:userDefinedMaintenanceFrequency>
+          <smXML:TM_PeriodDuration>P0Y</smXML:TM_PeriodDuration>
+         </smXML:userDefinedMaintenanceFrequency>
+        </smXML:MD_MaintenanceInformation>
+       </smXML:resourceMaintenance>
+       <smXML:language xmlns:smXML="http://metadata.dgiwg.org/smXML">
+        <smXML:CharacterString>de</smXML:CharacterString>
+       </smXML:language>
+       <iso19119:serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem</smXML:CharacterString>
+       </iso19119:serviceType>
+       <iso19119:operationMetadata>
+        <iso19119:SV_OperationMetadata>
+         <iso19119:operationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationName>
+         <iso19119:operationDescription>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:operationDescription>
+         <iso19119:invocationName>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+         </iso19119:invocationName>
+        </iso19119:SV_OperationMetadata>
+       </iso19119:operationMetadata>
+       <iso19119:operatesOn>
+        <smXML:Reference uuidref="" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+       </iso19119:operatesOn>
+       <iso19119:extent>
+        <smXML:EX_Extent xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:description>
+          <smXML:CharacterString/>
+         </smXML:description>
+         <smXML:verticalElement>
+          <smXML:EX_VerticalExtent>
+           <smXML:minimumValue>
+            <smXML:Real/>
+           </smXML:minimumValue>
+           <smXML:maximumValue>
+            <smXML:Real/>
+           </smXML:maximumValue>
+          </smXML:EX_VerticalExtent>
+         </smXML:verticalElement>
+         <smXML:temporalElement>
+          <smXML:EX_TemporalExtent>
+           <smXML:extent>
+            <smXML:TM_Primitive>
+             <gml:relatedTime xmlns:gml="http://www.opengis.net/gml">
+              <gml:TimePeriod/>
+             </gml:relatedTime>
+            </smXML:TM_Primitive>
+           </smXML:extent>
+          </smXML:EX_TemporalExtent>
+         </smXML:temporalElement>
+         <smXML:geographicElement>
+          <smXML:EX_GeographicDescription>
+           <smXML:geographicIdentifier>
+            <smXML:RS_Identifier>
+             <smXML:code>
+              <smXML:CharacterString>07</smXML:CharacterString>
+             </smXML:code>
+            </smXML:RS_Identifier>
+           </smXML:geographicIdentifier>
+          </smXML:EX_GeographicDescription>
+          <smXML:EX_GeographicBoundingBox/>
+         </smXML:geographicElement>
+        </smXML:EX_Extent>
+       </iso19119:extent>
+       <iso19119:couplingType>
+        <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0"/>
+       </iso19119:couplingType>
+      </iso19119:CSW_ServiceIdentification>
+     </iso19115full:identificationInfo>
+     <iso19115full:dataQualityInfo>
+      <smXML:DQ_DataQuality xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:lineage>
+        <smXML:LI_Lineage>
+         <smXML:source>
+          <smXML:LI_Source>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_Source>
+         </smXML:source>
+         <smXML:processStep>
+          <smXML:LI_ProcessStep>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+          </smXML:LI_ProcessStep>
+         </smXML:processStep>
+        </smXML:LI_Lineage>
+       </smXML:lineage>
+      </smXML:DQ_DataQuality>
+     </iso19115full:dataQualityInfo>
+     <iso19115full:spatialRepresentationInfo>
+      <smXML:MD_VectorSpatialRepresentation xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:topologyLevel>
+        <smXML:MD_TopologyLevelCode>
+         <smXML:CharacterString/>
+        </smXML:MD_TopologyLevelCode>
+       </smXML:topologyLevel>
+      </smXML:MD_VectorSpatialRepresentation>
+     </iso19115full:spatialRepresentationInfo>
+     <iso19115full:contentInfo>
+      <smXML:MD_FeatureCatalogueDescription xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:includedWithDataset>
+        <smXML:Boolean>false</smXML:Boolean>
+       </smXML:includedWithDataset>
+       <smXML:featureTypes/>
+      </smXML:MD_FeatureCatalogueDescription>
+     </iso19115full:contentInfo>
+     <iso19115full:distributionInfo>
+      <smXML:MD_Distribution xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:distributor>
+        <smXML:MD_Distributor>
+         <smXML:distributorFormat>
+          <smXML:MD_Format>
+           <smXML:name>
+            <smXML:CharacterString>HTML</smXML:CharacterString>
+           </smXML:name>
+           <smXML:version>
+            <smXML:CharacterString/>
+           </smXML:version>
+           <smXML:specification>
+            <smXML:CharacterString/>
+           </smXML:specification>
+           <smXML:fileDecompressionTechnique>
+            <smXML:CharacterString/>
+           </smXML:fileDecompressionTechnique>
+          </smXML:MD_Format>
+         </smXML:distributorFormat>
+         <smXML:distributionOrderProcess>
+          <smXML:MD_StandardOrderProcess>
+           <smXML:fees>
+            <smXML:CharacterString/>
+           </smXML:fees>
+           <smXML:orderingInstructions>
+            <smXML:CharacterString/>
+           </smXML:orderingInstructions>
+          </smXML:MD_StandardOrderProcess>
+         </smXML:distributionOrderProcess>
+        </smXML:MD_Distributor>
+       </smXML:distributor>
+       <smXML:transferOptions>
+        <smXML:MD_DigitalTransferOptions>
+         <smXML:online>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:URL>http://www.mainzer-emf-wachhund.de</smXML:URL>
+           </smXML:linkage>
+           <smXML:name>
+            <smXML:CharacterString>EMF Watchdog</smXML:CharacterString>
+           </smXML:name>
+           <smXML:description>
+            <smXML:CharacterString/>
+           </smXML:description>
+           <smXML:function>
+            <smXML:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_OnLineFunctionCode" codeListValue="information"/>
+           </smXML:function>
+          </smXML:CI_OnlineResource>
+         </smXML:online>
+         <smXML:offLine>
+          <smXML:MD_Medium>
+           <smXML:name>
+            <smXML:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode" codeListValue="Online"/>
+           </smXML:name>
+           <smXML:mediumNote>
+            <smXML:CharacterString/>
+           </smXML:mediumNote>
+          </smXML:MD_Medium>
+         </smXML:offLine>
+         <smXML:transferSize>
+          <smXML:CharacterString/>
+         </smXML:transferSize>
+        </smXML:MD_DigitalTransferOptions>
+       </smXML:transferOptions>
+      </smXML:MD_Distribution>
+     </iso19115full:distributionInfo>
+    </iso19115full:MD_Metadata>
+   </csw:SearchResults>
+  </csw:GetRecordsResponse>
+ </soapenv:Body>
+</soapenv:Envelope>

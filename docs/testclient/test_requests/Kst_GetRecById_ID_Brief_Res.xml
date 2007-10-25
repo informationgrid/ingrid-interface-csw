@@ -1,0 +1,76 @@
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw">
+   <iso19115brief:MD_Metadata xmlns:iso19115brief="http://schemas.opengis.net/iso19115brief" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+    <fileIdentifier>
+     <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">55E85353-D48F-11D3-BAF0-0060971A0BF7</smXML:CharacterString>
+    </fileIdentifier>
+    <hierarchyLevel>
+     <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+    </hierarchyLevel>
+    <contact>
+     <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+      <smXML:role>
+       <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+      </smXML:role>
+      <smXML:individualName>
+       <smXML:CharacterString>Herr Dr. Klaus-Peter Schulz</smXML:CharacterString>
+      </smXML:individualName>
+      <smXML:organisationName>
+       <smXML:CharacterString>Umweltministerium Baden-Württemberg (UM), Abteilung 5 - Wasser und Boden, Referat 52 - Altlasten, Förderangelegenheiten / WAABIS-Geschäftsstelle</smXML:CharacterString>
+      </smXML:organisationName>
+      <smXML:positionName>
+       <smXML:CharacterString/>
+      </smXML:positionName>
+      <smXML:contactInfo>
+       <smXML:CI_Contact>
+        <smXML:phone>
+         <smXML:CI_Telephone>
+          <smXML:voice>
+           <smXML:CharacterString>0711/126-1525</smXML:CharacterString>
+          </smXML:voice>
+          <smXML:facsimile>
+           <smXML:CharacterString>0711/126-1529</smXML:CharacterString>
+          </smXML:facsimile>
+         </smXML:CI_Telephone>
+        </smXML:phone>
+        <smXML:address>
+         <smXML:CI_Address>
+          <smXML:deliveryPoint>
+           <smXML:CharacterString>Kernerplatz 9</smXML:CharacterString>
+          </smXML:deliveryPoint>
+          <smXML:city>
+           <smXML:CharacterString>Stuttgart</smXML:CharacterString>
+          </smXML:city>
+          <smXML:postalCode>
+           <smXML:CharacterString>70182</smXML:CharacterString>
+          </smXML:postalCode>
+          <smXML:country>
+           <smXML:CharacterString>D</smXML:CharacterString>
+          </smXML:country>
+          <smXML:electronicMailAddress>
+           <smXML:CharacterString>Klaus-Peter.Schulz@um.bwl.de</smXML:CharacterString>
+          </smXML:electronicMailAddress>
+         </smXML:CI_Address>
+        </smXML:address>
+       </smXML:CI_Contact>
+      </smXML:contactInfo>
+     </smXML:CI_ResponsibleParty>
+    </contact>
+    <iso19115brief:identificationInfo>
+     <iso19115brief:CSW_ServiceIdentification>
+      <smXML:title xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:CharacterString>Informationssystem Wasser, Abfall, Altlasten, Boden (WAABIS)</smXML:CharacterString>
+      </smXML:title>
+      <iso19119:serviceType xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem, Berichtssystem</smXML:CharacterString>
+      </iso19119:serviceType>
+      <iso19119:couplingType xmlns:iso19119="http://schemas.opengis.net/iso19119">
+       <iso19119:CSW_CouplingType codeList="http://opengis.org/codelistRegistry?CSW_CouplingType" codeListValue="0, 0, 0, 0, 0, 0, 0"/>
+      </iso19119:couplingType>
+     </iso19115brief:CSW_ServiceIdentification>
+    </iso19115brief:identificationInfo>
+   </iso19115brief:MD_Metadata>
+  </csw:GetRecordByIdResponse>
+ </soapenv:Body>
+</soapenv:Envelope>
