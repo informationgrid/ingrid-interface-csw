@@ -12,9 +12,11 @@ import javax.xml.soap.SOAPElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import de.ingrid.interfaces.csw.exceptions.CSWException;
 import de.ingrid.interfaces.csw.tools.SOAPTools;
 import de.ingrid.interfaces.csw.tools.XMLTools;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
 import org.apache.commons.logging.Log;
@@ -42,7 +44,11 @@ public class RequestTransformer implements CSWRequestTransformer {
         FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
         ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
         QueryStringParser parser = new QueryStringParser(new StringReader(ingridQueryString));
-        ingridQuery = parser.parse();
+        try {
+        	ingridQuery = parser.parse();
+        } catch (Throwable t) {
+        	throw new Exception(t.getMessage());
+        }
         return ingridQuery;
     }    
     

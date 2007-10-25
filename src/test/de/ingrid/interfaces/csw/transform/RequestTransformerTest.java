@@ -79,6 +79,19 @@ public class RequestTransformerTest extends TestCase {
         queryString = ingridQueryToString.transform(ingridQuery);
         assertEquals("( AND t01_object.mod_time:[1990-12-31 TO 3000-01-01] )", queryString);
         
+        soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_BW4);
+        ingridQuery = requestTransformer.transform(soapElementFilter);
+        assertNotNull(ingridQuery);
+        queryString = ingridQueryToString.transform(ingridQuery);
+
+        soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_HH1);
+        try {
+        	ingridQuery = requestTransformer.transform(soapElementFilter);
+        	// must throw an exception
+        	assertTrue(false);
+        } catch (Exception e) {
+        }
+        
         
     }
     

@@ -801,6 +801,159 @@ public final class TestRequests {
 
     public static final Properties KVPGETCAPINVALID5 = new Properties();
 
+    
+    // Problem: Anfrage ohne Filter ist nicht erlaubt
+    public static final String GET_RECORDS_BW1 = 
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
+                + "                   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
+                + "                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                " <soapenv:Body>\n" +
+    			"<csw:GetRecords xmlns:ogc=\"http://www.opengis.net/ogc\" " + 
+    			"xmlns:ows=\"http://www.opengis.net/ows\" " +
+    			"xmlns:csw=\"http://www.opengis.net/cat/csw\" service=\"CSW\" " +  
+    			"version=\"2.0.0\" resultType=\"RESULTS\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\" startPosition=\"1\" maxRecords=\"10\">" + 
+    			"<csw:Query typeNames=\"csw:dataset\">" + 
+    			"	<csw:ElementSetName>full</csw:ElementSetName>" +          
+    			"</csw:Query>" + 
+    			"</csw:GetRecords>" +
+    			" </soapenv:Body>\n" + "</soapenv:Envelope>";
+    
+    
+    // Problem: wildcard character '%' in Verbindung mit UTF-8 Codierung schlägt fehl, da alle Strings URL decodiert werden.
+    public static final String GET_RECORDS_BW2 = 
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
+                + "                   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
+                + "                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                " <soapenv:Body>\n" +
+    "<csw:GetRecords xmlns:ogc=\"http://www.opengis.net/ogc\" " +
+    "xmlns:ows=\"http://www.opengis.net/ows\" " +
+    "xmlns:csw=\"http://www.opengis.net/cat/csw\"  service=\"CSW\"  " +
+    "version=\"2.0.0\" " +
+    "resultType=\"RESULTS\" outputFormat=\"text/xml\"  " +
+    "outputSchema=\"csw:profile\" " +
+    "startPosition=\"1\" maxRecords=\"10\"> " +
+    "   <csw:Query typeNames=\"csw:dataset\"> " +
+    "       <csw:ElementSetName>full</csw:ElementSetName> " +
+    "       <csw:Constraint version=\"1.0.0\"> " +
+    "           <ogc:Filter> " +
+    "               <ogc:PropertyIsLike wildCard=\"%\"  " +
+    "singleChar=\"_\" escape=\"\\\" " +
+    "matchCase=\"false\"> " +
+    "                   <ogc:PropertyName>Title</ogc:PropertyName> " +
+    "                   <ogc:Literal>%ssow%</ogc:Literal> " +
+    "               </ogc:PropertyIsLike> " +
+    "           </ogc:Filter> " +
+    "       </csw:Constraint> " +
+    "   </csw:Query> " +
+    "</csw:GetRecords> " +
+	" </soapenv:Body>\n" + "</soapenv:Envelope>";
+    
+
+    // Problem: wildcard character '%' in Verbindung mit UTF-8 Codierung schlägt fehl, da alle Strings URL decodiert werden.
+    public static final String GET_RECORDS_BW3 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> " +
+    "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> " +
+    "   <soap:Header/> " +
+    "   <soap:Body> " +
+    "       <csw:GetRecords xmlns:ogc=\"http://www.opengis.net/ogc\" " +
+    "xmlns:ows=\"http://www.opengis.net/ows\" " +
+    "xmlns:csw=\"http://www.opengis.net/cat/csw\" service=\"CSW\"  " +
+    "version=\"2.0.0\" " +
+    "resultType=\"RESULTS\" outputFormat=\"text/xml\"  " +
+    "outputSchema=\"csw:profile\" " +
+    "startPosition=\"1\" maxRecords=\"10\"> " +
+    "           <csw:Query typeNames=\"csw:dataset\"> " +
+    "               <csw:ElementSetName>full</csw:ElementSetName> " +
+    "               <csw:Constraint version=\"1.0.0\"> " +
+    "                   <ogc:Filter> " +
+    "                       <ogc:PropertyIsLike wildCard=\"*\" singleChar=\"_\" " +
+    "escape=\"\\\" matchCase=\"false\"> " +
+    "                           <ogc:PropertyName>Title</ogc:PropertyName> " +
+    "                           <ogc:Literal>*ssow*</ogc:Literal> " +
+    "                       </ogc:PropertyIsLike> " +
+    "                   </ogc:Filter> " +
+    "               </csw:Constraint> " +
+    "           </csw:Query> " +
+    "       </csw:GetRecords> " +
+    "   </soap:Body> " +
+    "</soap:Envelope>"; 
+    
+    
+    public static final String GET_RECORDS_BW4 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> " +
+    		"<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> " +
+    		"   <soap:Header/> " +
+    		"   <soap:Body> " +
+    		"       <csw:GetRecords xmlns:ogc=\"http://www.opengis.net/ogc\" " +
+    		"xmlns:ows=\"http://www.opengis.net/ows\" " +
+    		"xmlns:csw=\"http://www.opengis.net/cat/csw\" service=\"CSW\"  " +
+    		"version=\"2.0.0\" " +
+    		"resultType=\"RESULTS\" outputFormat=\"text/xml\"  " +
+    		"outputSchema=\"csw:profile\" " +
+    		"startPosition=\"1\" maxRecords=\"10\"> " +
+    		"           <csw:Query typeNames=\"csw:dataset\"> " +
+    		"               <csw:ElementSetName>full</csw:ElementSetName> " +
+    		"               <csw:Constraint version=\"1.0.0\"> " +
+    		"                   <ogc:Filter> " +
+    		"                       <ogc:PropertyIsLike wildCard=\"*\" singleChar=\"_\" " +
+    		"escape=\"\\\" matchCase=\"false\"> " +
+    		"                           <ogc:PropertyName>Title</ogc:PropertyName> " +
+    		"                           <ogc:Literal>*ssow*</ogc:Literal> " +
+    		"                       </ogc:PropertyIsLike> " +
+    		"                   </ogc:Filter> " +
+    		"               </csw:Constraint> " +
+    		"           </csw:Query> " +
+    		"       </csw:GetRecords> " +
+    		"   </soap:Body> " +
+    		"</soap:Envelope>";
+
+    public static final String GET_RECORDS_BW4_1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> " +
+	"<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> " +
+	"   <soap:Header/> " +
+	"   <soap:Body> " +
+	"       <csw:GetRecords xmlns:ogc=\"http://www.opengis.net/ogc\" " +
+	"xmlns:ows=\"http://www.opengis.net/ows\" " +
+	"xmlns:csw=\"http://www.opengis.net/cat/csw\" service=\"CSW\"  " +
+	"version=\"2.0.0\" " +
+	"resultType=\"RESULTS\" outputFormat=\"text/xml\"  " +
+	"outputSchema=\"csw:profile\" " +
+	"startPosition=\"1\" maxRecords=\"10\"> " +
+	"           <csw:Query typeNames=\"csw:dataset\"> " +
+	"               <csw:ElementSetName>full</csw:ElementSetName> " +
+	"               <csw:Constraint version=\"1.0.0\"> " +
+	"                   <ogc:Filter> " +
+	"                       <ogc:PropertyIsEqualTo" +
+	"> " +
+	"                           <ogc:PropertyName>AnyText</ogc:PropertyName> " +
+	"                           <ogc:Literal>*ssow*</ogc:Literal> " +
+	"                       </ogc:PropertyIsEqualTo> " +
+	"                   </ogc:Filter> " +
+	"               </csw:Constraint> " +
+	"           </csw:Query> " +
+	"       </csw:GetRecords> " +
+	"   </soap:Body> " +
+	"</soap:Envelope>";  
+    
+    public static final String GET_RECORDS_HH1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> " +
+	"<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> " +
+	"   <soap:Header/> " +
+	"   <soap:Body> " +
+	"   <cswOld:GetRecords xmlns:cswOld=\"http://www.opengis.net/cat/csw\" maxRecords=\"1\" outputSchema=\"csw:profile\" resultType=\"results\" service=\"CSW\" startPosition=\"1\" version=\"2.0.0\">" +
+	"	<cswOld:Query typeNames=\"csw:dataset csw:datasetcollection csw:service csw:application\">" +
+	"		<cswOld:ElementSetName>full</cswOld:ElementSetName>" +
+	"		<ogc:Constraint xmlns:csw=\"http://www.opengis.net/cat/csw/2.0.2\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0.0\">" +
+	"			<ogc:Filter>" +
+	"				<ogc:PropertyIsLike escapeChar=\"!\" singleChar=\"?\" wildCard=\"*\">" +
+	"					<ogc:PropertyName>AnyText</ogc:PropertyName>" +
+	"					<ogc:Literal>*</ogc:Literal>" +
+	"				</ogc:PropertyIsLike>" +
+	"			</ogc:Filter>" +
+	"		</ogc:Constraint>" +
+	"	</cswOld:Query>" +
+	"	</cswOld:GetRecords>" +    
+	"   </soap:Body> " +
+	"</soap:Envelope>";     
+
     // Although object are declared final, they are filled by this block
     static {
         KVPGETCAP1.setProperty("REQUEST", "GetCapabilities");
