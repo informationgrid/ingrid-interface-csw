@@ -92,6 +92,20 @@ public class RequestTransformerTest extends TestCase {
         } catch (Exception e) {
         }
         
+        soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_MV1);
+        ingridQuery = requestTransformer.transform(soapElementFilter);
+        assertNotNull(ingridQuery);
+        queryString = ingridQueryToString.transform(ingridQuery);
+        assertEquals("( AND title:Wasser )", queryString);
+
+        soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_MV2);
+        ingridQuery = requestTransformer.transform(soapElementFilter);
+        assertNotNull(ingridQuery);
+        queryString = ingridQueryToString.transform(ingridQuery);
+        assertEquals("( AND title:Wasser )", queryString);
+        
+        
+        
         
     }
     

@@ -954,6 +954,52 @@ public final class TestRequests {
 	"   </soap:Body> " +
 	"</soap:Envelope>";     
 
+    
+    // test for accepting case insensitive property names
+    // changed on request from MV
+    public static final String GET_RECORDS_MV1 =
+
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
+                + "                   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
+                + "                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                " <soapenv:Body>\n" +
+                "<" + GETREC_WORD + " maxRecords=\"4\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+                + "      requestId=\"csw:1\" resultType=\"results\" service=\"CSW\" startPosition=\"1\"\n"
+                + "        version=\"2.0.0\" xmlns=\"http://www.opengis.net/cat/csw\">\n"
+                + "<Query typeNames=\"csw:dataset\">\n" + "<ElementSetName typeNames=\"\">brief</ElementSetName>\n"
+                + "<Constraint version=\"1.0.0\">\n" 
+                + "<Filter xmlns=\"http://www.opengis.net/ogc\">\n" 
+                + "<PropertyIsEqualTo>\n" + "<PropertyName>title</PropertyName>\n" + "<Literal>Wasser</Literal>\n" + "</PropertyIsEqualTo>\n"
+                + "</Filter>\n" 
+                + "</Constraint>\n" 
+                + "<SortBy>\n" 
+                + "<SortProperty>\n" + "<PropertyName>title</PropertyName>\n" + "<SortOrder>ASC</SortOrder>\n" + "</SortProperty>\n" + "</SortBy>" 
+                + "</Query>\n" + "</" + GETREC_WORD + ">\n" 
+                + " </soapenv:Body>\n" + "</soapenv:Envelope>";
+    
+    public static final String GET_RECORDS_MV2 =
+
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
+                + "                   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
+                + "                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                " <soapenv:Body>\n" +
+                "<" + GETREC_WORD + " maxRecords=\"4\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+                + "      requestId=\"csw:1\" resultType=\"results\" service=\"CSW\" startPosition=\"1\"\n"
+                + "        version=\"2.0.0\" xmlns=\"http://www.opengis.net/cat/csw\">\n"
+                + "<Query typeNames=\"csw:dataset\">\n" + "<ElementSetName typeNames=\"\">brief</ElementSetName>\n"
+                + "<Constraint version=\"1.0.0\">\n" 
+                + "<Filter xmlns=\"http://www.opengis.net/ogc\">\n" 
+                + "<PropertyIsEqualTo>\n" + "<PropertyName>Title</PropertyName>\n" + "<Literal>Wasser</Literal>\n" + "</PropertyIsEqualTo>\n"
+                + "</Filter>\n" 
+                + "</Constraint>\n" 
+                + "<SortBy>\n" 
+                + "<SortProperty>\n" + "<PropertyName>Title</PropertyName>\n" + "<SortOrder>ASC</SortOrder>\n" + "</SortProperty>\n" + "</SortBy>" 
+                + "</Query>\n" + "</" + GETREC_WORD + ">\n" 
+                + " </soapenv:Body>\n" + "</soapenv:Envelope>";
+    
+    
     // Although object are declared final, they are filled by this block
     static {
         KVPGETCAP1.setProperty("REQUEST", "GetCapabilities");
