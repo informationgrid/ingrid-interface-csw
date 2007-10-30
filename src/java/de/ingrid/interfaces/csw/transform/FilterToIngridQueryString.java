@@ -834,87 +834,87 @@ public class FilterToIngridQueryString {
 		String outprop = null;
 
 		// all text fields
-		if (inprop.equals("AnyText")) {
+		if (inprop.equalsIgnoreCase("AnyText")) {
 			// anytext --> content
 			outprop = "";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/title
-		} else if (inprop.equals("Title")) {
+		} else if (inprop.equalsIgnoreCase("Title")) {
 			outprop = "title";
 			// metadata language
-		} else if (inprop.equals("Language")) {
+		} else if (inprop.equalsIgnoreCase("Language")) {
 			outprop = "t01_object.metadata_language";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/alternateTitle
-		} else if (inprop.equals("AlternateTitle")) {
+		} else if (inprop.equalsIgnoreCase("AlternateTitle")) {
 			outprop = "t01_object.dataset_alternate_name";
 			// responsible party organisation name
-		} else if (inprop.equals("OrganisationName")) {
+		} else if (inprop.equalsIgnoreCase("OrganisationName")) {
 			outprop = "t02_address.institution";
 			// do security constraints (resource constraints) exist (boolean)
-		} else if (inprop.equals("HasSecurityConstraints")) {
+		} else if (inprop.equalsIgnoreCase("HasSecurityConstraints")) {
 			// TODO hasSecurityConstraints
 			outprop = "hasSecurityConstraints";
 			// metadata hierarchy level name
-		} else if (inprop.equals("HierarchyLevelName")) {
+		} else if (inprop.equalsIgnoreCase("HierarchyLevelName")) {
 			// TODO HierarchyLevelName
 			outprop = "hierarchyLevelName";
 			// metadata parent identifier
-		} else if (inprop.equals("ParentIdentifier")) {
+		} else if (inprop.equalsIgnoreCase("ParentIdentifier")) {
 			outprop = "t012_obj_obj.object_from_id";
 			// dates
 			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/date/date
 			// date type: revision
-		} else if (inprop.equals("Modified")) {
+		} else if (inprop.equalsIgnoreCase("Modified")) {
 			outprop = "t01_object.mod_time";
 			// date type: creation
-		} else if (inprop.equals("CreationDate")) {
+		} else if (inprop.equalsIgnoreCase("CreationDate")) {
 			outprop = "t01_object.create_time";
 			// begin: t01_object.time_from
-		} else if (inprop.equals("TempExtent_begin")) {
+		} else if (inprop.equalsIgnoreCase("TempExtent_begin")) {
 			outprop = "t1";
 			// end: t01_object.time_to
-		} else if (inprop.equals("TempExtent_end")) {
+		} else if (inprop.equalsIgnoreCase("TempExtent_end")) {
 			outprop = "t2";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/abstract
-		} else if (inprop.equals("Abstract")) {
+		} else if (inprop.equalsIgnoreCase("Abstract")) {
 			outprop = "summary";
 			// distribution format
-		} else if (inprop.equals("Format")) {
+		} else if (inprop.equalsIgnoreCase("Format")) {
 			outprop = "t0110_avail_format.name";
 			// TODO citation identifier
-		} else if (inprop.equals("Identifier")) {
+		} else if (inprop.equalsIgnoreCase("Identifier")) {
 			outprop = "zip";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/descriptiveKeywords/MD_Keywords/keyword
-		} else if (inprop.equals("Subject")) {
+		} else if (inprop.equalsIgnoreCase("Subject")) {
 			outprop = "t04_search.searchterm";
 			// TODO keyword type
-		} else if (inprop.equals("KeywordType")) {
+		} else if (inprop.equalsIgnoreCase("KeywordType")) {
 			outprop = "keyTyp";
 			// TODO topic category
-		} else if (inprop.equals("TopicCategory")) {
+		} else if (inprop.equalsIgnoreCase("TopicCategory")) {
 			outprop = "tpCat";
 			// spatial resolution
-		} else if (inprop.equals("SpatialResolution")) {
+		} else if (inprop.equalsIgnoreCase("SpatialResolution")) {
 			outprop = "spatialResolution";
 			// denominator (integer)
-		} else if (inprop.equals("Denominator")) {
+		} else if (inprop.equalsIgnoreCase("Denominator")) {
 			outprop = "t011_obj_geo_scale.scale";
 			// distance value (float)
-		} else if (inprop.equals("DistanceValue")) {
+		} else if (inprop.equalsIgnoreCase("DistanceValue")) {
 			outprop = "t011_obj_geo_scale.resolution_ground";
 			// distance uom (measure: meter)
-		} else if (inprop.equals("DistanceUOM")) {
+		} else if (inprop.equalsIgnoreCase("DistanceUOM")) {
 			outprop = "t011_obj_geo_scale.resolution_scan";
 			// TODO spatial representation type
-		} else if (inprop.equals("Type")) {
+		} else if (inprop.equalsIgnoreCase("Type")) {
 			outprop = "spatRpType";
 			// coordinate reference system
-		} else if (inprop.equals("CRS")) {
+		} else if (inprop.equalsIgnoreCase("CRS")) {
 			outprop = "t011_obj_geo.coord";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicDescription/geographicIdentifier/code
 			// Dirk Schwarzmann, 2006-10-09:
 			// Support long xpath names (at least for GeoPortal.Bund)
-		} else if (inprop.equals("GeographicDescriptionCode") ||
+		} else if (inprop.equalsIgnoreCase("GeographicDescriptionCode") ||
 				inprop.equalsIgnoreCase("MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicDescription/geographicIdentifier/MD_Identifier/code") ||
 				inprop.equalsIgnoreCase("MD_Metadata/identificationInfo/CSW_ServiceIdentification/operatesOn/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicDescription/geographicIdentifier/MD_Identifier/code")) {
 			outprop = "t019_coordinates.bezug";
@@ -926,12 +926,12 @@ public class FilterToIngridQueryString {
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicBoundingBox/westBoundLongitude
 			// t019_coordinates.geo_x1
-		} else if (inprop.equals("WestBoundLongitude")) {
+		} else if (inprop.equalsIgnoreCase("WestBoundLongitude")) {
 			outprop = "x1";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicBoundingBox/eastBoundLongitude
 			// t019_coordinates.geo_x2
-		} else if (inprop.equals("EastBoundLongitude")) {
+		} else if (inprop.equalsIgnoreCase("EastBoundLongitude")) {
 			outprop = "x2";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicBoundingBox/southBoundLatitude
@@ -944,21 +944,21 @@ public class FilterToIngridQueryString {
 		} else if (inprop.equalsIgnoreCase("NorthBoundLatitude")) {
 			outprop = "y2";
 			// MD_Metadata/fileIdentifier
-		} else if (inprop.equals("FileIdentifier")) {
+		} else if (inprop.equalsIgnoreCase("FileIdentifier")) {
 			outprop = "t01_object.obj_id";
-		} else if (inprop.equals("ServiceType")) {
+		} else if (inprop.equalsIgnoreCase("ServiceType")) {
 			outprop = "t011_obj_serv.type";
-		} else if (inprop.equals("ServiceTypeVersion")) {
+		} else if (inprop.equalsIgnoreCase("ServiceTypeVersion")) {
 			outprop = "t011_obj_serv_version.version";
-		} else if (inprop.equals("OperatesOn")) {
+		} else if (inprop.equalsIgnoreCase("OperatesOn")) {
 			// TODO OperatesOn = T011_obj_serv.base??
 			outprop = "t011_obj_serv.base";
-		} else if (inprop.equals("Operation")) {
+		} else if (inprop.equalsIgnoreCase("Operation")) {
 			outprop = "t011_obj_serv_operation.name";
-		} else if (inprop.equals("DCP")) {
+		} else if (inprop.equalsIgnoreCase("DCP")) {
 			outprop = "t011_obj_serv_op_platform.platform";
 			// TODO CouplingType
-		} else if (inprop.equals("CouplingType")) {
+		} else if (inprop.equalsIgnoreCase("CouplingType")) {
 			outprop = "couplingType";
 		} else {
 			throw new CSWInvalidParameterValueException("Search for PropertyName '" + inprop + "' is not supported by this server.", "PropertyName");
