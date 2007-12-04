@@ -29,6 +29,10 @@ public class IngridQueryHelper {
 
     public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
 
+    public final static String HIT_KEY_ADDRESS_CLASS2 = "T02_address2.typ";
+
+    public final static String HIT_KEY_ADDRESS_CLASS3 = "T02_address3.typ";
+    
     public static final String HIT_KEY_ADDRESS_FIRSTNAME = "T02_address.firstname";
 
     public static final String HIT_KEY_ADDRESS_LASTNAME = "T02_address.lastname";
@@ -39,8 +43,16 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_ADDRESS_ADDRID = "T02_address.adr_id";
 
+    public static final String HIT_KEY_ADDRESS_ADDRID2 = "T02_address2.adr_id";
+
+    public static final String HIT_KEY_ADDRESS_ADDRID3 = "T02_address3.adr_id";
+    
     public static final String HIT_KEY_ADDRESS_INSTITUITION = "title";
 
+    public static final String HIT_KEY_ADDRESS_INSTITUITION2 = "title2";
+
+    public static final String HIT_KEY_ADDRESS_INSTITUITION3 = "title3";
+    
     public static final String HIT_KEY_ADDRESS_JOB = "summary";
 
     public static final String HIT_KEY_ADDRESS_COMM_TYPE = "t021_communication.comm_type";
@@ -309,6 +321,7 @@ public class IngridQueryHelper {
 
 
 
+
     /*
      * String[] requestedFields = new String[15]; requestedFields[0] =
      * IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID; requestedFields[1] =
@@ -339,8 +352,39 @@ public class IngridQueryHelper {
         if (addrClass.equals("2") || addrClass.equals("1")) {
             String addressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION);
             String currentAddressId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDRID);
+            
+            // check for parent address information in detail data
+            String tmpAddressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION2);
+            String tmpAddrClass = getDetailValue(addressDetail, HIT_KEY_ADDRESS_CLASS2);
+            String tmpAddressId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDRID2);
+            for (int i=0; i<2; i++) {
+            	if (i==1) {
+                    tmpAddressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION3);
+                    tmpAddrClass = getDetailValue(addressDetail, HIT_KEY_ADDRESS_CLASS3);
+                    tmpAddressId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDRID3);
+            	}
+                if (tmpAddressInstitution != null) {
+                    if (addressInstitution.length() > 0) {
+                        addressInstitution = tmpAddressInstitution.concat(
+                                ", ").concat(addressInstitution);
+                    } else {
+                        addressInstitution = tmpAddressInstitution;
+                    }
+                }
+                if (tmpAddrClass == null || !tmpAddrClass.equals("1")) {
+                	break;
+                }
+            }
+            if (tmpAddressId != null) {
+            	currentAddressId = tmpAddressId;
+            }
+            
             String newAddressId = null;
             boolean skipSearch = false;
+            if (tmpAddrClass != null && !tmpAddrClass.equals("1")) {
+            	skipSearch = true;
+            }
+            
             while (!skipSearch) {
                 IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId).concat(
                         " datatype:address ranking:score"));
@@ -398,6 +442,12 @@ public class IngridQueryHelper {
         requestedMetadata[11] = HIT_KEY_ADDRESS_CITY;
         requestedMetadata[12] = HIT_KEY_ADDRESS_ZIP;
         requestedMetadata[13] = HIT_KEY_ADDRESS_STATE_ID;
+        requestedMetadata[14] = HIT_KEY_ADDRESS_INSTITUITION2;
+        requestedMetadata[15] = HIT_KEY_ADDRESS_INSTITUITION3;
+        requestedMetadata[16] = HIT_KEY_ADDRESS_CLASS2;
+        requestedMetadata[17] = HIT_KEY_ADDRESS_CLASS3;
+        requestedMetadata[18] = HIT_KEY_ADDRESS_ADDRID2;
+        requestedMetadata[19] = HIT_KEY_ADDRESS_ADDRID3;
 
         ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(
                 " iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
