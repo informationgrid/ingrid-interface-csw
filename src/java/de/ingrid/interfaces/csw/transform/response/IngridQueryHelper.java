@@ -32,7 +32,7 @@ public class IngridQueryHelper {
     public final static String HIT_KEY_ADDRESS_CLASS2 = "T02_address2.typ";
 
     public final static String HIT_KEY_ADDRESS_CLASS3 = "T02_address3.typ";
-    
+
     public static final String HIT_KEY_ADDRESS_FIRSTNAME = "T02_address.firstname";
 
     public static final String HIT_KEY_ADDRESS_LASTNAME = "T02_address.lastname";
@@ -47,11 +47,26 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_ADDRESS_ADDRID3 = "T02_address3.adr_id";
     
+    public static final String HIT_KEY_ADDRESS_ADDR_FROM_ID = "t022_adr_adr.adr_from_id";
+
+    public static final String HIT_KEY_ADDRESS_ADDR_FROM_ID1 = "t022_adr_adr1.adr_from_id";
+    
+    public static final String HIT_KEY_ADDRESS_ADDR_FROM_ID3 = "t022_adr_adr3.adr_from_id";
+    
     public static final String HIT_KEY_ADDRESS_INSTITUITION = "title";
 
     public static final String HIT_KEY_ADDRESS_INSTITUITION2 = "title2";
 
     public static final String HIT_KEY_ADDRESS_INSTITUITION3 = "title3";
+
+    // institution key for object related address info in object hit
+    public static final String HIT_KEY_ADDRESS_INSTITUITION_REL = "T02_address.institution";
+
+    // institution key for object related address info in object hit
+    public static final String HIT_KEY_ADDRESS_INSTITUITION_REL2 = "T02_address2.institution";
+
+    // institution key for object related address info in object hit
+    public static final String HIT_KEY_ADDRESS_INSTITUITION_REL3 = "T02_address3.institution";
     
     public static final String HIT_KEY_ADDRESS_JOB = "summary";
 
@@ -110,7 +125,11 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SERVICE_TYPE_VERSION, HIT_KEY_OBJECT_OBJECT_SPECIAL_REF, HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY,
             HIT_KEY_OBJECT_DATASET_REFERENCE_DATE, HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE, HIT_KEY_OBJECT_MOD_TIME,
             HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE, HIT_KEY_OBJECT_DATA_LANGUAGE,
-            HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_ADR_SPECIAL_NAME };
+            HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_ADR_SPECIAL_NAME, HIT_KEY_ADDRESS_CLASS, HIT_KEY_ADDRESS_CLASS2, 
+            HIT_KEY_ADDRESS_CLASS3, HIT_KEY_ADDRESS_FIRSTNAME, HIT_KEY_ADDRESS_LASTNAME, HIT_KEY_ADDRESS_TITLE, HIT_KEY_ADDRESS_ADDRESS,
+            HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_ADDRID2, HIT_KEY_ADDRESS_ADDRID3, HIT_KEY_ADDRESS_INSTITUITION_REL, HIT_KEY_ADDRESS_INSTITUITION_REL2, 
+            HIT_KEY_ADDRESS_INSTITUITION_REL3, HIT_KEY_ADDRESS_COMM_TYPE, HIT_KEY_ADDRESS_COMM_VALUE, HIT_KEY_ADDRESS_STREET, HIT_KEY_ADDRESS_CITY,
+            HIT_KEY_ADDRESS_ZIP, HIT_KEY_ADDRESS_STATE_ID, HIT_KEY_ADDRESS_ADDR_FROM_ID1, HIT_KEY_ADDRESS_ADDR_FROM_ID3};
 
     public static final String HIT_KEY_OBJECT_DATASET_CHARACTER_SET = "T01_object.dataset_character_set";
 
@@ -314,33 +333,114 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_ST_BOX_Y2, HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO, HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP, HIT_KEY_OBJECT_ADR_SPECIAL_NAME, HIT_KEY_OBJECT_SYMBOL_TITLE, 
             HIT_KEY_OBJECT_SYMBOL_DATE, HIT_KEY_OBJECT_SYMBOL_EDITION, HIT_KEY_OBJECT_SPATIAL_REP_TYPE, HIT_KEY_OBJECT_GEO_REC_GRADE,
             HIT_KEY_OBJECT_SPATIAL_RES_SCALE, HIT_KEY_OBJECT_SPATIAL_RES_GROUND, HIT_KEY_OBJECT_SPATIAL_RES_SCAN, 
-            HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL, HIT_KEY_OBJECT_GEO_REC_EXACT, HIT_KEY_OBJECT_SUPPLINFO_FEATURE_TYPE};
+            HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL, HIT_KEY_OBJECT_GEO_REC_EXACT, HIT_KEY_OBJECT_SUPPLINFO_FEATURE_TYPE, HIT_KEY_ADDRESS_CLASS, HIT_KEY_ADDRESS_CLASS2, 
+            HIT_KEY_ADDRESS_CLASS3, HIT_KEY_ADDRESS_FIRSTNAME, HIT_KEY_ADDRESS_LASTNAME, HIT_KEY_ADDRESS_TITLE, HIT_KEY_ADDRESS_ADDRESS,
+            HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_ADDRID2, HIT_KEY_ADDRESS_ADDRID3, HIT_KEY_ADDRESS_INSTITUITION_REL, HIT_KEY_ADDRESS_INSTITUITION_REL2, 
+            HIT_KEY_ADDRESS_INSTITUITION_REL3, HIT_KEY_ADDRESS_COMM_TYPE, HIT_KEY_ADDRESS_COMM_VALUE, HIT_KEY_ADDRESS_STREET, HIT_KEY_ADDRESS_CITY,
+            HIT_KEY_ADDRESS_ZIP, HIT_KEY_ADDRESS_STATE_ID, HIT_KEY_ADDRESS_ADDR_FROM_ID1, HIT_KEY_ADDRESS_ADDR_FROM_ID3};
 
 
 
 
+    public static IngridHit getCompleteRelatedAddress(IngridHit hit, int addressIdx) throws Exception {
+    	
+    	// EC602AC5-8967-11D4-AAE5-0050DA769D0B
+        String addrClass = getStringFromDetailArray(hit, IngridQueryHelper.HIT_KEY_ADDRESS_CLASS, addressIdx);
+        if (addrClass.equals("0") || addrClass.equals("2") || addrClass.equals("1")) {
+            String addressInstitution = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_INSTITUITION_REL, addressIdx);
+            String currentAddressId = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_ADDRID, addressIdx);
+            
+            // flag set true if we have to requery the ibus in case more data can be available
+            boolean skipSearch = false;
 
+            // check for parent address information in detail data
+            String tmpAddressInstitution = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_INSTITUITION_REL2, addressIdx);
+            String tmpAddrClass = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_CLASS2, addressIdx);
+            String tmpAddressId = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_ADDRID2, addressIdx);
+            String tmpAddressFromId = null;
+            
+            if (tmpAddressId != null && tmpAddressId.length()>0) {
+	            // we do have parent addresses included in the original result
+            	for (int i=0; i<2; i++) {
+	            	if (i==1) {
+	                    tmpAddressInstitution = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_INSTITUITION_REL3, addressIdx);
+	                    tmpAddrClass = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_CLASS3, addressIdx);
+	                    tmpAddressId = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_ADDRID3, addressIdx);
+	                    tmpAddressFromId = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_ADDR_FROM_ID3, addressIdx);
+	                    // check for more address parents, skip further querying if no more parents are available
+	                    if (tmpAddressFromId == null || tmpAddressFromId.length() == 0) {
+	                    	skipSearch = true;
+	                    }
+	            	}
+	                if (tmpAddressInstitution != null && tmpAddressInstitution.length() > 0) {
+	                    if (addressInstitution.length() > 0) {
+	                        addressInstitution = tmpAddressInstitution.concat(
+	                                ", ").concat(addressInstitution);
+	                    } else {
+	                        addressInstitution = tmpAddressInstitution;
+	                    }
+	                }
+	                if (tmpAddrClass == null || tmpAddrClass.length() == 0) {
+	              		// no more parent addresses available than included in original results, skip parent address retrieval
+	               		skipSearch = true;
+	                	break;
+	                }
+	            }
+            } else {
+/*
+ * we must skip this until all iplugs have the extension OR we have access to a mapping version
+ * 
+ * at the moment we cannot be sure if a parent exists without querying the datatbase again (see below)
+ * 
+            	tmpAddressFromId = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_ADDR_TO_ID1, addressIdx);
+                // check for more address parents, skip further querying if no more parents are available
+                if (tmpAddressFromId == null || tmpAddressFromId.length() == 0 ||  tmpAddressFromId.equals(currentAddressId)) {
+                	skipSearch = true;
+                }
+*/                
+            }
+            
+            if (!skipSearch) {
+	            // if a parent address id was included in orinal request, use this for further querying
+            	if (tmpAddressFromId != null && tmpAddressFromId.length() > 0) {
+	            	currentAddressId = tmpAddressFromId;
+	            } else {
+	            	// query whole address again see comment above, remove existing institution
+	            	addressInstitution = "";
+	            }
+            	IngridHit addressHit = getCompleteAddress(currentAddressId, hit.getPlugId());
+                if (addressHit != null) {
+	            	IngridHitDetail addressDetail = (IngridHitDetail) addressHit.get("detail");
+	                tmpAddressInstitution = (String)addressDetail.get(HIT_KEY_ADDRESS_INSTITUITION); 
+	                if (addressInstitution.length() > 0) {
+	                    addressInstitution = tmpAddressInstitution.concat(
+	                            ", ").concat(addressInstitution);
+	                } else {
+	                    addressInstitution = tmpAddressInstitution;
+	                }
+                }
+            }
+            String[] institutionArray = new String[addressIdx+1];
+            institutionArray[addressIdx] = addressInstitution;
+            IngridHitDetail hitDetail = (IngridHitDetail) hit.get("detail");
+            hitDetail.put(HIT_KEY_ADDRESS_INSTITUITION_REL, institutionArray);
+        } else {
+        	
+        }
+    	
+    	return hit;
+    	
+    }
+    
+    private static String getStringFromDetailArray(IngridHit hit, String key, int idx) {
+    	String[] array = getDetailValueAsArray(hit, key);
+    	if (array == null || array.length <= idx) {
+    		return "";
+    	} else {
+    		return array[idx];
+    	}
+    }
 
-
-    /*
-     * String[] requestedFields = new String[15]; requestedFields[0] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID; requestedFields[1] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_REL_ADR_ID; requestedFields[2] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_REL_ADR_TYPE; requestedFields[3] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_OBJ_CLASS; requestedFields[4] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE; requestedFields[5] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_VERSION; requestedFields[6] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF; requestedFields[7] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY; requestedFields[8] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_DATASET_REFERENCE_DATE;
-     * requestedFields[9] =
-     * IngridQueryHelper.HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE;
-     * requestedFields[10] = IngridQueryHelper.HIT_KEY_OBJECT_MOD_TIME;
-     * requestedFields[11] = IngridQueryHelper.HIT_KEY_OBJECT_DESCR;
-     * requestedFields[12] = IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE;
-     * requestedFields[13] = IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE;
-     * requestedFields[14] = IngridQueryHelper.HIT_KEY_OBJECT_METADATA_LANGUAGE;
-     */
 
     public static IngridHit getCompleteAddress(String addrId, String iPlugId) throws Exception {
         IngridHit address = getAddressHit(addrId, iPlugId);
@@ -349,85 +449,106 @@ public class IngridQueryHelper {
         }
         IngridHitDetail addressDetail = (IngridHitDetail) address.get("detail");
         String addrClass = IngridQueryHelper.getDetailValue(addressDetail, IngridQueryHelper.HIT_KEY_ADDRESS_CLASS);
-        if (addrClass.equals("2") || addrClass.equals("1")) {
+        if (addrClass.equals("0") || addrClass.equals("2") || addrClass.equals("1")) {
             String addressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION);
             String currentAddressId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDRID);
             
+            // flag set true if we have to requery the ibus in case more data can be available
+            boolean skipSearch = false;
+
             // check for parent address information in detail data
             String tmpAddressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION2);
             String tmpAddrClass = getDetailValue(addressDetail, HIT_KEY_ADDRESS_CLASS2);
             String tmpAddressId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDRID2);
-            for (int i=0; i<2; i++) {
-            	if (i==1) {
-                    tmpAddressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION3);
-                    tmpAddrClass = getDetailValue(addressDetail, HIT_KEY_ADDRESS_CLASS3);
-                    tmpAddressId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDRID3);
-            	}
-                if (tmpAddressInstitution != null) {
-                    if (addressInstitution.length() > 0) {
-                        addressInstitution = tmpAddressInstitution.concat(
-                                ", ").concat(addressInstitution);
-                    } else {
-                        addressInstitution = tmpAddressInstitution;
-                    }
+            if (tmpAddressId != null && tmpAddressId.length()>0) {
+	            // we do have parent addresses included in the original result
+            	for (int i=0; i<2; i++) {
+	            	if (i==1) {
+	                    tmpAddressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION3);
+	                    tmpAddrClass = getDetailValue(addressDetail, HIT_KEY_ADDRESS_CLASS3);
+	                    tmpAddressId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDRID3);
+	                    String tmpAddressFromId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDR_FROM_ID3);
+	                    // check for more address parents, skip further querying if no more parents are available
+	                    if (tmpAddressFromId == null || tmpAddressFromId.length() == 0) {
+	                    	skipSearch = true;
+	                    }
+	            	}
+	                if (tmpAddressInstitution != null && tmpAddressInstitution.length() > 0) {
+	                    if (addressInstitution.length() > 0) {
+	                        addressInstitution = tmpAddressInstitution.concat(
+	                                ", ").concat(addressInstitution);
+	                    } else {
+	                        addressInstitution = tmpAddressInstitution;
+	                    }
+	                }
+	                if (tmpAddrClass == null || tmpAddrClass.length() == 0) {
+	              		// no more parent addresses available than included in original results, skip parent address retrieval
+	               		skipSearch = true;
+	                	break;
+	                }
+	            }
+            } else {
+                String tmpAddressFromId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDR_FROM_ID);
+                // check for more address parents, skip further querying if no more parents are available
+                if (tmpAddressFromId == null || tmpAddressFromId.length() == 0 ||  tmpAddressFromId.equals(currentAddressId)) {
+                	skipSearch = true;
                 }
-                if (tmpAddrClass == null || !tmpAddrClass.equals("1")) {
-                	break;
-                }
-            }
-            if (tmpAddressId != null) {
-            	currentAddressId = tmpAddressId;
             }
             
-            String newAddressId = null;
-            boolean skipSearch = false;
-            if (tmpAddrClass != null && !tmpAddrClass.equals("1")) {
-            	skipSearch = true;
-            }
+            if (!skipSearch) {
             
-            while (!skipSearch) {
-                IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId).concat(
-                        " datatype:address ranking:score"));
-                IngridHits results = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 10, 3000);
-                if (results.getHits().length > 0) {
-                    IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus()
-                            .getDetails(
-                                    results.getHits(),
-                                    query,
-                                    new String[] { HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_CLASS,
-                                            HIT_KEY_ADDRESS_INSTITUITION });
-                    // find first parent of the address in the result set
-                    for (int j = 0; j < details.length; j++) {
-                        IngridHitDetail addrDetail = (IngridHitDetail) details[j];
-                        addrClass = getDetailValue(addrDetail, HIT_KEY_ADDRESS_CLASS);
-                        newAddressId = getDetailValue(addrDetail, HIT_KEY_ADDRESS_ADDRID);
-                        if ((addrClass.equals("0") || addrClass.equals("1")) && !currentAddressId.equals(newAddressId)) {
-                            if (addressInstitution.length() > 0) {
-                                addressInstitution = getDetailValue(addrDetail, HIT_KEY_ADDRESS_INSTITUITION).concat(
-                                        ", ").concat(addressInstitution);
-                            } else {
-                                addressInstitution = getDetailValue(addrDetail, HIT_KEY_ADDRESS_INSTITUITION);
-                            }
-                            break;
-                        }
-                    }
-                    // check for search skip
-                    if (!addrClass.equals("1") || currentAddressId.equals(newAddressId)) {
-                        skipSearch = true;
-                    } else {
-                        currentAddressId = newAddressId;
-                    }
-                } else {
-                    skipSearch = true;
-                }
+	            // if a parent address id was included in orinal request, use this for further querying
+            	if (tmpAddressId != null && tmpAddressId.length() > 0) {
+	            	currentAddressId = tmpAddressId;
+	            }
+	            
+	            String newAddressId = null;
+	            
+	            while (!skipSearch) {
+	                IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId).concat(
+	                        " datatype:address ranking:score"));
+	                IngridHits results = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 10, 3000);
+	                if (results.getHits().length > 0) {
+	                    IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus()
+	                            .getDetails(
+	                                    results.getHits(),
+	                                    query,
+	                                    new String[] { HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_CLASS,
+	                                            HIT_KEY_ADDRESS_INSTITUITION });
+	                    // find first parent of the address in the result set
+	                    for (int j = 0; j < details.length; j++) {
+	                        IngridHitDetail addrDetail = (IngridHitDetail) details[j];
+	                        addrClass = getDetailValue(addrDetail, HIT_KEY_ADDRESS_CLASS);
+	                        newAddressId = getDetailValue(addrDetail, HIT_KEY_ADDRESS_ADDRID);
+	                        if ((addrClass.equals("0") || addrClass.equals("1")) && !currentAddressId.equals(newAddressId)) {
+	                            if (addressInstitution.length() > 0) {
+	                                addressInstitution = getDetailValue(addrDetail, HIT_KEY_ADDRESS_INSTITUITION).concat(
+	                                        ", ").concat(addressInstitution);
+	                            } else {
+	                                addressInstitution = getDetailValue(addrDetail, HIT_KEY_ADDRESS_INSTITUITION);
+	                            }
+	                            break;
+	                        }
+	                    }
+	                    // check for search skip
+	                    if (currentAddressId.equals(newAddressId)) {
+	                        skipSearch = true;
+	                    } else {
+	                        currentAddressId = newAddressId;
+	                    }
+	                } else {
+	                    skipSearch = true;
+	                }
+	            }
             }
             addressDetail.put(HIT_KEY_ADDRESS_INSTITUITION, addressInstitution);
         }
         return address;
     }
-
+    
+    
     public static IngridHit getAddressHit(String addrId, String iPlugId) {
-        String[] requestedMetadata = new String[14];
+        String[] requestedMetadata = new String[22];
         requestedMetadata[0] = HIT_KEY_ADDRESS_CLASS;
         requestedMetadata[1] = HIT_KEY_ADDRESS_FIRSTNAME;
         requestedMetadata[2] = HIT_KEY_ADDRESS_LASTNAME;
@@ -448,6 +569,8 @@ public class IngridQueryHelper {
         requestedMetadata[17] = HIT_KEY_ADDRESS_CLASS3;
         requestedMetadata[18] = HIT_KEY_ADDRESS_ADDRID2;
         requestedMetadata[19] = HIT_KEY_ADDRESS_ADDRID3;
+        requestedMetadata[20] = HIT_KEY_ADDRESS_ADDR_FROM_ID3;
+        requestedMetadata[21] = HIT_KEY_ADDRESS_ADDR_FROM_ID;
 
         ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(
                 " iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
