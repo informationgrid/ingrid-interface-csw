@@ -49,8 +49,6 @@ public class IngridQueryHelper {
     
     public static final String HIT_KEY_ADDRESS_ADDR_FROM_ID = "t022_adr_adr.adr_from_id";
 
-    public static final String HIT_KEY_ADDRESS_ADDR_FROM_ID1 = "t022_adr_adr1.adr_from_id";
-    
     public static final String HIT_KEY_ADDRESS_ADDR_FROM_ID3 = "t022_adr_adr3.adr_from_id";
     
     public static final String HIT_KEY_ADDRESS_INSTITUITION = "title";
@@ -129,7 +127,7 @@ public class IngridQueryHelper {
             HIT_KEY_ADDRESS_CLASS3, HIT_KEY_ADDRESS_FIRSTNAME, HIT_KEY_ADDRESS_LASTNAME, HIT_KEY_ADDRESS_TITLE, HIT_KEY_ADDRESS_ADDRESS,
             HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_ADDRID2, HIT_KEY_ADDRESS_ADDRID3, HIT_KEY_ADDRESS_INSTITUITION_REL, HIT_KEY_ADDRESS_INSTITUITION_REL2, 
             HIT_KEY_ADDRESS_INSTITUITION_REL3, HIT_KEY_ADDRESS_COMM_TYPE, HIT_KEY_ADDRESS_COMM_VALUE, HIT_KEY_ADDRESS_STREET, HIT_KEY_ADDRESS_CITY,
-            HIT_KEY_ADDRESS_ZIP, HIT_KEY_ADDRESS_STATE_ID, HIT_KEY_ADDRESS_ADDR_FROM_ID1, HIT_KEY_ADDRESS_ADDR_FROM_ID3};
+            HIT_KEY_ADDRESS_ZIP, HIT_KEY_ADDRESS_STATE_ID, HIT_KEY_ADDRESS_ADDR_FROM_ID3};
 
     public static final String HIT_KEY_OBJECT_DATASET_CHARACTER_SET = "T01_object.dataset_character_set";
 
@@ -337,7 +335,7 @@ public class IngridQueryHelper {
             HIT_KEY_ADDRESS_CLASS3, HIT_KEY_ADDRESS_FIRSTNAME, HIT_KEY_ADDRESS_LASTNAME, HIT_KEY_ADDRESS_TITLE, HIT_KEY_ADDRESS_ADDRESS,
             HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_ADDRID2, HIT_KEY_ADDRESS_ADDRID3, HIT_KEY_ADDRESS_INSTITUITION_REL, HIT_KEY_ADDRESS_INSTITUITION_REL2, 
             HIT_KEY_ADDRESS_INSTITUITION_REL3, HIT_KEY_ADDRESS_COMM_TYPE, HIT_KEY_ADDRESS_COMM_VALUE, HIT_KEY_ADDRESS_STREET, HIT_KEY_ADDRESS_CITY,
-            HIT_KEY_ADDRESS_ZIP, HIT_KEY_ADDRESS_STATE_ID, HIT_KEY_ADDRESS_ADDR_FROM_ID1, HIT_KEY_ADDRESS_ADDR_FROM_ID3};
+            HIT_KEY_ADDRESS_ZIP, HIT_KEY_ADDRESS_STATE_ID, HIT_KEY_ADDRESS_ADDR_FROM_ID3};
 
 
 
@@ -388,15 +386,13 @@ public class IngridQueryHelper {
 	            }
             } else {
 /*
- * we must skip this until all iplugs have the extension OR we have access to a mapping version
+ * we must skip this until all iplugs have the extension OR we have access to a mapping version.
  * 
- * at the moment we cannot be sure if a parent exists without querying the datatbase again (see below)
+ * at the moment we cannot be sure if a parent exists without querying the datatbase again (see below).
  * 
-            	tmpAddressFromId = getStringFromDetailArray(hit, HIT_KEY_ADDRESS_ADDR_TO_ID1, addressIdx);
-                // check for more address parents, skip further querying if no more parents are available
-                if (tmpAddressFromId == null || tmpAddressFromId.length() == 0 ||  tmpAddressFromId.equals(currentAddressId)) {
-                	skipSearch = true;
-                }
+ * if we can safely know if we have the address parent mapping extension, we can skip further querying here
+ * 
+              	skipSearch = true;
 */                
             }
             
@@ -424,8 +420,6 @@ public class IngridQueryHelper {
             institutionArray[addressIdx] = addressInstitution;
             IngridHitDetail hitDetail = (IngridHitDetail) hit.get("detail");
             hitDetail.put(HIT_KEY_ADDRESS_INSTITUITION_REL, institutionArray);
-        } else {
-        	
         }
     	
     	return hit;
