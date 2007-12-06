@@ -1,5 +1,7 @@
 package de.ingrid.interfaces.csw.transform.response;
 
+import junit.framework.TestCase;
+
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
@@ -11,9 +13,7 @@ import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
-import junit.framework.TestCase;
 
 public class CSWBuilderMetadataCommonTestLocal extends TestCase {
 
