@@ -102,11 +102,11 @@ public abstract class JAXMServlet
     protected static
         MimeHeaders getHeaders(HttpServletRequest req) 
     {
-        Enumeration enum = req.getHeaderNames();
+        Enumeration en = req.getHeaderNames();
         MimeHeaders headers = new MimeHeaders();
 
-        while (enum.hasMoreElements()) {
-            String headerName = (String)enum.nextElement();
+        while (en.hasMoreElements()) {
+            String headerName = (String)en.nextElement();
             String headerValue = req.getHeader(headerName);
 
             StringTokenizer values = new StringTokenizer(headerValue, ",");
