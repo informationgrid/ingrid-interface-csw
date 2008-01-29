@@ -79,12 +79,21 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 }
     
                 Element CIAddress = CIContact.addElement("smXML:address").addElement("smXML:CI_Address");
-                this.addSMXMLCharacterString(CIAddress.addElement("smXML:deliveryPoint"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_STREET));
-                this.addSMXMLCharacterString(CIAddress.addElement("smXML:city"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
-                this.addSMXMLCharacterString(CIAddress.addElement("smXML:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
+                String street = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_STREET);
+                String zip = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_ZIP);
+                if (street != null && street.length() == 0 && zip != null && zip.length() == 0) {
+                    this.addSMXMLCharacterString(CIAddress.addElement("smXML:deliveryPoint"), street);
+                    this.addSMXMLCharacterString(CIAddress.addElement("smXML:city"), IngridQueryHelper.getDetailValueAsString(address,
+                            IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
+                    this.addSMXMLCharacterString(CIAddress.addElement("smXML:postalCode"), zip);
+                } else {
+                    this.addSMXMLCharacterString(CIAddress.addElement("smXML:deliveryPoint"), IngridQueryHelper.getDetailValueAsString(address,
+                            IngridQueryHelper.HIT_KEY_ADDRESS_POSTBOX));
+                    this.addSMXMLCharacterString(CIAddress.addElement("smXML:city"), IngridQueryHelper.getDetailValueAsString(address,
+                            IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
+                    this.addSMXMLCharacterString(CIAddress.addElement("smXML:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
+                            IngridQueryHelper.HIT_KEY_ADDRESS_ZIP_POSTBOX));
+                }
                 this.addSMXMLCharacterString(CIAddress.addElement("smXML:country"), IngridQueryHelper.getDetailValueAsString(address,
                         IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID));
                 ArrayList emails = (ArrayList) communications.get("email");

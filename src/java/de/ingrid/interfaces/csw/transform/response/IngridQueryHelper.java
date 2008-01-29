@@ -6,6 +6,7 @@ package de.ingrid.interfaces.csw.transform.response;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -78,6 +79,10 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_ADDRESS_ZIP = "zip";
 
+    public static final String HIT_KEY_ADDRESS_POSTBOX = "t02_address.postbox";
+    
+    public static final String HIT_KEY_ADDRESS_ZIP_POSTBOX = "t02_address.postbox_pc";
+    
     public static final String HIT_KEY_ADDRESS_STATE_ID = "t02_address.state_id";
 
     public static final String HIT_KEY_OBJECT_ADR_SPECIAL_NAME = "T012_obj_adr.special_name";
@@ -456,6 +461,8 @@ public class IngridQueryHelper {
         requestedMetadata[10] = HIT_KEY_ADDRESS_STREET;
         requestedMetadata[11] = HIT_KEY_ADDRESS_CITY;
         requestedMetadata[12] = HIT_KEY_ADDRESS_ZIP;
+        requestedMetadata[12] = HIT_KEY_ADDRESS_POSTBOX;
+        requestedMetadata[12] = HIT_KEY_ADDRESS_ZIP_POSTBOX;
         requestedMetadata[13] = HIT_KEY_ADDRESS_STATE_ID;
         requestedMetadata[14] = HIT_KEY_ADDRESS_INSTITUITION2;
         requestedMetadata[15] = HIT_KEY_ADDRESS_INSTITUITION3;
@@ -681,4 +688,19 @@ public class IngridQueryHelper {
         return "";
     }
 
+    public static List getReferenceIdentifiers(IngridHit hit) {
+        ArrayList result = new ArrayList();
+    	String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+        String[] fromIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_FROM_ID);
+        String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
+        String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
+        for (int i = 0; i < toIds.length; i++) {
+            // '0' = parent, '1' = reference
+        	if (objId.equals(fromIds[i]) && refType[i].equals("1")) {
+        		result.add(toIds[i]);
+            }
+        }
+        return result;
+    }
+    
 }

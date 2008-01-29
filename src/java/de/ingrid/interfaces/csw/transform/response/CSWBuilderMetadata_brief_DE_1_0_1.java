@@ -51,7 +51,7 @@ public class CSWBuilderMetadata_brief_DE_1_0_1 extends CSWBuilderMetadataCommon 
 
         this.addFileIdentifier(metaData, objectId);
         this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
-        this.addContact(metaData, hit);
+//        this.addContact(metaData, hit);
         if (typeName.equals("dataset")) {
             this.addIdentificationInfoDataset(metaData, hit);
         } else {

@@ -4,6 +4,7 @@
 package de.ingrid.interfaces.csw.transform.response;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -461,10 +462,14 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		}
 
 		super.addOperationMetadata(cswServiceIdentification, hit);
+		
+		List references = IngridQueryHelper.getReferenceIdentifiers(hit);
+		for (int i=0; i< references.size(); i++) {
+			// iso19119:operatesOn
+			cswServiceIdentification.addElement("iso19119:operatesOn").addElement("smXML:Reference").addAttribute(
+					"uuidref", (String)references.get(i));
+		}
 
-		// iso19119:operatesOn
-		cswServiceIdentification.addElement("iso19119:operatesOn").addElement("smXML:Reference").addAttribute(
-				"uuidref", IngridQueryHelper.getParentIdentifier(hit));
 
 		super.addExtent(cswServiceIdentification, hit, "iso19119");
 
