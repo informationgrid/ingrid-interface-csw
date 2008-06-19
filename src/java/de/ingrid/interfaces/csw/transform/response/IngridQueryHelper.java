@@ -493,9 +493,9 @@ public class IngridQueryHelper {
             do {
                 page++;
                 if (log.isDebugEnabled()) {
-                	log.debug("querying ibus: " + query.toString());
+                	log.debug("querying ibus: " + query.toString() + "; page=" + page);
                 }
-                hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 20, page, 0, 3000);
+                hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 20, page, (page-1) * 20, 3000);
                 IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus().getDetails(hits.getHits(),
                         query, requestedMetaData);
                 for (int j = 0; j < details.length; j++) {

@@ -346,7 +346,7 @@ public class CSW {
 
         try {
             IBus myBus = cswConfig.getIBus();
-            hits = myBus.search(ingridQuery, hitsPerPage, pageNo, 0, timeOut);
+            hits = myBus.search(ingridQuery, hitsPerPage, pageNo, (pageNo-1) * hitsPerPage, timeOut);
         } catch (Throwable t) {
             log.error("Error getting IBus: " + t.getMessage());
             throw new Exception("Timeout problem while connecting to subsequent servers.");
