@@ -566,9 +566,16 @@ public class FilterToIngridQueryString {
 
 				// Ignore a possible time stamp in the creation date.
 				// TODO: make it more generic!!!
-				// It is just a quick fix for calls from GeoPortal.Bund
-				// done by Dirk Schwarzmann, 06-09-27
 				if (field.equals("t01_object.create_time")) {
+					int timeStartPos = literal.indexOf("T");
+					if (timeStartPos > -1) {
+						log.warn("Found field CreationDate: truncate extended time stamp from its value");
+						literal = literal.substring(0, timeStartPos);
+					}
+				}
+				// Ignore a possible time stamp in the creation date.
+				// TODO: make it more generic!!!
+				if (field.equals("t01_object.mod_time")) {
 					int timeStartPos = literal.indexOf("T");
 					if (timeStartPos > -1) {
 						log.warn("Found field CreationDate: truncate extended time stamp from its value");

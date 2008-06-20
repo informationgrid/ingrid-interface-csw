@@ -13,6 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
+import de.ingrid.interfaces.csw.transform.response.adapter.DscEcsVersionMapperFactory;
+import de.ingrid.interfaces.csw.transform.response.adapter.IngridQueryFactory;
+import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -400,13 +403,13 @@ public class IngridQueryHelper {
 	            String newAddressId = null;
 	            
 	            while (!skipSearch) {
-	                IngridQuery query = QueryStringParser.parse("T022_adr_adr.adr_to_id:".concat(currentAddressId).concat(
-	                        " datatype:address ranking:score"));
+	                
+	            	IngridQuery query = QueryStringParser.parse(IngridQueryFactory.getAddressParentQueryStr(address, currentAddressId));
 	                
 	                if (log.isDebugEnabled()) {
 	                	log.debug("querying ibus: " + query.toString());
 	                }
-	                IngridHits results = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 10, 3000);
+	                IngridHits results = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 0, 3000);
 	                if (results.getHits().length > 0) {
 	                    IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus()
 	                            .getDetails(
@@ -447,31 +450,36 @@ public class IngridQueryHelper {
     
     
     public static IngridHit getAddressHit(String addrId, String iPlugId) {
-        String[] requestedMetadata = new String[22];
-        requestedMetadata[0] = HIT_KEY_ADDRESS_CLASS;
-        requestedMetadata[1] = HIT_KEY_ADDRESS_FIRSTNAME;
-        requestedMetadata[2] = HIT_KEY_ADDRESS_LASTNAME;
-        requestedMetadata[3] = HIT_KEY_ADDRESS_TITLE;
-        requestedMetadata[4] = HIT_KEY_ADDRESS_ADDRESS;
-        requestedMetadata[5] = HIT_KEY_ADDRESS_ADDRID;
-        requestedMetadata[6] = HIT_KEY_ADDRESS_INSTITUITION;
-        requestedMetadata[7] = HIT_KEY_ADDRESS_JOB;
-        requestedMetadata[8] = HIT_KEY_ADDRESS_COMM_TYPE;
-        requestedMetadata[9] = HIT_KEY_ADDRESS_COMM_VALUE;
-        requestedMetadata[10] = HIT_KEY_ADDRESS_STREET;
-        requestedMetadata[11] = HIT_KEY_ADDRESS_CITY;
-        requestedMetadata[12] = HIT_KEY_ADDRESS_ZIP;
-        requestedMetadata[12] = HIT_KEY_ADDRESS_POSTBOX;
-        requestedMetadata[12] = HIT_KEY_ADDRESS_ZIP_POSTBOX;
-        requestedMetadata[13] = HIT_KEY_ADDRESS_STATE_ID;
-        requestedMetadata[14] = HIT_KEY_ADDRESS_INSTITUITION2;
-        requestedMetadata[15] = HIT_KEY_ADDRESS_INSTITUITION3;
-        requestedMetadata[16] = HIT_KEY_ADDRESS_CLASS2;
-        requestedMetadata[17] = HIT_KEY_ADDRESS_CLASS3;
-        requestedMetadata[18] = HIT_KEY_ADDRESS_ADDRID2;
-        requestedMetadata[19] = HIT_KEY_ADDRESS_ADDRID3;
-        requestedMetadata[20] = HIT_KEY_ADDRESS_ADDR_FROM_ID3;
-        requestedMetadata[21] = HIT_KEY_ADDRESS_ADDR_FROM_ID;
+        String[] requestedMetadata = new String[] {
+        HIT_KEY_ADDRESS_CLASS,
+        HIT_KEY_ADDRESS_FIRSTNAME,
+        HIT_KEY_ADDRESS_LASTNAME,
+        HIT_KEY_ADDRESS_TITLE,
+        HIT_KEY_ADDRESS_ADDRESS,
+        HIT_KEY_ADDRESS_ADDRID,
+        HIT_KEY_ADDRESS_INSTITUITION,
+        HIT_KEY_ADDRESS_JOB,
+        HIT_KEY_ADDRESS_COMM_TYPE,
+        HIT_KEY_ADDRESS_COMM_VALUE,
+        HIT_KEY_ADDRESS_STREET,
+        HIT_KEY_ADDRESS_CITY,
+        HIT_KEY_ADDRESS_ZIP,
+        HIT_KEY_ADDRESS_POSTBOX,
+        HIT_KEY_ADDRESS_ZIP_POSTBOX,
+        HIT_KEY_ADDRESS_STATE_ID,
+        HIT_KEY_ADDRESS_INSTITUITION2,
+        HIT_KEY_ADDRESS_INSTITUITION3,
+        HIT_KEY_ADDRESS_CLASS2,
+        HIT_KEY_ADDRESS_CLASS3,
+        HIT_KEY_ADDRESS_ADDRID2,
+        HIT_KEY_ADDRESS_ADDRID3,
+        HIT_KEY_ADDRESS_ADDR_FROM_ID3,
+        HIT_KEY_ADDRESS_ADDR_FROM_ID,
+        "parent3.address_node.addr_uuid",
+        "parent.address_node.addr_uuid",
+        "t02_address.address_value",
+        "t021_communication.commtype_value"
+        };
 
         ArrayList result = getHits("T02_address.adr_id:".concat(addrId).concat(
                 " iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
@@ -546,7 +554,7 @@ public class IngridQueryHelper {
      */
     static String getDetailValue(IngridHit detail, String key) {
 
-        Object obj = detail.get(key);
+        Object obj = detail.get(DscEcsVersionMapperFactory.getEcsDscVersionMapper(detail).mapIndexFieldName(key));
         if (obj == null) {
             return "";
         }
@@ -625,10 +633,10 @@ public class IngridQueryHelper {
     }
 
     public static String[] getDetailValueAsArray(IngridHit hit, String key) {
-        IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+    	IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
 
         String[] valueArray = new String[] {};
-        Object obj = detail.get(key);
+        Object obj = detail.get(DscEcsVersionMapperFactory.getEcsDscVersionMapper(hit).mapIndexFieldName(key));
         if (obj == null) {
             return valueArray;
         }
@@ -690,16 +698,24 @@ public class IngridQueryHelper {
 
     public static List getReferenceIdentifiers(IngridHit hit) {
         ArrayList result = new ArrayList();
-    	String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
-        String[] fromIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_FROM_ID);
-        String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
-        String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
-        for (int i = 0; i < toIds.length; i++) {
-            // '0' = parent, '1' = reference
-        	if (objId.equals(fromIds[i]) && refType[i].equals("1")) {
-        		result.add(toIds[i]);
+    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
+            String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+            for (int i = 0; i < toIds.length; i++) {
+           		result.add(toIds[i]);
             }
-        }
+    	} else {
+            String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+            String[] fromIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_FROM_ID);
+            String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
+            String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
+            for (int i = 0; i < toIds.length; i++) {
+                // '0' = parent, '1' = reference
+            	if (objId.equals(fromIds[i]) && refType[i].equals("1")) {
+            		result.add(toIds[i]);
+                }
+            }
+    	}
+        
         return result;
     }
     

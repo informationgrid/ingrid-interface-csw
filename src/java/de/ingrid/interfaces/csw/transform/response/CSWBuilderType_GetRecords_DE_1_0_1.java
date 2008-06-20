@@ -11,9 +11,12 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
+import de.ingrid.interfaces.csw.transform.response.adapter.DscEcsVersionMapperFactory;
+import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.PlugDescription;
 
 /**
  * TODO Describe your created type (class, etc.) here.

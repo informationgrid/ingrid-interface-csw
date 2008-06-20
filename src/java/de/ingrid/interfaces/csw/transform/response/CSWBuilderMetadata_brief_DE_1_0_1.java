@@ -86,7 +86,6 @@ public class CSWBuilderMetadata_brief_DE_1_0_1 extends CSWBuilderMetadataCommon 
                 "smXML:MD_DataIdentification");
         this.addSMXMLCharacterString(mdDataIdentification.addElement("smXML:title"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
-        // TODO: transform via UDK codelist 527
         // T011_obj_geo_topic_cat.topic_category
         mdDataIdentification.addElement("smXML:topicCategory").addElement("smXML:MD_TopicCategoryCode").addText(
                 IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY));

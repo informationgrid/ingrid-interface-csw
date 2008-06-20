@@ -81,7 +81,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 Element CIAddress = CIContact.addElement("smXML:address").addElement("smXML:CI_Address");
                 String postBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_POSTBOX);
                 String zipPostBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_ZIP_POSTBOX);
-                if (postBox != null && postBox.length() == 0 && zipPostBox != null && zipPostBox.length() == 0) {
+                if (postBox != null && postBox.length() > 0 && zipPostBox != null && zipPostBox.length() > 0) {
                     this.addSMXMLCharacterString(CIAddress.addElement("smXML:deliveryPoint"), postBox);
                     this.addSMXMLCharacterString(CIAddress.addElement("smXML:city"), IngridQueryHelper.getDetailValueAsString(address,
                             IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
@@ -172,11 +172,13 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
 
     protected void addLanguage(Element metaData, IngridHit hit, String ns) {
         String metadataLang =  IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_LANGUAGE);
-        if (metadataLang.equals("121")) {
-            metadataLang = "de";
-        } else {
-            metadataLang = "en";
-        }
+		if (metadataLang.equals("121") || metadataLang.equals("94")) {
+			if (metadataLang.equals("121")) {
+				metadataLang = "de";
+			} else {
+				metadataLang = "en";
+			}
+		}
         this.addSMXMLCharacterString(metaData.addElement(getNSElementName(ns, "language")), metadataLang);
     }
     
@@ -317,6 +319,8 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T2);
         } else if (myDateType != null && myDateType.equals("seit")) {
         	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T1);
+        } else if (myDateType != null && myDateType.equals("bis")) {
+        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T2);
         } else if (myDateType != null && myDateType.equals("am")) {
         	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
         	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);

@@ -527,9 +527,9 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		ArrayList thesaurusKeywords = new ArrayList();
 		ArrayList freeKeywords = new ArrayList();
 		for (int i = 0; i < keywords.length; i++) {
-			if (keywordTypes[i].equals("2")) {
+			if (keywordTypes[i].equals("2") || keywordTypes[i].equals("T")) {
 				thesaurusKeywords.add(keywords[i]);
-			} else if (keywordTypes[i].equals("1")) {
+			} else if (keywordTypes[i].equals("1") || keywordTypes[i].equals("F")) {
 				freeKeywords.add(keywords[i]);
 			}
 		}
@@ -599,10 +599,12 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 		// add language
 		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
-		if (dataLang.equals("121")) {
-			dataLang = "de";
-		} else {
-			dataLang = "en";
+		if (dataLang.equals("121") || dataLang.equals("94")) {
+			if (dataLang.equals("121")) {
+				dataLang = "de";
+			} else {
+				dataLang = "en";
+			}
 		}
 		this.addSMXMLCharacterString(parent.addElement("smXML:language"), dataLang);
 	}

@@ -27,12 +27,12 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
     
     protected SessionParameters session;
     
-    protected String nsPrefix; 
-
+    protected String nsPrefix;
+    
     public void setHit(IngridHit hit) {
         this.hit = hit;
     }
-
+    
     public void setMetaDataElement(Element metaDataElement) {
         this.metaDataElement = metaDataElement;
     }
