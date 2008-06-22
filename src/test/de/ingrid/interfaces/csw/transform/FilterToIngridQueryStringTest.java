@@ -19,7 +19,7 @@ import de.ingrid.interfaces.csw.tools.AxisTools;
 import de.ingrid.interfaces.csw.tools.SOAPTools;
 import de.ingrid.interfaces.csw.tools.XMLTools;
 import de.ingrid.interfaces.csw.transform.FilterImpl;
-import de.ingrid.interfaces.csw.transform.FilterToIngridQueryString;
+import de.ingrid.interfaces.csw.transform.request.FilterToIngridQueryString;
 
 import junit.framework.TestCase;
 

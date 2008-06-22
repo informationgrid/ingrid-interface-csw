@@ -346,6 +346,9 @@ public class CSW {
 
         try {
             IBus myBus = cswConfig.getIBus();
+            if (log.isDebugEnabled()) {
+            	log.debug("Fire query: " + ingridQuery.toString());
+            }
             hits = myBus.search(ingridQuery, hitsPerPage, pageNo, (pageNo-1) * hitsPerPage, timeOut);
         } catch (Throwable t) {
             log.error("Error getting IBus: " + t.getMessage());

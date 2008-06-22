@@ -17,8 +17,8 @@ public class UtilsCSWDateTest extends TestCase {
 	
 	
 	public final void testGetDBDateStyle() {
-		assertEquals("2006-10-12", UtilsCSWDate.getDBDateStyle("20061012"));
-		assertEquals("2006-10-12", UtilsCSWDate.getDBDateStyle("20061012T121247"));
+		assertEquals("20061012", UtilsCSWDate.getQueryDateStyle("2006-10-12"));
+		assertEquals("20061012", UtilsCSWDate.getQueryDateStyle("20061012T121247"));
 	}
 	
 }

@@ -15,6 +15,7 @@ import org.w3c.dom.Element;
 import de.ingrid.interfaces.csw.exceptions.CSWException;
 import de.ingrid.interfaces.csw.tools.SOAPTools;
 import de.ingrid.interfaces.csw.tools.XMLTools;
+import de.ingrid.interfaces.csw.transform.request.FilterToIngridQueryString;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;

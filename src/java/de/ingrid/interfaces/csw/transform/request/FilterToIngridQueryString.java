@@ -3,7 +3,7 @@
  * date: 21.10.2005
  */
 
-package de.ingrid.interfaces.csw.transform;
+package de.ingrid.interfaces.csw.transform.request;
 
 import java.util.StringTokenizer;
 
@@ -20,6 +20,37 @@ import de.ingrid.interfaces.csw.exceptions.CSWMissingParameterValueException;
 import de.ingrid.interfaces.csw.exceptions.CSWNoApplicableCodeException;
 import de.ingrid.interfaces.csw.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.tools.PatternTools;
+import de.ingrid.interfaces.csw.transform.ComparisonOps;
+import de.ingrid.interfaces.csw.transform.ComparisonOpsImpl;
+import de.ingrid.interfaces.csw.transform.Expression;
+import de.ingrid.interfaces.csw.transform.ExpressionImpl;
+import de.ingrid.interfaces.csw.transform.Filter;
+import de.ingrid.interfaces.csw.transform.FilterConst;
+import de.ingrid.interfaces.csw.transform.FilterOperation;
+import de.ingrid.interfaces.csw.transform.LogicalOps;
+import de.ingrid.interfaces.csw.transform.SpatialOps;
+import de.ingrid.interfaces.csw.transform.SpatialOpsImpl;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.CompOperation;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.PropertyIsBetween;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.PropertyIsEqualTo;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.PropertyIsGreaterThan;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.PropertyIsGreaterThanOrEqualTo;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.PropertyIsLessThan;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.PropertyIsLessThanOrEqualTo;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.PropertyIsLike;
+import de.ingrid.interfaces.csw.transform.ComparisonOps.PropertyIsNull;
+import de.ingrid.interfaces.csw.transform.ComparisonOpsImpl.PropertyIsBetweenImpl;
+import de.ingrid.interfaces.csw.transform.Expression.BaseExpr;
+import de.ingrid.interfaces.csw.transform.Expression.Literal;
+import de.ingrid.interfaces.csw.transform.Expression.PropertyName;
+import de.ingrid.interfaces.csw.transform.ExpressionImpl.LiteralImpl;
+import de.ingrid.interfaces.csw.transform.LogicalOps.Logic;
+import de.ingrid.interfaces.csw.transform.LogicalOps.Not;
+import de.ingrid.interfaces.csw.transform.SpatialOps.Box;
+import de.ingrid.interfaces.csw.transform.SpatialOps.Disjoint;
+import de.ingrid.interfaces.csw.transform.SpatialOps.Intersects;
+import de.ingrid.interfaces.csw.transform.SpatialOps.Spatial;
+import de.ingrid.interfaces.csw.transform.SpatialOpsImpl.BoxImpl;
 import de.ingrid.interfaces.csw.utils.UtilsCSWDate;
 
 /**
@@ -612,48 +643,31 @@ public class FilterToIngridQueryString {
 	 */
 	private void runPropertyIsGreaterThan(final boolean orEqualTo, final ComparisonOps.CompOperation co)
 	throws Exception {
-		log.debug("runPropertyIsGreaterThan orEqualTo: " + orEqualTo);
+		if (log.isDebugEnabled()) {
+			log.debug("runPropertyIsGreaterThan orEqualTo: " + orEqualTo);
+		}
 
 		if (not) {
 			not = false;
 		}
 
-		Expression properyNameExpression = co.getFirstExpression();
-		Expression valueExpression = co.getSecondExpression();
+		runExpr(co.getFirstExpression());
 		String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
-		
-		runExpr(properyNameExpression);
-
-		// Quick fix by Dirk Schwarzmann to apply the mapped property of
-		// "CreationDate"
-		// from "t01_object.create_time" to the internally used property t1:
-		String str_creationDate = "t01_object.create_time:";
-		int creationDatePos = sb.indexOf(str_creationDate);
-		boolean creationDateFound = false;
-
-		if (creationDatePos > -1) {
-			creationDateFound = true;
-			sb.replace(creationDatePos, creationDatePos + str_creationDate.length(), "t1:");
-		}
 
 		if (UtilsCSWDate.isCSWDate(value)) {
-			sb.append("[").append(UtilsCSWDate.getDBDateStyle(value)).append(" TO 3000-01-01]");
+			sb.append("[").append(UtilsCSWDate.getQueryDateStyle(value)).append(" TO 9999-01-01]");
 		} else {
-			// Don´t add a comparator string in case of the creationDate identifier
-			// because the semantic is given by the term "t1"
 			if (orEqualTo) {
-				if (!creationDateFound) {
-					sb.append(this.greaterThanOrEqualTo);
-				}
+				sb.append(this.greaterThanOrEqualTo);
 			} else {
-				if (!creationDateFound) {
-					sb.append(this.greaterThan);
-				}
+				sb.append(this.greaterThan);
 			}
-			runExpr(valueExpression);
+			runExpr(co.getSecondExpression());
 		}
 
-		log.debug("exiting, property=" + sb.toString());
+		if (log.isDebugEnabled()) {
+			log.debug("exiting, property=" + sb.toString());
+		}
 	}
 
 	/**
@@ -669,39 +683,31 @@ public class FilterToIngridQueryString {
 	 */
 	private void runPropertyIsLessThan(final boolean orEqualTo, final ComparisonOps.CompOperation co)
 	throws Exception {
-		log.debug("runPropertyIsLessThan orEqualTo: " + orEqualTo);
+		if (log.isDebugEnabled()) {
+			log.debug("runPropertyIsLessThan orEqualTo: " + orEqualTo);
+		}
 
 		if (not) {
 			not = false;
 		}
 
 		runExpr(co.getFirstExpression());
+		String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
 
-		// Quick fix by Dirk Schwarzmann to apply the mapped property of
-		// "CreationDate"
-		// from "t01_object.create_time" to the internally used property t2:
-		String str_creationDate = "t01_object.create_time:";
-		int creationDatePos = sb.indexOf(str_creationDate);
-		boolean creationDateFound = false;
-
-		if (creationDatePos > -1) {
-			creationDateFound = true;
-			sb.replace(creationDatePos, creationDatePos + str_creationDate.length(), "t2:");
-		}
-
-		if (orEqualTo) {
-			if (!creationDateFound) {
-				sb.append(this.lessThanOrEqualTo);
-			}
+		if (UtilsCSWDate.isCSWDate(value)) {
+			sb.append("[0000-01-01 TO ").append(UtilsCSWDate.getQueryDateStyle(value)).append("]");
 		} else {
-			if (!creationDateFound) {
+			if (orEqualTo) {
+				sb.append(this.lessThanOrEqualTo);
+			} else {
 				sb.append(this.lessThan);
 			}
+			runExpr(co.getSecondExpression());
 		}
-
-		runExpr(co.getSecondExpression());
-
-		log.debug("exiting, property=" + sb.toString());
+		
+		if (log.isDebugEnabled()) {
+			log.debug("exiting, property=" + sb.toString());
+		}
 	}
 
 	/**
@@ -714,16 +720,26 @@ public class FilterToIngridQueryString {
 	 */
 	private void runPropertyIsEqualTo(final ComparisonOps.CompOperation co)
 	throws Exception {
-		log.debug("entering");
+		if (log.isDebugEnabled()) {
+			log.debug("entering");
+		}
 
 		if (not) {
 			not = false;
 		}
 
 		runExpr(co.getFirstExpression());
+		// check for date string pattern
+		// adapt date string pattern if nessecary
+		String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
+		if (UtilsCSWDate.isCSWDate(value)) {
+			value = UtilsCSWDate.getQueryDateStyle(value);
+		}
 		runExpr(co.getSecondExpression());
 
-		log.debug("exiting");
+		if (log.isDebugEnabled()) {
+			log.debug("exiting");
+		}
 	}
 
 	/**

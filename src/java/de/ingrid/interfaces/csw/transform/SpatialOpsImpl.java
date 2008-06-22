@@ -168,7 +168,7 @@ public class SpatialOpsImpl implements SpatialOps {
 		 * //Debug.debugMethodEnd(); }
 		 */
 
-		protected Element getGeometryElement() throws Exception {
+		public Element getGeometryElement() throws Exception {
 			NodeList nl = element.getChildNodes();
 			Node nodeListItem = null;
 			Element elemBox = null;
