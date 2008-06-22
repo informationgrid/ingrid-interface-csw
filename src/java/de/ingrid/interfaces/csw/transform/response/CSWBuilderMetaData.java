@@ -93,8 +93,21 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
      * @return
      */
     protected Element addSMXMLReal(Element parent, String value) {
-        parent.addElement("smXML:Real").addText(value);
-        return parent;
+        String numberStr;
+    	try {
+			double n = Double.parseDouble(value);
+			if (Double.isNaN(n)) {
+				numberStr = "NaN";
+			} else if (Double.isInfinite(n)) {
+				numberStr = "INF";
+			} else {
+				numberStr = String.valueOf(n);
+			}
+		} catch (NumberFormatException e) {
+			numberStr = "NaN";
+		}
+    	parent.addElement("smXML:Real").addText(numberStr);
+    	return parent;
     }
     
     /**
@@ -105,7 +118,14 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
      * @return
      */
     protected Element addSMXMLDecimal(Element parent, String value) {
-        parent.addElement("smXML:Decimal").addText(value);
+        String numberStr;
+    	try {
+			long n = Long.parseLong(value);
+			numberStr = String.valueOf(n);
+		} catch (NumberFormatException e) {
+			numberStr = "";
+		}
+    	parent.addElement("smXML:Decimal").addText(numberStr);
         return parent;
     }
 

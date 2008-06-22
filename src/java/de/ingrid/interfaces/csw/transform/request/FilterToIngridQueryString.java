@@ -655,7 +655,7 @@ public class FilterToIngridQueryString {
 		String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
 
 		if (UtilsCSWDate.isCSWDate(value)) {
-			sb.append("[").append(UtilsCSWDate.getQueryDateStyle(value)).append(" TO 9999-01-01]");
+			sb.append("[").append(UtilsCSWDate.getQueryDateStyle(value)).append(" TO 99990101]");
 		} else {
 			if (orEqualTo) {
 				sb.append(this.greaterThanOrEqualTo);
@@ -695,7 +695,7 @@ public class FilterToIngridQueryString {
 		String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
 
 		if (UtilsCSWDate.isCSWDate(value)) {
-			sb.append("[0000-01-01 TO ").append(UtilsCSWDate.getQueryDateStyle(value)).append("]");
+			sb.append("[00000101 TO ").append(UtilsCSWDate.getQueryDateStyle(value)).append("]");
 		} else {
 			if (orEqualTo) {
 				sb.append(this.lessThanOrEqualTo);

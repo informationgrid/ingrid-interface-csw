@@ -14,7 +14,6 @@ public final class TestRequests {
     
 
     private static final String GETREC_WORD = "GetRecords";
-
     // SOAP 1.2 requests:
     
 

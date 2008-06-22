@@ -30,7 +30,6 @@ public class RequestTransformerTest extends TestCase {
     public final void testTransformFilter() throws Exception {
       
         RequestTransformer requestTransformer = new RequestTransformer();
-        
         IngridQuery ingridQuery = null;
         
         SOAPElement soapElementFilter = null;
@@ -77,7 +76,7 @@ public class RequestTransformerTest extends TestCase {
         ingridQuery = requestTransformer.transform(soapElementFilter);
         assertNotNull(ingridQuery);
         queryString = ingridQueryToString.transform(ingridQuery);
-        assertEquals("( AND t01_object.mod_time:[1990-12-31 TO 3000-01-01] )", queryString);
+        assertEquals("( AND t01_object.mod_time:[19901231 TO 99990101] )", queryString);
         
         soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_BW4);
         ingridQuery = requestTransformer.transform(soapElementFilter);

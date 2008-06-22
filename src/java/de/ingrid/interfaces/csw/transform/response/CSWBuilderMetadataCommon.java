@@ -190,7 +190,12 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
     protected void addDateStamp(Element metaData, IngridHit hit, String ns) {
         String creationDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_MOD_TIME);
         if (creationDate != null && creationDate.length() > 0) {
-            metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
+            String cswDate = Udk2CswDateFieldParser.instance().parse(creationDate);
+            if (cswDate.indexOf("T") > -1) {
+            	metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("smXML:DateTime").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
+            } else {
+            	metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
+            }
         }
     }
     
@@ -290,25 +295,21 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         super.addSMXMLReal(exVerticalExtent.addElement("smXML:maximumValue"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MAXIMUM));
         
         // T01_object.vertical_extent_unit = Wert [Domain-ID Codelist 102] MD_Metadata/full:identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/unitOfMeasure/UomLength/uomName/CharacterString
+        String codeVal = "";
         try {
             Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
-            String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
-            if (codeVal.length() > 0) {
-                super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:unitOfMeasure").addElement("smXML:UomLength").addElement("smXML:uomName"), codeVal);
-            }
+            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
         } catch (NumberFormatException e) {}
+        super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:unitOfMeasure").addElement("smXML:UomLength").addElement("smXML:uomName"), codeVal);
 
         // T01_object.vertical_extent_vdatum = Wert [Domain-Id Codelist 101] MD_Metadata/smXML:identificationInfo/iso19119:CSW_ServiceIdentification/iso19119:extent/smXML:EX_Extent/verticalElement/EX_VerticalExtent/verticalDatum/smXML:RS_Identifier/code/smXML:CharacterString
+        codeVal = "";
         try {
             Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
-            String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(101), code, new Long(94));
-            if (codeVal.length() > 0) {
-                super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:verticalDatum").addElement("smXML:RS_Identifier").addElement("smXML:code"), codeVal);
-            }
+            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(101), code, new Long(94));
         } catch (NumberFormatException e) {}
+        super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:verticalDatum").addElement("smXML:RS_Identifier").addElement("smXML:code"), codeVal);
         
-        
-        Element timePeriod = exExent.addElement("smXML:temporalElement").addElement("smXML:EX_TemporalExtent").addElement("smXML:extent").addElement("smXML:TM_Primitive").addElement("gml:relatedTime").addElement("gml:TimePeriod");
         // T01_object.time_from MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/temporalElement/EX_TemporalExtent/extent/TM_Primitive/gml:relatedTime/gml:TimePeriod/gml:beginPosition/gml:TimeInstant/gml:timePosition
         
         String myDateType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_TYPE);
@@ -325,13 +326,16 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
         	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
         }
-        if (beginDate != null) {
-            timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-                .addText(Udk2CswDateFieldParser.instance().parse(beginDate));
-        }
-        if (endDate != null) {
-            timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-                .addText(Udk2CswDateFieldParser.instance().parse(endDate));
+        if (beginDate != null || endDate != null) {
+            Element timePeriod = exExent.addElement("smXML:temporalElement").addElement("smXML:EX_TemporalExtent").addElement("smXML:extent").addElement("smXML:TM_Primitive").addElement("gml:relatedTime").addElement("gml:TimePeriod");
+            if (beginDate != null) {
+                timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
+                    .addText(Udk2CswDateFieldParser.instance().parse(beginDate));
+            }
+            if (endDate != null) {
+                timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
+                    .addText(Udk2CswDateFieldParser.instance().parse(endDate));
+            }
         }
 
         String[] coordinatesBezug = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_BEZUG);
@@ -343,15 +347,16 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             Element geographicElement = exExent.addElement("smXML:geographicElement");
             // T019_coordinates.bezug MD_Metadata/smXML:identificationInfo/iso19119:CSW_ServiceIdentification/iso19119:extent/smXML:EX_Extent/smXML:geographicElement/smXML:EX_GeographicDescription/smXML:geographicIdentifier/smXML:RS_Identifier/code/smXML:CharacterString
             super.addSMXMLCharacterString(geographicElement.addElement("smXML:EX_GeographicDescription").addElement("smXML:geographicIdentifier").addElement("smXML:MD_Identifier").addElement("smXML:code"), coordinatesBezug[i]);
+            geographicElement = exExent.addElement("smXML:geographicElement");
             Element exGeographicBoundingBox = geographicElement.addElement("smXML:EX_GeographicBoundingBox");
             // T019_coordinates.geo_x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/westBoundLongitude/smXML:approximateLongitude
-            exGeographicBoundingBox.addElement("smXML:westBoundLongitude").addElement("smXML:approximateLongitude").addText(coordinatesGeoX1[i]);
+            exGeographicBoundingBox.addElement("smXML:westBoundLongitude").addElement("smXML:approximateLongitude").addText(coordinatesGeoX1[i].replaceAll(",", "."));
             // T019_coordinates.geo_x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/eastBoundLongitude/smXML:approximateLongitude
-            exGeographicBoundingBox.addElement("smXML:eastBoundLongitude").addElement("smXML:approximateLongitude").addText(coordinatesGeoX2[i]);
+            exGeographicBoundingBox.addElement("smXML:eastBoundLongitude").addElement("smXML:approximateLongitude").addText(coordinatesGeoX2[i].replaceAll(",", "."));
             // T019_coordinates.geo_y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/southBoundLatitude/smXML:approximateLatitude
-            exGeographicBoundingBox.addElement("smXML:southBoundLatitude").addElement("smXML:approximateLatitude").addText(coordinatesGeoY1[i]);
+            exGeographicBoundingBox.addElement("smXML:southBoundLatitude").addElement("smXML:approximateLatitude").addText(coordinatesGeoY1[i].replaceAll(",", "."));
             // T019_coordinates.geo_y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/northBoundLatitude/smXML:approximateLatitude
-            exGeographicBoundingBox.addElement("smXML:northBoundLatitude").addElement("smXML:approximateLatitude").addText(coordinatesGeoY2[i]);
+            exGeographicBoundingBox.addElement("smXML:northBoundLatitude").addElement("smXML:approximateLatitude").addText(coordinatesGeoY2[i].replaceAll(",", "."));
         }
 
         String[] stTownship = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO);
@@ -365,22 +370,23 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             // T011_township.township_no MD_Metadata/smXML:identificationInfo/iso19119:CSW_ServiceIdentification/iso19119:extent/smXML:EX_Extent/smXML:geographicElement/smXML:EX_GeographicDescription/smXML:geographicIdentifier/smXML:RS_Identifier/code/smXML:CharacterString
             super.addSMXMLCharacterString(geographicElement.addElement("smXML:EX_GeographicDescription").addElement("smXML:geographicIdentifier").addElement("smXML:MD_Identifier").addElement("smXML:code"), stTownship[i]);
             
+            geographicElement = exExent.addElement("smXML:geographicElement");
             Element exGeographicBoundingBox = geographicElement.addElement("smXML:EX_GeographicBoundingBox");
             // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/smXML:approximateLongitude
             if (stBoxX1.length == stTownship.length) {
-            	exGeographicBoundingBox.addElement("smXML:westBoundLongitude").addElement("smXML:approximateLongitude").addText(stBoxX1[i]);
+            	exGeographicBoundingBox.addElement("smXML:westBoundLongitude").addElement("smXML:approximateLongitude").addText(stBoxX1[i].replaceAll(",", "."));
             }
             // T01_st_bbox.x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.eastBoundLongitude/smXML:approximateLongitude
             if (stBoxX2.length == stTownship.length) {
-            	exGeographicBoundingBox.addElement("smXML:eastBoundLongitude").addElement("smXML:approximateLongitude").addText(stBoxX2[i]);
+            	exGeographicBoundingBox.addElement("smXML:eastBoundLongitude").addElement("smXML:approximateLongitude").addText(stBoxX2[i].replaceAll(",", "."));
             }
             // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.southBoundLatitude/smXML:approximateLatitude
             if (stBoxY1.length == stTownship.length) {
-            	exGeographicBoundingBox.addElement("smXML:southBoundLatitude").addElement("smXML:approximateLatitude").addText(stBoxY1[i]);
+            	exGeographicBoundingBox.addElement("smXML:southBoundLatitude").addElement("smXML:approximateLatitude").addText(stBoxY1[i].replaceAll(",", "."));
             }
             // T01_st_bbox.y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLatitude/smXML:approximateLatitude
             if (stBoxY2.length == stTownship.length) {
-            	exGeographicBoundingBox.addElement("smXML:northBoundLatitude").addElement("smXML:approximateLatitude").addText(stBoxY2[i]);
+            	exGeographicBoundingBox.addElement("smXML:northBoundLatitude").addElement("smXML:approximateLatitude").addText(stBoxY2[i].replaceAll(",", "."));
             }
         }
     }
