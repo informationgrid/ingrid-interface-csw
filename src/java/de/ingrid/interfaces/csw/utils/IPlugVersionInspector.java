@@ -28,6 +28,8 @@ import de.ingrid.utils.PlugDescription;
 public class IPlugVersionInspector {
 
 	public static final String VERSION_IDC_1_0_2_DSC_OBJECT = "VERSION_IDC_1_0_2_DSC_OBJECT";
+
+	public static final String VERSION_IDC_1_0_3_DSC_OBJECT = "VERSION_IDC_1_0_3_DSC_OBJECT";
 	
 	public static final String VERSION_UDK_5_0_DSC_OBJECT = "VERSION_UDK_5_0_DSC_OBJECT";
 
@@ -56,7 +58,9 @@ public class IPlugVersionInspector {
 		
 		ArrayList fields = (ArrayList)plugDescription.get(PlugDescription.FIELDS);
 		
-		if (fields.contains("t01_object.obj_id") && fields.contains("parent.object_node.obj_uuid")) {
+		if (fields.contains("t01_object.obj_id") && fields.contains("parent.object_node.obj_uuid") && fields.contains("object_access.terms_of_use")) {
+			return VERSION_IDC_1_0_3_DSC_OBJECT;
+		} else if (fields.contains("t01_object.obj_id") && fields.contains("parent.object_node.obj_uuid")) {
 			return VERSION_IDC_1_0_2_DSC_OBJECT;
 		} else if (fields.contains("t01_object.obj_id") && fields.contains(IngridQueryHelper.HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO)) {
 			return VERSION_UDK_5_0_DSC_OBJECT;
