@@ -62,7 +62,7 @@ public class CSWBuilderMetadataCommonTestLocal extends TestCase {
         metaData.add(iso19119);
         metaData.add(csw);
         
-		cswBuilderMetadataCommon.addContactBlock(metaData, hit);
+		cswBuilderMetadataCommon.addContactBlocks(metaData, hit, "prefix");
 		metaData.asXML();
 
 		// object connected directly to an institution with no further parents
@@ -73,7 +73,7 @@ public class CSWBuilderMetadataCommonTestLocal extends TestCase {
 		detail = CSWInterfaceConfig.getInstance().getIBus().getDetail(hit, query, IngridQueryHelper.REQUESTED_STRING_SUMMARY);
 		hit.put("detail", detail);
 		
-		cswBuilderMetadataCommon.addContactBlock(metaData, hit);
+		cswBuilderMetadataCommon.addContactBlocks(metaData, hit, "prefix");
 		metaData.asXML();
 		
 		// object in hh catalog, NO parent address mapping extension
@@ -83,7 +83,7 @@ public class CSWBuilderMetadataCommonTestLocal extends TestCase {
 		detail = CSWInterfaceConfig.getInstance().getIBus().getDetail(hit, query, IngridQueryHelper.REQUESTED_STRING_SUMMARY);
 		hit.put("detail", detail);
 		
-		cswBuilderMetadataCommon.addContactBlock(metaData, hit);
+		cswBuilderMetadataCommon.addContactBlocks(metaData, hit, "prefix");
 		metaData.asXML();
 	}
 }
