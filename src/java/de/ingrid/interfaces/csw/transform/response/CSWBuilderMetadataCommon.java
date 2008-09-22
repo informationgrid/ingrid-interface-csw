@@ -38,21 +38,21 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         return parent;
     }
 
-    protected void addContact(Element parent, IngridHit hit) throws Exception {
-    	addContactBlock(parent.addElement(getNSElementName(null, "contact")), hit);
+    protected void addContacts(Element parent, IngridHit hit) throws Exception {
+    	this.addContactBlocks(parent, hit, null);
     }
 
-    protected void addContact(Element parent, IngridHit hit, String ns ) throws Exception {
-    	this.addContactBlock(parent.addElement(getNSElementName(ns, "contact")), hit);
+    protected void addContacts(Element parent, IngridHit hit, String ns ) throws Exception {
+    	this.addContactBlocks(parent, hit, ns);
     }
     
-    protected void addContactBlock(Element parent, IngridHit hit) throws Exception {
+    protected void addContactBlocks(Element parent, IngridHit hit, String ns) throws Exception {
 
         String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
         String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
         String[] specialNames = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ADR_SPECIAL_NAME);
         for (int i = 0; i < addressTypes.length; i++) {
-            Element ciResponsibleParty = parent.addElement("smXML:CI_ResponsibleParty");
+            Element ciResponsibleParty = parent.addElement(getNSElementName(ns, "contact")).addElement("smXML:CI_ResponsibleParty");
         	
         	// get complete address information
             IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], hit.getPlugId());
@@ -172,14 +172,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
 
     protected void addLanguage(Element metaData, IngridHit hit, String ns) {
         String metadataLang =  IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_LANGUAGE);
-		if (metadataLang.equals("121") || metadataLang.equals("94")) {
-			if (metadataLang.equals("121")) {
-				metadataLang = "de";
-			} else {
-				metadataLang = "en";
-			}
-		}
-        this.addSMXMLCharacterString(metaData.addElement(getNSElementName(ns, "language")), metadataLang);
+        this.addSMXMLCharacterString(metaData.addElement(getNSElementName(ns, "language")), getISO639_2LanguageCode(metadataLang));
     }
     
     
@@ -213,7 +206,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 	} else {
                 		ciDate = parent.addElement("date").addElement("smXML:CI_Date");
                 	}
-                    ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
+                    ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(creationDate));
                     String codeListValue;
                     if (referenceDateTypes[i].equals("1")) {
                         codeListValue = "creation";

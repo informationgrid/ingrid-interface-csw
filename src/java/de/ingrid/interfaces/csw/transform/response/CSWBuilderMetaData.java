@@ -174,5 +174,18 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
         }
     }
     
+    protected String getISO639_2LanguageCode(String numberBasedLang) {
+		if (numberBasedLang == null) {
+			return null;
+		}
+    	if (numberBasedLang.equals("121")) {
+    		return "ger";
+    	} else if (numberBasedLang.equals("94")) {
+    		return "eng";
+    	} else {
+    		return numberBasedLang;
+    	}
+    }
+    
     
 }

@@ -65,5 +65,19 @@ public class Udk2CswDateFieldParser implements FieldParser {
 		}
     	return value;
 	}
+	
+	/**
+	 * Convert an UDK date to the CSW format. Do only return a Date and NOT a DateTime, even if the input specified a time as well. 
+	 * 
+	 * @param value The UDK Date.
+	 * @return The CSW ISO Date.
+	 */
+	public String parseToDate(String value) {
+		String result = parse(value);
+		if (result.indexOf('T') > -1) {
+			return result.substring(0, result.indexOf('T'));
+		}
+    	return result;
+	}
 
 }

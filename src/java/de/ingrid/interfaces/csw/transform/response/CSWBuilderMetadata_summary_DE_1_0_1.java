@@ -53,7 +53,7 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
         this.addFileIdentifier(metaData, objectId);
         this.addLanguage(metaData, hit);
         this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
-        this.addContact(metaData, hit);
+        this.addContacts(metaData, hit);
         this.addDateStamp(metaData, hit);
         if (typeName.equals("dataset")) {
             this.addIdentificationInfoDataset(metaData, hit);

@@ -61,7 +61,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		this.addCharacterSet(metaData, hit);
 		this.addParentIdentifier(metaData, hit);
 		this.addHierarchyLevel(metaData.addElement("iso19115full:hierarchyLevel"), typeName);
-		this.addContact(metaData, hit, this.nsPrefix);
+		this.addContacts(metaData, hit, this.nsPrefix);
 		this.addDateStamp(metaData, hit, this.nsPrefix);
 		this.addSMXMLCharacterString(metaData.addElement("iso19115full:metadataStandardName"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_STANDARD_NAME));
@@ -112,7 +112,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 			String myDate = portrayalCatalogInfoDates[i];
 			if (myDate != null && myDate.length() > 0) {
 				Element ciDate = portrayalCICitation.addElement("smXML:date").addElement("smXML:CI_Date");
-				ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(myDate));
+				ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(myDate));
 				ciDate.addElement("smXML:dateType").addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
 						"codeListValue", "creation");
@@ -267,7 +267,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 				String myDate = keycDates[i];
 				if (myDate != null && myDate.length() > 0) {
 					Element ciDate = ciCitation.addElement("smXML:date").addElement("smXML:CI_Date");
-					ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parse(myDate));
+					ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(myDate));
 					ciDate.addElement("smXML:dateType").addElement("smXML:CI_DateTypeCode").addAttribute("codeList",
 							"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
 							"codeListValue", "creation");
@@ -620,14 +620,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 		// add language
 		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
-		if (dataLang.equals("121") || dataLang.equals("94")) {
-			if (dataLang.equals("121")) {
-				dataLang = "de";
-			} else {
-				dataLang = "en";
-			}
-		}
-		this.addSMXMLCharacterString(parent.addElement("smXML:language"), dataLang);
+		this.addSMXMLCharacterString(parent.addElement("smXML:language"), getISO639_2LanguageCode(dataLang));
 	}
 
 	private void addIdentificationInfoDataset(Element metaData, IngridHit hit) throws Exception {
