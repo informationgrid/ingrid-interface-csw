@@ -157,7 +157,9 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
      * @return The parent element.
      */
     protected void addFileIdentifier(Element parent, String id, String ns) {
-        this.addSMXMLCharacterString(parent.addElement(getNSElementName(ns, "fileIdentifier")), id);
+        if (IngridQueryHelper.hasValue(id)) {
+        	this.addSMXMLCharacterString(parent.addElement(getNSElementName(ns, "fileIdentifier")), id);
+        }
     }
 
     protected void addFileIdentifier(Element parent, String id) {
@@ -172,7 +174,9 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
 
     protected void addLanguage(Element metaData, IngridHit hit, String ns) {
         String metadataLang =  IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_LANGUAGE);
-        this.addSMXMLCharacterString(metaData.addElement(getNSElementName(ns, "language")), getISO639_2LanguageCode(metadataLang));
+        if (IngridQueryHelper.hasValue(metadataLang)) {
+        	this.addSMXMLCharacterString(metaData.addElement(getNSElementName(ns, "language")), getISO639_2LanguageCode(metadataLang));
+        }
     }
     
     
@@ -182,7 +186,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
 
     protected void addDateStamp(Element metaData, IngridHit hit, String ns) {
         String creationDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_MOD_TIME);
-        if (creationDate != null && creationDate.length() > 0) {
+        if (IngridQueryHelper.hasValue(creationDate)) {
             String cswDate = Udk2CswDateFieldParser.instance().parse(creationDate);
             if (cswDate.indexOf("T") > -1) {
             	metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("smXML:DateTime").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
@@ -279,7 +283,10 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         // extend
         Element exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("smXML:EX_Extent");
         // T01_object.loc_descr MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/description
-        super.addSMXMLCharacterString(exExent.addElement("smXML:description"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_LOC_DESCR));
+        String extDescription = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_LOC_DESCR);
+        if (IngridQueryHelper.hasValue(extDescription)) {
+            super.addSMXMLCharacterString(exExent.addElement("smXML:description"), extDescription);
+        }
         
         Element exVerticalExtent = exExent.addElement("smXML:verticalElement").addElement("smXML:EX_VerticalExtent");
         // T01_object.vertical_extent_minimum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.minimumValue
@@ -304,7 +311,6 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:verticalDatum").addElement("smXML:RS_Identifier").addElement("smXML:code"), codeVal);
         
         // T01_object.time_from MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/temporalElement/EX_TemporalExtent/extent/TM_Primitive/gml:relatedTime/gml:TimePeriod/gml:beginPosition/gml:TimeInstant/gml:timePosition
-        
         String myDateType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_TYPE);
         String beginDate = null;
         String endDate = null;
@@ -331,6 +337,9 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             }
         }
 
+        
+        // ATTN, HIT_KEY_OBJECT_COORDINATES values are only valid for UDK5 based data models
+        // They are never set in IGC catalog based data models
         String[] coordinatesBezug = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_BEZUG);
         String[] coordinatesGeoX1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_GEO_X1);
         String[] coordinatesGeoX2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_GEO_X2);
@@ -339,7 +348,9 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         for (int i=0; i< coordinatesBezug.length; i++) {
             Element geographicElement = exExent.addElement("smXML:geographicElement");
             // T019_coordinates.bezug MD_Metadata/smXML:identificationInfo/iso19119:CSW_ServiceIdentification/iso19119:extent/smXML:EX_Extent/smXML:geographicElement/smXML:EX_GeographicDescription/smXML:geographicIdentifier/smXML:RS_Identifier/code/smXML:CharacterString
-            super.addSMXMLCharacterString(geographicElement.addElement("smXML:EX_GeographicDescription").addElement("smXML:geographicIdentifier").addElement("smXML:MD_Identifier").addElement("smXML:code"), coordinatesBezug[i]);
+            if (coordinatesBezug[i]!= null && coordinatesBezug[i].length() > 0) {
+            	super.addSMXMLCharacterString(geographicElement.addElement("smXML:EX_GeographicDescription").addElement("smXML:geographicIdentifier").addElement("smXML:MD_Identifier").addElement("smXML:code"), coordinatesBezug[i]);
+            }
             geographicElement = exExent.addElement("smXML:geographicElement");
             Element exGeographicBoundingBox = geographicElement.addElement("smXML:EX_GeographicBoundingBox");
             // T019_coordinates.geo_x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/westBoundLongitude/smXML:approximateLongitude
@@ -353,17 +364,29 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         }
 
         String[] stTownship = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO);
+        String[] stTownshipNames = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP);
         String[] stBoxX1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_X1);
         String[] stBoxX2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_X2);
         String[] stBoxY1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_Y1);
         String[] stBoxY2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_Y2);
 
         for (int i=0; i< stTownship.length; i++) {
-            Element geographicElement = exExent.addElement("smXML:geographicElement");
             // T011_township.township_no MD_Metadata/smXML:identificationInfo/iso19119:CSW_ServiceIdentification/iso19119:extent/smXML:EX_Extent/smXML:geographicElement/smXML:EX_GeographicDescription/smXML:geographicIdentifier/smXML:RS_Identifier/code/smXML:CharacterString
-            super.addSMXMLCharacterString(geographicElement.addElement("smXML:EX_GeographicDescription").addElement("smXML:geographicIdentifier").addElement("smXML:MD_Identifier").addElement("smXML:code"), stTownship[i]);
+            String geoIdentifier = null;
+            if (stTownshipNames[i] == null &&  stTownshipNames[i].length() > 0) {
+            	geoIdentifier = stTownshipNames[i];
+            }
+            if (stTownship[i]!= null && stTownship[i].length() > 0) {
+            	if (geoIdentifier != null) {
+                	geoIdentifier += " "; 
+            	}
+            	geoIdentifier += "(" + stTownship[i] + ")"; 
+            }
+            if (geoIdentifier != null) {
+            	super.addSMXMLCharacterString(exExent.addElement("smXML:geographicElement").addElement("smXML:EX_GeographicDescription").addElement("smXML:geographicIdentifier").addElement("smXML:MD_Identifier").addElement("smXML:code"), stTownship[i]);
+            }
             
-            geographicElement = exExent.addElement("smXML:geographicElement");
+            Element geographicElement = exExent.addElement("smXML:geographicElement");
             Element exGeographicBoundingBox = geographicElement.addElement("smXML:EX_GeographicBoundingBox");
             // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/smXML:approximateLongitude
             if (stBoxX1.length == stTownship.length) {

@@ -336,7 +336,7 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SYMBOL_DATE, HIT_KEY_OBJECT_SYMBOL_EDITION, HIT_KEY_OBJECT_SPATIAL_REP_TYPE, HIT_KEY_OBJECT_GEO_REC_GRADE,
             HIT_KEY_OBJECT_SPATIAL_RES_SCALE, HIT_KEY_OBJECT_SPATIAL_RES_GROUND, HIT_KEY_OBJECT_SPATIAL_RES_SCAN, 
             HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL, HIT_KEY_OBJECT_GEO_REC_EXACT, HIT_KEY_OBJECT_SUPPLINFO_FEATURE_TYPE, 
-            "object_access.terms_of_use", "t011_obj_topic_cat.topic_category", "object_reference.special_ref", "areaid", "object_reference.obj_to_uuid"};
+            "object_access.terms_of_use", "t011_obj_topic_cat.topic_category", "object_reference.special_ref", "areaid", "object_reference.obj_to_uuid", "spatial_ref_value.name_value"};
 
 
 
@@ -699,25 +699,33 @@ public class IngridQueryHelper {
 
     public static List getReferenceIdentifiers(IngridHit hit) {
         ArrayList result = new ArrayList();
-    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
+    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
             String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+            String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
             for (int i = 0; i < toIds.length; i++) {
-           		result.add(toIds[i]);
+           		if (specialRefs[i].equals("3345")) {
+           			result.add(toIds[i]);
+           		}
             }
     	} else {
             String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
             String[] fromIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_FROM_ID);
             String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
+            String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
             String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
             for (int i = 0; i < toIds.length; i++) {
                 // '0' = parent, '1' = reference
-            	if (objId.equals(fromIds[i]) && refType[i].equals("1")) {
+            	if (objId.equals(fromIds[i]) && refType[i].equals("1") && specialRefs[i].equals("3345")) {
             		result.add(toIds[i]);
                 }
             }
     	}
         
         return result;
+    }
+    
+    public static boolean hasValue(String str) {
+    	return (str != null && str.length() > 0);
     }
     
 }
