@@ -373,7 +373,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         for (int i=0; i< stTownship.length; i++) {
             // T011_township.township_no MD_Metadata/smXML:identificationInfo/iso19119:CSW_ServiceIdentification/iso19119:extent/smXML:EX_Extent/smXML:geographicElement/smXML:EX_GeographicDescription/smXML:geographicIdentifier/smXML:RS_Identifier/code/smXML:CharacterString
             String geoIdentifier = null;
-            if (stTownshipNames[i] == null &&  stTownshipNames[i].length() > 0) {
+            if (stTownshipNames.length == stTownship.length && stTownshipNames[i] != null &&  stTownshipNames[i].length() > 0) {
             	geoIdentifier = stTownshipNames[i];
             }
             if (stTownship[i]!= null && stTownship[i].length() > 0) {

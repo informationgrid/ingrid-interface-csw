@@ -131,7 +131,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			csw = new CSW();
 			soapResponseMessage = csw.doRequest((Message) soapRequestMessage);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(), e);
 			try {
 				if (e instanceof CSWException) {
 					soapResponseMessage = SOAPTools.createExceptionReport(e.getMessage() ,
