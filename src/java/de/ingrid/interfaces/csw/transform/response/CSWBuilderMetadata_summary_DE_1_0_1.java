@@ -187,13 +187,6 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
         this.addSMXMLCharacterString(mdDataIdentification.addElement("iso19115summary:language"), dataLang);
 */        
         
-/*        Long code;
-        try {
-            code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY));
-            String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(527), code, new Long(94));
-            mdDataIdentification.addElement("iso19115summary:topicCategory").addElement("smXML:MD_TopicCategoryCode").addText(codeVal);
-        } catch (NumberFormatException e) {}
-*/        
     }
 
 }

@@ -158,11 +158,15 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 			this.addSMXMLCharacterString(mdFormat.addElement("smXML:version"), formatVersions[i]);
 			// T0110_avail_format.specification
 			// MD_Metadata/distributionInfo/MD_Distribution/distributor/MD_Distributor/distributorFormat/MD_Format/specification
-			this.addSMXMLCharacterString(mdFormat.addElement("smXML:specification"), formatSpecifications[i]);
+			if (IngridQueryHelper.hasValue(formatSpecifications[i])) {
+				this.addSMXMLCharacterString(mdFormat.addElement("smXML:specification"), formatSpecifications[i]);
+			}
 			// T0110_avail_format.file_decompression_technique
 			// MD_Metadata/distributionInfo/MD_Distribution/distributor/MD_Distributor/distributorFormat/MD_Format/fileDecompressionTechnique
-			this.addSMXMLCharacterString(mdFormat.addElement("smXML:fileDecompressionTechnique"),
-					formatFileDecompressionTechniques[i]);
+			if (IngridQueryHelper.hasValue(formatFileDecompressionTechniques[i])) {
+				this.addSMXMLCharacterString(mdFormat.addElement("smXML:fileDecompressionTechnique"),
+						formatFileDecompressionTechniques[i]);
+			}
 		}
 
 		Element mdStandardOrderProcess = mdDistributor.addElement("smXML:distributionOrderProcess").addElement(
@@ -178,9 +182,6 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 			this.addSMXMLCharacterString(mdStandardOrderProcess.addElement("smXML:orderingInstructions"), orderInstructions);
 		}
 
-		Element mdDigitalTransferOptions = mdDistribution.addElement("smXML:transferOptions").addElement(
-				"smXML:MD_DigitalTransferOptions");
-
 		// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/
 		String[] urlRefUrlLinks = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_URL_REF_URL_LINK);
@@ -189,7 +190,8 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		String[] urlRefDescr = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_URL_REF_DESCR);
 		for (int i = 0; i < urlRefUrlLinks.length; i++) {
-			Element ciOnlineResource = mdDigitalTransferOptions.addElement("smXML:online").addElement(
+			Element ciOnlineResource = mdDistribution.addElement("smXML:transferOptions").addElement(
+			"smXML:MD_DigitalTransferOptions").addElement("smXML:online").addElement(
 					"smXML:CI_OnlineResource");
 			// T017_url_ref.url_link
 			// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/linkage/smXML:URL
@@ -217,13 +219,10 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 				IngridQueryHelper.HIT_KEY_OBJECT_MEDIA_OPTION_MEDIUM_NOTE);
 		for (int i = 0; i < mediaMediaNames.length; i++) {
 			try {
-				// add another transferOptions branch, because transfersize does
-				// not fit into offline branch
-				if (i > 0) {
-					mdDigitalTransferOptions = mdDistribution.addElement("smXML:transferOptions").addElement(
-							"smXML:MD_DigitalTransferOptions");
-				}
-				Element mdMedium = mdDigitalTransferOptions.addElement("smXML:offLine").addElement("smXML:MD_Medium");
+				Element mdDigitalTransferOptions = mdDistribution.addElement("smXML:transferOptions").addElement(
+						"smXML:MD_DigitalTransferOptions");
+				Element mdMedium = mdDistribution.addElement("smXML:transferOptions").addElement(
+				"smXML:MD_DigitalTransferOptions").addElement("smXML:offLine").addElement("smXML:MD_Medium");
 
 				// T0112_media_option.medium_name [Domain-ID Codeliste 520]
 				// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/offLine/MD_Medium/name/MD_MediumNameCode@codeListValue
@@ -236,11 +235,15 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 				}
 				// T0112_media_option.medium_note
 				// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/offLine/MD_Medium/mediumNote
-				this.addSMXMLCharacterString(mdMedium.addElement("smXML:mediumNote"), mediaMediumNotes[i]);
+				if (IngridQueryHelper.hasValue(mediaMediumNotes[i])) {
+					this.addSMXMLCharacterString(mdMedium.addElement("smXML:mediumNote"), mediaMediumNotes[i]);
+				}
 				// T0112_media_option.transfer_size
 				// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/transferSize
-				this.addSMXMLCharacterString(mdDigitalTransferOptions.addElement("smXML:transferSize"),
-						mediaTransferSizes[i]);
+				if (IngridQueryHelper.hasValue(mediaTransferSizes[i])) {
+					this.addSMXMLCharacterString(mdDigitalTransferOptions.addElement("smXML:transferSize"),
+							mediaTransferSizes[i]);
+				}
 			} catch (NumberFormatException e) {
 			}
 		}
@@ -364,8 +367,9 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		Element liLineage = dqQualityInfo.addElement("smXML:lineage").addElement("smXML:LI_Lineage");
 		// (dataset) T011_obj_serv.base ->
 		// MD_Metadata/dataQualityInfo/DQ_DataQuality/lineage/LI_Lineage/source/LI_Source/description
-		String liSourceDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_SERV_BASE);
+		String liSourceDescription = null;
 		if (IngridQueryHelper.hasValue(liSourceDescription)) {
+			liLineage = dqQualityInfo.addElement("smXML:lineage").addElement("smXML:LI_Lineage");
 			this.addSMXMLCharacterString(liLineage.addElement("smXML:source").addElement("smXML:LI_Source").addElement(
 					"smXML:description"), liSourceDescription);
 		}
@@ -373,6 +377,9 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/LI_Lineage/processStep/LI_ProcessStep/description
 		String processStepDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_SERV_HISTORY);
 		if (IngridQueryHelper.hasValue(processStepDescription)) {
+			if (liLineage == null) {
+				liLineage = dqQualityInfo.addElement("smXML:lineage").addElement("smXML:LI_Lineage");
+			}
 			this.addSMXMLCharacterString(liLineage.addElement("smXML:processStep").addElement("smXML:LI_ProcessStep")
 					.addElement("smXML:description"), processStepDescription);
 		}
@@ -700,21 +707,28 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCAN);
 		for (int i = 0; i < spacialResolutionScale.length; i++) {
-			Element mdSpacialResolution = mdDataIdentification.addElement("smXML:spatialResolution").addElement(
-					"smXML:MD_Resolution");
 
-			this.addSMXMLPositiveInteger(mdSpacialResolution.addElement("smXML:equivalentScale").addElement(
-					"smXML:MD_RepresentativeFraction").addElement("smXML:denominator"), spacialResolutionScale[i]);
+			if (IngridQueryHelper.hasValue(spacialResolutionScale[i])) {
+				this.addSMXMLPositiveInteger(mdDataIdentification.addElement("smXML:spatialResolution").addElement(
+				"smXML:MD_Resolution").addElement("smXML:equivalentScale").addElement(
+						"smXML:MD_RepresentativeFraction").addElement("smXML:denominator"), spacialResolutionScale[i]);
+			}
 
-			Element distance = mdSpacialResolution.addElement("smXML:distance").addElement("smXML:Distance");
-			this.addSMXMLDecimal(distance.addElement("smXML:value"), spacialResolutionGround[i]);
-			this.addSMXMLCharacterString(distance.addElement("smXML:uom").addElement("smXML:UomLength").addElement(
-					"smXML:uomName"), "meter");
+			if (IngridQueryHelper.hasValue(spacialResolutionGround[i])) {
+				Element distance = mdDataIdentification.addElement("smXML:spatialResolution").addElement(
+				"smXML:MD_Resolution").addElement("smXML:distance").addElement("smXML:Distance");
+				this.addSMXMLDecimal(distance.addElement("smXML:value"), spacialResolutionGround[i]);
+				this.addSMXMLCharacterString(distance.addElement("smXML:uom").addElement("smXML:UomLength").addElement(
+						"smXML:uomName"), "meter");
+			}
 
-			distance = mdSpacialResolution.addElement("smXML:distance").addElement("smXML:Distance");
-			this.addSMXMLDecimal(distance.addElement("smXML:value"), spacialResolutionScan[i]);
-			this.addSMXMLCharacterString(distance.addElement("smXML:uom").addElement("smXML:UomLength").addElement(
-					"smXML:uomName"), "dpi");
+			if (IngridQueryHelper.hasValue(spacialResolutionScan[i])) {
+				Element distance = mdDataIdentification.addElement("smXML:spatialResolution").addElement(
+				"smXML:MD_Resolution").addElement("smXML:distance").addElement("smXML:Distance");
+				this.addSMXMLDecimal(distance.addElement("smXML:value"), spacialResolutionScan[i]);
+				this.addSMXMLCharacterString(distance.addElement("smXML:uom").addElement("smXML:UomLength").addElement(
+						"smXML:uomName"), "dpi");
+			}
 		}
 
 		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,

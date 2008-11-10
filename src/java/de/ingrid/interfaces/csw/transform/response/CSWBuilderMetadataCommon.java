@@ -59,10 +59,14 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             if (address != null) {
                 
                 this.addSMXMLCharacterString(ciResponsibleParty.addElement("smXML:individualName"), IngridQueryHelper.getCompletePersonName(address));
-                this.addSMXMLCharacterString(ciResponsibleParty.addElement("smXML:organisationName"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION));
-                this.addSMXMLCharacterString(ciResponsibleParty.addElement("smXML:positionName"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_JOB));
+                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION);
+                if (IngridQueryHelper.hasValue(organisationName)) {
+	                this.addSMXMLCharacterString(ciResponsibleParty.addElement("smXML:organisationName"), organisationName);
+                }
+                String positionName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_JOB);
+                if (IngridQueryHelper.hasValue(positionName)) {
+	                this.addSMXMLCharacterString(ciResponsibleParty.addElement("smXML:positionName"), positionName);
+                }
                 Element CIContact = ciResponsibleParty.addElement("smXML:contactInfo").addElement("smXML:CI_Contact");
     
                 HashMap communications = IngridQueryHelper.getCommunications(address);
@@ -210,7 +214,13 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 	} else {
                 		ciDate = parent.addElement("date").addElement("smXML:CI_Date");
                 	}
-                    ciDate.addElement("smXML:date").addElement("smXML:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(creationDate));
+                    String cswDate = Udk2CswDateFieldParser.instance().parse(creationDate);
+                    if (cswDate.indexOf("T") > -1) {
+                    	ciDate.addElement("smXML:date").addElement("smXML:DateTime").addText(cswDate);
+                    } else {
+                    	ciDate.addElement("smXML:date").addElement("smXML:Date").addText(cswDate);
+                    }
+                    
                     String codeListValue;
                     if (referenceDateTypes[i].equals("1")) {
                         codeListValue = "creation";
@@ -235,11 +245,15 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         // operationMetadata
         Element svOperationMetadata = parent.addElement("iso19119:operationMetadata").addElement("iso19119:SV_OperationMetadata");
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata -> iso19119:operationName -> String
-        this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:operationName"), IngridQueryHelper
-                .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_NAME));
+        String operationName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_NAME);
+        if (IngridQueryHelper.hasValue(operationName)) {
+	        this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:operationName"), operationName);
+        }
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata -> iso19119:operationDescription -> String
-        this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:operationDescription"), IngridQueryHelper
-                .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_DESCR));
+        String operationDescription = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_DESCR); 
+        if (IngridQueryHelper.hasValue(operationDescription)) {
+            this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:operationDescription"), operationDescription);
+        }
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata ->(1:n) iso19119:DCP -> iso19119:SV_DCPList/@codeListValue
         String[] platforms = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PLATFORM);
         for (int i=0; i< platforms.length; i++) {
@@ -248,8 +262,10 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                 .addAttribute("codeList", platforms[i]);
         }
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata -> iso19119:invocationName -> String
-        this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:invocationName"), IngridQueryHelper
-                .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_INVOCATION_NAME));
+        String invocationName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_INVOCATION_NAME);
+        if (IngridQueryHelper.hasValue(invocationName)) {
+	        this.addSMXMLCharacterString(svOperationMetadata.addElement("iso19119:invocationName"), invocationName);
+        }
         // iso19119:operationMetadata -> iso19119:SV_OperationMetadata ->(1:n) iso19119:connectPoint -> smXML:CI_OnlineResource
         String[] connectPoints = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT);
         for (int i=0; i< connectPoints.length; i++) {
@@ -264,9 +280,9 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         String[] parameterOptionality = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL);
         String[] parameterRepeatability = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY);
         for (int i=0; i<parameterNames.length; i++) {
-            Element parameters = svOperationMetadata.addElement("iso19119:parameters");
+            Element parameters = svOperationMetadata.addElement("iso19119:parameters").addElement("SV_Parameter");
             // iso19119:operationMetadata -> iso19119:SV_OperationMetadata ->(1:n) iso19119:parameters -> iso19119:SV_Parameter -> iso19119:name -> smXML:MemberName -> smXML:aName -> smXML:CharacterString
-            this.addSMXMLCharacterString(parameters.addElement("SV_Parameter").addElement("iso19119:name").addElement("smXML:MemberName").addElement("smXML:aName"),parameterNames[i]); 
+            this.addSMXMLCharacterString(parameters.addElement("iso19119:name").addElement("smXML:MemberName").addElement("smXML:aName"),parameterNames[i]); 
             // iso19119:operationMetadata -> iso19119:SV_OperationMetadata ->(1:n) iso19119:parameters -> iso19119:direction -> iso19119:SV_ParameterDirection -> (in|out|in/out)
             parameters.addElement("iso19119:direction").addElement("iso19119:SV_ParameterDirection").addText(parameterDirections[i]);
             // iso19119:operationMetadata -> iso19119:SV_OperationMetadata ->(1:n) iso19119:parameters -> iso19119:description -> smXML:CharacterString
