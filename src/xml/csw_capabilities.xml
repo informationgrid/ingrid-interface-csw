@@ -2,7 +2,7 @@
 <!-- ================================================================
 * Topic:        Capabilities document for CSW 2.0                   *
 * Last update:  29.09.2006                                          *
-* Owner:        wemove GmbH                                         *
+* Owner:        Coordination Center PortalU                                         *
 ================================================================= -->
 <csw:Capabilities version="2.0.0" updateSequence="0" xmlns:ows="http://www.opengis.net/ows" xmlns:ogc="http://www.opengis.net/ogc" xmlns:csw="http://www.opengis.net/csw" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/ows
        http://www.opengis.net/ogc
@@ -11,8 +11,8 @@
   <ows:ServiceIdentification>
     <ows:ServiceType>CSW</ows:ServiceType>
     <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
-    <ows:Title>wemove GmbH Catalogue Server</ows:Title>
-    <ows:Abstract>wemove CSW 2.0 - Catalogue Service Web 2.0</ows:Abstract>
+    <ows:Title>PortalU Catalog Server</ows:Title>
+    <ows:Abstract>Metadata collected from several catalogs owned by the german environmental and surveying authorities. Look at http://www.portalu.de for more information.</ows:Abstract>
     <ows:Keywords>
       <ows:Keyword>CS-W</ows:Keyword>
       <ows:Keyword>ISO19119</ows:Keyword>
@@ -20,31 +20,31 @@
       <ows:Keyword>wemove</ows:Keyword>
       <ows:Keyword>Catalog Service</ows:Keyword>
       <ows:Keyword>metadata</ows:Keyword>
-      <ows:Type codeSpace="http://www.wemove.com">theme</ows:Type>
+      <ows:Type codeSpace="http://www.kst.portalu.de/">theme</ows:Type>
     </ows:Keywords>
     <ows:Fees>NONE</ows:Fees>
     <ows:AccessConstraints>NONE</ows:AccessConstraints>
   </ows:ServiceIdentification>
   <ows:ServiceProvider>
-    <ows:ProviderName>wemove GmbH</ows:ProviderName>
-    <ows:ProviderSite xlink:href="http://www.wemove.com"/>
+    <ows:ProviderName>Coordination Center PortalU</ows:ProviderName>
+    <ows:ProviderSite xlink:href="http://www.kst.portalu.de/"/>
     <ows:ServiceContact>
-      <ows:IndividualName>Dirk Schwarzmann</ows:IndividualName>
-      <ows:PositionName>SW-Developer</ows:PositionName>
+      <ows:IndividualName>Fred Kruse</ows:IndividualName>
+      <ows:PositionName>Head Coordination Center PortalU</ows:PositionName>
       <ows:ContactInfo>
         <ows:Phone>
-          <ows:Voice>+49 69-75 900 314</ows:Voice>
-          <ows:Facsimile>+49 69-75 900 322</ows:Facsimile>
+          <ows:Voice>+49 (0)511 120 3480</ows:Voice>
+          <ows:Facsimile>+49 (0)511 120 3697</ows:Facsimile>
         </ows:Phone>
         <ows:Address>
-          <ows:DeliveryPoint>Eschersheimer Landstr. 5-7</ows:DeliveryPoint>
-          <ows:City>Frankfurt</ows:City>
-          <ows:AdministrativeArea>State of Hesse</ows:AdministrativeArea>
-          <ows:PostalCode>60322</ows:PostalCode>
+          <ows:DeliveryPoint>Archivstrasse 2</ows:DeliveryPoint>
+          <ows:City>Hannover</ows:City>
+          <ows:AdministrativeArea>Lower Saxony</ows:AdministrativeArea>
+          <ows:PostalCode>30169</ows:PostalCode>
           <ows:Country>Germany</ows:Country>
-          <ows:ElectronicMailAddress>contact@wemove.com</ows:ElectronicMailAddress>
+          <ows:ElectronicMailAddress>kst@portalu.de</ows:ElectronicMailAddress>
         </ows:Address>
-        <ows:OnlineResource xlink:href="mailto:contact@wemove.com"/>
+        <ows:OnlineResource xlink:href="mailto:kst@portalu.de"/>
       </ows:ContactInfo>
     </ows:ServiceContact>
   </ows:ServiceProvider>
