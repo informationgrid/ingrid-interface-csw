@@ -55,6 +55,7 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 
 import org.apache.axis.Message;
+import org.apache.axis.message.MimeHeaders;
 import org.apache.axis.soap.SOAPConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -191,7 +192,9 @@ public final class SOAPTools {
 		if (createSOAP12) {
 			System.setProperty("javax.xml.soap.MessageFactory", "org.apache.axis.soap.MessageFactoryImpl");
 			System.setProperty("javax.xml.soap.SOAPFactory", "org.apache.axis.soap.SOAPFactoryImpl");
-			faultMessage = new Message(SOAP12ENV, false);
+	        MimeHeaders mimeHeaders = new MimeHeaders();
+	        mimeHeaders.addHeader("Content-Type", "application/soap+xml");
+			faultMessage = new Message(SOAP12ENV, false, mimeHeaders);
 			sp = (org.apache.axis.SOAPPart) faultMessage.getSOAPPart();
 			se = (org.apache.axis.message.SOAPEnvelope) sp.getEnvelope();
 			((org.apache.axis.message.SOAPEnvelope) se).setSoapConstants(SOAPConstants.SOAP12_CONSTANTS);
@@ -238,11 +241,12 @@ public final class SOAPTools {
 	public static SOAPMessage createExceptionReport(final String exceptionText,
 			final String exceptionCode, final String locator, final boolean createSOAP12)
 	throws Exception {
-		log.debug("entering createExceptionReport");
-
-		log.debug("createExceptionReport  exceptionText: " + exceptionText);
-		log.debug("createExceptionReport  exceptionCode: " + exceptionCode);
-		log.debug("createExceptionReport  locator: " + locator);
+        if (log.isDebugEnabled()) {
+        	log.debug("entering createExceptionReport");
+			log.debug("createExceptionReport  exceptionText: " + exceptionText);
+			log.debug("createExceptionReport  exceptionCode: " + exceptionCode);
+			log.debug("createExceptionReport  locator: " + locator);
+        }
 
 		SOAPMessage exceptionReportMessage = null;
 		SOAPPart sp = null;
@@ -285,7 +289,9 @@ public final class SOAPTools {
 		SOAPElement elemExceptionText = elemException.addChildElement("ExceptionText");
 		elemExceptionText.addTextNode(exceptionText);
 
-		log.debug("exiting createExceptionReport");
+        if (log.isDebugEnabled()) {
+        	log.debug("exiting createExceptionReport");
+        }
 
 		return exceptionReportMessage;
 	}
