@@ -249,7 +249,7 @@ public final class CommonAnalyser {
 		String outputFormat = null;
 		outputFormat = be.getAttribute("outputFormat");
 		if (outputFormat != null && !outputFormat.equalsIgnoreCase("text/xml")) {
-			Exception e = new CSWInvalidParameterValueException("Attribute 'outputFormat' is not 'text/xml'.", "outputFormat");
+			Exception e = new CSWInvalidParameterValueException("Attribute 'outputFormat' is not 'text/xml'. It is set to '" + outputFormat + "'", "outputFormat");
 			throw e;
 		}
 		return true;
