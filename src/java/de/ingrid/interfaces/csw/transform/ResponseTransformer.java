@@ -100,14 +100,20 @@ public class ResponseTransformer {
         int numOfRecsReturned = 0;
 
         for (int start = intStartPosition; start < intStopPosition; start++) {
-            log.debug("doc#: " + docCount++ + " of " + numOfRecsToReturn);
+	        if (log.isDebugEnabled()) {
+	        	log.debug("doc#: " + docCount++ + " of " + numOfRecsToReturn);
+	        }
             result = results[start];
 
             PlugDescription plug = bus.getIPlug(result.getPlugId());
             int docId = result.getDocumentId();
-            log.debug("docId: " + docId);
+	        if (log.isDebugEnabled()) {
+	        	log.debug("docId: " + docId);
+	        }
             String plugId = (String) plug.getPlugId();
-            log.debug("plugId: " + plugId);
+	        if (log.isDebugEnabled()) {
+	        	log.debug("plugId: " + plugId);
+	        }
             Record record = null;
 
             // Step over an errorneous record request
@@ -250,7 +256,9 @@ public class ResponseTransformer {
         responseDoc.appendChild(elemRoot);
         Element elemIngridDoc = null;
         int numOfIngridDocs = ingridDocuments.length;
-        log.debug("number of metadatasets: " + numOfIngridDocs);
+        if (log.isDebugEnabled()) {
+        	log.debug("number of metadatasets: " + numOfIngridDocs);
+        }
 
         if (numOfIngridDocs != 0 && intStartPosition > numOfIngridDocs) {
             throw new CSWInvalidParameterValueException("Value of Attribute 'startPosition' is greater "
@@ -304,13 +312,17 @@ public class ResponseTransformer {
         // TODO elementSetName
         elemIngridDoc.setAttribute("elementSetName", elementSetName);
         Set keySet = ingridDocument.keySet();
-        log.debug("ingridDocument number of keys: " + keySet.size());
+        if (log.isDebugEnabled()) {
+        	log.debug("ingridDocument number of keys: " + keySet.size());
+        }
         Iterator iterator = keySet.iterator();
 
         while (iterator.hasNext()) {
             key = (Serializable) iterator.next();
             value = (Serializable) ingridDocument.get(key);
-            log.debug("ingridDocument key: " + key + "  value: " + value);
+	        if (log.isDebugEnabled()) {
+	        	log.debug("ingridDocument key: " + key + "  value: " + value);
+	        }
 
             if (key instanceof Integer) {
                 if (key.equals(new Integer(0))) {

@@ -82,12 +82,16 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		System.setProperty("javax.xml.soap.MessageFactory", "org.apache.axis.soap.MessageFactoryImpl");
 		System.setProperty("javax.xml.soap.SOAPFactory", "org.apache.axis.soap.SOAPFactoryImpl");
 
-		log.info("Starting InGrid CSW Interface (CSW Version " + cswConfig.getString(CSWInterfaceConfig.CSW_VERSION) + ")");
-		log.info("javax.xml.soap.MessageFactory: " + System.getProperty("javax.xml.soap.MessageFactory"));
-		log.info("javax.xml.soap.SOAPFactory: " + System.getProperty("javax.xml.soap.SOAPFactory"));
+    	if (log.isInfoEnabled()) {
+			log.info("Starting InGrid CSW Interface (CSW Version " + cswConfig.getString(CSWInterfaceConfig.CSW_VERSION) + ")");
+			log.info("javax.xml.soap.MessageFactory: " + System.getProperty("javax.xml.soap.MessageFactory"));
+			log.info("javax.xml.soap.SOAPFactory: " + System.getProperty("javax.xml.soap.SOAPFactory"));
+    	}
 
 		try {
-			log.info("trying to connect to bus via JXTA client... ");
+        	if (log.isInfoEnabled()) {
+        		log.info("trying to connect to bus via JXTA client... ");
+        	}
 			client = BusClient.instance();
 			bus = (IBus) client.getBus();
 		} catch (Exception e) {
@@ -95,7 +99,9 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		}
 
 		if (bus != null) {
-			log.info("connect to bus: success.");
+        	if (log.isInfoEnabled()) {
+        		log.info("connect to bus: success.");
+        	}
 			cswConfig.setIBus(bus);
 		}
 		logMemoryInfo("init");
@@ -109,8 +115,10 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	 * @return soapResponseMessage SOAPMessage
 	 */
 	public final SOAPMessage onMessage(final SOAPMessage message) {
-		log.debug("javax.xml.soap.MessageFactory: " + System.getProperty("javax.xml.soap.MessageFactory"));
-		log.debug("javax.xml.soap.SOAPFactory: " + System.getProperty("javax.xml.soap.SOAPFactory"));
+        if (log.isDebugEnabled()) {
+			log.debug("javax.xml.soap.MessageFactory: " + System.getProperty("javax.xml.soap.MessageFactory"));
+			log.debug("javax.xml.soap.SOAPFactory: " + System.getProperty("javax.xml.soap.SOAPFactory"));
+        }
 		
 		createSOAP12 = true;
 		Message soapRequestMessage = (Message) message;
@@ -118,7 +126,9 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		
 		//* for debugging only:
 		try {
-			log.debug("incoming SOAP:\n" + soapRequestMessage.getSOAPPartAsString());
+	        if (log.isDebugEnabled()) {
+	        	log.debug("incoming SOAP:\n" + soapRequestMessage.getSOAPPartAsString());
+	        }
 		} catch (AxisFault e) {
 			log.error("AxisFault while outputting SOAP request:" + e, e);
 		}

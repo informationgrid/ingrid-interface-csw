@@ -212,7 +212,9 @@ public class CSW {
 
         IngridHits hits = callBus(ingridQuery, requestedHits, startPosition);
         long totalHits = hits.length();
-        log.info("Hits for CSW: " + totalHits);
+    	if (log.isInfoEnabled()) {
+    		log.info("Hits for CSW: " + totalHits);
+    	}
 
         sessionParameters.setNumberOfRecordsMatched((int) totalHits);
 
@@ -282,8 +284,10 @@ public class CSW {
         if (sessionParameters.isTypeNameIsApplication() || sessionParameters.isTypeNameIsService()) {
             sourceTypeIsService = true;
         }
-        log.debug("isDataset=" + sourceTypeIsDataset);
-        log.debug("isService=" + sourceTypeIsService);
+        if (log.isDebugEnabled()) {
+	        log.debug("isDataset=" + sourceTypeIsDataset);
+	        log.debug("isService=" + sourceTypeIsService);
+        }
 
         if (sourceTypeIsDataset && sourceTypeIsService) {
             ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);

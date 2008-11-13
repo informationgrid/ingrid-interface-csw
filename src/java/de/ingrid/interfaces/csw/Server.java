@@ -27,7 +27,9 @@ public class Server {
      * @throws Exception 
      */
     public static void main(String[] args) throws Exception {
-        log.info("starting csw interface...");
+    	if (log.isInfoEnabled()) {
+    		log.info("starting csw interface...");
+    	}
         
         HttpServer server=new HttpServer();
           
@@ -52,7 +54,9 @@ public class Server {
 
         // Start the http server
         server.start();
-        log.info("... started wainting for requests.");
+    	if (log.isInfoEnabled()) {
+    		log.info("... started wainting for requests.");
+    	}
     }
 
 }

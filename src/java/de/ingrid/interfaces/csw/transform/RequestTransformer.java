@@ -69,7 +69,9 @@ public class RequestTransformer implements CSWRequestTransformer {
             queryString = queryString + " " + idField + (String) idsList.get(i);
         }
         
-        log.debug("ingridQueryString: " + queryString);
+        if (log.isDebugEnabled()) {
+        	log.debug("ingridQueryString: " + queryString);
+        }
         
         QueryStringParser parser = new QueryStringParser(new StringReader(queryString));
         ingridQuery = parser.parse();

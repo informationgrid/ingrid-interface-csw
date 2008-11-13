@@ -38,8 +38,10 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
         } else if (udkClass.equals("3")) {
             typeName = "service";
         } else {
-            log.info("Unsupported UDK class " + udkClass
+        	if (log.isInfoEnabled()) {
+        		log.info("Unsupported UDK class " + udkClass
                     + ". Only class 1 and 3 are supported by the CSW interface.");
+        	}
             return null;
         }
 

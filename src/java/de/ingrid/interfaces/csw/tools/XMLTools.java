@@ -189,7 +189,9 @@ public final class XMLTools {
 	 */
 	public static Document parse(final Reader reader) throws IOException {
 
-		log.debug("entering parse(reader)...");
+        if (log.isDebugEnabled()) {
+        	log.debug("entering parse(reader)...");
+        }
 
 		javax.xml.parsers.DocumentBuilder builder = null;
 
@@ -227,8 +229,10 @@ public final class XMLTools {
 			log.error("parse(reader) IOException: " + e, e);
 		}
 
-		log.debug("exiting parse(reader) returning document: " +
-				 doc.getDocumentElement().toString());
+        if (log.isDebugEnabled()) {
+			log.debug("exiting parse(reader) returning document: " +
+					 doc.getDocumentElement().toString());
+        }
 
 		return doc;
 	}

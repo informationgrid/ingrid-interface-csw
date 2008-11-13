@@ -90,7 +90,9 @@ public class CSWInterfaceConfig extends PropertiesConfiguration {
             URL url = classLoader.getResource(stripped);
             if (url != null) {
             	result = url.toString();
-            	log.debug("Found via thread-classloader: " + result);
+    	        if (log.isDebugEnabled()) {
+    	        	log.debug("Found via thread-classloader: " + result);
+    	        }
             }
         }
         // ??? Was soll das ???
@@ -103,7 +105,9 @@ public class CSWInterfaceConfig extends PropertiesConfiguration {
             URL url = CSWInterfaceConfig.class.getClassLoader().getResource(stripped);
             if (url != null) {
             	result = url.toString();
-            	log.debug("Found via thisclass-classloader: " + result);
+    	        if (log.isDebugEnabled()) {
+    	        	log.debug("Found via thisclass-classloader: " + result);
+    	        }
             }
         }
         

@@ -152,7 +152,9 @@ public class FilterToIngridQueryString {
 	 */
 	public final String generateQueryFromFilter(final Filter filter)
 	throws Exception {
-		log.debug("enter");
+        if (log.isDebugEnabled()) {
+        	log.debug("enter");
+        }
 		if (filter == null) {
 			return null;
 		}
@@ -189,7 +191,9 @@ public class FilterToIngridQueryString {
 			throw new CSWNoApplicableCodeException(e + " in method FilterToIngridQueryString.generateQueryFromFilter(...)");
 		}
 
-		log.debug("exiting, returning string: " + sb.toString());
+        if (log.isDebugEnabled()) {
+        	log.debug("exiting, returning string: " + sb.toString());
+        }
 		return sb.toString();
 	}
 
@@ -240,7 +244,9 @@ public class FilterToIngridQueryString {
 	 */
 	private void runPropertyIsNull(final ComparisonOps.CompOperation co)
 	throws Exception {
-		log.debug("entering");
+        if (log.isDebugEnabled()) {
+        	log.debug("entering");
+        }
 
 		if (not) {
 			sb.append(" NOT ");
@@ -252,7 +258,9 @@ public class FilterToIngridQueryString {
 		sb.append("null");
 		sb.append(rightBracket);
 
-		log.debug("exiting");
+        if (log.isDebugEnabled()) {
+        	log.debug("exiting");
+        }
 	}
 
 	/**
@@ -265,7 +273,9 @@ public class FilterToIngridQueryString {
 	 */
 	private void runPropertyIsBetween(final ComparisonOps.CompOperation co)
 	throws Exception {
-		log.debug("entering");
+        if (log.isDebugEnabled()) {
+        	log.debug("entering");
+        }
 
 		if (not) {
 			sb.append(" NOT ");
@@ -301,7 +311,9 @@ public class FilterToIngridQueryString {
 		sb.append(rightSquareBracket);
 		sb.append(rightBracket);
 
-		log.debug("exiting");
+        if (log.isDebugEnabled()) {
+        	log.debug("exiting");
+        }
 	}
 
 	/**
@@ -313,7 +325,9 @@ public class FilterToIngridQueryString {
 	 *             e
 	 */
 	private void runLogicalExpr(final LogicalOps logOps) throws Exception {
-		log.debug("entering");
+        if (log.isDebugEnabled()) {
+        	log.debug("entering");
+        }
 
 		// get first operation (if lo == Not it's the only operation)
 		LogicalOps.Logic logic = logOps.getLogicalOperation();
@@ -356,7 +370,9 @@ public class FilterToIngridQueryString {
 		}
 
 		sb.append(rightBracket);
-		log.debug("exiting");
+        if (log.isDebugEnabled()) {
+        	log.debug("exiting");
+        }
 	}
 
 	/**
@@ -368,7 +384,9 @@ public class FilterToIngridQueryString {
 	 *             e
 	 */
 	private void runSpatExpr(final SpatialOps spat) throws Exception {
-		log.debug("entering");
+        if (log.isDebugEnabled()) {
+        	log.debug("entering");
+        }
 
 		// Disjoint is equivalent to 'not Intersects' (OR 'not BBOX')
 		boolean operationIsDisjoint = false;
@@ -543,7 +561,9 @@ public class FilterToIngridQueryString {
 		sb.append(" (coord:inside) ");
 		sb.append(rightBracket);
 
-		log.debug("exiting, coords: " + sb.toString());
+        if (log.isDebugEnabled()) {
+        	log.debug("exiting, coords: " + sb.toString());
+        }
 	}
 
 	/**
@@ -852,7 +872,9 @@ public class FilterToIngridQueryString {
 	 *             e
 	 */
 	private String mapPropToField(final String inprop) throws Exception {
-		log.debug("mapProperty: input property: " + inprop);
+        if (log.isDebugEnabled()) {
+        	log.debug("mapProperty: input property: " + inprop);
+        }
 
 		String outprop = null;
 
@@ -987,7 +1009,9 @@ public class FilterToIngridQueryString {
 			throw new CSWInvalidParameterValueException("Search for PropertyName '" + inprop + "' is not supported by this server.", "PropertyName");
 		}
 
-		log.debug("exiting returning string out property: " + outprop);
+        if (log.isDebugEnabled()) {
+        	log.debug("exiting returning string out property: " + outprop);
+        }
 
 		return outprop;
 	}

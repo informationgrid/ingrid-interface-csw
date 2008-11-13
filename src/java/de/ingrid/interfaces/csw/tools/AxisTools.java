@@ -133,10 +133,14 @@ public final class AxisTools {
         }
         
 	    if (soapconsts instanceof SOAP12Constants) {
-	        log.debug("message is SOAP 1.2. ");
+	        if (log.isDebugEnabled()) {
+	        	log.debug("message is SOAP 1.2. ");
+	        }
 	        isSOAP12 = true;
 	    } else if (soapconsts instanceof SOAP11Constants) {
-	        log.debug("message is SOAP 1.1. ");
+	        if (log.isDebugEnabled()) {
+	        	log.debug("message is SOAP 1.1. ");
+	        }
 	        isSOAP12 = false;
 	    }
         

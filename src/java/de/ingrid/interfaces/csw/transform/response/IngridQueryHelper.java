@@ -487,7 +487,9 @@ public class IngridQueryHelper {
         if (result.size() > 0) {
             return (IngridHit) result.get(0);
         } else {
-            log.info("Unable to retrieve address (addrId: " + addrId + ") from iPlug '" + getAddressPlugIdFromPlugId(iPlugId) + "'!");
+        	if (log.isInfoEnabled()) {
+        		log.info("Unable to retrieve address (addrId: " + addrId + ") from iPlug '" + getAddressPlugIdFromPlugId(iPlugId) + "'!");
+        	}
             return null;
         }
     }
@@ -536,9 +538,11 @@ public class IngridQueryHelper {
             } while (hits.getHits().length == 20);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
-                log.error("Problems getting hits from iBus!", e);
+                log.debug("Problems getting hits from iBus!", e);
             } else {
-                log.info("Problems getting hits from iBus!");
+            	if (log.isInfoEnabled()) {
+            		log.info("Problems getting hits from iBus!");
+            	}
             }
         }
         return result;
