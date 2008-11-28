@@ -17,7 +17,7 @@
       <ows:Keyword>CS-W</ows:Keyword>
       <ows:Keyword>ISO19119</ows:Keyword>
       <ows:Keyword>ISO19115</ows:Keyword>
-      <ows:Keyword>wemove</ows:Keyword>
+      <ows:Keyword>PortalU</ows:Keyword>
       <ows:Keyword>Catalog Service</ows:Keyword>
       <ows:Keyword>metadata</ows:Keyword>
       <ows:Type codeSpace="http://www.kst.portalu.de/">theme</ows:Type>
@@ -64,7 +64,11 @@
     <ows:Operation name="DescribeRecord">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Post xlink:href="http://www.portalu.de/csw"/>
+          <ows:Post xlink:href="http://www.portalu.de/csw">
+	          <ows:Constraint name="PostEncoding">
+							<ows:Value>SOAP</ows:Value>
+						</ows:Constraint>
+					</ows:Post>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="typeName">
@@ -80,7 +84,11 @@
     <ows:Operation name="GetRecords">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Post xlink:href="http://www.portalu.de/csw"/>
+          <ows:Post xlink:href="http://www.portalu.de/csw">
+	          <ows:Constraint name="PostEncoding">
+							<ows:Value>SOAP</ows:Value>
+						</ows:Constraint>
+					</ows:Post>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="TypeName">
@@ -110,7 +118,11 @@
     <ows:Operation name="GetRecordById">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Post xlink:href="http://www.portalu.de/csw"/>
+          <ows:Post xlink:href="http://www.portalu.de/csw">
+	          <ows:Constraint name="PostEncoding">
+							<ows:Value>SOAP</ows:Value>
+						</ows:Constraint>
+					</ows:Post>
         </ows:HTTP>
       </ows:DCP>
       <ows:Parameter name="ElementSetName">
