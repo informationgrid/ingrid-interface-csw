@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.opengis.net/cat/csw/msg" xmlns:csw-soap="http://www.opengis.net/cat/csw/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:csw="http://www.opengis.net/cat/csw" xmlns:ows="http://www.opengis.net/ows" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:documentation xmlns:dc="http://purl.org/dc/elements/1.1/">
+		<dc:date>2006-03-20</dc:date>
+		<dc:description>Normative abstract service interface definition (messages, portTypes, operations) for CSW 2.0.1 (AP ISO 19115/19 V1.0) interfaces</dc:description>
+	</wsdl:documentation>
+	<!-- Message Elements -->
+	<wsdl:types>
+		<wsdl:documentation>OGC CSW 2.0.1 AP Iso19115/19 message elements</wsdl:documentation>
+		<xsd:schema targetNamespace="http://www.opengis.net/cat/csw" elementFormDefault="qualified" version="2.0.1">
+			<!-- Imports -->
+			<xsd:import namespace="http://www.opengeospatial.net/ows" schemaLocation="../ows1.0.0/owsGetCapabilities.xsd"/>
+			<xsd:import namespace="http://www.opengeospatial.net/ows" schemaLocation="../ows1.0.0/owsExceptionReport.xsd"/>			
+			<xsd:import namespace="http://www.opengis.net/cat/csw/isoap/brief" schemaLocation="../../isoap/brief.xsd"/>
+			<xsd:import namespace="http://www.opengis.net/cat/csw/isoap/summary" schemaLocation="../../isoap/summary.xsd"/>
+			<xsd:import namespace="http://www.isotc211.org/2005/gmd" schemaLocation="../../isoap/services.xsd"/>
+			<!-- Includes -->			
+			<xsd:include schemaLocation="../csw2.0.1/CSW-publication.xsd"/>
+			<xsd:include schemaLocation="../csw2.0.1/CSW-discovery.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="DescribeRecordRequest">
+		<wsdl:part name="body" element="csw:DescribeRecord"/>
+	</wsdl:message>
+	<wsdl:message name="DescribeRecordResponse">
+		<wsdl:part name="body" element="csw:DescribeRecordResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetDomainRequest">
+		<wsdl:part name="body" element="csw:GetDomain"/>
+	</wsdl:message>
+	<wsdl:message name="GetDomainResponse">
+		<wsdl:part name="body" element="csw:GetDomainResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetRecordsRequest">
+		<wsdl:part name="body" element="csw:GetRecords"/>
+	</wsdl:message>
+	<wsdl:message name="GetRecordsResponse">
+		<wsdl:part name="body" element="csw:GetRecordsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetRecordByIdRequest">
+		<wsdl:part name="body" element="csw:GetRecordById"/>
+	</wsdl:message>
+	<wsdl:message name="GetRecordByIdResponse">
+		<wsdl:part name="body" element="csw:GetRecordByIdResponse"/>
+	</wsdl:message>
+	<wsdl:message name="TransactionRequest">
+		<wsdl:part name="body" element="csw:Transaction"/>
+	</wsdl:message>
+	<wsdl:message name="TransactionResponse">
+		<wsdl:part name="body" element="csw:TransactionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="HarvestRequest">
+		<wsdl:part name="body" element="csw:Harvest"/>
+	</wsdl:message>
+	<wsdl:message name="HarvestResponse">
+		<wsdl:part name="body" type="csw:HarvestResponseType"/>
+	</wsdl:message>
+	<!-- Interfaces -->
+	<wsdl:portType name="CSW-Discovery">
+		<wsdl:documentation>
+    This interface corresponds to the Discovery (CSW) capability class.
+        </wsdl:documentation>
+		<wsdl:operation name="CSW-Discovery.getRecordById">
+			<wsdl:input message="csw:GetRecordByIdRequest"/>
+			<wsdl:output message="csw:GetRecordByIdResponse"/>
+			<wsdl:fault name="ExceptionReport" message="ows:ExceptionReport"/>
+		</wsdl:operation>
+		<wsdl:operation name="CSW-Discovery.describeRecord">
+			<wsdl:input message="csw:DescribeRecordRequest"/>
+			<wsdl:output message="csw:DescribeRecordResponse"/>
+			<wsdl:fault name="ExceptionReport" message="ows:ExceptionReport"/>
+		</wsdl:operation>
+		<wsdl:operation name="CSW-Discovery.getDomain">
+			<wsdl:input message="csw:GetDomainRequest"/>
+			<wsdl:output message="csw:GetDomainResponse"/>
+			<wsdl:fault name="ExceptionReport" message="ows:ExceptionReport"/>
+		</wsdl:operation>
+		<wsdl:operation name="CSW-Discovery.getRecords">
+			<wsdl:input message="csw:GetRecordsRequest"/>
+			<wsdl:output message="csw:GetRecordsResponse"/>
+			<wsdl:fault name="ExceptionReport" message="ows:ExceptionReport"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="CSW-Publication">
+		<wsdl:documentation>
+    This interface corresponds to the Publication capability class. A
+    fully capable catalogue service (CSWT) implements both interfaces.
+        </wsdl:documentation>
+		<wsdl:operation name="CSW-Publication.harvest">
+			<wsdl:input message="csw:HarvestRequest"/>
+			<wsdl:output message="csw:HarvestResponse"/>
+			<wsdl:fault name="ExceptionReport" message="ows:ExceptionReport"/>
+		</wsdl:operation>
+		<wsdl:operation name="CSW-Publication.transaction">
+			<wsdl:input message="csw:TransactionRequest"/>
+			<wsdl:output message="csw:TransactionResponse"/>
+			<wsdl:fault name="ExceptionReport" message="ows:ExceptionReport"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>
