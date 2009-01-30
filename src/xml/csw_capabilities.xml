@@ -4,13 +4,13 @@
 * Last update:  29.09.2006                                          *
 * Owner:        Coordination Center PortalU                                         *
 ================================================================= -->
-<csw:Capabilities version="2.0.0" updateSequence="0" xmlns:ows="http://www.opengis.net/ows" xmlns:ogc="http://www.opengis.net/ogc" xmlns:csw="http://www.opengis.net/csw" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/ows
+<csw:Capabilities version="2.0.2" updateSequence="0" xmlns:ows="http://www.opengis.net/ows" xmlns:ogc="http://www.opengis.net/ogc" xmlns:csw="http://www.opengis.net/csw/2.0.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/ows
        http://www.opengis.net/ogc
-       http://www.opengis.net/csw
+       http://www.opengis.net/csw/2.0.2
        http://www.w3.org/1999/xlink">
   <ows:ServiceIdentification>
     <ows:ServiceType>CSW</ows:ServiceType>
-    <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
+    <ows:ServiceTypeVersion>2.0.2</ows:ServiceTypeVersion>
     <ows:Title>PortalU Catalog Server</ows:Title>
     <ows:Abstract>Metadata collected from several catalogs owned by the german environmental and surveying authorities. Look at http://www.portalu.de for more information.</ows:Abstract>
     <ows:Keywords>
@@ -71,15 +71,19 @@
 					</ows:Post>
         </ows:HTTP>
       </ows:DCP>
-      <ows:Parameter name="typeName">
+      <ows:Parameter name="TypeName">
         <ows:Value>csw:Record</ows:Value>
+        <ows:Value>gmd:MD_Metadata</ows:Value>
       </ows:Parameter>
-      <ows:Parameter name="outputFormat">
-        <ows:Value>text/xml</ows:Value>
+      <ows:Parameter name="OutputFormat">
+        <ows:Value>application/xml</ows:Value>
       </ows:Parameter>
-      <ows:Parameter name="schemaLanguage">
+      <ows:Parameter name="SchemaLanguage">
         <ows:Value>XMLSCHEMA</ows:Value>
       </ows:Parameter>
+      <ows:Constraint name="PostEncoding">
+		<ows:Value>SOAP</ows:Value>
+	  </ows:Constraint>
     </ows:Operation>
     <ows:Operation name="GetRecords">
       <ows:DCP>
@@ -93,26 +97,27 @@
       </ows:DCP>
       <ows:Parameter name="TypeName">
         <ows:Value>csw:Record</ows:Value>
+        <ows:Value>gmd:MD_Metadata</ows:Value>
       </ows:Parameter>
-      <ows:Parameter name="outputFormat">
-        <ows:DefaultValue>text/xml</ows:DefaultValue>
+      <ows:Parameter name="OutputFormat">
+        <ows:Value>application/xml</ows:Value>
       </ows:Parameter>
-      <ows:Parameter name="outputSchema">
-        <ows:DefaultValue>csw:profile</ows:DefaultValue>
-        <ows:Value>csw:ogccore</ows:Value>
+      <ows:Parameter name="OutputSchema">
+        <ows:Value>http://www.opengis.net/cat/csw/2.0.2</ows:Value>
+        <ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
       </ows:Parameter>
-      <ows:Parameter name="resultType">
-        <ows:DefaultValue>HITS</ows:DefaultValue>
-        <ows:Value>RESULTS</ows:Value>
+      <ows:Parameter name="ResultType">
+        <ows:Value>hits</ows:Value>
+        <ows:Value>results</ows:Value>
       </ows:Parameter>
       <ows:Parameter name="ElementSetName">
-        <ows:DefaultValue>summary</ows:DefaultValue>
+        <ows:Value>summary</ows:Value>
         <ows:Value>brief</ows:Value>
         <ows:Value>full</ows:Value>
       </ows:Parameter>
       <ows:Parameter name="CONSTRAINTLANGUAGE">
-        <ows:DefaultValue>Filter</ows:DefaultValue>
-        <ows:Value>CQL</ows:Value>
+        <ows:Value>Filter</ows:Value>
+        <ows:Value>CQL_Text</ows:Value>
       </ows:Parameter>
     </ows:Operation>
     <ows:Operation name="GetRecordById">
@@ -125,14 +130,23 @@
 					</ows:Post>
         </ows:HTTP>
       </ows:DCP>
-      <ows:Parameter name="ElementSetName">
-        <ows:DefaultValue>summary</ows:DefaultValue>
+		<ows:Parameter name="OutputSchema">
+			<ows:Value>http://www.opengis.net/cat/csw/2.0.2</ows:Value>
+			<ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
+			<ows:Value>http://www.adv.de/extendedISO</ows:Value>
+		</ows:Parameter>
+		<ows:Parameter name="ElementSetName">
+        <ows:Value>summary</ows:Value>
         <ows:Value>brief</ows:Value>
         <ows:Value>full</ows:Value>
       </ows:Parameter>
     </ows:Operation>
+    <ows:Parameter name="version">
+		<ows:Value>2.0.2</ows:Value>
+		<ows:Value>2.0.0</ows:Value>
+	</ows:Parameter>
   </ows:OperationsMetadata>
-  <ogc:Filter_Capabilities>
+  <ogc:Filter_Capabilities xmlns:gml="http://www.opengis.net/gml">
     <ogc:Spatial_Capabilities>
       <ogc:Spatial_Operators>
         <ogc:BBOX/>

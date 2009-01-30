@@ -28,26 +28,17 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class CSWResponseTransformer {
 
-    private static Log log = LogFactory.getLog(CSWBuilderMetadata_brief_DE_1_0_1.class);
+    private static Log log = LogFactory.getLog(CSWResponseTransformer.class);
     
     public Document transform(IngridHits hits, IngridQuery q, final SessionParameters session) throws Exception {
 
         long startTime = System.currentTimeMillis();
         
         CSWBuilderType builder = null;
-        if (session.isOperationIsGetRecs()) {
-            builder = CSWBuilderFactory.getBuilderType(session.getResultType(), "GetRecords", "CSW_2_0_DE_1_0_1");
-            builder.setHits(hits);
-            builder.setQuery(q);
-            builder.setSessionParameter(session);
-        } else if (session.isOperationIsGetRecById()) {
-            builder = CSWBuilderFactory.getBuilderType(session.getResultType(), "GetRecordById", "CSW_2_0_DE_1_0_1");
-            builder.setHits(hits);
-            builder.setQuery(q);
-            builder.setSessionParameter(session);
-        } else if (session.isOperationIsGetCap()) {
-        } else if (session.isOperationIsDescRec()) {
-        }
+        builder = CSWBuilderFactory.getBuilderType(session);
+        builder.setHits(hits);
+        builder.setQuery(q);
+        builder.setSessionParameter(session);
 
         org.dom4j.Document doc = DocumentFactory.getInstance().createDocument();
         doc.add(builder.build());

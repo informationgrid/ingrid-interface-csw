@@ -46,7 +46,7 @@ public class CSWBuilderType_GetRecordById_DE_1_0_1 extends CSWBuilderType {
         IngridHit hit = hits.getHits()[0];
         hit.put("detail", details[0]);
         
-        CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session.getElementSetName(), "CSW_2_0_DE_1_0_1");
+        CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
         builder.setHit(hit);
         rootElement.add(builder.build());
 

@@ -1,0 +1,34 @@
+/*
+ * Copyright (c) 1997-2007 by wemove GmbH
+ */
+package de.ingrid.interfaces.csw.transform.response;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dom4j.DocumentFactory;
+import org.dom4j.Element;
+import org.dom4j.Namespace;
+
+import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
+import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.udk.UtilsUDKCodeLists;
+
+/**
+ * TODO Describe your created type (class, etc.) here.
+ * 
+ * @author joachim@wemove.com
+ */
+public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderMetadataCommon {
+
+	private static Log log = LogFactory.getLog(CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0.class);
+
+	public Element build() throws Exception {
+
+		throw new Exception("not yet implemented");
+
+	}
+
+}

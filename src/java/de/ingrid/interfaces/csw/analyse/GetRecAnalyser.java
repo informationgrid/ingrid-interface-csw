@@ -84,7 +84,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 			throw e;
 		}
 		commonAnalyser.analyseService(be);
-		commonAnalyser.analyseVersion(be);
+		sessionParameters.setVersion(commonAnalyser.analyseVersion(be));
 		commonAnalyser.analyseResultType(be);
 
 		//if result type is HITS don't analyse the request for startPosition and so on ..

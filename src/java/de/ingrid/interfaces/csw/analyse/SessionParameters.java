@@ -31,6 +31,16 @@ public final class SessionParameters {
 	private int startPosition = STARTPOSITION;
 	private int numberOfRecordsMatched = 0;
 	private int numberOfRecordsReturned = 0;
+	private String version = null; 
+	
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 
 	/**
 	 * the sorting: default is by
@@ -355,4 +365,19 @@ public final class SessionParameters {
 	public void setNumberOfRecordsReturned(final int numberOfRecordsReturn) {
 		this.numberOfRecordsReturned = numberOfRecordsReturn;
 	}
+	
+	public String getRequestOperation() {
+		if (operationIsGetCap) {
+			return ClientRequestParameters.GETCAPABILITIES;
+		} else if (operationIsGetRecs) {
+			return ClientRequestParameters.GETRECORDS;
+		} else if (operationIsGetRecById) {
+			return ClientRequestParameters.GETRECORDBYID;
+		} else if (operationIsDescRec) {
+			return ClientRequestParameters.DESCRIBERECORD;
+		} else {
+			return null;
+		}
+	}
+	
 }

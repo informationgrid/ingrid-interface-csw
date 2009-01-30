@@ -316,23 +316,23 @@ public final class CommonAnalyser {
 	}
 
 	/**
-	 * analyse the version, return true if ok
+	 * analyse the version, return version if ok
 	 * @param be SOAPBodyElement
-	 * @return boolean
+	 * @return String
 	 * @throws Exception e
 	 */
-	public boolean analyseVersion(final SOAPBodyElement be) throws Exception {
+	public String analyseVersion(final SOAPBodyElement be) throws Exception {
 		String version = null;
 		version = be.getAttribute("version");
 		if (version == null) {
 			Exception e = new CSWMissingParameterValueException("Attribute 'version' is missing.", "version");
 			throw e;
 		}
-		if (!version.equals("2.0.0")) {
-			Exception e = new CSWInvalidParameterValueException("Attribute 'version' is not '2.0.0'.", "version");
+		if (!version.equals("2.0.0") && !version.equals("2.0.2")) {
+			Exception e = new CSWInvalidParameterValueException("Attribute 'version' is not '2.0.0', '2.0.2'.", "version");
 			throw e;
 		}
-		return true;
+		return version;
 	}
 	
 	/**
@@ -352,10 +352,10 @@ public final class CommonAnalyser {
 		if (result == null || result.equals("")) {
 			throw new CSWMissingParameterValueException("Parameter '" + ClientRequestParameters.VERSION + "' is not specified or has no value", ClientRequestParameters.VERSION);
 		} else {
-			if (!result.equals("2.0.0")) {
+			if (!result.equals("2.0.0") && !result.equals("2.0.2")) {
 				StringBuffer errorMsg = new StringBuffer();
 				errorMsg.append("Parameter '" + ClientRequestParameters.VERSION + "' has an unsupported value.\n");
-				errorMsg.append("Supported values: 2.0.0\n");
+				errorMsg.append("Supported values: 2.0.0, 2.0.2\n");
 				throw new CSWInvalidParameterValueException(errorMsg.toString(), ClientRequestParameters.VERSION);
 			}
 		}
