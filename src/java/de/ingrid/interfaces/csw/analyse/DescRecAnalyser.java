@@ -46,7 +46,6 @@ public class DescRecAnalyser implements CSWAnalyser {
 		}
 		commonAnalyser.analyseService(be);
 		commonAnalyser.analyseVersion(be);
-		commonAnalyser.analyseOutputFormat(be);
 		commonAnalyser.analyseSchemaLanguage(be);
 		descRecRequestValid = true;
 		return descRecRequestValid;

@@ -19,15 +19,19 @@ import javax.xml.soap.SOAPMessage;
 
 import org.apache.axis.AxisFault;
 import org.apache.axis.Message;
+import org.apache.axis.soap.SOAP12Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.ibus.client.BusClient;
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.analyse.ClientRequestParameters;
 import de.ingrid.interfaces.csw.analyse.CommonAnalyser;
 import de.ingrid.interfaces.csw.analyse.DescRecAnalyser;
 import de.ingrid.interfaces.csw.analyse.GetCapAnalyser;
 import de.ingrid.interfaces.csw.analyse.GetRecAnalyser;
+import de.ingrid.interfaces.csw.analyse.GetRecByIdAnalyser;
+import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.interfaces.csw.exceptions.CSWException;
 import de.ingrid.interfaces.csw.tools.AxisTools;
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
@@ -92,8 +96,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
         	if (log.isInfoEnabled()) {
         		log.info("trying to connect to bus via JXTA client... ");
         	}
-			client = BusClient.instance();
-			bus = (IBus) client.getBus();
+			client = BusClientFactory.createBusClient();
+			bus = (IBus) client.getNonCacheableIBus();
 		} catch (Exception e) {
 			log.error("init iBus communication: " + e.getMessage(), e);
 		}
@@ -121,25 +125,15 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
         }
 		
 		createSOAP12 = true;
-		Message soapRequestMessage = (Message) message;
+//		Message soapRequestMessage = (Message) message.;
 		SOAPMessage soapResponseMessage = null;
 		
-		//* for debugging only:
 		try {
-	        if (log.isDebugEnabled()) {
-	        	log.debug("incoming SOAP:\n" + soapRequestMessage.getSOAPPartAsString());
-	        }
-		} catch (AxisFault e) {
-			log.error("AxisFault while outputting SOAP request:" + e, e);
-		}
-		//*/
-
-		try {
-			if (!AxisTools.isSOAP12((Message) soapRequestMessage)) {
+			if (!message.getSOAPPart().getEnvelope().getNamespaceURI().equalsIgnoreCase("http://www.w3.org/2003/05/soap-envelope")) {
 				throw new Exception("Only SOAP 1.2 is supported.");
 			}
 			csw = new CSW();
-			soapResponseMessage = csw.doRequest((Message) soapRequestMessage);
+			soapResponseMessage = csw.doRequest(message);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			try {
@@ -206,6 +200,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 				doGet_DescribeRecord(reqParams, response);
 			} else if (operation.equalsIgnoreCase(ClientRequestParameters.GETRECORDS)) {
 				doGet_GetRecords(reqParams, response);
+			} else if (operation.equalsIgnoreCase(ClientRequestParameters.GETRECORDBYID)) {
+				doGet_GetRecordById(reqParams, response);
 			}
 		} catch (Exception e) {
 			log.warn(e.getMessage());
@@ -289,6 +285,23 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	}
 
 	/**
+	 * Performs a GetRecordById kvp request and directly returns the result in case of success.
+	 * If an error occurs, the method throws a CSW*Exception that must be handled by the caller.
+	 * 
+	 * TODO:
+	 * The method is not yet finished. At the moment, it can only check _IF_ the KVP request
+	 * is valid, but it does NOT process the query and return a reply.
+	 * 
+	 * @param reqParams The parameters of the HTTP GET request
+	 * @param response The http response object needed for getting the output stream
+	 * @throws Exception
+	 */
+	private void doGet_GetRecordById(final Properties reqParams, final HttpServletResponse response)
+	throws Exception {
+		throw new Exception("not implemented yet.");
+	}
+	
+	/**
 	 * logs JVM memory information.
 	 * Parameter string strMethodName is the name of
 	 * the method where the logging occurs.
@@ -305,9 +318,5 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	}
 
 	public void destroy(){
-		//FIXME JXTA shutdown?
-		if (client != null) {
-			client.shutdown();
-		}
 	}
 }

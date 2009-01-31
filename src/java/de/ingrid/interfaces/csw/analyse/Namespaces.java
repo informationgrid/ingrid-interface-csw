@@ -13,6 +13,7 @@ public class Namespaces {
 	 * the csw uri
 	 */
 	public static final String CSW = "http://www.opengis.net/cat/csw";
+	public static final String CSW_2_0_2 = "http://www.opengis.net/cat/csw/2.0.2";
 	
 	/**
 	 * the ogc uri

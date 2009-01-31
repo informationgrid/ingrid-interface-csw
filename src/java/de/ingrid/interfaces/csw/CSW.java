@@ -7,11 +7,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 
+import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPMessage;
 
 import org.apache.axis.Message;
-import org.apache.axis.message.SOAPBody;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -63,11 +64,11 @@ public class CSW {
      * @throws Exception
      *             e
      */
-    protected final Message doRequest(final Message soapRequestMessage) throws Exception {
+    protected final Message doRequest(final SOAPMessage soapRequestMessage) throws Exception {
         Message soapResponseMessage = null;
         SessionParameters sessionParameters = new SessionParameters();
         CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
-        SOAPBody body = (SOAPBody) soapRequestMessage.getSOAPBody();
+        SOAPBody body = soapRequestMessage.getSOAPBody();
         SOAPBodyElement be = (SOAPBodyElement) body.getFirstChild();
 
         // String nameSpacePrefix = be.getPrefix();
@@ -80,7 +81,7 @@ public class CSW {
         // String opName = be.getNodeName();
         String opName = be.getLocalName();
 
-        if (nameSpaceURI != null && !"".equals(nameSpaceURI) && !Namespaces.CSW.equals(nameSpaceURI)) {
+        if (nameSpaceURI != null && !"".equals(nameSpaceURI) && !Namespaces.CSW.equals(nameSpaceURI) && !Namespaces.CSW_2_0_2.equals(nameSpaceURI)) {
             Exception e = new CSWOperationNotSupportedException("Operation '" + opName + "' within namespace URI '"
                     + nameSpaceURI + "' is not supported.", opName);
             throw e;
@@ -178,7 +179,7 @@ public class CSW {
 
         // transform the OGC filter (request) into IngridQuery; including
         // SessionParameters
-        SOAPElement soapElementFilter = (SOAPElement) be.getElementsByTagName("Filter").item(0);
+        SOAPElement soapElementFilter = (SOAPElement) be.getElementsByTagNameNS("http://www.opengis.net/ogc", "Filter").item(0);
         RequestTransformer requestTransformer = new RequestTransformer();
         IngridQuery ingridQuery = requestTransformer.transform(soapElementFilter);
 

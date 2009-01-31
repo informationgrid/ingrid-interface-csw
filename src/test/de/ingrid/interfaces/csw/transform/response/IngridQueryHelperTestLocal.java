@@ -2,6 +2,7 @@ package de.ingrid.interfaces.csw.transform.response;
 
 import junit.framework.TestCase;
 import de.ingrid.ibus.client.BusClient;
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridHit;
@@ -19,8 +20,8 @@ public class IngridQueryHelperTestLocal extends TestCase {
         IBus bus = null;
         BusClient client = null;
         try {
-            client = BusClient.instance();
-            bus = (IBus) client.getBus();
+            client = BusClientFactory.createBusClient();
+            bus = (IBus) client.getNonCacheableIBus();
         } catch (Exception e) {
             System.out.println("init iBus communication: " + e.getMessage());
         }

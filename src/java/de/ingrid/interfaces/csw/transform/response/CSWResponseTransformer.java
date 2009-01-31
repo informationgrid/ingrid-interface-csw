@@ -34,13 +34,13 @@ public class CSWResponseTransformer {
 
         long startTime = System.currentTimeMillis();
         
+        org.dom4j.Document doc = DocumentFactory.getInstance().createDocument();
+        
         CSWBuilderType builder = null;
         builder = CSWBuilderFactory.getBuilderType(session);
         builder.setHits(hits);
         builder.setQuery(q);
         builder.setSessionParameter(session);
-
-        org.dom4j.Document doc = DocumentFactory.getInstance().createDocument();
         doc.add(builder.build());
         
         // apply postprocessing

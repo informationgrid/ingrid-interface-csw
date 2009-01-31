@@ -67,7 +67,7 @@ public abstract class JAXMServlet
         super.init(servletConfig);
         try {
             // Initialize it to the default.
-            msgFactory = MessageFactory.newInstance();
+            msgFactory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
         } catch (SOAPException ex) {
             throw new ServletException("Unable to create message factory"+ex.getMessage());
         }

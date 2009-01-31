@@ -876,92 +876,93 @@ public class FilterToIngridQueryString {
         	log.debug("mapProperty: input property: " + inprop);
         }
 
+		String inPropWithoutNS = inprop.indexOf(':') > -1 ? inprop.substring(inprop.indexOf(':') + 1, inprop.length()): inprop;
 		String outprop = null;
 
 		// all text fields
-		if (inprop.equalsIgnoreCase("AnyText")) {
+		if (inPropWithoutNS.equalsIgnoreCase("AnyText")) {
 			// anytext --> content
 			outprop = "";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/title
-		} else if (inprop.equalsIgnoreCase("Title")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Title")) {
 			outprop = "title";
 			// metadata language
-		} else if (inprop.equalsIgnoreCase("Language")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Language")) {
 			outprop = "t01_object.metadata_language";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/alternateTitle
-		} else if (inprop.equalsIgnoreCase("AlternateTitle")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("AlternateTitle")) {
 			outprop = "t01_object.dataset_alternate_name";
 			// responsible party organisation name
-		} else if (inprop.equalsIgnoreCase("OrganisationName")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("OrganisationName")) {
 			outprop = "t02_address.institution";
 			// do security constraints (resource constraints) exist (boolean)
-		} else if (inprop.equalsIgnoreCase("HasSecurityConstraints")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("HasSecurityConstraints")) {
 			// TODO hasSecurityConstraints
 			outprop = "hasSecurityConstraints";
 			// metadata hierarchy level name
-		} else if (inprop.equalsIgnoreCase("HierarchyLevelName")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("HierarchyLevelName")) {
 			// TODO HierarchyLevelName
 			outprop = "hierarchyLevelName";
 			// metadata parent identifier
-		} else if (inprop.equalsIgnoreCase("ParentIdentifier")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("ParentIdentifier")) {
 			outprop = "t012_obj_obj.object_from_id";
 			// dates
 			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/date/date
 			// date type: revision
-		} else if (inprop.equalsIgnoreCase("Modified")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Modified")) {
 			outprop = "t01_object.mod_time";
 			// date type: creation
-		} else if (inprop.equalsIgnoreCase("CreationDate")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("CreationDate")) {
 			outprop = "t01_object.create_time";
 			// begin: t01_object.time_from
-		} else if (inprop.equalsIgnoreCase("TempExtent_begin")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("TempExtent_begin")) {
 			outprop = "t1";
 			// end: t01_object.time_to
-		} else if (inprop.equalsIgnoreCase("TempExtent_end")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("TempExtent_end")) {
 			outprop = "t2";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/abstract
-		} else if (inprop.equalsIgnoreCase("Abstract")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Abstract")) {
 			outprop = "summary";
 			// distribution format
-		} else if (inprop.equalsIgnoreCase("Format")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Format")) {
 			outprop = "t0110_avail_format.name";
 			// TODO citation identifier
-		} else if (inprop.equalsIgnoreCase("Identifier")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Identifier")) {
 			outprop = "zip";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/descriptiveKeywords/MD_Keywords/keyword
-		} else if (inprop.equalsIgnoreCase("Subject")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Subject")) {
 			outprop = "t04_search.searchterm";
 			// TODO keyword type
-		} else if (inprop.equalsIgnoreCase("KeywordType")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("KeywordType")) {
 			outprop = "keyTyp";
 			// TODO topic category
-		} else if (inprop.equalsIgnoreCase("TopicCategory")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("TopicCategory")) {
 			outprop = "tpCat";
 			// spatial resolution
-		} else if (inprop.equalsIgnoreCase("SpatialResolution")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("SpatialResolution")) {
 			outprop = "spatialResolution";
 			// denominator (integer)
-		} else if (inprop.equalsIgnoreCase("Denominator")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Denominator")) {
 			outprop = "t011_obj_geo_scale.scale";
 			// distance value (float)
-		} else if (inprop.equalsIgnoreCase("DistanceValue")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("DistanceValue")) {
 			outprop = "t011_obj_geo_scale.resolution_ground";
 			// distance uom (measure: meter)
-		} else if (inprop.equalsIgnoreCase("DistanceUOM")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("DistanceUOM")) {
 			outprop = "t011_obj_geo_scale.resolution_scan";
 			// TODO spatial representation type
-		} else if (inprop.equalsIgnoreCase("Type")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Type")) {
 			outprop = "spatRpType";
 			// coordinate reference system
-		} else if (inprop.equalsIgnoreCase("CRS")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("CRS")) {
 			outprop = "t011_obj_geo.coord";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicDescription/geographicIdentifier/code
 			// Dirk Schwarzmann, 2006-10-09:
 			// Support long xpath names (at least for GeoPortal.Bund)
-		} else if (inprop.equalsIgnoreCase("GeographicDescriptionCode") ||
-				inprop.equalsIgnoreCase("MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicDescription/geographicIdentifier/MD_Identifier/code") ||
-				inprop.equalsIgnoreCase("MD_Metadata/identificationInfo/CSW_ServiceIdentification/operatesOn/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicDescription/geographicIdentifier/MD_Identifier/code")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("GeographicDescriptionCode") ||
+				inPropWithoutNS.equalsIgnoreCase("MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicDescription/geographicIdentifier/MD_Identifier/code") ||
+				inPropWithoutNS.equalsIgnoreCase("MD_Metadata/identificationInfo/CSW_ServiceIdentification/operatesOn/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicDescription/geographicIdentifier/MD_Identifier/code")) {
 			outprop = "t019_coordinates.bezug";
 			// Dirk Schwarzmann, 2006-10-09:
 			// At the moment, ignore any geographic identifiers (not working with iPlugs)
@@ -971,39 +972,39 @@ public class FilterToIngridQueryString {
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicBoundingBox/westBoundLongitude
 			// t019_coordinates.geo_x1
-		} else if (inprop.equalsIgnoreCase("WestBoundLongitude")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("WestBoundLongitude")) {
 			outprop = "x1";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicBoundingBox/eastBoundLongitude
 			// t019_coordinates.geo_x2
-		} else if (inprop.equalsIgnoreCase("EastBoundLongitude")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("EastBoundLongitude")) {
 			outprop = "x2";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicBoundingBox/southBoundLatitude
 			// t019_coordinates.geo_y1
-		} else if (inprop.equalsIgnoreCase("SouthBoundLatitude")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("SouthBoundLatitude")) {
 			outprop = "y1";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
 			// EX_GeographicBoundingBox/northBoundLatitude
 			// t019_coordinates.geo_y2
-		} else if (inprop.equalsIgnoreCase("NorthBoundLatitude")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("NorthBoundLatitude")) {
 			outprop = "y2";
 			// MD_Metadata/fileIdentifier
-		} else if (inprop.equalsIgnoreCase("FileIdentifier")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("FileIdentifier")) {
 			outprop = "t01_object.obj_id";
-		} else if (inprop.equalsIgnoreCase("ServiceType")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("ServiceType")) {
 			outprop = "t011_obj_serv.type";
-		} else if (inprop.equalsIgnoreCase("ServiceTypeVersion")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("ServiceTypeVersion")) {
 			outprop = "t011_obj_serv_version.version";
-		} else if (inprop.equalsIgnoreCase("OperatesOn")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("OperatesOn")) {
 			// TODO OperatesOn = T011_obj_serv.base??
 			outprop = "t011_obj_serv.base";
-		} else if (inprop.equalsIgnoreCase("Operation")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("Operation")) {
 			outprop = "t011_obj_serv_operation.name";
-		} else if (inprop.equalsIgnoreCase("DCP")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("DCP")) {
 			outprop = "t011_obj_serv_op_platform.platform";
 			// TODO CouplingType
-		} else if (inprop.equalsIgnoreCase("CouplingType")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("CouplingType")) {
 			outprop = "couplingType";
 		} else {
 			throw new CSWInvalidParameterValueException("Search for PropertyName '" + inprop + "' is not supported by this server.", "PropertyName");

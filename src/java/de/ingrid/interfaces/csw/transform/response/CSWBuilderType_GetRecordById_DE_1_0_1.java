@@ -24,7 +24,7 @@ public class CSWBuilderType_GetRecordById_DE_1_0_1 extends CSWBuilderType {
     
     public Element build() throws Exception {
 
-        Element rootElement = DocumentFactory.getInstance().createElement("csw:GetRecordByIdResponse", "http://www.opengis.net/cat/csw");
+        Element rootElement = DocumentFactory.getInstance().createElement("csw:GetRecordByIdResponse", "http://www.opengis.net/cat/csw/2.0.2");
 
         String elementSetName = session.getElementSetName();
         
@@ -43,12 +43,16 @@ public class CSWBuilderType_GetRecordById_DE_1_0_1 extends CSWBuilderType {
         IngridHitDetail[] details = CSWInterfaceConfig.getInstance().getIBus().getDetails(hits.getHits(), query,
                 requestedFields);
 
-        IngridHit hit = hits.getHits()[0];
-        hit.put("detail", details[0]);
         
-        CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
-        builder.setHit(hit);
-        rootElement.add(builder.build());
+        
+        if (hits.length() > 0) {
+        	IngridHit hit = hits.getHits()[0];
+	        hit.put("detail", details[0]);
+	        
+	        CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
+	        builder.setHit(hit);
+	        rootElement.add(builder.build());
+        }
 
         return rootElement;
     }

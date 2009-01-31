@@ -265,14 +265,7 @@ public final class SOAPTools {
 		SOAPElement elemExceptionReport = 
 			 elemDetail.addChildElement("ExceptionReport", "ows", "http://www.opengis.net/ows");
 		Name nameVersion = se.createName("version");
-		String cswVersion = cswConfig.getString(CSWInterfaceConfig.CSW_VERSION);
-
-		if (cswVersion == null) {
-			cswVersion = "undefined";
-			log.warn("createExceptionReport: cswVersion is undefined");
-		}
-
-		elemExceptionReport.addAttribute(nameVersion, cswVersion);
+		elemExceptionReport.addAttribute(nameVersion, "1.0.0");
 		Name nameLanguage = se.createName("language");
 		elemExceptionReport.addAttribute(nameLanguage, "en");
 

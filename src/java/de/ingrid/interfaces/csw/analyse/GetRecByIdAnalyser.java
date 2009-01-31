@@ -79,6 +79,7 @@ public class GetRecByIdAnalyser implements CSWAnalyser {
          
          
          commonAnalyser.analyseService(be);
+ 			sessionParameters.setVersion(commonAnalyser.analyseVersion(be));
          
          
          commonAnalyser.analyseVersion(be);

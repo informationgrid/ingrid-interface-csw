@@ -54,9 +54,11 @@ public class CSWBuilderFactory {
         } else if (session.getResultType().equalsIgnoreCase("hits") && session.getVersion().equalsIgnoreCase("2.0.2")) {
             return new CSWBuilderType_Hits_CSW_2_0_2_AP_ISO_1_0();
         } else if (session.getResultType().equalsIgnoreCase("results") && session.isOperationIsGetRecs() && session.getVersion().equalsIgnoreCase("2.0.2")) {
-            return new CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0();
+            return new CSWBuilderType_GetRecords_DE_1_0_1();
+//            return new CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0();
         } else if (session.getResultType().equalsIgnoreCase("results") && session.isOperationIsGetRecById() && session.getVersion().equalsIgnoreCase("2.0.2")) {
-            return new CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0();
+//            return new CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0();
+            return new CSWBuilderType_GetRecordById_DE_1_0_1();
         }
 
         throw new IllegalArgumentException("No CSW response builder found for resultType:" + session.getResultType()

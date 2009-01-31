@@ -8,6 +8,7 @@ import org.apache.axis.Message;
 import org.custommonkey.xmlunit.XMLTestCase;
 
 import de.ingrid.ibus.client.BusClient;
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.tools.AxisTools;
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.utils.IBus;
@@ -48,8 +49,8 @@ public class CSWServletTestLocal extends XMLTestCase {
         IBus bus = null;
         BusClient client = null;
         try {
-            client = BusClient.instance();
-            bus = (IBus) client.getBus();
+            client = BusClientFactory.createBusClient();
+            bus = (IBus) client.getNonCacheableIBus();
         } catch (Exception e) {
             System.out.println("init iBus communication: " + e.getMessage());
         }

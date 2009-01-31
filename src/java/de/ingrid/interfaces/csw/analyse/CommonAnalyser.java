@@ -147,6 +147,9 @@ public final class CommonAnalyser {
 			} else if (typeNameCurrent.equalsIgnoreCase("csw:application")) {
 				typeNamesIsValid = true;
 				sessionParameters.setTypeNameIsApplication(true);
+			} else if (typeNameCurrent.equalsIgnoreCase("gmd:MD_Metadata")) {
+				typeNamesIsValid = true;
+				sessionParameters.setTypeNameIsDataset(true);
 			}
 		}
 		//no matter if it is invalid
@@ -189,7 +192,7 @@ public final class CommonAnalyser {
 	public boolean analyseElementSetName(final SOAPBodyElement be) throws Exception {
 		String elementSetName = null;
 		Element elemElementSetName = null;
-		NodeList nl = be.getElementsByTagName("ElementSetName");
+		NodeList nl = be.getElementsByTagName("csw:ElementSetName");
 		if (nl == null || nl.getLength() == 0) {
 			nl = be.getElementsByTagName("ElementName");
 		}
@@ -229,7 +232,8 @@ public final class CommonAnalyser {
 		outputSchema = be.getAttribute("outputSchema");
 		if (outputSchema != null) {
 			if (outputSchema.equalsIgnoreCase("CSW:OGCCORE") ||
-				outputSchema.equalsIgnoreCase("CSW:PROFILE")) {
+				outputSchema.equalsIgnoreCase("CSW:PROFILE") ||
+				outputSchema.equalsIgnoreCase("http://www.isotc211.org/2005/gmd")) {
 				sessionParameters.setOutputSchema(outputSchema);
 			} else {
 				Exception e = new CSWInvalidParameterValueException("Attribute 'outputSchema' is invalid.", "outputSchema");
@@ -248,7 +252,7 @@ public final class CommonAnalyser {
 	public boolean analyseOutputFormat(final SOAPBodyElement be) throws Exception {
 		String outputFormat = null;
 		outputFormat = be.getAttribute("outputFormat");
-		if (outputFormat != null && !outputFormat.equalsIgnoreCase("text/xml")) {
+		if (outputFormat != null && !outputFormat.equalsIgnoreCase("text/xml") && !outputFormat.equalsIgnoreCase("application/xml")) {
 			Exception e = new CSWInvalidParameterValueException("Attribute 'outputFormat' is not 'text/xml'. It is set to '" + outputFormat + "'", "outputFormat");
 			throw e;
 		}
@@ -264,7 +268,7 @@ public final class CommonAnalyser {
 	public boolean analyseSchemaLanguage(final SOAPBodyElement be) throws Exception {
 		String schemaLanguage = null;
 		schemaLanguage = be.getAttribute("schemaLanguage");
-		if (schemaLanguage != null && !schemaLanguage.equalsIgnoreCase("XMLSCHEMA")) {
+		if (schemaLanguage != null && !schemaLanguage.equalsIgnoreCase("XMLSCHEMA") && !schemaLanguage.equalsIgnoreCase("http://www.w3.org/XML/Schema")) {
 			Exception e = new CSWInvalidParameterValueException("Attribute 'schemaLanguage' is not 'XMLSCHEMA'.", "schemaLanguage");
 			throw e;
 		}

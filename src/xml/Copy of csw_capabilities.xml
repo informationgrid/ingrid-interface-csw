@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csw:Capabilities version="2.0.2" updateSequence="0" xmlns:ows="http://www.opengis.net/ows" xmlns:ogc="http://www.opengis.net/ogc" xmlns:csw="http://www.opengis.net/csw/2.0.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/ows
+       http://www.opengis.net/ogc
+       http://www.opengis.net/csw/2.0.2
+       http://www.w3.org/1999/xlink">
+  <ows:ServiceIdentification>
+	<ows:Title>PortalU Catalog Server</ows:Title>
+	<ows:Abstract>Metadata collected from several catalogs owned by the german environmental and surveying authorities. Look at http://www.portalu.de for more information.</ows:Abstract>
+	<ows:Keywords>
+		<ows:Keyword>CS-W</ows:Keyword>
+		<ows:Keyword>ISO19119</ows:Keyword>
+		<ows:Keyword>ISO19115</ows:Keyword>
+		<ows:Keyword>Catalog Service</ows:Keyword>
+		<ows:Type>theme</ows:Type>
+	</ows:Keywords>
+	<ows:ServiceType>CSW</ows:ServiceType>
+	<ows:ServiceTypeVersion>2.0.2</ows:ServiceTypeVersion>
+  </ows:ServiceIdentification>
+  <ows:ServiceProvider>
+    <ows:ProviderName>Coordination Center PortalU</ows:ProviderName>
+    <ows:ProviderSite xlink:href="http://www.kst.portalu.de/"/>
+    <ows:ServiceContact>
+      <ows:IndividualName>Fred Kruse</ows:IndividualName>
+      <ows:PositionName>Head Coordination Center PortalU</ows:PositionName>
+      <ows:ContactInfo>
+        <ows:Phone>
+          <ows:Voice>+49 (0)511 120 3480</ows:Voice>
+          <ows:Facsimile>+49 (0)511 120 3697</ows:Facsimile>
+        </ows:Phone>
+        <ows:Address>
+          <ows:DeliveryPoint>Archivstrasse 2</ows:DeliveryPoint>
+          <ows:City>Hannover</ows:City>
+          <ows:AdministrativeArea>Lower Saxony</ows:AdministrativeArea>
+          <ows:PostalCode>30169</ows:PostalCode>
+          <ows:Country>Germany</ows:Country>
+          <ows:ElectronicMailAddress>kst@portalu.de</ows:ElectronicMailAddress>
+        </ows:Address>
+        <ows:OnlineResource xlink:href="mailto:kst@portalu.de"/>
+      </ows:ContactInfo>
+    </ows:ServiceContact>
+  </ows:ServiceProvider>
+  <ows:OperationsMetadata>
+    <ows:Operation name="GetCapabilities">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="http://www.portalu.de/csw"/>
+          <ows:Post xlink:href="http://www.portalu.de/csw">
+	          <ows:Constraint name="PostEncoding">
+							<ows:Value>SOAP</ows:Value>
+						</ows:Constraint>
+					</ows:Post>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    <ows:Operation name="DescribeRecord">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Post xlink:href="http://www.portalu.de/csw">
+	          <ows:Constraint name="PostEncoding">
+							<ows:Value>SOAP</ows:Value>
+						</ows:Constraint>
+					</ows:Post>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="TypeName">
+        <ows:Value>csw:Record</ows:Value>
+        <ows:Value>gmd:MD_Metadata</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="OutputFormat">
+        <ows:Value>application/xml</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="SchemaLanguage">
+        <ows:Value>XMLSCHEMA</ows:Value>
+      </ows:Parameter>
+      <ows:Constraint name="PostEncoding">
+		<ows:Value>SOAP</ows:Value>
+	  </ows:Constraint>
+    </ows:Operation>
+    <ows:Operation name="GetRecords">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Post xlink:href="http://www.portalu.de/csw">
+	          <ows:Constraint name="PostEncoding">
+							<ows:Value>SOAP</ows:Value>
+						</ows:Constraint>
+					</ows:Post>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="TypeName">
+        <ows:Value>csw:Record</ows:Value>
+        <ows:Value>gmd:MD_Metadata</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="OutputFormat">
+        <ows:Value>application/xml</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="OutputSchema">
+        <ows:Value>http://www.opengis.net/cat/csw/2.0.2</ows:Value>
+        <ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="ResultType">
+        <ows:Value>hits</ows:Value>
+        <ows:Value>results</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="ElementSetName">
+        <ows:Value>summary</ows:Value>
+        <ows:Value>brief</ows:Value>
+        <ows:Value>full</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="CONSTRAINTLANGUAGE">
+        <ows:Value>Filter</ows:Value>
+        <ows:Value>CQL_Text</ows:Value>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:Operation name="GetRecordById">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Post xlink:href="http://www.portalu.de/csw">
+	          <ows:Constraint name="PostEncoding">
+							<ows:Value>SOAP</ows:Value>
+						</ows:Constraint>
+					</ows:Post>
+        </ows:HTTP>
+      </ows:DCP>
+		<ows:Parameter name="OutputSchema">
+			<ows:Value>http://www.opengis.net/cat/csw/2.0.2</ows:Value>
+			<ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
+			<ows:Value>http://www.adv.de/extendedISO</ows:Value>
+		</ows:Parameter>
+		<ows:Parameter name="ElementSetName">
+        <ows:Value>summary</ows:Value>
+        <ows:Value>brief</ows:Value>
+        <ows:Value>full</ows:Value>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:Parameter name="version">
+		<ows:Value>2.0.2</ows:Value>
+		<ows:Value>2.0.0</ows:Value>
+	</ows:Parameter>
+  </ows:OperationsMetadata>
+  <ogc:Filter_Capabilities xmlns:gml="http://www.opengis.net/gml">
+    <ogc:Spatial_Capabilities>
+      <ogc:Spatial_Operators>
+        <ogc:BBOX/>
+        <ogc:Disjoint/>
+        <ogc:Intersect/>
+      </ogc:Spatial_Operators>
+    </ogc:Spatial_Capabilities>
+    <ogc:Scalar_Capabilities>
+      <ogc:Logical_Operators/>
+      <ogc:Comparison_Operators/>
+      <ogc:Arithmetic_Operators>
+        <ogc:Simple_Arithmetic/>
+      </ogc:Arithmetic_Operators>
+    </ogc:Scalar_Capabilities>
+  </ogc:Filter_Capabilities>
+</csw:Capabilities>

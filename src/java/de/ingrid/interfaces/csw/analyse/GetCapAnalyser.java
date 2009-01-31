@@ -60,7 +60,7 @@ public class GetCapAnalyser implements CSWAnalyser {
 				elemVerCurr = (Element) nl.item(i);
 				version = elemVerCurr.getFirstChild().getNodeValue();
 
-				if (version.equals("2.0.0")) {
+				if (version.equals("2.0.0")||version.equals("2.0.2")) {
 					versionNegotiationSuccess = true;
 					break;
 				}
@@ -92,12 +92,12 @@ public class GetCapAnalyser implements CSWAnalyser {
 	 */
 	public final boolean analyse(final Properties reqParams)
 	throws Exception {		
-		// Check ACCEPTVERSIONS parameter - does it contain version 2.0.0?
+		// Check ACCEPTVERSIONS parameter - does it contain version 2.0.2?
 		String param = reqParams.getProperty(ClientRequestParameters.ACCEPTVERSIONS, null);
-		if (param != null && param.indexOf("2.0.0") == -1) {
+		if (param != null && param.indexOf("2.0.2") == -1) {
 			StringBuffer errorMsg = new StringBuffer();
 			errorMsg.append("Parameter 'ACCEPTVERSIONS' has an unsupported value.\n");
-			errorMsg.append("Supported values: 2.0.0\n");
+			errorMsg.append("Supported values: 2.0.2\n");
 			throw new CSWVersionNegotiationFailedException(errorMsg.toString());
 		}
 		return true; // only if not cancelled by an exception before

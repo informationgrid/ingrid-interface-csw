@@ -151,7 +151,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 		boolean queryIsValid = false;
 		Element elemQuery = null;
 		String typeNames = null;
-		NodeList nl = be.getElementsByTagName("Query");
+		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "Query");
 
 		if (nl != null || nl.getLength() != 0) {
 			elemQuery = (Element) nl.item(0);
@@ -164,7 +164,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 			throw e;
 		}
 
-		if (typeNames == null) {
+		if (typeNames == null || typeNames.length() == 0) {
 			Exception e =
 				new CSWMissingParameterValueException("Attribute 'typeNames' is missing.", "typeNames");
 			throw e;
@@ -191,7 +191,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 	private boolean analyseConstraint(final SOAPBodyElement be) throws Exception {
 		Element elemConstraint = null;
 		String constraintLangVersion = null;
-		NodeList nl = be.getElementsByTagName("Constraint");
+		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "Constraint"); 
 
 		if (nl != null || nl.getLength() != 0) {
 			elemConstraint = (Element) nl.item(0);
@@ -206,8 +206,8 @@ public class GetRecAnalyser implements CSWAnalyser {
 		}
 
 		if (constraintLangVersion != null) {
-			//allow only Filter encoding 1.0.0
-			if (!constraintLangVersion.equals("1.0.0")) {
+			//allow only Filter encoding 1.1.0
+			if (!constraintLangVersion.equals("1.1.0")) {
 				Exception e =
 					new CSWInvalidParameterValueException("Attribute 'version' of Element 'Constraint' is not '1.0.0'.", "version");
 				throw e;
@@ -230,7 +230,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 	 */
 	private boolean analyseFilter(final SOAPBodyElement be) throws Exception {
 		SOAPElement soapElementFilter = null;
-		NodeList nl = be.getElementsByTagName("Filter");
+		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/ogc", "Filter");
 
 		if (nl != null || nl.getLength() != 0) {
 			soapElementFilter = (SOAPElement) nl.item(0);
