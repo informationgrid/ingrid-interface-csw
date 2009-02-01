@@ -26,7 +26,7 @@ import junit.framework.TestCase;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class GetCapAnalyserTest extends TestCase {
+public class GetCapAnalyserTestLocal extends TestCase {
 
     public final void testAnalyseSOAPBodyElement() throws Exception {
        

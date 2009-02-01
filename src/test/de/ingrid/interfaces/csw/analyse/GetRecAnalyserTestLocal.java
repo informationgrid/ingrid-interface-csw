@@ -24,7 +24,7 @@ import junit.framework.TestCase;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class GetRecAnalyserTest extends TestCase {
+public class GetRecAnalyserTestLocal extends TestCase {
 
     /*
      * Class under test for boolean analyse(SOAPBodyElement)
