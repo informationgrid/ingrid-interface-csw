@@ -914,6 +914,9 @@ public class FilterToIngridQueryString {
 			// date type: creation
 		} else if (inPropWithoutNS.equalsIgnoreCase("CreationDate")) {
 			outprop = "t01_object.create_time";
+			// date type: revision
+		} else if (inPropWithoutNS.equalsIgnoreCase("RevisionDate")) {
+			outprop = "t0113_dataset_reference.type:3 t0113_dataset_reference.reference_date";
 			// begin: t01_object.time_from
 		} else if (inPropWithoutNS.equalsIgnoreCase("TempExtent_begin")) {
 			outprop = "t1";

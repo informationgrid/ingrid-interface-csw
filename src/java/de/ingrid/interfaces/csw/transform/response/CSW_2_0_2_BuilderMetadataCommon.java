@@ -4,6 +4,7 @@
 package de.ingrid.interfaces.csw.transform.response;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
@@ -132,7 +133,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             	String codeVal = null;
             	try {
             		Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
-                    if (code.longValue() == 999) {
+                    if (code.longValue() == 999 || code.longValue() == -1) {
                         codeVal = specialNames[i];
                     } else {
                         codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(505), code, new Long(94));
@@ -204,18 +205,18 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     
     protected void addCitationReferenceDates(Element parent, IngridHit hit, String ns) {
         // add dates (creation, revision etc.)
+    	Element ciDate;
+    	if (ns != null) {
+    		ciDate = parent.addElement(ns + ":date").addElement("gmd:CI_Date");
+    	} else {
+    		ciDate = parent.addElement("date").addElement("gmd:CI_Date");
+    	}
         String[] referenceDate = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_REFERENCE_DATE);
         String[] referenceDateTypes = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE);
-        if (referenceDate != null) {
+        if (referenceDate != null && referenceDate.length > 0) {
             for (int i = 0; i < referenceDate.length; i++) {
                 String creationDate = referenceDate[i];
                 if (creationDate != null && creationDate.length() > 0) {
-                	Element ciDate;
-                	if (ns != null) {
-                		ciDate = parent.addElement(ns + ":date").addElement("gmd:CI_Date");
-                	} else {
-                		ciDate = parent.addElement("date").addElement("gmd:CI_Date");
-                	}
                     String cswDate = Udk2CswDateFieldParser.instance().parse(creationDate);
                     if (cswDate.indexOf("T") > -1) {
                     	ciDate.addElement("gmd:date").addElement("gco:DateTime").addText(cswDate);
@@ -240,6 +241,22 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     
                 }
             }
+        } else {
+            String cswDate = null;
+            String creationDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_MOD_TIME);
+            if (IngridQueryHelper.hasValue(creationDate)) {
+                cswDate = Udk2CswDateFieldParser.instance().parse(creationDate);
+            } else {
+                cswDate = DATE_TIME_FORMAT.format(new Date());
+            }
+            if (cswDate.indexOf("T") > -1) {
+            	ciDate.addElement("gmd:date").addElement("gco:DateTime").addText(cswDate);
+            } else {
+            	ciDate.addElement("gmd:date").addElement("gco:Date").addText(cswDate);
+            }
+            ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
+            "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+            "codeListValue", "publication");
         }
     }
     

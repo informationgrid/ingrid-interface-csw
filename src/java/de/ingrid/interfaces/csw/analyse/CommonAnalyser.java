@@ -192,7 +192,7 @@ public final class CommonAnalyser {
 	public boolean analyseElementSetName(final SOAPBodyElement be) throws Exception {
 		String elementSetName = null;
 		Element elemElementSetName = null;
-		NodeList nl = be.getElementsByTagName("csw:ElementSetName");
+		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "ElementSetName");
 		if (nl == null || nl.getLength() == 0) {
 			nl = be.getElementsByTagName("ElementName");
 		}

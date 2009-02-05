@@ -70,17 +70,11 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
      */
     private Element getResponseHeader_GetRecords(Element parent, IngridHits hits) throws Exception {
         parent.addElement("csw:RequestId");
-        String searchStatus;
-        if (hits.getHits().length < hits.length()) {
-            searchStatus = "subset";
-        } else {
-            searchStatus = "complete";
-        }
-        Element e = parent.addElement("csw:SearchStatus").addAttribute("status", searchStatus);
+        Element e = parent.addElement("csw:SearchStatus");
         GregorianCalendar calendar = new GregorianCalendar();
         e.addAttribute("timestamp", DATE_TIME_FORMAT.format(calendar.getTime()));
         return parent.addElement("csw:SearchResults").addAttribute("resultSetId", "")
-                .addAttribute("elementSet", "").addAttribute("numberOfRecordsMatched", Long.toString(hits.length()))
+                .addAttribute("elementSet", session.getElementSetName()).addAttribute("numberOfRecordsMatched", Long.toString(hits.length()))
                 .addAttribute("numberOfRecordsReturned", Integer.toString(hits.getHits().length));
     }
     

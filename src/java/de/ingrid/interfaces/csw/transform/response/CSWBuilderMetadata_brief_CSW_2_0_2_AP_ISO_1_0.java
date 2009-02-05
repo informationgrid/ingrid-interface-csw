@@ -10,6 +10,7 @@ import org.dom4j.Element;
 import org.dom4j.Namespace;
 
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -53,7 +54,8 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 
 		this.addFileIdentifier(metaData, objectId);
 		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
-		// this.addContact(metaData, hit);
+		this.addContacts(metaData, hit, this.nsPrefix);
+		this.addDateStamp(metaData, hit, this.nsPrefix);
 		if (typeName.equals("dataset")) {
 			this.addIdentificationInfoDataset(metaData, hit);
 		} else {
@@ -64,21 +66,21 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 	}
 
 	private void addIdentificationInfoService(Element metaData, IngridHit hit) {
-		Element cswServiceIdentification = metaData.addElement("gmd:identificationInfo").addElement(
+		Element svServiceIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"gmd:SV_ServiceIdentification");
-		this.addSMXMLCharacterString(cswServiceIdentification.addElement("gmd:title"), IngridQueryHelper
+		this.addGCOCharacterString(svServiceIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation").addElement("gmd:title"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
-		this.addSMXMLCharacterString(cswServiceIdentification.addElement("srv:serviceType"), IngridQueryHelper
+		this.addGCOCharacterString(svServiceIdentification.addElement("srv:serviceType"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE));
 		String[] serviceTypeVersions = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_VERSION);
 		if (serviceTypeVersions != null) {
 			for (int i = 0; i < serviceTypeVersions.length; i++) {
-				this.addSMXMLCharacterString(cswServiceIdentification.addElement("srv:serviceTypeVersion"),
+				this.addGCOCharacterString(svServiceIdentification.addElement("srv:serviceTypeVersion"),
 						serviceTypeVersions[i]);
 			}
 		}
-		cswServiceIdentification.addElement("srv:couplingType").addElement("srv:CSW_CouplingType")
+		svServiceIdentification.addElement("srv:couplingType").addElement("srv:CSW_CouplingType")
 				.addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_CouplingType").addAttribute(
 						"codeListValue",
 						IngridQueryHelper.getDetailValueAsString(hit,
@@ -88,11 +90,39 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 	private void addIdentificationInfoDataset(Element metaData, IngridHit hit) {
 		Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"gmd:MD_DataIdentification");
-		this.addSMXMLCharacterString(mdDataIdentification.addElement("gmd:title"), IngridQueryHelper
-				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
+		Element ciCitation = mdDataIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation");
+		// add title
+		this.addGCOCharacterString(ciCitation.addElement("gmd:title"), IngridQueryHelper.getDetailValueAsString(
+				hit, IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
+		// add dates (creation, revision etc.)
+		super.addCitationReferenceDates(ciCitation, hit, "gmd");
+
+		// add abstract
+		this.addGCOCharacterString(mdDataIdentification.addElement("gmd:abstract"), IngridQueryHelper.getDetailValueAsString(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
+		
+		// add language
+		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
+		if (IngridQueryHelper.hasValue(dataLang)) {
+			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
+		}
+
 		// T011_obj_geo_topic_cat.topic_category
-		mdDataIdentification.addElement("gmd:topicCategory").addElement("gmd:MD_TopicCategoryCode").addText(
-				IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY));
+		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY);
+		for (int i = 0; i < topicCategories.length; i++) {
+			Long code;
+			try {
+				code = Long.valueOf(topicCategories[i]);
+				String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(527), code, new Long(94));
+				if (codeVal.length() > 0) {
+					mdDataIdentification.addElement("gmd:topicCategory").addElement("gmd:MD_TopicCategoryCode")
+							.addText(codeVal);
+				}
+			} catch (NumberFormatException e) {
+				log.debug("Could not parse topic category id: " + topicCategories[i]);
+			}
+		}
 	}
 
 }
