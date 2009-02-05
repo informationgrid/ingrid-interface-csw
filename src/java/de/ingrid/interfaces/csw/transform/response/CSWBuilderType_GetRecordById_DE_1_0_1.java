@@ -24,7 +24,7 @@ public class CSWBuilderType_GetRecordById_DE_1_0_1 extends CSWBuilderType {
     
     public Element build() throws Exception {
 
-        Element rootElement = DocumentFactory.getInstance().createElement("csw:GetRecordByIdResponse", "http://www.opengis.net/cat/csw/2.0.2");
+        Element rootElement = DocumentFactory.getInstance().createElement("csw:GetRecordByIdResponse", "http://www.opengis.net/cat/csw");
 
         String elementSetName = session.getElementSetName();
         

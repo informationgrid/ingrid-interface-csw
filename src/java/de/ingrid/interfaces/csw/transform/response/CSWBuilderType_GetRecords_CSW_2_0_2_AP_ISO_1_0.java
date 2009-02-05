@@ -11,12 +11,9 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
-import de.ingrid.interfaces.csw.transform.response.adapter.DscEcsVersionMapperFactory;
-import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.PlugDescription;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -29,7 +26,36 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
     
     public Element build() throws Exception {
 
-        throw new Exception("not yet implemented");
+        Element rootElement = DocumentFactory.getInstance().createElement("csw:GetRecordsResponse", "http://www.opengis.net/cat/csw/2.0.2");
+        Element searchResults = this.getResponseHeader_GetRecords(rootElement, hits);
+
+        String elementSetName = session.getElementSetName();
+        
+        String[] requestedFields = null;
+        
+        if (elementSetName.equalsIgnoreCase("brief")) {
+            requestedFields = IngridQueryHelper.REQUESTED_STRING_BRIEF;
+        } else if (elementSetName.equalsIgnoreCase("summary")) {
+            requestedFields = IngridQueryHelper.REQUESTED_STRING_SUMMARY;
+        } else if (elementSetName.equalsIgnoreCase("full")) {
+            requestedFields = IngridQueryHelper.REQUESTED_STRING_FULL;
+        } else {
+            log.error("Unsupported CSW element set name (" + elementSetName + ") only brief, summary, full are supported");
+            throw new IllegalArgumentException("Unsupported CSW element set name (" + elementSetName + ") only brief, summary, full are supported");
+        }
+        IngridHitDetail[] details = CSWInterfaceConfig.getInstance().getIBus().getDetails(hits.getHits(), query,
+                requestedFields);
+
+        for (int i = 0; i < hits.getHits().length; i++) {
+            IngridHit hit = hits.getHits()[i];
+            hit.put("detail", details[i]);
+            
+            CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
+            builder.setHit(hit);
+            searchResults.add(builder.build());
+        }
+
+        return rootElement;
     }
 
     /**
@@ -43,8 +69,19 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
      * @return The 'SearchResults' element of the CSW response.
      */
     private Element getResponseHeader_GetRecords(Element parent, IngridHits hits) throws Exception {
-        throw new Exception("not yet implemented");
-
+        parent.addElement("csw:RequestId");
+        String searchStatus;
+        if (hits.getHits().length < hits.length()) {
+            searchStatus = "subset";
+        } else {
+            searchStatus = "complete";
+        }
+        Element e = parent.addElement("csw:SearchStatus").addAttribute("status", searchStatus);
+        GregorianCalendar calendar = new GregorianCalendar();
+        e.addAttribute("timestamp", DATE_TIME_FORMAT.format(calendar.getTime()));
+        return parent.addElement("csw:SearchResults").addAttribute("resultSetId", "")
+                .addAttribute("elementSet", "").addAttribute("numberOfRecordsMatched", Long.toString(hits.length()))
+                .addAttribute("numberOfRecordsReturned", Integer.toString(hits.getHits().length));
     }
     
 }

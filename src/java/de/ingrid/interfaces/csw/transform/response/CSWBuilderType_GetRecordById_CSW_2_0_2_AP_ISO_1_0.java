@@ -24,7 +24,36 @@ public class CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilde
     
     public Element build() throws Exception {
 
+        Element rootElement = DocumentFactory.getInstance().createElement("csw:GetRecordByIdResponse", "http://www.opengis.net/cat/csw/2.0.2");
 
-    	throw new Exception("not yet implemented");
+        String elementSetName = session.getElementSetName();
+        
+        String[] requestedFields = null;
+        
+        if (elementSetName.equalsIgnoreCase("brief")) {
+            requestedFields = IngridQueryHelper.REQUESTED_STRING_BRIEF;
+        } else if (elementSetName.equalsIgnoreCase("summary")) {
+            requestedFields = IngridQueryHelper.REQUESTED_STRING_SUMMARY;
+        } else if (elementSetName.equalsIgnoreCase("full")) {
+            requestedFields = IngridQueryHelper.REQUESTED_STRING_FULL;
+        } else {
+            log.error("Unsupported CSW element set name (" + elementSetName + ") only brief, summary, full are supported");
+            throw new IllegalArgumentException("Unsupported CSW element set name (" + elementSetName + ") only brief, summary, full are supported");
+        }
+        IngridHitDetail[] details = CSWInterfaceConfig.getInstance().getIBus().getDetails(hits.getHits(), query,
+                requestedFields);
+
+        
+        
+        if (hits.length() > 0) {
+        	IngridHit hit = hits.getHits()[0];
+	        hit.put("detail", details[0]);
+	        
+	        CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
+	        builder.setHit(hit);
+	        rootElement.add(builder.build());
+        }
+
+        return rootElement;
     }
 }

@@ -2,7 +2,7 @@
 <csw:Capabilities version="2.0.2" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd">
 	<ows:ServiceIdentification>
 		<ows:Title>PortalU Catalog Server</ows:Title>
-		<ows:Abstract>Metadata collected from several catalogs owned by the german environmental and surveying authorities. Look at http://85.180.158.62 for more information.</ows:Abstract>
+		<ows:Abstract>Metadata collected from several catalogs owned by the german environmental and surveying authorities. Look at http://213.138.48.149:8080 for more information.</ows:Abstract>
 		<ows:Keywords>
 			<ows:Keyword>CS-W</ows:Keyword>
 			<ows:Keyword>ISO19119</ows:Keyword>
@@ -40,13 +40,13 @@
 		<ows:Operation name="GetCapabilities">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="http://85.180.158.62/csw"/>
-					<ows:Post xlink:href="http://85.180.158.62/csw">
+					<ows:Get xlink:href="http://213.138.48.149:8080/csw"/>
+					<ows:Post xlink:href="http://213.138.48.149:8080/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="http://85.180.158.62/csw">
+					<ows:Post xlink:href="http://213.138.48.149:8080/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 						</ows:Constraint>
@@ -57,12 +57,12 @@
 		<ows:Operation name="GetRecords">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="http://85.180.158.62/csw">
+					<ows:Post xlink:href="http://213.138.48.149:8080/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="http://85.180.158.62/csw">
+					<ows:Post xlink:href="http://213.138.48.149:8080/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 						</ows:Constraint>
@@ -133,13 +133,13 @@
 		<ows:Operation name="GetRecordById">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="http://85.180.158.62/csw"/>
-					<ows:Post xlink:href="http://85.180.158.62/csw">
+					<ows:Get xlink:href="http://213.138.48.149:8080/csw"/>
+					<ows:Post xlink:href="http://213.138.48.149:8080/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="http://85.180.158.62/csw">
+					<ows:Post xlink:href="http://213.138.48.149:8080/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 						</ows:Constraint>
@@ -163,13 +163,13 @@
 		<ows:Operation name="DescribeRecord">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="http://85.180.158.62/csw"/>
-					<ows:Post xlink:href="http://85.180.158.62/csw">
+					<ows:Get xlink:href="http://213.138.48.149:8080/csw"/>
+					<ows:Post xlink:href="http://213.138.48.149:8080/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="http://85.180.158.62/csw">
+					<ows:Post xlink:href="http://213.138.48.149:8080/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 						</ows:Constraint>

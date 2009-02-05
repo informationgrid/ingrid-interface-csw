@@ -952,7 +952,7 @@ public class FilterToIngridQueryString {
 			outprop = "t011_obj_geo_scale.resolution_scan";
 			// TODO spatial representation type
 		} else if (inPropWithoutNS.equalsIgnoreCase("Type")) {
-			outprop = "spatRpType";
+			outprop = "";
 			// coordinate reference system
 		} else if (inPropWithoutNS.equalsIgnoreCase("CRS")) {
 			outprop = "t011_obj_geo.coord";
