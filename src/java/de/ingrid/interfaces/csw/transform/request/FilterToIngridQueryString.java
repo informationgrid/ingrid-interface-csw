@@ -615,7 +615,7 @@ public class FilterToIngridQueryString {
 					literal = literal.substring(1);
 				}
 
-				// Ignore a possible time stamp in the creation date.
+				// Ignore a possible time stamp in the date.
 				// TODO: make it more generic!!!
 				if (field.equals("t01_object.create_time")) {
 					int timeStartPos = literal.indexOf("T");
@@ -624,9 +624,36 @@ public class FilterToIngridQueryString {
 						literal = literal.substring(0, timeStartPos);
 					}
 				}
-				// Ignore a possible time stamp in the creation date.
+				// Ignore a possible time stamp in the date.
 				// TODO: make it more generic!!!
 				if (field.equals("t01_object.mod_time")) {
+					int timeStartPos = literal.indexOf("T");
+					if (timeStartPos > -1) {
+						log.warn("Found field CreationDate: truncate extended time stamp from its value");
+						literal = literal.substring(0, timeStartPos);
+					}
+				}
+				// Ignore a possible time stamp in the date.
+				// TODO: make it more generic!!!
+				if (field.equals("t1")) {
+					int timeStartPos = literal.indexOf("T");
+					if (timeStartPos > -1) {
+						log.warn("Found field CreationDate: truncate extended time stamp from its value");
+						literal = literal.substring(0, timeStartPos);
+					}
+				}
+				// Ignore a possible time stamp in the date.
+				// TODO: make it more generic!!!
+				if (field.equals("t2")) {
+					int timeStartPos = literal.indexOf("T");
+					if (timeStartPos > -1) {
+						log.warn("Found field CreationDate: truncate extended time stamp from its value");
+						literal = literal.substring(0, timeStartPos);
+					}
+				}
+				// Ignore a possible time stamp in the date.
+				// TODO: make it more generic!!!
+				if (field.indexOf("t0113_dataset_reference.reference_date") > -1) {
 					int timeStartPos = literal.indexOf("T");
 					if (timeStartPos > -1) {
 						log.warn("Found field CreationDate: truncate extended time stamp from its value");
@@ -879,136 +906,155 @@ public class FilterToIngridQueryString {
 		String inPropWithoutNS = inprop.indexOf(':') > -1 ? inprop.substring(inprop.indexOf(':') + 1, inprop.length()): inprop;
 		String outprop = null;
 
+		// common queryable elements
+		
 		// all text fields
 		if (inPropWithoutNS.equalsIgnoreCase("AnyText")) {
 			// anytext --> content
 			outprop = "";
+			// MD_Metadata/identificationInfo/MD_DataIdentification/descriptiveKeywords/MD_Keywords/keyword
+		} else if (inPropWithoutNS.equalsIgnoreCase("subject")) {
+			outprop = "t04_search.searchterm";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/title
-		} else if (inPropWithoutNS.equalsIgnoreCase("Title")) {
+		} else if (inPropWithoutNS.equalsIgnoreCase("title")) {
 			outprop = "title";
-			// metadata language
-		} else if (inPropWithoutNS.equalsIgnoreCase("Language")) {
-			outprop = "t01_object.metadata_language";
+			// MD_Metadata/identificationInfo/MD_DataIdentification/abstract
+		} else if (inPropWithoutNS.equalsIgnoreCase("abstract")) {
+			outprop = "summary";
+			// MD_Metadata.distributionInfo.MD_Distribution.distributionFormat.MD_Format.name
+		} else if (inPropWithoutNS.equalsIgnoreCase("format")) {
+			outprop = "t0110_avail_format.format_value";
+			// MD_Metadata.fileIdentifier
+		} else if (inPropWithoutNS.equalsIgnoreCase("identifier")) {
+			outprop = "t01_object.obj_id";
+			// MD_Metadata.dateStamp .Date
+		} else if (inPropWithoutNS.equalsIgnoreCase("Modified")) {
+			outprop = "t01_object.mod_time";
+			// MD_Metadata.hierarchyLevel.MD_ScopeCode@codeListValue
+		} else if (inPropWithoutNS.equalsIgnoreCase("type")) {
+			// TODO: must map to t011_obj_geo.hierarchy_level or t01_object.obj_class
+			// depending on the value of the query parameter (see mapping)
+			outprop = "";
+		} else if (inPropWithoutNS.equalsIgnoreCase("Association")) {
+			// TODO: NOT supported
+			throw new CSWInvalidParameterValueException("Search for PropertyName '" + inprop + "' is not supported by this server.", "PropertyName");
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicBoundingBox.westBoundLongitude
+		} else if (inPropWithoutNS.equalsIgnoreCase("WestBoundLongitude")) {
+			outprop = "x1";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicBoundingBox.eastBoundLongitude
+		} else if (inPropWithoutNS.equalsIgnoreCase("EastBoundLongitude")) {
+			outprop = "x2";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicBoundingBox.southBoundLatitude
+		} else if (inPropWithoutNS.equalsIgnoreCase("SouthBoundLatitude")) {
+			outprop = "y1";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicBoundingBox.northBoundLatitude
+		} else if (inPropWithoutNS.equalsIgnoreCase("NorthBoundLatitude")) {
+			outprop = "y2";			
+			// MD_Metadata.referenceSystemInfo.MD_ReferenceSystem.referenceSystemIdentifier.RS_Identifier.codeSpace
+		} else if (inPropWithoutNS.equalsIgnoreCase("Authority")) {
+			// TODO: value of the query must be transformed into a wildcard query
+			outprop = "t011_obj_geo.referencesystem_id";	
+			// MD_Metadata.referenceSystemInfo.MD_ReferenceSystem.referenceSystemIdentifier.RS_Identifier.code
+		} else if (inPropWithoutNS.equalsIgnoreCase("ID")) {
+			// TODO: value of the query must be transformed into a wildcard query
+			outprop = "t011_obj_geo.referencesystem_id";			
+			// MD_Metadata.referenceSystemInfo.MD_ReferenceSystem.referenceSystemIdentifier.RS_Identifier.version
+		} else if (inPropWithoutNS.equalsIgnoreCase("Version")) {
+			// TODO: NOT supported
+			throw new CSWInvalidParameterValueException("Search for PropertyName '" + inprop + "' is not supported by this server.", "PropertyName");
+			
+		// Additional queryable properties common to all information resources
+			
+			// MD_Metadata.identificationInfo.AbstractMD_Identification.citation.CI_Citation.date.CI_Date[dateType.CI_DateTypeCode.@codeListValue='revision'].date.Date
+		} else if (inPropWithoutNS.equalsIgnoreCase("RevisionDate")) {
+			outprop = "t0113_dataset_reference.type:3 t0113_dataset_reference.reference_date";
 			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/alternateTitle
 		} else if (inPropWithoutNS.equalsIgnoreCase("AlternateTitle")) {
 			outprop = "t01_object.dataset_alternate_name";
-			// responsible party organisation name
+			// MD_Metadata.identificationInfo.AbstractMD_Identification.citation.CI_Citation.date.CI_Date[dateType.CI_DateTypeCode.@codeListValue='creation'].date.Date
+		} else if (inPropWithoutNS.equalsIgnoreCase("CreationDate")) {
+			outprop = "t0113_dataset_reference.type:1 t0113_dataset_reference.reference_date";
+			// MD_Metadata.identificationInfo.AbstractMD_Identification.citation.CI_Citation.date.CI_Date[dateType.CI_DateTypeCode.@codeListValue='publication'].date.Date
+		} else if (inPropWithoutNS.equalsIgnoreCase("PublicationDate")) {
+			outprop = "t0113_dataset_reference.type:2 t0113_dataset_reference.reference_date";
+			// MD_Metadata.identificationInfo.AbstractMD_Identification.pointOfContact.CI_ResponsibleParty.organisationName
 		} else if (inPropWithoutNS.equalsIgnoreCase("OrganisationName")) {
 			outprop = "t02_address.institution";
-			// do security constraints (resource constraints) exist (boolean)
+			// Boolean: MD_Metadata.AbstractMD_Identification.resourceConstraints.MD_SecurityConstraints
 		} else if (inPropWithoutNS.equalsIgnoreCase("HasSecurityConstraints")) {
-			// TODO hasSecurityConstraints
-			outprop = "hasSecurityConstraints";
-			// metadata hierarchy level name
-		} else if (inPropWithoutNS.equalsIgnoreCase("HierarchyLevelName")) {
-			// TODO HierarchyLevelName
-			outprop = "hierarchyLevelName";
-			// metadata parent identifier
-		} else if (inPropWithoutNS.equalsIgnoreCase("ParentIdentifier")) {
-			outprop = "t012_obj_obj.object_from_id";
-			// dates
-			// MD_Metadata/identificationInfo/MD_DataIdentification/citation/date/date
-			// date type: revision
-		} else if (inPropWithoutNS.equalsIgnoreCase("Modified")) {
-			outprop = "t01_object.mod_time";
-			// date type: creation
-		} else if (inPropWithoutNS.equalsIgnoreCase("CreationDate")) {
-			outprop = "t01_object.create_time";
-			// date type: revision
-		} else if (inPropWithoutNS.equalsIgnoreCase("RevisionDate")) {
-			outprop = "t0113_dataset_reference.type:3 t0113_dataset_reference.reference_date";
-			// begin: t01_object.time_from
-		} else if (inPropWithoutNS.equalsIgnoreCase("TempExtent_begin")) {
-			outprop = "t1";
-			// end: t01_object.time_to
-		} else if (inPropWithoutNS.equalsIgnoreCase("TempExtent_end")) {
-			outprop = "t2";
-			// MD_Metadata/identificationInfo/MD_DataIdentification/abstract
-		} else if (inPropWithoutNS.equalsIgnoreCase("Abstract")) {
-			outprop = "summary";
-			// distribution format
-		} else if (inPropWithoutNS.equalsIgnoreCase("Format")) {
-			outprop = "t0110_avail_format.name";
-			// TODO citation identifier
-		} else if (inPropWithoutNS.equalsIgnoreCase("Identifier")) {
-			outprop = "zip";
-			// MD_Metadata/identificationInfo/MD_DataIdentification/descriptiveKeywords/MD_Keywords/keyword
-		} else if (inPropWithoutNS.equalsIgnoreCase("Subject")) {
-			outprop = "t04_search.searchterm";
-			// TODO keyword type
-		} else if (inPropWithoutNS.equalsIgnoreCase("KeywordType")) {
-			outprop = "keyTyp";
-			// TODO topic category
-		} else if (inPropWithoutNS.equalsIgnoreCase("TopicCategory")) {
-			outprop = "tpCat";
-			// spatial resolution
-		} else if (inPropWithoutNS.equalsIgnoreCase("SpatialResolution")) {
-			outprop = "spatialResolution";
-			// denominator (integer)
-		} else if (inPropWithoutNS.equalsIgnoreCase("Denominator")) {
-			outprop = "t011_obj_geo_scale.scale";
-			// distance value (float)
-		} else if (inPropWithoutNS.equalsIgnoreCase("DistanceValue")) {
-			outprop = "t011_obj_geo_scale.resolution_ground";
-			// distance uom (measure: meter)
-		} else if (inPropWithoutNS.equalsIgnoreCase("DistanceUOM")) {
-			outprop = "t011_obj_geo_scale.resolution_scan";
-			// TODO spatial representation type
-		} else if (inPropWithoutNS.equalsIgnoreCase("Type")) {
+			outprop = "object_access.restriction_key:[0 TO 9]";
+			// MD_Metadata.identificationInfo.AbstractMD_Identification.citation.CI_Citation.identifier.MD_Identifier.code
+		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceIdentifier")) {
+			// TODO: no mapping to IGC available
 			outprop = "";
-			// coordinate reference system
-		} else if (inPropWithoutNS.equalsIgnoreCase("CRS")) {
-			outprop = "t011_obj_geo.coord";
-			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
-			// EX_GeographicDescription/geographicIdentifier/code
-			// Dirk Schwarzmann, 2006-10-09:
-			// Support long xpath names (at least for GeoPortal.Bund)
-		} else if (inPropWithoutNS.equalsIgnoreCase("GeographicDescriptionCode") ||
-				inPropWithoutNS.equalsIgnoreCase("MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicDescription/geographicIdentifier/MD_Identifier/code") ||
-				inPropWithoutNS.equalsIgnoreCase("MD_Metadata/identificationInfo/CSW_ServiceIdentification/operatesOn/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicDescription/geographicIdentifier/MD_Identifier/code")) {
-			outprop = "t019_coordinates.bezug";
-			// Dirk Schwarzmann, 2006-10-09:
-			// At the moment, ignore any geographic identifiers (not working with iPlugs)
-			// By erasing the field name, search is done as a normal text search
+			// MD_Metadata.parentIdentifier
+		} else if (inPropWithoutNS.equalsIgnoreCase("ParentIdentifier")) {
+			outprop = "refering.object_reference.obj_uuid";
+			// MD_Identification.descriptiveKeywords.MD_Keywords.type
+		} else if (inPropWithoutNS.equalsIgnoreCase("KeywordType")) {
+			// TODO: must map value to searchterm_value.type (mapping required)
 			outprop = "";
 
-			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
-			// EX_GeographicBoundingBox/westBoundLongitude
-			// t019_coordinates.geo_x1
-		} else if (inPropWithoutNS.equalsIgnoreCase("WestBoundLongitude")) {
-			outprop = "x1";
-			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
-			// EX_GeographicBoundingBox/eastBoundLongitude
-			// t019_coordinates.geo_x2
-		} else if (inPropWithoutNS.equalsIgnoreCase("EastBoundLongitude")) {
-			outprop = "x2";
-			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
-			// EX_GeographicBoundingBox/southBoundLatitude
-			// t019_coordinates.geo_y1
-		} else if (inPropWithoutNS.equalsIgnoreCase("SouthBoundLatitude")) {
-			outprop = "y1";
-			// MD_Metadata/identificationInfo/MD_DataIdentification/extent/geographicElement/
-			// EX_GeographicBoundingBox/northBoundLatitude
-			// t019_coordinates.geo_y2
-		} else if (inPropWithoutNS.equalsIgnoreCase("NorthBoundLatitude")) {
-			outprop = "y2";
-			// MD_Metadata/fileIdentifier
-		} else if (inPropWithoutNS.equalsIgnoreCase("FileIdentifier")) {
-			outprop = "t01_object.obj_id";
+		// Additional queryable properties (dataset, datasetcollection, application)			
+			
+			// MD_Metadata.identificationInfo.MD_DataIdentification.topicCategory
+		} else if (inPropWithoutNS.equalsIgnoreCase("TopicCategory")) {
+			// TODO: value must be transformed via CodeList 527
+			outprop = "";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.language
+		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceLanguage")) {
+			// TODO: value must be transformed to ISO639-2
+			outprop = "t01_object.data_language_code";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicDescription.geographicIdentifier.MD_Identifier.code
+		} else if (inPropWithoutNS.equalsIgnoreCase("GeographicDescriptionCode")) {
+			outprop = "spatial_ref_value.name_value";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.spatialResolution.MD_Resolution.equivalentScale.MD_RepresentativeFraction.denominator
+		} else if (inPropWithoutNS.equalsIgnoreCase("Denominator")) {
+			outprop = "t011_obj_geo_scale.scale";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.spatialResolution.MD_Resolution.distance.gco:Distance
+		} else if (inPropWithoutNS.equalsIgnoreCase("DistanceValue")) {
+			outprop = "t011_obj_geo_scale.resolution_ground";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.spatialResolution.MD_Resolution.distance.gco:Distance@uom
+		} else if (inPropWithoutNS.equalsIgnoreCase("DistanceUOM")) {
+			// TODO: not mappable. "meter" is implicit set when t011_obj_geo_scale.resolution_ground is filled, "dpi"is implicit set when t011_obj_geo_scale.resolution_scan is filled
+			outprop = "";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.temporalElement.EX_TemporalExtent.extent.TimePeriod.beginPosition
+		} else if (inPropWithoutNS.equalsIgnoreCase("TempExtent_begin")) {
+			// TODO: Ingrid Query field depends on values in TempExtent_begin and TempExtent_end (see mapping)
+			// TODO: value must be transformed to IGC DateTime Format
+			outprop = "t1";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.temporalElement.EX_TemporalExtent.extent.TimePeriod.endPosition
+		} else if (inPropWithoutNS.equalsIgnoreCase("TempExtent_end")) {
+			// TODO: Ingrid Query field depends on values in TempExtent_begin and TempExtent_end (see mapping)
+			// TODO: value must be transformed to IGC DateTime Format
+			outprop = "t2";
+
+		// Additional queryable properties (service)
+			
+			// MD_Metadata.identificationInfo.SV_ServiceIdentification.serviceType
 		} else if (inPropWithoutNS.equalsIgnoreCase("ServiceType")) {
+			// TODO: should be mapped to t011_obj_serv_type.serv_type_key via 5100 (attn: special treatment required)
 			outprop = "t011_obj_serv.type";
+			// MD_Metadata.identificationInfo.SV_ServiceIdentification.serviceTypeVersion
 		} else if (inPropWithoutNS.equalsIgnoreCase("ServiceTypeVersion")) {
 			outprop = "t011_obj_serv_version.version";
-		} else if (inPropWithoutNS.equalsIgnoreCase("OperatesOn")) {
-			// TODO OperatesOn = T011_obj_serv.base??
-			outprop = "t011_obj_serv.base";
+			// MD_Metadata.identificationInfo.SV_ServiceIdentification.containsOperations.SV_OperationMetadata.operationName
 		} else if (inPropWithoutNS.equalsIgnoreCase("Operation")) {
 			outprop = "t011_obj_serv_operation.name";
-		} else if (inPropWithoutNS.equalsIgnoreCase("DCP")) {
-			outprop = "t011_obj_serv_op_platform.platform";
-			// TODO CouplingType
+			// MD_Metadata.identificationInfo.SV_ServiceIdentification.couplingType.SV_CouplingType.code@codeListValue
 		} else if (inPropWithoutNS.equalsIgnoreCase("CouplingType")) {
-			outprop = "couplingType";
+			// TODO: must map to object_reference.special_ref, as value is only "tight" supported only if special_ref=3345 (Basisdaten) 
+			outprop = "";
+			// MD_Metadata.identificationInfo.SV_ServiceIdentification.operatesOn.MD_DataIdentification.citation.CI_Citation.identifier
+		} else if (inPropWithoutNS.equalsIgnoreCase("OperatesOn")) {
+			outprop = "object_reference.obj_to_uuid";
+			// MD_Metadata.identificationInfo.SV_ServiceIdentification.coupledResource.SV_CoupledResource.identifier
+		} else if (inPropWithoutNS.equalsIgnoreCase("OperatesOnIdentifier")) {
+			outprop = "object_reference.obj_to_uuid";
+			// MD_Metadata.identificationInfo.SV_ServiceIdentification.coupledResource.SV_CoupledResource.operationName
+		} else if (inPropWithoutNS.equalsIgnoreCase("OperatesOnName")) {
+			// TODO: not supported at the moment. To support it the mapping must be extended to map also the name of the referenced object to the index
+			outprop = "";			
 		} else {
 			throw new CSWInvalidParameterValueException("Search for PropertyName '" + inprop + "' is not supported by this server.", "PropertyName");
 		}
