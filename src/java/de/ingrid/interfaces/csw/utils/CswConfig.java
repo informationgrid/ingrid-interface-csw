@@ -21,6 +21,12 @@ public class CswConfig extends PropertiesConfiguration {
 
     public static final String SERVER_PORT = "server.port";
 
+    public static final String SERVER_INTERFACE_HOST = "server.interface.host";
+    public static final String SERVER_INTERFACE_PORT = "server.interface.port";
+    
+    public static final String KEY_INTERFACE_HOST = "INTERFACE_HOST";
+    public static final String KEY_INTERFACE_PORT = "INTERFACE_PORT";
+
     public static final String MAX_RETURNED_HITS = "max.returned.hits";
     
     public static synchronized CswConfig getInstance() {

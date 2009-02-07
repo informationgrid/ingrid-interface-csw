@@ -6,7 +6,11 @@ package de.ingrid.interfaces.csw;
 
 //IMPORTS java.io
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Properties;
 
 import javax.servlet.ServletConfig;
@@ -22,6 +26,8 @@ import org.apache.axis.Message;
 import org.apache.axis.soap.SOAP12Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.BusClientFactory;
@@ -38,6 +44,9 @@ import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.interfaces.csw.tools.IOTools;
 import de.ingrid.interfaces.csw.tools.SOAPTools;
 import de.ingrid.interfaces.csw.tools.ServletTools;
+import de.ingrid.interfaces.csw.tools.XMLTools;
+import de.ingrid.interfaces.csw.tools.XPathUtils;
+import de.ingrid.interfaces.csw.utils.CswConfig;
 import de.ingrid.utils.IBus;
 
 
@@ -236,7 +245,34 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		GetCapAnalyser getCapAnalyser = new GetCapAnalyser();
 		if (getCapAnalyser.analyse(reqParams)) {
 			URL url = new URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_GETCAPABILITIES));
-			IOTools.writeInputToOutputStream(url.openStream(), response.getOutputStream());
+	        Reader reader = new InputStreamReader(url.openStream());
+	        Document doc = XMLTools.parse(reader);
+	        
+	        // try to replace the interface URLs
+	        NodeList nodes = XPathUtils.getNodeList(doc, "//ows:Operation/*/ows:HTTP/*/@xlink:href");
+			// get host
+	        String host = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_HOST, null);
+	        if (host == null) {
+	        	log.info("The interface host address is not specified, use local hosts address instead.");
+	        	try {
+	                InetAddress addr = InetAddress.getLocalHost();
+	                host = addr.getHostAddress();
+	            } catch (UnknownHostException e) {
+	            	log.error("Unable to get interface host address.", e);
+	            	throw e;
+	            }
+	        }
+			// get port
+	        String port = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PORT, "80");
+	        // replace interface host and port
+	        for (int idx = 0; idx < nodes.getLength(); idx++) {
+				String s = nodes.item(idx).getTextContent();
+				s = s.replaceAll(CswConfig.KEY_INTERFACE_HOST, host);
+				s = s.replaceAll(CswConfig.KEY_INTERFACE_PORT, port);
+				nodes.item(idx).setTextContent(s);
+			}
+			
+	        response.getOutputStream().write(XMLTools.toString(doc).getBytes());
 		}
 		log.debug("leaving");
 	}

@@ -5,18 +5,23 @@ package de.ingrid.interfaces.csw;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
 
 import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.analyse.CommonAnalyser;
 import de.ingrid.interfaces.csw.analyse.DescRecAnalyser;
@@ -29,8 +34,10 @@ import de.ingrid.interfaces.csw.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.tools.AxisTools;
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.interfaces.csw.tools.XMLTools;
+import de.ingrid.interfaces.csw.tools.XPathUtils;
 import de.ingrid.interfaces.csw.transform.RequestTransformer;
 import de.ingrid.interfaces.csw.transform.response.CSWResponseTransformer;
+import de.ingrid.interfaces.csw.utils.CswConfig;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHits;
@@ -158,6 +165,31 @@ public class CSW {
         URL url = new URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_GETCAPABILITIES));
         Reader reader = new InputStreamReader(url.openStream());
         Document doc = XMLTools.parse(reader);
+        
+        // try to replace the interface URLs
+        NodeList nodes = XPathUtils.getNodeList(doc, "//ows:Operation/*/ows:HTTP/*/@xlink:href");
+		// get host
+        String host = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_HOST, null);
+        if (host == null) {
+        	log.info("The interface host address is not specified, use local hosts address instead.");
+        	try {
+                InetAddress addr = InetAddress.getLocalHost();
+                host = addr.getHostAddress();
+            } catch (UnknownHostException e) {
+            	log.error("Unable to get interface host address.", e);
+            	throw e;
+            }
+        }
+		// get port
+        String port = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PORT, "80");
+        // replace interface host and port
+        for (int idx = 0; idx < nodes.getLength(); idx++) {
+			String s = nodes.item(idx).getTextContent();
+			s = s.replaceAll(CswConfig.KEY_INTERFACE_HOST, host);
+			s = s.replaceAll(CswConfig.KEY_INTERFACE_PORT, port);
+			nodes.item(idx).setTextContent(s);
+		}
+        
         soapResponseMessage = AxisTools.createSOAPMessage(doc);
         return soapResponseMessage;
     }
