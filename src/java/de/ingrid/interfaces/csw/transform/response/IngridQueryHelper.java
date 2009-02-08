@@ -94,6 +94,8 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_SERVICE_TYPE = "T011_obj_serv.type";
 
+    public static final String HIT_KEY_OBJECT_SERVICE_TYPE_KEY = "T011_obj_serv.type_key";
+    
     public static final String HIT_KEY_OBJECT_SERVICE_TYPE_VERSION = "T011_obj_serv_version.version";
 
     public static final String HIT_KEY_OBJECT_OBJECT_SPECIAL_REF = "T012_obj_obj.special_ref";
@@ -116,28 +118,67 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_DESCR = "summary";
 
-    public static final String HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE = "T01_object.avail_access_note";
-
     public static final String HIT_KEY_OBJECT_DATA_LANGUAGE = "T01_object.data_language";
 
-    public static final String HIT_KEY_OBJECT_METADATA_LANGUAGE = "T01_object.metadata_language";
+    public static final String HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL = "t011_obj_geo.hierarchy_level";
 
+
+	
+    
     public static final String[] REQUESTED_STRING_BRIEF = { HIT_KEY_OBJECT_OBJ_ID, HIT_KEY_OBJECT_REL_ADR_ID,
             HIT_KEY_OBJECT_REL_ADR_TYPE, HIT_KEY_OBJECT_OBJ_CLASS, HIT_KEY_OBJECT_SERVICE_TYPE,
             HIT_KEY_OBJECT_SERVICE_TYPE_VERSION, HIT_KEY_OBJECT_OBJECT_SPECIAL_REF, 
             HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY, HIT_KEY_OBJECT_ADR_SPECIAL_NAME,  
             "object_reference.special_ref", "t011_obj_topic_cat.topic_category",
             HIT_KEY_OBJECT_DATASET_REFERENCE_DATE, HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE,
-            HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_MOD_TIME, HIT_KEY_OBJECT_DATA_LANGUAGE};
+            HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_MOD_TIME, HIT_KEY_OBJECT_DATA_LANGUAGE, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
+            HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL};
 
+
+    public static final String HIT_KEY_OBJECT_METADATA_LANGUAGE = "T01_object.metadata_language";
+
+    public static final String HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE = "T01_object.avail_access_note";
+
+    public static final String HIT_KEY_OBJECT_PARENT_UUID = "parent.object_node.obj_uuid";
+
+	public static final String HIT_KEY_OBJECT_SPATIAL_RES_SCALE = "t011_obj_geo_scale.scale";
+
+	public static final String HIT_KEY_OBJECT_SPATIAL_RES_GROUND = "t011_obj_geo_scale.resolution_ground";
+	
+	public static final String HIT_KEY_OBJECT_SPATIAL_RES_SCAN = "t011_obj_geo_scale.resolution_scan";
+
+    public static final String HIT_KEY_OBJECT_SERV_OPERATION_NAME = "T011_obj_serv_operation.name";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_PLATFORM = "T011_obj_serv_op_platform.platform";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT = "T011_obj_serv_op_connpoint.connect_point";
+    
+    public static final String HIT_KEY_OBJECT_URL_REF_URL_LINK = "T017_url_ref.url_link";
+
+    public static final String HIT_KEY_OBJECT_URL_REF_DESCR = "T017_url_ref.descr";
+
+    public static final String HIT_KEY_OBJECT_URL_REF_CONTENT = "T017_url_ref.content";
+    
+    public static final String HIT_KEY_OBJECT_METADATA_STANDARD_NAME = "T01_object.metadata_standard_name";
+
+    public static final String HIT_KEY_OBJECT_METADATA_STANDARD_VERSION = "T01_object.metadata_standard_version";
+
+    public static final String HIT_KEY_OBJECT_DATASET_CHARACTER_SET = "T01_object.dataset_character_set";
+
+    
+    
     public static final String[] REQUESTED_STRING_SUMMARY = { HIT_KEY_OBJECT_OBJ_ID, HIT_KEY_OBJECT_REL_ADR_ID,
             HIT_KEY_OBJECT_REL_ADR_TYPE, HIT_KEY_OBJECT_OBJ_CLASS, HIT_KEY_OBJECT_SERVICE_TYPE,
             HIT_KEY_OBJECT_SERVICE_TYPE_VERSION, HIT_KEY_OBJECT_OBJECT_SPECIAL_REF, HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY,
             HIT_KEY_OBJECT_DATASET_REFERENCE_DATE, HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE, HIT_KEY_OBJECT_MOD_TIME,
             HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE, HIT_KEY_OBJECT_DATA_LANGUAGE,
-            HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_ADR_SPECIAL_NAME, "object_reference.special_ref", "t011_obj_topic_cat.topic_category"};
-
-    public static final String HIT_KEY_OBJECT_DATASET_CHARACTER_SET = "T01_object.dataset_character_set";
+            HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_ADR_SPECIAL_NAME, "object_reference.special_ref", 
+            "t011_obj_topic_cat.topic_category", HIT_KEY_OBJECT_PARENT_UUID, HIT_KEY_OBJECT_SPATIAL_RES_SCALE,
+            HIT_KEY_OBJECT_SPATIAL_RES_GROUND, HIT_KEY_OBJECT_SPATIAL_RES_SCAN, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
+            HIT_KEY_OBJECT_SERV_OPERATION_NAME, HIT_KEY_OBJECT_SERV_OP_PLATFORM, HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT,
+            HIT_KEY_OBJECT_URL_REF_URL_LINK, HIT_KEY_OBJECT_URL_REF_DESCR, HIT_KEY_OBJECT_URL_REF_CONTENT,
+            HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL, HIT_KEY_OBJECT_METADATA_STANDARD_NAME, HIT_KEY_OBJECT_DATASET_CHARACTER_SET,
+            HIT_KEY_OBJECT_METADATA_STANDARD_VERSION};
 
     public static final String HIT_KEY_OBJECT_OBJ_TO_ID = "t012_obj_obj.object_to_id";
 
@@ -145,10 +186,6 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_OBJ_TYPE = "t012_obj_obj.typ";
     
-    public static final String HIT_KEY_OBJECT_METADATA_STANDARD_NAME = "T01_object.metadata_standard_name";
-
-    public static final String HIT_KEY_OBJECT_METADATA_STANDARD_VERSION = "T01_object.metadata_standard_version";
-
     public static final String HIT_KEY_OBJECT_DATASET_ALTERNATE_TITLE = "T01_object.dataset_alternate_name";
 
     public static final String HIT_KEY_OBJECT_INFO_NOTE = "T01_object.info_note";
@@ -171,15 +208,9 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_TIME_ALLE = "T01_object.time_alle";
     
-    public static final String HIT_KEY_OBJECT_SERV_OPERATION_NAME = "T011_obj_serv_operation.name";
-
     public static final String HIT_KEY_OBJECT_SERV_OPERATION_DESCR = "T011_obj_serv_operation.descr";
     
-    public static final String HIT_KEY_OBJECT_SERV_OP_PLATFORM = "T011_obj_serv_op_platform.platform";
-
     public static final String HIT_KEY_OBJECT_SERV_INVOCATION_NAME = "T011_obj_serv_operation.invocation_name";
-
-    public static final String HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT = "T011_obj_serv_op_connpoint.connect_point";
 
     public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_NAME = "T011_obj_serv_op_para.name";
 
@@ -237,12 +268,6 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_MEDIA_OPTION_MEDIUM_NOTE = "T0112_media_option.medium_note";
 
-    public static final String HIT_KEY_OBJECT_URL_REF_URL_LINK = "T017_url_ref.url_link";
-
-    public static final String HIT_KEY_OBJECT_URL_REF_DESCR = "T017_url_ref.descr";
-
-    public static final String HIT_KEY_OBJECT_URL_REF_CONTENT = "T017_url_ref.content";
-
     public static final String HIT_KEY_OBJECT_LOC_DESCR = "T01_object.loc_descr";
 
     public static final String HIT_KEY_OBJECT_VERTICAL_EXTENT_MINIMUM = "T01_object.vertical_extent_minimum";
@@ -295,12 +320,6 @@ public class IngridQueryHelper {
 	
 	public static final String HIT_KEY_OBJECT_GEO_REC_GRADE = "T011_obj_geo.rec_grade";
 	
-	public static final String HIT_KEY_OBJECT_SPATIAL_RES_SCALE = "t011_obj_geo_scale.scale";
-
-	public static final String HIT_KEY_OBJECT_SPATIAL_RES_GROUND = "t011_obj_geo_scale.resolution_ground";
-	
-	public static final String HIT_KEY_OBJECT_SPATIAL_RES_SCAN = "t011_obj_geo_scale.resolution_scan";
-	
 	public static final String HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL = "t011_obj_geo.pos_accuracy_vertical";
 	
 	public static final String HIT_KEY_OBJECT_GEO_REC_EXACT = "t011_obj_geo.rec_exact";
@@ -340,7 +359,9 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SYMBOL_DATE, HIT_KEY_OBJECT_SYMBOL_EDITION, HIT_KEY_OBJECT_SPATIAL_REP_TYPE, HIT_KEY_OBJECT_GEO_REC_GRADE,
             HIT_KEY_OBJECT_SPATIAL_RES_SCALE, HIT_KEY_OBJECT_SPATIAL_RES_GROUND, HIT_KEY_OBJECT_SPATIAL_RES_SCAN, 
             HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL, HIT_KEY_OBJECT_GEO_REC_EXACT, HIT_KEY_OBJECT_SUPPLINFO_FEATURE_TYPE, 
-            "object_access.terms_of_use", "t011_obj_topic_cat.topic_category", "object_reference.special_ref", "areaid", "object_reference.obj_to_uuid", "spatial_ref_value.name_value"};
+            "object_access.terms_of_use", "t011_obj_topic_cat.topic_category", "object_reference.special_ref", "areaid", 
+            "object_reference.obj_to_uuid", "spatial_ref_value.name_value", HIT_KEY_OBJECT_PARENT_UUID, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
+            HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL};
 
 
 
@@ -692,7 +713,11 @@ public class IngridQueryHelper {
     }
 
     public static String getParentIdentifier(IngridHit hit) {
-        String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+    	String parentIdentifier = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_PARENT_UUID);
+    	if (parentIdentifier != null && parentIdentifier.length() > 0) {
+    		return parentIdentifier;
+    	}
+    	String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
         String[] fromIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_FROM_ID);
         String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
         String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
@@ -702,6 +727,7 @@ public class IngridQueryHelper {
                 return fromIds[i];
             }
         }
+        
         return "";
     }
 

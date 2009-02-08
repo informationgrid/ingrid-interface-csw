@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import de.ingrid.interfaces.csw.CSWServlet;
+import de.ingrid.interfaces.csw.CSW;
 import de.ingrid.interfaces.csw.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw.exceptions.CSWMissingParameterValueException;
 import de.ingrid.interfaces.csw.exceptions.CSWOperationNotSupportedException;
@@ -332,8 +332,8 @@ public final class CommonAnalyser {
 			Exception e = new CSWMissingParameterValueException("Attribute 'version' is missing.", "version");
 			throw e;
 		}
-		if (!version.equals("2.0.0") && !version.equals("2.0.2")) {
-			Exception e = new CSWInvalidParameterValueException("Attribute 'version' is not '2.0.0', '2.0.2'.", "version");
+		if (!version.equals("2.0.2")) {
+			Exception e = new CSWInvalidParameterValueException("Attribute 'version' is not '2.0.2'.", "version");
 			throw e;
 		}
 		return version;

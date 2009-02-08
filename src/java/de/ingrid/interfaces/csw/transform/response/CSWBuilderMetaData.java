@@ -178,9 +178,9 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
 		if (numberBasedLang == null) {
 			return null;
 		}
-    	if (numberBasedLang.equals("121")) {
+    	if (numberBasedLang.equals("121") || numberBasedLang.equals("de")) {
     		return "ger";
-    	} else if (numberBasedLang.equals("94")) {
+    	} else if (numberBasedLang.equals("94") || numberBasedLang.equals("en")) {
     		return "eng";
     	} else {
     		return numberBasedLang;

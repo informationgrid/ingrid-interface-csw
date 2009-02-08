@@ -9,7 +9,9 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
 
+import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -31,36 +33,53 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 
         String objectId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
         String udkClass = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_CLASS);
-        String typeName;
-        if (udkClass.equals("1")) {
-            typeName = "dataset";
-        } else if (udkClass.equals("3")) {
-            typeName = "service";
-        } else {
-        	if (log.isInfoEnabled()) {
-        		log.info("Unsupported UDK class " + udkClass
-                    + ". Only class 1 and 3 are supported by the CSW interface.");
-        	}
-            return null;
+        String typeName = getTypeName();
+        if (typeName == null) {
+        	return null;
         }
 
-        Element metaData = DocumentFactory.getInstance().createElement("gmd:MD_Metadata",
-        "http://schemas.opengis.net/iso19115summary");
+        Element metaData = DocumentFactory.getInstance().createElement("MD_Metadata",
+        "http://www.isotc211.org/2005/gmd");
         metaData.add(gco);
         metaData.add(gmd);
         metaData.add(srv);
 
         this.addFileIdentifier(metaData, objectId);
         this.addLanguage(metaData, hit);
+		this.addCharacterSet(metaData, hit);
+		this.addParentIdentifier(metaData, hit);
         this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
         this.addContacts(metaData, hit);
         this.addDateStamp(metaData, hit);
-        if (typeName.equals("dataset")) {
+		String metaDataStandardName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_STANDARD_NAME);
+		if (IngridQueryHelper.hasValue(metaDataStandardName)) {
+			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardName"), metaDataStandardName);
+		}
+		String metaDataStandardVersion = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_STANDARD_VERSION);
+		if (IngridQueryHelper.hasValue(metaDataStandardVersion)) {
+			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), metaDataStandardVersion);
+		}
+        if (udkClass.equals("1")) {
             this.addIdentificationInfoDataset(metaData, hit);
         } else {
             this.addIdentificationInfoService(metaData, hit);
         }
+        
+		// contentInfo
+		this.addContentInfo(metaData, hit);
 
+		// distributionInfo
+		this.addDistributionInfo(metaData, hit);
+
+		// dataQualityInfo
+		if (udkClass.equals("1")) {
+			this.addDataQualityInfoDataSet(metaData, hit);
+		} else if (udkClass.equals("3")) {
+			this.addDataQualityInfoService(metaData, hit);
+		}
+        
+
+        
         return metaData;
     }
 
@@ -68,42 +87,73 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         Element ciCitation = parent.addElement("citation")
         .addElement("gmd:CI_Citation");
         // add title
-        this.addSMXMLCharacterString(ciCitation.addElement("title"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addGCOCharacterString(ciCitation.addElement("title"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
         // add dates (creation, revision etc.)
         super.addCitationReferenceDates(ciCitation, hit, null);
     }
     
-    private void addIdentificationInfoService(Element metaData, IngridHit hit) {
+    private void addIdentificationInfoService(Element metaData, IngridHit hit) throws Exception {
         Element svServiceIdentification = metaData.addElement("identificationInfo").addElement(
-                "gmd:SV_ServiceIdentification");
+                "srv:SV_ServiceIdentification");
 
         // add citation construct
         this.addCitation(svServiceIdentification, hit);
 
         
         // add abstract
-        this.addSMXMLCharacterString(svServiceIdentification.addElement("abstract"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addGCOCharacterString(svServiceIdentification.addElement("abstract"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
 
+		addPointOfContacts(svServiceIdentification, hit, "gmd");
+
         // add resourceConstraint
-        this.addSMXMLCharacterString(svServiceIdentification.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
+        this.addGCOCharacterString(svServiceIdentification.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE));
         
         
-        this.addSMXMLCharacterString(svServiceIdentification.addElement("serviceType"), IngridQueryHelper
-                        .getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE));
+        // add service type
+        String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);
+        String serviceType = null;
+        if (serviceTypeKey != null) {
+        	if (serviceTypeKey.equals("1")) {
+        		serviceType = "discovery";
+        	} else if (serviceTypeKey.equals("2")) {
+        		serviceType = "view";
+        	} else if (serviceTypeKey.equals("3")) {
+        		serviceType = "download";
+        	} else if (serviceTypeKey.equals("4")) {
+        		serviceType = "transformation";
+        	} else if (serviceTypeKey.equals("5")) {
+        		serviceType = "invoke";
+        	} else  {
+        		serviceType = "other";
+        	}
+        }
+        if (serviceType != null) {
+        	this.addGCOCharacterString(svServiceIdentification.addElement("serviceType"), serviceType);        	
+        }
+        
 
         String[] serviceTypeVersions = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_VERSION);
         if (serviceTypeVersions != null) {
             for (int i=0; i< serviceTypeVersions.length; i++) {
-                this.addSMXMLCharacterString(svServiceIdentification.addElement("serviceTypeVersion"), serviceTypeVersions[i]);
+                this.addGCOCharacterString(svServiceIdentification.addElement("srv:serviceTypeVersion"), serviceTypeVersions[i]);
             }
         }
-
+        
+		addOperationMetadata(svServiceIdentification, hit);
+        
+        
+		String objReferenceSpecialRef = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
+        if (objReferenceSpecialRef != null && objReferenceSpecialRef.equals("3345")) {
+			svServiceIdentification.addElement("srv:couplingType").addElement("srv:CSW_CouplingType")
+			.addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_CouplingType").addAttribute(
+					"codeListValue", "tight");
+		}
     }
 
-    private void addIdentificationInfoDataset(Element metaData, IngridHit hit) {
+    private void addIdentificationInfoDataset(Element metaData, IngridHit hit) throws Exception {
         Element mdDataIdentification = metaData.addElement("identificationInfo").addElement(
                 "gmd:MD_DataIdentification");
 
@@ -111,13 +161,272 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         this.addCitation(mdDataIdentification, hit);
 
         // add abstract
-        this.addSMXMLCharacterString(mdDataIdentification.addElement("abstract"), IngridQueryHelper.getDetailValueAsString(hit,
-                IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
+        this.addGCOCharacterString(mdDataIdentification.addElement("abstract"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
 
-        // add resourceConstraint
-        this.addSMXMLCharacterString(mdDataIdentification.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
-                IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE));
+		addPointOfContacts(mdDataIdentification, hit, "gmd");
+
+		// add resourceConstraint
+		String resourceConstraints = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE);
+        if (IngridQueryHelper.hasValue(resourceConstraints)) {
+        	this.addGCOCharacterString(mdDataIdentification.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), resourceConstraints);
+        }
+		
+        // add language
+		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
+		if (IngridQueryHelper.hasValue(dataLang)) {
+			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
+		}
+		
+		// add digital representation
+		// T011_obj_geo_spatial_rep.type ->
+		// MD_Metadata/udk:identificationInfo/spatialRepresentationType
+		String[] digitalRepresentations = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_REP_TYPE);
+		for (int i = 0; i < digitalRepresentations.length; i++) {
+			Long code;
+			try {
+				code = Long.valueOf(digitalRepresentations[i]);
+				String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(526), code, new Long(94));
+				if (codeVal.length() > 0) {
+					mdDataIdentification.addElement("gmd:spatialRepresentationType").addElement(
+							"gmd:MD_SpatialRepresentationTypeCode").addAttribute("codeList",
+							"http://www.tc211.org/ISO19115/resources/codeList.xml?MD_SpatialRepresentationTypeCode")
+							.addAttribute("codeListValue", codeVal);
+				}
+			} catch (NumberFormatException e) {
+			}
+		}
+
+		// add spacial resolution
+		// T011_obj_geo_scale.scale ->
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/positiveInteger
+		// T011_obj_geo_scale.resolution_ground ->
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance/gmd:value//Decimal
+		// T011_obj_geo_scale.resolution_scan ->
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance/gmd:value/Decimal
+		String[] spacialResolutionScale = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCALE);
+		String[] spacialResolutionGround = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_GROUND);
+		String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCAN);
+		for (int i = 0; i < spacialResolutionScale.length; i++) {
+
+			if (IngridQueryHelper.hasValue(spacialResolutionScale[i])) {
+				this.addGCOPositiveInteger(mdDataIdentification.addElement("gmd:spatialResolution").addElement(
+				"gmd:MD_Resolution").addElement("gmd:equivalentScale").addElement(
+						"gmd:MD_RepresentativeFraction").addElement("gmd:denominator"), spacialResolutionScale[i]);
+			}
+
+			if (IngridQueryHelper.hasValue(spacialResolutionGround[i])) {
+				Element distance = mdDataIdentification.addElement("gmd:spatialResolution").addElement(
+				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gmd:Distance");
+				this.addGCODecimal(distance.addElement("gmd:value"), spacialResolutionGround[i]);
+				this.addGCOCharacterString(distance.addElement("gmd:uom").addElement("gmd:UomLength").addElement(
+						"gmd:uomName"), "meter");
+			}
+
+			if (IngridQueryHelper.hasValue(spacialResolutionScan[i])) {
+				Element distance = mdDataIdentification.addElement("gmd:spatialResolution").addElement(
+				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gmd:Distance");
+				this.addGCODecimal(distance.addElement("gmd:value"), spacialResolutionScan[i]);
+				this.addGCOCharacterString(distance.addElement("gmd:uom").addElement("gmd:UomLength").addElement(
+						"gmd:uomName"), "dpi");
+			}
+		}
+
+		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY);
+		for (int i = 0; i < topicCategories.length; i++) {
+			Long code;
+			try {
+				code = Long.valueOf(topicCategories[i]);
+				String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(527), code, new Long(94));
+				if (codeVal.length() > 0) {
+					mdDataIdentification.addElement("gmd:topicCategory").addElement("gmd:MD_TopicCategoryCode")
+							.addText(codeVal);
+				}
+			} catch (NumberFormatException e) {
+			}
+		}		
+		
+		
+		addExtent(mdDataIdentification, hit, "gmd");
         
-    }    
+    }
     
+    protected void addExtent (Element parent, IngridHit hit, String ns) {
+        // extend
+        Element exExent = null;
+        
+        String[] stTownship = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO);
+        String[] stTownshipNames = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP);
+        String[] stBoxX1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_X1);
+        String[] stBoxX2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_X2);
+        String[] stBoxY1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_Y1);
+        String[] stBoxY2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_Y2);
+
+        for (int i=0; i< stTownship.length; i++) {
+            if (exExent == null) {
+            	exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("gmd:EX_Extent");
+            }
+        	
+        	// T011_township.township_no MD_Metadata/gmd:identificationInfo/srv:CSW_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:RS_Identifier/code/gco:CharacterString
+            String geoIdentifier = null;
+            if (stTownshipNames.length == stTownship.length && stTownshipNames[i] != null &&  stTownshipNames[i].length() > 0) {
+            	geoIdentifier = stTownshipNames[i];
+            }
+            if (stTownship[i]!= null && stTownship[i].length() > 0) {
+            	if (geoIdentifier != null) {
+                	geoIdentifier += " "; 
+            	}
+            	geoIdentifier += "(" + stTownship[i] + ")"; 
+            }
+            if (geoIdentifier != null) {
+            	super.addGCOCharacterString(exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicDescription").addElement("gmd:geographicIdentifier").addElement("gmd:MD_Identifier").addElement("gmd:code"), stTownship[i]);
+            }
+            
+            Element geographicElement = exExent.addElement("gmd:geographicElement");
+            Element exGeographicBoundingBox = geographicElement.addElement("gmd:EX_GeographicBoundingBox");
+            // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/gmd:approximateLongitude
+            if (stBoxX1.length == stTownship.length) {
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX1[i].replaceAll(",", "."));
+            }
+            // T01_st_bbox.x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.eastBoundLongitude/gmd:approximateLongitude
+            if (stBoxX2.length == stTownship.length) {
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX2[i].replaceAll(",", "."));
+            }
+            // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.southBoundLatitude/gmd:approximateLatitude
+            if (stBoxY1.length == stTownship.length) {
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY1[i].replaceAll(",", "."));
+            }
+            // T01_st_bbox.y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLatitude/gmd:approximateLatitude
+            if (stBoxY2.length == stTownship.length) {
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:northBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY2[i].replaceAll(",", "."));
+            }
+        }
+    }
+    
+	private void addDistributionInfo(Element metaData, IngridHit hit) {
+
+		Element mdDistribution = null; 
+
+		String[] formatNames = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_FORMAT_NAME);
+		String[] formatVersions = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_FORMAT_VERSION);
+		for (int i = 0; i < formatNames.length; i++) {
+			if (mdDistribution == null) {
+				mdDistribution = metaData.addElement("gmd:distributionInfo").addElement("gmd:MD_Distribution");
+			}
+			Element mdFormat = mdDistribution.addElement("gmd:distributionFormat").addElement("gmd:MD_Format");
+			// T0110_avail_format.name
+			// MD_Metadata/distributionInfo/MD_Distribution/distributor/MD_Distributor/distributorFormat/MD_Format/name
+			this.addGCOCharacterString(mdFormat.addElement("gmd:name"), formatNames[i]);
+			// T0110_avail_format.version
+			// MD_Metadata/distributionInfo/MD_Distribution/distributor/MD_Distributor/distributorFormat/MD_Format/version
+			this.addGCOCharacterString(mdFormat.addElement("gmd:version"), formatVersions[i]);
+		}
+		
+		// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/
+		String[] urlRefUrlLinks = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_URL_REF_URL_LINK);
+		String[] urlRefContent = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_URL_REF_CONTENT);
+		String[] urlRefDescr = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_URL_REF_DESCR);
+		for (int i = 0; i < urlRefUrlLinks.length; i++) {
+			if (mdDistribution == null) {
+				mdDistribution = metaData.addElement("gmd:distributionInfo").addElement("gmd:MD_Distribution");
+			}
+			Element ciOnlineResource = mdDistribution.addElement("gmd:transferOptions").addElement(
+			"gmd:MD_DigitalTransferOptions").addElement("gmd:onLine").addElement(
+					"gmd:CI_OnlineResource");
+			// T017_url_ref.url_link
+			// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/linkage/gmd:URL
+			ciOnlineResource.addElement("gmd:linkage").addElement("gmd:URL").addText(urlRefUrlLinks[i]);
+			// T017_url_ref.content
+			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/name
+			this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
+			// T017_url_ref.descr
+			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/description
+			this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+		}
+		
+
+	}
+
+	private void addDataQualityInfoService(Element metaData, IngridHit hit) {
+	}
+
+	private void addDataQualityInfoDataSet(Element metaData, IngridHit hit) {
+		Element dqQualityInfo = null;
+		// T011_obj_geo.special_base ->
+		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/udk:LI_Lineage/statement
+		String statement = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_SPECIAL_BASE);
+		if (IngridQueryHelper.hasValue(statement)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("scope").addElement("DQ_Scope").addElement("level").addElement("MD_ScopeCode").addAttribute("codeListValue", getTypeName()).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
+			Element liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
+			this.addGCOCharacterString(liLineage.addElement("gmd:statement"), IngridQueryHelper.getDetailValueAsString(
+					hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_SPECIAL_BASE));
+		}
+	}	
+
+	private void addContentInfo(Element metaData, IngridHit hit) {
+
+		Element mdFeatureCatalogueDescription = null;
+		// T011_obj_geo_supplinfo.feature_type
+		// MD_Metadata/contentInfo/MD_FeatureCatalogueDescription/featureTypes/gco:LocalName
+		String[] udkFeatureTypes = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SUPPLINFO_FEATURE_TYPE);
+		if (udkFeatureTypes.length > 0) {
+			if (mdFeatureCatalogueDescription == null) {
+				mdFeatureCatalogueDescription = metaData.addElement("gmd:contentInfo").addElement("gmd:MD_FeatureCatalogueDescription");
+			}
+			Element featureTypes = mdFeatureCatalogueDescription.addElement("gmd:featureTypes");
+			for (int i = 0; i < udkFeatureTypes.length; i++) {
+				featureTypes.addElement("gco:LocalName").addText(udkFeatureTypes[i]);
+			}
+		}
+	}	
+
+    protected void addOperationMetadata(Element parent, IngridHit hit) {
+        // operationMetadata
+        Element svOperationMetadata = null;
+
+        // srv:operationMetadata -> srv:SV_OperationMetadata -> srv:operationName -> String
+        String operationName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_NAME);
+        if (IngridQueryHelper.hasValue(operationName)) {
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
+        	this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationName"), operationName);
+        }
+
+        // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:DCP -> srv:SV_DCPList/@codeListValue
+        String[] platforms = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PLATFORM);
+        for (int i=0; i< platforms.length; i++) {
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
+            svOperationMetadata.addElement("srv:DCP").addElement("srv:SV_DCPList")
+                .addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_DCPCodeType")
+                .addAttribute("codeList", platforms[i]);
+        }
+        // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:connectPoint -> gmd:CI_OnlineResource
+        String[] connectPoints = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT);
+        for (int i=0; i< connectPoints.length; i++) {
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
+            svOperationMetadata.addElement("srv:connectPoint")
+                .addElement("gmd:CI_OnlineResource").addElement("gmd:linkage")
+                    .addElement("gmd:URL").addText(connectPoints[i]);
+        }
+    }	
+	
 }
