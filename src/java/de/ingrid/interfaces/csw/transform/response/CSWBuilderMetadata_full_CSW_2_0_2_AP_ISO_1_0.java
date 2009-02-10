@@ -34,6 +34,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		Namespace gmd = new Namespace("gmd", "http://www.isotc211.org/2005/gmd");
 		Namespace srv = new Namespace("srv", "http://www.isotc211.org/2005/srv");
 		Namespace gml = new Namespace("gml", "http://www.opengis.net/gml");
+		Namespace gts = new Namespace("gts", "http://www.isotc211.org/2005/gts");
 
 		String objectId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
 		String udkClass = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_CLASS);
@@ -48,6 +49,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		metaData.add(gmd);
 		metaData.add(srv);
 		metaData.add(gml);
+		metaData.add(gts);
 
 		this.addFileIdentifier(metaData, objectId, this.getNSPrefix());
 		this.addLanguage(metaData, hit, this.getNSPrefix());
@@ -343,7 +345,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					.addAttribute("codeListValue", geometricObjectsType[i]);
 			// T011_obj_geo_vector.geometric_object_count ->
 			// MD_Metadata/full:spatialRepresentationInfo/MD_VectorSpatialRepresentation/geometricObjects/MD_GeometricObjects/geometricObjectCount
-			this.addGCOCharacterString(mdGeometricObjects.addElement("gmd:geometricObjectCount"),
+			this.addGCOInteger(mdGeometricObjects.addElement("gmd:geometricObjectCount"),
 					geometricObjectsCount[i]);
 		}
 
@@ -520,7 +522,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		this.addCitation(parent, hit);
 
         // add abstract
-        this.addGCOCharacterString(parent.addElement("abstract"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
+        this.addGCOCharacterString(parent.addElement("gmd:abstract"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
 
 		// add purpose
 		// combine Herstellungszweck and rechtliche Grundlagen
@@ -549,56 +551,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 
 		addPointOfContacts(parent, hit, "gmd");
 		
-		// add resourceSpecificUsage
-		String usage = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_USAGE);
-		if (IngridQueryHelper.hasValue(usage)) {
-			Element usageType = parent.addElement("gmd:resourceSpecificUsage").addElement("gmd:MD_Usage");
-			this.addGCOCharacterString(usageType.addElement("gmd:specificUsage"), usage);
-			
-			usageType.addElement("gmd:userContactInfo").addElement("gmd:CI_ResponsibleParty").addElement("gmd:role").addElement("gmd:CI_RoleCode")
-	        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
-	        .addAttribute("codeListValue", "pointOfContact");
-		}
-		
-
-		// descriptiveKeywords
-		String[] keywords = IngridQueryHelper.getDetailValueAsArray(hit,
-				IngridQueryHelper.HIT_KEY_OBJECT_SEARCH_SEARCHTERM);
-		String[] keywordTypes = IngridQueryHelper.getDetailValueAsArray(hit,
-				IngridQueryHelper.HIT_KEY_OBJECT_SEARCH_TYPE);
-		ArrayList thesaurusKeywords = new ArrayList();
-		ArrayList freeKeywords = new ArrayList();
-		for (int i = 0; i < keywords.length; i++) {
-			if (keywordTypes[i].equals("2") || keywordTypes[i].equals("T")) {
-				thesaurusKeywords.add(keywords[i]);
-			} else if (keywordTypes[i].equals("1") || keywordTypes[i].equals("F")) {
-				freeKeywords.add(keywords[i]);
-			}
-		}
-		if (thesaurusKeywords.size() > 0) {
-			Element keywordType = parent.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < thesaurusKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
-								.get(i));
-			}
-			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
-			"codeListValue", "Theme");
-			this.addGCOCharacterString(keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation").addElement("gmd:title"), "UDK-Thesaurus");
-		}
-		if (freeKeywords.size() > 0) {
-			Element keywordType = parent.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < freeKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) freeKeywords.get(i));
-			}
-		}
-
-		// add resourceConstraint
-		String resourceConstraints = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE);
-        if (IngridQueryHelper.hasValue(resourceConstraints)) {
-        	this.addGCOCharacterString(parent.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), resourceConstraints);
-        }
-
 		// resource maintenance
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
@@ -631,7 +583,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 						period19108 = period19108.concat("T").concat(timeAlle).concat("S");
 					}
 					mdMaintenanceInformation.addElement("gmd:userDefinedMaintenanceFrequency").addElement(
-							"gmd:TM_PeriodDuration").addText(period19108);
+							"gts:TM_PeriodDuration").addText(period19108);
 				}
 				String maintenanceNote = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_DESCR);
 				if (IngridQueryHelper.hasValue(maintenanceNote)) {
@@ -641,12 +593,60 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		} catch (NumberFormatException e) {
 		}
 		
-
-		// add language
-		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
-		if (IngridQueryHelper.hasValue(dataLang)) {
-			this.addGCOCharacterString(parent.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
+		
+		// descriptiveKeywords
+		String[] keywords = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SEARCH_SEARCHTERM);
+		String[] keywordTypes = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SEARCH_TYPE);
+		ArrayList thesaurusKeywords = new ArrayList();
+		ArrayList freeKeywords = new ArrayList();
+		for (int i = 0; i < keywords.length; i++) {
+			if (keywordTypes[i].equals("2") || keywordTypes[i].equals("T")) {
+				thesaurusKeywords.add(keywords[i]);
+			} else if (keywordTypes[i].equals("1") || keywordTypes[i].equals("F")) {
+				freeKeywords.add(keywords[i]);
+			}
 		}
+		if (thesaurusKeywords.size() > 0) {
+			Element keywordType = parent.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+			for (int i = 0; i < thesaurusKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
+								.get(i));
+			}
+			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"codeListValue", "Theme");
+			this.addGCOCharacterString(keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation").addElement("gmd:title"), "UDK-Thesaurus");
+		}
+		if (freeKeywords.size() > 0) {
+			Element keywordType = parent.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+			for (int i = 0; i < freeKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) freeKeywords.get(i));
+			}
+		}		
+		
+		// add resourceSpecificUsage
+		String usage = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_USAGE);
+		if (IngridQueryHelper.hasValue(usage)) {
+			Element usageType = parent.addElement("gmd:resourceSpecificUsage").addElement("gmd:MD_Usage");
+			this.addGCOCharacterString(usageType.addElement("gmd:specificUsage"), usage);
+			
+			usageType.addElement("gmd:userContactInfo").addElement("gmd:CI_ResponsibleParty").addElement("gmd:role").addElement("gmd:CI_RoleCode")
+	        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+	        .addAttribute("codeListValue", "pointOfContact");
+		}
+
+
+		// add resourceConstraint
+		String resourceConstraints = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE);
+        if (IngridQueryHelper.hasValue(resourceConstraints)) {
+        	this.addGCOCharacterString(parent.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), resourceConstraints);
+        }
+
+
+		
+
 	}
 
 	private void addIdentificationInfoDataset(Element metaData, IngridHit hit) throws Exception {
@@ -677,11 +677,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 
 		// add spacial resolution
 		// T011_obj_geo_scale.scale ->
-		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/positiveInteger
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer
 		// T011_obj_geo_scale.resolution_ground ->
-		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance/gmd:value//Decimal
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance/gmd:value//Decimal
 		// T011_obj_geo_scale.resolution_scan ->
-		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance/gmd:value/Decimal
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance/gmd:value/Decimal
 		String[] spacialResolutionScale = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCALE);
 		String[] spacialResolutionGround = IngridQueryHelper.getDetailValueAsArray(hit,
@@ -691,26 +691,26 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		for (int i = 0; i < spacialResolutionScale.length; i++) {
 
 			if (IngridQueryHelper.hasValue(spacialResolutionScale[i])) {
-				this.addGCOPositiveInteger(mdDataIdentification.addElement("gmd:spatialResolution").addElement(
+				this.addGCOInteger(mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 				"gmd:MD_Resolution").addElement("gmd:equivalentScale").addElement(
 						"gmd:MD_RepresentativeFraction").addElement("gmd:denominator"), spacialResolutionScale[i]);
 			}
 
 			if (IngridQueryHelper.hasValue(spacialResolutionGround[i])) {
 				Element distance = mdDataIdentification.addElement("gmd:spatialResolution").addElement(
-				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gmd:Distance");
-				this.addGCODecimal(distance.addElement("gmd:value"), spacialResolutionGround[i]);
-				this.addGCOCharacterString(distance.addElement("gmd:uom").addElement("gmd:UomLength").addElement(
-						"gmd:uomName"), "meter");
+				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "meter").addText(spacialResolutionGround[i]);
 			}
 
 			if (IngridQueryHelper.hasValue(spacialResolutionScan[i])) {
-				Element distance = mdDataIdentification.addElement("gmd:spatialResolution").addElement(
-				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gmd:Distance");
-				this.addGCODecimal(distance.addElement("gmd:value"), spacialResolutionScan[i]);
-				this.addGCOCharacterString(distance.addElement("gmd:uom").addElement("gmd:UomLength").addElement(
-						"gmd:uomName"), "dpi");
+				mdDataIdentification.addElement("gmd:spatialResolution").addElement(
+				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "dpi").addText(spacialResolutionScan[i]);
 			}
+		}
+
+		// add language
+		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
+		if (IngridQueryHelper.hasValue(dataLang)) {
+			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
 		}
 
 		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,

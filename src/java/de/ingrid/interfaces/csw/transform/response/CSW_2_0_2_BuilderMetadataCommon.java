@@ -364,16 +364,16 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     
     protected void addCitationReferenceDates(Element parent, IngridHit hit, String ns) {
         // add dates (creation, revision etc.)
-    	Element ciDate;
-    	if (ns != null) {
-    		ciDate = parent.addElement(ns + ":date").addElement("gmd:CI_Date");
-    	} else {
-    		ciDate = parent.addElement("date").addElement("gmd:CI_Date");
-    	}
         String[] referenceDate = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_REFERENCE_DATE);
         String[] referenceDateTypes = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE);
         if (referenceDate != null && referenceDate.length > 0) {
             for (int i = 0; i < referenceDate.length; i++) {
+            	Element ciDate;
+            	if (ns != null) {
+            		ciDate = parent.addElement(ns + ":date").addElement("gmd:CI_Date");
+            	} else {
+            		ciDate = parent.addElement("date").addElement("gmd:CI_Date");
+            	}
                 String creationDate = referenceDate[i];
                 if (creationDate != null && creationDate.length() > 0) {
                     String cswDate = Udk2CswDateFieldParser.instance().parse(creationDate);
@@ -401,6 +401,12 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                 }
             }
         } else {
+        	Element ciDate;
+        	if (ns != null) {
+        		ciDate = parent.addElement(ns + ":date").addElement("gmd:CI_Date");
+        	} else {
+        		ciDate = parent.addElement("date").addElement("gmd:CI_Date");
+        	}
             String cswDate = null;
             String creationDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_MOD_TIME);
             if (IngridQueryHelper.hasValue(creationDate)) {

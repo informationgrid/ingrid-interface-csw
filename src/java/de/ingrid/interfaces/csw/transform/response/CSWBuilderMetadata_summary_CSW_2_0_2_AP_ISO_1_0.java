@@ -171,12 +171,6 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         	this.addGCOCharacterString(mdDataIdentification.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), resourceConstraints);
         }
 		
-        // add language
-		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
-		if (IngridQueryHelper.hasValue(dataLang)) {
-			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
-		}
-		
 		// add digital representation
 		// T011_obj_geo_spatial_rep.type ->
 		// MD_Metadata/udk:identificationInfo/spatialRepresentationType
@@ -199,11 +193,11 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 
 		// add spacial resolution
 		// T011_obj_geo_scale.scale ->
-		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/positiveInteger
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer
 		// T011_obj_geo_scale.resolution_ground ->
-		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance/gmd:value//Decimal
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance
 		// T011_obj_geo_scale.resolution_scan ->
-		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gmd:Distance/gmd:value/Decimal
+		// gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance
 		String[] spacialResolutionScale = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCALE);
 		String[] spacialResolutionGround = IngridQueryHelper.getDetailValueAsArray(hit,
@@ -213,27 +207,28 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 		for (int i = 0; i < spacialResolutionScale.length; i++) {
 
 			if (IngridQueryHelper.hasValue(spacialResolutionScale[i])) {
-				this.addGCOPositiveInteger(mdDataIdentification.addElement("gmd:spatialResolution").addElement(
+				this.addGCOInteger(mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 				"gmd:MD_Resolution").addElement("gmd:equivalentScale").addElement(
 						"gmd:MD_RepresentativeFraction").addElement("gmd:denominator"), spacialResolutionScale[i]);
 			}
 
 			if (IngridQueryHelper.hasValue(spacialResolutionGround[i])) {
-				Element distance = mdDataIdentification.addElement("gmd:spatialResolution").addElement(
-				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gmd:Distance");
-				this.addGCODecimal(distance.addElement("gmd:value"), spacialResolutionGround[i]);
-				this.addGCOCharacterString(distance.addElement("gmd:uom").addElement("gmd:UomLength").addElement(
-						"gmd:uomName"), "meter");
+				mdDataIdentification.addElement("gmd:spatialResolution").addElement(
+				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "meter").addText(spacialResolutionGround[i]);
 			}
 
 			if (IngridQueryHelper.hasValue(spacialResolutionScan[i])) {
-				Element distance = mdDataIdentification.addElement("gmd:spatialResolution").addElement(
-				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gmd:Distance");
-				this.addGCODecimal(distance.addElement("gmd:value"), spacialResolutionScan[i]);
-				this.addGCOCharacterString(distance.addElement("gmd:uom").addElement("gmd:UomLength").addElement(
-						"gmd:uomName"), "dpi");
+				mdDataIdentification.addElement("gmd:spatialResolution").addElement(
+				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "dpi").addText(spacialResolutionScan[i]);;
 			}
 		}
+
+		// add language
+		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
+		if (IngridQueryHelper.hasValue(dataLang)) {
+			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
+		}
+		
 
 		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY);

@@ -20,7 +20,7 @@ import de.ingrid.utils.query.IngridQuery;
 public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
 
     /**
-     * Add a smXML character string to a parent element.
+     * Add a gco character string to a parent element.
      * 
      * @param parent
      * @param value
@@ -32,7 +32,7 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
     }
 
     /**
-     * Add a smXML URL to a parent element.
+     * Add a gco URL to a parent element.
      * 
      * @param parent
      * @param value
@@ -44,7 +44,7 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
     }
     
     /**
-     * Add a smXML Boolean to a parent element
+     * Add a gco Boolean to a parent element
      * 
      * @param parent
      * @param value
@@ -60,7 +60,7 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
     }
     
     /**
-     * Add a smXML real object to the parent.
+     * Add a gco real object to the parent.
      * 
      * @param parent
      * @param value
@@ -85,7 +85,7 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
     }
     
     /**
-     * Add a smXML decimal object to the parent.
+     * Add a gco decimal object to the parent.
      * 
      * @param parent
      * @param value
@@ -104,14 +104,21 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
     }
 
     /**
-     * Add a smXML positive Integer to the parent.
+     * Add a gco Integer to the parent.
      * 
      * @param parent
      * @param value
      * @return
      */
-    protected Element addGCOPositiveInteger(Element parent, String value) {
-        parent.addElement("gco:positiveInteger").addText(value);
+    protected Element addGCOInteger(Element parent, String value) {
+        String numberStr;
+    	try {
+			int n = Integer.parseInt(value);
+			numberStr = String.valueOf(n);
+		} catch (NumberFormatException e) {
+			numberStr = "NaN";
+		}
+        parent.addElement("gco:Integer").addText(numberStr);
         return parent;
     }
     
