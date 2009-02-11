@@ -6,6 +6,7 @@ package de.ingrid.interfaces.csw.transform.response;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -487,81 +488,6 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         if (IngridQueryHelper.hasValue(extDescription)) {
             super.addGCOCharacterString(exExent.addElement("gmd:description"), extDescription);
         }
-        
-        Element exVerticalExtent = exExent.addElement("gmd:verticalElement").addElement("gmd:EX_VerticalExtent");
-        // T01_object.vertical_extent_minimum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.minimumValue
-        super.addGCOReal(exVerticalExtent.addElement("gmd:minimumValue"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MINIMUM));
-        // T01_object.vertical_extent_maximum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.maximumValue
-        super.addGCOReal(exVerticalExtent.addElement("gmd:maximumValue"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MAXIMUM));
-        
-        // T01_object.vertical_extent_unit = Wert [Domain-ID Codelist 102] MD_Metadata/full:identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/unitOfMeasure/UomLength/uomName/CharacterString
-        String codeVal = "";
-        try {
-            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
-            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
-        } catch (NumberFormatException e) {}
-        super.addGCOCharacterString(exVerticalExtent.addElement("gmd:unitOfMeasure").addElement("gmd:UomLength").addElement("gmd:uomName"), codeVal);
-
-        // T01_object.vertical_extent_vdatum = Wert [Domain-Id Codelist 101] MD_Metadata/gmd:identificationInfo/srv:CSW_ServiceIdentification/srv:extent/gmd:EX_Extent/verticalElement/EX_VerticalExtent/verticalDatum/gmd:RS_Identifier/code/gco:CharacterString
-        codeVal = "";
-        try {
-            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
-            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(101), code, new Long(94));
-        } catch (NumberFormatException e) {}
-        super.addGCOCharacterString(exVerticalExtent.addElement("gmd:verticalDatum").addElement("gmd:RS_Identifier").addElement("gmd:code"), codeVal);
-        
-        // T01_object.time_from MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/temporalElement/EX_TemporalExtent/extent/TM_Primitive/gml:relatedTime/gml:TimePeriod/gml:beginPosition/gml:TimeInstant/gml:timePosition
-        String myDateType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_TYPE);
-        String beginDate = null;
-        String endDate = null;
-        if (myDateType != null && myDateType.equals("von")) {
-        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T1);
-        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T2);
-        } else if (myDateType != null && myDateType.equals("seit")) {
-        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T1);
-        } else if (myDateType != null && myDateType.equals("bis")) {
-        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T2);
-        } else if (myDateType != null && myDateType.equals("am")) {
-        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
-        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
-        }
-        if (beginDate != null || endDate != null) {
-            Element timePeriod = exExent.addElement("gmd:temporalElement").addElement("gmd:EX_TemporalExtent").addElement("gmd:extent").addElement("gmd:TM_Primitive").addElement("gml:relatedTime").addElement("gml:TimePeriod");
-            if (beginDate != null) {
-                timePeriod.addElement("gml:beginPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-                    .addText(Udk2CswDateFieldParser.instance().parse(beginDate));
-            }
-            if (endDate != null) {
-                timePeriod.addElement("gml:endPosition").addElement("gml:TimeInstant").addElement("gml:timePosition")
-                    .addText(Udk2CswDateFieldParser.instance().parse(endDate));
-            }
-        }
-
-        
-        // ATTN, HIT_KEY_OBJECT_COORDINATES values are only valid for UDK5 based data models
-        // They are never set in IGC catalog based data models
-        String[] coordinatesBezug = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_BEZUG);
-        String[] coordinatesGeoX1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_GEO_X1);
-        String[] coordinatesGeoX2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_GEO_X2);
-        String[] coordinatesGeoY1 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_GEO_Y1);
-        String[] coordinatesGeoY2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_COORDINATES_GEO_Y2);
-        for (int i=0; i< coordinatesBezug.length; i++) {
-            Element geographicElement = exExent.addElement("gmd:geographicElement");
-            // T019_coordinates.bezug MD_Metadata/gmd:identificationInfo/srv:CSW_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:RS_Identifier/code/gco:CharacterString
-            if (coordinatesBezug[i]!= null && coordinatesBezug[i].length() > 0) {
-            	super.addGCOCharacterString(geographicElement.addElement("gmd:EX_GeographicDescription").addElement("gmd:geographicIdentifier").addElement("gmd:MD_Identifier").addElement("gmd:code"), coordinatesBezug[i]);
-            }
-            geographicElement = exExent.addElement("gmd:geographicElement");
-            Element exGeographicBoundingBox = geographicElement.addElement("gmd:EX_GeographicBoundingBox");
-            // T019_coordinates.geo_x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/westBoundLongitude/gmd:approximateLongitude
-            exGeographicBoundingBox.addElement("gmd:westBoundLongitude").addElement("gmd:approximateLongitude").addText(coordinatesGeoX1[i].replaceAll(",", "."));
-            // T019_coordinates.geo_x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/eastBoundLongitude/gmd:approximateLongitude
-            exGeographicBoundingBox.addElement("gmd:eastBoundLongitude").addElement("gmd:approximateLongitude").addText(coordinatesGeoX2[i].replaceAll(",", "."));
-            // T019_coordinates.geo_y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/southBoundLatitude/gmd:approximateLatitude
-            exGeographicBoundingBox.addElement("gmd:southBoundLatitude").addElement("gmd:approximateLatitude").addText(coordinatesGeoY1[i].replaceAll(",", "."));
-            // T019_coordinates.geo_y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox/northBoundLatitude/gmd:approximateLatitude
-            exGeographicBoundingBox.addElement("gmd:northBoundLatitude").addElement("gmd:approximateLatitude").addText(coordinatesGeoY2[i].replaceAll(",", "."));
-        }
 
         String[] stTownship = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO);
         String[] stTownshipNames = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP);
@@ -586,25 +512,100 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             	super.addGCOCharacterString(exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicDescription").addElement("gmd:geographicIdentifier").addElement("gmd:MD_Identifier").addElement("gmd:code"), stTownship[i]);
             }
             
-            Element geographicElement = exExent.addElement("gmd:geographicElement");
-            Element exGeographicBoundingBox = geographicElement.addElement("gmd:EX_GeographicBoundingBox");
+            Element exGeographicBoundingBox = null;
             // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/gmd:approximateLongitude
             if (stBoxX1.length == stTownship.length) {
+            	if (exGeographicBoundingBox == null) {
+            		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
+            	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX1[i].replaceAll(",", "."));
             }
             // T01_st_bbox.x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.eastBoundLongitude/gmd:approximateLongitude
             if (stBoxX2.length == stTownship.length) {
+            	if (exGeographicBoundingBox == null) {
+            		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
+            	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX2[i].replaceAll(",", "."));
             }
             // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.southBoundLatitude/gmd:approximateLatitude
             if (stBoxY1.length == stTownship.length) {
+            	if (exGeographicBoundingBox == null) {
+            		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
+            	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY1[i].replaceAll(",", "."));
             }
             // T01_st_bbox.y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLatitude/gmd:approximateLatitude
             if (stBoxY2.length == stTownship.length) {
+            	if (exGeographicBoundingBox == null) {
+            		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
+            	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:northBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY2[i].replaceAll(",", "."));
             }
+        }        
+        
+        // T01_object.time_from MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/temporalElement/EX_TemporalExtent/extent/gml:TimePeriod/
+        String myDateType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_TYPE);
+        String beginDate = null;
+        String endDate = null;
+        if (myDateType != null && myDateType.equals("von")) {
+        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T1);
+        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T2);
+        } else if (myDateType != null && myDateType.equals("seit")) {
+        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T1);
+        } else if (myDateType != null && myDateType.equals("bis")) {
+        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T2);
+        } else if (myDateType != null && myDateType.equals("am")) {
+        	beginDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
+        	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
         }
+        if (beginDate != null || endDate != null) {
+            // gml:TimePeriod gml:id="timePeriod_ID_"
+        	Element timePeriod = exExent.addElement("gmd:temporalElement").addElement("gmd:EX_TemporalExtent").addElement("gmd:extent").addElement("gml:TimePeriod").addAttribute("gml:id", "timePeriod_ID_" + UUID.randomUUID());
+            if (beginDate != null) {
+                timePeriod.addElement("gml:beginPosition").addText(Udk2CswDateFieldParser.instance().parse(beginDate));
+            } else {
+            	timePeriod.addElement("gml:beginPosition").addText("");
+            }
+            if (endDate != null) {
+                timePeriod.addElement("gml:endPosition").addText(Udk2CswDateFieldParser.instance().parse(endDate));
+            } else {
+            	timePeriod.addElement("gml:endPosition").addText("");
+            }
+        }        
+        
+        Element exVerticalExtent = exExent.addElement("gmd:verticalElement").addElement("gmd:EX_VerticalExtent");
+        // T01_object.vertical_extent_minimum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.minimumValue
+        super.addGCOReal(exVerticalExtent.addElement("gmd:minimumValue"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MINIMUM));
+        // T01_object.vertical_extent_maximum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.maximumValue
+        super.addGCOReal(exVerticalExtent.addElement("gmd:maximumValue"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MAXIMUM));
+        
+        Element verticalCRS = exVerticalExtent.addElement("gmd:verticalCRS").addElement("gml:VerticalCRS").addAttribute("gml:id", "verticalCRSN_ID_" + UUID.randomUUID());
+        // T01_object.vertical_extent_unit = Wert [Domain-ID Codelist 102] MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis@gml:uom
+        String codeVal = "";
+        try {
+            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
+            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
+        } catch (NumberFormatException e) {}
+        verticalCRS.addElement("gml:identifier").addAttribute("codeSpace", "");
+        verticalCRS.addElement("gml:scope");
+        Element verticalCS = verticalCRS.addElement("gml:verticalCS").addElement("gml:VerticalCS").addAttribute("gml:id", "verticalCS_ID_" + UUID.randomUUID());
+        verticalCS.addElement("gml:identifier").addAttribute("codeSpace", "");
+        Element coordinateSystemAxis = verticalCS.addElement("gml:axis").addElement("gml:CoordinateSystemAxis").addAttribute("gml:uom", codeVal).addAttribute("gml:id", "coordinateSystemAxis_ID_" + UUID.randomUUID());
+        coordinateSystemAxis.addElement("gml:identifier").addAttribute("codeSpace", "");
+        coordinateSystemAxis.addElement("gml:axisAbbrev");
+        coordinateSystemAxis.addElement("gml:axisDirection").addAttribute("codeSpace", "");
+
+        // T01_object.vertical_extent_vdatum = Wert [Domain-Id Codelist 101] MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name
+        codeVal = "";
+        try {
+            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
+            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(101), code, new Long(94));
+        } catch (NumberFormatException e) {}
+        Element verticalDatum = verticalCRS.addElement("gml:verticalDatum").addElement("gml:VerticalDatum").addAttribute("gml:id", "verticalDatum_ID_" + UUID.randomUUID());
+        verticalDatum.addElement("gml:identifier").addAttribute("codeSpace", "");
+        verticalDatum.addElement("gml:name").addText("codeVal");
+        verticalDatum.addElement("gml:scope");
+
     }
 
 }
