@@ -23,7 +23,6 @@ import javax.xml.soap.SOAPMessage;
 
 import org.apache.axis.AxisFault;
 import org.apache.axis.Message;
-import org.apache.axis.soap.SOAP12Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -36,10 +35,7 @@ import de.ingrid.interfaces.csw.analyse.CommonAnalyser;
 import de.ingrid.interfaces.csw.analyse.DescRecAnalyser;
 import de.ingrid.interfaces.csw.analyse.GetCapAnalyser;
 import de.ingrid.interfaces.csw.analyse.GetRecAnalyser;
-import de.ingrid.interfaces.csw.analyse.GetRecByIdAnalyser;
-import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.interfaces.csw.exceptions.CSWException;
-import de.ingrid.interfaces.csw.tools.AxisTools;
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.interfaces.csw.tools.IOTools;
 import de.ingrid.interfaces.csw.tools.SOAPTools;

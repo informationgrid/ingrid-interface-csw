@@ -9,20 +9,16 @@ package de.ingrid.interfaces.csw.tools;
 
 import java.io.InputStream;
 
-import org.apache.axis.message.SOAPEnvelope;
 import org.apache.axis.Message;
 import org.apache.axis.SOAPPart;
-import org.apache.axis.soap.SOAP12Constants;
-import org.apache.axis.soap.SOAP11Constants;
-import org.apache.axis.soap.SOAPConstants;
 import org.apache.axis.message.MimeHeaders;
-
-import org.w3c.dom.Document;
-
+import org.apache.axis.message.SOAPEnvelope;
+import org.apache.axis.soap.SOAP11Constants;
+import org.apache.axis.soap.SOAP12Constants;
+import org.apache.axis.soap.SOAPConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import de.ingrid.interfaces.csw.CSWServlet;
+import org.w3c.dom.Document;
 
 /**
  * @author rschaefer
@@ -38,7 +34,7 @@ public final class AxisTools {
      * 
      */
     private AxisTools() { }
-    
+
     /**
      * 
      * @param inputStream InputStream 

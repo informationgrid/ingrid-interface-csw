@@ -13,8 +13,6 @@ import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
 
 import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
