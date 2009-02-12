@@ -202,6 +202,22 @@ public class SpatialOpsImpl implements SpatialOps {
 							if (elemBox.getLocalName().equals(FilterConst.BOX)) {
 								return elemBox;
 							}
+						} else if (nodeListItem.getLocalName().equals(FilterConst.ENVELOPE)) {
+							elemBox = (Element) nodeListItem;
+							// test if namespace is correct
+							String nameSpaceURI = elemBox.getNamespaceURI();
+
+							if (nameSpaceURI != null
+									&& !"".equals(nameSpaceURI)
+									&& !Namespaces.GML.equals(nameSpaceURI)) {
+
+								Exception e = new CSWOperationNotSupportedException(
+										"Geometry Element Box within namespace URI '"
+												+ nameSpaceURI
+												+ "' is not supported.", "Filter");
+								throw e;
+							}
+							return elemBox;
 						}
 					}
 				}

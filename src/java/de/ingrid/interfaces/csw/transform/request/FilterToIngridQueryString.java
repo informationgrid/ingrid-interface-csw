@@ -14,6 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
+import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.interfaces.csw.exceptions.CSWFilterException;
 import de.ingrid.interfaces.csw.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw.exceptions.CSWMissingParameterValueException;
@@ -134,11 +135,14 @@ public class FilterToIngridQueryString {
 	 * the log object
 	 */
 	private static Log log = LogFactory.getLog(FilterToIngridQueryString.class);
+	
+	private SessionParameters _session;
 
 	/**
 	 * constructor.
 	 */
-	public FilterToIngridQueryString() {
+	public FilterToIngridQueryString(SessionParameters session) {
+		_session = session;
 	}
 
 	/**
@@ -188,6 +192,9 @@ public class FilterToIngridQueryString {
 			throw new CSWNoApplicableCodeException(e + " in method FilterToIngridQueryString.generateQueryFromFilter(...)");
 			// catch all other exceptions
 		} catch (Exception e) {
+			if (log.isDebugEnabled()) {
+				log.debug(e + " in method FilterToIngridQueryString.generateQueryFromFilter(...)", e);
+			}
 			throw new CSWNoApplicableCodeException(e + " in method FilterToIngridQueryString.generateQueryFromFilter(...)");
 		}
 
@@ -536,6 +543,22 @@ public class FilterToIngridQueryString {
 			if (node.getLocalName().equals("Y")) {
 				maxy = node.getChildNodes().item(0).getNodeValue();
 			}
+		} else if (nlCoords.item(0).getLocalName().equalsIgnoreCase("lowerCorner")) {
+			coordErrorLocator = "gml:envelope";
+			try {
+				String lowerCorner = nlCoords.item(0).getTextContent().trim();
+				String upperCorner = nlCoords.item(1).getTextContent().trim();
+				String[] lowerCornerCoords = lowerCorner.split(" ");
+				String[] upperCornerCoords = upperCorner.split(" ");
+				minx = lowerCornerCoords[0];
+				miny = lowerCornerCoords[1];
+				maxx = upperCornerCoords[0];
+				maxy = upperCornerCoords[1];
+			} catch (Exception e) {
+				throw new CSWInvalidParameterValueException(
+						"Values of lowerCorner, upperCorner are not correct", coordErrorLocator);
+			}
+			
 		}
 
 		// test coordinates
@@ -660,6 +683,12 @@ public class FilterToIngridQueryString {
 						literal = literal.substring(0, timeStartPos);
 					}
 				}
+				
+				// transform <.. ..> to "<.. ..>"
+				if (literal.indexOf(' ') > -1) {
+					literal = "\"" + literal + "\"";
+				}
+				
 				sb.append(literal);
 			} else if (obj instanceof Double || obj instanceof Integer) {
 				if (field.equals("WEST") || field.equals("OST")
@@ -774,6 +803,22 @@ public class FilterToIngridQueryString {
 		if (not) {
 			not = false;
 		}
+		
+		// check for type query
+		if (co.getFirstExpression().getExpression() instanceof Expression.PropertyName && co.getSecondExpression().getExpression() instanceof Expression.Literal) {
+			String property = ((Expression.PropertyName) co.getFirstExpression().getExpression()).getPropertyName();
+			String inPropWithoutNS = property.indexOf(':') > -1 ? property.substring(property.indexOf(':') + 1, property.length()): property;
+
+			if (inPropWithoutNS.equalsIgnoreCase("type")) {	
+				String type = (String)((Expression.Literal)  co.getSecondExpression().getExpression()).getLiteral();
+				if (type.equalsIgnoreCase("service") || type.equalsIgnoreCase("application")) {
+					_session.setTypeNameIsService(true);
+				} else {
+					_session.setTypeNameIsDataset(true);
+				}
+			}
+		}
+
 
 		runExpr(co.getFirstExpression());
 		// check for date string pattern
@@ -828,7 +873,8 @@ public class FilterToIngridQueryString {
 		Object obj = literal.getLiteral();
 
 		if (obj instanceof String) {
-			String literalValue = (String) obj;
+			String literalValue = ((String) obj).trim();
+			
 			char[] charArray = literalValue.toCharArray();
 			literalValue = "";
 			char currentChar;
@@ -849,6 +895,18 @@ public class FilterToIngridQueryString {
 					literalValue = literalValue + currentChar;
 				}
 			} // end for
+
+			// Leading wildcards and singleChars are not possible with
+			// lucene!
+			// Therefore we have to remove them!
+			while (literalValue.startsWith("*") && literalValue.length() != 1) {
+				literalValue = literalValue.substring(1);
+			}
+
+			while (literalValue.startsWith("?") && literalValue.length() != 1) {
+				literalValue = literalValue.substring(1);
+			}
+			
 			literal.setLiteral(literalValue);
 			propIsLike.setLiteral(literal);
 		}

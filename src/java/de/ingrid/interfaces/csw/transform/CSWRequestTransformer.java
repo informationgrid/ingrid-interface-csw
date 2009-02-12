@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.xml.soap.SOAPElement;
 
+import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.utils.query.IngridQuery;
 
 /**
@@ -26,7 +27,7 @@ public interface CSWRequestTransformer {
      * @return ingridQuery IngridQuery
      * @throws Exception e
      */
-    IngridQuery transform(final SOAPElement soapElementFilter) throws Exception;
+    IngridQuery transform(final SOAPElement soapElementFilter, SessionParameters session) throws Exception;
     
     
     /**

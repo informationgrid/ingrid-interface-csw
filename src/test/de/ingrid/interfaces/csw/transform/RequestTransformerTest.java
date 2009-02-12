@@ -41,7 +41,7 @@ public class RequestTransformerTest extends TestCase {
         
         String queryString = null;
         
-        ingridQuery = requestTransformer.transform(soapElementFilter);
+        ingridQuery = requestTransformer.transform(soapElementFilter, null);
         
         assertNotNull(ingridQuery);
         
@@ -58,7 +58,7 @@ public class RequestTransformerTest extends TestCase {
         
        
         
-        ingridQuery = requestTransformer.transform(soapElementFilter);
+        ingridQuery = requestTransformer.transform(soapElementFilter, null);
         assertNotNull(ingridQuery);
         queryString = ingridQueryToString.transform(ingridQuery);
         assertEquals("(AND ( AND fische  AND halle NOT ( OR saale  OR hufeisensee )))", queryString);
@@ -67,38 +67,38 @@ public class RequestTransformerTest extends TestCase {
         //System.out.println("get records as ingrid query string: " + queryString);
         
         soapElementFilter = getSOAPElementFilterFromString(TestRequests.GETRECORDS_WILDCARD);
-        ingridQuery = requestTransformer.transform(soapElementFilter);
+        ingridQuery = requestTransformer.transform(soapElementFilter, null);
         assertNotNull(ingridQuery);
         queryString = ingridQueryToString.transform(ingridQuery);
         assertEquals("( AND zip:3* )", queryString);
 
         soapElementFilter = getSOAPElementFilterFromString(TestRequests.GETRECORDS_MODIFIED);
-        ingridQuery = requestTransformer.transform(soapElementFilter);
+        ingridQuery = requestTransformer.transform(soapElementFilter, null);
         assertNotNull(ingridQuery);
         queryString = ingridQueryToString.transform(ingridQuery);
         assertEquals("( AND t01_object.mod_time:[19901231 TO 99990101] )", queryString);
         
         soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_BW4);
-        ingridQuery = requestTransformer.transform(soapElementFilter);
+        ingridQuery = requestTransformer.transform(soapElementFilter, null);
         assertNotNull(ingridQuery);
         queryString = ingridQueryToString.transform(ingridQuery);
 
         soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_HH1);
         try {
-        	ingridQuery = requestTransformer.transform(soapElementFilter);
+        	ingridQuery = requestTransformer.transform(soapElementFilter, null);
         	// must throw an exception
         	assertTrue(false);
         } catch (Exception e) {
         }
         
         soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_MV1);
-        ingridQuery = requestTransformer.transform(soapElementFilter);
+        ingridQuery = requestTransformer.transform(soapElementFilter, null);
         assertNotNull(ingridQuery);
         queryString = ingridQueryToString.transform(ingridQuery);
         assertEquals("( AND title:Wasser )", queryString);
 
         soapElementFilter = getSOAPElementFilterFromString(TestRequests.GET_RECORDS_MV2);
-        ingridQuery = requestTransformer.transform(soapElementFilter);
+        ingridQuery = requestTransformer.transform(soapElementFilter, null);
         assertNotNull(ingridQuery);
         queryString = ingridQueryToString.transform(ingridQuery);
         assertEquals("( AND title:Wasser )", queryString);

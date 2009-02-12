@@ -12,6 +12,7 @@ import javax.xml.soap.SOAPElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.interfaces.csw.exceptions.CSWException;
 import de.ingrid.interfaces.csw.tools.SOAPTools;
 import de.ingrid.interfaces.csw.tools.XMLTools;
@@ -38,11 +39,11 @@ public class RequestTransformer implements CSWRequestTransformer {
      * 
      * @see de.ingrid.interfaces.csw.transform.CSWRequestTransformer#transform(javax.xml.soap.SOAPElement)
      */
-    public final IngridQuery transform(final SOAPElement soapElementFilter) throws Exception {
+    public final IngridQuery transform(final SOAPElement soapElementFilter, SessionParameters session) throws Exception {
         IngridQuery ingridQuery = null;
         String ingridQueryString = null;
         FilterImpl filter = getFilterFromSOAPElem(soapElementFilter);
-        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(session);
         ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
         QueryStringParser parser = new QueryStringParser(new StringReader(ingridQueryString));
         try {

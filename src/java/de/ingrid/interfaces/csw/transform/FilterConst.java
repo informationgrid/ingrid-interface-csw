@@ -49,6 +49,7 @@ public interface FilterConst {
 	public static final String Beyond = "Beyond"; 
 	public static final String BBOX = "BBOX";
 	public static final String BOX = "Box";
+	public static final Object ENVELOPE = "Envelope";
 	public static final String ATTR_BOX_CS = "cs";
 	public static final String ATTR_BOX_TS = "ts";
 	public static final String ATTR_BOX_DECIMAL = "decimal";

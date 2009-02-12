@@ -61,7 +61,7 @@ public class FilterToIngridQueryStringTest extends TestCase {
         FilterImpl filter = new FilterImpl(elemFilter);
         
         
-        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(null);
         
         ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
         
@@ -102,7 +102,7 @@ public class FilterToIngridQueryStringTest extends TestCase {
         FilterImpl filter = new FilterImpl(elemFilter);
         
         
-        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(null);
         
         ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
         
@@ -143,7 +143,7 @@ public class FilterToIngridQueryStringTest extends TestCase {
         FilterImpl filter = new FilterImpl(elemFilter);
         
         
-        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(null);
         
         ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
         
@@ -184,7 +184,7 @@ public class FilterToIngridQueryStringTest extends TestCase {
         FilterImpl filter = new FilterImpl(elemFilter);
         
         
-        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(null);
         
         ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
         
@@ -225,7 +225,7 @@ public class FilterToIngridQueryStringTest extends TestCase {
         FilterImpl filter = new FilterImpl(elemFilter);
         
         
-        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(null);
         
         ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
         
@@ -266,7 +266,7 @@ public class FilterToIngridQueryStringTest extends TestCase {
         FilterImpl filter = new FilterImpl(elemFilter);
         
         
-        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(null);
         
        try  {
            
@@ -296,7 +296,7 @@ public class FilterToIngridQueryStringTest extends TestCase {
         
         stringBuffer.append("BLA");
         
-        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(null);
         
         stringBuffer = filterToIngrid.deletePreOperator(stringBuffer);
         
