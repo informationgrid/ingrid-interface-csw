@@ -72,6 +72,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// spatialRepresentationInfo
 		this.addSpatialRepresentationInfo(metaData, hit);
 
+		// referenceSystemInfo
+		this.addReferenceSystemInfo(metaData, hit);
+
 		if (udkClass.equals("1")) {
 			this.addIdentificationInfoDataset(metaData, hit);
 		} else {
@@ -92,9 +95,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			this.addDataQualityInfoService(metaData, hit);
 		}
 
-		// referenceSystemInfo
-		this.addReferenceSystemInfo(metaData, hit);
-
 		return metaData;
 	}
 
@@ -113,7 +113,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			String myDate = portrayalCatalogInfoDates[i];
 			if (myDate != null && myDate.length() > 0) {
 				Element ciDate = portrayalCICitation.addElement("gmd:date").addElement("gmd:CI_Date");
-				ciDate.addElement("gmd:date").addElement("gmd:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(myDate));
+				ciDate.addElement("gmd:date").addElement("gco:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(myDate));
 				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
 						"codeListValue", "creation");
@@ -311,9 +311,13 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			codeVal = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_REFERENCESYSTEM_ID);
 		}
 		if (IngridQueryHelper.hasValue(codeVal)) {
-			this.addGCOCharacterString(metaData.addElement("gmd:referenceSystemInfo").addElement(
-					"gmd:MD_ReferenceSystem").addElement("gmd:referenceSystemIdentifier").addElement(
-					"gmd:RS_Identifier").addElement("gmd:code"), codeVal);
+			Element rsIdentifier = metaData.addElement("gmd:referenceSystemInfo").addElement(
+			"gmd:MD_ReferenceSystem").addElement("gmd:referenceSystemIdentifier").addElement(
+			"gmd:RS_Identifier");
+			this.addGCOCharacterString(rsIdentifier.addElement("gmd:code"), codeVal);
+			if (codeVal.startsWith("EPSG")) {
+				this.addGCOCharacterString(rsIdentifier.addElement("gmd:codeSpace"), "EPSG");
+			}
 		}
 
 	}
@@ -400,17 +404,16 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			Element completenessCommission = dqQualityInfo.addElement("gmd:report").addElement("gmd:DQ_CompletenessCommission");
 			this.addGCOCharacterString(completenessCommission.addElement("gmd:measureDescription"), "completeness");
 			Element dqQuantitativeResult = completenessCommission.addElement("gmd:result").addElement("gmd:DQ_QuantitativeResult");
-			dqQuantitativeResult.addElement("gmd:value").addElement("gmd:Record").addText(completenessComission);
 			Element unitDefinition = dqQuantitativeResult.addElement("gmd:valueUnit").addElement("gml:UnitDefinition").addAttribute("gml:id", "unitDefinition_ID_" + UUID.randomUUID());
 			unitDefinition.addElement("gml:identifier").addAttribute("codeSpace", "");
 			unitDefinition.addElement("gml:name").addText("percent");
 			unitDefinition.addElement("gml:quantityType").addText("completeness");
 			unitDefinition.addElement("gml:catalogSymbol").addText("%");
+			dqQuantitativeResult.addElement("gmd:value").addElement("gco:Record").addText(completenessComission);
 		}
 
 		// T011_obj_geo.pos_accuracy_vertical ->
 		// MD_Metadata/dataQualityInfo/DQ_DataQuality/report/DQ_RelativeInternalPositionalAccuracy[measureDescription/CharacterString='vertical']/DQ_QuantitativeResult.value
-
 		String verticalAccuracy = IngridQueryHelper.getDetailValueAsString(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL);
 		if (IngridQueryHelper.hasValue(verticalAccuracy)) {
@@ -418,9 +421,14 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					.addElement("gmd:DQ_RelativeInternalPositionalAccuracy");
 			this.addGCOCharacterString(dqRelativeInternalPositionalAccuracy.addElement("gmd:measureDescription"),
 					"vertical");
-			
-			dqRelativeInternalPositionalAccuracy.addElement("gmd:DQ_QuantitativeResult").addElement("gmd:value")
-					.addElement("gmd:Record").addText(verticalAccuracy);
+
+			Element dqQuantitativeResult = dqRelativeInternalPositionalAccuracy.addElement("gmd:result").addElement("gmd:DQ_QuantitativeResult");
+			Element unitDefinition = dqQuantitativeResult.addElement("gmd:valueUnit").addElement("gml:UnitDefinition").addAttribute("gml:id", "unitDefinition_ID_" + UUID.randomUUID());
+			unitDefinition.addElement("gml:identifier").addAttribute("codeSpace", "");
+			unitDefinition.addElement("gml:name").addText("meter");
+			unitDefinition.addElement("gml:quantityType").addText("vertical accuracy");
+			unitDefinition.addElement("gml:catalogSymbol").addText("m");
+			dqQuantitativeResult.addElement("gmd:value").addElement("gco:Record").addText(verticalAccuracy);
 		}
 
 		// T011_obj_geo.rec_exact ->
@@ -432,15 +440,24 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					.addElement("gmd:DQ_RelativeInternalPositionalAccuracy");
 			this.addGCOCharacterString(dqRelativeInternalPositionalAccuracy.addElement("gmd:measureDescription"),
 					"geographic");
-			dqRelativeInternalPositionalAccuracy.addElement("gmd:DQ_QuantitativeResult").addElement("gmd:value")
-					.addElement("gmd:Record").addText(geographicAccuracy);
+
+			Element dqQuantitativeResult = dqRelativeInternalPositionalAccuracy.addElement("gmd:result").addElement("gmd:DQ_QuantitativeResult");
+			Element unitDefinition = dqQuantitativeResult.addElement("gmd:valueUnit").addElement("gml:UnitDefinition").addAttribute("gml:id", "unitDefinition_ID_" + UUID.randomUUID());
+			unitDefinition.addElement("gml:identifier").addAttribute("codeSpace", "");
+			unitDefinition.addElement("gml:name").addText("meter");
+			unitDefinition.addElement("gml:quantityType").addText("geographic accuracy");
+			unitDefinition.addElement("gml:catalogSymbol").addText("m");
+			dqQuantitativeResult.addElement("gmd:value").addElement("gco:Record").addText(geographicAccuracy);
 		}		
 		
 		// T011_obj_geo.special_base ->
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/udk:LI_Lineage/statement
-		Element liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
+		Element liLineage = null;
 		String statement = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_SPECIAL_BASE);
 		if (IngridQueryHelper.hasValue(statement)) {
+			if (liLineage == null) {
+				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
+			}
 			this.addGCOCharacterString(liLineage.addElement("gmd:statement"), IngridQueryHelper.getDetailValueAsString(
 					hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_SPECIAL_BASE));
 		}
@@ -448,6 +465,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/LI_Lineage/processStep/LI_ProcessStep/description
 		String processStepDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_GEO_METHOD);
 		if (IngridQueryHelper.hasValue(processStepDescription)) {
+			if (liLineage == null) {
+				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
+			}
 			this.addGCOCharacterString(liLineage.addElement("gmd:processStep").addElement("gmd:LI_ProcessStep")
 					.addElement("gmd:description"), processStepDescription);
 		}
@@ -455,6 +475,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// MD_Metadata/dataQualityInfo/DQ_DataQuality/lineage/LI_Lineage/source/LI_Source/description
 		String liSourceDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_GEO_DATA_BASE);
 		if (IngridQueryHelper.hasValue(liSourceDescription)) {
+			if (liLineage == null) {
+				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
+			}
 			this.addGCOCharacterString(liLineage.addElement("gmd:source").addElement("gmd:LI_Source").addElement(
 					"gmd:description"), liSourceDescription);
 		}
