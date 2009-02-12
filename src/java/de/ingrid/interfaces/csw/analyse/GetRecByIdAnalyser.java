@@ -44,7 +44,7 @@ public class GetRecByIdAnalyser implements CSWAnalyser {
     * @throws Exception e
     * @see com.gistec.ingeocsw.analyse.CSWAnalyser#analyse(javax.xml.soap.SOAPBodyElement)
     */
-    public final boolean analyse(final SOAPBodyElement be) throws Exception {
+    public final boolean analyse(final Element be) throws Exception {
        
         boolean getRecordByIdRequestValid = false;
          
@@ -59,7 +59,7 @@ public class GetRecByIdAnalyser implements CSWAnalyser {
         }
         
          
-         opName = be.getElementName().getLocalName();
+         opName = be.getLocalName();
         
          if (opName == null) {
             
@@ -107,7 +107,7 @@ public class GetRecByIdAnalyser implements CSWAnalyser {
      * @return boolean
      * @throws Exception e
      */
-    private boolean analyseId(final SOAPBodyElement be) throws Exception {
+    private boolean analyseId(final Element be) throws Exception {
         
         
         

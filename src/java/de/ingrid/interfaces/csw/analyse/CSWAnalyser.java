@@ -6,7 +6,7 @@ package de.ingrid.interfaces.csw.analyse;
 
 import java.util.Properties;
 
-import javax.xml.soap.SOAPBodyElement;
+import org.w3c.dom.Element;
 
 /**
  * interface for OGC CSW analysers
@@ -21,7 +21,7 @@ public interface CSWAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	boolean analyse(final SOAPBodyElement be) throws Exception;
+	boolean analyse(final Element be) throws Exception;
 
 	/**
 	 * Checks if the given request parameters are correct.

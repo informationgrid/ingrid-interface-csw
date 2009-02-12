@@ -12,6 +12,7 @@ import javax.xml.soap.SOAPBodyElement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.CSW;
@@ -163,7 +164,7 @@ public final class CommonAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	public boolean analyseResultType(final SOAPBodyElement be) throws Exception {
+	public boolean analyseResultType(final Element be) throws Exception {
 		String resultType = null;
 		resultType = be.getAttribute("resultType");
 		if (resultType != null) {
@@ -189,7 +190,7 @@ public final class CommonAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	public boolean analyseElementSetName(final SOAPBodyElement be) throws Exception {
+	public boolean analyseElementSetName(final Element be) throws Exception {
 		String elementSetName = null;
 		Element elemElementSetName = null;
 		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "ElementSetName");
@@ -227,7 +228,7 @@ public final class CommonAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	public boolean analyseOutputSchema(final SOAPBodyElement be) throws Exception {
+	public boolean analyseOutputSchema(final Element be) throws Exception {
 		String outputSchema = null;
 		outputSchema = be.getAttribute("outputSchema");
 		if (outputSchema != null) {
@@ -249,7 +250,7 @@ public final class CommonAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	public boolean analyseOutputFormat(final SOAPBodyElement be) throws Exception {
+	public boolean analyseOutputFormat(final Element be) throws Exception {
 		String outputFormat = null;
 		outputFormat = be.getAttribute("outputFormat");
 		if (outputFormat != null && !outputFormat.equalsIgnoreCase("text/xml") && !outputFormat.equalsIgnoreCase("application/xml")) {
@@ -265,7 +266,7 @@ public final class CommonAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	public boolean analyseSchemaLanguage(final SOAPBodyElement be) throws Exception {
+	public boolean analyseSchemaLanguage(final Element be) throws Exception {
 		String schemaLanguage = null;
 		schemaLanguage = be.getAttribute("schemaLanguage");
 		if (schemaLanguage != null && !schemaLanguage.equalsIgnoreCase("XMLSCHEMA") && !schemaLanguage.equalsIgnoreCase("http://www.w3.org/XML/Schema")) {
@@ -281,7 +282,7 @@ public final class CommonAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	public boolean analyseService(final SOAPBodyElement be) throws Exception {
+	public boolean analyseService(final Element be) throws Exception {
 		String service = null;
 		service = be.getAttribute("service");
 		if (service == null) {
@@ -325,7 +326,7 @@ public final class CommonAnalyser {
 	 * @return String
 	 * @throws Exception e
 	 */
-	public String analyseVersion(final SOAPBodyElement be) throws Exception {
+	public String analyseVersion(final Element be) throws Exception {
 		String version = null;
 		version = be.getAttribute("version");
 		if (version == null) {

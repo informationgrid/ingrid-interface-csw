@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.xml.soap.SOAPBodyElement;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.exceptions.CSWOperationNotSupportedException;
@@ -27,7 +28,7 @@ public class GetCapAnalyser implements CSWAnalyser {
 	 * @throws Exception e
 	 * @see com.gistec.ingeocsw.analyse.CSWAnalyser#analyse(javax.xml.soap.SOAPBodyElement)
 	 */
-	public final boolean analyse(final SOAPBodyElement be) throws Exception {
+	public final boolean analyse(final Element be) throws Exception {
 		boolean getCapRequestValid = false;
 		String opName = null;
 		CommonAnalyser commonAnalyser = new CommonAnalyser(null);
@@ -35,7 +36,7 @@ public class GetCapAnalyser implements CSWAnalyser {
 		if (be == null) {
 			throw new Exception("analyse: SOAPBodyElement is null.");
 		}
-		opName = be.getElementName().getLocalName();
+		opName = be.getLocalName();
 
 		if (opName == null) {
 			throw new Exception("analyse: opName is null.");

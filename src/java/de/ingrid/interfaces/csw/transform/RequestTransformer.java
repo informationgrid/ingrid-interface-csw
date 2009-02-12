@@ -87,11 +87,15 @@ public class RequestTransformer implements CSWRequestTransformer {
      * @throws Exception e
      */
     public final FilterImpl getFilterFromSOAPElem(final SOAPElement soapElementFilter) throws Exception {
-        Element  elemFilter = null;
-        Document doc = XMLTools.create();
-        doc.appendChild(doc.createElement("Filter"));
-        elemFilter = doc.getDocumentElement();
-        elemFilter = (Element) SOAPTools.copyNode(soapElementFilter, elemFilter);
-        return new FilterImpl(elemFilter);
+        if (soapElementFilter == null) {
+        	return null;
+        } else {
+	        Element  elemFilter = null;
+	        Document doc = XMLTools.create();
+	        doc.appendChild(doc.createElement("Filter"));
+	        elemFilter = doc.getDocumentElement();
+	    	elemFilter = (Element) SOAPTools.copyNode(soapElementFilter, elemFilter);
+	        return new FilterImpl(elemFilter);
+        }
     }
 }

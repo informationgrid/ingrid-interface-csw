@@ -18,7 +18,9 @@ import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.analyse.CommonAnalyser;
@@ -69,8 +71,8 @@ public class CSW {
      * @throws Exception
      *             e
      */
-    protected final Message doRequest(final SOAPMessage soapRequestMessage) throws Exception {
-        Message soapResponseMessage = null;
+    protected final Message doSoapRequest(final SOAPMessage soapRequestMessage) throws Exception {
+        Document responseDoc = null;
         SessionParameters sessionParameters = new SessionParameters();
         CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
         SOAPBody body = soapRequestMessage.getSOAPBody();
@@ -100,7 +102,7 @@ public class CSW {
         if (sessionParameters.isOperationIsGetCap()) {
             GetCapAnalyser getCapAnalyser = new GetCapAnalyser();
             if (getCapAnalyser.analyse(be)) {
-                soapResponseMessage = doGetCapabilitiesRequest();
+            	responseDoc = doGetCapabilitiesRequest();
             }
         } else if (sessionParameters.isOperationIsGetRecs()) {
             GetRecAnalyser getRecAnalyser = new GetRecAnalyser(sessionParameters);
@@ -117,24 +119,99 @@ public class CSW {
                  * answer");
                  */
                 // The original method:
-                soapResponseMessage = doGetRecordsRequest(be, sessionParameters);
+            	responseDoc = doGetRecordsRequest(be, sessionParameters);
             }
         } else if (sessionParameters.isOperationIsGetRecById()) {
             GetRecByIdAnalyser getRecByIdAnalyser = new GetRecByIdAnalyser(sessionParameters);
 
             if (getRecByIdAnalyser.analyse(be)) {
-                soapResponseMessage = doGetRecordByIdRequest(be, sessionParameters);
+            	responseDoc = doGetRecordByIdRequest(be, sessionParameters);
             }
         } else if (sessionParameters.isOperationIsDescRec()) {
             DescRecAnalyser descRecAnalyser = new DescRecAnalyser();
 
             if (descRecAnalyser.analyse(be)) {
-                soapResponseMessage = doDescribeRecordRequest();
+            	responseDoc = doDescribeRecordRequest();
             }
         }
+        Message soapResponseMessage = AxisTools.createSOAPMessage(responseDoc);
         return soapResponseMessage;
     }
 
+    /**
+     * This method performs a SOAP request
+     * 
+     * @param soapRequestMessage
+     *            Message
+     * @return soapResponseMessage Message
+     * @throws Exception
+     *             e
+     */
+    protected final Document doPostRequest(final Document inDoc) throws Exception {
+        Document respDoc = null;
+        SessionParameters sessionParameters = new SessionParameters();
+        CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
+        Element be = (Element)inDoc.getFirstChild();
+
+        // String nameSpacePrefix = be.getPrefix();
+        // System.out.println("nameSpacePrefix: " + nameSpacePrefix);
+
+        // test if namespace is correct
+        String nameSpaceURI = be.getNamespaceURI();
+        // System.out.println("doRequest nameSpaceURI: " + nameSpaceURI);
+
+        // String opName = be.getNodeName();
+        String opName = be.getLocalName();
+
+        if (nameSpaceURI != null && !"".equals(nameSpaceURI) && !Namespaces.CSW.equals(nameSpaceURI) && !Namespaces.CSW_2_0_2.equals(nameSpaceURI)) {
+            Exception e = new CSWOperationNotSupportedException("Operation '" + opName + "' within namespace URI '"
+                    + nameSpaceURI + "' is not supported.", opName);
+            throw e;
+        }
+
+        // TODO remove opName analyse in analysers?
+        if (!commonAnalyser.analyseOperationName(opName)) {
+            throw new CSWOperationNotSupportedException("Operation '" + opName + "' is not supported.", opName);
+        }
+
+        if (sessionParameters.isOperationIsGetCap()) {
+            GetCapAnalyser getCapAnalyser = new GetCapAnalyser();
+            if (getCapAnalyser.analyse(be)) {
+            	respDoc = doGetCapabilitiesRequest();
+            }
+        } else if (sessionParameters.isOperationIsGetRecs()) {
+            GetRecAnalyser getRecAnalyser = new GetRecAnalyser(sessionParameters);
+
+            if (getRecAnalyser.analyse(be)) {
+                /*
+                 * // DEBUG Dirk Schwarzmann // Return a predefined file with
+                 * reference content of GeoTask... log.debug("Sending fake
+                 * GetRecords answer (from GeoTask)"); URL url = new
+                 * URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_FAKERESPONSE));
+                 * Reader reader = new InputStreamReader(url.openStream());
+                 * Document doc = XMLTools.parse(reader); soapResponseMessage =
+                 * AxisTools.createSOAPMessage(doc); log.debug("Finished faking
+                 * answer");
+                 */
+                // The original method:
+            	respDoc = doGetRecordsRequest(be, sessionParameters);
+            }
+        } else if (sessionParameters.isOperationIsGetRecById()) {
+            GetRecByIdAnalyser getRecByIdAnalyser = new GetRecByIdAnalyser(sessionParameters);
+
+            if (getRecByIdAnalyser.analyse(be)) {
+            	respDoc = doGetRecordByIdRequest(be, sessionParameters);
+            }
+        } else if (sessionParameters.isOperationIsDescRec()) {
+            DescRecAnalyser descRecAnalyser = new DescRecAnalyser();
+
+            if (descRecAnalyser.analyse(be)) {
+            	respDoc = doDescribeRecordRequest();
+            }
+        }
+        return respDoc;
+    }    
+    
     /**
      * performs a describe record request
      * 
@@ -142,13 +219,10 @@ public class CSW {
      * @throws Exception
      *             e
      */
-    private Message doDescribeRecordRequest() throws Exception {
-        Message soapResponseMessage = null;
+    private Document doDescribeRecordRequest() throws Exception {
         URL url = new URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_DESCRIBERECORD));
         Reader reader = new InputStreamReader(url.openStream());
-        Document doc = XMLTools.parse(reader);
-        soapResponseMessage = AxisTools.createSOAPMessage(doc);
-        return soapResponseMessage;
+        return XMLTools.parse(reader);
     }
 
     /**
@@ -158,7 +232,7 @@ public class CSW {
      * @throws Exception
      *             e
      */
-    private Message doGetCapabilitiesRequest() throws Exception {
+    private Document doGetCapabilitiesRequest() throws Exception {
         Message soapResponseMessage = null;
         URL url = new URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_GETCAPABILITIES));
         Reader reader = new InputStreamReader(url.openStream());
@@ -188,8 +262,7 @@ public class CSW {
 			nodes.item(idx).setTextContent(s);
 		}
         
-        soapResponseMessage = AxisTools.createSOAPMessage(doc);
-        return soapResponseMessage;
+        return doc;
     }
 
     /**
@@ -203,9 +276,8 @@ public class CSW {
      * @throws Exception
      *             e
      */
-    private Message doGetRecordsRequest(final SOAPBodyElement be, final SessionParameters sessionParameters)
+    private Document doGetRecordsRequest(final Element be, final SessionParameters sessionParameters)
             throws Exception {
-        Message soapResponseMessage = null;
 
         // transform the OGC filter (request) into IngridQuery; including
         // SessionParameters
@@ -216,9 +288,7 @@ public class CSW {
         IngridHits hits = doBusRequest(ingridQuery, sessionParameters);
 
         CSWResponseTransformer responseTransformer = new CSWResponseTransformer();
-        Document responseDoc = responseTransformer.transform(hits, ingridQuery, sessionParameters);
-        soapResponseMessage = AxisTools.createSOAPMessage(responseDoc);
-        return soapResponseMessage;
+        return responseTransformer.transform(hits, ingridQuery, sessionParameters);
     }
 
     /**
@@ -232,7 +302,7 @@ public class CSW {
      * @return results IngridHits
      * @throws Exception
      */
-    private final IngridHits doBusRequest(IngridQuery ingridQuery, final SessionParameters sessionParameters)
+    protected static final IngridHits doBusRequest(IngridQuery ingridQuery, final SessionParameters sessionParameters)
             throws Exception {
 
         int requestedHits = sessionParameters.getMaxRecords();
@@ -263,10 +333,8 @@ public class CSW {
      * @throws Exception
      *             e
      */
-    private Message doGetRecordByIdRequest(final SOAPBodyElement be, final SessionParameters sessionParameters)
+    private Document doGetRecordByIdRequest(final Element be, final SessionParameters sessionParameters)
             throws Exception {
-
-        Message soapResponseMessage = null;
 
         // TODO store in session?
         IngridQuery ingridQuery = null;
@@ -284,11 +352,7 @@ public class CSW {
         IngridHits hits = doBusRequest(ingridQuery, sessionParameters);
 
         CSWResponseTransformer responseTransformer = new CSWResponseTransformer();
-        Document responseDoc = responseTransformer.transform(hits, ingridQuery, sessionParameters);
-
-        soapResponseMessage = AxisTools.createSOAPMessage(responseDoc);
-
-        return soapResponseMessage;
+        return responseTransformer.transform(hits, ingridQuery, sessionParameters);
     }
 
     /**
@@ -302,7 +366,7 @@ public class CSW {
      * @return ingridQuery IngridQuery
      */
 
-    public final IngridQuery setSourceType(final IngridQuery ingridQuery, final SessionParameters sessionParameters) {
+    public static final IngridQuery setSourceType(final IngridQuery ingridQuery, final SessionParameters sessionParameters) {
         boolean required = true;
         boolean prohibited = false;
         boolean sourceTypeIsDataset = false;
@@ -344,7 +408,7 @@ public class CSW {
      *            IngridQuery
      * @return ingridQuery IngridQuery with datatype csw
      */
-    public final IngridQuery setDataTypeCSW(final IngridQuery ingridQuery) {
+    public static final IngridQuery setDataTypeCSW(final IngridQuery ingridQuery) {
         boolean required = true;
         boolean prohibited = false;
 
@@ -368,7 +432,7 @@ public class CSW {
      * @throws Exception
      *             e
      */
-    private IngridHits callBus(final IngridQuery ingridQuery, final int requestedHits, final int startPosition) throws Exception {
+    private static IngridHits callBus(final IngridQuery ingridQuery, final int requestedHits, final int startPosition) throws Exception {
         String str_timeOut = cswConfig.getString(CSWInterfaceConfig.TIMEOUT);
         int timeOut = Integer.parseInt(str_timeOut);
 

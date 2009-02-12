@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPElementFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -61,7 +62,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 	* @throws Exception e
 	* @see com.gistec.ingeocsw.analyse.CSWAnalyser#analyse(javax.xml.soap.SOAPBodyElement)
 	*/
-	public final boolean analyse(final SOAPBodyElement be) throws Exception {
+	public final boolean analyse(final Element be) throws Exception {
 		boolean getRecordsRequestValid = false;
 		String opName = null;
 		String startPosition = null;
@@ -73,7 +74,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 		if (be == null) {
 			throw new Exception("analyse: SOAPBodyElement is null.");
 		}
-		opName = be.getElementName().getLocalName();
+		opName = be.getLocalName();
 
 		if (opName == null) {
 			throw new Exception("analyse: opName is null.");
@@ -147,7 +148,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 	 * @return queryIsValid boolean
 	 * @throws Exception e
 	 */
-	private boolean analyseQuery(final SOAPBodyElement be) throws Exception {
+	private boolean analyseQuery(final Element be) throws Exception {
 		boolean queryIsValid = false;
 		Element elemQuery = null;
 		String typeNames = null;
@@ -188,7 +189,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	private boolean analyseConstraint(final SOAPBodyElement be) throws Exception {
+	private boolean analyseConstraint(final Element be) throws Exception {
 		Element elemConstraint = null;
 		String constraintLangVersion = null;
 		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "Constraint"); 
@@ -200,9 +201,12 @@ public class GetRecAnalyser implements CSWAnalyser {
 		if (elemConstraint != null) {
 			constraintLangVersion = elemConstraint.getAttribute("version");
 		} else {
-			Exception e =
+			// no constraint element is given, this is a valid request though
+			return false;
+/*			Exception e =
 				new CSWMissingParameterValueException("Element 'Constraint' is missing.", "Constraint");
 			throw e;
+*/			
 		}
 
 		if (constraintLangVersion != null) {
@@ -228,7 +232,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 	 * @return boolean
 	 * @throws Exception e
 	 */
-	private boolean analyseFilter(final SOAPBodyElement be) throws Exception {
+	private boolean analyseFilter(final Element be) throws Exception {
 		SOAPElement soapElementFilter = null;
 		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/ogc", "Filter");
 
@@ -250,9 +254,9 @@ public class GetRecAnalyser implements CSWAnalyser {
 				}
 			sessionParameters.setSoapElementFilter(soapElementFilter);
 		} else {
-			Exception e =
-				new CSWMissingParameterValueException("Element 'Filter' is missing.", "Filter");
-			throw e;
+			// no filter is set, this query is valid though.
+			sessionParameters.setSoapElementFilter(null);
+			return false;
 		}
 		return true;
 	}

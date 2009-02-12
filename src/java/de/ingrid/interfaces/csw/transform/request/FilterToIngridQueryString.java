@@ -156,7 +156,7 @@ public class FilterToIngridQueryString {
         	log.debug("enter");
         }
 		if (filter == null) {
-			return null;
+			return "";
 		}
 		int type = filter.getOperationType();
 
