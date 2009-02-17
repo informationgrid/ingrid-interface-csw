@@ -1047,7 +1047,7 @@ public class FilterToIngridQueryString {
 			outprop = "";
 			// MD_Metadata.parentIdentifier
 		} else if (inPropWithoutNS.equalsIgnoreCase("ParentIdentifier")) {
-			outprop = "refering.object_reference.obj_uuid";
+			outprop = "parent.object_node.obj_uuid";
 			// MD_Identification.descriptiveKeywords.MD_Keywords.type
 		} else if (inPropWithoutNS.equalsIgnoreCase("KeywordType")) {
 			// TODO: must map value to searchterm_value.type (mapping required)
