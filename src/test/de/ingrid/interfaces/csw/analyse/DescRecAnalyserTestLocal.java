@@ -20,7 +20,7 @@ import junit.framework.TestCase;
  * @author rschaefer
  *
  */
-public class DescRecAnalyserTest extends TestCase {
+public class DescRecAnalyserTestLocal extends TestCase {
 	
 	
 
