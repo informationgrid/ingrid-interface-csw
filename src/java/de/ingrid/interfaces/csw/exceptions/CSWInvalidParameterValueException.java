@@ -23,14 +23,14 @@
  *                                                                            *
  *+---------------------------------------------------------------------------*
  *                                                                            *
- * Author           : Ralf Schäfer                                            *
+ * Author           : Ralf Schaefer                                            *
  * Erstellungsdatum : 25.05.2004                                              *
  * Version          : 1.0                                                     *
  * Beschreibung     : stellt eine InvalidParameterValueException dar.         *
  *                                                                            *
  *                                                                            *
  *----------------------------------------------------------------------------*
- * Änderungen (Datum, Version, Author, Beschreibung)                          *
+ * aenderungen (Datum, Version, Author, Beschreibung)                          *
  *----------------------------------------------------------------------------*
  *            |         |          |                                          *
  *            |         |          |                                          *

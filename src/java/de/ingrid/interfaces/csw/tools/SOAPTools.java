@@ -23,14 +23,14 @@
  *                                                                            *
  *+---------------------------------------------------------------------------*
  *                                                                            *
- * Author           : Ralf Schäfer                                            *
+ * Author           : Ralf Schaefer                                            *
  * Erstellungsdatum : 24.05.2004                                              *
  * Version          : 1.0                                                     *
  * Beschreibung     :  Hilfsfunktionen fuer SOAP                              *
  *                                                                            *
  *                                                                            *
  *----------------------------------------------------------------------------*
- * Änderungen (Datum, Version, Author, Beschreibung)                          *
+ * aenderungen (Datum, Version, Author, Beschreibung)                          *
  *----------------------------------------------------------------------------*
  *            |         |          |                                          *
  *            |         |          |                                          *

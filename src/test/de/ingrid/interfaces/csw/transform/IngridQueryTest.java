@@ -81,7 +81,7 @@ public class IngridQueryTest extends TestCase {
         
         //query = parse("fische bla bo nkl hjkjk izi ort:Halle land:BRD (zeit:1970 OR aktuell:monatlich) ");
         
-        // query = parse("(zeit:1970 OR aktuell:täglich)  fische OR ort:Halle land:BRD ");
+        // query = parse("(zeit:1970 OR aktuell:taeglich)  fische OR ort:Halle land:BRD ");
         
         //TODO meaning of square brackets?
          //query = parse("west:[ ]");

@@ -105,7 +105,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                     this.addSMXMLCharacterString(CIAddress.addElement("smXML:electronicMailAddress"), (String) emails.get(j));
                 }
     
-                // CSW 2.0 unterstützt nur eine online resource
+                // CSW 2.0 unterstuetzt nur eine online resource
                 ArrayList url = (ArrayList) communications.get("url");
                 if (url.size() > 0) {
                     Element CI_OnlineResource = CIContact.addElement("smXML:onlineResource").addElement(

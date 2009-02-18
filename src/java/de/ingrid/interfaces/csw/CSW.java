@@ -463,7 +463,7 @@ public class CSW {
         ingridDoc.put("mdHrLv", "dataset");
         ingridDoc.put("mdLang", "deu");
         ingridDoc.put("mdChar", "ISO-????");
-        ingridDoc.put("rpIndName", "Ralf Schäfer");
+        ingridDoc.put("rpIndName", "Ralf Schaefer");
         ingridDoc.put("rpOrgName", "GIStec");
         ingridDoc.put("contactRole", "publisher");
         ingridDoc.put("voice", "+49-155-255");
@@ -504,7 +504,7 @@ public class CSW {
         // contacts[0] = new IngridDocument("ID", "contact1");
         // contacts[1] = new IngridDocument("ID", "contact2");
         // contacts[0].put("country", "Germany");
-        // contacts[0].put("individualName", "Ralf Schäfer");
+        // contacts[0].put("individualName", "Ralf Schaefer");
         // contacts[0].put("voice", "+49-155-255");
         // contacts[1].put("country", "Germany");
         // contacts[1].put("individualName", "Nico S. Beck");

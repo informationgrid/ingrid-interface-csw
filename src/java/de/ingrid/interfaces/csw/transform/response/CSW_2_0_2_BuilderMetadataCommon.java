@@ -152,7 +152,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     this.addGCOCharacterString(CIAddress.addElement("gmd:electronicMailAddress"), (String) emails.get(j));
                 }
     
-                // CSW 2.0 unterstützt nur eine online resource
+                // CSW 2.0 unterstuetzt nur eine online resource
                 ArrayList url = (ArrayList) communications.get("url");
                 if (url.size() > 0) {
                     Element CI_OnlineResource = CIContact.addElement("gmd:onlineResource").addElement(
@@ -266,7 +266,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     this.addGCOCharacterString(CIAddress.addElement("gmd:electronicMailAddress"), (String) emails.get(j));
                 }
     
-                // CSW 2.0 unterstützt nur eine online resource
+                // CSW 2.0 unterstuetzt nur eine online resource
                 ArrayList url = (ArrayList) communications.get("url");
                 if (url.size() > 0) {
                     Element CI_OnlineResource = CIContact.addElement("gmd:onlineResource").addElement(

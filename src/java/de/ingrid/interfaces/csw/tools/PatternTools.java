@@ -23,14 +23,14 @@
  *                                                                            *
  *+---------------------------------------------------------------------------*
  *                                                                            *
- * Author           : Ralf Schäfer                                            *
+ * Author           : Ralf Schaefer                                            *
  * Erstellungsdatum : 28.05.2004                                              *
  * Version          : 1.0                                                     *
  * Beschreibung     : methods for testing and creating patterns and formats   *
  *                                                                            *
  *                                                                            *
  *----------------------------------------------------------------------------*
- * Änderungen (Datum, Version, Author, Beschreibung)                          *
+ * aenderungen (Datum, Version, Author, Beschreibung)                          *
  *----------------------------------------------------------------------------*
  * 10.01.2006 |1.0      |rschaefer | method toValidDateFormat improvements    *
  *            |         |          |                                          *

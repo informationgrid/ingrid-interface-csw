@@ -819,7 +819,7 @@ public final class TestRequests {
     			" </soapenv:Body>\n" + "</soapenv:Envelope>";
     
     
-    // Problem: wildcard character '%' in Verbindung mit UTF-8 Codierung schlägt fehl, da alle Strings URL decodiert werden.
+    // Problem: wildcard character '%' in Verbindung mit UTF-8 Codierung schlaegt fehl, da alle Strings URL decodiert werden.
     public static final String GET_RECORDS_BW2 = 
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
@@ -850,7 +850,7 @@ public final class TestRequests {
 	" </soapenv:Body>\n" + "</soapenv:Envelope>";
     
 
-    // Problem: wildcard character '%' in Verbindung mit UTF-8 Codierung schlägt fehl, da alle Strings URL decodiert werden.
+    // Problem: wildcard character '%' in Verbindung mit UTF-8 Codierung schlaegt fehl, da alle Strings URL decodiert werden.
     public static final String GET_RECORDS_BW3 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> " +
     "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> " +
     "   <soap:Header/> " +

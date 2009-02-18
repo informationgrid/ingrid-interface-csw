@@ -42,7 +42,7 @@ public class CSWTest extends TestCase {
 		
 		//(assertEquals(ingridQueryToString.transform(ingridQuery), "( AND source:map )");
 		
-        // geändert Dirk Schwarzmann 13.09.06
+        // geaendert Dirk Schwarzmann 13.09.06
 		//assertEquals(ingridQueryToString.transform(ingridQuery), "( AND t01_object.obj_class:1 )");
 		
 		assertEquals(ingridQueryToString.transform(ingridQuery), "( AND metaclass:map )");
@@ -64,7 +64,7 @@ public class CSWTest extends TestCase {
 		
 		//assertEquals(ingridQueryToString.transform(ingridQuery), "( AND source:service )");
 		
-		// geändert Dirk Schwarzmann 13.09.06
+		// geaendert Dirk Schwarzmann 13.09.06
 		//assertEquals(ingridQueryToString.transform(ingridQuery), "( AND t01_object.obj_class:3 )");
 		
 		assertEquals(ingridQueryToString.transform(ingridQuery), "( AND metaclass:service )");
@@ -84,7 +84,7 @@ public class CSWTest extends TestCase {
           
         //System.out.println("CSWTest ingridQuery ingridQueryToString: " + ingridQueryToString.transform(ingridQuery));
 	
-		// geändert Dirk Schwarzmann 13.09.06
+		// geaendert Dirk Schwarzmann 13.09.06
 		//assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR t01_object.obj_class:1  OR t01_object.obj_class:3 ))");
 		
 		assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR metaclass:map  OR metaclass:service ))");

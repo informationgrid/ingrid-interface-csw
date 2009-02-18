@@ -23,14 +23,14 @@
  *                                                                            *
  *+---------------------------------------------------------------------------*
  *                                                                            *
- * Author           : Ralf Schäfer                                            *
+ * Author           : Ralf Schaefer                                            *
  * Erstellungsdatum : 06.06.2004                                              *
  * Version          : 1.0                                                     *
  * Beschreibung     : Die Klasse stellt eine Ausnahme im Filterencoding dar.  *
  *                                                                            *
  *                                                                            *
  *----------------------------------------------------------------------------*
- * Änderungen (Datum, Version, Author, Beschreibung)                          *
+ * aenderungen (Datum, Version, Author, Beschreibung)                          *
  *----------------------------------------------------------------------------*
  *            |         |          |                                          *
  *            |         |          |                                          *

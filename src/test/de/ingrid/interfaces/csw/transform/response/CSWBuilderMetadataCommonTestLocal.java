@@ -41,7 +41,7 @@ public class CSWBuilderMetadataCommonTestLocal extends TestCase {
 	}
 
 	public void testAddContactBlock() throws Exception {
-		// object connected to person "Herr Dr. Reinhard Hartwich", typ2, connected via 2 units to institution "BGR - Bundesanstalt für Geowissenschaften und Rohstoffe"
+		// object connected to person "Herr Dr. Reinhard Hartwich", typ2, connected via 2 units to institution "BGR - Bundesanstalt fuer Geowissenschaften und Rohstoffe"
 		IngridQuery query = QueryStringParser.parse("t01_object.obj_id:EC602AC5-8967-11D4-AAE5-0050DA769D0B iplugs:\"/torwald-group:torwald-iplug-udk-db_uba\" ranking:any datatype:any");
 		IngridHits hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 0, 10000);
 		IngridHit hit = hits.getHits()[0];
