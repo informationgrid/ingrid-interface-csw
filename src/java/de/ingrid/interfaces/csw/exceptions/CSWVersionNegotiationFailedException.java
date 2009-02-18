@@ -18,7 +18,7 @@
  * info@gistec-online.de                          http://www.gistec-online.de *
  *----------------------------------------------------------------------------*
  *                                                                            *
- * Copyright © 2004 GIStec GmbH                                               *
+ * Copyright  2004 GIStec GmbH                                               *
  * ALL Rights Reserved.                                                       *
  *                                                                            *
  *+---------------------------------------------------------------------------*

@@ -218,7 +218,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			// Check the value of the SERVICE parameter. An exception is thrown
 			// in case
 			// of an improper value, so no further checking is needed here.
-			// We don´t need the value of the service parameter, so ignore it.
+			// We don't need the value of the service parameter, so ignore it.
 			CommonAnalyser.analyseService(reqParams);
 
 			if (operation.equals(ClientRequestParameters.GETCAPABILITIES)) {
