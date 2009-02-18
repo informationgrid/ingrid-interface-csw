@@ -28,7 +28,7 @@ public class DscEcsVersionMapper_Udk_5_0_TO_IDC_1_0_3 implements DscEcsVersionMa
 		map.put(IngridQueryHelper.HIT_KEY_ADDRESS_ADDRESS, "t02_address.address_value");
 		map.put(IngridQueryHelper.HIT_KEY_ADDRESS_COMM_TYPE, "t021_communication.commtype_value");
 		map.put(IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID, "object_reference.obj_to_uuid");
-		map.put(IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE, "object_access.terms_of_use");
+		map.put(IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE, IngridQueryHelper.HIT_KEY_OBJECT_ACCESS_TERMS_OF_USE);
 	}
 
 	public static DscEcsVersionMapper_Udk_5_0_TO_IDC_1_0_3 instance() {

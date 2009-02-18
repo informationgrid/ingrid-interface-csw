@@ -388,6 +388,37 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			this.addGCOCharacterString(liLineage.addElement("gmd:source").addElement("gmd:LI_Source").addElement(
 					"gmd:description"), liSourceDescription);
 		}
+		
+		// add conformity object_conformity.*
+		String[] objectConformitySpecifications = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION);
+		String[] objectConformityDegreeKeys = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY);
+		String[] objectConformityPublicationDate = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE);
+		
+		for (int i = 0; i < objectConformitySpecifications.length; i++) {
+			if (IngridQueryHelper.hasValue(objectConformityDegreeKeys[i]) && 
+					(objectConformityDegreeKeys[i].equals("1") || objectConformityDegreeKeys[i].equals("2"))) {
+				Element dqDomainConsistency = dqQualityInfo.addElement("gmd:report").addElement("gmd:DQ_DomainConsistency");
+				Element dqConformanceResult = dqDomainConsistency.addElement("gmd:result").addElement("gmd:DQ_ConformanceResult");
+				
+				// pass/gco:Boolean
+				this.addGCOBoolean(dqConformanceResult.addElement("gmd:pass"), objectConformityDegreeKeys[i].equals("1"));
+				// specification/CI_Citation/
+				Element ciCitation = dqConformanceResult.addElement("gmd:specification").addElement("gmd:CI_Citation");
+				// title/gco:CharacterString
+				this.addGCOCharacterString(ciCitation.addElement("gmd:title"), objectConformitySpecifications[i]);
+				// date/CI_Date/date/gco:Date
+				Element ciDate = ciCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+				ciDate.addElement("gmd:date").addElement("gco:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(objectConformityPublicationDate[i]));
+				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
+						"http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode").addAttribute(
+						"codeListValue", "publication").addText("publication");
+
+			}
+		}
+		
 
 	}
 
@@ -448,7 +479,39 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			unitDefinition.addElement("gml:quantityType").addText("geographic accuracy");
 			unitDefinition.addElement("gml:catalogSymbol").addText("m");
 			dqQuantitativeResult.addElement("gmd:value").addElement("gco:Record").addText(geographicAccuracy);
-		}		
+		}
+		
+		// add conformity object_conformity.*
+		String[] objectConformitySpecifications = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION);
+		String[] objectConformityDegreeKeys = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY);
+		String[] objectConformityPublicationDate = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE);
+		
+		for (int i = 0; i < objectConformitySpecifications.length; i++) {
+			if (IngridQueryHelper.hasValue(objectConformityDegreeKeys[i]) && 
+					(objectConformityDegreeKeys[i].equals("1") || objectConformityDegreeKeys[i].equals("2"))) {
+				Element dqDomainConsistency = dqQualityInfo.addElement("gmd:report").addElement("gmd:DQ_DomainConsistency");
+				Element dqConformanceResult = dqDomainConsistency.addElement("gmd:result").addElement("gmd:DQ_ConformanceResult");
+				
+				// pass/gco:Boolean
+				this.addGCOBoolean(dqConformanceResult.addElement("gmd:pass"), objectConformityDegreeKeys[i].equals("1"));
+				// specification/CI_Citation/
+				Element ciCitation = dqConformanceResult.addElement("gmd:specification").addElement("gmd:CI_Citation");
+				// title/gco:CharacterString
+				this.addGCOCharacterString(ciCitation.addElement("gmd:title"), objectConformitySpecifications[i]);
+				// date/CI_Date/date/gco:Date
+				Element ciDate = ciCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+				ciDate.addElement("gmd:date").addElement("gco:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(objectConformityPublicationDate[i]));
+				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
+						"http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode").addAttribute(
+						"codeListValue", "publication").addText("publication");
+
+			}
+		}
+		
+		
 		
 		// T011_obj_geo.special_base ->
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/udk:LI_Lineage/statement
@@ -718,13 +781,54 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		}
 
 
-		// add resourceConstraint
-		String resourceConstraints = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE);
-        if (IngridQueryHelper.hasValue(resourceConstraints)) {
-        	this.addGCOCharacterString(parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), resourceConstraints);
-        }
-
-
+		// add resourceConstraint uselimitations
+		String[] resourceConstraints = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE);
+		if (resourceConstraints.length > 0) {
+			Element contraints = parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_Constraints");
+			for (int i = 0; i < resourceConstraints.length; i++) {
+				this.addGCOCharacterString(contraints.addElement("gmd:useLimitation"), resourceConstraints[i]);
+			}
+		}
+        
+        // add resource constraint MD_SecurityConstraints/otherConstraints
+		String[] securityConstraintsKey = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_ACCESS_RESTRICTION_KEY);
+		if (securityConstraintsKey.length > 0) {
+			Element securityContraints = parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_SecurityConstraints");
+			for (int i = 0; i < securityConstraintsKey.length; i++) {
+				String securityConstraint = null;
+				if (securityConstraintsKey[i].equals("1")) {
+					securityConstraint = "no conditions apply";
+				} else if (securityConstraintsKey[i].equals("2")) {
+					securityConstraint = "the confidentiality of the proceedings of public authorities";
+				} else if (securityConstraintsKey[i].equals("3")) {
+					securityConstraint = "international relations, public security or national defence";
+				} else if (securityConstraintsKey[i].equals("4")) {
+					securityConstraint = "the course of justice";
+				} else if (securityConstraintsKey[i].equals("5")) {
+					securityConstraint = "the confidentiality of commercial or industrial information";
+				} else if (securityConstraintsKey[i].equals("6")) {
+					securityConstraint = "intellectual property rights";
+				} else if (securityConstraintsKey[i].equals("7")) {
+					securityConstraint = "the confidentiality of personal data and/or files";
+				} else if (securityConstraintsKey[i].equals("8")) {
+					securityConstraint = "the interests or protection of any person";
+				} else if (securityConstraintsKey[i].equals("9")) {
+					securityConstraint = "the protection of the environment";
+				} else if (securityConstraintsKey[i].equals("10")) {
+					securityConstraint = "conditions unknown";
+				}
+				if (securityConstraint != null) {
+					this.addGCOCharacterString(securityContraints.addElement("gmd:otherConstraints"), securityConstraint);
+				}
+			}
+			parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_LegalConstraints")
+				.addElement("gmd:accessConstraints").addElement("gmd:MD_RestrictionCode")
+				.addAttribute("codeListValue", "otherRestrictions")
+				.addAttribute("codelList", "http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode")
+				.addText("otherRestrictions");
+		}
 		
 
 	}
