@@ -17,7 +17,7 @@ public class ServletTools {
 	/**
 	 * Creates a Properties object containing all keys and values in the given http request.
 	 * 
-	 * @param request A servlet´s request as string representation
+	 * @param request A servlet's request as string representation
 	 * @param uppercase Specify true if you want all key names to be in upper case. If false,
 	 *        the case of the key names is left untouched. 
 	 * @return java.util.Properties object containing all parameters and values. In case there
