@@ -281,22 +281,22 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
             	super.addGCOCharacterString(exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicDescription").addElement("gmd:geographicIdentifier").addElement("gmd:MD_Identifier").addElement("gmd:code"), stTownship[i]);
             }
             
-            Element geographicElement = exExent.addElement("gmd:geographicElement");
-            Element exGeographicBoundingBox = geographicElement.addElement("gmd:EX_GeographicBoundingBox");
-            // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/gmd:approximateLongitude
-            if (stBoxX1.length == stTownship.length) {
+            Element exGeographicBoundingBox = null;
+            if (stBoxX1.length == stTownship.length 
+            		&& stBoxX1.length == stTownship.length
+            		&& stBoxY1.length == stTownship.length
+            		&& stBoxY2.length == stTownship.length
+            		&& IngridQueryHelper.hasValue(stBoxX1[i])
+            		&& IngridQueryHelper.hasValue(stBoxX2[i])
+            		&& IngridQueryHelper.hasValue(stBoxY1[i])
+            		&& IngridQueryHelper.hasValue(stBoxY2[i])
+            		) {
+            	if (exGeographicBoundingBox == null) {
+            		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
+            	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX1[i].replaceAll(",", "."));
-            }
-            // T01_st_bbox.x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.eastBoundLongitude/gmd:approximateLongitude
-            if (stBoxX2.length == stTownship.length) {
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX2[i].replaceAll(",", "."));
-            }
-            // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.southBoundLatitude/gmd:approximateLatitude
-            if (stBoxY1.length == stTownship.length) {
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY1[i].replaceAll(",", "."));
-            }
-            // T01_st_bbox.y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLatitude/gmd:approximateLatitude
-            if (stBoxY2.length == stTownship.length) {
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:northBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY2[i].replaceAll(",", "."));
             }
         }

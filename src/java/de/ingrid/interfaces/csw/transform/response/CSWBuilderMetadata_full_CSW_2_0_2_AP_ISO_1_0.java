@@ -583,7 +583,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 
 		addGenericMetadataIndentification(svServiceIdentification, hit);
 
-		this.addGCOCharacterString(svServiceIdentification.addElement("srv:serviceType"), IngridQueryHelper
+		this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE));
 
 		String[] serviceTypeVersions = IngridQueryHelper.getDetailValueAsArray(hit,
@@ -782,12 +782,15 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 
 
 		// add resourceConstraint uselimitations
+		Element mdLegalContraints = null;
 		String[] resourceConstraints = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE);
 		if (resourceConstraints.length > 0) {
-			Element contraints = parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_Constraints");
+			if (mdLegalContraints == null) {
+				mdLegalContraints = parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_LegalConstraints");
+			}
 			for (int i = 0; i < resourceConstraints.length; i++) {
-				this.addGCOCharacterString(contraints.addElement("gmd:useLimitation"), resourceConstraints[i]);
+				this.addGCOCharacterString(mdLegalContraints.addElement("gmd:useLimitation"), resourceConstraints[i]);
 			}
 		}
         
@@ -795,7 +798,13 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		String[] securityConstraintsKey = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_ACCESS_RESTRICTION_KEY);
 		if (securityConstraintsKey.length > 0) {
-			Element securityContraints = parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_SecurityConstraints");
+			if (mdLegalContraints == null) {
+				mdLegalContraints = parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_LegalConstraints");
+			}
+			mdLegalContraints.addElement("gmd:accessConstraints").addElement("gmd:MD_RestrictionCode")
+			.addAttribute("codeListValue", "otherRestrictions")
+			.addAttribute("codeList", "http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode")
+			.addText("otherRestrictions");
 			for (int i = 0; i < securityConstraintsKey.length; i++) {
 				String securityConstraint = null;
 				if (securityConstraintsKey[i].equals("1")) {
@@ -820,14 +829,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					securityConstraint = "conditions unknown";
 				}
 				if (securityConstraint != null) {
-					this.addGCOCharacterString(securityContraints.addElement("gmd:otherConstraints"), securityConstraint);
+					this.addGCOCharacterString(mdLegalContraints.addElement("gmd:otherConstraints"), securityConstraint);
 				}
 			}
-			parent.addElement("gmd:resourceConstraints").addElement("gmd:MD_LegalConstraints")
-				.addElement("gmd:accessConstraints").addElement("gmd:MD_RestrictionCode")
-				.addAttribute("codeListValue", "otherRestrictions")
-				.addAttribute("codelList", "http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode")
-				.addText("otherRestrictions");
 		}
 		
 

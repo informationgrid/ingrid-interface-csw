@@ -3,6 +3,8 @@
  */
 package de.ingrid.interfaces.csw.transform.response;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -19,6 +21,9 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
 
+    private static Log log = LogFactory.getLog(CSW_2_0_2_BuilderMetaData.class);
+	
+	
     /**
      * Add a gco character string to a parent element.
      * 
@@ -31,6 +36,18 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
         return parent;
     }
 
+    /**
+     * Add a gco local name to a parent element.
+     * 
+     * @param parent
+     * @param value
+     * @return The parent element.
+     */
+    protected Element addGCOLocalName(Element parent, String value) {
+        parent.addElement("gco:LocalName").addText(value.replaceAll("&(?![a-z]+;)", "&amp;"));
+        return parent;
+    }
+    
     /**
      * Add a gco URL to a parent element.
      * 
@@ -78,6 +95,9 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
 				numberStr = String.valueOf(n);
 			}
 		} catch (NumberFormatException e) {
+			if (log.isDebugEnabled()) {
+				log.debug("Could not convert to Double: " + value, e);
+			}
 			numberStr = "NaN";
 		}
     	parent.addElement("gco:Real").addText(numberStr);
@@ -94,9 +114,12 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
     protected Element addGCODecimal(Element parent, String value) {
         String numberStr;
     	try {
-			long n = Long.parseLong(value);
+			double n = Double.parseDouble(value);
 			numberStr = String.valueOf(n);
 		} catch (NumberFormatException e) {
+			if (log.isDebugEnabled()) {
+				log.debug("Could not convert to Double: " + value, e);
+			}
 			numberStr = "NaN";
 		}
     	parent.addElement("gco:Decimal").addText(numberStr);
@@ -116,6 +139,9 @@ public abstract class CSW_2_0_2_BuilderMetaData extends CSWBuilderMetaData {
 			int n = Integer.parseInt(value);
 			numberStr = String.valueOf(n);
 		} catch (NumberFormatException e) {
+			if (log.isDebugEnabled()) {
+				log.debug("Could not convert to Integer: " + value, e);
+			}
 			numberStr = "NaN";
 		}
         parent.addElement("gco:Integer").addText(numberStr);

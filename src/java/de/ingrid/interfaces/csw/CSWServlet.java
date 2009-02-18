@@ -231,7 +231,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 				doGet_GetRecordById(reqParams, response);
 			}
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			log.warn(e.getMessage(), e);
 			String errorXmlMsg = null;
 			if (e instanceof CSWException) {
 				errorXmlMsg = CSWException.createXmlExceptionReport(e.getMessage(), ((CSWException) e)

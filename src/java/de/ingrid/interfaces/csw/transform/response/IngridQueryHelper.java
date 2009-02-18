@@ -122,6 +122,25 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL = "t011_obj_geo.hierarchy_level";
 
+    public static final String HIT_KEY_OBJECT_SERV_OPERATION_NAME = "T011_obj_serv_operation.name";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_PLATFORM = "T011_obj_serv_op_platform.platform";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT = "T011_obj_serv_op_connpoint.connect_point";
+
+    public static final String HIT_KEY_OBJECT_SERV_OPERATION_DESCR = "T011_obj_serv_operation.descr";
+    
+    public static final String HIT_KEY_OBJECT_SERV_INVOCATION_NAME = "T011_obj_serv_operation.invocation_name";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_NAME = "T011_obj_serv_op_para.name";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION = "T011_obj_serv_op_para.direction";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR = "T011_obj_serv_op_para.descr";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL = "T011_obj_serv_op_para.optional";
+
+    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY = "T011_obj_serv_op_para.repeatability";
 
 	
     
@@ -132,7 +151,12 @@ public class IngridQueryHelper {
             "object_reference.special_ref", "t011_obj_topic_cat.topic_category",
             HIT_KEY_OBJECT_DATASET_REFERENCE_DATE, HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE,
             HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_MOD_TIME, HIT_KEY_OBJECT_DATA_LANGUAGE, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
-            HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL};
+            HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL, HIT_KEY_OBJECT_SERV_OPERATION_NAME, HIT_KEY_OBJECT_SERV_OP_PLATFORM,
+            HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT,
+            HIT_KEY_OBJECT_SERV_OPERATION_DESCR, HIT_KEY_OBJECT_SERV_INVOCATION_NAME,
+            HIT_KEY_OBJECT_SERV_OP_PARAM_NAME, HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION,
+            HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR, HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL,
+            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY};
 
 
     public static final String HIT_KEY_OBJECT_METADATA_LANGUAGE = "T01_object.metadata_language";
@@ -145,12 +169,6 @@ public class IngridQueryHelper {
 	
 	public static final String HIT_KEY_OBJECT_SPATIAL_RES_SCAN = "t011_obj_geo_scale.resolution_scan";
 
-    public static final String HIT_KEY_OBJECT_SERV_OPERATION_NAME = "T011_obj_serv_operation.name";
-
-    public static final String HIT_KEY_OBJECT_SERV_OP_PLATFORM = "T011_obj_serv_op_platform.platform";
-
-    public static final String HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT = "T011_obj_serv_op_connpoint.connect_point";
-    
     public static final String HIT_KEY_OBJECT_URL_REF_URL_LINK = "T017_url_ref.url_link";
 
     public static final String HIT_KEY_OBJECT_URL_REF_DESCR = "T017_url_ref.descr";
@@ -165,6 +183,14 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE = "T01_object.avail_access_note";
 
+    public static final String HIT_KEY_OBJECT_ST_BOX_X1 = "x1";
+
+    public static final String HIT_KEY_OBJECT_ST_BOX_X2 = "x2";
+
+    public static final String HIT_KEY_OBJECT_ST_BOX_Y1 = "y1";
+
+    public static final String HIT_KEY_OBJECT_ST_BOX_Y2 = "y2";
+
     
     
     public static final String[] REQUESTED_STRING_SUMMARY = { HIT_KEY_OBJECT_OBJ_ID, HIT_KEY_OBJECT_REL_ADR_ID,
@@ -178,7 +204,12 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SERV_OPERATION_NAME, HIT_KEY_OBJECT_SERV_OP_PLATFORM, HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT,
             HIT_KEY_OBJECT_URL_REF_URL_LINK, HIT_KEY_OBJECT_URL_REF_DESCR, HIT_KEY_OBJECT_URL_REF_CONTENT,
             HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL, HIT_KEY_OBJECT_METADATA_STANDARD_NAME, HIT_KEY_OBJECT_DATASET_CHARACTER_SET,
-            HIT_KEY_OBJECT_METADATA_STANDARD_VERSION, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE};
+            HIT_KEY_OBJECT_METADATA_STANDARD_VERSION, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE,
+            HIT_KEY_OBJECT_ST_BOX_X1, HIT_KEY_OBJECT_ST_BOX_X2, HIT_KEY_OBJECT_ST_BOX_Y1, HIT_KEY_OBJECT_ST_BOX_Y2,
+            HIT_KEY_OBJECT_SERV_OPERATION_DESCR, HIT_KEY_OBJECT_SERV_INVOCATION_NAME,
+            HIT_KEY_OBJECT_SERV_OP_PARAM_NAME, HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION,
+            HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR, HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL,
+            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY};
 
     public static final String HIT_KEY_OBJECT_OBJ_TO_ID = "t012_obj_obj.object_to_id";
 
@@ -208,20 +239,6 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_TIME_ALLE = "T01_object.time_alle";
     
-    public static final String HIT_KEY_OBJECT_SERV_OPERATION_DESCR = "T011_obj_serv_operation.descr";
-    
-    public static final String HIT_KEY_OBJECT_SERV_INVOCATION_NAME = "T011_obj_serv_operation.invocation_name";
-
-    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_NAME = "T011_obj_serv_op_para.name";
-
-    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION = "T011_obj_serv_op_para.direction";
-
-    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR = "T011_obj_serv_op_para.descr";
-
-    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL = "T011_obj_serv_op_para.optional";
-
-    public static final String HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY = "T011_obj_serv_op_para.repeatability";
-
     public static final String HIT_KEY_OBJECT_GEO_SPECIAL_BASE = "T011_obj_geo.special_base";
 
     public static final String HIT_KEY_OBJECT_GEO_DATA_BASE = "T011_obj_geo.data_base";
@@ -297,14 +314,6 @@ public class IngridQueryHelper {
     public static final String HIT_KEY_OBJECT_COORDINATES_GEO_Y2 = "T019_coordinates.geo_y2";
 
     public static final String HIT_KEY_OBJECT_TOWNSHIP_NO = "areaid";
-
-    public static final String HIT_KEY_OBJECT_ST_BOX_X1 = "x1";
-
-    public static final String HIT_KEY_OBJECT_ST_BOX_X2 = "x2";
-
-    public static final String HIT_KEY_OBJECT_ST_BOX_Y1 = "y1";
-
-    public static final String HIT_KEY_OBJECT_ST_BOX_Y2 = "y2";
 
     public static final String HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP = "t01_st_township.township";
     

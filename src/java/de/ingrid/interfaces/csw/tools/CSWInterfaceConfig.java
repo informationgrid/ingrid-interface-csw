@@ -93,7 +93,15 @@ public class CSWInterfaceConfig extends PropertiesConfiguration {
     	        if (log.isDebugEnabled()) {
     	        	log.debug("Found via thread-classloader: " + result);
     	        }
+            } else {
+    	        if (log.isDebugEnabled()) {
+    	        	log.debug("resource '" + stripped + "' not found with Thread.currentThread().getContextClassLoader()");
+    	        }
             }
+        } else {
+	        if (log.isDebugEnabled()) {
+	        	log.debug("Thread.currentThread().getContextClassLoader(): null");
+	        }
         }
         // ??? Was soll das ???
         /*
@@ -107,6 +115,10 @@ public class CSWInterfaceConfig extends PropertiesConfiguration {
             	result = url.toString();
     	        if (log.isDebugEnabled()) {
     	        	log.debug("Found via thisclass-classloader: " + result);
+    	        }
+            } else {
+    	        if (log.isDebugEnabled()) {
+    	        	log.debug("resource '" + stripped + "' not found with CSWInterfaceConfig.class.getClassLoader()");
     	        }
             }
         }

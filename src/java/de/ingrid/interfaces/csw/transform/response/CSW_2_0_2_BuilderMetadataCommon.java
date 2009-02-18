@@ -428,32 +428,47 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     
     protected void addOperationMetadata(Element parent, IngridHit hit) {
         // operationMetadata
-        Element svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+        Element svOperationMetadata = null;
         // srv:operationMetadata -> srv:SV_OperationMetadata -> srv:operationName -> String
         String operationName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_NAME);
         if (IngridQueryHelper.hasValue(operationName)) {
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
 	        this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationName"), operationName);
         }
         // srv:operationMetadata -> srv:SV_OperationMetadata -> srv:operationDescription -> String
         String operationDescription = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_DESCR); 
         if (IngridQueryHelper.hasValue(operationDescription)) {
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
             this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationDescription"), operationDescription);
         }
         // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:DCP -> srv:SV_DCPList/@codeListValue
         String[] platforms = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PLATFORM);
         for (int i=0; i< platforms.length; i++) {
-            svOperationMetadata.addElement("srv:DCP").addElement("srv:SV_DCPList")
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
+            svOperationMetadata.addElement("srv:DCP").addElement("srv:DCPList")
                 .addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_DCPCodeType")
-                .addAttribute("codeList", platforms[i]);
+                .addAttribute("codeListValue", platforms[i]);
         }
         // srv:operationMetadata -> srv:SV_OperationMetadata -> srv:invocationName -> String
         String invocationName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_INVOCATION_NAME);
         if (IngridQueryHelper.hasValue(invocationName)) {
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
 	        this.addGCOCharacterString(svOperationMetadata.addElement("srv:invocationName"), invocationName);
         }
         // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:connectPoint -> gmd:CI_OnlineResource
         String[] connectPoints = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT);
         for (int i=0; i< connectPoints.length; i++) {
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
             svOperationMetadata.addElement("srv:connectPoint")
                 .addElement("gmd:CI_OnlineResource").addElement("gmd:linkage")
                     .addElement("gmd:URL").addText(connectPoints[i]);
@@ -465,6 +480,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         String[] parameterOptionality = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL);
         String[] parameterRepeatability = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY);
         for (int i=0; i<parameterNames.length; i++) {
+	        if (svOperationMetadata == null) {
+	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        }
             Element parameters = svOperationMetadata.addElement("srv:parameters").addElement("SV_Parameter");
             // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:parameters -> srv:SV_Parameter -> srv:name -> gmd:MemberName -> gmd:aName -> gco:CharacterString
             this.addGCOCharacterString(parameters.addElement("srv:name").addElement("gmd:MemberName").addElement("gmd:aName"),parameterNames[i]); 
@@ -482,10 +500,13 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     
     protected void addExtent (Element parent, IngridHit hit, String ns) {
         // extend
-        Element exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("gmd:EX_Extent");
+        Element exExent = null;
         // T01_object.loc_descr MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/description
         String extDescription = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_LOC_DESCR);
         if (IngridQueryHelper.hasValue(extDescription)) {
+            if (exExent == null) {
+            	exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("gmd:EX_Extent");
+            }
             super.addGCOCharacterString(exExent.addElement("gmd:description"), extDescription);
         }
 
@@ -497,6 +518,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         String[] stBoxY2 = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ST_BOX_Y2);
 
         for (int i=0; i< stTownship.length; i++) {
+            if (exExent == null) {
+            	exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("gmd:EX_Extent");
+            }
             // T011_township.township_no MD_Metadata/gmd:identificationInfo/srv:CSW_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:RS_Identifier/code/gco:CharacterString
             String geoIdentifier = null;
             if (stTownshipNames.length == stTownship.length && stTownshipNames[i] != null &&  stTownshipNames[i].length() > 0) {
@@ -514,31 +538,21 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             
             Element exGeographicBoundingBox = null;
             // T01_st_bbox.x1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.westBoundLongitude/gmd:approximateLongitude
-            if (stBoxX1.length == stTownship.length) {
+            if (stBoxX1.length == stTownship.length 
+            		&& stBoxX1.length == stTownship.length
+            		&& stBoxY1.length == stTownship.length
+            		&& stBoxY2.length == stTownship.length
+            		&& IngridQueryHelper.hasValue(stBoxX1[i])
+            		&& IngridQueryHelper.hasValue(stBoxX2[i])
+            		&& IngridQueryHelper.hasValue(stBoxY1[i])
+            		&& IngridQueryHelper.hasValue(stBoxY2[i])
+            		) {
             	if (exGeographicBoundingBox == null) {
             		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
             	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX1[i].replaceAll(",", "."));
-            }
-            // T01_st_bbox.x2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.eastBoundLongitude/gmd:approximateLongitude
-            if (stBoxX2.length == stTownship.length) {
-            	if (exGeographicBoundingBox == null) {
-            		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
-            	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX2[i].replaceAll(",", "."));
-            }
-            // T01_st_bbox.y1 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.southBoundLatitude/gmd:approximateLatitude
-            if (stBoxY1.length == stTownship.length) {
-            	if (exGeographicBoundingBox == null) {
-            		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
-            	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY1[i].replaceAll(",", "."));
-            }
-            // T01_st_bbox.y2 MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/geographicElement/EX_GeographicBoundingBox.northBoundLatitude/gmd:approximateLatitude
-            if (stBoxY2.length == stTownship.length) {
-            	if (exGeographicBoundingBox == null) {
-            		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
-            	}
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:northBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY2[i].replaceAll(",", "."));
             }
         }        

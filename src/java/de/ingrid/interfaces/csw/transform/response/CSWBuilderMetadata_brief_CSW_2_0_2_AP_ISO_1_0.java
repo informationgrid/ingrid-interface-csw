@@ -60,10 +60,19 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 
 	private void addIdentificationInfoService(Element metaData, IngridHit hit) {
 		Element svServiceIdentification = metaData.addElement("gmd:identificationInfo").addElement(
-				"gmd:SV_ServiceIdentification");
-		this.addGCOCharacterString(svServiceIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation").addElement("gmd:title"), IngridQueryHelper
+				"srv:SV_ServiceIdentification");
+		Element ciCitation = svServiceIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation");
+
+		this.addGCOCharacterString(ciCitation.addElement("gmd:title"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
 
+		// add dates (creation, revision etc.)
+		super.addCitationReferenceDates(ciCitation, hit, "gmd");
+
+		// add abstract
+		this.addGCOCharacterString(svServiceIdentification.addElement("gmd:abstract"), IngridQueryHelper.getDetailValueAsString(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
+		
         // add service type
         String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);
         String serviceType = null;
@@ -83,7 +92,7 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
         	}
         }
         if (serviceType != null) {
-        	this.addGCOCharacterString(svServiceIdentification.addElement("serviceType"), serviceType);        	
+        	this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), serviceType);        	
         }
 
 		String[] serviceTypeVersions = IngridQueryHelper.getDetailValueAsArray(hit,
@@ -94,7 +103,10 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 						serviceTypeVersions[i]);
 			}
 		}
-		svServiceIdentification.addElement("srv:couplingType").addElement("srv:CSW_CouplingType")
+
+		addOperationMetadata(svServiceIdentification, hit);
+		
+		svServiceIdentification.addElement("srv:couplingType").addElement("srv:SV_CouplingType")
 				.addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_CouplingType").addAttribute(
 						"codeListValue",
 						IngridQueryHelper.getDetailValueAsString(hit,
