@@ -142,15 +142,18 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
             }
         }
         
-		addOperationMetadata(svServiceIdentification, hit);
-        
-        
 		String objReferenceSpecialRef = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
         if (objReferenceSpecialRef != null && objReferenceSpecialRef.equals("3345")) {
-			svServiceIdentification.addElement("srv:couplingType").addElement("srv:CSW_CouplingType")
-			.addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_CouplingType").addAttribute(
+			svServiceIdentification.addElement("srv:couplingType").addElement("srv:SV_CouplingType")
+			.addAttribute("codeList", "http://opengis.org/codelistRegistry?SV_CouplingType").addAttribute(
 					"codeListValue", "tight");
+		} else {
+			svServiceIdentification.addElement("srv:couplingType").addElement("srv:SV_CouplingType")
+			.addAttribute("codeList", "http://opengis.org/codelistRegistry?SV_CouplingType").addAttribute(
+					"codeListValue", "loose");
 		}
+
+        addOperationMetadata(svServiceIdentification, hit);
     }
 
     private void addIdentificationInfoDataset(Element metaData, IngridHit hit) throws Exception {
@@ -294,10 +297,10 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
             	if (exGeographicBoundingBox == null) {
             		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
             	}
-            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX1[i].replaceAll(",", "."));
-            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX2[i].replaceAll(",", "."));
-            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY1[i].replaceAll(",", "."));
-            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:northBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY2[i].replaceAll(",", "."));
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude"), stBoxX1[i].replaceAll(",", "."));
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude"), stBoxX2[i].replaceAll(",", "."));
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude"), stBoxY1[i].replaceAll(",", "."));
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:northBoundLatitude"), stBoxY2[i].replaceAll(",", "."));
             }
         }
     }

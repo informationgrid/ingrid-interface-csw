@@ -200,14 +200,14 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 
     
     protected void addPointOfContacts(Element parent, IngridHit hit) throws Exception {
-    	this.aaddPointOfContactBlocks(parent, hit, null);
+    	this.addPointOfContactBlocks(parent, hit, null);
     }
 
     protected void addPointOfContacts(Element parent, IngridHit hit, String ns ) throws Exception {
-    	this.aaddPointOfContactBlocks(parent, hit, ns);
+    	this.addPointOfContactBlocks(parent, hit, ns);
     }
     
-    protected void aaddPointOfContactBlocks(Element parent, IngridHit hit, String ns) throws Exception {
+    protected void addPointOfContactBlocks(Element parent, IngridHit hit, String ns) throws Exception {
 
         String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
         String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
@@ -431,47 +431,34 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         Element svOperationMetadata = null;
         // srv:operationMetadata -> srv:SV_OperationMetadata -> srv:operationName -> String
         String operationName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_NAME);
-        if (IngridQueryHelper.hasValue(operationName)) {
+        // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:DCP -> srv:SV_DCPList/@codeListValue
+        String[] platforms = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PLATFORM);
+        // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:connectPoint -> gmd:CI_OnlineResource
+        String[] connectPoints = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT);
+
+        if (!IngridQueryHelper.hasValue(operationName) || platforms.length == 0 || connectPoints.length == 0) {
+        	// there must be an operation name at least one platform and at least one connection point !
+        	return;
+        } else {
 	        if (svOperationMetadata == null) {
-	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
+	        	svOperationMetadata = parent.addElement("srv:containsOperations").addElement("srv:SV_OperationMetadata");
 	        }
 	        this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationName"), operationName);
         }
-        // srv:operationMetadata -> srv:SV_OperationMetadata -> srv:operationDescription -> String
-        String operationDescription = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_DESCR); 
-        if (IngridQueryHelper.hasValue(operationDescription)) {
-	        if (svOperationMetadata == null) {
-	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
-	        }
-            this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationDescription"), operationDescription);
-        }
-        // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:DCP -> srv:SV_DCPList/@codeListValue
-        String[] platforms = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PLATFORM);
         for (int i=0; i< platforms.length; i++) {
-	        if (svOperationMetadata == null) {
-	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
-	        }
             svOperationMetadata.addElement("srv:DCP").addElement("srv:DCPList")
                 .addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_DCPCodeType")
                 .addAttribute("codeListValue", platforms[i]);
         }
+        // srv:operationMetadata -> srv:SV_OperationMetadata -> srv:operationDescription -> String
+        String operationDescription = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_DESCR); 
+        if (IngridQueryHelper.hasValue(operationDescription)) {
+            this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationDescription"), operationDescription);
+        }
         // srv:operationMetadata -> srv:SV_OperationMetadata -> srv:invocationName -> String
         String invocationName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_INVOCATION_NAME);
         if (IngridQueryHelper.hasValue(invocationName)) {
-	        if (svOperationMetadata == null) {
-	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
-	        }
 	        this.addGCOCharacterString(svOperationMetadata.addElement("srv:invocationName"), invocationName);
-        }
-        // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:connectPoint -> gmd:CI_OnlineResource
-        String[] connectPoints = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT);
-        for (int i=0; i< connectPoints.length; i++) {
-	        if (svOperationMetadata == null) {
-	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
-	        }
-            svOperationMetadata.addElement("srv:connectPoint")
-                .addElement("gmd:CI_OnlineResource").addElement("gmd:linkage")
-                    .addElement("gmd:URL").addText(connectPoints[i]);
         }
         // srv:paramaters
         String[] parameterNames = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PARAM_NAME);
@@ -480,22 +467,38 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         String[] parameterOptionality = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL);
         String[] parameterRepeatability = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY);
         for (int i=0; i<parameterNames.length; i++) {
-	        if (svOperationMetadata == null) {
-	        	svOperationMetadata = parent.addElement("srv:operationMetadata").addElement("srv:SV_OperationMetadata");
-	        }
-            Element parameters = svOperationMetadata.addElement("srv:parameters").addElement("SV_Parameter");
+            Element parameters = svOperationMetadata.addElement("srv:parameters").addElement("srv:SV_Parameter");
             // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:parameters -> srv:SV_Parameter -> srv:name -> gmd:MemberName -> gmd:aName -> gco:CharacterString
-            this.addGCOCharacterString(parameters.addElement("srv:name").addElement("gmd:MemberName").addElement("gmd:aName"),parameterNames[i]); 
+            Element srvName = parameters.addElement("srv:name");
+            this.addGCOCharacterString(srvName.addElement("gco:aName"),parameterNames[i]); 
+            srvName.addElement("gco:attributeType"); 
             // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:parameters -> srv:direction -> srv:SV_ParameterDirection -> (in|out|in/out)
-            parameters.addElement("srv:direction").addElement("srv:SV_ParameterDirection").addText(parameterDirections[i]);
+            if (IngridQueryHelper.hasValue(parameterDirections[i])) {
+	            String isoDirection = null;
+	            if (parameterDirections[i].equalsIgnoreCase("eingabe")) {
+	            	isoDirection = "in";
+	            } else if (parameterDirections[i].equalsIgnoreCase("ausgabe")) {
+	            	isoDirection = "out";
+	            } else {
+	            	isoDirection = "in/out";
+	            }
+	            parameters.addElement("srv:direction").addElement("srv:SV_ParameterDirection").addText(isoDirection);
+            }
             // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:parameters -> srv:description -> gco:CharacterString
             this.addGCOCharacterString(parameters.addElement("srv:description"), parameterDescriptions[i]);
             // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:parameters -> srv:optionality -> gco:CharacterString
             this.addGCOCharacterString(parameters.addElement("srv:optionality"), parameterOptionality[i]);
-            // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:parameters -> srv:repeatability -> gmd:Boolean
+            // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:parameters -> srv:repeatability -> gco:Boolean
             this.addGCOBoolean(parameters.addElement("srv:repeatability"), (parameterRepeatability[i] !=null && parameterRepeatability[i].equals("1")));
+            // srv:operationMetadata -> srv:SV_OperationMetadata ->(1:n) srv:parameters -> srv:valueType -> gco:aName
+            this.addGCOCharacterString(parameters.addElement("srv:valueType").addElement("gco:TypeName").addElement("gco:aName"), "");
         }
-        
+        for (int i=0; i< connectPoints.length; i++) {
+            svOperationMetadata.addElement("srv:connectPoint")
+                .addElement("gmd:CI_OnlineResource").addElement("gmd:linkage")
+                    .addElement("gmd:URL").addText(connectPoints[i]);
+        }
+
     }
     
     protected void addExtent (Element parent, IngridHit hit, String ns) {
@@ -550,10 +553,10 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             	if (exGeographicBoundingBox == null) {
             		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
             	}
-            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX1[i].replaceAll(",", "."));
-            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude").addElement("gmd:approximateLongitude"), stBoxX2[i].replaceAll(",", "."));
-            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY1[i].replaceAll(",", "."));
-            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:northBoundLatitude").addElement("gmd:approximateLatitude"), stBoxY2[i].replaceAll(",", "."));
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude"), stBoxX1[i].replaceAll(",", "."));
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude"), stBoxX2[i].replaceAll(",", "."));
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude"), stBoxY1[i].replaceAll(",", "."));
+            	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:northBoundLatitude"), stBoxY2[i].replaceAll(",", "."));
             }
         }        
         
@@ -621,5 +624,86 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         verticalDatum.addElement("gml:scope");
 
     }
+    
+    
+	protected void addDescriptiveKeywords(Element indentification, IngridHit hit) throws Exception {
+		// descriptiveKeywords
+		String[] keywords = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SEARCH_SEARCHTERM);
+		String[] keywordTypes = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SEARCH_TYPE);
+		ArrayList thesaurusKeywords = new ArrayList();
+		ArrayList freeKeywords = new ArrayList();
+		ArrayList inspireKeywords = new ArrayList();
+		ArrayList gemetKeywords = new ArrayList();
+		for (int i = 0; i < keywords.length; i++) {
+			if (keywordTypes[i].equals("2") || keywordTypes[i].equals("T")) {
+				thesaurusKeywords.add(keywords[i]);
+			} else if (keywordTypes[i].equals("1") || keywordTypes[i].equals("F")) {
+				freeKeywords.add(keywords[i]);
+			} else if (keywordTypes[i].equals("G")) {
+				gemetKeywords.add(keywords[i]);
+			} else if (keywordTypes[i].equals("I")) {
+				inspireKeywords.add(keywords[i]);
+			}
+		}
+		if (thesaurusKeywords.size() > 0) {
+			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+			for (int i = 0; i < thesaurusKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
+								.get(i));
+			}
+			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"codeListValue", "theme");
+			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
+			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "UMTHES Thesaurus");
+			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2009-01-15");
+			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
+				.addAttribute("codeListValue", "publication")
+				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
+		}
+		if (gemetKeywords.size() > 0) {
+			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+			for (int i = 0; i < thesaurusKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
+								.get(i));
+			}
+			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"codeListValue", "theme");
+			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
+			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "GEMET - Concepts, version 2.1");
+			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2008-06-13");
+			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
+				.addAttribute("codeListValue", "publication")
+				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
+		}		
+		if (inspireKeywords.size() > 0) {
+			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+			for (int i = 0; i < thesaurusKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
+								.get(i));
+			}
+			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"codeListValue", "theme");
+			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
+			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "GEMET - INSPIRE themes, version 1.0");
+			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2008-06-01");
+			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
+				.addAttribute("codeListValue", "publication")
+				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
+		}		
+		if (freeKeywords.size() > 0) {
+			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+			for (int i = 0; i < freeKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) freeKeywords.get(i));
+			}
+		}		
+	}    
 
 }

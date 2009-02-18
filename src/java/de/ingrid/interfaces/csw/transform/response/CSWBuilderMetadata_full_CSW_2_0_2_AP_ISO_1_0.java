@@ -403,8 +403,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				Element dqDomainConsistency = dqQualityInfo.addElement("gmd:report").addElement("gmd:DQ_DomainConsistency");
 				Element dqConformanceResult = dqDomainConsistency.addElement("gmd:result").addElement("gmd:DQ_ConformanceResult");
 				
-				// pass/gco:Boolean
-				this.addGCOBoolean(dqConformanceResult.addElement("gmd:pass"), objectConformityDegreeKeys[i].equals("1"));
 				// specification/CI_Citation/
 				Element ciCitation = dqConformanceResult.addElement("gmd:specification").addElement("gmd:CI_Citation");
 				// title/gco:CharacterString
@@ -415,6 +413,8 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
 						"http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode").addAttribute(
 						"codeListValue", "publication").addText("publication");
+				// pass/gco:Boolean
+				this.addGCOBoolean(dqConformanceResult.addElement("gmd:pass"), objectConformityDegreeKeys[i].equals("1"));
 
 			}
 		}
@@ -494,9 +494,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					(objectConformityDegreeKeys[i].equals("1") || objectConformityDegreeKeys[i].equals("2"))) {
 				Element dqDomainConsistency = dqQualityInfo.addElement("gmd:report").addElement("gmd:DQ_DomainConsistency");
 				Element dqConformanceResult = dqDomainConsistency.addElement("gmd:result").addElement("gmd:DQ_ConformanceResult");
-				
-				// pass/gco:Boolean
-				this.addGCOBoolean(dqConformanceResult.addElement("gmd:pass"), objectConformityDegreeKeys[i].equals("1"));
 				// specification/CI_Citation/
 				Element ciCitation = dqConformanceResult.addElement("gmd:specification").addElement("gmd:CI_Citation");
 				// title/gco:CharacterString
@@ -507,7 +504,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
 						"http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode").addAttribute(
 						"codeListValue", "publication").addText("publication");
-
+				this.addGCOCharacterString(dqConformanceResult.addElement("gmd:explanation"), "");
+				// pass/gco:Boolean
+				this.addGCOBoolean(dqConformanceResult.addElement("gmd:pass"), objectConformityDegreeKeys[i].equals("1"));
 			}
 		}
 		
@@ -582,7 +581,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				"srv:SV_ServiceIdentification");
 
 		addGenericMetadataIndentification(svServiceIdentification, hit);
-
+		
 		this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE));
 
@@ -593,7 +592,20 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					serviceTypeVersions[i]);
 		}
 
-		super.addOperationMetadata(svServiceIdentification, hit);
+		super.addExtent(svServiceIdentification, hit, "srv");
+
+		String objReferenceSpecialRef = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
+        if (objReferenceSpecialRef != null && objReferenceSpecialRef.equals("3345")) {
+			svServiceIdentification.addElement("srv:couplingType").addElement("srv:SV_CouplingType")
+			.addAttribute("codeList", "http://opengis.org/codelistRegistry?SV_CouplingType").addAttribute(
+					"codeListValue", "tight");
+		} else {
+			svServiceIdentification.addElement("srv:couplingType").addElement("srv:SV_CouplingType")
+			.addAttribute("codeList", "http://opengis.org/codelistRegistry?SV_CouplingType").addAttribute(
+					"codeListValue", "loose");
+		}
+
+        super.addOperationMetadata(svServiceIdentification, hit);
 		
 		List references = IngridQueryHelper.getReferenceIdentifiers(hit);
 		for (int i=0; i< references.size(); i++) {
@@ -603,14 +615,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		}
 
 
-		super.addExtent(svServiceIdentification, hit, "srv");
-
-		String objReferenceSpecialRef = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
-        if (objReferenceSpecialRef != null && objReferenceSpecialRef.equals("3345")) {
-			svServiceIdentification.addElement("srv:couplingType").addElement("srv:CSW_CouplingType")
-			.addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_CouplingType").addAttribute(
-					"codeListValue", "tight");
-		}
 
 	}
 
@@ -690,84 +694,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		} catch (NumberFormatException e) {
 		}
 		
-		
-		// descriptiveKeywords
-		String[] keywords = IngridQueryHelper.getDetailValueAsArray(hit,
-				IngridQueryHelper.HIT_KEY_OBJECT_SEARCH_SEARCHTERM);
-		String[] keywordTypes = IngridQueryHelper.getDetailValueAsArray(hit,
-				IngridQueryHelper.HIT_KEY_OBJECT_SEARCH_TYPE);
-		ArrayList thesaurusKeywords = new ArrayList();
-		ArrayList freeKeywords = new ArrayList();
-		ArrayList inspireKeywords = new ArrayList();
-		ArrayList gemetKeywords = new ArrayList();
-		for (int i = 0; i < keywords.length; i++) {
-			if (keywordTypes[i].equals("2") || keywordTypes[i].equals("T")) {
-				thesaurusKeywords.add(keywords[i]);
-			} else if (keywordTypes[i].equals("1") || keywordTypes[i].equals("F")) {
-				freeKeywords.add(keywords[i]);
-			} else if (keywordTypes[i].equals("G")) {
-				gemetKeywords.add(keywords[i]);
-			} else if (keywordTypes[i].equals("I")) {
-				inspireKeywords.add(keywords[i]);
-			}
-		}
-		if (thesaurusKeywords.size() > 0) {
-			Element keywordType = parent.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < thesaurusKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
-								.get(i));
-			}
-			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
-			"codeListValue", "theme");
-			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
-			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "UMTHES Thesaurus");
-			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
-			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2009-01-15");
-			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
-				.addAttribute("codeListValue", "publication")
-				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
-		}
-		if (gemetKeywords.size() > 0) {
-			Element keywordType = parent.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < thesaurusKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
-								.get(i));
-			}
-			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
-			"codeListValue", "theme");
-			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
-			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "GEMET - Concepts, version 2.1");
-			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
-			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2008-06-13");
-			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
-				.addAttribute("codeListValue", "publication")
-				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
-		}		
-		if (inspireKeywords.size() > 0) {
-			Element keywordType = parent.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < thesaurusKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
-								.get(i));
-			}
-			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
-			"codeListValue", "theme");
-			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
-			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "GEMET - INSPIRE themes, version 1.0");
-			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
-			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2008-06-01");
-			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
-				.addAttribute("codeListValue", "publication")
-				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
-		}		
-		if (freeKeywords.size() > 0) {
-			Element keywordType = parent.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < freeKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) freeKeywords.get(i));
-			}
-		}		
+		addDescriptiveKeywords(parent, hit);		
 		
 		// add resourceSpecificUsage
 		String usage = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATASET_USAGE);
@@ -779,7 +706,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 	        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
 	        .addAttribute("codeListValue", "pointOfContact");
 		}
-
 
 		// add resourceConstraint uselimitations
 		Element mdLegalContraints = null;
@@ -836,6 +762,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		
 
 	}
+	
 
 	private void addIdentificationInfoDataset(Element metaData, IngridHit hit) throws Exception {
 		Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
