@@ -121,6 +121,12 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			this.addGCOCharacterString(portrayalCICitation.addElement("gmd:edition"),
 					portrayalCatalogInfoVersions[i]);
 		}
+		// add portrayal catalog info references
+		List<String> portrayalCatalogInfoReferenceIdentifiers = IngridQueryHelper.getPortrayalCatalogInfoReferenceIdentifiers(hit);
+		for (int i=0; i < portrayalCatalogInfoReferenceIdentifiers.size(); i++) {
+			metaData.addElement("gmd:portrayalCatalogueInfo").addAttribute("uuidref", portrayalCatalogInfoReferenceIdentifiers.get(i));
+		}
+		
 	}
 
 	private void addDistributionInfo(Element metaData, IngridHit hit) {
@@ -295,6 +301,14 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				this.addGCOCharacterString(ciCitation.addElement("gmd:edition"), keycEditions[i]);
 			}
 		}
+		
+		// add content Info references
+		List<String> contentInfoReferenceIdentifiers = IngridQueryHelper.getContentInfoReferenceIdentifiers(hit);
+		for (int i=0; i < contentInfoReferenceIdentifiers.size(); i++) {
+			metaData.addElement("gmd:contentInfo").addAttribute("uuidref", contentInfoReferenceIdentifiers.get(i));
+		}
+		
+		
 	}
 
 	private void addReferenceSystemInfo(Element metaData, IngridHit hit) {
@@ -562,6 +576,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// add dates (creation, revision etc.)
 		super.addCitationReferenceDates(ciCitation, hit, "gmd");
 
+		// add identifier
+		this.addGCOCharacterString(ciCitation.addElement("gmd:identifier").addElement("gmd:RS_Identifier").addElement("gmd:code"), IngridQueryHelper.getDetailValueAsString(
+				hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_DATASOURCE_UUID));
+		
+		
 		// citedResponsibleParty not implemented, because only
 		// UDK classes 1 and 3 are supported. citedResponsibleParty always maps
 		// to
@@ -580,8 +599,34 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		Element svServiceIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"srv:SV_ServiceIdentification");
 
-		addGenericMetadataIndentification(svServiceIdentification, hit);
+		String abstractPostfix = null;
+		final String abstractPostfixPrefix = "\n\n\nWeitere Daten des Dienstes, die nicht standard-konform (ISO 19119) hinterlegt werden können, zum Teil gemäß INSPIRE-Direktive aber bereit zu stellen sind*:\n\n\n";
+		// Weitere Daten des Dienstes, die nicht standard-konform (ISO 19119) hinterlegt werden können, gemäß INSPIRE-Direktive aber bereit zu stellen sind*:
+		String systemEnvironment = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_ENVIROMENT);
+		if (IngridQueryHelper.hasValue(systemEnvironment)) {
+			if (abstractPostfix == null) {
+				abstractPostfix = abstractPostfixPrefix;
+			}
+			abstractPostfix += "Systemumgebung: " + systemEnvironment;
+			abstractPostfix += "(environmentDescription/gco:CharacterString= " + systemEnvironment + ")";
+		}
 		
+		String supplementalInformation = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_DESCRIPTION);
+		if (IngridQueryHelper.hasValue(supplementalInformation)) {
+			if (abstractPostfix == null) {
+				abstractPostfix = abstractPostfixPrefix;
+			}
+			abstractPostfix += "Erläuterung zum Fachbezug: " + supplementalInformation;
+			abstractPostfix += "(supplementalInformation/gco:CharacterString= " + supplementalInformation + ")";
+		}
+		
+		if (abstractPostfix != null) {
+			abstractPostfix += "\n\n\n---\n";
+			abstractPostfix += "* Nähere Informationen zur INSPIRE-Direktive: http://inspire.jrc.ec.europa.eu/implementingRulesDocs_md.cfm";
+		}
+		
+		addGenericMetadataIndentification(svServiceIdentification, hit, abstractPostfix);
+
 		this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE));
 
@@ -618,12 +663,16 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 
 	}
 
-	private void addGenericMetadataIndentification(Element parent, IngridHit hit) throws Exception {
+	private void addGenericMetadataIndentification(Element parent, IngridHit hit, String abtractPostfix) throws Exception {
 		// add citation construct
 		this.addCitation(parent, hit);
 
         // add abstract
-        this.addGCOCharacterString(parent.addElement("gmd:abstract"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
+		if (abtractPostfix != null) {
+			this.addGCOCharacterString(parent.addElement("gmd:abstract"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DESCR) + abtractPostfix);
+		} else {
+			this.addGCOCharacterString(parent.addElement("gmd:abstract"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
+		}
 
 		// add purpose
 		// combine Herstellungszweck and rechtliche Grundlagen
@@ -768,7 +817,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"gmd:MD_DataIdentification");
 
-		addGenericMetadataIndentification(mdDataIdentification, hit);
+		addGenericMetadataIndentification(mdDataIdentification, hit, null);
 
 		// add digital representation
 		// T011_obj_geo_spatial_rep.type ->

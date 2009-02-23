@@ -816,18 +816,27 @@ public class FilterToIngridQueryString {
 				} else {
 					_session.setTypeNameIsDataset(true);
 				}
+			} else {
+				runExpr(co.getFirstExpression());
+				// check for date string pattern
+				// adapt date string pattern if nessecary
+				String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
+				if (UtilsCSWDate.isCSWDate(value)) {
+					value = UtilsCSWDate.getQueryDateStyle(value);
+				}
+				runExpr(co.getSecondExpression());
 			}
+		} else {
+			runExpr(co.getFirstExpression());
+			// check for date string pattern
+			// adapt date string pattern if nessecary
+			String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
+			if (UtilsCSWDate.isCSWDate(value)) {
+				value = UtilsCSWDate.getQueryDateStyle(value);
+			}
+			runExpr(co.getSecondExpression());
 		}
 
-
-		runExpr(co.getFirstExpression());
-		// check for date string pattern
-		// adapt date string pattern if nessecary
-		String value = ((Expression.Literal)co.getSecondExpression().getExpression()).getLiteral().toString();
-		if (UtilsCSWDate.isCSWDate(value)) {
-			value = UtilsCSWDate.getQueryDateStyle(value);
-		}
-		runExpr(co.getSecondExpression());
 
 		if (log.isDebugEnabled()) {
 			log.debug("exiting");
@@ -1041,10 +1050,9 @@ public class FilterToIngridQueryString {
 			// Boolean: MD_Metadata.AbstractMD_Identification.resourceConstraints.MD_SecurityConstraints
 		} else if (inPropWithoutNS.equalsIgnoreCase("HasSecurityConstraints")) {
 			outprop = "object_access.restriction_key:[0 TO 9]";
-			// MD_Metadata.identificationInfo.AbstractMD_Identification.citation.CI_Citation.identifier.MD_Identifier.code
+			// MD_Metadata.identificationInfo.AbstractMD_Identification.citation.CI_Citation.identifier.MD_Identifier.code		
 		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceIdentifier")) {
-			// TODO: no mapping to IGC available
-			outprop = "";
+			outprop = "t011_obj_geo.datasource_uuid";
 			// MD_Metadata.parentIdentifier
 		} else if (inPropWithoutNS.equalsIgnoreCase("ParentIdentifier")) {
 			outprop = "parent.object_node.obj_uuid";
@@ -1061,7 +1069,7 @@ public class FilterToIngridQueryString {
 			outprop = "";
 			// MD_Metadata.identificationInfo.MD_DataIdentification.language
 		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceLanguage")) {
-			// TODO: value must be transformed to ISO639-2
+			// TODO: value must be transformed to ISO 639-1
 			outprop = "t01_object.data_language_code";
 			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicDescription.geographicIdentifier.MD_Identifier.code
 		} else if (inPropWithoutNS.equalsIgnoreCase("GeographicDescriptionCode")) {

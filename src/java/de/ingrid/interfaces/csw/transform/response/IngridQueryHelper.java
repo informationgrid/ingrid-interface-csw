@@ -250,6 +250,8 @@ public class IngridQueryHelper {
     public static final String HIT_KEY_OBJECT_SERV_HISTORY = "T011_obj_serv.history";
 
     public static final String HIT_KEY_OBJECT_SERV_ENVIROMENT = "T011_obj_serv.environment";
+
+    public static final String HIT_KEY_OBJECT_SERV_DESCRIPTION = "t011_obj_serv.description";
     
     public static final String HIT_KEY_OBJECT_VECTOR_TOPOLOGY_LEVEL = "T011_obj_geo.vector_topology_level";
 
@@ -342,6 +344,7 @@ public class IngridQueryHelper {
 	public static final String HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION = "object_conformity.specification";
 	public static final String HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY = "object_conformity.degree_key";
 	public static final String HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE = "object_conformity.publication_date";
+	public static final String HIT_KEY_OBJECT_GEO_DATASOURCE_UUID = "t011_obj_geo.datasource_uuid";
 	
 	
     public static final String[] REQUESTED_STRING_FULL = { HIT_KEY_OBJECT_OBJ_ID, HIT_KEY_OBJECT_REL_ADR_ID,
@@ -380,7 +383,9 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_ACCESS_TERMS_OF_USE, "t011_obj_topic_cat.topic_category", "object_reference.special_ref", "areaid", 
             "object_reference.obj_to_uuid", "spatial_ref_value.name_value", HIT_KEY_OBJECT_PARENT_UUID, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
             HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL, HIT_KEY_OBJECT_ACCESS_RESTRICTION_KEY, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE,
-            HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION, HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY, HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE};
+            HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION, HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY, HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE,
+            HIT_KEY_OBJECT_GEO_DATASOURCE_UUID, HIT_KEY_OBJECT_SERV_ENVIROMENT};
+
 
 
 
@@ -775,6 +780,61 @@ public class IngridQueryHelper {
         
         return result;
     }
+
+    public static List<String> getContentInfoReferenceIdentifiers(IngridHit hit) {
+        ArrayList result = new ArrayList();
+    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+            String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+            String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
+            for (int i = 0; i < toIds.length; i++) {
+           		if (specialRefs[i].equals("3535")) {
+           			result.add(toIds[i]);
+           		}
+            }
+    	} else {
+            String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+            String[] fromIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_FROM_ID);
+            String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
+            String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
+            String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
+            for (int i = 0; i < toIds.length; i++) {
+                // '0' = parent, '1' = reference
+            	if (objId.equals(fromIds[i]) && refType[i].equals("1") && specialRefs[i].equals("3535")) {
+            		result.add(toIds[i]);
+                }
+            }
+    	}
+        
+        return result;
+    }
+    
+    public static List<String> getPortrayalCatalogInfoReferenceIdentifiers(IngridHit hit) {
+        ArrayList result = new ArrayList();
+    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+            String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+            String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
+            for (int i = 0; i < toIds.length; i++) {
+           		if (specialRefs[i].equals("3555")) {
+           			result.add(toIds[i]);
+           		}
+            }
+    	} else {
+            String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
+            String[] fromIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_FROM_ID);
+            String[] refType = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TYPE);
+            String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
+            String objId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
+            for (int i = 0; i < toIds.length; i++) {
+                // '0' = parent, '1' = reference
+            	if (objId.equals(fromIds[i]) && refType[i].equals("1") && specialRefs[i].equals("3555")) {
+            		result.add(toIds[i]);
+                }
+            }
+    	}
+        
+        return result;
+    }
+    
     
     public static boolean hasValue(String str) {
     	return (str != null && str.length() > 0);
