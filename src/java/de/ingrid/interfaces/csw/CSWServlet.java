@@ -143,6 +143,9 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		if (log.isDebugEnabled()) {
 			log.debug("javax.xml.soap.MessageFactory: " + System.getProperty("javax.xml.soap.MessageFactory"));
 			log.debug("javax.xml.soap.SOAPFactory: " + System.getProperty("javax.xml.soap.SOAPFactory"));
+			try {
+				log.debug("incoming SOAP:" + ((Message) message).getSOAPPartAsString());
+			} catch (Exception e) {}
 		}
 
 		createSOAP12 = true;
@@ -205,6 +208,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		 */
 		try {
 			response.setContentType("text/xml");
+			response.setCharacterEncoding("UTF-8");
 			Properties reqParams = ServletTools.createPropertiesFromRequest(request, true); // all
 																							// key
 																							// names
@@ -410,7 +414,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			log.debug("CSW response: " + XMLTools.toString(responseDoc));
 		}
 
-		response.getOutputStream().print(XMLTools.toString(responseDoc));
+		response.getOutputStream().write(XMLTools.toString(responseDoc).getBytes("UTF-8"));
 	}
 
 	/**

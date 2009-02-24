@@ -116,7 +116,7 @@ public class GetRecByIdAnalyser implements CSWAnalyser {
         String ids = null;
         
         //if (elemId == null || elemId.getNodeName() != "Id") {
-        if (elemId == null || elemId.getLocalName() != "Id") {     
+        if (elemId == null || elemId.getLocalName() != "Id" || elemId.getFirstChild() == null) {     
         	
         	
             Exception e = 
