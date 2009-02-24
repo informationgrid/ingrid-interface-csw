@@ -600,8 +600,8 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				"srv:SV_ServiceIdentification");
 
 		String abstractPostfix = null;
-		final String abstractPostfixPrefix = "\n\n\nWeitere Daten des Dienstes, die nicht standard-konform (ISO 19119) hinterlegt werden kˆnnen, zum Teil gem‰ﬂ INSPIRE-Direktive aber bereit zu stellen sind*:\n\n\n";
-		// Weitere Daten des Dienstes, die nicht standard-konform (ISO 19119) hinterlegt werden kˆnnen, gem‰ﬂ INSPIRE-Direktive aber bereit zu stellen sind*:
+		final String abstractPostfixPrefix = "\n\n\nWeitere Daten des Dienstes, die nicht standard-konform (ISO 19119) hinterlegt werden k√∂nnen, zum Teil gem√§√ü INSPIRE-Direktive aber bereit zu stellen sind*:\n\n\n";
+		// Weitere Daten des Dienstes, die nicht standard-konform (ISO 19119) hinterlegt werden k√∂nnen, gem√§√ü INSPIRE-Direktive aber bereit zu stellen sind*:
 		String systemEnvironment = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_ENVIROMENT);
 		if (IngridQueryHelper.hasValue(systemEnvironment)) {
 			if (abstractPostfix == null) {
@@ -616,13 +616,13 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			if (abstractPostfix == null) {
 				abstractPostfix = abstractPostfixPrefix;
 			}
-			abstractPostfix += "Erl‰uterung zum Fachbezug: " + supplementalInformation;
+			abstractPostfix += "Erl√§uterung zum Fachbezug: " + supplementalInformation;
 			abstractPostfix += "(supplementalInformation/gco:CharacterString= " + supplementalInformation + ")";
 		}
 		
 		if (abstractPostfix != null) {
 			abstractPostfix += "\n\n\n---\n";
-			abstractPostfix += "* N‰here Informationen zur INSPIRE-Direktive: http://inspire.jrc.ec.europa.eu/implementingRulesDocs_md.cfm";
+			abstractPostfix += "* N√§here Informationen zur INSPIRE-Direktive: http://inspire.jrc.ec.europa.eu/implementingRulesDocs_md.cfm";
 		}
 		
 		addGenericMetadataIndentification(svServiceIdentification, hit, abstractPostfix);
