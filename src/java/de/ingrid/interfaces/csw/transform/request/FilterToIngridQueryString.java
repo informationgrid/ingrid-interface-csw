@@ -816,6 +816,7 @@ public class FilterToIngridQueryString {
 				} else {
 					_session.setTypeNameIsDataset(true);
 				}
+				sb = deletePreOperator(sb);
 			} else {
 				runExpr(co.getFirstExpression());
 				// check for date string pattern
