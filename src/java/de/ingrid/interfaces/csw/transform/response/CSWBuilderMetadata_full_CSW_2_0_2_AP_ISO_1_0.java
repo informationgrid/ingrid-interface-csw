@@ -874,8 +874,25 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// add language
 		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
 		if (IngridQueryHelper.hasValue(dataLang)) {
-			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
+			mdDataIdentification.addElement("gmd:language").addElement("LanguageCode")
+				.addAttribute("codeList", "http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode")
+				.addAttribute("codeListValue", getISO639_2LanguageCode(dataLang));
 		}
+		
+		// add characterset
+		try {
+			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
+					IngridQueryHelper.HIT_KEY_OBJECT_METADATA_CHARACTER_SET));
+			String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(510), code, new Long(94));
+			if (IngridQueryHelper.hasValue(codeVal)) {
+				mdDataIdentification.addElement("gmd:characterSet").addElement("gmd:MD_CharacterSetCode").addAttribute(
+						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode")
+						.addAttribute("codeListValue", codeVal);
+			}
+		} catch (NumberFormatException e) {
+		}
+		
+		
 
 		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY);

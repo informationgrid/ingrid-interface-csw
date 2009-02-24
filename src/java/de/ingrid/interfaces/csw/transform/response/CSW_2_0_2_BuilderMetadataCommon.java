@@ -590,38 +590,44 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             }
         }        
         
-        Element exVerticalExtent = exExent.addElement("gmd:verticalElement").addElement("gmd:EX_VerticalExtent");
-        // T01_object.vertical_extent_minimum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.minimumValue
-        super.addGCOReal(exVerticalExtent.addElement("gmd:minimumValue"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MINIMUM));
-        // T01_object.vertical_extent_maximum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.maximumValue
-        super.addGCOReal(exVerticalExtent.addElement("gmd:maximumValue"), IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MAXIMUM));
+        String verticalExtentMin = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MINIMUM); 
+        String verticalExtentMax = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MAXIMUM);
         
-        Element verticalCRS = exVerticalExtent.addElement("gmd:verticalCRS").addElement("gml:VerticalCRS").addAttribute("gml:id", "verticalCRSN_ID_" + UUID.randomUUID());
-        // T01_object.vertical_extent_unit = Wert [Domain-ID Codelist 102] MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis@gml:uom
-        String codeVal = "";
-        try {
-            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
-            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
-        } catch (NumberFormatException e) {}
-        verticalCRS.addElement("gml:identifier").addAttribute("codeSpace", "");
-        verticalCRS.addElement("gml:scope");
-        Element verticalCS = verticalCRS.addElement("gml:verticalCS").addElement("gml:VerticalCS").addAttribute("gml:id", "verticalCS_ID_" + UUID.randomUUID());
-        verticalCS.addElement("gml:identifier").addAttribute("codeSpace", "");
-        Element coordinateSystemAxis = verticalCS.addElement("gml:axis").addElement("gml:CoordinateSystemAxis").addAttribute("gml:uom", codeVal).addAttribute("gml:id", "coordinateSystemAxis_ID_" + UUID.randomUUID());
-        coordinateSystemAxis.addElement("gml:identifier").addAttribute("codeSpace", "");
-        coordinateSystemAxis.addElement("gml:axisAbbrev");
-        coordinateSystemAxis.addElement("gml:axisDirection").addAttribute("codeSpace", "");
-
-        // T01_object.vertical_extent_vdatum = Wert [Domain-Id Codelist 101] MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name
-        codeVal = "";
-        try {
-            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
-            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(101), code, new Long(94));
-        } catch (NumberFormatException e) {}
-        Element verticalDatum = verticalCRS.addElement("gml:verticalDatum").addElement("gml:VerticalDatum").addAttribute("gml:id", "verticalDatum_ID_" + UUID.randomUUID());
-        verticalDatum.addElement("gml:identifier").addAttribute("codeSpace", "");
-        verticalDatum.addElement("gml:name").addText("codeVal");
-        verticalDatum.addElement("gml:scope");
+        if (IngridQueryHelper.hasValue(verticalExtentMin) && IngridQueryHelper.hasValue(verticalExtentMax)) {
+        
+	        Element exVerticalExtent = exExent.addElement("gmd:verticalElement").addElement("gmd:EX_VerticalExtent");
+	        // T01_object.vertical_extent_minimum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.minimumValue
+	        super.addGCOReal(exVerticalExtent.addElement("gmd:minimumValue"), verticalExtentMin);
+	        // T01_object.vertical_extent_maximum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.maximumValue
+	        super.addGCOReal(exVerticalExtent.addElement("gmd:maximumValue"), verticalExtentMax);
+	        
+	        Element verticalCRS = exVerticalExtent.addElement("gmd:verticalCRS").addElement("gml:VerticalCRS").addAttribute("gml:id", "verticalCRSN_ID_" + UUID.randomUUID());
+	        // T01_object.vertical_extent_unit = Wert [Domain-ID Codelist 102] MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis@gml:uom
+	        String codeVal = "";
+	        try {
+	            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
+	            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
+	        } catch (NumberFormatException e) {}
+	        verticalCRS.addElement("gml:identifier").addAttribute("codeSpace", "");
+	        verticalCRS.addElement("gml:scope");
+	        Element verticalCS = verticalCRS.addElement("gml:verticalCS").addElement("gml:VerticalCS").addAttribute("gml:id", "verticalCS_ID_" + UUID.randomUUID());
+	        verticalCS.addElement("gml:identifier").addAttribute("codeSpace", "");
+	        Element coordinateSystemAxis = verticalCS.addElement("gml:axis").addElement("gml:CoordinateSystemAxis").addAttribute("gml:uom", codeVal).addAttribute("gml:id", "coordinateSystemAxis_ID_" + UUID.randomUUID());
+	        coordinateSystemAxis.addElement("gml:identifier").addAttribute("codeSpace", "");
+	        coordinateSystemAxis.addElement("gml:axisAbbrev");
+	        coordinateSystemAxis.addElement("gml:axisDirection").addAttribute("codeSpace", "");
+	
+	        // T01_object.vertical_extent_vdatum = Wert [Domain-Id Codelist 101] MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name
+	        codeVal = "";
+	        try {
+	            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
+	            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(101), code, new Long(94));
+	        } catch (NumberFormatException e) {}
+	        Element verticalDatum = verticalCRS.addElement("gml:verticalDatum").addElement("gml:VerticalDatum").addAttribute("gml:id", "verticalDatum_ID_" + UUID.randomUUID());
+	        verticalDatum.addElement("gml:identifier").addAttribute("codeSpace", "");
+	        verticalDatum.addElement("gml:name").addText("codeVal");
+	        verticalDatum.addElement("gml:scope");
+        }
 
     }
     
@@ -647,6 +653,10 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 				inspireKeywords.add(keywords[i]);
 			}
 		}
+		String[] serviceClassifications = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_OBJECT_SERV_TYPE_KEY);
+		
+		
 		if (thesaurusKeywords.size() > 0) {
 			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
 			for (int i = 0; i < thesaurusKeywords.size(); i++) {
@@ -666,8 +676,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 		}
 		if (gemetKeywords.size() > 0) {
 			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < thesaurusKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
+			for (int i = 0; i < gemetKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) gemetKeywords
 								.get(i));
 			}
 			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
@@ -683,8 +693,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 		}		
 		if (inspireKeywords.size() > 0) {
 			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < thesaurusKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
+			for (int i = 0; i < inspireKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) inspireKeywords
 								.get(i));
 			}
 			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
@@ -703,7 +713,34 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			for (int i = 0; i < freeKeywords.size(); i++) {
 				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) freeKeywords.get(i));
 			}
+		}
+		if (serviceClassifications.length > 0) {
+			Element keywordType = null;
+			for (int i = 0; i < serviceClassifications.length; i++) {
+		        String codeVal = "";
+		        try {
+		            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, serviceClassifications[i]));
+		            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
+					if (keywordType == null) {
+						keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+					}
+		            this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), codeVal);
+		        } catch (Exception e) {}
+			}
+			if (keywordType != null) {
+				keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+				"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+				"codeListValue", "theme");
+				Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
+				this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "Service Classification, version 1.0");
+				Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+				thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2008-06-01");
+				thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
+					.addAttribute("codeListValue", "publication")
+					.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
+			}
 		}		
+		
 	}    
 
 }

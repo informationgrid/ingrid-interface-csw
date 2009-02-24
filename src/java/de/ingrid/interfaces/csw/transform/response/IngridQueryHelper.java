@@ -180,6 +180,7 @@ public class IngridQueryHelper {
     public static final String HIT_KEY_OBJECT_METADATA_STANDARD_VERSION = "T01_object.metadata_standard_version";
 
     public static final String HIT_KEY_OBJECT_DATASET_CHARACTER_SET = "T01_object.dataset_character_set";
+    public static final String HIT_KEY_OBJECT_METADATA_CHARACTER_SET = "t01_object.metadata_character_set";
 
     public static final String HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE = "T01_object.avail_access_note";
 
@@ -209,7 +210,7 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SERV_OPERATION_DESCR, HIT_KEY_OBJECT_SERV_INVOCATION_NAME,
             HIT_KEY_OBJECT_SERV_OP_PARAM_NAME, HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION,
             HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR, HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL,
-            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY};
+            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY, HIT_KEY_OBJECT_METADATA_CHARACTER_SET};
 
     public static final String HIT_KEY_OBJECT_OBJ_TO_ID = "t012_obj_obj.object_to_id";
 
@@ -345,6 +346,7 @@ public class IngridQueryHelper {
 	public static final String HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY = "object_conformity.degree_key";
 	public static final String HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE = "object_conformity.publication_date";
 	public static final String HIT_KEY_OBJECT_GEO_DATASOURCE_UUID = "t011_obj_geo.datasource_uuid";
+	public static final String HIT_KEY_OBJECT_SERV_TYPE_KEY = "t011_obj_serv_type.serv_type_key";
 	
 	
     public static final String[] REQUESTED_STRING_FULL = { HIT_KEY_OBJECT_OBJ_ID, HIT_KEY_OBJECT_REL_ADR_ID,
@@ -384,7 +386,9 @@ public class IngridQueryHelper {
             "object_reference.obj_to_uuid", "spatial_ref_value.name_value", HIT_KEY_OBJECT_PARENT_UUID, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
             HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL, HIT_KEY_OBJECT_ACCESS_RESTRICTION_KEY, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE,
             HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION, HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY, HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE,
-            HIT_KEY_OBJECT_GEO_DATASOURCE_UUID, HIT_KEY_OBJECT_SERV_ENVIROMENT};
+            HIT_KEY_OBJECT_GEO_DATASOURCE_UUID, HIT_KEY_OBJECT_SERV_ENVIROMENT, HIT_KEY_OBJECT_SERV_TYPE_KEY,
+            HIT_KEY_OBJECT_METADATA_CHARACTER_SET};
+
 
 
 

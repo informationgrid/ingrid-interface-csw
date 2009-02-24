@@ -1099,7 +1099,7 @@ public class FilterToIngridQueryString {
 			
 			// MD_Metadata.identificationInfo.SV_ServiceIdentification.serviceType
 		} else if (inPropWithoutNS.equalsIgnoreCase("ServiceType")) {
-			// TODO: should be mapped to t011_obj_serv_type.serv_type_key via 5100 (attn: special treatment required)
+			// TODO: should be mapped to t011_obj_serv.serv_type_key via 5100 (attn: special treatment required)
 			outprop = "t011_obj_serv.type";
 			// MD_Metadata.identificationInfo.SV_ServiceIdentification.serviceTypeVersion
 		} else if (inPropWithoutNS.equalsIgnoreCase("ServiceTypeVersion")) {
