@@ -253,9 +253,9 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			if (req.getContentType().equalsIgnoreCase("application/soap+xml")) {
+			if (req.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				super.doPost(req, resp);
-			} else if (req.getContentType().toLowerCase().startsWith("application/xml")) {
+			} else if (req.getContentType().toLowerCase().indexOf("application/xml") != -1) {
 	            // Get the body of the HTTP request.
 	            
 				DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
@@ -269,6 +269,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	    		resp.getOutputStream().print(XMLTools.toString(responseDoc));
 	    		resp.getOutputStream().flush();
+			} else {
+				throw new ServletException("Unsupported Content Type in POST request: " + req.getContentType());
 			}
 		} catch (Exception ex) {
 			throw new ServletException("POST failed " + ex.getMessage(), ex);
