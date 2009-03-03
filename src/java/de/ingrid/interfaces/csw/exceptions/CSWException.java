@@ -99,7 +99,7 @@ public class CSWException extends Exception {
 		result.append("xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n");
 		result.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
 		result.append("xsi:schemaLocation=\"http://www.opengis.net/ows owsCommon.xsd\"\n");
-		result.append("version=\"2.0.0\" language=\"en\">\n");
+		result.append("version=\"1.0.0\" language=\"en\">\n");
 		result.append("<Exception exceptionCode=\"" + excCode + "\"\n");
 		if (excLocator != null && !excLocator.equals("")) {
 			result.append("locator=\"" + excLocator + "\"\n");
