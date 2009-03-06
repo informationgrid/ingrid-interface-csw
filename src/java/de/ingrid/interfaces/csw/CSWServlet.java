@@ -5,9 +5,7 @@ package de.ingrid.interfaces.csw;
 
 // IMPORTS java.io
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.net.InetAddress;
 import java.net.URL;
@@ -20,23 +18,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.messaging.JAXMServlet;
-import javax.xml.messaging.OnewayListener;
 import javax.xml.messaging.ReqRespListener;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPMessage;
 
 import org.apache.axis.AxisFault;
 import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.DocumentFactory;
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
-import de.ingrid.ibus.client.BusClient;
-import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.analyse.ClientRequestParameters;
 import de.ingrid.interfaces.csw.analyse.CommonAnalyser;
 import de.ingrid.interfaces.csw.analyse.DescRecAnalyser;
@@ -53,6 +45,7 @@ import de.ingrid.interfaces.csw.tools.XPathUtils;
 import de.ingrid.interfaces.csw.transform.RequestTransformer;
 import de.ingrid.interfaces.csw.transform.response.CSWResponseTransformer;
 import de.ingrid.interfaces.csw.utils.CswConfig;
+import de.ingrid.interfaces.csw.utils.IBusHelper;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
@@ -77,8 +70,6 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	 * flag that shows if SOAP version 1.2 should be created
 	 */
 	private boolean createSOAP12 = true;
-
-	private BusClient client = null;
 
 	/**
 	 * the log object
@@ -113,11 +104,10 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		}
 
 		try {
-			if (log.isInfoEnabled()) {
-				log.info("trying to connect to bus via JXTA client... ");
-			}
-			client = BusClientFactory.createBusClient();
-			bus = (IBus) client.getNonCacheableIBus();
+        	if (log.isInfoEnabled()) {
+        		log.info("trying to connect to bus via JXTA client... ");
+        	}
+			bus = IBusHelper.getIBus();
 		} catch (Exception e) {
 			log.error("init iBus communication: " + e.getMessage(), e);
 		}

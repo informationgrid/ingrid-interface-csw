@@ -38,6 +38,7 @@ import de.ingrid.interfaces.csw.tools.XPathUtils;
 import de.ingrid.interfaces.csw.transform.RequestTransformer;
 import de.ingrid.interfaces.csw.transform.response.CSWResponseTransformer;
 import de.ingrid.interfaces.csw.utils.CswConfig;
+import de.ingrid.interfaces.csw.utils.IBusHelper;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHits;
@@ -448,6 +449,7 @@ public class CSW {
             if (log.isDebugEnabled()) {
             	log.debug("Fire query: " + ingridQuery.toString());
             }
+            IBusHelper.injectCache(ingridQuery);
             hits = myBus.search(ingridQuery, hitsPerPage, pageNo, (pageNo-1) * hitsPerPage, timeOut);
         } catch (Throwable t) {
             log.error("Error getting IBus: " + t.getMessage());

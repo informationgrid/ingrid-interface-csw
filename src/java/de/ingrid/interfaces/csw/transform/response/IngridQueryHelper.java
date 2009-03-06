@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.interfaces.csw.transform.response.adapter.DscEcsVersionMapperFactory;
 import de.ingrid.interfaces.csw.transform.response.adapter.IngridQueryFactory;
+import de.ingrid.interfaces.csw.utils.IBusHelper;
 import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -388,7 +389,7 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION, HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY, HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE,
             HIT_KEY_OBJECT_GEO_DATASOURCE_UUID, HIT_KEY_OBJECT_SERV_ENVIROMENT, HIT_KEY_OBJECT_SERV_TYPE_KEY,
             HIT_KEY_OBJECT_METADATA_CHARACTER_SET};
-
+            
 
 
 
@@ -462,10 +463,10 @@ public class IngridQueryHelper {
 	                if (log.isDebugEnabled()) {
 	                	log.debug("querying ibus: " + query.toString());
 	                }
+	                IBusHelper.injectCache(query);
 	                IngridHits results = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 0, 3000);
 	                if (results.getHits().length > 0) {
-	                    IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus()
-	                            .getDetails(
+	                    IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus().getDetails(
 	                                    results.getHits(),
 	                                    query,
 	                                    new String[] { HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_CLASS,
@@ -558,6 +559,7 @@ public class IngridQueryHelper {
                 if (log.isDebugEnabled()) {
                 	log.debug("querying ibus: " + query.toString() + "; page=" + page);
                 }
+                IBusHelper.injectCache(query);
                 hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 20, page, (page-1) * 20, 3000);
                 IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus().getDetails(hits.getHits(),
                         query, requestedMetaData);
@@ -649,11 +651,22 @@ public class IngridQueryHelper {
      * @return
      */
     private static String getAddressPlugIdFromPlugId(String plugId) {
-        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
-            return plugId.concat("_addr");
-        } else {
-            return plugId;
-        }
+    	String correspondentIPlug = plugId;
+    	try {
+	    	correspondentIPlug = CSWInterfaceConfig.getInstance().getIBus().getIPlug(plugId)    	
+	    		.getCorrespondentProxyServiceURL();
+    	} catch (Exception e) {
+			log.error("iBus communication: " + e.getMessage(), e);
+		}
+    
+    	if (correspondentIPlug == null || correspondentIPlug == "") {
+	        if (plugId != null && plugId.indexOf("udk-db") > -1 && !plugId.endsWith("_addr")) {
+	        	correspondentIPlug = plugId.concat("_addr");
+	        } else {
+	        	correspondentIPlug = plugId;
+	        }
+    	}
+    	return correspondentIPlug;
     }
 
     public static String getCompletePersonName(IngridHit addressHit) {
