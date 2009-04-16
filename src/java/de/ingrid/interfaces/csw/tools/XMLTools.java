@@ -447,5 +447,17 @@ public final class XMLTools {
         return stringWriter.toString();
 	}
 	
+	public static void removeWhitespaceNodes(Node e) {
+		NodeList children = e.getChildNodes();
+		for (int i = children.getLength() - 1; i >= 0; i--) {
+			Node child = children.item(i);
+			if (child instanceof Text && ((Text) child).getData().trim().length() == 0) {
+				e.removeChild(child);
+			} else if (child instanceof Element) {
+				removeWhitespaceNodes((Node) child);
+			}
+		}
+	}
+	
 
 }

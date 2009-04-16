@@ -15,6 +15,8 @@ import javax.xml.soap.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import de.ingrid.interfaces.csw.tools.XMLTools;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -183,6 +185,11 @@ public abstract class JAXMServlet
             // Now internalize the contents of a HTTP request and
             // create a SOAPMessage
 	    SOAPMessage msg = msgFactory.createMessage(headers, is);
+	    // remove whitespace text nodes from the soap part of the message
+	    // this is a workaround for a bug with the Message.getSoapBody() method
+	    // which fails if the soap:Body Element is followed my a whitespace in the
+	    // textual xml representation of the SOAP message.
+	    XMLTools.removeWhitespaceNodes(msg.getSOAPPart());
 	    
 	    SOAPMessage reply = null;
 
