@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <csw:DescribeRecordResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
 	<csw:SchemaComponent parentSchema="gmd.xsd"
 		schemaLanguage="http://www.w3.org/XML/Schema" targetNamespace="http://www.isotc211.org/2005/gmd">
