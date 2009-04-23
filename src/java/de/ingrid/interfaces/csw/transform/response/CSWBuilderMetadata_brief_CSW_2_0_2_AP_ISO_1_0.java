@@ -145,7 +145,7 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 			Long code;
 			try {
 				code = Long.valueOf(topicCategories[i]);
-				String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(527), code, new Long(94));
+				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(527L, code);
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("gmd:topicCategory").addElement("gmd:MD_TopicCategoryCode")
 							.addText(codeVal);

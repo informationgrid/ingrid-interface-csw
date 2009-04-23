@@ -229,7 +229,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				// T0112_media_option.medium_name [Domain-ID Codeliste 520]
 				// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/offLine/MD_Medium/name/MD_MediumNameCode@codeListValue
 				Long code = Long.valueOf(mediaMediaNames[i]);
-				String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(520), code, new Long(94));
+				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(520L, code);
 				if (codeVal.length() > 0) {
 					mdMedium.addElement("gmd:name").addElement("gmd:MD_MediumNameCode").addAttribute("codeList",
 							"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode").addAttribute(
@@ -320,7 +320,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		try {
 			code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_GEO_REFERENCESYSTEM_ID));
-			codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(100), code, new Long(94));
+			codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(100L, code);
 		} catch (NumberFormatException e) {
 			codeVal = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_REFERENCESYSTEM_ID);
 		}
@@ -345,7 +345,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_VECTOR_TOPOLOGY_LEVEL));
-			codeStr = UtilsUDKCodeLists.getCodeListEntryName(new Long(518), code, new Long(94));
+			codeStr = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(518L, code);
 			mdVectorSpatialRepresentation.addElement("gmd:topologyLevel").addElement("gmd:MD_TopologyLevelCode")
 			.addAttribute("codeList","http://www.tc211.org/ISO19139/resources/codeList.xml?MD_TopologyLevelCode")
 			.addAttribute("codeListValue", codeStr);
@@ -690,7 +690,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_TIME_STATUS));
-			String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(518), code, new Long(94));
+			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(518L, code);
 			if (codeVal.length() > 0) {
 				parent.addElement("gmd:status").addElement("gmd:MD_ProgressCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode").addAttribute(
@@ -705,7 +705,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_TIME_PERIOD));
-			String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(518), code, new Long(94));
+			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(518L, code);
 			if (codeVal.length() > 0) {
 				Element mdMaintenanceInformation = parent.addElement("gmd:resourceMaintenance").addElement(
 				"gmd:MD_MaintenanceInformation");
@@ -828,7 +828,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			Long code;
 			try {
 				code = Long.valueOf(digitalRepresentations[i]);
-				String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(526), code, new Long(94));
+				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(526L, code);
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("gmd:spatialRepresentationType").addElement(
 							"gmd:MD_SpatialRepresentationTypeCode").addAttribute("codeList",
@@ -883,7 +883,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_METADATA_CHARACTER_SET));
-			String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(510), code, new Long(94));
+			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(510L, code);
 			if (IngridQueryHelper.hasValue(codeVal)) {
 				mdDataIdentification.addElement("gmd:characterSet").addElement("gmd:MD_CharacterSetCode").addAttribute(
 						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode")
@@ -900,7 +900,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			Long code;
 			try {
 				code = Long.valueOf(topicCategories[i]);
-				String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(527), code, new Long(94));
+				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(527L, code);
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("gmd:topicCategory").addElement("gmd:MD_TopicCategoryCode")
 							.addText(codeVal);

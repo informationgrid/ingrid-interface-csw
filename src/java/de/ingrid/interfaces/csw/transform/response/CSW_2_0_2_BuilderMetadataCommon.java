@@ -31,7 +31,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         if (udkClass.equals("1")) {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL));
-			typeName = UtilsUDKCodeLists.getCodeListEntryName(new Long(525), code, new Long(94));
+			typeName = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(525L, code);
 			if (!IngridQueryHelper.hasValue(typeName)) {
 				typeName = "datatset";
 			}
@@ -51,7 +51,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_DATASET_CHARACTER_SET));
-			String codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(510), code, new Long(94));
+			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(510L, code);
 			if (IngridQueryHelper.hasValue(codeVal)) {
 				metaData.addElement("gmd:characterSet").addElement("gmd:MD_CharacterSetCode").addAttribute(
 						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode")
@@ -182,7 +182,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     if (code.longValue() == 999 || code.longValue() == -1) {
                         codeVal = specialNames[i];
                     } else {
-                        codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(505), code, new Long(94));
+                        codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
                     }
             	} catch (NumberFormatException e) {
             		codeVal = specialNames[i];
@@ -296,7 +296,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     if (code.longValue() == 999 || code.longValue() == -1) {
                         codeVal = specialNames[i];
                     } else {
-                        codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(505), code, new Long(94));
+                        codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
                     }
             	} catch (NumberFormatException e) {
             		codeVal = specialNames[i];
@@ -606,7 +606,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 	        String codeVal = "";
 	        try {
 	            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
-	            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
+	            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(102L, code);
 	        } catch (NumberFormatException e) {}
 	        verticalCRS.addElement("gml:identifier").addAttribute("codeSpace", "");
 	        verticalCRS.addElement("gml:scope");
@@ -621,7 +621,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 	        codeVal = "";
 	        try {
 	            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
-	            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(101), code, new Long(94));
+	            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(101L, code);
 	        } catch (NumberFormatException e) {}
 	        Element verticalDatum = verticalCRS.addElement("gml:verticalDatum").addElement("gml:VerticalDatum").addAttribute("gml:id", "verticalDatum_ID_" + UUID.randomUUID());
 	        verticalDatum.addElement("gml:identifier").addAttribute("codeSpace", "");
@@ -720,7 +720,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 		        String codeVal = "";
 		        try {
 		            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, serviceClassifications[i]));
-		            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
+		            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(102L, code);
 					if (keywordType == null) {
 						keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
 					}

@@ -135,7 +135,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                     if (code.longValue() == 999) {
                         codeVal = specialNames[i];
                     } else {
-                        codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(505), code, new Long(94));
+                        codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
                     }
                     if (codeVal != null && codeVal.length() > 0) {
                         ciResponsibleParty.addElement("smXML:role").addElement("smXML:CI_RoleCode")
@@ -314,7 +314,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         String codeVal = "";
         try {
             Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
-            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(102), code, new Long(94));
+            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(102L, code);
         } catch (NumberFormatException e) {}
         super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:unitOfMeasure").addElement("smXML:UomLength").addElement("smXML:uomName"), codeVal);
 
@@ -322,7 +322,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         codeVal = "";
         try {
             Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
-            codeVal = UtilsUDKCodeLists.getCodeListEntryName(new Long(101), code, new Long(94));
+            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(101L, code);
         } catch (NumberFormatException e) {}
         super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:verticalDatum").addElement("smXML:RS_Identifier").addElement("smXML:code"), codeVal);
         
