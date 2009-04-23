@@ -21,7 +21,7 @@ public final class TestRequests {
             + "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
             + "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
             + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" + "<soapenv:Body>\n"
-            + "<GetCapabilities service=\"CSW\" >\n" + "<AcceptVersions>\n" + "<Version>2.0.0</Version>\n"
+            + "<GetCapabilities service=\"CSW\" >\n" + "<AcceptVersions>\n" + "<Version>2.0.2</Version>\n"
             + "</AcceptVersions>\n" + "</GetCapabilities>\n" + " </soapenv:Body>\n" + "</soapenv:Envelope>";
 
     public static final String GETCAP2 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -88,7 +88,7 @@ public final class TestRequests {
                 " <soapenv:Body>\n" +
                 "<" + GETREC_WORD + " maxRecords=\"4\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
                 + "      requestId=\"csw:1\" resultType=\"results\" service=\"CSW\" startPosition=\"1\"\n"
-                + "        version=\"2.0.0\" xmlns=\"http://www.opengis.net/cat/csw\">\n"
+                + "        version=\"2.0.2\" xmlns=\"http://www.opengis.net/cat/csw\">\n"
                 + "<Query typeNames=\"csw:dataset\">\n" + "<ElementSetName typeNames=\"\">brief</ElementSetName>\n"
                 + "<Constraint version=\"1.0.0\">\n" 
                 + "<Filter xmlns=\"http://www.opengis.net/ogc\">\n" 
