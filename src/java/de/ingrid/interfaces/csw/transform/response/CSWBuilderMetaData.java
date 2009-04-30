@@ -9,8 +9,10 @@ import org.dom4j.Element;
 import org.dom4j.io.DOMWriter;
 
 import de.ingrid.interfaces.csw.analyse.SessionParameters;
+import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -20,6 +22,8 @@ import de.ingrid.utils.query.IngridQuery;
 public abstract class CSWBuilderMetaData extends CSWBuilder {
 
     protected IngridHit hit;
+    
+    protected String iPlugVersion = null;
 
     protected Element metaDataElement;
 
@@ -31,6 +35,7 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
     
     public void setHit(IngridHit hit) {
         this.hit = hit;
+        this.iPlugVersion = IPlugVersionInspector.getIPlugVersion(hit);
     }
     
     public void setMetaDataElement(Element metaDataElement) {
@@ -46,36 +51,36 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
     }
     
     /**
-     * Add a smXML character string to a parent element.
-     * 
-     * @param parent
-     * @param value
-     * @return The parent element.
-     */
+	 * Add a smXML character string to a parent element.
+	 * 
+	 * @param parent
+	 * @param value
+	 * @return The parent element.
+	 */
     protected Element addSMXMLCharacterString(Element parent, String value) {
         parent.addElement("smXML:CharacterString").addText(value.replaceAll("&(?![a-z]+;)", "&amp;"));
         return parent;
     }
 
     /**
-     * Add a smXML URL to a parent element.
-     * 
-     * @param parent
-     * @param value
-     * @return The parent element.
-     */
+	 * Add a smXML URL to a parent element.
+	 * 
+	 * @param parent
+	 * @param value
+	 * @return The parent element.
+	 */
     protected Element addSMXMLUrl(Element parent, String value) {
         parent.addElement("smXML:URL").addText(value);
         return parent;
     }
     
     /**
-     * Add a smXML Boolean to a parent element
-     * 
-     * @param parent
-     * @param value
-     * @return
-     */
+	 * Add a smXML Boolean to a parent element
+	 * 
+	 * @param parent
+	 * @param value
+	 * @return
+	 */
     protected Element addSMXMLBoolean(Element parent, boolean value) {
         if (value) {
             parent.addElement("smXML:Boolean").addText("true");
@@ -86,12 +91,12 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
     }
     
     /**
-     * Add a smXML real object to the parent.
-     * 
-     * @param parent
-     * @param value
-     * @return
-     */
+	 * Add a smXML real object to the parent.
+	 * 
+	 * @param parent
+	 * @param value
+	 * @return
+	 */
     protected Element addSMXMLReal(Element parent, String value) {
         String numberStr;
     	try {
@@ -111,12 +116,12 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
     }
     
     /**
-     * Add a smXML decimal object to the parent.
-     * 
-     * @param parent
-     * @param value
-     * @return
-     */
+	 * Add a smXML decimal object to the parent.
+	 * 
+	 * @param parent
+	 * @param value
+	 * @return
+	 */
     protected Element addSMXMLDecimal(Element parent, String value) {
         String numberStr;
     	try {
@@ -130,38 +135,39 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
     }
 
     /**
-     * Add a smXML positive Integer to the parent.
-     * 
-     * @param parent
-     * @param value
-     * @return
-     */
+	 * Add a smXML positive Integer to the parent.
+	 * 
+	 * @param parent
+	 * @param value
+	 * @return
+	 */
     protected Element addSMXMLPositiveInteger(Element parent, String value) {
         parent.addElement("smXML:positiveInteger").addText(value);
         return parent;
     }
     
     /**
-     * Transform the dom4j document of this class into a w3c.dom.Document.
-     * 
-     * @return
-     * @throws DocumentException
-     */
+	 * Transform the dom4j document of this class into a w3c.dom.Document.
+	 * 
+	 * @return
+	 * @throws DocumentException
+	 */
     public static org.w3c.dom.Document transformtoDOM(Document doc) throws DocumentException {
       DOMWriter writer = new DOMWriter();
       return writer.write(doc);
     }
 
     /**
-     * @return Returns the nsPrefix.
-     */
+	 * @return Returns the nsPrefix.
+	 */
     public String getNSPrefix() {
         return nsPrefix;
     }
 
     /**
-     * @param nsPrefix The nsPrefix to set.
-     */
+	 * @param nsPrefix
+	 *            The nsPrefix to set.
+	 */
     public void setNSPrefix(String nsPrefix) {
         this.nsPrefix = nsPrefix;
     }
@@ -178,9 +184,20 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
 		if (numberBasedLang == null) {
 			return null;
 		}
-    	if (numberBasedLang.equals("121") || numberBasedLang.equals("de")) {
+    	
+		if (numberBasedLang.equals("de")) {
     		return "ger";
-    	} else if (numberBasedLang.equals("94") || numberBasedLang.equals("en")) {
+    	} else if (numberBasedLang.equals("en")) {
+    		return "eng";
+    	} else if (numberBasedLang.equals(UtilsLanguageCodelist.getCodeFromShortcut("de").toString())) {
+	    	return "ger";
+    	} else if (numberBasedLang.equals(UtilsLanguageCodelist.getCodeFromShortcut("en").toString())) {
+    		return "eng";
+    	// compare old value for german
+    	} else if (numberBasedLang.equals("121")) {
+    		return "ger";
+       	// compare old value for english
+    	} else if (numberBasedLang.equals("94")) {
     		return "eng";
     	} else {
     		return numberBasedLang;

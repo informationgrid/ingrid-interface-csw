@@ -176,19 +176,6 @@ public class CSWBuilderMetadata_summary_DE_1_0_1 extends CSWBuilderMetadataCommo
         this.addSMXMLCharacterString(mdDataIdentification.addElement("resourceConstraints").addElement("smXML:MD_Constraints").addElement("smXML:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
                 IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE));
         
-        // add pointOfContact
-        // implemented only in full profile
-        
-        // add language
-/*        String dataLang =  IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
-        if (dataLang.equals("121")) {
-            dataLang = "de";
-        } else {
-            dataLang = "en";
-        }
-        this.addSMXMLCharacterString(mdDataIdentification.addElement("iso19115summary:language"), dataLang);
-*/        
-        
     }
 
 }
