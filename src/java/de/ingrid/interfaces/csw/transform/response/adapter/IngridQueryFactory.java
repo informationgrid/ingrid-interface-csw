@@ -3,10 +3,8 @@
  */
 package de.ingrid.interfaces.csw.transform.response.adapter;
 
-import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.PlugDescription;
 
 /**
  * @author joachim@wemove.com
