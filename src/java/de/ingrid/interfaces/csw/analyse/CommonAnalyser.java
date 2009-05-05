@@ -133,9 +133,9 @@ public final class CommonAnalyser {
 	public boolean analyseTypeNames(final String typeNames) {
 		boolean typeNamesIsValid = false;
 		String typeNameCurrent = null;
-		StringTokenizer stringTokenizer = new StringTokenizer(typeNames, ", ");
+		StringTokenizer stringTokenizer = new StringTokenizer(typeNames, ",");
 		while (stringTokenizer.hasMoreTokens()) {
-			typeNameCurrent = stringTokenizer.nextToken();
+			typeNameCurrent = stringTokenizer.nextToken().trim();
 			if (typeNameCurrent.equalsIgnoreCase("csw:dataset")) {
 				typeNamesIsValid = true;
 				sessionParameters.setTypeNameIsDataset(true);
