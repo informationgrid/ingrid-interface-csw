@@ -121,6 +121,8 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_DATA_LANGUAGE = "T01_object.data_language";
 
+    public static final String HIT_KEY_OBJECT_DATA_LANGUAGE_KEY = "T01_object.data_language_key";
+    
     public static final String HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL = "t011_obj_geo.hierarchy_level";
 
     public static final String HIT_KEY_OBJECT_SERV_OPERATION_NAME = "T011_obj_serv_operation.name";
@@ -151,7 +153,7 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY, HIT_KEY_OBJECT_ADR_SPECIAL_NAME,  
             "object_reference.special_ref", "t011_obj_topic_cat.topic_category",
             HIT_KEY_OBJECT_DATASET_REFERENCE_DATE, HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE,
-            HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_MOD_TIME, HIT_KEY_OBJECT_DATA_LANGUAGE, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
+            HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_MOD_TIME, HIT_KEY_OBJECT_DATA_LANGUAGE, HIT_KEY_OBJECT_DATA_LANGUAGE_KEY, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
             HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL, HIT_KEY_OBJECT_SERV_OPERATION_NAME, HIT_KEY_OBJECT_SERV_OP_PLATFORM,
             HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT,
             HIT_KEY_OBJECT_SERV_OPERATION_DESCR, HIT_KEY_OBJECT_SERV_INVOCATION_NAME,
@@ -162,6 +164,8 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_METADATA_LANGUAGE = "T01_object.metadata_language";
 
+    public static final String HIT_KEY_OBJECT_METADATA_LANGUAGE_KEY = "T01_object.metadata_language_key";
+    
     public static final String HIT_KEY_OBJECT_PARENT_UUID = "parent.object_node.obj_uuid";
 
 	public static final String HIT_KEY_OBJECT_SPATIAL_RES_SCALE = "t011_obj_geo_scale.scale";
@@ -199,8 +203,8 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_REL_ADR_TYPE, HIT_KEY_OBJECT_OBJ_CLASS, HIT_KEY_OBJECT_SERVICE_TYPE,
             HIT_KEY_OBJECT_SERVICE_TYPE_VERSION, HIT_KEY_OBJECT_OBJECT_SPECIAL_REF, HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY,
             HIT_KEY_OBJECT_DATASET_REFERENCE_DATE, HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE, HIT_KEY_OBJECT_MOD_TIME,
-            HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_DATA_LANGUAGE,
-            HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_ADR_SPECIAL_NAME, "object_reference.special_ref", 
+            HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_DATA_LANGUAGE, HIT_KEY_OBJECT_DATA_LANGUAGE_KEY,
+            HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_METADATA_LANGUAGE_KEY, HIT_KEY_OBJECT_ADR_SPECIAL_NAME, "object_reference.special_ref", 
             "t011_obj_topic_cat.topic_category", HIT_KEY_OBJECT_PARENT_UUID, HIT_KEY_OBJECT_SPATIAL_RES_SCALE,
             HIT_KEY_OBJECT_SPATIAL_RES_GROUND, HIT_KEY_OBJECT_SPATIAL_RES_SCAN, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
             HIT_KEY_OBJECT_SERV_OPERATION_NAME, HIT_KEY_OBJECT_SERV_OP_PLATFORM, HIT_KEY_OBJECT_SERV_OP_CONNECT_POINT,
@@ -354,8 +358,8 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_REL_ADR_TYPE, HIT_KEY_OBJECT_OBJ_CLASS, HIT_KEY_OBJECT_SERVICE_TYPE,
             HIT_KEY_OBJECT_SERVICE_TYPE_VERSION, HIT_KEY_OBJECT_OBJECT_SPECIAL_REF, HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY,
             HIT_KEY_OBJECT_DATASET_REFERENCE_DATE, HIT_KEY_OBJECT_DATASET_REFERENCE_TYPE, HIT_KEY_OBJECT_MOD_TIME,
-            HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_DATA_LANGUAGE,
-            HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_DATASET_CHARACTER_SET, HIT_KEY_OBJECT_OBJ_TO_ID,
+            HIT_KEY_OBJECT_DESCR, HIT_KEY_OBJECT_DATA_LANGUAGE, HIT_KEY_OBJECT_DATA_LANGUAGE_KEY,
+            HIT_KEY_OBJECT_METADATA_LANGUAGE, HIT_KEY_OBJECT_METADATA_LANGUAGE_KEY, HIT_KEY_OBJECT_DATASET_CHARACTER_SET, HIT_KEY_OBJECT_OBJ_TO_ID,
             HIT_KEY_OBJECT_OBJ_FROM_ID, HIT_KEY_OBJECT_OBJ_TYPE, HIT_KEY_OBJECT_METADATA_STANDARD_NAME,
             HIT_KEY_OBJECT_METADATA_STANDARD_VERSION, HIT_KEY_OBJECT_DATASET_ALTERNATE_TITLE, HIT_KEY_OBJECT_INFO_NOTE,
             HIT_KEY_OBJECT_TIME_STATUS, HIT_KEY_OBJECT_DATASET_USAGE, HIT_KEY_OBJECT_LEGIST, HIT_KEY_OBJECT_SEARCH_SEARCHTERM,
@@ -773,7 +777,7 @@ public class IngridQueryHelper {
 
     public static List getReferenceIdentifiers(IngridHit hit) {
         ArrayList result = new ArrayList();
-    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
             String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
             String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
             for (int i = 0; i < toIds.length; i++) {
@@ -800,7 +804,7 @@ public class IngridQueryHelper {
 
     public static List<String> getContentInfoReferenceIdentifiers(IngridHit hit) {
         ArrayList result = new ArrayList();
-    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
             String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
             String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
             for (int i = 0; i < toIds.length; i++) {
@@ -827,7 +831,7 @@ public class IngridQueryHelper {
     
     public static List<String> getPortrayalCatalogInfoReferenceIdentifiers(IngridHit hit) {
         ArrayList result = new ArrayList();
-    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
+    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
             String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
             String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
             for (int i = 0; i < toIds.length; i++) {

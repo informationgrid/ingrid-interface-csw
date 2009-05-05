@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="PortalU CSW Service" resourceRoot="" soapui-version="2.5.1" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="ProjectSettings@projectRoot">C:\data\wemove\ingrid\ingrid-project\ingrid-interface-csw\trunk\docs\soapUI</con:setting></con:settings><con:interface xsi:type="con:RestService" name="PortalU CSW Service" type="rest" basePath="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://harrison.its-technidata.de</con:endpoint></con:endpoints><con:resource name="csw" path="/csw"><con:settings/><con:parameters><con:parameter><con:name>SERVICE</con:name><con:value>CSW</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>REQUEST</con:name><con:value>GetCapabilities</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:request name="csw" method="POST" accept="" mediaType="application/soap+xml"><con:settings/><con:endpoint>http://harrison.its-technidata.de</con:endpoint><con:request/><con:parameters><con:parameter><con:name>SERVICE</con:name><con:value>CSW</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>REQUEST</con:name><con:value>GetCapabilities</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType>text/xml</con:mediaType><con:status>200</con:status><con:params/></con:representation></con:request></con:resource></con:interface><con:interface xsi:type="con:RestService" name="harrison CSW Service" type="rest" basePath="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://harrison.its-technidata.de</con:endpoint></con:endpoints><con:resource name="csw" path="/csw"><con:settings/><con:parameters><con:parameter><con:name>SERVICE</con:name><con:value>CSW</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>REQUEST</con:name><con:value>GetCapabilities</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:request name="GetCapabilities" method="GET" accept=""><con:settings/><con:endpoint>http://harrison.its-technidata.de</con:endpoint><con:request/><con:parameters><con:parameter><con:name>SERVICE</con:name><con:value>CSW</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>REQUEST</con:name><con:value>GetCapabilities</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType>text/xml</con:mediaType><con:status>200</con:status><con:params/></con:representation></con:request><con:request name="GetRecords, 2.0.2, SOAP, brief, title isLike &quot;wasser&quot;" method="POST" mediaType="application/soap+xml" accept=""><con:description>2.0.2, brief, title isLike "wasser"</con:description><con:settings/><con:endpoint>http://harrison.its-technidata.de</con:endpoint><con:request><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<soapenv:Body><GetRecords xmlns="http://www.opengis.net/cat/csw/2.0.2"
+xmlns:ogc="http://www.opengis.net/ogc"
+xmlns:gmd="http://www.isotc211.org/2005/gmd"
+xmlns:apiso="http://www.opengis.net/cat/csw/apiso/1.0"
+xmlns:ows="http://www.opengis.net/ows"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:dct="http://purl.org/dc/terms/"
+xmlns:gml="http://www.opengis.net/gml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2" service="CSW"
+version="2.0.2" resultType="results" outputFormat="application/xml"
+outputSchema="http://www.isotc211.org/2005/gmd" startPosition="1"
+maxRecords="5">
+  <Query typeNames="gmd:MD_Metadata">
+    <ElementSetName typeNames="">brief</ElementSetName>
+    <Constraint version="1.1.0">
+      <ogc:Filter>
+        <ogc:PropertyIsLike escapeChar="\" singleChar="?" wildCard="*">
+          <ogc:PropertyName>apiso:title</ogc:PropertyName>
+          <ogc:Literal>wasser</ogc:Literal>
+        </ogc:PropertyIsLike>
+      </ogc:Filter>
+    </Constraint>
+  </Query>
+</GetRecords>
+</soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/soap+xml</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/soap+xml</con:mediaType><con:status>200</con:status><con:params/></con:representation></con:request><con:request name="GetRecords, 2.0.2, SOAP, full, AnyText isLike &quot;Beispielobjekt&quot;" method="POST" mediaType="application/soap+xml" accept=""><con:description>2.0.2, brief, title isLike "wasser"</con:description><con:settings/><con:endpoint>http://harrison.its-technidata.de</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Body>
+      <GetRecords xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" resultType="results" outputFormat="application/xml" outputSchema="http://www.isotc211.org/2005/gmd" startPosition="1" maxRecords="5" xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:apiso="http://www.opengis.net/cat/csw/apiso/1.0" xmlns:ows="http://www.opengis.net/ows" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:gml="http://www.opengis.net/gml">
+         <Query typeNames="gmd:MD_Metadata">
+            <ElementSetName typeNames="">full</ElementSetName>
+            <Constraint version="1.1.0">
+               <ogc:Filter>
+                  <ogc:PropertyIsLike escapeChar="\" singleChar="?" wildCard="*">
+                     <ogc:PropertyName>AnyText</ogc:PropertyName>
+                     <ogc:Literal>Beispielobjekt</ogc:Literal>
+                  </ogc:PropertyIsLike>
+               </ogc:Filter>
+            </Constraint>
+         </Query>
+      </GetRecords>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/soap+xml</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/soap+xml</con:mediaType><con:status>200</con:status><con:params/></con:representation></con:request></con:resource></con:interface><con:testSuite name="harrison CSW Service TestSuite"><con:description>TestSuite generated for REST Service [harrison CSW Service]</con:description><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="csw TestCase" searchProperties="true" id="32e8fb48-1ac3-406e-9691-c8cd0f424ff2"><con:description>TestCase generated for REST Resource [csw] located at [/csw]</con:description><con:settings/><con:testStep type="restrequest" name="GetCapabilities"><con:settings/><con:config service="harrison CSW Service" resourcePath="/csw" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GetCapabilities" method="GET" accept=""><con:settings/><con:endpoint>http://harrison.its-technidata.de</con:endpoint><con:request/><con:assertion type="XPath Match"><con:configuration><path>declare namespace csw='http://www.opengis.net/cat/csw/2.0.2'
+declare namespace ows='http://www.opengis.net/ows'
+declare namespace xlink='http://www.w3.org/1999/xlink'
+
+count(//ows:Operation[@name='GetCapabilities']//ows:Get[@xlink:href='http://harrison.its-technidata.de:80/csw'])=1</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>true</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters><con:parameter><con:name>SERVICE</con:name><con:value>CSW</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>REQUEST</con:name><con:value>GetCapabilities</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType>text/xml</con:mediaType><con:status>200</con:status><con:params/></con:representation></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="GetRecords, 2.0.2, SOAP, brief, title isLike &quot;wasser&quot;"><con:settings/><con:config service="harrison CSW Service" resourcePath="/csw" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GetRecords, 2.0.2, SOAP, brief, title isLike &quot;wasser&quot;" method="POST" mediaType="application/soap+xml" accept=""><con:description>2.0.2, brief, title isLike "wasser"</con:description><con:settings/><con:endpoint>http://harrison.its-technidata.de</con:endpoint><con:request><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<soapenv:Body><GetRecords xmlns="http://www.opengis.net/cat/csw/2.0.2"
+xmlns:ogc="http://www.opengis.net/ogc"
+xmlns:gmd="http://www.isotc211.org/2005/gmd"
+xmlns:apiso="http://www.opengis.net/cat/csw/apiso/1.0"
+xmlns:ows="http://www.opengis.net/ows"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:dct="http://purl.org/dc/terms/"
+xmlns:gml="http://www.opengis.net/gml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2" service="CSW"
+version="2.0.2" resultType="results" outputFormat="application/xml"
+outputSchema="http://www.isotc211.org/2005/gmd" startPosition="1"
+maxRecords="5">
+  <Query typeNames="gmd:MD_Metadata">
+    <ElementSetName typeNames="">brief</ElementSetName>
+    <Constraint version="1.1.0">
+      <ogc:Filter>
+        <ogc:PropertyIsLike escapeChar="\" singleChar="?" wildCard="*">
+          <ogc:PropertyName>apiso:title</ogc:PropertyName>
+          <ogc:Literal>wasser</ogc:Literal>
+        </ogc:PropertyIsLike>
+      </ogc:Filter>
+    </Constraint>
+  </Query>
+</GetRecords>
+</soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="XPath Match"><con:configuration><path>declare namespace csw='http://www.opengis.net/cat/csw/2.0.2'
+
+//csw:SearchResults/@numberOfRecordsMatched > 0</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/soap+xml</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/soap+xml</con:mediaType><con:status>200</con:status><con:params/></con:representation></con:restRequest></con:config></con:testStep><con:loadTest name="LoadTest 1"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>2</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/></con:soapui-project>
