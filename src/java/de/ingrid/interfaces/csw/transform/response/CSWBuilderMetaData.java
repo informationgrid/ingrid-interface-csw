@@ -3,6 +3,8 @@
  */
 package de.ingrid.interfaces.csw.transform.response;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -12,6 +14,7 @@ import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.udk.UtilsCountryCodelist;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 /**
@@ -21,6 +24,8 @@ import de.ingrid.utils.udk.UtilsLanguageCodelist;
  */
 public abstract class CSWBuilderMetaData extends CSWBuilder {
 
+    private static Log log = LogFactory.getLog(CSWBuilderMetaData.class);
+	
     protected IngridHit hit;
     
     protected String iPlugVersion = null;
@@ -202,6 +207,26 @@ public abstract class CSWBuilderMetaData extends CSWBuilder {
     	} else {
     		return numberBasedLang;
     	}
+    }
+
+    /**
+     * Returns the ISO3166-1 Alpha-3 code based on the numeric representation.
+     * 
+     * @param iso3166_1Numeric The numeric ISO3166-1 representation. 
+     * @return
+     */
+    protected String getISO3166_1Alpha3LanguageCode(String iso3166_1Numeric) {
+    	if (log.isDebugEnabled()) {
+    		log.debug("transform code to ISO 3166-1 Alpha3:" + iso3166_1Numeric);
+    	}
+    	
+    	try {
+			String getISO3166_1Alpha3 = UtilsCountryCodelist.getShortcut3FromCode(Integer.valueOf(iso3166_1Numeric));
+			if (getISO3166_1Alpha3 != null) {
+				return getISO3166_1Alpha3;
+			}
+		} catch (NumberFormatException e) { }
+		return iso3166_1Numeric;
     }
     
     

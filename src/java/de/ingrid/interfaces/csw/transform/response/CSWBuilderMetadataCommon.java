@@ -98,8 +98,8 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                     this.addSMXMLCharacterString(CIAddress.addElement("smXML:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
                             IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
                 }
-                this.addSMXMLCharacterString(CIAddress.addElement("smXML:country"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID));
+                this.addSMXMLCharacterString(CIAddress.addElement("smXML:country"), getISO3166_1Alpha3LanguageCode(IngridQueryHelper.getDetailValueAsString(address,
+                        IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID)));
                 ArrayList emails = (ArrayList) communications.get("email");
                 for (int j = 0; j < emails.size(); j++) {
                     this.addSMXMLCharacterString(CIAddress.addElement("smXML:electronicMailAddress"), (String) emails.get(j));
