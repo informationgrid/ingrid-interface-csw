@@ -18,7 +18,7 @@ public class DscEcsVersionMapper_Udk_5_0_TO_IDC_1_0_5 implements DscEcsVersionMa
 	private static DscEcsVersionMapper_Udk_5_0_TO_IDC_1_0_5 instance = null;
 
 	private DscEcsVersionMapper_Udk_5_0_TO_IDC_1_0_5() {
-		map.put(IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID, "t02_address.country_code");
+		map.put(IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID, IngridQueryHelper.HIT_KEY_ADDRESS_COUNTRY_KEY);
 		map.put(IngridQueryHelper.HIT_KEY_OBJECT_ST_BBOX_LOC_TOWN_NO, "areaid");
 		map.put(IngridQueryHelper.HIT_KEY_OBJECT_ST_TOWNSHIP_TOWNSHIP, "spatial_ref_value.name_value");
 		map.put(IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF, "object_reference.special_ref");

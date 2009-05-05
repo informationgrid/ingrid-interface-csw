@@ -145,8 +145,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
                             IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
                 }
-                this.addGCOCharacterString(CIAddress.addElement("gmd:country"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID));
+                this.addGCOCharacterString(CIAddress.addElement("gmd:country"), getISO3166_1Alpha3LanguageCode(IngridQueryHelper.getDetailValueAsString(address,
+                        IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID)));
                 ArrayList emails = (ArrayList) communications.get("email");
                 for (int j = 0; j < emails.size(); j++) {
                     this.addGCOCharacterString(CIAddress.addElement("gmd:electronicMailAddress"), (String) emails.get(j));
@@ -259,8 +259,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
                             IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
                 }
-                this.addGCOCharacterString(CIAddress.addElement("gmd:country"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID));
+                this.addGCOCharacterString(CIAddress.addElement("gmd:country"), getISO3166_1Alpha3LanguageCode(IngridQueryHelper.getDetailValueAsString(address,
+                        IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID)));
                 ArrayList emails = (ArrayList) communications.get("email");
                 for (int j = 0; j < emails.size(); j++) {
                     this.addGCOCharacterString(CIAddress.addElement("gmd:electronicMailAddress"), (String) emails.get(j));

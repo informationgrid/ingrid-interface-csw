@@ -89,6 +89,10 @@ public class IngridQueryHelper {
     
     public static final String HIT_KEY_ADDRESS_STATE_ID = "t02_address.state_id";
 
+    public static final String HIT_KEY_ADDRESS_COUNTRY_CODE = "t02_address.country_code";
+    
+    public static final String HIT_KEY_ADDRESS_COUNTRY_KEY = "t02_address.country_key";
+    
     public static final String HIT_KEY_OBJECT_ADR_SPECIAL_NAME = "T012_obj_adr.special_name";
 
     public static final String HIT_KEY_OBJECT_TITLE = "title";
@@ -525,6 +529,8 @@ public class IngridQueryHelper {
         HIT_KEY_ADDRESS_POSTBOX,
         HIT_KEY_ADDRESS_ZIP_POSTBOX,
         HIT_KEY_ADDRESS_STATE_ID,
+        HIT_KEY_ADDRESS_COUNTRY_CODE,
+        HIT_KEY_ADDRESS_COUNTRY_KEY,
         HIT_KEY_ADDRESS_INSTITUITION2,
         HIT_KEY_ADDRESS_INSTITUITION3,
         HIT_KEY_ADDRESS_CLASS2,
