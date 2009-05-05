@@ -345,7 +345,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_VECTOR_TOPOLOGY_LEVEL));
-			codeStr = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(518L, code);
+			codeStr = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(528L, code);
 			mdVectorSpatialRepresentation.addElement("gmd:topologyLevel").addElement("gmd:MD_TopologyLevelCode")
 			.addAttribute("codeList","http://www.tc211.org/ISO19139/resources/codeList.xml?MD_TopologyLevelCode")
 			.addAttribute("codeListValue", codeStr);
