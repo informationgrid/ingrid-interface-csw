@@ -4,7 +4,7 @@
     <artifactId>ingrid-interface-csw</artifactId>
     <name>ingrid-interface-csw</name>
     <groupId>ingrid</groupId>
-    <currentVersion>1.2-SNAPSHOT</currentVersion>
+    <currentVersion>1.3-SNAPSHOT</currentVersion>
     <organization />
     <inceptionYear>2005</inceptionYear>
     <logo>/images/logo.gif</logo>
