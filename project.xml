@@ -39,7 +39,7 @@
         </developer>
     </developers>
     <repository>
-        <connection>scm:svn:https://127.0.0.1:444/svn/ingrid/ingrid-interface-csw/trunk</connection>
+        <connection>scm:svn:https://127.0.0.1:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-1.2</connection>
     </repository>
     <dependencies>
         <dependency>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-se</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -99,7 +99,7 @@
         <dependency>
             <groupId>ingrid</groupId>
             <artifactId>ingrid-iplug-tamino</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.2-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -111,7 +111,7 @@
 				<dependency>
             <groupId>de.ingrid.communication</groupId>
             <artifactId>ingrid-communication-authentication</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <version>1.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
