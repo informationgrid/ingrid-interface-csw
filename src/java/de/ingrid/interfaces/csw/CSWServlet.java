@@ -258,6 +258,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	    			log.debug("CSW response: " + XMLTools.toString(responseDoc));
 	    		}
 
+	    		resp.setContentType("application/xml");
+	    		resp.setCharacterEncoding("UTF-8");
 	    		resp.getOutputStream().print(XMLTools.toString(responseDoc));
 	    		resp.getOutputStream().flush();
 			} else {
@@ -311,6 +313,9 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 				nodes.item(idx).setTextContent(s);
 			}
 
+			response.setContentType("application/xml");
+			response.setCharacterEncoding("UTF-8");
+			
 			response.getOutputStream().write(XMLTools.toString(doc).getBytes());
 		}
 		log.debug("leaving");
@@ -332,6 +337,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		DescRecAnalyser descRecAnalyser = new DescRecAnalyser();
 		if (descRecAnalyser.analyse(reqParams)) {
 			URL url = new URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_DESCRIBERECORD));
+			response.setContentType("application/xml");
+			response.setCharacterEncoding("UTF-8");
 			IOTools.writeInputToOutputStream(url.openStream(), response.getOutputStream());
 		}
 		log.debug("leaving");
