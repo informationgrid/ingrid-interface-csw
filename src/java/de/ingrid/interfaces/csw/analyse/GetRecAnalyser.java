@@ -233,11 +233,11 @@ public class GetRecAnalyser implements CSWAnalyser {
 	 * @throws Exception e
 	 */
 	private boolean analyseFilter(final Element be) throws Exception {
-		SOAPElement soapElementFilter = null;
+		Element soapElementFilter = null;
 		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/ogc", "Filter");
 
 		if (nl != null || nl.getLength() != 0) {
-			soapElementFilter = (SOAPElement) nl.item(0);
+			soapElementFilter = (Element) nl.item(0);
 		}
 
 		if (soapElementFilter != null) {

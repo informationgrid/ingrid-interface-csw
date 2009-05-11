@@ -282,7 +282,7 @@ public class CSW {
 
         // transform the OGC filter (request) into IngridQuery; including
         // SessionParameters
-        SOAPElement soapElementFilter = (SOAPElement) be.getElementsByTagNameNS("http://www.opengis.net/ogc", "Filter").item(0);
+        Element soapElementFilter = (Element) be.getElementsByTagNameNS("http://www.opengis.net/ogc", "Filter").item(0);
         RequestTransformer requestTransformer = new RequestTransformer();
         IngridQuery ingridQuery = requestTransformer.transform(soapElementFilter, sessionParameters);
 

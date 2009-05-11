@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.xml.soap.SOAPElement;
 
+import org.w3c.dom.Element;
+
 
 /**
  * @author rschaefer
@@ -51,7 +53,7 @@ public final class SessionParameters {
 	/**
 	 * stores the OGC Filter element
 	 */
-	private SOAPElement soapElementFilter = null;
+	private Element soapElementFilter = null;
 
 	//also needed for GetRecordById requests
 
@@ -187,14 +189,14 @@ public final class SessionParameters {
 	/**
 	 * @return Returns the soapElementFilter.
 	 */
-	public SOAPElement getSoapElementFilter() {
+	public Element getSoapElementFilter() {
 		return soapElementFilter;
 	}
 
 	/**
 	 * @param soapElemFilter The soapElementFilter to set.
 	 */
-	public void setSoapElementFilter(final SOAPElement soapElemFilter) {
+	public void setSoapElementFilter(final Element soapElemFilter) {
 		this.soapElementFilter = soapElemFilter;
 	}
 
