@@ -7,22 +7,17 @@ package de.ingrid.interfaces.csw.transform;
 import java.io.StringReader;
 import java.util.ArrayList;
 
-import javax.xml.soap.SOAPElement;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import de.ingrid.interfaces.csw.analyse.SessionParameters;
-import de.ingrid.interfaces.csw.exceptions.CSWException;
 import de.ingrid.interfaces.csw.tools.SOAPTools;
 import de.ingrid.interfaces.csw.tools.XMLTools;
 import de.ingrid.interfaces.csw.transform.request.FilterToIngridQueryString;
 import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * This class transforms an OGC XML Filter or 
@@ -39,7 +34,7 @@ public class RequestTransformer implements CSWRequestTransformer {
      * 
      * @see de.ingrid.interfaces.csw.transform.CSWRequestTransformer#transform(javax.xml.soap.SOAPElement)
      */
-    public final IngridQuery transform(final SOAPElement soapElementFilter, SessionParameters session) throws Exception {
+    public final IngridQuery transform(final Element soapElementFilter, SessionParameters session) throws Exception {
         IngridQuery ingridQuery = null;
         String ingridQueryString = null;
         FilterImpl filter = getFilterFromSOAPElem(soapElementFilter);
@@ -87,7 +82,7 @@ public class RequestTransformer implements CSWRequestTransformer {
      * @return FilterImpl
      * @throws Exception e
      */
-    public final FilterImpl getFilterFromSOAPElem(final SOAPElement soapElementFilter) throws Exception {
+    public final FilterImpl getFilterFromSOAPElem(final Element soapElementFilter) throws Exception {
         if (soapElementFilter == null) {
         	return null;
         } else {
@@ -95,7 +90,7 @@ public class RequestTransformer implements CSWRequestTransformer {
 	        Document doc = XMLTools.create();
 	        doc.appendChild(doc.createElement("Filter"));
 	        elemFilter = doc.getDocumentElement();
-	    	elemFilter = (Element) SOAPTools.copyNode(soapElementFilter, elemFilter);
+	    	elemFilter = (Element) XMLTools.copyNode(soapElementFilter, elemFilter);
 	        return new FilterImpl(elemFilter);
         }
     }

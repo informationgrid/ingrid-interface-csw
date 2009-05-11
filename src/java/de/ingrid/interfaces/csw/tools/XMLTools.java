@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 import java.io.StringWriter;
 import java.io.StringReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.Iterator;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;
@@ -20,6 +23,8 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.Name;
+import javax.xml.soap.SOAPElement;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -34,6 +39,10 @@ import org.apache.commons.logging.LogFactory;
  * Diese Klasse stellt Hilfsfunktionen fuer XML zur Verfuegung  
  */
 public final class XMLTools {
+
+    // Static object used to retrieve the config data 
+    private static CSWInterfaceConfig cswConfig = CSWInterfaceConfig.getInstance();
+	
 	/**
 	 * three as int
 	 */
@@ -256,7 +265,6 @@ public final class XMLTools {
 					source.getNodeValue());
 			return tn;
 		} else {
-
 			NamedNodeMap attr = source.getAttributes();
 
 			if (attr != null) {
@@ -271,7 +279,7 @@ public final class XMLTools {
 			for (int i = 0; i < list.getLength(); i++) {
 
 				if (!(list.item(i) instanceof Text)) {
-					Element en = dest.getOwnerDocument().createElement(
+					Element en = dest.getOwnerDocument().createElementNS(list.item(i).getNamespaceURI(),
 							list.item(i).getNodeName());
 					if (list.item(i).getNodeValue() != null) {
 						en.setNodeValue(list.item(i).getNodeValue());
@@ -284,10 +292,8 @@ public final class XMLTools {
 							list.item(i).getNodeValue());
 					dest.appendChild(tn);
 				}
-
 			}
 		}
-
 		return dest;
 
 	}

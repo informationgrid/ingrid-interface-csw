@@ -251,7 +251,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 				DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
 				df.setNamespaceAware(true);
 				Document inDoc = df.newDocumentBuilder().parse(req.getInputStream());
-	            CSW csw = new CSW();
+
+				CSW csw = new CSW();
 	            Document responseDoc = csw.doPostRequest(inDoc);
 	    		if (log.isDebugEnabled()) {
 	    			log.debug("CSW response: " + XMLTools.toString(responseDoc));
