@@ -69,7 +69,7 @@ public final class AxisTools {
     public static Message createSOAPMessage(final Document doc) throws Exception {
         Message smsg = null;
         MimeHeaders mimeHeaders = new MimeHeaders();
-        mimeHeaders.addHeader("Content-Type", "application/soap+xml");
+        mimeHeaders.addHeader("Content-Type", "application/xml;charset=UTF-8");
         smsg = new Message(SOAPTools.SOAP12ENV, false, mimeHeaders);
         //smsg = new Message(SOAPTools.SOAP11ENV, false);
 	    SOAPPart sp = (SOAPPart) smsg.getSOAPPart();

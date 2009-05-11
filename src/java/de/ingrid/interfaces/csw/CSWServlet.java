@@ -360,6 +360,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			result.append("<?xml version=\"1.0\" encoding=\""
 					+ cswConfig.getString(CSWInterfaceConfig.RESPONSE_ENCODING) + "\"?>\n");
 			result.append("<RobMeldung>Anfrage ist ok</RobMeldung>\n");
+			response.setContentType("application/xml");
+			response.setCharacterEncoding("UTF-8");
 			response.getOutputStream().print(result.toString());
 		}
 		log.debug("leaving");
@@ -406,6 +408,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		if (log.isDebugEnabled()) {
 			log.debug("CSW response: " + XMLTools.toString(responseDoc));
 		}
+		response.setContentType("application/xml");
+		response.setCharacterEncoding("UTF-8");
 
 		response.getOutputStream().write(XMLTools.toString(responseDoc).getBytes("UTF-8"));
 	}
