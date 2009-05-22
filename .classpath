@@ -71,6 +71,20 @@
   </classpathentry>
   <classpathentry path="MAVEN_REPO/ehcache/jars/ehcache-1.1.jar" kind="var">
   </classpathentry>
+  <classpathentry path="MAVEN_REPO/org.geotools/jars/geoapi-2.2-M1.jar" kind="var">
+  </classpathentry>
+  <classpathentry path="MAVEN_REPO/org.geotools/jars/gt-main-2.5.2.jar" kind="var">
+  </classpathentry>
+  <classpathentry path="MAVEN_REPO/jmock/jars/jmock-2.5.1.jar" kind="var">
+  </classpathentry>
+  <classpathentry path="MAVEN_REPO/hamcrest/jars/hamcrest-core-1.1.jar" kind="var">
+  </classpathentry>
+  <classpathentry path="MAVEN_REPO/hamcrest/jars/hamcrest-library-1.1.jar" kind="var">
+  </classpathentry>
+  <classpathentry path="MAVEN_REPO/org.springframework/jars/spring-beans-2.5.6.jar" kind="var">
+  </classpathentry>
+  <classpathentry path="MAVEN_REPO/org.springframework/jars/spring-core-2.5.6.jar" kind="var">
+  </classpathentry>
   <classpathentry kind="output" path="target/classes">
   </classpathentry>
 </classpath>

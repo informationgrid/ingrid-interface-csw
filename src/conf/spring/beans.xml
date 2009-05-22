@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="cswMessageEncodingImpl" class="org.springframework.beans.factory.config.MapFactoryBean">
+		<property name="sourceMap">
+			<map>
+				<entry key="get" value="cswGetEncoding"/>
+				<entry key="post" value="cswPostEncoding"/>
+				<entry key="soap" value="cswSoapEncoding"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="cswGetEncoding" class="de.ingrid.interfaces.csw2.encoding.impl.KVPEncoding">
+	</bean>
+	<bean id="cswPostEncoding" class="de.ingrid.interfaces.csw2.encoding.impl.XMLEncoding">
+	</bean>
+	<bean id="cswSoapEncoding" class="de.ingrid.interfaces.csw2.encoding.impl.SoapEncoding">
+	</bean>
+
+	<bean id="cswRequestImpl" class="org.springframework.beans.factory.config.MapFactoryBean">
+	  <property name="sourceMap">
+	      <map>
+	        <entry key="GetCapabilities" value="de.ingrid.interfaces.csw2.request.GetCapabilitiesRequest"/>
+	        <entry key="DescribeRecord" value="de.ingrid.interfaces.csw2.request.DescribeRecordRequest"/>
+	        <entry key="GetDomain" value="de.ingrid.interfaces.csw2.request.GetDomainRequest"/>
+	        <entry key="GetRecords" value="de.ingrid.interfaces.csw2.request.GetRecordsRequest"/>
+	        <entry key="GetRecordById" value="de.ingrid.interfaces.csw2.request.GetRecordsByIdRequest"/>
+	      </map>
+	  </property>
+	</bean>	
+	
+	<bean id="cswResponseImpl" class="de.ingrid.interfaces.csw2.response.impl.GenericResponse">
+		<!-- <property name="property" value="xxx" /> -->
+	</bean>
+
+	<bean id="cswServerImpl" class="de.ingrid.interfaces.csw2.impl.GenericServer">
+		<!-- <property name="property" value="xxx" /> -->
+	</bean>
+
+</beans>
