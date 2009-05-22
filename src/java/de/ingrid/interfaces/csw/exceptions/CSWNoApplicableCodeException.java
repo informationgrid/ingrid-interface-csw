@@ -37,7 +37,7 @@
  *----------------------------------------------------------------------------*
 */
 
-package de.ingrid.interfaces.csw.exceptions;
+package de.ingrid.interfaces.csw2.exceptions;
 
 
 

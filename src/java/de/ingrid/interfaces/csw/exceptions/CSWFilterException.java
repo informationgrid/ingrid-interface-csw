@@ -39,7 +39,7 @@
 
 
 
-package de.ingrid.interfaces.csw.exceptions;
+package de.ingrid.interfaces.csw2.exceptions;
 
 /**
  * Die Klasse stellt eine Ausnahme im Filterencoding dar. 
@@ -57,7 +57,8 @@ public class CSWFilterException extends CSWException {
     /**
      * Comment for <code>message</code>
      */
-    private String message = "CSWFilterException";
+    @SuppressWarnings("unused")
+	private String message = "CSWFilterException";
 
     
 	/**
