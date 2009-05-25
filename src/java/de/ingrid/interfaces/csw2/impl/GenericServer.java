@@ -37,7 +37,7 @@ public class GenericServer implements CSWServer {
 	protected Map<String, Document> documentCache = new Hashtable<String, Document>();
 
 	@Override
-	public Document getCapabilities(GetCapabilitiesRequest request) throws CSWException {
+	public Document process(GetCapabilitiesRequest request) throws CSWException {
 		
         Document doc = null;
         final String documentKey = ConfigurationKeys.CAPABILITIES_DOC;
@@ -80,25 +80,25 @@ public class GenericServer implements CSWServer {
 	}
 
 	@Override
-	public Document describeRecord(DescribeRecordRequest request) throws CSWException {
+	public Document process(DescribeRecordRequest request) throws CSWException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Document getDomain(GetDomainRequest request) throws CSWException {
+	public Document process(GetDomainRequest request) throws CSWException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Document getRecords(GetRecordsRequest request) throws CSWException {
+	public Document process(GetRecordsRequest request) throws CSWException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Document getRecordById(GetRecordByIdRequest request) throws CSWException {
+	public Document process(GetRecordByIdRequest request) throws CSWException {
 		// TODO Auto-generated method stub
 		return null;
 	}

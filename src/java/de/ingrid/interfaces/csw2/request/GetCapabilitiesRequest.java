@@ -23,15 +23,20 @@ public class GetCapabilitiesRequest implements CSWRequest {
 
 	@Override
 	public void validate() throws CSWException {
+
 		// check if ACCEPTVERSIONS parameter contains the configured csw version
+		
+		// get the version from the configuration
 		final String versionKey = ConfigurationKeys.CSW_VERSION;
 		CSWConfig config = CSWConfig.getInstance();
 		if (!config.containsKey(versionKey))
 			throw new RuntimeException("Unknown configuration key in interface configuration: "+versionKey);
-			
 		String cswVersion = CSWConfig.getInstance().getString(versionKey);
+
+		// if accepted versions are given in the request, they must include the 
+		// configured version. if no version are requested, we default to the configured one 
 		List<String> versions = encoding.getAcceptVersions();
-		if (versions == null || !versions.contains(cswVersion)) {
+		if (versions != null && versions.size() > 0 && !versions.contains(cswVersion)) {
 			StringBuffer errorMsg = new StringBuffer();
 			errorMsg.append("Parameter 'ACCEPTVERSIONS' has an unsupported value.\n");
 			errorMsg.append("Supported values: ").append(cswVersion).append("\n");

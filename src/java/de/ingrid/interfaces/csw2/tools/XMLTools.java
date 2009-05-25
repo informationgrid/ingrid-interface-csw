@@ -120,7 +120,7 @@ public final class XMLTools {
 	 * @throws SAXException e
 	 *
 	 */
-	public static Document parse(final String fileName) throws IOException,
+	public static Document parse(final String fileName) throws Exception,
 			SAXException {
 
 		Reader reader = new InputStreamReader(new FileInputStream(fileName));
@@ -192,7 +192,7 @@ public final class XMLTools {
 	 * @return Document
 	 * @throws IOException e
 	 */
-	public static Document parse(final Reader reader) throws IOException {
+	public static Document parse(final Reader reader) throws Exception {
 
         if (log.isDebugEnabled()) {
         	log.debug("entering parse(reader)...");
@@ -230,8 +230,10 @@ public final class XMLTools {
 
 		} catch (SAXException e) {
 			log.error("parse(reader) SAXException: " + e, e);
+			throw e;
 		} catch (IOException e) {
 			log.error("parse(reader) IOException: " + e, e);
+			throw e;
 		}
 
         if (log.isDebugEnabled()) {

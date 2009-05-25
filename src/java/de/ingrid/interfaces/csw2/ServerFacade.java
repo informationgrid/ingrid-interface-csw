@@ -5,6 +5,7 @@
 package de.ingrid.interfaces.csw2;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import de.ingrid.interfaces.csw2.constants.Operation;
 import de.ingrid.interfaces.csw2.constants.RequestType;
 import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
+import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw2.request.CSWRequest;
 import de.ingrid.interfaces.csw2.request.DescribeRecordRequest;
 import de.ingrid.interfaces.csw2.request.GetCapabilitiesRequest;
@@ -106,7 +108,7 @@ public class ServerFacade {
 		CSWMessageEncoding encodingImpl = ServerFacade.getMessageEncodingInstance(type);
 		encodingImpl.initialize(request, response);
 		if (log.isDebugEnabled()) {
-			log.debug("Handle "+type+" request for operation: "+encodingImpl.getOperation());
+			log.debug("Handle "+type+" request");
 		}
 		
 		// validate the request message non-operation-specific
@@ -116,8 +118,22 @@ public class ServerFacade {
 			throw e;
 		}
 		
+		// check if the operation is supported
+		Operation operation = encodingImpl.getOperation();
+		List<Operation> supportedOperations = encodingImpl.getSupportedOperations();
+		if (!supportedOperations.contains(operation)) {
+			StringBuffer errorMsg = new StringBuffer();
+			errorMsg.append("The operation '"+operation+"' is not supported in a "+type+" request.\n");
+			errorMsg.append("Supported values:\n");
+			errorMsg.append(supportedOperations.toString()+"\n");
+			throw new CSWOperationNotSupportedException(errorMsg.toString(), operation.toString());
+		}
+		if (log.isDebugEnabled()) {
+			log.debug("Operation: "+encodingImpl.getOperation());
+		}
+		
 		// initialize the CSWRequest instance
-		CSWRequest requestImpl = ServerFacade.getRequestInstance(encodingImpl.getOperation());
+		CSWRequest requestImpl = ServerFacade.getRequestInstance(operation);
 		requestImpl.initialize(encodingImpl);
 		
 		// validate the request message operation-specific
@@ -133,21 +149,20 @@ public class ServerFacade {
 		
 		// perform the requested operation
 		Document result = null;
-		Operation operation = encodingImpl.getOperation();
 		if (operation == Operation.GET_CAPABILITIES) {
-			result = serverImpl.getCapabilities((GetCapabilitiesRequest)requestImpl);
+			result = serverImpl.process((GetCapabilitiesRequest)requestImpl);
 		}
 		else if(operation == Operation.DESCRIBE_RECORD) {
-			result = serverImpl.describeRecord((DescribeRecordRequest)requestImpl);
+			result = serverImpl.process((DescribeRecordRequest)requestImpl);
 		}
 		else if(operation == Operation.GET_DOMAIN) {
-			result = serverImpl.getDomain((GetDomainRequest)requestImpl);
+			result = serverImpl.process((GetDomainRequest)requestImpl);
 		}
 		else if(operation == Operation.GET_RECORDS) {
-			result = serverImpl.getRecords((GetRecordsRequest)requestImpl);
+			result = serverImpl.process((GetRecordsRequest)requestImpl);
 		}
 		else if(operation == Operation.GET_RECORD_BY_ID) {
-			result = serverImpl.getRecordById((GetRecordByIdRequest)requestImpl);
+			result = serverImpl.process((GetRecordByIdRequest)requestImpl);
 		}
 		if (log.isDebugEnabled()) {
 			log.debug("Result: "+XMLTools.toString(result));

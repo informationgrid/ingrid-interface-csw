@@ -48,6 +48,12 @@ public interface CSWMessageEncoding {
 	void validateResponse() throws CSWException;
 
 	/**
+	 * Get the supported operations
+	 * @return A List
+	 */
+	List<Operation> getSupportedOperations();
+
+	/**
 	 * Get the requested operation
 	 * @return The Operation
 	 */

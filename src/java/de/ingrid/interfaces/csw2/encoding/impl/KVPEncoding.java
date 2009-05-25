@@ -19,7 +19,6 @@ import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
 import de.ingrid.interfaces.csw2.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw2.exceptions.CSWMissingParameterValueException;
-import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 
 public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding {
 
@@ -30,20 +29,18 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 	/** Parameter names **/
 	private static String SERVICE_PARAM = "SERVICE";
 	private static String REQUEST_PARAM = "REQUEST";
-	private static String ACCEPTVERSIONS = "ACCEPTVERSIONS";
+	private static String ACCEPTVERSIONS_PARAM = "ACCEPTVERSIONS";
 
 	/** Supported operations **/
-	static private List<Operation> SUPPORTED_OPERATIONS = Arrays.asList(new Operation[] {
+	protected static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
 		Operation.GET_CAPABILITIES,
 		Operation.DESCRIBE_RECORD, 
-		Operation.GET_RECORDS, 
 		Operation.GET_RECORD_BY_ID
-	});
+	}));
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void initialize(HttpServletRequest request, HttpServletResponse response) {
-		
 		super.initialize(request, response);
 		
 		// get all parameters from the request and store them in a map
@@ -54,18 +51,14 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 			String key = (String) paramEnum.nextElement();
 			requestParams.put(key.toUpperCase(), request.getParameter(key));
 		}
-
-		// get the operation name from the REQUEST parameter
-		String operationName = requestParams.get(REQUEST_PARAM);
-		this.operation = Operation.getByName(operationName);
 	}
 
 	@Override
 	public void validateRequest() throws CSWException {
-
-		// check the SERVICE parameter 
-		String serviceParam = requestParams.get(SERVICE_PARAM);
+		checkInitialized();
 		
+		// check the service parameter 
+		String serviceParam = requestParams.get(SERVICE_PARAM);
 		if (serviceParam == null || serviceParam.equals("")) {
 			throw new CSWMissingParameterValueException("Parameter '"+SERVICE_PARAM+"' is not specified or has no value", 
 					SERVICE_PARAM);
@@ -78,18 +71,11 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 			}
 		}
 		
-		// check if the operation is supported
-		if (this.operation == null) {
+		// check the request parameter (operation)
+		String requestParam = requestParams.get(REQUEST_PARAM);
+		if (requestParam == null || requestParam.equals("")) {
 			throw new CSWMissingParameterValueException("Parameter '"+REQUEST_PARAM+"' is not specified or has no value", 
 					REQUEST_PARAM);
-		} else {
-			if (!SUPPORTED_OPERATIONS.contains(this.operation)) {
-				StringBuffer errorMsg = new StringBuffer();
-				errorMsg.append("Parameter '"+REQUEST_PARAM+"' has an unsupported value.\n");
-				errorMsg.append("Supported values:\n");
-				errorMsg.append(SUPPORTED_OPERATIONS.toString()+"\n");
-				throw new CSWOperationNotSupportedException(errorMsg.toString(), REQUEST_PARAM);
-			}
 		}
 	}
 	
@@ -99,15 +85,38 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 	}
 
 	@Override
+	public List<Operation> getSupportedOperations() {
+		return SUPPORTED_OPERATIONS;
+	}
+
+	@Override
 	public Operation getOperation() {
+		checkInitialized();
+		
+		// get the operation name from the REQUEST parameter
+		if (this.operation == null) {
+			String operationName = requestParams.get(REQUEST_PARAM);
+			this.operation = Operation.getByName(operationName);
+		}
 		return this.operation;
 	}
 
 	@Override
 	public List<String> getAcceptVersions() {
+		checkInitialized();
+		
 		if (acceptVersions == null) {
-			acceptVersions = Collections.unmodifiableList(Arrays.asList(new String[] {requestParams.get(ACCEPTVERSIONS)}));
+			acceptVersions = Collections.unmodifiableList(Arrays.asList(new String[] {requestParams.get(ACCEPTVERSIONS_PARAM)}));
 		}
 		return acceptVersions;
+	}
+
+	/**
+	 * Check if the instance is initialized
+	 */
+	protected void checkInitialized() {
+		if (this.requestParams == null) {
+			throw new RuntimeException("No request parameters found. Maybe initialize() was not called.");
+		}
 	}
 }

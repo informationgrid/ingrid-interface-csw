@@ -47,7 +47,7 @@ public class CSWServlet extends HttpServlet {
 				ServerFacade.handlePostRequest(request, response);
 			}
 			else {
-				throw new ServletException("Unsupported Content Type in POST request: "+request.getContentType());
+				throw new ServletException("Unsupported Content-Type in POST request: "+request.getContentType());
 			}
 		} catch (Exception ex) {
 			throw new ServletException("POST failed: "+ex.getMessage(), ex);

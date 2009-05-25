@@ -38,5 +38,6 @@ public class GenericResponse implements CSWResponse {
 		response.setContentType("application/xml");
 		response.setCharacterEncoding("UTF-8");
 		response.getOutputStream().write(XMLTools.toString(this.content).getBytes());
+		response.getOutputStream().flush();		
 	}
 }

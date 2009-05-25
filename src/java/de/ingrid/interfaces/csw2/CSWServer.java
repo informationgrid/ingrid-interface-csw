@@ -20,33 +20,33 @@ public interface CSWServer {
 	 * @param request A GetCapabilitiesRequest instance
 	 * @return A Document instance
 	 */
-	Document getCapabilities(GetCapabilitiesRequest request) throws CSWException;
+	Document process(GetCapabilitiesRequest request) throws CSWException;
 
 	/**
 	 * Do the CSW-Discovery.DescribeRecord request
 	 * @param request A DescribeRecordRequest instance
 	 * @return A Document instance
 	 */
-	Document describeRecord(DescribeRecordRequest request) throws CSWException;
+	Document process(DescribeRecordRequest request) throws CSWException;
 
 	/**
 	 * Do the CSW-Discovery.GetDomain request
 	 * @param request A GetDomainRequest instance
 	 * @return A Document instance
 	 */
-	Document getDomain(GetDomainRequest request) throws CSWException;
+	Document process(GetDomainRequest request) throws CSWException;
 
 	/**
 	 * Do the CSW-Discovery.GetRecords request
 	 * @param request A GetRecordRequest instance
 	 * @return A Document instance
 	 */
-	Document getRecords(GetRecordsRequest request) throws CSWException;
+	Document process(GetRecordsRequest request) throws CSWException;
 
 	/**
 	 * Do the CSW-Discovery.GetRecordById request
 	 * @param request A GetRecordByIdRequest instance
 	 * @return A Document instance
 	 */
-	Document getRecordById(GetRecordByIdRequest request) throws CSWException;
+	Document process(GetRecordByIdRequest request) throws CSWException;
 }
