@@ -8,7 +8,7 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package de.ingrid.interfaces.csw2.exceptions;
+package de.ingrid.interfaces.csw.exceptions;
 
 /**
  * Von dieser Klasse werden alle moeglichen Ausnahmen des Catalog Service abgeleitet
