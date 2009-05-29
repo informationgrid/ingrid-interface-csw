@@ -472,16 +472,13 @@ public class IngridQueryHelper {
 	                	log.debug("querying ibus: " + query.toString());
 	                }
 	                IBusHelper.injectCache(query);
-	                IngridHits results = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 0, 3000);
-	                if (results.getHits().length > 0) {
-	                    IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus().getDetails(
-	                                    results.getHits(),
-	                                    query,
-	                                    new String[] { HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_CLASS,
-	                                            HIT_KEY_ADDRESS_INSTITUITION });
+	                IngridHits hits = CSWInterfaceConfig.getInstance().getIBus().searchAndDetail(query, 10, 1, 0, 3000, 
+	                		new String[] { HIT_KEY_ADDRESS_ADDRID, HIT_KEY_ADDRESS_CLASS,
+                            HIT_KEY_ADDRESS_INSTITUITION });
+	                if (hits.getHits().length > 0) {
 	                    // find first parent of the address in the result set
-	                    for (int j = 0; j < details.length; j++) {
-	                        IngridHitDetail addrDetail = (IngridHitDetail) details[j];
+	                    for (int j = 0; j < hits.getHits().length; j++) {
+	                        IngridHitDetail addrDetail = (IngridHitDetail) hits.getHits()[j].getHitDetail();
 	                        addrClass = getDetailValue(addrDetail, HIT_KEY_ADDRESS_CLASS);
 	                        newAddressId = getDetailValue(addrDetail, HIT_KEY_ADDRESS_ADDRID);
 	                        if ((addrClass.equals("0") || addrClass.equals("1")) && !currentAddressId.equals(newAddressId)) {
@@ -570,11 +567,9 @@ public class IngridQueryHelper {
                 	log.debug("querying ibus: " + query.toString() + "; page=" + page);
                 }
                 IBusHelper.injectCache(query);
-                hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 20, page, (page-1) * 20, 3000);
-                IngridHitDetail details[] = CSWInterfaceConfig.getInstance().getIBus().getDetails(hits.getHits(),
-                        query, requestedMetaData);
-                for (int j = 0; j < details.length; j++) {
-                    IngridHitDetail detail = (IngridHitDetail) details[j];
+                hits = CSWInterfaceConfig.getInstance().getIBus().searchAndDetail(query, 20, page, (page-1) * 20, 3000, requestedMetaData);
+                for (int j = 0; j < hits.getHits().length; j++) {
+                    IngridHitDetail detail = (IngridHitDetail) hits.getHits()[j].getHitDetail();
                     boolean include = true;
                     if (filter != null && filter.size() > 0) {
                         Iterator it = filter.entrySet().iterator();
@@ -595,7 +590,8 @@ public class IngridQueryHelper {
                          * detail.put(requestedMetaData[i],
                          * getDetailValue(detail, requestedMetaData[i])); }
                          */
-                        hits.getHits()[j].put("detail", detail);
+                    	// detail already inside the hit
+                        //hits.getHits()[j].put("detail", detail);
                         result.add(hits.getHits()[j]);
                     }
                 }
