@@ -407,7 +407,7 @@ public class IngridQueryHelper {
         if (address == null) {
             return null;
         }
-        IngridHitDetail addressDetail = (IngridHitDetail) address.get("detail");
+        IngridHitDetail addressDetail = (IngridHitDetail) address.get("hitDetail");
         String addrClass = IngridQueryHelper.getDetailValue(addressDetail, IngridQueryHelper.HIT_KEY_ADDRESS_CLASS);
         if (addrClass.equals("0") || addrClass.equals("2") || addrClass.equals("1")) {
             String addressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION);
@@ -591,7 +591,7 @@ public class IngridQueryHelper {
                          * getDetailValue(detail, requestedMetaData[i])); }
                          */
                     	// detail already inside the hit
-                        //hits.getHits()[j].put("detail", detail);
+                        //hits.getHits()[j].put("detail", detail); // now "hitDetail"
                         result.add(hits.getHits()[j]);
                     }
                 }
@@ -676,7 +676,7 @@ public class IngridQueryHelper {
     }
 
     public static String getCompletePersonName(IngridHit addressHit) {
-        IngridHitDetail address = (IngridHitDetail) addressHit.get("detail");
+        IngridHitDetail address = (IngridHitDetail) addressHit.get("hitDetail");
 
         String personName = "";
         if (address.get(IngridQueryHelper.HIT_KEY_ADDRESS_ADDRESS) != null) {
@@ -704,12 +704,12 @@ public class IngridQueryHelper {
     }
 
     public static String getDetailValueAsString(IngridHit hit, String key) {
-        IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+        IngridHitDetail detail = (IngridHitDetail) hit.get("hitDetail");
         return getDetailValue(detail, key);
     }
 
     public static String[] getDetailValueAsArray(IngridHit hit, String key) {
-    	IngridHitDetail detail = (IngridHitDetail) hit.get("detail");
+    	IngridHitDetail detail = (IngridHitDetail) hit.get("hitDetail");
 
         String[] valueArray = new String[] {};
         Object obj = detail.get(DscEcsVersionMapperFactory.getEcsDscVersionMapper(hit).mapIndexFieldName(key));

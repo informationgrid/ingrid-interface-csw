@@ -46,7 +46,7 @@ public class CSWBuilderMetadataCommonTestLocal extends TestCase {
 		IngridHits hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 0, 10000);
 		IngridHit hit = hits.getHits()[0];
 		IngridHitDetail detail = CSWInterfaceConfig.getInstance().getIBus().getDetail(hit, query, IngridQueryHelper.REQUESTED_STRING_SUMMARY);
-		hit.put("detail", detail);
+		hit.put("hitDetail", detail);
 		
 		CSWBuilderMetadataCommon cswBuilderMetadataCommon = new CSWBuilderMetadata_summary_DE_1_0_1();
 		
@@ -72,7 +72,7 @@ public class CSWBuilderMetadataCommonTestLocal extends TestCase {
 		hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 0, 10000);
 		hit = hits.getHits()[0];
 		detail = CSWInterfaceConfig.getInstance().getIBus().getDetail(hit, query, IngridQueryHelper.REQUESTED_STRING_SUMMARY);
-		hit.put("detail", detail);
+		hit.put("hitDetail", detail);
 		
 		cswBuilderMetadataCommon.addContactBlocks(metaData, hit, "prefix");
 		metaData.asXML();
@@ -82,7 +82,7 @@ public class CSWBuilderMetadataCommonTestLocal extends TestCase {
 		hits = CSWInterfaceConfig.getInstance().getIBus().search(query, 10, 1, 0, 10000);
 		hit = hits.getHits()[0];
 		detail = CSWInterfaceConfig.getInstance().getIBus().getDetail(hit, query, IngridQueryHelper.REQUESTED_STRING_SUMMARY);
-		hit.put("detail", detail);
+		hit.put("hitDetail", detail);
 		
 		cswBuilderMetadataCommon.addContactBlocks(metaData, hit, "prefix");
 		metaData.asXML();
