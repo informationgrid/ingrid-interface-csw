@@ -20,7 +20,6 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.analyse.CommonAnalyser;
@@ -234,7 +233,6 @@ public class CSW {
      *             e
      */
     private Document doGetCapabilitiesRequest() throws Exception {
-        Message soapResponseMessage = null;
         URL url = new URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_GETCAPABILITIES));
         Reader reader = new InputStreamReader(url.openStream());
         Document doc = XMLTools.parse(reader);
@@ -255,11 +253,14 @@ public class CSW {
         }
 		// get port
         String port = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PORT, "80");
-        // replace interface host and port
+		// get path
+        String path = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PATH, "csw");
+        // replace interface host and port and path
         for (int idx = 0; idx < nodes.getLength(); idx++) {
 			String s = nodes.item(idx).getTextContent();
 			s = s.replaceAll(CswConfig.KEY_INTERFACE_HOST, host);
 			s = s.replaceAll(CswConfig.KEY_INTERFACE_PORT, port);
+			s = s.replaceAll(CswConfig.KEY_INTERFACE_PATH, path);
 			nodes.item(idx).setTextContent(s);
 		}
         

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <csw:Capabilities version="2.0.2" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd">
 	<ows:ServiceIdentification>
 		<ows:Title>PortalU Catalog Server</ows:Title>
@@ -40,13 +40,13 @@
 		<ows:Operation name="GetCapabilities">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw"/>
-					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw">
+					<ows:Get xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH"/>
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw">
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 						</ows:Constraint>
@@ -57,12 +57,12 @@
 		<ows:Operation name="GetRecords">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw">
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw">
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 						</ows:Constraint>
@@ -75,6 +75,7 @@
 			</ows:Parameter>
 			<ows:Parameter name="outputFormat">
 				<ows:Value>application/xml</ows:Value>
+				<ows:Value>text/xml</ows:Value>
 			</ows:Parameter>
 			<ows:Parameter name="outputSchema">
 				<ows:Value>http://www.opengis.net/cat/csw/2.0.2</ows:Value>
@@ -96,6 +97,7 @@
 			</ows:Parameter>
 		    <ows:Parameter name="version">
 				<ows:Value>2.0.2</ows:Value>
+				<ows:Value>2.0.0</ows:Value>
 			</ows:Parameter>
 			<ows:Constraint name="SupportedISOQueryables">
 				<ows:Value>RevisionDate</ows:Value>
@@ -131,13 +133,13 @@
 		<ows:Operation name="GetRecordById">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw"/>
-					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw">
+					<ows:Get xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH"/>
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw">
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 						</ows:Constraint>
@@ -155,18 +157,19 @@
 			</ows:Parameter>
 		    <ows:Parameter name="version">
 				<ows:Value>2.0.2</ows:Value>
+				<ows:Value>2.0.0</ows:Value>
 			</ows:Parameter>
 		</ows:Operation>
 		<ows:Operation name="DescribeRecord">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw"/>
-					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw">
+					<ows:Get xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH"/>
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/csw">
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 						</ows:Constraint>
