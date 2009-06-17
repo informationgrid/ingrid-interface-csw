@@ -13,6 +13,13 @@ import de.ingrid.interfaces.csw2.request.GetDomainRequest;
 import de.ingrid.interfaces.csw2.request.GetRecordByIdRequest;
 import de.ingrid.interfaces.csw2.request.GetRecordsRequest;
 
+/**
+ * CSWServer defines the interface for request processing specific to 
+ * the csw domain. All domain logic will be defined in CSWServer
+ * implementations.
+ * 
+ * @author ingo herwig <ingo@wemove.com>
+ */
 public interface CSWServer {
 
 	/**

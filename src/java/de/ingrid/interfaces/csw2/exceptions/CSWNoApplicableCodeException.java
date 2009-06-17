@@ -55,7 +55,7 @@ public class CSWNoApplicableCodeException extends CSWException {
     static final long serialVersionUID = 0;
     
     
-	{ super.setExceptionCode("NoApplicableCode"); }
+	{ super.setCode("NoApplicableCode"); }
 	
 	
 	/**
@@ -64,7 +64,6 @@ public class CSWNoApplicableCodeException extends CSWException {
 	 */
 	public CSWNoApplicableCodeException(final String mess) {
 		super(mess);
-		super.setExceptionText(mess);
 	}
 	
 	

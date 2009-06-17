@@ -10,6 +10,7 @@ import javax.xml.namespace.NamespaceContext;
 
 /**
  * @author Administrator
+ * TODO: use Namespace constants
  *
  */
 public class CSWNamespaceContext implements NamespaceContext {
@@ -27,6 +28,7 @@ public class CSWNamespaceContext implements NamespaceContext {
         else if ("gml".equals(prefix)) return "http://www.opengis.net/gml";
         else if ("gmd".equals(prefix)) return "http://www.isotc211.org/2005/gmd";
         else if ("xml".equals(prefix)) return XMLConstants.XML_NS_URI;
+        else if ("soapenv".equals(prefix)) return "http://www.w3.org/2003/05/soap-envelope";
 		
         return XMLConstants.NULL_NS_URI;
 	}

@@ -18,17 +18,17 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	</bean>
 	<bean id="cswPostEncoding" class="de.ingrid.interfaces.csw2.encoding.impl.XMLEncoding">
 	</bean>
-	<bean id="cswSoapEncoding" class="de.ingrid.interfaces.csw2.encoding.impl.SoapEncoding">
+	<bean id="cswSoapEncoding" class="de.ingrid.interfaces.csw2.encoding.impl.Soap12Encoding">
 	</bean>
 
 	<bean id="cswRequestImpl" class="org.springframework.beans.factory.config.MapFactoryBean">
 	  <property name="sourceMap">
 	      <map>
-	        <entry key="GetCapabilities" value="de.ingrid.interfaces.csw2.request.GetCapabilitiesRequest"/>
-	        <entry key="DescribeRecord" value="de.ingrid.interfaces.csw2.request.DescribeRecordRequest"/>
-	        <entry key="GetDomain" value="de.ingrid.interfaces.csw2.request.GetDomainRequest"/>
-	        <entry key="GetRecords" value="de.ingrid.interfaces.csw2.request.GetRecordsRequest"/>
-	        <entry key="GetRecordById" value="de.ingrid.interfaces.csw2.request.GetRecordsByIdRequest"/>
+	        <entry key="GetCapabilities" value="de.ingrid.interfaces.csw2.request.impl.GetCapabilitiesRequestImpl"/>
+	        <entry key="DescribeRecord" value="de.ingrid.interfaces.csw2.request.impl.DescribeRecordRequestImpl"/>
+	        <entry key="GetDomain" value="de.ingrid.interfaces.csw2.request.impl.GetDomainRequestImpl"/>
+	        <entry key="GetRecords" value="de.ingrid.interfaces.csw2.request.impl.GetRecordsRequestImpl"/>
+	        <entry key="GetRecordById" value="de.ingrid.interfaces.csw2.request.impl.GetRecordsByIdRequestImpl"/>
 	      </map>
 	  </property>
 	</bean>	

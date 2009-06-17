@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * The CSW Servlet. Entry point for incoming requests.
+ * Dispatches the requests according to method and content type
+ * and delegates all processing to ServerFacade
+ * 
  * @author ingo herwig <ingo@wemove.com>
  */
 public class CSWServlet extends HttpServlet {

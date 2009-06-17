@@ -55,7 +55,7 @@ public class CSWMissingParameterValueException extends CSWException {
     static final long serialVersionUID = 0;
 	
 	
-	{ super.setExceptionCode("MissingParameterValue"); }
+	{ super.setCode("MissingParameterValue"); }
 	
 	
 	/**
@@ -65,7 +65,6 @@ public class CSWMissingParameterValueException extends CSWException {
 	 */
 	public CSWMissingParameterValueException(final String mess, final String loc) {
 	    super(mess);
-		super.setExceptionText(mess);
 		super.setLocator(loc);
 	 }
 

@@ -170,7 +170,6 @@ public final class XMLTools {
 	 *
 	 * @see
 	 */
-
 	/*
 	 public static Document parse(Reader reader) throws IOException, SAXException {
 	 javax.xml.parsers.DocumentBuilder parser = null;
@@ -434,6 +433,10 @@ public final class XMLTools {
 	
 	
 	public static String toString(Document document) throws TransformerException {
+        return XMLTools.toString(document.getDocumentElement());
+	}
+	
+	public static String toString(Node node) throws TransformerException {
         StringWriter stringWriter = new StringWriter();
         StreamResult streamResult = new StreamResult(stringWriter);
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -441,9 +444,8 @@ public final class XMLTools {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-        transformer.transform(new DOMSource(document.getDocumentElement()), streamResult);
+        transformer.transform(new DOMSource(node), streamResult);
         return stringWriter.toString();
 	}
-	
 
 }

@@ -1,43 +1,26 @@
-
-
-
-
-/*
- * Created on 24.05.2004
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package de.ingrid.interfaces.csw2.exceptions;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import de.ingrid.interfaces.csw2.tools.XMLTools;
 
 /**
  * Von dieser Klasse werden alle moeglichen Ausnahmen des Catalog Service abgeleitet
  *
  * @author rschaefer
+ * @author ingo herwig <ingo@wemove.com>
  */
 public class CSWException extends Exception {
-	/**
-	 * Comment for <code>serialVersionUID</code>
-	 */
+
 	static final long serialVersionUID = 0;
 
-	/**
-	 * Der exceptionCode des Exception reports
-	 */
-	private String exceptionCode = "NoApplicableCode";
-
-	/**
-	 * Der locator des Exception reports
-	 */
+	private String code = "NoApplicableCode";
 	private String locator = null;
 
 	/**
-	 * Der exceptionText des Exception reports
-	 */
-	private String exceptionText = "CSWException";
-
-	/**
-	 * Konstruktor
+	 * Constructor
 	 * @param message String
 	 */
 	public CSWException(final String message) {
@@ -45,70 +28,128 @@ public class CSWException extends Exception {
 	}
 
 	/**
-	 * @return Returns the exceptionCode.
+	 * Constructor
+	 * @param message
+	 * @param code
+	 * @param locator
 	 */
-	public final String getExceptionCode() {
-		return exceptionCode;
+	public CSWException(final String message, final String code, final String locator) {
+		super(message);
+		this.code = code;
+		this.locator = locator;
 	}
+
 	/**
-	 * @param excCode The exceptionCode to set.
+	 * Get the exception code
+	 * @return String
 	 */
-	public final void setExceptionCode(final String excCode) {
-		this.exceptionCode = excCode;
+	public final String getCode() {
+		return code;
 	}
+	
 	/**
-	 * @return Returns the exceptionText.
+	 * Set the exception code
+	 * @param code The code to set
 	 */
-	public final String getExceptionText() {
-		return exceptionText;
+	public final void setCode(final String code) {
+		this.code = code;
 	}
+	
 	/**
-	 * @param excText The exceptionText to set.
-	 */
-	public final void setExceptionText(final String excText) {
-		this.exceptionText = excText;
-	}
-	/**
-	 * @return Returns the locator.
+	 * Get the exception locator
+	 * @return String
 	 */
 	public final String getLocator() {
 		return locator;
 	}
+	
 	/**
-	 * @param loc The locator to set.
+	 * Set the exception locator
+	 * @param loc The locator to set
 	 */
 	public final void setLocator(final String loc) {
 		this.locator = loc;
 	}
 	
 	/**
+	 * Conversions to XML format
+	 */
+	
+	/**
 	 * Creates an error message in XML structure that complies to the schema which
 	 * is defined for OWS exception reports, version 0.3.1 (see also
 	 * http://schemas.opengis.net/ows/0.3.1/owsExceptionReport.xsd)
-	 * 
-	 * @param excText A descriptive exception text. If null or empty, it is not included.
-	 * @param excCode The mandatory exception code.
-	 * @param excLocator An optional error location text. If null or empty, it is not included.
-	 * @return The complete XML text containing the error report
+
+	 * @return The complete XML document containing the error report
+	 * @throws Exception 
 	 */
-	public static String createXmlExceptionReport(String excText, String excCode, String excLocator) {
-		StringBuffer result = new StringBuffer();
+	public Document toXmlExceptionReport() throws Exception {
+		// TODO: use dom4j here
+		Document reportDoc = XMLTools.create();
 		
-		result.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		result.append("<ExceptionReport xmlns=\"http://www.opengis.net/ows\"\n");
-		result.append("xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n");
-		result.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
-		result.append("xsi:schemaLocation=\"http://www.opengis.net/ows owsCommon.xsd\"\n");
-		result.append("version=\"1.0.0\" language=\"en\">\n");
-		result.append("<Exception exceptionCode=\"" + excCode + "\"\n");
-		if (excLocator != null && !excLocator.equals("")) {
-			result.append("locator=\"" + excLocator + "\"\n");
+		Element rootElement = reportDoc.createElementNS("http://www.opengis.net/ows", "ExceptionReport");
+		reportDoc.appendChild(rootElement);
+		
+		Attr versionAttribute = reportDoc.createAttribute("version");
+		versionAttribute.setNodeValue("1.0.0");
+		rootElement.setAttributeNode(versionAttribute);
+		
+		Attr languageAttribute = reportDoc.createAttribute("language");
+		languageAttribute.setNodeValue("en");
+		rootElement.setAttributeNode(languageAttribute);
+		
+		Element exceptionElement = reportDoc.createElement("Exception");
+		rootElement.appendChild(exceptionElement);
+		
+		Attr exceptionCodeAttribute = reportDoc.createAttribute("exceptionCode");
+		exceptionCodeAttribute.setNodeValue(this.code);
+		exceptionElement.setAttributeNode(exceptionCodeAttribute);
+		
+		if (this.locator != null) {
+			Attr locatorAttribute = reportDoc.createAttribute("locator");
+			locatorAttribute.setNodeValue(this.locator);
+			exceptionElement.setAttributeNode(locatorAttribute);
 		}
-		result.append(">\n");
-		result.append(excText + "\n");
-		result.append("</Exception>\n");
-		result.append("</ExceptionReport>\n");
+		exceptionElement.setTextContent(this.getMessage());
 		
-		return result.toString();
+		return reportDoc;
+	}
+	
+	/**
+	 * Creates an error message in SOAP Fault XML structure that complies to the schema which
+	 * is defined by the W3C (see also http://www.w3.org/TR/soap12-part1/#soapfault)
+
+	 * @return The complete XML document containing the error report
+	 * @throws Exception 
+	 */
+	public Document toSoapExceptionReport() throws Exception {
+		// TODO: use dom4j here
+		Document reportDoc = XMLTools.create();
+		
+		Element faultElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Fault");
+		reportDoc.appendChild(faultElement);
+		
+		Element codeElement = reportDoc.createElement("Code");
+		faultElement.appendChild(codeElement);
+		Element codeValueElement = reportDoc.createElement("Value");
+		// this is not a valid code (see http://www.w3.org/TR/soap12-part1/#faultcodes)
+		codeValueElement.setTextContent("unknown");
+		codeElement.appendChild(codeValueElement);
+
+		Element reasonElement = reportDoc.createElement("Reason");
+		faultElement.appendChild(reasonElement);
+		Element reasonTextElement = reportDoc.createElement("Text");
+		reasonTextElement.setTextContent("exceptionText: "+this.getMessage()+
+				" exceptionCode: "+this.code+" locator: "+locator);
+		Attr langAttribute = reportDoc.createAttribute("xml:lang");
+		langAttribute.setNodeValue("en-US");
+		reasonTextElement.setAttributeNode(langAttribute);
+		reasonElement.appendChild(codeValueElement);
+
+		Element detailElement = reportDoc.createElement("Detail");
+		detailElement.appendChild(this.toXmlExceptionReport());
+		faultElement.appendChild(detailElement);
+		
+		return reportDoc;
 	}
 }

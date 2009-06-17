@@ -52,7 +52,7 @@ public class CSWOperationNotSupportedException extends CSWException {
     static final long serialVersionUID = 0;
 	
 	
-	{ super.setExceptionCode("OperationNotSupported"); }
+	{ super.setCode("OperationNotSupported"); }
 	
 	
 	/**
@@ -62,8 +62,6 @@ public class CSWOperationNotSupportedException extends CSWException {
 	 */
 	public CSWOperationNotSupportedException(final String mess, final String loc) {
 	    super(mess);
-		super.setExceptionText(mess);
 		super.setLocator(loc);
-		}
-
+	}
 }

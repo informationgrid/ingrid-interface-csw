@@ -54,7 +54,7 @@ public class CSWVersionNegotiationFailedException extends CSWException {
     static final long serialVersionUID = 0;
     
 	
-	{ super.setExceptionCode("VersionNegotiationFailed"); }
+	{ super.setCode("VersionNegotiationFailed"); }
 	
 	
 	/**

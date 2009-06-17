@@ -14,17 +14,23 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import de.ingrid.interfaces.csw2.constants.Operation;
 import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
 import de.ingrid.interfaces.csw2.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw2.exceptions.CSWMissingParameterValueException;
 
-public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding {
+/**
+ * KVPEncoding deals with messages defined in the key value pair format.
+ * 
+ * @author ingo herwig <ingo@wemove.com>
+ */
+public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
-	protected Map<String, String> requestParams = null;
-	protected Operation operation;
-	protected List<String> acceptVersions = null; 
+	private Map<String, String> requestParams = null;
+	private Operation operation;
+	private List<String> acceptVersions = null; 
 	
 	/** Parameter names **/
 	private static String SERVICE_PARAM = "SERVICE";
@@ -32,7 +38,7 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 	private static String ACCEPTVERSIONS_PARAM = "ACCEPTVERSIONS";
 
 	/** Supported operations **/
-	protected static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
+	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
 		Operation.GET_CAPABILITIES,
 		Operation.DESCRIBE_RECORD, 
 		Operation.GET_RECORD_BY_ID
@@ -41,7 +47,8 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void initialize(HttpServletRequest request, HttpServletResponse response) {
-		super.initialize(request, response);
+		this.setRequest(request);
+		this.setResponse(response);
 		
 		// get all parameters from the request and store them in a map
 		// to make sure they are uppercase
@@ -59,7 +66,7 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 		
 		// check the service parameter 
 		String serviceParam = requestParams.get(SERVICE_PARAM);
-		if (serviceParam == null || serviceParam.equals("")) {
+		if (serviceParam == null || serviceParam.length() == 0) {
 			throw new CSWMissingParameterValueException("Parameter '"+SERVICE_PARAM+"' is not specified or has no value", 
 					SERVICE_PARAM);
 		} else {
@@ -79,11 +86,6 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 		}
 	}
 	
-	@Override
-	public void validateResponse() throws CSWException {
-		// TODO Auto-generated method stub
-	}
-
 	@Override
 	public List<Operation> getSupportedOperations() {
 		return SUPPORTED_OPERATIONS;
@@ -109,6 +111,11 @@ public class KVPEncoding extends AbstractEncoding implements CSWMessageEncoding 
 			acceptVersions = Collections.unmodifiableList(Arrays.asList(new String[] {requestParams.get(ACCEPTVERSIONS_PARAM)}));
 		}
 		return acceptVersions;
+	}
+
+	@Override
+	public void validateResponse() throws CSWException {
+		// TODO Auto-generated method stub
 	}
 
 	/**

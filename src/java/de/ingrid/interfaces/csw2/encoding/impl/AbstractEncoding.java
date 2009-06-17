@@ -9,25 +9,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
 
+/**
+ * AbstractEncoding defines methods common to all CSWMessageEncoding
+ * implementation.
+ * 
+ * @author ingo herwig <ingo@wemove.com>
+ */
 public abstract class AbstractEncoding implements CSWMessageEncoding {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
 	@Override
-	public void initialize(HttpServletRequest request,
-			HttpServletResponse response) {
-		this.request = request;
-		this.response = response;
-	}
-
-	@Override
 	public HttpServletRequest getRequest() {
 		return this.request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
 	}
 
 	@Override
 	public HttpServletResponse getResponse() {
 		return this.response;
 	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
 }

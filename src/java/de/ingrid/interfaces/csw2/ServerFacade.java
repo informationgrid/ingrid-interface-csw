@@ -28,9 +28,16 @@ import de.ingrid.interfaces.csw2.request.GetCapabilitiesRequest;
 import de.ingrid.interfaces.csw2.request.GetDomainRequest;
 import de.ingrid.interfaces.csw2.request.GetRecordByIdRequest;
 import de.ingrid.interfaces.csw2.request.GetRecordsRequest;
-import de.ingrid.interfaces.csw2.response.CSWResponse;
 import de.ingrid.interfaces.csw2.tools.SimpleSpringBeanFactory;
 
+/**
+ * ServerFacade processes all server requests. It instatiates the
+ * appropriate CSWMessageEncoding and CSWRequest instances and
+ * acts as mediator between the servlet and the CSWServer.
+ * 
+ * @author ingo herwig <ingo@wemove.com>
+ *
+ */
 public class ServerFacade {
 
 	/** The logging object **/
@@ -42,25 +49,9 @@ public class ServerFacade {
 	 * @param response
 	 * @throws CSWException 
 	 */
-	static public void handleGetRequest(HttpServletRequest request, HttpServletResponse response) throws CSWException {
+	static public void handleGetRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		try {
-			handleRequest(RequestType.GET, request, response);
-		} catch (Exception e) {
-			log.warn(e.getMessage(), e);
-			String errorXmlMsg = null;
-			if (e instanceof CSWException) {
-				errorXmlMsg = CSWException.createXmlExceptionReport(e.getMessage(), ((CSWException) e)
-						.getExceptionCode(), ((CSWException) e).getLocator());
-			} else {
-				errorXmlMsg = CSWException.createXmlExceptionReport(e.getMessage(), "NoApplicableCode", null);
-			}
-			try {
-				response.getOutputStream().print(errorXmlMsg);
-			} catch (IOException ioe) {
-				log.error("Unable to send error XML message to client: " + ioe.getMessage());
-			}
-		}
+		handleRequest(RequestType.GET, request, response);
 	}
 	
 	/**
@@ -69,14 +60,9 @@ public class ServerFacade {
 	 * @param response
 	 * @throws CSWException 
 	 */
-	static public void handlePostRequest(HttpServletRequest request, HttpServletResponse response) throws CSWException {
+	static public void handlePostRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		try {
-			handleRequest(RequestType.POST, request, response);
-		} catch (Exception e) {
-			log.warn(e.getMessage(), e);
-			// TODO exception handling
-		}
+		handleRequest(RequestType.POST, request, response);
 	}
 	
 	/**
@@ -85,14 +71,9 @@ public class ServerFacade {
 	 * @param response
 	 * @throws CSWException 
 	 */
-	static public void handleSoapRequest(HttpServletRequest request, HttpServletResponse response) throws CSWException {
+	static public void handleSoapRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		try {
-			handleRequest(RequestType.SOAP, request, response);
-		} catch (Exception e) {
-			log.warn(e.getMessage(), e);
-			// TODO exception handling
-		}
+		handleRequest(RequestType.SOAP, request, response);
 	}
 
 	/**
@@ -104,78 +85,76 @@ public class ServerFacade {
 	static protected void handleRequest(RequestType type, HttpServletRequest request, 
 			HttpServletResponse response) throws Exception {
 
-		// initialize the CSWMessageEncoding
-		CSWMessageEncoding encodingImpl = ServerFacade.getMessageEncodingInstance(type);
-		encodingImpl.initialize(request, response);
-		if (log.isDebugEnabled()) {
-			log.debug("Handle "+type+" request");
-		}
-		
-		// validate the request message non-operation-specific
+		CSWMessageEncoding encodingImpl = null;
 		try {
+			// initialize the CSWMessageEncoding
+			encodingImpl = ServerFacade.getMessageEncodingInstance(type);
+			encodingImpl.initialize(request, response);
+			if (log.isDebugEnabled()) {
+				log.debug("Handle "+type+" request");
+			}
+			
+			// validate the request message non-operation-specific
 			encodingImpl.validateRequest();
-		} catch(CSWException e) {
-			throw e;
-		}
-		
-		// check if the operation is supported
-		Operation operation = encodingImpl.getOperation();
-		List<Operation> supportedOperations = encodingImpl.getSupportedOperations();
-		if (!supportedOperations.contains(operation)) {
-			StringBuffer errorMsg = new StringBuffer();
-			errorMsg.append("The operation '"+operation+"' is not supported in a "+type+" request.\n");
-			errorMsg.append("Supported values:\n");
-			errorMsg.append(supportedOperations.toString()+"\n");
-			throw new CSWOperationNotSupportedException(errorMsg.toString(), operation.toString());
-		}
-		if (log.isDebugEnabled()) {
-			log.debug("Operation: "+encodingImpl.getOperation());
-		}
-		
-		// initialize the CSWRequest instance
-		CSWRequest requestImpl = ServerFacade.getRequestInstance(operation);
-		requestImpl.initialize(encodingImpl);
-		
-		// validate the request message operation-specific
-		try {
+			
+			// check if the operation is supported
+			Operation operation = encodingImpl.getOperation();
+			List<Operation> supportedOperations = encodingImpl.getSupportedOperations();
+			if (!supportedOperations.contains(operation)) {
+				StringBuffer errorMsg = new StringBuffer();
+				errorMsg.append("The operation '"+operation+"' is not supported in a "+type+" request.\n");
+				errorMsg.append("Supported values:\n");
+				errorMsg.append(supportedOperations.toString()+"\n");
+				throw new CSWOperationNotSupportedException(errorMsg.toString(), operation.toString());
+			}
+			if (log.isDebugEnabled()) {
+				log.debug("Operation: "+encodingImpl.getOperation());
+			}
+			
+			// initialize the CSWRequest instance
+			CSWRequest requestImpl = ServerFacade.getRequestInstance(operation);
+			requestImpl.initialize(encodingImpl);
+			
+			// validate the request message operation-specific
 			requestImpl.validate();
-		} catch(CSWException e) {
-			throw e;
+			
+			// initialize the CSWServer instance
+			CSWServer serverImpl = SimpleSpringBeanFactory.INSTANCE.getBean(
+					ConfigurationKeys.CSW_SERVER_IMPLEMENTATION, CSWServer.class); 
+			
+			// perform the requested operation
+			Document result = null;
+			if (operation == Operation.GET_CAPABILITIES) {
+				result = serverImpl.process((GetCapabilitiesRequest)requestImpl);
+			}
+			else if(operation == Operation.DESCRIBE_RECORD) {
+				result = serverImpl.process((DescribeRecordRequest)requestImpl);
+			}
+			else if(operation == Operation.GET_DOMAIN) {
+				result = serverImpl.process((GetDomainRequest)requestImpl);
+			}
+			else if(operation == Operation.GET_RECORDS) {
+				result = serverImpl.process((GetRecordsRequest)requestImpl);
+			}
+			else if(operation == Operation.GET_RECORD_BY_ID) {
+				result = serverImpl.process((GetRecordByIdRequest)requestImpl);
+			}
+			if (log.isDebugEnabled()) {
+				log.debug("Result: "+XMLTools.toString(result));
+			}
+
+			// serialize the response
+			encodingImpl.writeResponse(result);
+			
+		} catch (Exception e) {
+			try {
+				log.warn(e.getMessage(), e);
+				if (encodingImpl != null)
+					encodingImpl.reportError(e);
+			} catch (IOException ioe) {
+				log.error("Unable to send error message to client: " + ioe.getMessage());
+			}
 		}
-		
-		// initialize the CSWServer instance
-		CSWServer serverImpl = SimpleSpringBeanFactory.INSTANCE.getBean(
-				ConfigurationKeys.CSW_SERVER_IMPLEMENTATION, CSWServer.class); 
-		
-		// perform the requested operation
-		Document result = null;
-		if (operation == Operation.GET_CAPABILITIES) {
-			result = serverImpl.process((GetCapabilitiesRequest)requestImpl);
-		}
-		else if(operation == Operation.DESCRIBE_RECORD) {
-			result = serverImpl.process((DescribeRecordRequest)requestImpl);
-		}
-		else if(operation == Operation.GET_DOMAIN) {
-			result = serverImpl.process((GetDomainRequest)requestImpl);
-		}
-		else if(operation == Operation.GET_RECORDS) {
-			result = serverImpl.process((GetRecordsRequest)requestImpl);
-		}
-		else if(operation == Operation.GET_RECORD_BY_ID) {
-			result = serverImpl.process((GetRecordByIdRequest)requestImpl);
-		}
-		if (log.isDebugEnabled()) {
-			log.debug("Result: "+XMLTools.toString(result));
-		}
-		
-		// initialize the CSWResponse instance
-		CSWResponse responseImpl = SimpleSpringBeanFactory.INSTANCE.getBean(
-				ConfigurationKeys.CSW_RESPONSE_IMPLEMENTATION, CSWResponse.class);
-		responseImpl.initialize(encodingImpl);
-		responseImpl.setContent(result);
-		
-		// serialize the response
-		responseImpl.serialize();
 	}
 
 	/**

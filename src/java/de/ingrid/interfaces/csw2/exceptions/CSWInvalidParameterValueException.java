@@ -54,7 +54,7 @@ public class CSWInvalidParameterValueException extends CSWException {
     static final long serialVersionUID = 0;
 	
 	
-	{ super.setExceptionCode("InvalidParameterValue"); }
+	{ super.setCode("InvalidParameterValue"); }
 	
 	
 	/**
@@ -64,7 +64,6 @@ public class CSWInvalidParameterValueException extends CSWException {
 	 */
 	public CSWInvalidParameterValueException(final String mess, final String loc) {
 			super(mess);
-			super.setExceptionText(mess);
 			super.setLocator(loc);
 		}
 
