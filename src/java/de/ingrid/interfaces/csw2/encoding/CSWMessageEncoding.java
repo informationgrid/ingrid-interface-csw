@@ -66,10 +66,16 @@ public interface CSWMessageEncoding {
 	Operation getOperation() throws CSWOperationNotSupportedException;
 
 	/**
-	 * Get the versions that the client accepts for the getCapablities request
+	 * Get the versions that the client accepts for the GetCapablities request
 	 * @return The versions as array
 	 */
 	List<String> getAcceptVersions();
+
+	/**
+	 * Get the version that the client requests in the DescribeRecord request
+	 * @return The version
+	 */
+	String getVersion();
 
 	/**
 	 * Response specific operations

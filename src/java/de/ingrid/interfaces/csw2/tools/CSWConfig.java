@@ -34,6 +34,18 @@ public class CSWConfig extends PropertiesConfiguration {
         return instance;
     }
 
+    /**
+     * Get a string value. Throws a RuntimeException, if the key does not exist
+     * @param key
+     * @return String
+     */
+    public synchronized String getStringMandatory(String key) {
+		CSWConfig config = CSWConfig.getInstance();
+		if (!config.containsKey(key))
+			throw new RuntimeException("Unknown interface configuration key requested: "+key);
+		return config.getString(key);
+    }
+
     private CSWConfig() throws Exception {
         super("ingrid-csw.properties");
     }

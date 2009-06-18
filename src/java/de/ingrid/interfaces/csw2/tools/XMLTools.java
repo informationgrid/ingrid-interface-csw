@@ -102,6 +102,91 @@ public final class XMLTools {
 	}
 
 	/**
+	 * Copiy one node to another node (of a different DOM document).
+	 * @param source Node
+	 * @param dest Node
+	 * @return Node
+	 */
+	public static Node copyNode(final Node source, final Node dest) {
+		if (source.getNodeType() == Node.TEXT_NODE) {
+			Text tn = dest.getOwnerDocument().createTextNode(source.getNodeValue());
+			return tn;
+		} else {
+			NamedNodeMap attr = source.getAttributes();
+			if (attr != null) {
+				for (int i = 0; i < attr.getLength(); i++) {
+					((Element) dest).setAttribute(attr.item(i).getNodeName(),
+							(String) attr.item(i).getNodeValue());
+				}
+			}
+
+			NodeList list = source.getChildNodes();
+			for (int i = 0; i < list.getLength(); i++) {
+				if (!(list.item(i) instanceof Text)) {
+					Element en = dest.getOwnerDocument().createElementNS(list.item(i).getNamespaceURI(),
+							list.item(i).getNodeName());
+					if (list.item(i).getNodeValue() != null) {
+						en.setNodeValue(list.item(i).getNodeValue());
+					}
+
+					Node n = copyNode(list.item(i), en);
+					dest.appendChild(n);
+				} else {
+					Text tn = dest.getOwnerDocument().createTextNode(
+							list.item(i).getNodeValue());
+					dest.appendChild(tn);
+				}
+			}
+		}
+		return dest;
+
+	}
+	
+	/**
+	 * Insert a node into a dom element (of a different DOM document)
+	 * @param source Node 
+	 * @param dest Node
+	 * @return Node
+	 */
+	public static Node insertNodeInto(final Node source, final Node dest) {
+		Document dDoc = null;
+		Document sDoc = source.getOwnerDocument();
+		if (dest instanceof Document) {
+			dDoc = (Document) dest;
+		} else {
+			dDoc = dest.getOwnerDocument();
+		}
+
+		if (dDoc.equals(sDoc)) {
+			dest.appendChild(source);
+		} else {
+			Element element = dDoc.createElement(source.getNodeName());
+			dest.appendChild(element);
+
+			copyNode(source, element);
+		}
+		return dest;
+
+	}
+
+	/**
+	 * Get the attribute value of the given node.
+	 * @param node Node
+	 * @param attrName String
+	 * @return String or null
+	 */
+	public static String getAttrValue(final Node node, final String attrName) {
+		NamedNodeMap atts = node.getAttributes();
+		if (atts != null) {
+			Attr a = (Attr)atts.getNamedItem(attrName);
+			if (a != null) {
+				return a.getValue();
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Create a string representation of a DOM Document
 	 * @param document
 	 * @return String
@@ -133,110 +218,6 @@ public final class XMLTools {
 	 * TODO: review methods below and check if they are used (remove if not).
 	 */
 	
-	/**
-	 * Returns the attribute value of the given node.
-	 *
-	 *
-	 * @param node Node
-	 * @param attrName String
-	 *
-	 * @return String
-
-	 */
-	public static String getAttrValue(final Node node, final String attrName) {
-
-		// get attr name and dtype
-		NamedNodeMap atts = node.getAttributes();
-
-		if (atts == null) {
-			return null;
-		}
-
-		Attr a = (Attr) atts.getNamedItem(attrName);
-
-		if (a != null) {
-			return a.getValue();
-		}
-
-		return null;
-	}
-
-	/**
-	 * copies one node to another node (of a different dom document).
-	 * @param source Node
-	 * @param dest Node
-	 * @return Node
-	 */
-	public static Node copyNode(final Node source, final Node dest) {
-		if (source.getNodeType() == Node.TEXT_NODE) {
-			Text tn = dest.getOwnerDocument().createTextNode(
-					source.getNodeValue());
-			return tn;
-		} else {
-			NamedNodeMap attr = source.getAttributes();
-
-			if (attr != null) {
-				for (int i = 0; i < attr.getLength(); i++) {
-					((Element) dest).setAttribute(attr.item(i).getNodeName(),
-							(String) attr.item(i).getNodeValue());
-				}
-			}
-
-			NodeList list = source.getChildNodes();
-
-			for (int i = 0; i < list.getLength(); i++) {
-
-				if (!(list.item(i) instanceof Text)) {
-					Element en = dest.getOwnerDocument().createElementNS(list.item(i).getNamespaceURI(),
-							list.item(i).getNodeName());
-					if (list.item(i).getNodeValue() != null) {
-						en.setNodeValue(list.item(i).getNodeValue());
-					}
-
-					Node n = copyNode(list.item(i), en);
-					dest.appendChild(n);
-				} else {
-					Text tn = dest.getOwnerDocument().createTextNode(
-							list.item(i).getNodeValue());
-					dest.appendChild(tn);
-				}
-			}
-		}
-		return dest;
-
-	}
-	
-	/**
-	 * inserts a node into a dom element (of a different dom document)
-	 * 
-	 * @param source Node 
-	 * @param dest Node
-	 * @return Node
-	 */
-	public static Node insertNodeInto(final Node source, final Node dest) {
-
-		Document dDoc = null;
-		Document sDoc = source.getOwnerDocument();
-		if (dest instanceof Document) {
-			dDoc = (Document) dest;
-		} else {
-			dDoc = dest.getOwnerDocument();
-		}
-
-		if (dDoc.equals(sDoc)) {
-			dest.appendChild(source);
-		} else {
-
-			Element element = dDoc.createElement(source.getNodeName());
-			dest.appendChild(element);
-
-			copyNode(source, element);
-
-		}
-
-		return dest;
-
-	}
 
 	
 	

@@ -26,6 +26,7 @@ import de.ingrid.interfaces.csw2.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw2.exceptions.CSWMissingParameterValueException;
 import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw2.tools.XPathUtils;
+import de.ingrid.interfaces.csw2.tools.XMLTools;
 
 /**
  * XMLEncoding deals with messages defined in the XML format.
@@ -40,6 +41,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
 	/** Parameter names **/
 	private static String SERVICE_PARAM = "service";
+	private static String VERSION_PARAM = "version";
 	
 	/** Supported operations **/
 	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
@@ -118,6 +120,17 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 			acceptVersions = Collections.unmodifiableList(acceptVersions);
 		}
 		return acceptVersions;
+	}
+
+	@Override
+	public String getVersion() {
+		checkInitialized();
+		
+		Node descRecordNode = XPathUtils.getNode(this.getRequestBody(), "//DescribeRecord");
+		if (descRecordNode != null) {
+			return String.valueOf(XMLTools.getAttrValue(descRecordNode, VERSION_PARAM));
+		}
+		return null;
 	}
 
 	@Override

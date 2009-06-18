@@ -145,7 +145,7 @@ public class CSWException extends Exception {
 		reasonElement.appendChild(codeValueElement);
 
 		Element detailElement = reportDoc.createElement("Detail");
-		detailElement.appendChild(this.toXmlExceptionReport());
+		XMLTools.insertNodeInto(this.toXmlExceptionReport().getLastChild(), detailElement);
 		faultElement.appendChild(detailElement);
 		
 		return reportDoc;

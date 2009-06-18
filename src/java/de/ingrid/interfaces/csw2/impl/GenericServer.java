@@ -20,7 +20,9 @@ import de.ingrid.interfaces.csw2.tools.XMLTools;
 import de.ingrid.interfaces.csw2.tools.XPathUtils;
 import de.ingrid.interfaces.csw2.CSWServer;
 import de.ingrid.interfaces.csw2.constants.ConfigurationKeys;
+import de.ingrid.interfaces.csw2.constants.Operation;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
+import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw2.request.DescribeRecordRequest;
 import de.ingrid.interfaces.csw2.request.GetCapabilitiesRequest;
 import de.ingrid.interfaces.csw2.request.GetDomainRequest;
@@ -89,8 +91,8 @@ public class GenericServer implements CSWServer {
 
 	@Override
 	public Document process(GetDomainRequest request) throws CSWException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new CSWOperationNotSupportedException("The operation 'GetDomain' is not implemented", 
+				Operation.GET_DOMAIN.toString());
 	}
 
 	@Override
@@ -114,12 +116,7 @@ public class GenericServer implements CSWServer {
 		if (!documentCache.containsKey(key)) {
 
 			// fetch the document from the file system if it is not cached
-			CSWConfig config = CSWConfig.getInstance();
-			if (!config.containsKey(key)) {
-				throw new RuntimeException("Unknown configuration key in interface configuration: "+key);
-			}
-			String filename = config.getString(key);
-			
+			String filename = CSWConfig.getInstance().getStringMandatory(key);
 			try {
 				Reader reader = new FileReader(getClass().getClassLoader()
                         .getResource(filename).getPath().replaceAll("%20", " "));
@@ -130,7 +127,7 @@ public class GenericServer implements CSWServer {
 			}
 			catch (Exception e) {
 				throw new RuntimeException("Error reading document configured in configuration key '"+
-						ConfigurationKeys.CAPABILITIES_DOC+"': "+filename, e);
+						key+"': "+filename, e);
 			}
 		}
 		return documentCache.get(key);

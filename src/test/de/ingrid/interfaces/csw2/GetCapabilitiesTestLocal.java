@@ -38,12 +38,12 @@ public class GetCapabilitiesTestLocal extends OperationTestBase {
 		final ServletOutputStream sos = new TestServletOutputStream(result);
 		
 		// expectations
-		final List<String> parameters = Arrays.asList(new String[]{"SERVICE", "REQUEST", "ACCEPTVERSIONS"});
+		final List<String> parameters = Arrays.asList(new String[]{"SERVICE", "REQUEST", "ACCEPTVERSION"});
 		context.checking(new Expectations() {{
 			allowing(request).getParameterNames(); will(returnEnumeration(parameters));
 			allowing(request).getParameter("SERVICE"); will(returnValue("CSW"));
 			allowing(request).getParameter("REQUEST"); will(returnValue("GetCapabilities"));
-			allowing(request).getParameter("ACCEPTVERSIONS"); will(returnValue("2.0.2"));
+			allowing(request).getParameter("ACCEPTVERSION"); will(returnValue("2.0.2"));
 			allowing(response).setContentType("application/xml");
 			allowing(response).setCharacterEncoding("UTF-8");
 			allowing(response).getOutputStream(); will(returnValue(sos));
@@ -130,7 +130,7 @@ public class GetCapabilitiesTestLocal extends OperationTestBase {
 			allowing(request).getInputStream(); will(returnValue(sis));
 			allowing(response).setStatus(HttpServletResponse.SC_OK);
 			allowing(response).setHeader("Content-Type", "application/soap+xml; charset=utf-8");
-			allowing(response).setHeader("Content-Length", "9420");
+			allowing(response).setHeader(with(any(String.class)), with(any(String.class)));
 			allowing(response).setContentType("application/soap+xml");
 			allowing(response).setCharacterEncoding("UTF-8");
 			allowing(response).getOutputStream(); will(returnValue(sos));
@@ -147,7 +147,7 @@ public class GetCapabilitiesTestLocal extends OperationTestBase {
 		// expect capabilities document
 		assertTrue("The response length is > 0.", result.length() > 0);
 		Document responseDoc = XMLTools.parse(new StringReader(result.toString()));
-		Node payload = XPathUtils.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getChildNodes().item(1);
+		Node payload = XPathUtils.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 		
 		assertTrue("The response is no ExceptionReport.", 
 				!payload.getNodeName().equals("ExceptionReport"));

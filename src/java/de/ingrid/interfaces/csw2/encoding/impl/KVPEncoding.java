@@ -34,9 +34,10 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	private List<String> acceptVersions = null; 
 	
 	/** Parameter names **/
-	private static String SERVICE_PARAM = "SERVICE";
-	private static String REQUEST_PARAM = "REQUEST";
-	private static String ACCEPTVERSIONS_PARAM = "ACCEPTVERSIONS";
+	private static final String SERVICE_PARAM = "SERVICE";
+	private static final String REQUEST_PARAM = "REQUEST";
+	private static final String ACCEPTVERSION_PARAM = "ACCEPTVERSION";
+	private static final String VERSION_PARAM = "VERSION";
 
 	/** Supported operations **/
 	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
@@ -109,9 +110,18 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		checkInitialized();
 		
 		if (acceptVersions == null) {
-			acceptVersions = Collections.unmodifiableList(Arrays.asList(new String[] {requestParams.get(ACCEPTVERSIONS_PARAM)}));
+			String versions = requestParams.get(ACCEPTVERSION_PARAM);
+			if (versions != null)
+				acceptVersions = Collections.unmodifiableList(Arrays.asList(versions.split(",")));
 		}
 		return acceptVersions;
+	}
+
+	@Override
+	public String getVersion() {
+		checkInitialized();
+		
+		return requestParams.get(VERSION_PARAM);
 	}
 
 	@Override
