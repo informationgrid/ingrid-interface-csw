@@ -19,6 +19,7 @@ import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 import org.w3c.dom.Document;
@@ -75,20 +76,14 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 		    soapMessage = msgFactory.createMessage(headers, request.getInputStream());
 
 	        // get the request body
-		    SOAPBody body = soapMessage.getSOAPBody();
-		    Iterator children = body.getChildElements();
-		    while (children.hasNext()) {
-			    Object obj = (Object) children.next();
-			    if (obj instanceof SOAPElement) {
-					this.setRequestBody((Element)obj);
-					break;
-			    }
-		    }
+		    Element requestBody = getMessagePayload(soapMessage);
+		    this.setRequestBody(requestBody);
+		    
 		} catch(Exception e) {
 			throw new RuntimeException("Error parsing request: ", e);
 		}
 	}
-	
+
 	@Override
 	public void validateRequest() throws CSWException {
 		super.validateRequest();
@@ -177,5 +172,26 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
         soapBody.addDocument(document);        
         
 		return message;
+	}
+
+	/**
+	 * Get the payload of a SOAP message
+	 * @param message The message
+	 * @return Element
+	 * @throws SOAPException
+	 */
+	@SuppressWarnings("unchecked")
+	private static Element getMessagePayload(SOAPMessage message) throws SOAPException {
+		Element requestBody = null;
+		SOAPBody body = message.getSOAPBody();
+		Iterator children = body.getChildElements();
+		while (children.hasNext()) {
+		    Object obj = (Object) children.next();
+		    if (obj instanceof SOAPElement) {
+		    	requestBody = (Element)obj;
+				break;
+		    }
+		}
+		return requestBody;
 	}
 }

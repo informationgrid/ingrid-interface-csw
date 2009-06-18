@@ -4,17 +4,9 @@
 
 package de.ingrid.interfaces.csw2.request.impl;
 
-import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
-import de.ingrid.interfaces.csw2.exceptions.CSWException;
 import de.ingrid.interfaces.csw2.request.GetDomainRequest;
 
-public class GetDomainRequestImpl implements GetDomainRequest {
-
-	@Override
-	public void initialize(CSWMessageEncoding encoding) throws CSWException {
-		// TODO Auto-generated method stub
-
-	}
+public class GetDomainRequestImpl extends AbstractRequestImpl implements GetDomainRequest {
 
 	@Override
 	public void validate() {

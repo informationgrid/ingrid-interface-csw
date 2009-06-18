@@ -20,6 +20,7 @@ import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
 import de.ingrid.interfaces.csw2.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw2.exceptions.CSWMissingParameterValueException;
+import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 
 /**
  * KVPEncoding deals with messages defined in the key value pair format.
@@ -92,7 +93,7 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	}
 
 	@Override
-	public Operation getOperation() {
+	public Operation getOperation() throws CSWOperationNotSupportedException {
 		checkInitialized();
 		
 		// get the operation name from the REQUEST parameter

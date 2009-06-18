@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.w3c.dom.Document;
 
-import de.ingrid.interfaces.csw.tools.XMLTools;
+import de.ingrid.interfaces.csw2.tools.XMLTools;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
 
 /**

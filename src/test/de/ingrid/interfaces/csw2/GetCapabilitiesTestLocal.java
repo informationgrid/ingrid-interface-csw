@@ -4,8 +4,6 @@
 
 package de.ingrid.interfaces.csw2;
 
-import java.io.IOException;
-import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
@@ -15,30 +13,18 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import junit.framework.TestCase;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw2.tools.SimpleSpringBeanFactory;
 import de.ingrid.interfaces.csw2.tools.XMLTools;
+import de.ingrid.interfaces.csw2.tools.XPathUtils;
 
-public class ServletTestLocal extends TestCase {
+public class GetCapabilitiesTestLocal extends OperationTestBase {
 
-	private static final String GETCAP_SOAP = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-        + "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
-        + "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
-        + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" + "<soapenv:Body>\n"
-        + "<GetCapabilities service=\"CSW\" >\n" + "<AcceptVersions>\n" + "<Version>2.0.2</Version>\n"
-        + "</AcceptVersions>\n" + "</GetCapabilities>\n" + " </soapenv:Body>\n" + "</soapenv:Envelope>";
-
-    private static final String GETCAP_POST = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-        + "<GetCapabilities service=\"CSW\" >\n" + "<AcceptVersions>\n" + "<Version>2.0.2</Version>\n"
-        + "</AcceptVersions>\n" + "</GetCapabilities>";
-
-    
-    /**
+	/**
 	 * Test GetCapabilities with GET method using KVP encoding
 	 * @throws Exception
 	 */
@@ -72,14 +58,13 @@ public class ServletTestLocal extends TestCase {
 		context.assertIsSatisfied();
 		
 		// expect capabilities document
-		System.out.println(result.toString());
 		assertTrue("The response length is > 0.", result.length() > 0);
 		
 		Document responseDoc = XMLTools.parse(new StringReader(result.toString()));
 		assertTrue("The response is no ExceptionReport.", 
 				!responseDoc.getDocumentElement().getNodeName().equals("ExceptionReport"));
-		assertTrue("The response is no GetCapabilities document.", 
-				!responseDoc.getDocumentElement().getNodeName().equals("GetCapabilities"));
+		assertTrue("The response is a Capabilities document.", 
+				responseDoc.getDocumentElement().getNodeName().equals("csw:Capabilities"));
 	}
 	
     /**
@@ -93,7 +78,7 @@ public class ServletTestLocal extends TestCase {
 		final HttpServletResponse response = context.mock(HttpServletResponse.class);
 
 		StringBuffer result = new StringBuffer();
-		final ServletInputStream sis = new TestServletInputStream(GETCAP_POST);
+		final ServletInputStream sis = new TestServletInputStream(TestRequests.GETCAP_POST);
 		final ServletOutputStream sos = new TestServletOutputStream(result);
 
 		// expectations
@@ -115,14 +100,13 @@ public class ServletTestLocal extends TestCase {
 		context.assertIsSatisfied();
 		
 		// expect capabilities document
-		System.out.println(result.toString());
 		assertTrue("The response length is > 0.", result.length() > 0);
 		
 		Document responseDoc = XMLTools.parse(new StringReader(result.toString()));
 		assertTrue("The response is no ExceptionReport.", 
 				!responseDoc.getDocumentElement().getNodeName().equals("ExceptionReport"));
-		assertTrue("The response is no GetCapabilities document.", 
-				!responseDoc.getDocumentElement().getNodeName().equals("GetCapabilities"));
+		assertTrue("The response is a Capabilities document.", 
+				responseDoc.getDocumentElement().getNodeName().equals("csw:Capabilities"));
 	}
 	
     /**
@@ -136,7 +120,7 @@ public class ServletTestLocal extends TestCase {
 		final HttpServletResponse response = context.mock(HttpServletResponse.class);
 
 		StringBuffer result = new StringBuffer();
-		final ServletInputStream sis = new TestServletInputStream(GETCAP_SOAP);
+		final ServletInputStream sis = new TestServletInputStream(TestRequests.GETCAP_SOAP);
 		final ServletOutputStream sos = new TestServletOutputStream(result);
 
 		// expectations
@@ -161,45 +145,13 @@ public class ServletTestLocal extends TestCase {
 		context.assertIsSatisfied();
 		
 		// expect capabilities document
-		System.out.println(result.toString());
 		assertTrue("The response length is > 0.", result.length() > 0);
-		
 		Document responseDoc = XMLTools.parse(new StringReader(result.toString()));
+		Node payload = XPathUtils.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getChildNodes().item(1);
+		
 		assertTrue("The response is no ExceptionReport.", 
-				!responseDoc.getDocumentElement().getNodeName().equals("ExceptionReport"));
-		assertTrue("The response is no GetCapabilities document.", 
-				!responseDoc.getDocumentElement().getNodeName().equals("GetCapabilities"));
-	}
-	
-	/**
-	 * InputStream class used with servlet response
-	 */
-	protected class TestServletInputStream extends ServletInputStream {
-		Reader buf = null;
-		
-		public TestServletInputStream(String input) {
-			this.buf = new StringReader(input);
-		}
-
-		@Override
-		public int read() throws IOException {
-			return this.buf.read();
-		}
-	}
-
-	/**
-	 * OutputStream class used with servlet response
-	 */
-	protected class TestServletOutputStream extends ServletOutputStream {
-		StringBuffer buf = null;
-		
-		public TestServletOutputStream(StringBuffer buf) {
-			this.buf = buf;
-		}
-		
-		@Override  
-		public void write(int c) throws IOException {  
-			this.buf.append((char)c);
-		}  
+				!payload.getNodeName().equals("ExceptionReport"));
+		assertTrue("The response is a Capabilities document.", 
+				payload.getNodeName().equals("csw:Capabilities"));
 	}
 }

@@ -15,7 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 
-import de.ingrid.interfaces.csw.tools.XMLTools;
+import de.ingrid.interfaces.csw2.tools.XMLTools;
 import de.ingrid.interfaces.csw2.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw2.constants.Operation;
 import de.ingrid.interfaces.csw2.constants.RequestType;
@@ -105,7 +105,7 @@ public class ServerFacade {
 				errorMsg.append("The operation '"+operation+"' is not supported in a "+type+" request.\n");
 				errorMsg.append("Supported values:\n");
 				errorMsg.append(supportedOperations.toString()+"\n");
-				throw new CSWOperationNotSupportedException(errorMsg.toString(), operation.toString());
+				throw new CSWOperationNotSupportedException(errorMsg.toString(), String.valueOf(operation));
 			}
 			if (log.isDebugEnabled()) {
 				log.debug("Operation: "+encodingImpl.getOperation());

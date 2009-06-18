@@ -39,13 +39,12 @@ public class GenericServer implements CSWServer {
 	@Override
 	public Document process(GetCapabilitiesRequest request) throws CSWException {
 		
-        Document doc = null;
         final String documentKey = ConfigurationKeys.CAPABILITIES_DOC;
         
         // replace document variables on first call
 		if (!documentCache.containsKey(documentKey)) {
 
-			doc = this.getDocument(documentKey);
+	        Document doc = this.getDocument(documentKey);
 	        
 	        // try to replace the interface URLs
 	        NodeList nodes = XPathUtils.getNodeList(doc, "//ows:Operation/*/ows:HTTP/*/@xlink:href");
@@ -76,13 +75,16 @@ public class GenericServer implements CSWServer {
 		}
         
 		// return the cached document
-        return documentCache.get(documentKey);
+        return this.getDocument(documentKey);
 	}
 
 	@Override
 	public Document process(DescribeRecordRequest request) throws CSWException {
-		// TODO Auto-generated method stub
-		return null;
+
+        final String documentKey = ConfigurationKeys.RECORDDESC_DOC;
+        
+		// return the cached document
+        return this.getDocument(documentKey);
 	}
 
 	@Override

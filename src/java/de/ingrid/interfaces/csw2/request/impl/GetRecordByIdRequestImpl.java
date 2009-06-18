@@ -4,17 +4,9 @@
 
 package de.ingrid.interfaces.csw2.request.impl;
 
-import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
-import de.ingrid.interfaces.csw2.exceptions.CSWException;
 import de.ingrid.interfaces.csw2.request.GetRecordByIdRequest;
 
-public class GetRecordByIdRequestImpl implements GetRecordByIdRequest {
-
-	@Override
-	public void initialize(CSWMessageEncoding encoding) throws CSWException {
-		// TODO Auto-generated method stub
-
-	}
+public class GetRecordByIdRequestImpl extends AbstractRequestImpl implements GetRecordByIdRequest {
 
 	@Override
 	public void validate() {

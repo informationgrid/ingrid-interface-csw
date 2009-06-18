@@ -24,6 +24,7 @@ import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
 import de.ingrid.interfaces.csw2.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw2.exceptions.CSWMissingParameterValueException;
+import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw2.tools.XPathUtils;
 
 /**
@@ -89,7 +90,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	}
 
 	@Override
-	public Operation getOperation() {
+	public Operation getOperation() throws CSWOperationNotSupportedException {
 		checkInitialized();
 		
 		if (this.operation == null) {

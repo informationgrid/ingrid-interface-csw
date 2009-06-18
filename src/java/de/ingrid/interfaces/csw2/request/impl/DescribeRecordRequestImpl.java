@@ -4,20 +4,14 @@
 
 package de.ingrid.interfaces.csw2.request.impl;
 
-import de.ingrid.interfaces.csw2.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
 import de.ingrid.interfaces.csw2.request.DescribeRecordRequest;
 
-public class DescribeRecordRequestImpl implements DescribeRecordRequest {
+public class DescribeRecordRequestImpl extends AbstractRequestImpl implements DescribeRecordRequest {
 
 	@Override
-	public void initialize(CSWMessageEncoding encoding) throws CSWException {
-		// TODO Auto-generated method stub
+	public void validate() throws CSWException {
 
-	}
-
-	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
+		validateVersion();
 	}
 }

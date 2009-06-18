@@ -1,12 +1,10 @@
 package de.ingrid.interfaces.csw2.tools;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -33,42 +31,21 @@ import org.xml.sax.SAXException;
  */
 public final class XMLTools {
 
-	/**
-	 * three as int
-	 */
-	private static final  int THREE = 3;
-	
-	
-	/**
-	 * thirtyone as int
-	 */
-	private static final int THIRTYONE = 31;
-	
-	
-	/**
-	 * thirtytwo as int
-	 */
-	private static final int THIRTYTWO = 32;
-	
-	/**
-	 * constructor
-	 */
-	private XMLTools() {
-	}
-
-	/**
-	 * the log object
-	 */
 	private static Log log = LogFactory.getLog(XMLTools.class);
 
 	/**
-	 * creates a new and empty dom document
+	 * Constructor
+	 */
+	private XMLTools() {}
+
+	/**
+	 * Create a an empty DOM document. Uses the default DOM implementation.
 	 * @return Document 
 	 * @throws Exception e
 	 */
 	public static Document create() throws Exception {
-		javax.xml.parsers.DocumentBuilder builder = null;
 
+		javax.xml.parsers.DocumentBuilder builder = null;
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setNamespaceAware(true);
@@ -80,6 +57,82 @@ public final class XMLTools {
 		return builder.newDocument();
 	}
 
+	/**
+	 * Parse an XML document provided by a reader into a DOM Document. 
+	 * Uses the default DOM implementation.
+	 * @param reader Reader
+	 * @return Document
+	 * @throws IOException
+	 */
+	public static Document parse(final Reader reader) throws Exception {
+
+        if (log.isDebugEnabled()) {
+        	log.debug("entering parse(reader)...");
+        }
+
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(true);
+		factory.setIgnoringComments(true);
+        //factory.setValidating(true);
+		//factory.setIgnoringElementContentWhitespace(true);
+		
+		DocumentBuilder builder = null;
+		try {
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			throw new IOException("Unable to initialize DocumentBuilder: "+e.getMessage());
+		}
+
+		Document doc = null;
+		try {
+			doc = builder.parse(new InputSource(reader));
+		} catch (SAXException e) {
+			log.error("parse(reader) SAXException: "+e, e);
+			throw e;
+		} catch (IOException e) {
+			log.error("parse(reader) IOException: "+e, e);
+			throw e;
+		}
+
+        if (log.isDebugEnabled()) {
+			log.debug("exiting parse(reader) returning document: "+
+					doc.getDocumentElement().toString());
+        }
+		return doc;
+	}
+
+	/**
+	 * Create a string representation of a DOM Document
+	 * @param document
+	 * @return String
+	 * @throws TransformerException
+	 */
+	public static String toString(Document document) throws TransformerException {
+        return XMLTools.toString(document.getDocumentElement());
+	}
+	
+	/**
+	 * Create a string representation of a DOM Node
+	 * @param node
+	 * @return String
+	 * @throws TransformerException
+	 */
+	public static String toString(Node node) throws TransformerException {
+        StringWriter stringWriter = new StringWriter();
+        StreamResult streamResult = new StreamResult(stringWriter);
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.transform(new DOMSource(node), streamResult);
+        return stringWriter.toString();
+	}
+
+	/**
+	 * TODO: review methods below and check if they are used (remove if not).
+	 */
+	
 	/**
 	 * Returns the attribute value of the given node.
 	 *
@@ -108,142 +161,6 @@ public final class XMLTools {
 		return null;
 	}
 
-	/**
-	 * Parses a XML document and returns a DOM object.
-	 *
-	 *
-	 * @param fileName the filename of the XML file to be parsed
-	 *
-	 * @return a DOM object
-	 *
-	 * @throws IOException e
-	 * @throws SAXException e
-	 *
-	 */
-	public static Document parse(final String fileName) throws Exception,
-			SAXException {
-
-		Reader reader = new InputStreamReader(new FileInputStream(fileName));
-
-		StringWriter stw = new StringWriter();
-
-		// remove all not writeable characters
-		int c = -1;
-		int cc = -1;
-		while ((c = reader.read()) > -1) {
-			if (c > THIRTYONE) {
-				if (cc == THIRTYTWO && c == THIRTYTWO) {
-					//not needed
-					cc = c;
-				} else {
-					stw.write(c);
-				}
-				cc = c;
-			}
-		}
-
-		// remove not need spaces (spaces between tags)
-		StringBuffer sb = new StringBuffer(stw.toString());
-		stw.close();
-		String s = sb.toString();
-		while (s.indexOf("> <") > -1) {
-			int idx = s.indexOf("> <");
-			sb.replace(idx, idx + THREE, "><");
-			s = sb.toString();
-		}
-
-		Document doc = parse(new StringReader(s));
-
-		return doc;
-	}
-
-	/**
-	 * Parses a XML document and returns a DOM object.
-	 *
-	 *
-	 * @param fileName the filename of the XML file to be parsed
-	 *
-	 * @return a DOM object
-	 *
-	 * @throws IOException
-	 * @throws SAXException
-	 *
-	 * @see
-	 */
-	/*
-	 public static Document parse(Reader reader) throws IOException, SAXException {
-	 javax.xml.parsers.DocumentBuilder parser = null;
-	 try {
-	 parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-	 } catch (ParserConfigurationException ex) {
-	 ex.printStackTrace();
-	 throw new IOException("Unable to initialize DocumentBuilder: " + ex.getMessage() );
-	 }
-	 Document doc = parser.parse(new InputSource(reader));
-	 
-	 return doc;
-	 }
-	 */
-
-	/**
-	 * 
-	 * @param reader Reader
-	 * @return Document
-	 * @throws IOException e
-	 */
-	public static Document parse(final Reader reader) throws Exception {
-
-        if (log.isDebugEnabled()) {
-        	log.debug("entering parse(reader)...");
-        }
-
-		javax.xml.parsers.DocumentBuilder builder = null;
-
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-		factory.setNamespaceAware(true);
-		
-		factory.setIgnoringComments(true);
-		
-        //factory.setValidating(true);
-		
-		//factory.setIgnoringElementContentWhitespace(true);
-
-		
-		
-		try {
-
-			//builder = XMLParserUtils.getXMLDocBuilder();
-			builder = factory.newDocumentBuilder();
-
-		} catch (ParserConfigurationException ex) {
-			ex.printStackTrace();
-			throw new IOException("Unable to initialize DocumentBuilder: " +
-					 ex.getMessage());
-		}
-
-		Document doc = null;
-		try {
-
-			doc = builder.parse(new InputSource(reader));
-
-		} catch (SAXException e) {
-			log.error("parse(reader) SAXException: " + e, e);
-			throw e;
-		} catch (IOException e) {
-			log.error("parse(reader) IOException: " + e, e);
-			throw e;
-		}
-
-        if (log.isDebugEnabled()) {
-			log.debug("exiting parse(reader) returning document: " +
-					 doc.getDocumentElement().toString());
-        }
-
-		return doc;
-	}
-
-	
 	/**
 	 * copies one node to another node (of a different dom document).
 	 * @param source Node
@@ -288,8 +205,6 @@ public final class XMLTools {
 		return dest;
 
 	}
-
-		
 	
 	/**
 	 * inserts a node into a dom element (of a different dom document)
@@ -430,22 +345,4 @@ public final class XMLTools {
 		
 		return nodeName;
 	}
-	
-	
-	public static String toString(Document document) throws TransformerException {
-        return XMLTools.toString(document.getDocumentElement());
-	}
-	
-	public static String toString(Node node) throws TransformerException {
-        StringWriter stringWriter = new StringWriter();
-        StreamResult streamResult = new StreamResult(stringWriter);
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-        transformer.transform(new DOMSource(node), streamResult);
-        return stringWriter.toString();
-	}
-
 }

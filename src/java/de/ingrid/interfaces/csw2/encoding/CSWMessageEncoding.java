@@ -13,6 +13,7 @@ import org.w3c.dom.Document;
 
 import de.ingrid.interfaces.csw2.constants.Operation;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
+import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 
 /**
  * CSWMessageEncoding defines the interface for dealing with 
@@ -60,8 +61,9 @@ public interface CSWMessageEncoding {
 	/**
 	 * Get the requested operation
 	 * @return The Operation
+	 * @throws CSWOperationNotSupportedException
 	 */
-	Operation getOperation();
+	Operation getOperation() throws CSWOperationNotSupportedException;
 
 	/**
 	 * Get the versions that the client accepts for the getCapablities request

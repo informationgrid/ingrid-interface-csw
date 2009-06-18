@@ -84,7 +84,6 @@ public class CSWException extends Exception {
 	 * @throws Exception 
 	 */
 	public Document toXmlExceptionReport() throws Exception {
-		// TODO: use dom4j here
 		Document reportDoc = XMLTools.create();
 		
 		Element rootElement = reportDoc.createElementNS("http://www.opengis.net/ows", "ExceptionReport");
@@ -123,7 +122,6 @@ public class CSWException extends Exception {
 	 * @throws Exception 
 	 */
 	public Document toSoapExceptionReport() throws Exception {
-		// TODO: use dom4j here
 		Document reportDoc = XMLTools.create();
 		
 		Element faultElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Fault");

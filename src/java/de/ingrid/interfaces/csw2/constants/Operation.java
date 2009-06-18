@@ -7,6 +7,8 @@ package de.ingrid.interfaces.csw2.constants;
 import java.util.Hashtable;
 import java.util.Map;
 
+import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
+
 public enum Operation {
 	
 	/**
@@ -46,13 +48,17 @@ public enum Operation {
 	 */
 	private static Map<String, Operation> nameMapping = null;
 	
-	public static Operation getByName(String name) {
+	public static Operation getByName(String name) throws CSWOperationNotSupportedException {
 		if (nameMapping == null) {
 			nameMapping = new Hashtable<String, Operation>();
 			for (Operation op : Operation.values()) {
 				nameMapping.put(op.toString(), op);
 			}
 		}
-		return nameMapping.get(name);
+		Operation op = nameMapping.get(name);
+		if (op == null) {
+			throw new CSWOperationNotSupportedException("The operation '"+name+"' is unknown.", name);
+		}
+		return op;
 	}
 }
