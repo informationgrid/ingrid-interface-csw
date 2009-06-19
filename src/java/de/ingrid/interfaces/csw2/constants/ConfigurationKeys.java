@@ -13,7 +13,7 @@ public class ConfigurationKeys {
 	public static final String CSW_SERVER_IMPLEMENTATION = "cswServerImpl";
 	public static final String CSW_ENCODING_IMPLEMENTATIONS = "cswMessageEncodingImpl";
 	public static final String CSW_REQUEST_IMPLEMENTATIONS = "cswRequestImpl";
-	public static final String CSW_RESPONSE_IMPLEMENTATION = "cswResponseImpl";
+	public static final String CSW_FILTERPARSER_IMPLEMENTATION = "cswFilterParserImpl";
 
 	/** ingrid-csw.properties **/
 	public static final String CSW_VERSION = "csw.version";

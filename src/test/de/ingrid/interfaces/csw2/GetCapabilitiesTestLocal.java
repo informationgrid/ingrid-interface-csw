@@ -18,6 +18,7 @@ import org.jmock.Mockery;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import de.ingrid.interfaces.csw2.data.TestRequests;
 import de.ingrid.interfaces.csw2.tools.SimpleSpringBeanFactory;
 import de.ingrid.interfaces.csw2.tools.XMLTools;
 import de.ingrid.interfaces.csw2.tools.XPathUtils;

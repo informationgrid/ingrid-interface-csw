@@ -33,11 +33,11 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	  </property>
 	</bean>	
 	
-	<bean id="cswResponseImpl" class="de.ingrid.interfaces.csw2.response.impl.GenericResponse">
+	<bean id="cswServerImpl" class="de.ingrid.interfaces.csw2.impl.GenericServer">
 		<!-- <property name="property" value="xxx" /> -->
 	</bean>
 
-	<bean id="cswServerImpl" class="de.ingrid.interfaces.csw2.impl.GenericServer">
+	<bean id="cswFilterParserImpl" class="de.ingrid.interfaces.csw2.filter.impl.geotools.FilterParserImpl">
 		<!-- <property name="property" value="xxx" /> -->
 	</bean>
 

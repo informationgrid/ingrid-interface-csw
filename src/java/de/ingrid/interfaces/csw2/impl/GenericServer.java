@@ -16,19 +16,23 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import de.ingrid.interfaces.csw2.tools.XMLTools;
-import de.ingrid.interfaces.csw2.tools.XPathUtils;
 import de.ingrid.interfaces.csw2.CSWServer;
 import de.ingrid.interfaces.csw2.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw2.constants.Operation;
 import de.ingrid.interfaces.csw2.exceptions.CSWException;
 import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
+import de.ingrid.interfaces.csw2.filter.FilterParser;
+import de.ingrid.interfaces.csw2.query.CSWQuery;
 import de.ingrid.interfaces.csw2.request.DescribeRecordRequest;
 import de.ingrid.interfaces.csw2.request.GetCapabilitiesRequest;
 import de.ingrid.interfaces.csw2.request.GetDomainRequest;
 import de.ingrid.interfaces.csw2.request.GetRecordByIdRequest;
 import de.ingrid.interfaces.csw2.request.GetRecordsRequest;
 import de.ingrid.interfaces.csw2.tools.CSWConfig;
+import de.ingrid.interfaces.csw2.tools.SimpleSpringBeanFactory;
+import de.ingrid.interfaces.csw2.tools.XMLTools;
+import de.ingrid.interfaces.csw2.tools.XPathUtils;
+import de.ingrid.utils.query.IngridQuery;
 
 public class GenericServer implements CSWServer {
 	
@@ -97,7 +101,9 @@ public class GenericServer implements CSWServer {
 
 	@Override
 	public Document process(GetRecordsRequest request) throws CSWException {
-		// TODO Auto-generated method stub
+		CSWQuery query = request.getQuery();
+		FilterParser filterParser = this.getFilterParserInstance();
+		IngridQuery ingridQuery = filterParser.parse(query.getConstraint());
 		return null;
 	}
 
@@ -131,5 +137,15 @@ public class GenericServer implements CSWServer {
 			}
 		}
 		return documentCache.get(key);
+	}
+
+	/**
+	 * Get the CSWMesageEncoding implementation for a given request type from the server configuration
+	 * @param type The request type
+	 * @return The CSWMesageEncoding instance
+	 */
+	private FilterParser getFilterParserInstance() {
+		return SimpleSpringBeanFactory.INSTANCE.getBeanMandatory(
+				ConfigurationKeys.CSW_FILTERPARSER_IMPLEMENTATION, FilterParser.class);
 	}
 }

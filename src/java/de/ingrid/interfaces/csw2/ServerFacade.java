@@ -164,12 +164,8 @@ public class ServerFacade {
 	 */
 	@SuppressWarnings({"unchecked"})
 	private static CSWMessageEncoding getMessageEncodingInstance(RequestType type) {
-		Map encodingImplementations = SimpleSpringBeanFactory.INSTANCE.getBean(
+		Map encodingImplementations = SimpleSpringBeanFactory.INSTANCE.getBeanMandatory(
 				ConfigurationKeys.CSW_ENCODING_IMPLEMENTATIONS, Map.class);
-		if (encodingImplementations == null)
-			throw new RuntimeException("ServerFacade is not configured properly. Parameter '"+
-					ConfigurationKeys.CSW_ENCODING_IMPLEMENTATIONS+"' is missing");
-
 		String beanId = (String)encodingImplementations.get(type.toString());
 		if (beanId == null)
 			throw new RuntimeException("Unknown encoding type requested for '"+
@@ -186,12 +182,8 @@ public class ServerFacade {
 	 */
 	@SuppressWarnings({"unchecked"})
 	static CSWRequest getRequestInstance(Operation operation) {
-		Map requestImplementations = SimpleSpringBeanFactory.INSTANCE.getBean(
+		Map requestImplementations = SimpleSpringBeanFactory.INSTANCE.getBeanMandatory(
 				ConfigurationKeys.CSW_REQUEST_IMPLEMENTATIONS, Map.class);
-		if (requestImplementations == null)
-			throw new RuntimeException("ServerFacade is not configured properly. Parameter '"+
-					ConfigurationKeys.CSW_REQUEST_IMPLEMENTATIONS+"' is missing");
-
 		CSWRequest request = null;
 		try {
 			request = (CSWRequest)Class.forName(requestImplementations.get(operation.toString()).toString()).newInstance();

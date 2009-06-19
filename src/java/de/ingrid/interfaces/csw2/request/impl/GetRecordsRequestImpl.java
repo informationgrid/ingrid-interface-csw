@@ -4,6 +4,7 @@
 
 package de.ingrid.interfaces.csw2.request.impl;
 
+import de.ingrid.interfaces.csw2.query.CSWQuery;
 import de.ingrid.interfaces.csw2.request.GetRecordsRequest;
 
 public class GetRecordsRequestImpl extends AbstractRequestImpl implements GetRecordsRequest {
@@ -11,5 +12,11 @@ public class GetRecordsRequestImpl extends AbstractRequestImpl implements GetRec
 	@Override
 	public void validate() {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public CSWQuery getQuery() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
