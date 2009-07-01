@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly>
+  <id>bin</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>src/main/release/conf</directory>
+      <outputDirectory>conf</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/release/xml</directory>
+      <outputDirectory>xml</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/release/scripts</directory>
+      <outputDirectory>/</outputDirectory>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>lib</outputDirectory>
+    </dependencySet>
+  </dependencySets>
+</assembly>

@@ -245,19 +245,18 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>src/java</sourceDirectory>
-        <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
         <unitTest>
             <includes>
                 <include>**/*Test.java</include>
             </includes>
+          <excludes>
+            <exclude>**/CSWServletTest.java</exclude>
+          </excludes>
             <resources>
                 <resource>
-                    <directory>src/conf/</directory>
-                    <filtering>false</filtering>
-                </resource>
-                <resource>
-                    <directory>src/xml/</directory>
+                    <directory>src/test/resources/</directory>
                     <filtering>false</filtering>
                 </resource>
             </resources>

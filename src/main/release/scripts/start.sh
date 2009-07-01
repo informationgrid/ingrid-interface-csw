@@ -97,6 +97,7 @@ startIplug()
 
   # CLASSPATH initially contains $INGRID_CONF_DIR, or defaults to $INGRID_HOME/conf
   CLASSPATH=${INGRID_CONF_DIR:=$INGRID_HOME/conf}
+  CLASSPATH=${CLASSPATH}:$INGRID_HOME/xml
   CLASSPATH=${CLASSPATH}:$JAVA_HOME/lib/tools.jar
   
   # so that filenames w/ spaces are handled correctly in loops below

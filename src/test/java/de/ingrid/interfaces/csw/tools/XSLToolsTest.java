@@ -54,7 +54,7 @@ public class XSLToolsTest extends TestCase {
         
        
  
-        transformedDoc = xslt.transform(originalDoc, System.getProperty("user.dir")+ "/src/xml/ingrid.xsl");
+        transformedDoc = xslt.transform(originalDoc, System.getProperty("user.dir")+ "/src/test/resources/ingrid.xsl");
         
         
         AxisTools.createSOAPMessage(transformedDoc).writeTo(System.out);
