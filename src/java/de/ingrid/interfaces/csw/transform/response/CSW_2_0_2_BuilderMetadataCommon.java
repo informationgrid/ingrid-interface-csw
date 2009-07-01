@@ -26,14 +26,16 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     private static Log log = LogFactory.getLog(CSW_2_0_2_BuilderMetadataCommon.class);
 
 	protected String getTypeName() {
-        String typeName = null;
+        String typeName = "datatset";
 		String udkClass = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_CLASS);
         if (udkClass.equals("1")) {
-			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-					IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL));
-			typeName = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(525L, code);
-			if (!IngridQueryHelper.hasValue(typeName)) {
-				typeName = "datatset";
+			try {
+				Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
+						IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL));
+				typeName = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(525L, code);
+			} catch (NumberFormatException e) {
+				log.warn("Could not parse " + IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL + ". Value: " + IngridQueryHelper.getDetailValueAsString(hit,
+						IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL) + "could not be parsed to an Integer.");
 			}
         } else if (udkClass.equals("3")) {
             typeName = "service";

@@ -88,51 +88,48 @@ public class GetRecAnalyser implements CSWAnalyser {
 		sessionParameters.setVersion(commonAnalyser.analyseVersion(be));
 		commonAnalyser.analyseResultType(be);
 
-		//if result type is HITS don't analyse the request for startPosition and so on ..
-		if (!this.sessionParameters.getResultType().equalsIgnoreCase("HITS")) {
-			commonAnalyser.analyseOutputFormat(be);
-			commonAnalyser.analyseOutputSchema(be);
-			startPosition = be.getAttribute("startPosition");
+		commonAnalyser.analyseOutputFormat(be);
+		commonAnalyser.analyseOutputSchema(be);
+		startPosition = be.getAttribute("startPosition");
 
-			if (startPosition != null) {
-				startPositionInt = Integer.parseInt(startPosition);
-				if (startPositionInt < 1) {
-					Exception e =
-						new CSWInvalidParameterValueException("Attribute 'startPosition' is invalid.", "startPosition");
-					throw e;
-				} else {
-					sessionParameters.setStartPosition(startPositionInt);
-				}
-			}
-			maxRecords = be.getAttribute("maxRecords");
-
-			if (maxRecords != null && !maxRecords.equals("")) {
-				maxRecordsInt = Integer.parseInt(maxRecords);
-
-				if (maxRecordsInt < 1) {
-					Exception e =
-						new CSWInvalidParameterValueException("Attribute 'maxRecords' must be 1 or above.", "maxRecords");
-					throw e;
-				} else if (maxRecordsInt > Integer.parseInt(cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS))) {
-					// Silently limit the maxRecords request parameter to the value we configured
-					maxRecordsInt = Integer.parseInt(cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS));
-					sessionParameters.setMaxRecords(maxRecordsInt);
-					/*
-					Exception e =
-						new CSWInvalidParameterValueException("Attribute 'maxRecords' is invalid because " +
-							" its value is greater than " +
-							cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS) +
-							" (value of CSW configuration).", "maxRecords");
-					throw e;
-					*/
-				} else {
-					sessionParameters.setMaxRecords(maxRecordsInt);
-				}
+		if (startPosition != null) {
+			startPositionInt = Integer.parseInt(startPosition);
+			if (startPositionInt < 1) {
+				Exception e =
+					new CSWInvalidParameterValueException("Attribute 'startPosition' is invalid.", "startPosition");
+				throw e;
 			} else {
-				// Set the default value if parameter was not specified
-				sessionParameters.setMaxRecords(10);
+				sessionParameters.setStartPosition(startPositionInt);
 			}
-		} //end if result type != HITS
+		}
+		maxRecords = be.getAttribute("maxRecords");
+
+		if (maxRecords != null && !maxRecords.equals("")) {
+			maxRecordsInt = Integer.parseInt(maxRecords);
+
+			if (maxRecordsInt < 1) {
+				Exception e =
+					new CSWInvalidParameterValueException("Attribute 'maxRecords' must be 1 or above.", "maxRecords");
+				throw e;
+			} else if (maxRecordsInt > Integer.parseInt(cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS))) {
+				// Silently limit the maxRecords request parameter to the value we configured
+				maxRecordsInt = Integer.parseInt(cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS));
+				sessionParameters.setMaxRecords(maxRecordsInt);
+				/*
+				Exception e =
+					new CSWInvalidParameterValueException("Attribute 'maxRecords' is invalid because " +
+						" its value is greater than " +
+						cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS) +
+						" (value of CSW configuration).", "maxRecords");
+				throw e;
+				*/
+			} else {
+				sessionParameters.setMaxRecords(maxRecordsInt);
+			}
+		} else {
+			// Set the default value if parameter was not specified
+			sessionParameters.setMaxRecords(10);
+		}
 		analyseQuery(be);
 		commonAnalyser.analyseElementSetName(be);
 		analyseConstraint(be);
