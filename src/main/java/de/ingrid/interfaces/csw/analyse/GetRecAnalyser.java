@@ -66,7 +66,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 		boolean getRecordsRequestValid = false;
 		String opName = null;
 		String startPosition = null;
-		int startPositionInt = 0;
+		int startPositionInt = 1;
 		String maxRecords = null;
 		int maxRecordsInt = 0;
 		CommonAnalyser commonAnalyser = new CommonAnalyser(this.sessionParameters);
@@ -92,7 +92,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 		commonAnalyser.analyseOutputSchema(be);
 		startPosition = be.getAttribute("startPosition");
 
-		if (startPosition != null) {
+		if (startPosition != null && !startPosition.equals("")) {
 			startPositionInt = Integer.parseInt(startPosition);
 			if (startPositionInt < 1) {
 				Exception e =
