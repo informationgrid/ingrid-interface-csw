@@ -1,0 +1,64 @@
+<project name="PortalU Installation">
+    <description>
+        CSW Interface Installation Script
+    </description>
+	<!-- set global properties for this build -->
+	<property name="componentName" 			value="${project.artifactId}-${project.version}"/>
+	<property name="xml-communication" 	value="${installDir}/conf/communication.xml"/>
+	<property name="csw-properties" 	value="${installDir}/conf/ingrid-csw.properties"/>
+	
+	<target name="extract" description="Extract all files to the installation directory.">
+		<unzip src="${antinstaller.jar}" dest="${installDir}">
+			<patternset>
+				<include name="${componentName}/**/*.*"/>
+			</patternset>
+		</unzip>
+		
+		<move toDir="${installDir}">
+			<fileset dir="${installDir}/${componentName}"/>
+		</move>
+	</target>
+	
+	<target name="ibus" description="Set configuration correctly for the iBus.">
+		<echo>Schreibe iBus Konfiguration in communication.xml</echo>
+		<xmlproperty file="${xml-communication}" prefix="plugXML"/>
+		<replace file="${xml-communication}" token="${plugXML.communication.client(name)}" 								value="${clientName}"/>
+		<replace file="${xml-communication}" token="${plugXML.communication.client.connections.server(name)}" 			value="${serverName}"/>
+		<replace file="${xml-communication}" token="${plugXML.communication.client.connections.server.socket(ip)}" 		value="${serverIp}"/>
+		<replace file="${xml-communication}" token="${plugXML.communication.client.connections.server.socket(port)}" 	value="${serverPort}"/>		
+	</target>
+
+	<target name="csw" description="Set csw properties.">
+		<echo>Schreibe CSW Konfiguration in ingrid-csw.properties</echo>
+		<xmlproperty file="${csw-properties}" prefix="cswProperties"/>
+		<replace file="${csw-properties}" token="${cswProperties.(server.port)}" value="${localServerPort}"/>
+		<replace file="${csw-properties}" token="${cswProperties.(maxRecords)}" value="${maxRecords}"/>
+		<replace file="${csw-properties}" token="${cswProperties.(server.interface.host)}" value="${externalInterfaceHost}"/>
+		<replace file="${csw-properties}" token="${cswProperties.(server.interface.port)}" value="${externalInterfacePort}"/>
+		<replace file="${csw-properties}" token="${cswProperties.(server.interface.path)}" value="${externalInterfacePath}"/>
+	</target>
+	
+	<target name="startIPlug">
+		<echo>
+=================
+Weiteres Vorgehen
+=================
+
+		</echo>
+		<echo>
+Gehen Sie ins Verzeichnis: ${installDir} und
+rufen sie von der Kommandozeile folgendes auf
+"sh admin.sh", um im Webbrowser das iPlug unter
+der folgenden Adresse "http://localhost:8082/step1"
+zu konfigurieren. Anstelle von localhost koennen Sie
+auch die IP-Adresse des Computers eingeben!
+
+Danach beenden Sie den Prozess wieder (Strg+C) und
+rufen "sh start.sh start" auf, um das iPlug zu starten.
+
+Bevor das iPlug benutzt werden kann, muss es in der iBus-
+Administration (im Portal) eingeschaltet werden.
+		</echo>
+	</target>
+	
+</project>
