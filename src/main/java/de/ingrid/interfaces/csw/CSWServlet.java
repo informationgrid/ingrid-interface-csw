@@ -21,11 +21,13 @@ import javax.xml.messaging.JAXMServlet;
 import javax.xml.messaging.ReqRespListener;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.TransformerException;
 
 import org.apache.axis.AxisFault;
 import org.apache.axis.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.DocumentException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -245,7 +247,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		try {
 			if (req.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				super.doPost(req, resp);
-			} else if (req.getContentType().toLowerCase().indexOf("application/xml") != -1) {
+			} else if (req.getContentType().toLowerCase().indexOf("application/xml") != -1
+					|| req.getContentType().toLowerCase().indexOf("text/xml") != -1) {
 	            // Get the body of the HTTP request.
 	            
 				DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
@@ -266,7 +269,14 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 				throw new ServletException("Unsupported Content Type in POST request: " + req.getContentType());
 			}
 		} catch (Exception ex) {
-			throw new ServletException("POST failed " + ex.getMessage(), ex);
+    		resp.setContentType("application/xml");
+    		resp.setCharacterEncoding("UTF-8");
+    		try {
+				resp.getOutputStream().print(XMLTools.toString(ServletTools.createServiceException(ex)));
+			} catch (Exception e) {
+				throw new ServletException("POST failed (generating service exception failed): " + e.getMessage(), e);
+			}
+    		resp.getOutputStream().flush();
 		}
 	}
 
@@ -305,11 +315,13 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			}
 			// get port
 			String port = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PORT, "80");
+			String path = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PATH, "csw");
 			// replace interface host and port
 			for (int idx = 0; idx < nodes.getLength(); idx++) {
 				String s = nodes.item(idx).getTextContent();
 				s = s.replaceAll(CswConfig.KEY_INTERFACE_HOST, host);
 				s = s.replaceAll(CswConfig.KEY_INTERFACE_PORT, port);
+				s = s.replaceAll(CswConfig.KEY_INTERFACE_PATH, path);
 				nodes.item(idx).setTextContent(s);
 			}
 

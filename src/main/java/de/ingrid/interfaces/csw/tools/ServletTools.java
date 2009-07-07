@@ -8,6 +8,14 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentFactory;
+import org.dom4j.Element;
+import org.dom4j.io.DOMWriter;
+
+import de.ingrid.interfaces.csw.exceptions.CSWException;
+
 /**
  * Miscellaneous functions to make life easier treating servlet functionality.
  * @author Dirk Schwarzmann
@@ -40,5 +48,20 @@ public class ServletTools {
 			}
 		}
 		return requestParams;
+	}
+	
+	public static org.w3c.dom.Document createServiceException(Exception e) throws DocumentException {
+		if (e == null) return null;
+		
+		Element serviceExceptionReportElement = DocumentFactory.getInstance().createElement("ServiceExceptionReport", "http://www.opengis.net/ogc").addAttribute("version", "1.2.0");
+		
+		if (e instanceof CSWException) {
+			serviceExceptionReportElement.addElement("ServiceException").addAttribute("code", ((CSWException) e)
+					.getExceptionCode()).addAttribute("locator", ((CSWException) e).getLocator()).addText(e.getMessage());
+		} else {
+			serviceExceptionReportElement.addElement("ServiceException").addAttribute("code", "NoApplicableCode").addText(e.getMessage());
+		}
+		DOMWriter writer = new DOMWriter();
+		return writer.write(DocumentFactory.getInstance().createDocument(serviceExceptionReportElement));
 	}
 }

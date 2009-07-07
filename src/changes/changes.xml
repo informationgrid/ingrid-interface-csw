@@ -7,6 +7,18 @@
   <body>
     <release version="1.2.0" date="xxxx-xx-xx" description="Erstes CSW 2.0.2 AP-ISO 1.0 kompatibles Release">
       <action type="add">
+        POST Methode akzeptiert auch Anfragen mit Content-Type:text/xml.
+      </action>
+      <action type="fix">
+        Exceptions während der POST Methode werden in einem ServiceExceptionReport gekapselt.
+      </action>
+      <action type="add">
+        Integration eines Installers
+      </action>
+      <action type="add">
+        Migration zu build system Maven 2.0
+      </action>
+      <action type="add">
         Unterstützung für IGC DB Version 1.0.5
       </action>
       <action type="add">
