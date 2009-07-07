@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid</groupId>
-    <artifactId>ingrid-base-pom</artifactId>
+    <artifactId>ingrid-releases-pom</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -104,10 +104,6 @@
           <artifactId>ant</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>backport-util-concurrent</groupId>
-          <artifactId>backport-util-concurrent</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>commons-beanutils</groupId>
           <artifactId>commons-beanutils</artifactId>
         </exclusion>
@@ -138,10 +134,6 @@
         <exclusion>
           <groupId>htmlparser</groupId>
           <artifactId>htmlparser</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>net.sf.jsr107cache</groupId>
-          <artifactId>jsr107cache</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -287,16 +279,6 @@
           <excludes>
             <exclude>**/CSWServletTest.java</exclude>
           </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2-beta-4</version>
-        <configuration>
-          <appendAssemblyId>false</appendAssemblyId>
-          <descriptors>
-            <descriptor>src/main/assembly/bin.xml</descriptor>
-          </descriptors>
         </configuration>
       </plugin>
     </plugins>

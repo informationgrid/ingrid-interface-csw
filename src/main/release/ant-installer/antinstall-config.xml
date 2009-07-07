@@ -8,7 +8,8 @@
 			name		="InGrid CSW Interface Installation"
 			windowIcon	="/resources/icons/logoIcon.gif"
 			defaultImageResource="/resources/makewavesdawn.png"
-			minJavaVersion		="1.6">
+			minJavaVersion		="1.6"
+			>
 			
 	<!--  The target "extract" must be called first, so it is defined on the first page -->
 	<page
@@ -47,16 +48,25 @@
 			type		="input"
 			name		="componentOptions"
 			displayText	="Einstellungen fuer die CSW Kommunikation"
-			target		="csw">
+			>
 			
 			<text property="localServerPort" displayText="Lokaler Port für die Schnittstelle:" defaultValue="8083"/>
 			<comment displayText="" explanatoryText="Lokaler Port, unter dem der CSW Server laufen soll. Lokal kann der CSW Server dann per http://localhost:PORT/csw aufgerufen werden."/>
 			<text property="maxRecords" displayText="max. zurückzuliefernde Ergebnisse pro Anfrage:" defaultValue="10"/>
 			<comment displayText="" explanatoryText="Anzahl der Ergebnisse, die pro CSW Anfrage zurückgegeben werden. Diese Eigenschaft dient der Performance Sicherung."/>
+	</page>
+
+	<page
+			type		="input"
+			name		="componentOptions2"
+			displayText	="Proxy-Einstellungen fuer die CSW Schnittstelle"
+			target		="csw"
+			>
+			
 			<text property="externalInterfaceHost"   displayText="Externer Servername:"   defaultValue="127.0.0.1"/>
 			<text property="externalInterfacePort"   displayText="Externer Port:"   defaultValue="8083"/>
 			<text property="externalInterfacePath"   displayText="Externer Pfad:"   defaultValue="csw"/>
-			<comment displayText="" explanatoryText="Externen Einstellungen werden in der GetCapabilities verwendet, um den externen Zugriff auf die Schnittstelle zu beschreiben. Die Werte können geändert werden, wenn z.B. eine Proxy-Weiterleitung zum CSW Server eingerichtet wurde."/>
+			<comment displayText="" explanatoryText="Die externen Einstellungen werden in der GetCapabilities verwendet, um den externen Zugriff auf die Schnittstelle zu beschreiben. Die Werte können geändert werden, wenn z.B. eine Proxy-Weiterleitung zum CSW Server eingerichtet wurde."/>
 	</page>
 	
 	<!--  type="input" shows a list of editable options for the installer -->
@@ -70,14 +80,6 @@
 				defaultValueWin	="${env.ProgramFiles}\${project.artifactId}-${project.version}"
 				displayText		="Installationsverzeichnis"
 				create			="true"/>
-		<!--
-		<target
-			target		="startIPlug"
-			displayText = ""
-			explanatoryText	="Start des iPlugs nach der Installation"
-			defaultValue="false">
-		</target>
-		-->
 	</page>
 
 	<page
