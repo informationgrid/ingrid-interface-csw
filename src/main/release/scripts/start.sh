@@ -138,7 +138,7 @@ fi
 
 STARTING_USER=`whoami`
 if [ "$STARTING_USER" != "$INGRID_USER" ]; then
-  echo "you must be user '$INGRID_USER' to start that script!"
+  echo "You must be user '$INGRID_USER' to start that script! Set INGRID_USER in environment to overwrite this."
   exit 1
 fi
 
