@@ -93,10 +93,6 @@
     </dependency>
     <dependency>
       <groupId>jetty</groupId>
-      <artifactId>org.mortbay.jetty</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jetty</groupId>
       <artifactId>servlet-api</artifactId>
     </dependency>
     <dependency>

@@ -9,6 +9,8 @@
 #
 #   INGRID_OPTS      addtional java runtime options
 #
+#		INGRID_USER 		 starting user, default ist "ingrid"
+#
 
 THIS="$0"
 
@@ -128,6 +130,17 @@ startIplug()
   echo "ingrid component ($INGRID_HOME) started."
   echo $! > $PID
 }
+
+# make sure the current user has the privilege to execute that script
+if [ "$INGRID_USER" = "" ]; then
+  INGRID_USER="ingrid"
+fi
+
+STARTING_USER=`whoami`
+if [ "$STARTING_USER" != "$INGRID_USER" ]; then
+  echo "you must be user '$INGRID_USER' to start that script!"
+  exit 1
+fi
 
 
 case "$1" in
