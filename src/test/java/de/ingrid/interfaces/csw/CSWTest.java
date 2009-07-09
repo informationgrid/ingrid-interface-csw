@@ -103,7 +103,7 @@ public class CSWTest extends TestCase {
 		
 		//assertEquals(ingridQueryToString.transform(ingridQuery), "( AND source:map )");
 	
-		assertEquals(ingridQueryToString.transform(ingridQuery), "()");
+		assertEquals(ingridQueryToString.transform(ingridQuery), "( AND metaclass:map )");
 		
 		
 	}
