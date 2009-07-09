@@ -398,6 +398,9 @@ public class CSW {
         } else if (sourceTypeIsService) {
             required = true;
             ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
+        } else {
+            required = true;
+            ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
         }
 
         return ingridQuery;

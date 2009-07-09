@@ -201,7 +201,7 @@ public class FilterToIngridQueryString {
         if (log.isDebugEnabled()) {
         	log.debug("exiting, returning string: " + sb.toString());
         }
-		return sb.toString();
+		return sb.toString().replaceAll("\\(\\s\\)", "");
 	}
 
 	/**
@@ -813,7 +813,7 @@ public class FilterToIngridQueryString {
 				String type = (String)((Expression.Literal)  co.getSecondExpression().getExpression()).getLiteral();
 				if (type.equalsIgnoreCase("service") || type.equalsIgnoreCase("application")) {
 					_session.setTypeNameIsService(true);
-				} else {
+				} else if (type.equalsIgnoreCase("dataset") || type.equalsIgnoreCase("datasetcollections")) {
 					_session.setTypeNameIsDataset(true);
 				}
 				sb = deletePreOperator(sb);

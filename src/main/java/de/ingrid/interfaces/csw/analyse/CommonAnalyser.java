@@ -133,24 +133,23 @@ public final class CommonAnalyser {
 	public boolean analyseTypeNames(final String typeNames) {
 		boolean typeNamesIsValid = false;
 		String typeNameCurrent = null;
+/*
+ * The definition of the queried type is only to be defined via the type property in the filter query
+ *
+ */
 		StringTokenizer stringTokenizer = new StringTokenizer(typeNames, ",");
 		while (stringTokenizer.hasMoreTokens()) {
 			typeNameCurrent = stringTokenizer.nextToken().trim();
 			if (typeNameCurrent.equalsIgnoreCase("csw:dataset")) {
 				typeNamesIsValid = true;
-				sessionParameters.setTypeNameIsDataset(true);
 			} else if (typeNameCurrent.equalsIgnoreCase("csw:datasetcollection")) {
 				typeNamesIsValid = true;
-				sessionParameters.setTypeNameIsDatasetcollection(true);
 			} else if (typeNameCurrent.equalsIgnoreCase("csw:service")) {
 				typeNamesIsValid = true;
-				sessionParameters.setTypeNameIsService(true);
 			} else if (typeNameCurrent.equalsIgnoreCase("csw:application")) {
 				typeNamesIsValid = true;
-				sessionParameters.setTypeNameIsApplication(true);
 			} else if (typeNameCurrent.equalsIgnoreCase("gmd:MD_Metadata")) {
 				typeNamesIsValid = true;
-				sessionParameters.setTypeNameIsDataset(true);
 			}
 		}
 		//no matter if it is invalid
