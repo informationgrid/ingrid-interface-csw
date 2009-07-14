@@ -690,7 +690,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_TIME_STATUS));
-			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(518L, code);
+			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(523L, code);
 			if (codeVal.length() > 0) {
 				parent.addElement("gmd:status").addElement("gmd:MD_ProgressCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode").addAttribute(
@@ -874,7 +874,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// add language
 		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
 		if (IngridQueryHelper.hasValue(dataLang)) {
-			mdDataIdentification.addElement("gmd:language").addElement("LanguageCode")
+			mdDataIdentification.addElement("gmd:language").addElement("gmd:LanguageCode")
 				.addAttribute("codeList", "http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode")
 				.addAttribute("codeListValue", getISO639_2LanguageCode(dataLang));
 		}
