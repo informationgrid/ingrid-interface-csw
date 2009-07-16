@@ -45,8 +45,9 @@ Weiteres Vorgehen
 
 		</echo>
 		<echo>
-Gehen Sie ins Verzeichnis: ${installDir} und
-rufen sie von der Kommandozeile folgendes auf
+Gehen Sie ins Verzeichnis:
+${installDir}
+und rufen sie von der Kommandozeile folgendes auf
 "sh start.sh start", um die Schnittstelle zu starten.
 		</echo>
 	</target>

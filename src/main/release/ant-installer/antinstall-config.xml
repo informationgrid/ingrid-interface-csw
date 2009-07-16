@@ -39,7 +39,7 @@
 			
 			<text property="serverName" displayText="Server ID:" defaultValue="/ingrid-group:ibus-'Ihr-Name'"/>
 			<text property="serverIp"   displayText="Server IP:"   defaultValue="127.0.0.1"/>
-			<text property="serverPort" displayText="Server Port:" defaultValue="8081"/>
+			<text property="serverPort" displayText="Server Port:" defaultValue="9900"/>
 			
 			<comment displayText="" explanatoryText="Die Server-IP ist die Adresse des Rechners, auf dem der iBus ueber dem Server-Port angesprochen werden kann."/>
 	</page>
@@ -50,7 +50,7 @@
 			displayText	="Einstellungen fuer die CSW Kommunikation"
 			>
 			
-			<text property="localServerPort" displayText="Lokaler Port für die Schnittstelle:" defaultValue="8083"/>
+			<text property="localServerPort" displayText="Lokaler Port für die Schnittstelle:" defaultValue="8084"/>
 			<comment displayText="" explanatoryText="Lokaler Port, unter dem der CSW Server laufen soll. Lokal kann der CSW Server dann per http://localhost:PORT/csw aufgerufen werden."/>
 			<text property="maxRecords" displayText="max. zurückzuliefernde Ergebnisse pro Anfrage:" defaultValue="10"/>
 			<comment displayText="" explanatoryText="Anzahl der Ergebnisse, die pro CSW Anfrage zurückgegeben werden. Diese Eigenschaft dient der Performance Sicherung."/>
@@ -64,7 +64,7 @@
 			>
 			
 			<text property="externalInterfaceHost"   displayText="Externer Servername:"   defaultValue="127.0.0.1"/>
-			<text property="externalInterfacePort"   displayText="Externer Port:"   defaultValue="8083"/>
+			<text property="externalInterfacePort"   displayText="Externer Port:"   defaultValue="8084"/>
 			<text property="externalInterfacePath"   displayText="Externer Pfad:"   defaultValue="csw"/>
 			<comment displayText="" explanatoryText="Die externen Einstellungen werden in der GetCapabilities verwendet, um den externen Zugriff auf die Schnittstelle zu beschreiben. Die Werte können geändert werden, wenn z.B. eine Proxy-Weiterleitung zum CSW Server eingerichtet wurde."/>
 	</page>
@@ -76,7 +76,7 @@
 			displayText	="Benoetigte Installationsoptionen">
 		<directory
 				property		="installDir"
-				defaultValue	="/usr/local/${project.artifactId}-${project.version}"
+				defaultValue	="/opt/ingrid/${project.artifactId}-${project.version}"
 				defaultValueWin	="${env.ProgramFiles}\${project.artifactId}-${project.version}"
 				displayText		="Installationsverzeichnis"
 				create			="true"/>
