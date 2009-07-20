@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid</groupId>
@@ -13,6 +13,7 @@
   <name>ingrid-interface-csw</name>
   <scm>
     <connection>${scmConnectionBase}/ingrid-interface-csw/branches/ingrid-interface-csw-1.2</connection>
+    <developerConnection>${scmConnectionBase}/ingrid-interface-csw/branches/ingrid-interface-csw-1.2</developerConnection>
   </scm>
   <repositories>
     <repository>
@@ -29,50 +30,6 @@
       <url>http://harrison.its-technidata.de/ingrid/maven2</url>
     </repository>
   </repositories>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-ibus</artifactId>
-        <version>1.2.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-iplug</artifactId>
-        <version>1.2.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-iplug-dsc</artifactId>
-        <version>1.3.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>ingrid</groupId>
-        <artifactId>ingrid-iplug-se</artifactId>
-        <version>1.2-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-iplug-sns</artifactId>
-        <version>1.4.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-iplug-g2k</artifactId>
-        <version>1.2.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-iplug-tamino</artifactId>
-        <version>1.2.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-ibus-client</artifactId>
-        <version>1.2.1-SNAPSHOT</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>

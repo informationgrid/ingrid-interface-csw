@@ -5,7 +5,7 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.2.0" date="xxxx-xx-xx" description="Erstes CSW 2.0.2 AP-ISO 1.0 kompatibles Release">
+    <release version="1.2.0" date="2009-07-17" description="Release">
       <action type="add">
         POST Methode akzeptiert auch Anfragen mit Content-Type:text/xml.
       </action>
