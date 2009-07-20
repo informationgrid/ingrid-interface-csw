@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid</groupId>
@@ -30,6 +30,15 @@
       <url>http://harrison.its-technidata.de/ingrid/maven2</url>
     </repository>
   </repositories>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>ingrid</groupId>
+        <artifactId>ingrid-iplug-se</artifactId>
+        <version>1.2-SNAPSHOT</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>
