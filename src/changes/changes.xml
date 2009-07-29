@@ -5,12 +5,15 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.2.0" date="2009-07-17" description="Release">
+    <release version="1.2.0-SNAPSHOT" date="2009-07-27" description="Release">
       <action type="add">
         POST Methode akzeptiert auch Anfragen mit Content-Type:text/xml.
       </action>
       <action type="fix">
         Exceptions während der POST Methode werden in einem ServiceExceptionReport gekapselt.
+      </action>
+      <action type="fix">
+        Transformation von GeometricObjectTypeCode war nicht korrekt 
       </action>
       <action type="add">
         Integration eines Installers
