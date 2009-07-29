@@ -360,10 +360,22 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					"gmd:MD_GeometricObjects");
 			// T011_obj_geo_vector.geometric_object_type ->
 			// MD_Metadata/spatialRepresentationInfo/MD_SpatialRepresentation/MD_VectorSpatialRepresentation/geometricObjects/geometricObjectType/MD_GeometricObjectTypeCode@codeListValue
+			Long code = null;
+			try {
+				code = Long.valueOf(geometricObjectsType[i]);
+			} catch (NumberFormatException e) {
+			}
+			codeStr = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(515L, code);
+			if (codeStr == null) {
+				if (log.isDebugEnabled()) {
+					log.debug("Unable to convert value '" + geometricObjectsType[i] + "' into ISO value with CodeList 515.");
+				}
+				codeStr = geometricObjectsType[i];
+			}
 			mdGeometricObjects.addElement("gmd:geometricObjectType").addElement("gmd:MD_GeometricObjectTypeCode")
 					.addAttribute("codeList",
 							"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_GeometricObjectTypeCode")
-					.addAttribute("codeListValue", geometricObjectsType[i]);
+					.addAttribute("codeListValue", codeStr);
 			// T011_obj_geo_vector.geometric_object_count ->
 			// MD_Metadata/full:spatialRepresentationInfo/MD_VectorSpatialRepresentation/geometricObjects/MD_GeometricObjects/geometricObjectCount
 			this.addGCOInteger(mdGeometricObjects.addElement("gmd:geometricObjectCount"),
@@ -716,8 +728,8 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				// userDefinedMaintenanceFrequency
 				String timeInterval = IngridQueryHelper.getDetailValueAsString(hit,
 						IngridQueryHelper.HIT_KEY_OBJECT_TIME_INTERVAL);
-				if (timeInterval.length() > 0) {
-					String timeAlle = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_ALLE);
+				String timeAlle = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_ALLE);
+				if (timeInterval.length() > 0 && timeAlle.length() > 0) {
 					String period19108 = "P";
 					if (timeInterval.equalsIgnoreCase("Tage")) {
 						period19108 = period19108.concat(timeAlle).concat("D");
