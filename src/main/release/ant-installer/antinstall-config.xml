@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
 <installer
-			ui			="swing,text"
-			verbose		="true"
-			debug		="true"
-			lookAndFeel	="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
-			name		="InGrid CSW Interface Installation"
-			windowIcon	="/resources/icons/logoIcon.gif"
+			ui                  ="swing,text,swing-auto,text-auto"
+      oadDefaults         ="prompt"
+			verbose		          ="true"
+			debug		            ="true"
+			lookAndFeel	        ="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+			name		            ="InGrid CSW Interface Installation"
+			windowIcon	        ="/resources/icons/logoIcon.gif"
 			defaultImageResource="/resources/makewavesdawn.png"
-			minJavaVersion		="1.6"
-			>
+			minJavaVersion		  ="1.6"
+			version             ="1.0">
 			
 	<!--  The target "extract" must be called first, so it is defined on the first page -->
 	<page
@@ -18,6 +19,8 @@
 			displayText	="Willkommen zur InGrid CSW Interface Installation"
 			target		="extract">
 			<comment displayText="" bold="true" explanatoryText="Dieser Assistent hilft Ihnen bei der Installation sowie Konfiguration der Komponente."/>
+      <comment displayText="Hinweis: " bold="true"/>
+      <comment displayText="" explanatoryText="Wenn dies ein Update ist, dann können die Einstellungen der vorherigen Installation verwendet werden. Dazu muss sich die Datei 'ant.install.properties' im gleichen Verzeichnis wie der Installer befinden. Es empfiehlt sich daher, die Updates immer vom gelichen Verzeichnis auszuführen."/>
 	</page>
 
 	<page
@@ -28,7 +31,7 @@
 			
 			<text property="clientName" displayText="Client ID:" defaultValue="/ingrid-group:csw-interface-'Ihr-Name'"/>
 			
-			<comment displayText="" explanatoryText="Die Client-ID muss eindeutig sein, da es sonst zu Kommunikationsproblemen zum iBus fuehren kann."/>
+			<comment displayText="" explanatoryText="Die Client-ID muss eindeutig sein, da es sonst zu Kommunikationsproblemen zum iBus führen kann."/>
 	</page>
 	
 	<page
@@ -73,7 +76,7 @@
 	<page
 			type		="input"
 			name		="properties"
-			displayText	="Benoetigte Installationsoptionen">
+			displayText	="Benötigte Installationsoptionen">
 		<directory
 				property		="installDir"
 				defaultValue	="/opt/ingrid/${project.artifactId}-${project.version}"
