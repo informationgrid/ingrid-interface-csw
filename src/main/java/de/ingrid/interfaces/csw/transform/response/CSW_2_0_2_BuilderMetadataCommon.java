@@ -356,12 +356,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     protected void addDateStamp(Element metaData, IngridHit hit, String ns) {
         String creationDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_MOD_TIME);
         if (IngridQueryHelper.hasValue(creationDate)) {
-            String cswDate = Udk2CswDateFieldParser.instance().parse(creationDate);
-            if (cswDate.indexOf("T") > -1) {
-            	metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("gco:DateTime").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
-            } else {
-            	metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("gco:Date").addText(Udk2CswDateFieldParser.instance().parse(creationDate));
-            }
+           	// do only return the date section, ignore the time part of the date
+        	// see CSW 2.0.2 AP ISO 1.0 (p.41)
+        	metaData.addElement(getNSElementName(ns, "dateStamp")).addElement("gco:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(creationDate));
         }
     }
     
