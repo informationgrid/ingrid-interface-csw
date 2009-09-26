@@ -5,7 +5,13 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.2.0-SNAPSHOT" date="2009-07-27" description="Release">
+    <release version="1.2.0-SNAPSHOT" date="2009-09-25" description="Release">
+      <action type="fix">
+        Kommentare zu Textfeldern im Installer (nur im Textmodus) werden erst nach der Eingabe angezeigt.
+      </action>
+      <action type="fix">
+        Wiederholtes Laden eines gecachten Objektes fuehrt zu Vervielfachung der "organisation" Angaben in einer Adresse.
+      </action>
       <action type="update">
         Erweiterung der unterst&uuml;tzten Länder bei Transformation IGC - CSW
       </action>
