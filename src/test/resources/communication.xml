@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- LIVE - extern -->
+<!--
+-->
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="communication.xsd">
-	<client name="/torwald-group:csw-interface-jm-test">
-		<connections>
-			<server name="/torwald-group:torwald-ibus">
-				<socket port="9900" timeout="10" ip="213.144.28.245" />
-				<messages maximumSize="1048576" threadCount="100" />
-			</server>
-		</connections>
-	</client>
-	<messages queueSize="2000" handleTimeout="10"/>
+        xsi:noNamespaceSchemaLocation="communication.xsd">
+        <client name="/kug-group:csw-interface-jm-test">
+                <connections>
+                        <server name="/kug-group:kug-ibus">
+                                <socket port="80" timeout="10" ip="213.144.28.236" />
+                                <messages maximumSize="1048576" threadCount="100" />
+                        </server>
+                </connections>
+        </client>
+        <messages queueSize="2000" handleTimeout="120"/>
 </communication>
+
+<!-- Harrison - extern -->
+<!--
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="communication.xsd">
+    <client name="/torwald-group:csw-interface-jm-test">
+        <connections>
+            <server name="/torwald-group:torwald-ibus">
+                <socket port="9900" timeout="10" ip="213.144.28.245" />
+                <messages maximumSize="1048576" threadCount="100" />
+            </server>
+        </connections>
+    </client>
+    <messages queueSize="2000" handleTimeout="10"/>
+</communication>
+-->
+

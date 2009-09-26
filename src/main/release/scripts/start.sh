@@ -9,7 +9,7 @@
 #
 #   INGRID_OPTS      addtional java runtime options
 #
-#		INGRID_USER 		 starting user, default ist "ingrid"
+#   INGRID_USER      starting user, default ist "ingrid"
 #
 
 THIS="$0"

@@ -108,7 +108,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             if (address != null) {
                 
                 this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:individualName"), IngridQueryHelper.getCompletePersonName(address));
-                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION);
+                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION_PROCESSED);
                 if (IngridQueryHelper.hasValue(organisationName)) {
 	                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:organisationName"), organisationName);
                 }
@@ -222,7 +222,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             if (address != null) {
                 
                 this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:individualName"), IngridQueryHelper.getCompletePersonName(address));
-                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION);
+                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION_PROCESSED);
                 if (IngridQueryHelper.hasValue(organisationName)) {
 	                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:organisationName"), organisationName);
                 }

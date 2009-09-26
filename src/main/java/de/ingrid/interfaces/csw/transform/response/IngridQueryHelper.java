@@ -58,6 +58,8 @@ public class IngridQueryHelper {
     
     public static final String HIT_KEY_ADDRESS_INSTITUITION = "title";
 
+    public static final String HIT_KEY_ADDRESS_INSTITUITION_PROCESSED = "institution_processed";
+    
     public static final String HIT_KEY_ADDRESS_INSTITUITION2 = "title2";
 
     public static final String HIT_KEY_ADDRESS_INSTITUITION3 = "title3";
@@ -409,8 +411,8 @@ public class IngridQueryHelper {
         }
         IngridHitDetail addressDetail = (IngridHitDetail) address.get("hitDetail");
         String addrClass = IngridQueryHelper.getDetailValue(addressDetail, IngridQueryHelper.HIT_KEY_ADDRESS_CLASS);
+        String addressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION);
         if (addrClass.equals("0") || addrClass.equals("2") || addrClass.equals("1")) {
-            String addressInstitution = getDetailValue(addressDetail, HIT_KEY_ADDRESS_INSTITUITION);
             String currentAddressId = getDetailValue(addressDetail, HIT_KEY_ADDRESS_ADDRID);
             
             // flag set true if we have to requery the ibus in case more data can be available
@@ -502,7 +504,9 @@ public class IngridQueryHelper {
 	                }
 	            }
             }
-            addressDetail.put(HIT_KEY_ADDRESS_INSTITUITION, addressInstitution);
+            addressDetail.put(HIT_KEY_ADDRESS_INSTITUITION_PROCESSED, addressInstitution);
+        } else {
+        	addressDetail.put(HIT_KEY_ADDRESS_INSTITUITION_PROCESSED, addressInstitution);
         }
         return address;
     }

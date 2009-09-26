@@ -59,7 +59,7 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
             if (address != null) {
                 
                 this.addSMXMLCharacterString(ciResponsibleParty.addElement("smXML:individualName"), IngridQueryHelper.getCompletePersonName(address));
-                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION);
+                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION_PROCESSED);
                 if (IngridQueryHelper.hasValue(organisationName)) {
 	                this.addSMXMLCharacterString(ciResponsibleParty.addElement("smXML:organisationName"), organisationName);
                 }
