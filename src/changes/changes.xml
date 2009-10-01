@@ -5,7 +5,10 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.2.0-SNAPSHOT" date="2009-09-25" description="Release">
+    <release version="1.2.0-SNAPSHOT" date="2009-09-30" description="Release">
+      <action type="add">
+        Anfragen können auf Partner, Anbieter und iPlug ID über GET Parameter eingeschränkt werden.
+      </action>
       <action type="fix">
         Kommentare zu Textfeldern im Installer (nur im Textmodus) werden erst nach der Eingabe angezeigt.
       </action>
