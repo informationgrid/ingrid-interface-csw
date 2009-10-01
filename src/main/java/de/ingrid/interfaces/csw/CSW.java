@@ -8,7 +8,9 @@ import java.io.Reader;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
@@ -32,6 +34,7 @@ import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.interfaces.csw.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.tools.AxisTools;
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
+import de.ingrid.interfaces.csw.tools.ServletTools;
 import de.ingrid.interfaces.csw.tools.XMLTools;
 import de.ingrid.interfaces.csw.tools.XPathUtils;
 import de.ingrid.interfaces.csw.transform.RequestTransformer;
@@ -61,7 +64,14 @@ public class CSW {
      * Static object used to retrieve the config data
      */
     private static CSWInterfaceConfig cswConfig = CSWInterfaceConfig.getInstance();
+    
+    private HttpServletRequest request = null;
 
+    public CSW(HttpServletRequest request) {
+    	this.request = request;
+    }
+    
+    
     /**
      * This method performs a SOAP request
      * 
@@ -72,9 +82,15 @@ public class CSW {
      *             e
      */
     protected final Message doSoapRequest(final SOAPMessage soapRequestMessage) throws Exception {
-        Document responseDoc = null;
+    	Document responseDoc = null;
+		Properties reqParams = ServletTools.createPropertiesFromRequest(request, true); // all
+
         SessionParameters sessionParameters = new SessionParameters();
-        CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
+		sessionParameters.setPartner(reqParams.getProperty("PARTNER"));
+		sessionParameters.setProvider(reqParams.getProperty("PROVIDER"));
+		sessionParameters.setIplugId(reqParams.getProperty("IPLUG"));
+
+		CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
         SOAPBody body = soapRequestMessage.getSOAPBody();
         SOAPBodyElement be = (SOAPBodyElement) body.getFirstChild();
 
@@ -149,7 +165,13 @@ public class CSW {
      */
     protected final Document doPostRequest(final Document inDoc) throws Exception {
         Document respDoc = null;
+		Properties reqParams = ServletTools.createPropertiesFromRequest(request, true); // all
+
         SessionParameters sessionParameters = new SessionParameters();
+		sessionParameters.setPartner(reqParams.getProperty("PARTNER"));
+		sessionParameters.setProvider(reqParams.getProperty("PROVIDER"));
+		sessionParameters.setIplugId(reqParams.getProperty("IPLUG"));
+
         CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
         Element be = (Element)inDoc.getFirstChild();
 
@@ -312,6 +334,7 @@ public class CSW {
 
         ingridQuery = setDataTypeCSW(ingridQuery);
         ingridQuery = setSourceType(ingridQuery, sessionParameters);
+        ingridQuery = setQueryExtensions(ingridQuery, sessionParameters);
 
         IngridHits hits = callBus(ingridQuery, requestedHits, startPosition);
         long totalHits = hits.length();
@@ -324,7 +347,21 @@ public class CSW {
         return hits;
     }
 
-    /**
+    private static IngridQuery setQueryExtensions(IngridQuery ingridQuery, final SessionParameters sessionParameters) {
+            if (sessionParameters.getPartner() != null && sessionParameters.getPartner().length() > 0) {
+            	ingridQuery.addField(new FieldQuery(true, false, "partner", sessionParameters.getPartner()));
+            }
+            if (sessionParameters.getProvider() != null && sessionParameters.getProvider().length() > 0) {
+            	ingridQuery.addField(new FieldQuery(true, false, "provider", sessionParameters.getProvider()));
+            }
+            if (sessionParameters.getIplugId() != null && sessionParameters.getIplugId().length() > 0) {
+            	ingridQuery.addField(new FieldQuery(true, false, "iplugs", sessionParameters.getIplugId()));
+            }
+            
+            return ingridQuery;
+	}
+
+	/**
      * performs a get record by id request
      * 
      * @param be

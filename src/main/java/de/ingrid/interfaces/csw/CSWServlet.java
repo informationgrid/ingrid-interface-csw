@@ -123,6 +123,11 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		logMemoryInfo("init");
 	}
 
+	public final SOAPMessage onMessage(final SOAPMessage message) {
+		throw new RuntimeException("The Method should never be called!!");
+	}
+	
+	
 	/**
 	 * This method handles SOAP 1.2 requests via http-POST. It called by the
 	 * servlet engine. The resulting message is sent to the client.
@@ -131,7 +136,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	 *            SOAPMessage
 	 * @return soapResponseMessage SOAPMessage
 	 */
-	public final SOAPMessage onMessage(final SOAPMessage message) {
+	public final SOAPMessage onMessage(final SOAPMessage message, HttpServletRequest request) {
+		
 		if (log.isDebugEnabled()) {
 			log.debug("javax.xml.soap.MessageFactory: " + System.getProperty("javax.xml.soap.MessageFactory"));
 			log.debug("javax.xml.soap.SOAPFactory: " + System.getProperty("javax.xml.soap.SOAPFactory"));
@@ -149,7 +155,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 					"http://www.w3.org/2003/05/soap-envelope")) {
 				throw new Exception("Only SOAP 1.2 is supported.");
 			}
-			csw = new CSW();
+			csw = new CSW(request);
 			soapResponseMessage = csw.doSoapRequest(message);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -255,7 +261,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 				df.setNamespaceAware(true);
 				Document inDoc = df.newDocumentBuilder().parse(req.getInputStream());
 
-				CSW csw = new CSW();
+				CSW csw = new CSW(req);
 	            Document responseDoc = csw.doPostRequest(inDoc);
 	    		if (log.isDebugEnabled()) {
 	    			log.debug("CSW response: " + XMLTools.toString(responseDoc));
@@ -372,7 +378,6 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	 * @throws Exception
 	 */
 	private void doGet_GetRecords(final Properties reqParams, final HttpServletResponse response) throws Exception {
-		log.debug("enter");
 		GetRecAnalyser getRecAnalyser = new GetRecAnalyser();
 		if (getRecAnalyser.analyse(reqParams)) {
 			StringBuffer result = new StringBuffer();
@@ -383,7 +388,6 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			response.setCharacterEncoding("UTF-8");
 			response.getOutputStream().print(result.toString());
 		}
-		log.debug("leaving");
 	}
 
 	/**
@@ -411,6 +415,9 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		ArrayList<String> idList = new ArrayList<String>();
 		idList.add(reqParams.getProperty("ID"));
 		sessionParameters.setIdsList(idList);
+		sessionParameters.setPartner(reqParams.getProperty("PARTNER"));
+		sessionParameters.setProvider(reqParams.getProperty("PROVIDER"));
+		sessionParameters.setIplugId(reqParams.getProperty("IPLUG"));
 
 		IngridQuery ingridQuery = null;
 		RequestTransformer requestTransformer = new RequestTransformer();

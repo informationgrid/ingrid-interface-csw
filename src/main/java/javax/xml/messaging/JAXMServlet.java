@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.interfaces.csw.CSW;
+import de.ingrid.interfaces.csw.CSWServlet;
 import de.ingrid.interfaces.csw.tools.XMLTools;
 
 import java.io.IOException;
@@ -200,8 +201,13 @@ public abstract class JAXMServlet
 	    
 	    SOAPMessage reply = null;
 
-            // There are no replies in case of an OnewayListener.
-            if (this instanceof ReqRespListener) 
+	    	// THIS IS AN UGLY HACK
+	    	// but the whole solutions from GIStec is an ugly hack
+	        // we are otherwise not be able to pass the request parameter to the CSW handler
+	    	// but we need it to get the query extensions like partner, provider, iplug
+	    	if (this instanceof CSWServlet)
+        		reply = ((CSWServlet)this).onMessage(msg, req);
+        	else if (this instanceof ReqRespListener) 
                 reply = ((ReqRespListener) this).onMessage(msg);
             else if (this instanceof OnewayListener)
                 ((OnewayListener) this).onMessage(msg);

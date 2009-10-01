@@ -34,6 +34,53 @@ public final class SessionParameters {
 	private int numberOfRecordsMatched = 0;
 	private int numberOfRecordsReturned = 0;
 	private String version = null; 
+
+	private String partner = null; 
+	private String provider = null; 
+	private String iplugId = null; 
+	
+	/**
+	 * @return the partner
+	 */
+	public String getPartner() {
+		return partner;
+	}
+
+	/**
+	 * @param partner the partner to set
+	 */
+	public void setPartner(String partner) {
+		this.partner = partner;
+	}
+
+	/**
+	 * @return the provider
+	 */
+	public String getProvider() {
+		return provider;
+	}
+
+	/**
+	 * @param provider the provider to set
+	 */
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+
+	/**
+	 * @return the iplugId
+	 */
+	public String getIplugId() {
+		return iplugId;
+	}
+
+	/**
+	 * @param iplugId the iplugId to set
+	 */
+	public void setIplugId(String iplugId) {
+		this.iplugId = iplugId;
+	}
+
 	
 
 	public String getVersion() {

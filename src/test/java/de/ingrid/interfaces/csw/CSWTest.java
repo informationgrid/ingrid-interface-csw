@@ -21,7 +21,7 @@ public class CSWTest extends TestCase {
 	 */
 	public void testSetSourceType() throws Exception {
 		
-		CSW csw = new CSW();
+		CSW csw = new CSW(null);
 		
 		
 		//MAP
