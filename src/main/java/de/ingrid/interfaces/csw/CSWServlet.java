@@ -107,7 +107,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 		try {
         	if (log.isInfoEnabled()) {
-        		log.info("trying to connect to bus via JXTA client... ");
+        		log.info("trying to connect to bus via ibus client... ");
         	}
 			bus = IBusHelper.getIBus();
 		} catch (Exception e) {
