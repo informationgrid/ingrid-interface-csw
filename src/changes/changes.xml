@@ -6,6 +6,9 @@
   </properties>
   <body>
     <release version="1.2.0-SNAPSHOT" date="2009-09-30" description="Release">
+      <action type="fix">
+        Problem bei Umsetzung von Filterquery zu InGrid Query mit logischen Verknüpfungen behoben.
+      </action>
       <action type="add">
         Anfragen können auf Partner, Anbieter und iPlug ID über GET Parameter eingeschränkt werden.
       </action>
