@@ -201,7 +201,7 @@ public class FilterToIngridQueryString {
         if (log.isDebugEnabled()) {
         	log.debug("exiting, returning string: " + sb.toString());
         }
-		return sb.toString().replaceAll("\\(\\s\\)", "");
+		return sb.toString().replaceAll("(( AND)*|( OR)*|\\s) \\(\\s\\)", "");
 	}
 
 	/**
