@@ -151,7 +151,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 		String typeNames = null;
 		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "Query");
 
-		if (nl != null || nl.getLength() != 0) {
+		if (nl != null && nl.getLength() > 0) {
 			elemQuery = (Element) nl.item(0);
 		}
 

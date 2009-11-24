@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.xml.soap.SOAPBodyElement;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw.exceptions.CSWMissingParameterValueException;
@@ -110,45 +111,28 @@ public class GetRecByIdAnalyser implements CSWAnalyser {
     private boolean analyseId(final Element be) throws Exception {
         
         
+    	NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "Id");
         
-        Element elemId = (Element) be.getFirstChild();
-        
-        String ids = null;
-        
-        //if (elemId == null || elemId.getNodeName() != "Id") {
-        if (elemId == null || elemId.getLocalName() != "Id" || elemId.getFirstChild() == null) {     
-        	
-        	
-            Exception e = 
-                new CSWMissingParameterValueException("Element 'Id' is missing.", "Id"); 
-            
-            throw e;     
-        
-        } else {
-            
-            ids = elemId.getFirstChild().getNodeValue();
+    	if (nl != null && nl.getLength() > 0) {
+    		Element elemId = (Element) nl.item(0);
+            String ids = elemId.getFirstChild().getNodeValue();
             
             CommonAnalyser commonAnalyser = new CommonAnalyser(this.sessionParameters);
             
              // tokenize ids: e.g '2, 6, 8'
-            
             if (!commonAnalyser.analyseIds(ids)) {
-                
-                
                 Exception e = 
                     new CSWInvalidParameterValueException(" 'Id' is invalid.", "Id"); 
                 
                 throw e;     
                 
             }
+		} else {
+            Exception e = 
+                new CSWMissingParameterValueException("Element 'Id' is missing.", "Id"); 
             
-            
-            
-           
-            
-            
-        }
-     
+            throw e;     
+		}
         return true;
     }   
     
