@@ -5,7 +5,10 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.2.0-SNAPSHOT" date="2009-09-30" description="Release">
+    <release version="1.2.0-SNAPSHOT" date="2009-11-24" description="Release">
+      <action type="fix">
+        Fix Problem beim Parsen von Id Attribut bei der SOAP basierten GetRecordById Methode.
+      </action>
       <action type="fix">
         Problem bei Umsetzung von Filterquery zu InGrid Query mit logischen Verknüpfungen behoben.
       </action>
