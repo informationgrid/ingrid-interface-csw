@@ -30,15 +30,6 @@
       <url>http://harrison.its-technidata.de/ingrid/maven2</url>
     </repository>
   </repositories>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>ingrid</groupId>
-        <artifactId>ingrid-iplug-se</artifactId>
-        <version>1.2-SNAPSHOT</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>
@@ -96,7 +87,7 @@
           <artifactId>ingrid-communication-authentication</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>quartz</groupId>
+          <groupId>opensymphony</groupId>
           <artifactId>quartz</artifactId>
         </exclusion>
         <exclusion>
@@ -298,8 +289,26 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>ingrid</groupId>
+      <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-se</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>nutch</groupId>
+          <artifactId>nutch</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>nutch</groupId>
+          <artifactId>hadoop</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>lucene</groupId>
+          <artifactId>lucene-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>lucene</groupId>
+          <artifactId>lucene-misc</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
