@@ -6,6 +6,9 @@ package de.ingrid.interfaces.csw;
 // IMPORTS java.io
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.net.InetAddress;
 import java.net.URL;
@@ -25,6 +28,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.axis.AxisFault;
 import org.apache.axis.Message;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
@@ -269,8 +273,11 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	    		resp.setContentType("application/xml");
 	    		resp.setCharacterEncoding("UTF-8");
-	    		resp.getOutputStream().print(XMLTools.toString(responseDoc));
-	    		resp.getOutputStream().flush();
+	    		OutputStream os = resp.getOutputStream();
+	    		OutputStreamWriter osw = new OutputStreamWriter(os , "UTF-8");
+	    		PrintWriter pw = new PrintWriter(osw);
+	    		pw.print(XMLTools.toString(responseDoc));
+	    		pw.flush();
 			} else {
 				throw new ServletException("Unsupported Content Type in POST request: " + req.getContentType());
 			}

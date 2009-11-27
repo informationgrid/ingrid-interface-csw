@@ -441,7 +441,7 @@ public final class XMLTools {
 	}
 	
 	
-	public static String toString(Document document) throws TransformerException {
+	public static String toString(Document document) throws TransformerException, UnsupportedEncodingException {
         StringWriter stringWriter = new StringWriter();
         StreamResult streamResult = new StreamResult(stringWriter);
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -449,6 +449,7 @@ public final class XMLTools {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.transform(new DOMSource(document.getDocumentElement()), streamResult);
         return stringWriter.toString();
 	}
