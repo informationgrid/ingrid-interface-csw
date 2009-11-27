@@ -5,7 +5,10 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.2.0-SNAPSHOT" date="2009-11-24" description="Release">
+    <release version="1.2.0-SNAPSHOT" date="2009-11-26" description="Release">
+      <action type="fix">
+        Fix Character Encoding Problem bei POST requests unter Windows.
+      </action>
       <action type="fix">
         Fix Problem beim Parsen von Id Attribut bei der SOAP basierten GetRecordById Methode.
       </action>
