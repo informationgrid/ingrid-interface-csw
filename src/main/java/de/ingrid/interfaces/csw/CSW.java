@@ -423,7 +423,7 @@ public class CSW {
 	        log.debug("isService=" + sourceTypeIsService);
         }
 
-        if (sourceTypeIsDataset && sourceTypeIsService) {
+        if ((sourceTypeIsDataset && sourceTypeIsService) || (!sourceTypeIsDataset && !sourceTypeIsService)) {
             ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);
             required = false;
             clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
@@ -435,9 +435,6 @@ public class CSW {
         } else if (sourceTypeIsService) {
             required = true;
             ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
-        } else {
-            required = true;
-            ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
         }
 
         return ingridQuery;
