@@ -5,7 +5,7 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.2.0-SNAPSHOT" date="2009-11-26" description="Release">
+    <release version="1.2.0" date="2009-12-04" description="Release">
       <action type="fix">
         Fix Character Encoding Problem bei POST requests unter Windows.
       </action>
