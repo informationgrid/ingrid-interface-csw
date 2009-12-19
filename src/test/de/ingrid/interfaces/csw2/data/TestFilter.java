@@ -10,7 +10,7 @@ public final class TestFilter {
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 		"<ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\">" +
 			"<ogc:PropertyIsLike escapeChar=\"\\\" singleChar=\"?\" wildCard=\"*\">" +
-			"<ogc:PropertyName>fileIdentifier</ogc:PropertyName>" +
+			"<ogc:PropertyName>identifier</ogc:PropertyName>" +
 			"<ogc:Literal>1*</ogc:Literal>" + 
 			"</ogc:PropertyIsLike>" + 
 		"</ogc:Filter>";
@@ -59,5 +59,138 @@ public final class TestFilter {
 				"</Intersects>" +
 			"</And>" +
 		"</Or>" +
-		"</Filter>";	
+		"</Filter>";
+	
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<PropertyName>Title</PropertyName>\r\n" + 
+			"<Literal>100</Literal>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"</Filter>";
+	
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_2 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsLessThan>\r\n" + 
+			"<PropertyName>DistanceValue</PropertyName>\r\n" + 
+			"<Literal>30</Literal>\r\n" + 
+			"</PropertyIsLessThan>\r\n" + 
+			"</Filter>";
+	
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_3 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<Not>\r\n" + 
+			"<Disjoint>\r\n" + 
+			"<PropertyName>Geometry</PropertyName>\r\n" + 
+			"<gml:Box srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\">\r\n" + 
+			"<gml:coordinates>13.0983,31.5899 35.5472,42.8143</gml:coordinates>\r\n" + 
+			"</gml:Box>\r\n" + 
+			"</Disjoint>\r\n" + 
+			"</Not>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_3_1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<BBOX>\r\n" + 
+			"<PropertyName>Geometry</PropertyName>\r\n" + 
+			"<gml:Box srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\">\r\n" + 
+			"<gml:coordinates>13.0983,31.5899 35.5472,42.8143</gml:coordinates>\r\n" + 
+			"</gml:Box>\r\n" + 
+			"</BBOX>" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_3_2 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<Within>\r\n" + 
+			"<PropertyName>Geometry</PropertyName>\r\n" + 
+			"<gml:Box srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\">\r\n" + 
+			"<gml:coordinates>13.0983,31.5899 35.5472,42.8143</gml:coordinates>\r\n" + 
+			"</gml:Box>\r\n" + 
+			"</Within>" + 
+			"</Filter>";
+	
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_3_3 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<Contains>\r\n" + 
+			"<PropertyName>Geometry</PropertyName>\r\n" + 
+			"<gml:Box srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\">\r\n" + 
+			"<gml:coordinates>13.0983,31.5899 35.5472,42.8143</gml:coordinates>\r\n" + 
+			"</gml:Box>\r\n" + 
+			"</Contains>" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_4 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<And>\r\n" + 
+			"<PropertyIsLessThan>\r\n" + 
+			"<PropertyName>DistanceValue</PropertyName>\r\n" + 
+			"<Literal>30</Literal>\r\n" + 
+			"</PropertyIsLessThan>\r\n" + 
+			"<Not>\r\n" + 
+			"<Disjoint>\r\n" + 
+			"<PropertyName>Geometry</PropertyName>\r\n" + 
+			"<gml:Box srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\">\r\n" + 
+			"<gml:coordinates>13.0983,31.5899 35.5472,42.8143</gml:coordinates>\r\n" + 
+			"</gml:Box>\r\n" + 
+			"</Disjoint>\r\n" + 
+			"</Not>\r\n" + 
+			"</And>" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_5 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<FeatureId fid=\"TREESA_1M.1234\"/>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_6 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<FeatureId fid=\"TREESA_1M.1234\"/>\r\n" + 
+			"<FeatureId fid=\"TREESA_1M.5678\"/>\r\n" + 
+			"<FeatureId fid=\"TREESA_1M.9012\"/>\r\n" + 
+			"<FeatureId fid=\"INWATERA_1M.3456\"/>\r\n" + 
+			"<FeatureId fid=\"INWATERA_1M.7890\"/>\r\n" + 
+			"<FeatureId fid=\"BUILTUPA_1M.4321\"/>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_7 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<Function name=\"SIN\">\r\n" + 
+			"<PropertyName>DISPERSION_ANGLE</PropertyName>\r\n" + 
+			"</Function>\r\n" + 
+			"<Literal>1</Literal>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_8 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<PropertyName>PROPA</PropertyName>\r\n" + 
+			"<Add>\r\n" + 
+			"<PropertyName>PROPB</PropertyName>\r\n" + 
+			"<Literal>100</Literal>\r\n" + 
+			"</Add>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_9 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsBetween>\r\n" + 
+			"<PropertyName>DistanceValue</PropertyName>\r\n" + 
+			"<LowerBoundary><Literal>100</Literal></LowerBoundary>\r\n" + 
+			"<UpperBoundary><Literal>200</Literal></UpperBoundary>\r\n" + 
+			"</PropertyIsBetween>\r\n" + 
+			"</Filter>";
 }

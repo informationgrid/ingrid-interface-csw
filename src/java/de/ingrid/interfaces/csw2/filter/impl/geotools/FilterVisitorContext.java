@@ -41,7 +41,11 @@ public class FilterVisitorContext {
 	 * @param value
 	 */
 	public void setProperty(FilterProperty name, Object value) {
-		properties.put(name, value);
+		if (value == null) {
+			properties.remove(name);
+		} else {
+			properties.put(name, value);
+		}
 	}
 
 	/**
