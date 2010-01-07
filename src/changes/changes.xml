@@ -5,6 +5,11 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="1.2.1-beta" date="2010-xx-xx" description="Release">
+      <action type="fix">
+        Fix problem transforming a result when no summary and geographic location was supplied.
+      </action>
+    </release> 
     <release version="1.2.0" date="2009-12-04" description="Release">
       <action type="fix">
         Fix Character Encoding Problem bei POST requests unter Windows.
