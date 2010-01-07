@@ -575,6 +575,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         	endDate = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TIME_T0);
         }
         if (beginDate != null || endDate != null) {
+            if (exExent == null) {
+            	exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("gmd:EX_Extent");
+            }
             // gml:TimePeriod gml:id="timePeriod_ID_"
         	Element timePeriod = exExent.addElement("gmd:temporalElement").addElement("gmd:EX_TemporalExtent").addElement("gmd:extent").addElement("gml:TimePeriod").addAttribute("gml:id", "timePeriod_ID_" + UUID.randomUUID());
             if (beginDate != null) {
@@ -593,6 +596,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         String verticalExtentMax = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_MAXIMUM);
         
         if (IngridQueryHelper.hasValue(verticalExtentMin) && IngridQueryHelper.hasValue(verticalExtentMax)) {
+            if (exExent == null) {
+            	exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("gmd:EX_Extent");
+            }
         
 	        Element exVerticalExtent = exExent.addElement("gmd:verticalElement").addElement("gmd:EX_VerticalExtent");
 	        // T01_object.vertical_extent_minimum MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent.minimumValue
