@@ -8,12 +8,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid</groupId>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>ingrid-interface-csw</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/tags/ingrid-interface-csw-1.2.1</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/tags/ingrid-interface-csw-1.2.1</developerConnection>
+    <connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-1.2</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-1.2</developerConnection>
   </scm>
   <repositories>
     <repository>
