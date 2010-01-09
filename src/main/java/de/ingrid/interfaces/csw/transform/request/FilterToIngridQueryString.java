@@ -52,7 +52,7 @@ import de.ingrid.interfaces.csw.transform.SpatialOps.Disjoint;
 import de.ingrid.interfaces.csw.transform.SpatialOps.Intersects;
 import de.ingrid.interfaces.csw.transform.SpatialOps.Spatial;
 import de.ingrid.interfaces.csw.transform.SpatialOpsImpl.BoxImpl;
-import de.ingrid.interfaces.csw.utils.UtilsCSWDate;
+import de.ingrid.utils.udk.UtilsCSWDate;
 
 /**
  * 

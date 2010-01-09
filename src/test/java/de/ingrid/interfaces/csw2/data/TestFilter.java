@@ -6,6 +6,7 @@ package de.ingrid.interfaces.csw2.data;
 
 public final class TestFilter {
 
+	
 	public static final String SIMPLE_FILTER = 
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 		"<ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\">" +
@@ -60,6 +61,14 @@ public final class TestFilter {
 			"</And>" +
 		"</Or>" +
 		"</Filter>";
+
+	public static final String UNSUPPORTED_QUERIABLE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<PropertyName>Unsupported</PropertyName>\r\n" + 
+			"<Literal>100</Literal>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"</Filter>";
 	
 	// sample filter from OGC 02-059 Filter Specification
 	public static final String OGC_FILTER_SAMPLE_1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
@@ -193,4 +202,46 @@ public final class TestFilter {
 			"<UpperBoundary><Literal>200</Literal></UpperBoundary>\r\n" + 
 			"</PropertyIsBetween>\r\n" + 
 			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_10 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsBetween>\r\n" + 
+			"<PropertyName>Modified</PropertyName>\r\n" + 
+			"<LowerBoundary>\r\n" + 
+			"<Literal>2001-01-15T20:07:48.11</Literal>\r\n" + 
+			"</LowerBoundary>\r\n" + 
+			"<UpperBoundary>\r\n" + 
+			"<Literal>2001-03-06T12:00:00.00</Literal>\r\n" + 
+			"</UpperBoundary>\r\n" + 
+			"</PropertyIsBetween>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_11 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsLike wildCard=\"*\" singleChar=\"#\" escapeChar=\"!\">\r\n" + 
+			"<PropertyName>Title</PropertyName>\r\n" + 
+			"<Literal>JOHN*</Literal>\r\n" + 
+			"</PropertyIsLike>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_11_1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsLike wildCard=\"§\" singleChar=\"#\" escapeChar=\"!\">\r\n" + 
+			"<PropertyName>Title</PropertyName>\r\n" + 
+			"<Literal>JO!#H#N§</Literal>\r\n" + 
+			"</PropertyIsLike>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_11_2 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<PropertyIsLike wildCard=\"*\" singleChar=\"#\" escapeChar=\"!\">\r\n" + 
+			"<PropertyName>Title</PropertyName>\r\n" + 
+			"<Literal>*JOHN*</Literal>\r\n" + 
+			"</PropertyIsLike>\r\n" + 
+			"</Filter>";
+	
 }

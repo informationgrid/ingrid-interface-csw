@@ -36,7 +36,18 @@ public class FilterTest extends OperationTestBase {
 		
 		
 		FilterParser parser = new de.ingrid.interfaces.csw2.filter.impl.geotools.FilterParserImpl();
-		Document filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_1));
+		Document filterDoc = XMLTools.parse(new StringReader(TestFilter.UNSUPPORTED_QUERIABLE));
+		try {
+			parser.parse(filterDoc);
+			fail("Queriable 'Unsupported' should not be supported (missing exception).");
+		} catch (Throwable t) {
+			if (!(t.getCause() instanceof CSWOperationNotSupportedException)) {
+				fail("Exception cause must be a CSWOperationNotSupportedException!");
+			}
+		}
+		
+		
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_1));
 		IngridQuery query = parser.parse(filterDoc);
 		assertTrue("The query is not null.", query != null);
 
@@ -107,7 +118,30 @@ public class FilterTest extends OperationTestBase {
 		
 		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_9));
 		query = parser.parse(filterDoc);
-		assertTrue("'"+query.toString()+"' dos not contain 'ranges: t011_obj_geo_scale.resolution_ground:[100 TO 200]'", query.toString().contains("ranges: t011_obj_geo_scale.resolution_ground:[100 TO 200]"));
+		assertTrue("'"+query.toString()+"' does not contain 'ranges: t011_obj_geo_scale.resolution_ground:[100 TO 200]'", query.toString().contains("ranges: t011_obj_geo_scale.resolution_ground:[100 TO 200]"));
 		
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_10));
+		query = parser.parse(filterDoc);
+		assertTrue("'"+query.toString()+"' does not contain 'ranges: t01_object.mod_time:[20010115 TO 20010306]'", query.toString().contains("ranges: t01_object.mod_time:[20010115 TO 20010306]"));
+
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_11));
+		query = parser.parse(filterDoc);
+		assertTrue("'"+query.toString()+"' does not contain 'wildcardFields: title:JOHN*'", query.toString().contains("wildcardFields: title:JOHN*"));
+		
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_11_1));
+		query = parser.parse(filterDoc);
+		assertTrue("'"+query.toString()+"' does not contain 'wildcardFields: title:JO#H?N*'", query.toString().contains("wildcardFields: title:JO#H?N*"));
+
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_11_2));
+		try {
+			query = parser.parse(filterDoc);
+			fail("Leading wildcards should not be supported (missing exception).");
+		} catch (Throwable t) {
+			if (!(t.getCause() instanceof CSWOperationNotSupportedException)) {
+				fail("Exception cause must be a CSWOperationNotSupportedException!");
+			}
+		}
+		
+	
 	}
 }

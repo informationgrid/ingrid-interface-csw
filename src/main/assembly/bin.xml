@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly>
+  <id>installer</id>
+  <formats>
+    <format>jar</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>src/main/release/conf</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/conf</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/release/xml</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/xml</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/release/scripts</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/release/ant-installer</directory>
+      <outputDirectory>/</outputDirectory>
+      <filtered>true</filtered>
+    </fileSet>
+    <fileSet>
+      <directory>target/installer</directory>
+      <outputDirectory>/</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>target/site</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/doc</outputDirectory>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>${project.artifactId}-${project.version}/lib</outputDirectory>
+      <unpack>false</unpack>
+      <scope>runtime</scope>
+      <excludes>
+        <exclude>de.ingrid:ingrid-installer</exclude>
+      </excludes>
+    </dependencySet>
+  </dependencySets>
+</assembly>

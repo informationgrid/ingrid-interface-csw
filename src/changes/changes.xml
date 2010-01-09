@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+  <properties>
+    <title>History Ingrid CSW Interface</title>
+    <author email="joachim@wemove.com">Joachim Müller</author>
+  </properties>
+  <body>
+    <release version="1.3.0" date="xxxx-xx-xx" description="Release">
+      <action type="update">
+        General refactoring of the CSW interface.
+      </action>
+    </release> 
+    <release version="1.2.1" date="2010-01-08" description="Release">
+      <action type="fix">
+        Fix order of results when the start position of the results was not a multiple of the requested hits.
+      </action>
+      <action type="fix">
+        Fix problem transforming a result when no summary and geographic location was supplied.
+      </action>
+    </release> 
+    <release version="1.2.0" date="2009-12-04" description="Release">
+      <action type="fix">
+        Fix Character Encoding Problem bei POST requests unter Windows.
+      </action>
+      <action type="fix">
+        Fix Problem beim Parsen von Id Attribut bei der SOAP basierten GetRecordById Methode.
+      </action>
+      <action type="fix">
+        Problem bei Umsetzung von Filterquery zu InGrid Query mit logischen Verknüpfungen behoben.
+      </action>
+      <action type="add">
+        Anfragen können auf Partner, Anbieter und iPlug ID über GET Parameter eingeschränkt werden.
+      </action>
+      <action type="fix">
+        Kommentare zu Textfeldern im Installer (nur im Textmodus) werden erst nach der Eingabe angezeigt.
+      </action>
+      <action type="fix">
+        Wiederholtes Laden eines gecachten Objektes fuehrt zu Vervielfachung der "organisation" Angaben in einer Adresse.
+      </action>
+      <action type="update">
+        Erweiterung der unterst&uuml;tzten Länder bei Transformation IGC - CSW
+      </action>
+      <action type="add">
+        POST Methode akzeptiert auch Anfragen mit Content-Type:text/xml.
+      </action>
+      <action type="fix">
+        Exceptions während der POST Methode werden in einem ServiceExceptionReport gekapselt.
+      </action>
+      <action type="fix">
+        Transformation von GeometricObjectTypeCode war nicht korrekt 
+      </action>
+      <action type="add">
+        Integration eines Installers
+      </action>
+      <action type="add">
+        Migration zu build system Maven 2.0
+      </action>
+      <action type="add">
+        Unterstützung für IGC DB Version 1.0.5
+      </action>
+      <action type="add">
+        Unterstützung für CSW 2.0.2
+      </action>
+      <action type="add">
+        Unterstützung für Anforderungen aus der INSPIRE Richtlinie
+      </action>
+      <action type="add">
+		Caching der InGrid-Anfragen
+      </action>
+      <action type="add">
+		Verbesserte Performance beim Abfragen des iBus (Methode searchAndDetail)
+      </action>
+      <action type="add">
+		neue Kommunikation, kompatibel mit InGrid 2.0 (Konfigurationsfile f. die communication hat sich geändert: communication.xml statt communication.proerties)
+      </action>
+      <action type="add">
+		Aktualisierung auf JAVA6 (ACHTUNG: JAVA6 ist jetzt erforderlich)
+      </action>
+      <action type="add">
+		Build Prozess auf Maven2 Basis
+      </action>
+    </release>
+
+    <release version="1.1.7" date="2008-11-05" description="Letztes CSW 2.0.0 kompatibles Release">
+      <action type="fix">
+        verschiedene CSW Formatfehler behoben
+      </action>
+      <action type="fix">
+        Verbesserung der Standard Kompatibilität
+      </action>
+      <action type="add">
+        Unterstützung von IDC 1.0.2 basierten UDK-DSCs
+      </action>
+      <action type="add">
+		Unterstützung von IDC 1.0.3 (INSPIRE) basierten UDK-DSCs
+      </action>
+    </release>
+
+    <release version="1.1.6" date="2008-02-15" description="Release">
+      <action type="add">
+        Optimierter Zugriff auf hierarchische Adressenstruktur der UDK Kataloge
+      </action>
+      <action type="update">
+        Aktualisierung von AXIS auf Version 1.4
+      </action>
+      <action type="add">
+        Postfach Angaben werden bevorzugt uebernommen, wenn angegeben
+      </action>
+      <action type="add">
+        Erhoehung der Zuverlaessigkeit der Kommunikationsschicht bei Reconnects
+      </action>
+    </release>
+
+    <release version="1.1.5" date="2007-10-30" description="Release">
+      <action type="add">
+        Im Filter Encoding der CSW Anfragen werden die PropertyNamen nun "case insensitive" interpretiert
+      </action>
+      <action type="fix">
+        Fehlerhafte IngridQuerys, die aus CSW Abfragen resultieren werden als SOAP Exception zurückgegeben (war 500 Servlet Error)
+      </action>
+    </release>
+
+    <release version="1.1.4" date="2007-10-12" description="BugFix-Release">
+      <action dev="" type="fix">
+        Beachte Proxies, die kein EOF senden
+      </action>
+      <action dev="" type="fix" issue="INGRID-1609">
+        Behebe erneute Anmeldung nach Herunterfahren
+      </action>
+    </release>
+    
+    <release version="1.1.3" date="2007-09-03" description="Release">
+      <action dev="" type="add">
+        Anpassungen für Anschluss an GeoPortal (per default nicht aktiviert)
+      </action>
+      <action dev="" type="update">
+        Bessere CSW-DE-1.0.1 Kompatibilität
+      </action>
+      <action dev="" type="update">
+        Anpassung der Defaultwerte der Kommunikationskomponente
+      </action>
+    </release>
+      
+    <release version="1.1.2" date="2007-08-31" description="Release">
+      <action dev="" type="update">
+        Verbesserung der Kommunikationskomponente. 
+      </action>
+      <action dev="" type="add">
+        ProxyUser und ProxyPassword werden jetzt Ueber Konfigurationsdatei gesetzt.
+      </action>
+      <action dev="" type="add">
+        Eine Http-Proxy Verbindung kann auch ohne Username und Password aufgebaut werden.
+      </action>
+    </release>
+    
+    <release version="1.1.1" date="2007-08-21" description="Fix-Release">
+      <action dev="" type="fix">
+        Bugfix: Fehlendes file communication.properties ergänzt
+      </action>
+    </release>
+    
+    <release version="1.1.0" date="2007-08-01" description="Initial-Release">
+      <action dev="" type="update">
+        Austausch JXTA-Kommunikation gegen TCP/IP-Kommunikation
+      </action>
+    </release>
+  </body>
+</document>
