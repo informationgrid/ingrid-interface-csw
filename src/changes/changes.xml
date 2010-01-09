@@ -5,7 +5,10 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.2.1-beta" date="2010-xx-xx" description="Release">
+    <release version="1.2.1" date="2010-01-08" description="Release">
+      <action type="fix">
+        Fix order of results when the start position of the results was not a multiple of the requested hits.
+      </action>
       <action type="fix">
         Fix problem transforming a result when no summary and geographic location was supplied.
       </action>

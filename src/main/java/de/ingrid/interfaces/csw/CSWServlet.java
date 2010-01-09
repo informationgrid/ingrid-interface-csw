@@ -282,7 +282,10 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 				throw new ServletException("Unsupported Content Type in POST request: " + req.getContentType());
 			}
 		} catch (Exception ex) {
-    		resp.setContentType("application/xml");
+    		if (log.isDebugEnabled()) {
+    			log.debug("Error serving POST request.", ex);
+    		}
+			resp.setContentType("application/xml");
     		resp.setCharacterEncoding("UTF-8");
     		try {
 				resp.getOutputStream().print(XMLTools.toString(ServletTools.createServiceException(ex)));

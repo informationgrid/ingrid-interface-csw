@@ -43,6 +43,7 @@ import de.ingrid.interfaces.csw.utils.CswConfig;
 import de.ingrid.interfaces.csw.utils.IBusHelper;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
@@ -475,13 +476,28 @@ public class CSW {
         String str_timeOut = cswConfig.getString(CSWInterfaceConfig.TIMEOUT);
         int timeOut = Integer.parseInt(str_timeOut);
 
-        // set pageNo to the first page (zero)
-        int pageNo = (int) (startPosition / requestedHits) + 1;
         
-        // set to requestedHits
-        int hitsPerPage = requestedHits;
+        int pageNo = 0;
+        int hitsPerPage = 0;
+        // the iBus search interface takes only pageNo and pageSize as parameter 
+        // to determine the start- and number of hits to return
+        // if startPosition is no multiple of requestedHits we need special treatment.
+        // Get paging based on the startPosition and requested hits.
+        // see below for cutting the right results out from the result array.
+        int[] paging = IBusHelper.getPaging(startPosition, requestedHits);
+        pageNo = paging[0];
+        hitsPerPage = paging[1];
+		int searchResultStart = paging[1] == 1 ? paging[0] : Math.max((paging[0] - 1) * paging[1] + 1, 1);
+		int searchResultEnd = searchResultStart + paging[1] - 1;
+        boolean diffResultRange = searchResultStart != startPosition || searchResultEnd != (requestedHits + startPosition - 1);
+        if (log.isDebugEnabled()) {
+	        log.debug("translating start position and reuqested hits into page number and page size for ibus querying.");
+	        log.debug("start,length : first,last (" + startPosition + "," + requestedHits + " : " + startPosition + "," + (requestedHits + startPosition - 1) + ")");
+	        log.debug("pageNo,pageSize : first,last (" + pageNo + "," + hitsPerPage + " : " + searchResultStart + "," + searchResultEnd + ")");
+        }
+        
         IngridHits hits = null;
-
+        
         try {
             IBus myBus = cswConfig.getIBus();
             if (log.isDebugEnabled()) {
@@ -489,6 +505,23 @@ public class CSW {
             }
             IBusHelper.injectCache(ingridQuery);
             hits = myBus.search(ingridQuery, hitsPerPage, pageNo, (pageNo-1) * hitsPerPage, timeOut);
+            if (hits.length() < startPosition) {
+            	// oh another funny behavior of the ibus: if more results than 
+            	// available are requested the ibus returns STILL results
+            	// make sure the CSW interface does NOT
+            	hits = new IngridHits((int)hits.length(), new IngridHit[0]);
+            } else if (diffResultRange) {
+            	// see comment above
+            	// here we cut the right hits out of the requested hits,
+            	// so we match the CSW request
+            	int length = Math.min(hits.getHits().length - (startPosition - searchResultStart), requestedHits);
+            	IngridHit[] requestedIngridHitsArray = new IngridHit[length];
+                if (log.isDebugEnabled()) {
+                	log.debug("Cutting " + length + " results: starting with result no " + (startPosition - searchResultStart) + ".");
+                }
+            	System.arraycopy(hits.getHits(), (startPosition - searchResultStart), requestedIngridHitsArray, 0, length);
+            	hits = new IngridHits((int)hits.length(), requestedIngridHitsArray);
+            }
         } catch (Throwable t) {
             log.error("Error getting IBus: " + t.getMessage());
             throw new Exception("Timeout problem while connecting to subsequent servers.");
