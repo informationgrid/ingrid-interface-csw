@@ -14,6 +14,7 @@ import org.dom4j.Element;
 
 import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.udk.UtilsLanguageCodelist;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
@@ -103,101 +104,40 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         for (int i = 0; i < addressTypes.length; i++) {
             Element ciResponsibleParty = parent.addElement(getNSElementName(ns, "contact")).addElement("gmd:CI_ResponsibleParty");
         	
-        	// get complete address information
-            IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], hit.getPlugId());
-            if (address != null) {
+            // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
+            //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
+                /* mapping of UDK addresstypes to CSW address types
                 
-                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:individualName"), IngridQueryHelper.getCompletePersonName(address));
-                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION_PROCESSED);
-                if (IngridQueryHelper.hasValue(organisationName)) {
-	                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:organisationName"), organisationName);
-                }
-                String positionName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_JOB);
-                if (IngridQueryHelper.hasValue(positionName)) {
-	                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:positionName"), positionName);
-                }
-                Element CIContact = ciResponsibleParty.addElement("gmd:contactInfo").addElement("gmd:CI_Contact");
-    
-                HashMap communications = IngridQueryHelper.getCommunications(address);
-                ArrayList phoneNumbers = (ArrayList) communications.get("phone");
-                ArrayList faxNumbers = (ArrayList) communications.get("fax");
-                if (phoneNumbers.size() > 0 || faxNumbers.size() > 0) {
-                    Element CI_Telephone = CIContact.addElement("gmd:phone").addElement("gmd:CI_Telephone");
-                    for (int j = 0; j < phoneNumbers.size(); j++) {
-                        this.addGCOCharacterString(CI_Telephone.addElement("gmd:voice"), (String) phoneNumbers.get(j));
-                    }
-                    for (int j = 0; j < faxNumbers.size(); j++) {
-                        this.addGCOCharacterString(CI_Telephone.addElement("gmd:facsimile"), (String) faxNumbers.get(j));
-                    }
-                }
-    
-                Element CIAddress = CIContact.addElement("gmd:address").addElement("gmd:CI_Address");
-                String postBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_POSTBOX);
-                String zipPostBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_ZIP_POSTBOX);
-                if (postBox != null && postBox.length() > 0 && zipPostBox != null && zipPostBox.length() > 0) {
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), postBox);
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:city"), IngridQueryHelper.getDetailValueAsString(address,
-                            IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), zipPostBox);
+                UDK | CSW (codelist 505)| Name
+                0 | 7 | Auskunft
+                1 | 3 | Datenhalter
+                2 | 2 | Datenverantwortung
+                3 | 1 | Anbieter
+                4 | 4 | Benutzer
+                5 | 5 | Vertrieb
+                6 | 6 | Herkunft
+                7 | 8 | Datenerfassung
+                8 | 9 | Auswertung
+                9 | 10 | Herausgeber
+                999 | keine Entsprechung, mapping auf codeListValue | Sonstige Angaben
+                 */
+        	String role = null;
+        	try {
+        		Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
+                if (code.longValue() == 999 || code.longValue() == -1) {
+                	role = specialNames[i];
                 } else {
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), IngridQueryHelper.getDetailValueAsString(address,
-                            IngridQueryHelper.HIT_KEY_ADDRESS_STREET));
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:city"), IngridQueryHelper.getDetailValueAsString(address,
-                            IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
-                            IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
+                	role = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
                 }
-                this.addGCOCharacterString(CIAddress.addElement("gmd:country"), getISO3166_1Alpha3LanguageCode(IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID)));
-                ArrayList emails = (ArrayList) communications.get("email");
-                for (int j = 0; j < emails.size(); j++) {
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:electronicMailAddress"), (String) emails.get(j));
-                }
-    
-                // CSW 2.0 unterstuetzt nur eine online resource
-                ArrayList url = (ArrayList) communications.get("url");
-                if (url.size() > 0) {
-                    Element CI_OnlineResource = CIContact.addElement("gmd:onlineResource").addElement(
-                            "gmd:CI_OnlineResource");
-                    this.addGMDUrl(CI_OnlineResource.addElement("gmd:linkage"), (String) url.get(0));
-                }
-                // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
-                //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
-                    /* mapping of UDK addresstypes to CSW address types
-                    
-                    UDK | CSW (codelist 505)| Name
-                    0 | 7 | Auskunft
-                    1 | 3 | Datenhalter
-                    2 | 2 | Datenverantwortung
-                    3 | 1 | Anbieter
-                    4 | 4 | Benutzer
-                    5 | 5 | Vertrieb
-                    6 | 6 | Herkunft
-                    7 | 8 | Datenerfassung
-                    8 | 9 | Auswertung
-                    9 | 10 | Herausgeber
-                    999 | keine Entsprechung, mapping auf codeListValue | Sonstige Angaben
-                     */
-            	String codeVal = null;
-            	try {
-            		Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
-                    if (code.longValue() == 999 || code.longValue() == -1) {
-                        codeVal = specialNames[i];
-                    } else {
-                        codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
-                    }
-            	} catch (NumberFormatException e) {
-            		codeVal = specialNames[i];
-            	}
-                if (codeVal != null && codeVal.length() > 0) {
-                    ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
-                    .addAttribute("codeListValue", codeVal);
-                }
-            }
+        	} catch (NumberFormatException e) {
+        		role = specialNames[i];
+        	}
+        	if (role == null) {
+        		role = specialNames[i];
+        	}
+        	
+        	this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
         }    
-    
-    
     }
 
     
@@ -217,102 +157,109 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         for (int i = 0; i < addressTypes.length; i++) {
             Element ciResponsibleParty = parent.addElement(getNSElementName(ns, "pointOfContact")).addElement("gmd:CI_ResponsibleParty");
         	
-        	// get complete address information
-            IngridHit address = IngridQueryHelper.getCompleteAddress(addressIds[i], hit.getPlugId());
-            if (address != null) {
+            // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
+            //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
+                /* mapping of UDK addresstypes to CSW address types
                 
-                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:individualName"), IngridQueryHelper.getCompletePersonName(address));
-                String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION_PROCESSED);
-                if (IngridQueryHelper.hasValue(organisationName)) {
-	                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:organisationName"), organisationName);
-                }
-                String positionName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_JOB);
-                if (IngridQueryHelper.hasValue(positionName)) {
-	                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:positionName"), positionName);
-                }
-                Element CIContact = ciResponsibleParty.addElement("gmd:contactInfo").addElement("gmd:CI_Contact");
-    
-                HashMap communications = IngridQueryHelper.getCommunications(address);
-                ArrayList phoneNumbers = (ArrayList) communications.get("phone");
-                ArrayList faxNumbers = (ArrayList) communications.get("fax");
-                if (phoneNumbers.size() > 0 || faxNumbers.size() > 0) {
-                    Element CI_Telephone = CIContact.addElement("gmd:phone").addElement("gmd:CI_Telephone");
-                    for (int j = 0; j < phoneNumbers.size(); j++) {
-                        this.addGCOCharacterString(CI_Telephone.addElement("gmd:voice"), (String) phoneNumbers.get(j));
-                    }
-                    for (int j = 0; j < faxNumbers.size(); j++) {
-                        this.addGCOCharacterString(CI_Telephone.addElement("gmd:facsimile"), (String) faxNumbers.get(j));
-                    }
-                }
-    
-                Element CIAddress = CIContact.addElement("gmd:address").addElement("gmd:CI_Address");
-                String postBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_POSTBOX);
-                String zipPostBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_ZIP_POSTBOX);
-                if (postBox != null && postBox.length() > 0 && zipPostBox != null && zipPostBox.length() > 0) {
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), postBox);
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:city"), IngridQueryHelper.getDetailValueAsString(address,
-                            IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), zipPostBox);
+                UDK | CSW (codelist 505)| Name
+                0 | 7 | Auskunft
+                1 | 3 | Datenhalter
+                2 | 2 | Datenverantwortung
+                3 | 1 | Anbieter
+                4 | 4 | Benutzer
+                5 | 5 | Vertrieb
+                6 | 6 | Herkunft
+                7 | 8 | Datenerfassung
+                8 | 9 | Auswertung
+                9 | 10 | Herausgeber
+                999 | keine Entsprechung, mapping auf codeListValue | Sonstige Angaben
+                 */
+        	String role = null;
+        	try {
+        		Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
+                if (code.longValue() == 999 || code.longValue() == -1) {
+                	role = specialNames[i];
                 } else {
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), IngridQueryHelper.getDetailValueAsString(address,
-                            IngridQueryHelper.HIT_KEY_ADDRESS_STREET));
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:city"), IngridQueryHelper.getDetailValueAsString(address,
-                            IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
-                            IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
+                	role = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
                 }
-                this.addGCOCharacterString(CIAddress.addElement("gmd:country"), getISO3166_1Alpha3LanguageCode(IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID)));
-                ArrayList emails = (ArrayList) communications.get("email");
-                for (int j = 0; j < emails.size(); j++) {
-                    this.addGCOCharacterString(CIAddress.addElement("gmd:electronicMailAddress"), (String) emails.get(j));
+        	} catch (NumberFormatException e) {
+        		role = specialNames[i];
+        	}
+        	if (role == null) {
+        		role = specialNames[i];
+        	}
+        	
+        	this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
+        }    
+    }    
+
+    protected void addResponsibleParty(Element ciResponsibleParty, IngridHit hit, String addressId, String role) throws Exception {
+    	// get complete address information
+        IngridHit address = IngridQueryHelper.getCompleteAddress(addressId, hit.getPlugId());
+        if (address != null) {
+            
+            this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:individualName"), IngridQueryHelper.getCompletePersonName(address));
+            String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION_PROCESSED);
+            if (IngridQueryHelper.hasValue(organisationName)) {
+                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:organisationName"), organisationName);
+            }
+            String positionName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_JOB);
+            if (IngridQueryHelper.hasValue(positionName)) {
+                this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:positionName"), positionName);
+            }
+            Element CIContact = ciResponsibleParty.addElement("gmd:contactInfo").addElement("gmd:CI_Contact");
+
+            HashMap communications = IngridQueryHelper.getCommunications(address);
+            ArrayList phoneNumbers = (ArrayList) communications.get("phone");
+            ArrayList faxNumbers = (ArrayList) communications.get("fax");
+            if (phoneNumbers.size() > 0 || faxNumbers.size() > 0) {
+                Element CI_Telephone = CIContact.addElement("gmd:phone").addElement("gmd:CI_Telephone");
+                for (int j = 0; j < phoneNumbers.size(); j++) {
+                    this.addGCOCharacterString(CI_Telephone.addElement("gmd:voice"), (String) phoneNumbers.get(j));
                 }
-    
-                // CSW 2.0 unterstuetzt nur eine online resource
-                ArrayList url = (ArrayList) communications.get("url");
-                if (url.size() > 0) {
-                    Element CI_OnlineResource = CIContact.addElement("gmd:onlineResource").addElement(
-                            "gmd:CI_OnlineResource");
-                    this.addGMDUrl(CI_OnlineResource.addElement("gmd:linkage"), (String) url.get(0));
-                }
-                // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
-                //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
-                    /* mapping of UDK addresstypes to CSW address types
-                    
-                    UDK | CSW (codelist 505)| Name
-                    0 | 7 | Auskunft
-                    1 | 3 | Datenhalter
-                    2 | 2 | Datenverantwortung
-                    3 | 1 | Anbieter
-                    4 | 4 | Benutzer
-                    5 | 5 | Vertrieb
-                    6 | 6 | Herkunft
-                    7 | 8 | Datenerfassung
-                    8 | 9 | Auswertung
-                    9 | 10 | Herausgeber
-                    999 | keine Entsprechung, mapping auf codeListValue | Sonstige Angaben
-                     */
-            	String codeVal = null;
-            	try {
-            		Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
-                    if (code.longValue() == 999 || code.longValue() == -1) {
-                        codeVal = specialNames[i];
-                    } else {
-                        codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
-                    }
-            	} catch (NumberFormatException e) {
-            		codeVal = specialNames[i];
-            	}
-                if (codeVal != null && codeVal.length() > 0) {
-                    ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
-                    .addAttribute("codeListValue", codeVal);
+                for (int j = 0; j < faxNumbers.size(); j++) {
+                    this.addGCOCharacterString(CI_Telephone.addElement("gmd:facsimile"), (String) faxNumbers.get(j));
                 }
             }
-        }    
+
+            Element CIAddress = CIContact.addElement("gmd:address").addElement("gmd:CI_Address");
+            String postBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_POSTBOX);
+            String zipPostBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_ZIP_POSTBOX);
+            if (postBox != null && postBox.length() > 0 && zipPostBox != null && zipPostBox.length() > 0) {
+                this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), postBox);
+                this.addGCOCharacterString(CIAddress.addElement("gmd:city"), IngridQueryHelper.getDetailValueAsString(address,
+                        IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
+                this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), zipPostBox);
+            } else {
+                this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), IngridQueryHelper.getDetailValueAsString(address,
+                        IngridQueryHelper.HIT_KEY_ADDRESS_STREET));
+                this.addGCOCharacterString(CIAddress.addElement("gmd:city"), IngridQueryHelper.getDetailValueAsString(address,
+                        IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
+                this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
+                        IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
+            }
+            this.addGCOCharacterString(CIAddress.addElement("gmd:country"), getISO3166_1Alpha3LanguageCode(IngridQueryHelper.getDetailValueAsString(address,
+                    IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID)));
+            ArrayList emails = (ArrayList) communications.get("email");
+            for (int j = 0; j < emails.size(); j++) {
+                this.addGCOCharacterString(CIAddress.addElement("gmd:electronicMailAddress"), (String) emails.get(j));
+            }
+
+            // CSW 2.0 unterstuetzt nur eine online resource
+            ArrayList url = (ArrayList) communications.get("url");
+            if (url.size() > 0) {
+                Element CI_OnlineResource = CIContact.addElement("gmd:onlineResource").addElement(
+                        "gmd:CI_OnlineResource");
+                this.addGMDUrl(CI_OnlineResource.addElement("gmd:linkage"), (String) url.get(0));
+            }
+            if (role != null && role.length() > 0) {
+                ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
+                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                .addAttribute("codeListValue", role);
+            }
+        }        	
+    }
     
-    
-    }    
     
     /**
      * Adds a CSW file identifier to a given element.
@@ -523,19 +470,20 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             if (exExent == null) {
             	exExent = parent.addElement(this.getNSElementName(ns, "extent")).addElement("gmd:EX_Extent");
             }
-            // T011_township.township_no MD_Metadata/gmd:identificationInfo/srv:CSW_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:RS_Identifier/code/gco:CharacterString
+            // T011_township.township_no MD_Metadata/gmd:identificationInfo/srv:CSW_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/code/gco:CharacterString
             String geoIdentifier = null;
             if (stTownshipNames.length == stTownship.length && stTownshipNames[i] != null &&  stTownshipNames[i].length() > 0) {
             	geoIdentifier = stTownshipNames[i];
             }
             if (stTownship[i]!= null && stTownship[i].length() > 0) {
             	if (geoIdentifier != null) {
-                	geoIdentifier += " "; 
+                	geoIdentifier += " (" + stTownship[i] + ")"; 
+            	} else {
+                	geoIdentifier = "(" + stTownship[i] + ")"; 
             	}
-            	geoIdentifier += "(" + stTownship[i] + ")"; 
             }
             if (geoIdentifier != null) {
-            	super.addGCOCharacterString(exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicDescription").addElement("gmd:geographicIdentifier").addElement("gmd:MD_Identifier").addElement("gmd:code"), stTownship[i]);
+            	super.addGCOCharacterString(exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicDescription").addElement("gmd:geographicIdentifier").addElement("gmd:MD_Identifier").addElement("gmd:code"), geoIdentifier);
             }
             
             Element exGeographicBoundingBox = null;
@@ -660,7 +608,12 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 		}
 		String[] serviceClassifications = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SERV_TYPE_KEY);
+
+		String[] environmentalCategories = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_ENV_CATEGORY_CAT_KEY);
 		
+		String[] environmentalTopics = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_ENV_TOPIC_TOPIC_KEY);
 		
 		if (thesaurusKeywords.size() > 0) {
 			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
@@ -745,7 +698,61 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 					.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
 			}
 		}		
+		if (environmentalCategories.length > 0) {
+			Element keywordType = null;
+			for (int i = 0; i < environmentalCategories.length; i++) {
+		        String codeVal = "";
+		        try {
+		            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, environmentalCategories[i]));
+		            codeVal = UtilsUDKCodeLists.getCodeListEntryName(1410L, code, UtilsLanguageCodelist.getCodeFromShortcut("en").longValue());
+					if (keywordType == null) {
+						keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+					}
+		            this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), codeVal);
+		        } catch (Exception e) {}
+			}
+			if (keywordType != null) {
+				keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+				"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+				"codeListValue", "theme");
+				Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
+				this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "German Environmental Classification - Category, version 1.0");
+				Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+				thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2006-05-01");
+				thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
+					.addAttribute("codeListValue", "publication")
+					.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
+			}
+		}		
+
+		if (environmentalTopics.length > 0) {
+			Element keywordType = null;
+			for (int i = 0; i < environmentalTopics.length; i++) {
+		        String codeVal = "";
+		        try {
+		            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, environmentalTopics[i]));
+		            codeVal = UtilsUDKCodeLists.getCodeListEntryName(1400L, code, UtilsLanguageCodelist.getCodeFromShortcut("en").longValue());
+					if (keywordType == null) {
+						keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+					}
+		            this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), codeVal);
+		        } catch (Exception e) {}
+			}
+			if (keywordType != null) {
+				keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+				"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+				"codeListValue", "theme");
+				Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
+				this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "German Environmental Classification - Topic, version 1.0");
+				Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+				thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2006-05-01");
+				thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
+					.addAttribute("codeListValue", "publication")
+					.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
+			}
+		}		
 		
+	
 	}    
 
 }

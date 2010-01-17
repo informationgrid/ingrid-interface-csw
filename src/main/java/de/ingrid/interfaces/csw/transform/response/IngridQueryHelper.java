@@ -359,6 +359,58 @@ public class IngridQueryHelper {
 	public static final String HIT_KEY_OBJECT_GEO_DATASOURCE_UUID = "t011_obj_geo.datasource_uuid";
 	public static final String HIT_KEY_OBJECT_SERV_TYPE_KEY = "t011_obj_serv_type.serv_type_key";
 	
+	public static final String HIT_KEY_ENV_CATEGORY_CAT_KEY = "t0114_env_category.cat_key";
+	
+	public static final String HIT_KEY_ENV_TOPIC_TOPIC_KEY = "t0114_env_topic.topic_key";
+
+	public static final String HIT_KEY_OBJECT_DATA_BASE = "t011_obj_data.base";
+
+	public static final String HIT_KEY_OBJECT_DATA_DESCRIPTION = "t011_obj_data.description";
+
+	public static final String HIT_KEY_OBJECT_DATA_PARA_PARAMETER = "t011_obj_data_para.parameter";
+
+	public static final String HIT_KEY_OBJECT_DATA_PARA_UNIT = "t011_obj_data_para.unit";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_AUTHOR = "t011_obj_literature.author";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_BASE = "t011_obj_literature.base";
+
+	public static final String HIT_KEY_OBJECT_LITERATURE_DESCRIPTION = "t011_obj_literature.description";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_DOC_INFO = "t011_obj_literature.doc_info";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_ISBN = "t011_obj_literature.isbn";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_LOCATION = "t011_obj_literature.loc";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_IN = "t011_obj_literature.publish_in";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_LOC = "t011_obj_literature.publish_loc";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_YEAR = "t011_obj_literature.publish_year";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISHER = "t011_obj_literature.publisher";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISHING = "t011_obj_literature.publishing";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_SIDES = "t011_obj_literature.sides";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_TYPE_KEY = "t011_obj_literature.type_key";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_TYPE_VALUE = "t011_obj_literature.type_value";
+	
+	public static final String HIT_KEY_OBJECT_LITERATURE_VOLUME = "t011_obj_literature.volume";
+	
+	public static final String HIT_KEY_OBJECT_PROJECT_DESCRIPTION = "t011_obj_project.description";
+	
+	public static final String HIT_KEY_OBJECT_PROJECT_LEADER = "t011_obj_project.leader";
+	
+	public static final String HIT_KEY_OBJECT_PROJECT_MEMBER = "t011_obj_project.member";
+	
+	
+	
+	
+	
 	
     public static final String[] REQUESTED_STRING_FULL = { HIT_KEY_OBJECT_OBJ_ID, HIT_KEY_OBJECT_REL_ADR_ID,
             HIT_KEY_OBJECT_REL_ADR_TYPE, HIT_KEY_OBJECT_OBJ_CLASS, HIT_KEY_OBJECT_SERVICE_TYPE,
@@ -398,7 +450,14 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL, HIT_KEY_OBJECT_ACCESS_RESTRICTION_KEY, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE,
             HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION, HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY, HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE,
             HIT_KEY_OBJECT_GEO_DATASOURCE_UUID, HIT_KEY_OBJECT_SERV_ENVIROMENT, HIT_KEY_OBJECT_SERV_TYPE_KEY,
-            HIT_KEY_OBJECT_METADATA_CHARACTER_SET};
+            HIT_KEY_OBJECT_METADATA_CHARACTER_SET, HIT_KEY_ENV_CATEGORY_CAT_KEY, HIT_KEY_ENV_TOPIC_TOPIC_KEY, HIT_KEY_OBJECT_DATA_BASE,
+            HIT_KEY_OBJECT_DATA_DESCRIPTION, HIT_KEY_OBJECT_DATA_PARA_PARAMETER, HIT_KEY_OBJECT_DATA_PARA_UNIT,
+            HIT_KEY_OBJECT_LITERATURE_AUTHOR, HIT_KEY_OBJECT_LITERATURE_BASE, HIT_KEY_OBJECT_LITERATURE_DESCRIPTION,
+            HIT_KEY_OBJECT_LITERATURE_DOC_INFO, HIT_KEY_OBJECT_LITERATURE_ISBN, HIT_KEY_OBJECT_LITERATURE_LOCATION,
+            HIT_KEY_OBJECT_LITERATURE_PUBLISH_IN, HIT_KEY_OBJECT_LITERATURE_PUBLISH_LOC, HIT_KEY_OBJECT_LITERATURE_PUBLISH_YEAR,
+            HIT_KEY_OBJECT_LITERATURE_PUBLISHER, HIT_KEY_OBJECT_LITERATURE_PUBLISHING, HIT_KEY_OBJECT_LITERATURE_SIDES,
+            HIT_KEY_OBJECT_LITERATURE_TYPE_KEY, HIT_KEY_OBJECT_LITERATURE_TYPE_VALUE, HIT_KEY_OBJECT_LITERATURE_VOLUME,
+            HIT_KEY_OBJECT_PROJECT_DESCRIPTION, HIT_KEY_OBJECT_PROJECT_LEADER, HIT_KEY_OBJECT_PROJECT_MEMBER};
             
 
 
