@@ -31,11 +31,9 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 		Namespace gmd = new Namespace("gmd", "http://www.isotc211.org/2005/gmd");
 		Namespace srv = new Namespace("srv", "http://www.isotc211.org/2005/srv");
 
-		String objectId = IngridQueryHelper.getDetailValueAsString(hit, "t01_object.obj_id");
-
 		String udkClass = IngridQueryHelper.getDetailValueAsString(hit, "t01_object.obj_class");
-        String typeName = getTypeName();
-        if (typeName == null) {
+        HierarchyInfo hierarchyInfo = getTypeName();
+        if (hierarchyInfo.hierarchyLevel == null) {
         	return null;
         }
 
@@ -45,8 +43,11 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 		metaData.add(gco);
 		metaData.add(srv);
 
-		this.addFileIdentifier(metaData, objectId);
-		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
+		this.addFileIdentifier(metaData, hit);
+		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), hierarchyInfo.hierarchyLevel);
+		if (IngridQueryHelper.hasValue(hierarchyInfo.hierarchyLevelName)) {
+			this.addGCOCharacterString(metaData.addElement("gmd:hierarchyLevelName"), hierarchyInfo.hierarchyLevelName);
+		}
 		this.addContacts(metaData, hit, this.nsPrefix);
 		this.addDateStamp(metaData, hit, this.nsPrefix);
 		if (udkClass.equals("1")) {

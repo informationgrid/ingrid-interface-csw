@@ -115,6 +115,8 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_OBJ_ID = "t01_object.obj_id";
 
+    public static final String HIT_KEY_OBJECT_ORG_OBJ_ID = "t01_object.org_obj_id ";
+    
     public static final String HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY = "t011_obj_geo_topic_cat.topic_category";
 
     public static final String HIT_KEY_OBJECT_DATASET_REFERENCE_DATE = "T0113_dataset_reference.reference_date";
@@ -165,7 +167,7 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SERV_OPERATION_DESCR, HIT_KEY_OBJECT_SERV_INVOCATION_NAME,
             HIT_KEY_OBJECT_SERV_OP_PARAM_NAME, HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION,
             HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR, HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL,
-            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY};
+            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY, HIT_KEY_OBJECT_ORG_OBJ_ID};
 
 
     public static final String HIT_KEY_OBJECT_METADATA_LANGUAGE = "T01_object.metadata_language";
@@ -202,7 +204,12 @@ public class IngridQueryHelper {
     public static final String HIT_KEY_OBJECT_ST_BOX_Y1 = "y1";
 
     public static final String HIT_KEY_OBJECT_ST_BOX_Y2 = "y2";
-
+    
+    public static final String HIT_KEY_SERVICE_SPATIAL_RES_GROUND = "t011_obj_serv_scale.resolution_ground";
+    public static final String HIT_KEY_SERVICE_SPATIAL_RES_SCAN = "t011_obj_serv_scale.resolution_scan";
+    public static final String HIT_KEY_SERVICE_SPATIAL_RES_SCALE = "t011_obj_serv_scale.scale";
+    
+    
     
     
     public static final String[] REQUESTED_STRING_SUMMARY = { HIT_KEY_OBJECT_OBJ_ID, HIT_KEY_OBJECT_REL_ADR_ID,
@@ -221,7 +228,8 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SERV_OPERATION_DESCR, HIT_KEY_OBJECT_SERV_INVOCATION_NAME,
             HIT_KEY_OBJECT_SERV_OP_PARAM_NAME, HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION,
             HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR, HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL,
-            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY, HIT_KEY_OBJECT_METADATA_CHARACTER_SET};
+            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY, HIT_KEY_OBJECT_METADATA_CHARACTER_SET, HIT_KEY_SERVICE_SPATIAL_RES_GROUND,
+            HIT_KEY_SERVICE_SPATIAL_RES_SCAN, HIT_KEY_SERVICE_SPATIAL_RES_SCALE, HIT_KEY_OBJECT_ORG_OBJ_ID};
 
     public static final String HIT_KEY_OBJECT_OBJ_TO_ID = "t012_obj_obj.object_to_id";
 
@@ -371,33 +379,33 @@ public class IngridQueryHelper {
 
 	public static final String HIT_KEY_OBJECT_DATA_PARA_UNIT = "t011_obj_data_para.unit";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_AUTHOR = "t011_obj_literature.author";
+	public static final String HIT_KEY_OBJECT_LITERATURE_AUTHOR = "t011_obj_literatur.autor";
 	
 	public static final String HIT_KEY_OBJECT_LITERATURE_BASE = "t011_obj_literature.base";
 
-	public static final String HIT_KEY_OBJECT_LITERATURE_DESCRIPTION = "t011_obj_literature.description";
+	public static final String HIT_KEY_OBJECT_LITERATURE_DESCRIPTION = "t011_obj_literatur.description";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_DOC_INFO = "t011_obj_literature.doc_info";
+	public static final String HIT_KEY_OBJECT_LITERATURE_DOC_INFO = "t011_obj_literatur.doc_info";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_ISBN = "t011_obj_literature.isbn";
+	public static final String HIT_KEY_OBJECT_LITERATURE_ISBN = "t011_obj_literatur.isbn";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_LOCATION = "t011_obj_literature.loc";
+	public static final String HIT_KEY_OBJECT_LITERATURE_LOCATION = "t011_obj_literatur.loc";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_IN = "t011_obj_literature.publish_in";
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_IN = "t011_obj_literatur.publish_in";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_LOC = "t011_obj_literature.publish_loc";
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_LOC = "t011_obj_literatur.publish_loc";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_YEAR = "t011_obj_literature.publish_year";
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISH_YEAR = "t011_obj_literatur.publish_year";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISHER = "t011_obj_literature.publisher";
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISHER = "t011_obj_literatur.publisher";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISHING = "t011_obj_literature.publishing";
+	public static final String HIT_KEY_OBJECT_LITERATURE_PUBLISHING = "t011_obj_literatur.publishing";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_SIDES = "t011_obj_literature.sides";
+	public static final String HIT_KEY_OBJECT_LITERATURE_SIDES = "t011_obj_literatur.sides";
 	
 	public static final String HIT_KEY_OBJECT_LITERATURE_TYPE_KEY = "t011_obj_literature.type_key";
 	
-	public static final String HIT_KEY_OBJECT_LITERATURE_TYPE_VALUE = "t011_obj_literature.type_value";
+	public static final String HIT_KEY_OBJECT_LITERATURE_TYPE_VALUE = "t011_obj_literatur.typ";
 	
 	public static final String HIT_KEY_OBJECT_LITERATURE_VOLUME = "t011_obj_literature.volume";
 	
@@ -406,6 +414,9 @@ public class IngridQueryHelper {
 	public static final String HIT_KEY_OBJECT_PROJECT_LEADER = "t011_obj_project.leader";
 	
 	public static final String HIT_KEY_OBJECT_PROJECT_MEMBER = "t011_obj_project.member";
+	
+	public static final String HIT_KEY_OBJECT_PUBLISH_ID = "t01_object.publish_id";
+	
 	
 	
 	
@@ -457,7 +468,8 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_LITERATURE_PUBLISH_IN, HIT_KEY_OBJECT_LITERATURE_PUBLISH_LOC, HIT_KEY_OBJECT_LITERATURE_PUBLISH_YEAR,
             HIT_KEY_OBJECT_LITERATURE_PUBLISHER, HIT_KEY_OBJECT_LITERATURE_PUBLISHING, HIT_KEY_OBJECT_LITERATURE_SIDES,
             HIT_KEY_OBJECT_LITERATURE_TYPE_KEY, HIT_KEY_OBJECT_LITERATURE_TYPE_VALUE, HIT_KEY_OBJECT_LITERATURE_VOLUME,
-            HIT_KEY_OBJECT_PROJECT_DESCRIPTION, HIT_KEY_OBJECT_PROJECT_LEADER, HIT_KEY_OBJECT_PROJECT_MEMBER};
+            HIT_KEY_OBJECT_PROJECT_DESCRIPTION, HIT_KEY_OBJECT_PROJECT_LEADER, HIT_KEY_OBJECT_PROJECT_MEMBER, HIT_KEY_SERVICE_SPATIAL_RES_GROUND,
+            HIT_KEY_SERVICE_SPATIAL_RES_SCAN, HIT_KEY_SERVICE_SPATIAL_RES_SCALE, HIT_KEY_OBJECT_ORG_OBJ_ID, HIT_KEY_OBJECT_PUBLISH_ID};
             
 
 
@@ -742,25 +754,25 @@ public class IngridQueryHelper {
         IngridHitDetail address = (IngridHitDetail) addressHit.get("hitDetail");
 
         String personName = "";
-        if (address.get(IngridQueryHelper.HIT_KEY_ADDRESS_ADDRESS) != null) {
-            personName = personName.concat(getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_ADDRESS));
-            personName = personName.concat(" ");
+        String addressing = getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_ADDRESS);
+        String title = getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_TITLE);
+        String firstName = getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_FIRSTNAME);
+        String lastName = getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_LASTNAME);
+
+        if (IngridQueryHelper.hasValue(lastName)) {
+        	personName = lastName;
         }
-        if (address.get(IngridQueryHelper.HIT_KEY_ADDRESS_TITLE) != null) {
-            personName = personName.concat(getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_TITLE));
-            personName = personName.concat(" ");
+        
+        if (IngridQueryHelper.hasValue(firstName)) {
+        	personName = IngridQueryHelper.hasValue(personName) ? personName += ", " + firstName : firstName;
         }
-        if (address.get(IngridQueryHelper.HIT_KEY_ADDRESS_FIRSTNAME) != null
-                && address.get(IngridQueryHelper.HIT_KEY_ADDRESS_LASTNAME) != null) {
-            personName = personName.concat(getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_FIRSTNAME));
-            personName = personName.concat(" ");
-            personName = personName.concat(getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_LASTNAME));
-        } else if (address.get(IngridQueryHelper.HIT_KEY_ADDRESS_FIRSTNAME) == null
-                && address.get(IngridQueryHelper.HIT_KEY_ADDRESS_LASTNAME) != null) {
-            personName = personName.concat(getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_LASTNAME));
-        } else if (address.get(IngridQueryHelper.HIT_KEY_ADDRESS_FIRSTNAME) != null
-                && address.get(IngridQueryHelper.HIT_KEY_ADDRESS_LASTNAME) == null) {
-            personName = personName.concat(getDetailValue(address, IngridQueryHelper.HIT_KEY_ADDRESS_FIRSTNAME));
+        
+        if (IngridQueryHelper.hasValue(title) && !IngridQueryHelper.hasValue(addressing)) {
+        	personName = IngridQueryHelper.hasValue(personName) ? personName += ", " + title : title;
+        } else if (!IngridQueryHelper.hasValue(title) && IngridQueryHelper.hasValue(addressing)) {
+        	personName = IngridQueryHelper.hasValue(personName) ? personName += ", " + addressing : addressing;
+        } else if (IngridQueryHelper.hasValue(title) && IngridQueryHelper.hasValue(addressing)) {
+        	personName = IngridQueryHelper.hasValue(personName) ? personName += ", " + title + " " + addressing : title + " " + addressing;
         }
 
         return personName;

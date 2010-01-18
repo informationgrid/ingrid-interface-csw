@@ -13,7 +13,6 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
-import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPMessage;
 
 import org.apache.axis.Message;
@@ -424,12 +423,13 @@ public class CSW {
 	        log.debug("isService=" + sourceTypeIsService);
         }
 
-        if ((sourceTypeIsDataset && sourceTypeIsService) || (!sourceTypeIsDataset && !sourceTypeIsService)) {
+        if (sourceTypeIsDataset && sourceTypeIsService) {
             ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);
             required = false;
             clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
             clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
             ingridQuery.addClause(clauseQuery);
+        	// nothing to be done, all meta data is queried
         } else if (sourceTypeIsDataset) {
             required = true;
             ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));

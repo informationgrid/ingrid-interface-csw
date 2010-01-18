@@ -31,10 +31,9 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 		Namespace gmd = new Namespace("gmd", "http://www.isotc211.org/2005/gmd");
 		Namespace srv = new Namespace("srv", "http://www.isotc211.org/2005/srv");
 
-        String objectId = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
         String udkClass = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_CLASS);
-        String typeName = getTypeName();
-        if (typeName == null) {
+        HierarchyInfo hierarchyInfo = getTypeName();
+        if (hierarchyInfo.hierarchyLevel == null) {
         	return null;
         }
 
@@ -44,11 +43,14 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         metaData.add(gmd);
         metaData.add(srv);
 
-        this.addFileIdentifier(metaData, objectId);
+        this.addFileIdentifier(metaData, hit);
         this.addLanguage(metaData, hit);
 		this.addCharacterSet(metaData, hit);
 		this.addParentIdentifier(metaData, hit);
-        this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
+		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), hierarchyInfo.hierarchyLevel);
+		if (IngridQueryHelper.hasValue(hierarchyInfo.hierarchyLevelName)) {
+			this.addGCOCharacterString(metaData.addElement("gmd:hierarchyLevelName"), hierarchyInfo.hierarchyLevelName);
+		}
         this.addContacts(metaData, hit);
         this.addDateStamp(metaData, hit);
 		String metaDataStandardName = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_STANDARD_NAME);
@@ -366,7 +368,7 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 			if (dqQualityInfo == null) {
 				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
 				// add scope
-				dqQualityInfo.addElement("scope").addElement("DQ_Scope").addElement("level").addElement("MD_ScopeCode").addAttribute("codeListValue", getTypeName()).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+				dqQualityInfo.addElement("scope").addElement("DQ_Scope").addElement("level").addElement("MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
 			}
 			Element liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
 			this.addGCOCharacterString(liLineage.addElement("gmd:statement"), IngridQueryHelper.getDetailValueAsString(

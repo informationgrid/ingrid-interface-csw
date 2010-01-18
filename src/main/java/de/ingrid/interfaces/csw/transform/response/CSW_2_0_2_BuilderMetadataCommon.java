@@ -26,27 +26,52 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 
     private static Log log = LogFactory.getLog(CSW_2_0_2_BuilderMetadataCommon.class);
 
-	protected String getTypeName() {
-        String typeName = "datatset";
+    /**
+     * Container for hierarchyLevel information.
+     * 
+     * @author Administrator
+     *
+     */
+    protected class HierarchyInfo {
+    	public String hierarchyLevel = null;
+    	public String hierarchyLevelName = null;
+    }
+    
+	protected HierarchyInfo getTypeName() {
+		HierarchyInfo hierarchyInfo = new HierarchyInfo();
+		hierarchyInfo.hierarchyLevel = "datatset";
 		String udkClass = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_CLASS);
         if (udkClass.equals("1")) {
 			try {
 				Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 						IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL));
-				typeName = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(525L, code);
+				hierarchyInfo.hierarchyLevel = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(525L, code);
 			} catch (NumberFormatException e) {
 				log.warn("Could not parse " + IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL + ". Value: " + IngridQueryHelper.getDetailValueAsString(hit,
 						IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL) + "could not be parsed to an Integer.");
 			}
         } else if (udkClass.equals("3")) {
-            typeName = "service";
+        	hierarchyInfo.hierarchyLevel = "service";
+        	hierarchyInfo.hierarchyLevelName = "service";
+        } else if (udkClass.equals("2")) {
+        	hierarchyInfo.hierarchyLevel = "nonGeographicDataset";
+        	hierarchyInfo.hierarchyLevelName = "document";
+        } else if (udkClass.equals("4")) {
+        	hierarchyInfo.hierarchyLevel = "nonGeographicDataset";
+        	hierarchyInfo.hierarchyLevelName = "project";
+        } else if (udkClass.equals("5")) {
+        	hierarchyInfo.hierarchyLevel = "nonGeographicDataset";
+        	hierarchyInfo.hierarchyLevelName = "database";
+        } else if (udkClass.equals("0")) {
+        	hierarchyInfo.hierarchyLevel = "nonGeographicDataset";
+        	hierarchyInfo.hierarchyLevelName = "job";
         } else {
         	if (log.isInfoEnabled()) {
-        		log.info("Unsupported UDK class " + udkClass
-                    + ". Only class 1 and 3 are supported by the CSW interface.");
+        		log.info("Unsupported UDK class '" + udkClass
+                    + "'. Only class 0 to 5 are supported by the CSW interface.");
         	}
         }
-        return typeName;
+        return hierarchyInfo;
 	}
     
     
@@ -194,11 +219,16 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     }    
 
     protected void addResponsibleParty(Element ciResponsibleParty, IngridHit hit, String addressId, String role) throws Exception {
+    	// add uuid
+    	ciResponsibleParty.addAttribute("uuid", "igc:" + addressId + ":" + role);
     	// get complete address information
         IngridHit address = IngridQueryHelper.getCompleteAddress(addressId, hit.getPlugId());
         if (address != null) {
             
-            this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:individualName"), IngridQueryHelper.getCompletePersonName(address));
+        	String individualName = IngridQueryHelper.getCompletePersonName(address);
+        	if (IngridQueryHelper.hasValue(individualName)) {
+            	this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:individualName"), individualName);
+            }
             String organisationName = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_INSTITUITION_PROCESSED);
             if (IngridQueryHelper.hasValue(organisationName)) {
                 this.addGCOCharacterString(ciResponsibleParty.addElement("gmd:organisationName"), organisationName);
@@ -257,7 +287,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                 .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
                 .addAttribute("codeListValue", role);
             }
-        }        	
+        } else {
+        	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
+        }
     }
     
     
@@ -272,14 +304,18 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
      *            The Document.
      * @return The parent element.
      */
-    protected void addFileIdentifier(Element parent, String id, String ns) {
-        if (IngridQueryHelper.hasValue(id)) {
+    protected void addFileIdentifier(Element parent, IngridHit hit, String ns) {
+    	String id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_ORG_OBJ_ID);
+        if (!IngridQueryHelper.hasValue(id)) {
+        	id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
+        }
+    	if (IngridQueryHelper.hasValue(id)) {
         	this.addGCOCharacterString(parent.addElement(getNSElementName(ns, "fileIdentifier")), id);
         }
     }
 
-    protected void addFileIdentifier(Element parent, String id) {
-        addFileIdentifier(parent, id, null);
+    protected void addFileIdentifier(Element parent, IngridHit hit) {
+        addFileIdentifier(parent, hit, null);
     }
     
     
