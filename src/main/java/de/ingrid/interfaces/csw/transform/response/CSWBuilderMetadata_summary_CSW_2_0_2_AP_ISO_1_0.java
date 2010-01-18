@@ -61,10 +61,10 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 		if (IngridQueryHelper.hasValue(metaDataStandardVersion)) {
 			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), metaDataStandardVersion);
 		}
-        if (udkClass.equals("1")) {
-            this.addIdentificationInfoDataset(metaData, hit);
-        } else {
+        if (udkClass.equals("3")) {
             this.addIdentificationInfoService(metaData, hit);
+        } else {
+            this.addIdentificationInfoDataset(metaData, hit);
         }
         
 		// contentInfo
@@ -110,8 +110,10 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 		addPointOfContacts(svServiceIdentification, hit, "gmd");
 
         // add resourceConstraint
-        this.addGCOCharacterString(svServiceIdentification.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), IngridQueryHelper.getDetailValueAsString(hit,
-                IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE));
+        String resourceConstraint = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE);
+		if (IngridQueryHelper.hasValue(resourceConstraint)) {
+			this.addGCOCharacterString(svServiceIdentification.addElement("resourceConstraints").addElement("gmd:MD_Constraints").addElement("gmd:useLimitation"), resourceConstraint);
+		}
         
         
         // add service type
@@ -347,10 +349,14 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 			ciOnlineResource.addElement("gmd:linkage").addElement("gmd:URL").addText(urlRefUrlLinks[i]);
 			// T017_url_ref.content
 			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/name
-			this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
+			if (IngridQueryHelper.hasValue(urlRefContent[i])) {
+				this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
+			}
 			// T017_url_ref.descr
 			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/description
-			this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+			if (IngridQueryHelper.hasValue(urlRefDescr[i])) {
+				this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+			}
 		}
 		
 

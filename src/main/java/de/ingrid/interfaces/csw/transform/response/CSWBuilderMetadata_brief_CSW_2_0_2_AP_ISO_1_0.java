@@ -50,10 +50,10 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 		}
 		this.addContacts(metaData, hit, this.nsPrefix);
 		this.addDateStamp(metaData, hit, this.nsPrefix);
-		if (udkClass.equals("1")) {
-			this.addIdentificationInfoDataset(metaData, hit);
-		} else {
+		if (udkClass.equals("3")) {
 			this.addIdentificationInfoService(metaData, hit);
+		} else {
+			this.addIdentificationInfoDataset(metaData, hit);
 		}
 
 		return metaData;

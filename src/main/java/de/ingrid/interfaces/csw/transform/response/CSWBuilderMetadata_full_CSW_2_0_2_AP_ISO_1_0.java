@@ -260,10 +260,14 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			ciOnlineResource.addElement("gmd:linkage").addElement("gmd:URL").addText(urlRefUrlLinks[i]);
 			// T017_url_ref.content
 			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/name
-			this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
+			if (IngridQueryHelper.hasValue(urlRefContent[i])) {
+				this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
+			}
 			// T017_url_ref.descr
 			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/description
-			this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+			if (IngridQueryHelper.hasValue(urlRefDescr[i])) {
+				this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+			}
 		}
 
 		// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/offLine/
@@ -448,8 +452,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 	}
 
 	private void addSpatialRepresentationInfo(Element metaData, IngridHit hit) {
-		Element mdVectorSpatialRepresentation = metaData.addElement("gmd:spatialRepresentationInfo")
-				.addElement("gmd:MD_VectorSpatialRepresentation");
+		Element mdVectorSpatialRepresentation = null;
 		// T011_obj_geo.vector_topology_level ->
 		// MD_Metadata/full:spatialRepresentationInfo/MD_VectorSpatialRepresentation/topologyLevel/MD_TopologyLevelCode/@CodeListValue
 		String codeStr;
@@ -457,6 +460,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_VECTOR_TOPOLOGY_LEVEL));
 			codeStr = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(528L, code);
+			if (mdVectorSpatialRepresentation == null) {
+				mdVectorSpatialRepresentation = metaData.addElement("gmd:spatialRepresentationInfo").addElement("gmd:MD_VectorSpatialRepresentation");
+			}
 			mdVectorSpatialRepresentation.addElement("gmd:topologyLevel").addElement("gmd:MD_TopologyLevelCode")
 			.addAttribute("codeList","http://www.tc211.org/ISO19139/resources/codeList.xml?MD_TopologyLevelCode")
 			.addAttribute("codeListValue", codeStr);
@@ -467,6 +473,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		String[] geometricObjectsCount = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_VECTOR_GEOMETRIC_OBJECT_COUNT);
 		for (int i = 0; i < geometricObjectsType.length; i++) {
+			if (mdVectorSpatialRepresentation == null) {
+				mdVectorSpatialRepresentation = metaData.addElement("gmd:spatialRepresentationInfo").addElement("gmd:MD_VectorSpatialRepresentation");
+			}
 			Element mdGeometricObjects = mdVectorSpatialRepresentation.addElement("gmd:geometricObjects").addElement(
 					"gmd:MD_GeometricObjects");
 			// T011_obj_geo_vector.geometric_object_type ->
@@ -496,21 +505,21 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 	}
 
 	private void addDataQualityInfoService(Element metaData, IngridHit hit) {
-		Element dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+		Element dqQualityInfo = null;
 
-		
-		Element dqScopeType = dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope");
-		// add level
-		dqScopeType.addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
-		dqScopeType.addElement("gmd:levelDescription").addElement("gmd:MD_ScopeDescription").addElement("gmd:featureInstances");
 		
 		// T011_obj_geo.special_base ->
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/udk:LI_Lineage/statement
-		Element liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
+		Element liLineage = null;
 		// (dataset) T011_obj_serv.history ->
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/LI_Lineage/processStep/LI_ProcessStep/description
 		String processStepDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_SERV_HISTORY);
 		if (IngridQueryHelper.hasValue(processStepDescription)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
 			if (liLineage == null) {
 				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
 			}
@@ -521,6 +530,14 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// MD_Metadata/dataQualityInfo/DQ_DataQuality/lineage/LI_Lineage/source/LI_Source/description
 		String liSourceDescription = null;
 		if (IngridQueryHelper.hasValue(liSourceDescription)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
+			if (liLineage == null) {
+				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
+			}
 			liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
 			this.addGCOCharacterString(liLineage.addElement("gmd:source").addElement("gmd:LI_Source").addElement(
 					"gmd:description"), liSourceDescription);
@@ -537,6 +554,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		for (int i = 0; i < objectConformitySpecifications.length; i++) {
 			if (IngridQueryHelper.hasValue(objectConformityDegreeKeys[i]) && 
 					(objectConformityDegreeKeys[i].equals("1") || objectConformityDegreeKeys[i].equals("2"))) {
+				if (dqQualityInfo == null) {
+					dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+					// add scope
+					dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+				}
 				Element dqDomainConsistency = dqQualityInfo.addElement("gmd:report").addElement("gmd:DQ_DomainConsistency");
 				Element dqConformanceResult = dqDomainConsistency.addElement("gmd:result").addElement("gmd:DQ_ConformanceResult");
 				
@@ -560,15 +582,17 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 	}
 
 	private void addDataQualityInfoDataSet(Element metaData, IngridHit hit) {
-		Element dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
-		
-		// add scope
-		dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+		Element dqQualityInfo = null;
 
 		// T011_obj_geo.rec_grade ->
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/report/DQ_CompletenessCommission/DQ_QuantitativeResult/value/Record
 		String completenessComission = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_REC_GRADE);
 		if (IngridQueryHelper.hasValue(completenessComission)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
 			Element completenessCommission = dqQualityInfo.addElement("gmd:report").addElement("gmd:DQ_CompletenessCommission");
 			this.addGCOCharacterString(completenessCommission.addElement("gmd:measureDescription"), "completeness");
 			Element dqQuantitativeResult = completenessCommission.addElement("gmd:result").addElement("gmd:DQ_QuantitativeResult");
@@ -585,6 +609,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		String verticalAccuracy = IngridQueryHelper.getDetailValueAsString(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL);
 		if (IngridQueryHelper.hasValue(verticalAccuracy)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
 			Element dqRelativeInternalPositionalAccuracy = dqQualityInfo.addElement("gmd:report")
 					.addElement("gmd:DQ_RelativeInternalPositionalAccuracy");
 			this.addGCOCharacterString(dqRelativeInternalPositionalAccuracy.addElement("gmd:measureDescription"),
@@ -604,6 +633,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		String geographicAccuracy = IngridQueryHelper.getDetailValueAsString(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_GEO_REC_EXACT);
 		if (IngridQueryHelper.hasValue(geographicAccuracy)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
 			Element dqRelativeInternalPositionalAccuracy = dqQualityInfo.addElement("gmd:report")
 					.addElement("gmd:DQ_RelativeInternalPositionalAccuracy");
 			this.addGCOCharacterString(dqRelativeInternalPositionalAccuracy.addElement("gmd:measureDescription"),
@@ -629,6 +663,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		for (int i = 0; i < objectConformitySpecifications.length; i++) {
 			if (IngridQueryHelper.hasValue(objectConformityDegreeKeys[i]) && 
 					(objectConformityDegreeKeys[i].equals("1") || objectConformityDegreeKeys[i].equals("2"))) {
+				if (dqQualityInfo == null) {
+					dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+					// add scope
+					dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+				}
 				Element dqDomainConsistency = dqQualityInfo.addElement("gmd:report").addElement("gmd:DQ_DomainConsistency");
 				Element dqConformanceResult = dqDomainConsistency.addElement("gmd:result").addElement("gmd:DQ_ConformanceResult");
 				// specification/CI_Citation/
@@ -654,6 +693,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		Element liLineage = null;
 		String statement = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_SPECIAL_BASE);
 		if (IngridQueryHelper.hasValue(statement)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
 			if (liLineage == null) {
 				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
 			}
@@ -664,6 +708,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// MD_Metadata/dataQualityInfo/udk:DQ_DataQuality/lineage/LI_Lineage/processStep/LI_ProcessStep/description
 		String processStepDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_GEO_METHOD);
 		if (IngridQueryHelper.hasValue(processStepDescription)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
 			if (liLineage == null) {
 				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
 			}
@@ -674,6 +723,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// MD_Metadata/dataQualityInfo/DQ_DataQuality/lineage/LI_Lineage/source/LI_Source/description
 		String liSourceDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_GEO_DATA_BASE);
 		if (IngridQueryHelper.hasValue(liSourceDescription)) {
+			if (dqQualityInfo == null) {
+				dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+				// add scope
+				dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+			}
 			if (liLineage == null) {
 				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
 			}
@@ -683,15 +737,15 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 	}
 
 	private void addDataQualityInfoDatabase(Element metaData, IngridHit hit) {
-		Element dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
-		
-		// add scope
-		dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
+		Element dqQualityInfo = null;
 
 		// t011_obj_data.base
 		Element liLineage = null;
 		String liSourceDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_DATA_BASE);
 		if (IngridQueryHelper.hasValue(liSourceDescription)) {
+			dqQualityInfo = metaData.addElement("gmd:dataQualityInfo").addElement("gmd:DQ_DataQuality");
+			// add scope
+			dqQualityInfo.addElement("gmd:scope").addElement("gmd:DQ_Scope").addElement("gmd:level").addElement("gmd:MD_ScopeCode").addAttribute("codeListValue", getTypeName().hierarchyLevel).addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode");
 			if (liLineage == null) {
 				liLineage = dqQualityInfo.addElement("gmd:lineage").addElement("gmd:LI_Lineage");
 			}
@@ -702,7 +756,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 
 	private void addDataQualityInfoLiterature(Element metaData, IngridHit hit) {
 		
-
 		// t011_obj_data.base
 		Element liLineage = null;
 		String liSourceDescription = IngridQueryHelper.getDetailValueAsString(hit,IngridQueryHelper.HIT_KEY_OBJECT_LITERATURE_BASE);
@@ -734,8 +787,10 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		super.addCitationReferenceDates(ciCitation, hit, "gmd");
 
 		// add identifier
-		this.addGCOCharacterString(ciCitation.addElement("gmd:identifier").addElement("gmd:RS_Identifier").addElement("gmd:code"), IngridQueryHelper.getDetailValueAsString(
-				hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_DATASOURCE_UUID));
+		String identifier = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_DATASOURCE_UUID);
+		if (IngridQueryHelper.hasValue(identifier)) {
+			this.addGCOCharacterString(ciCitation.addElement("gmd:identifier").addElement("gmd:RS_Identifier").addElement("gmd:code"), identifier);
+		}
 		
 		
 		// map literature properties
@@ -1072,7 +1127,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			}
 			purpose = purpose.concat(legis[i]);
 		}
-		this.addGCOCharacterString(parent.addElement("gmd:purpose"), purpose);
+		if (IngridQueryHelper.hasValue(purpose)) {
+			this.addGCOCharacterString(parent.addElement("gmd:purpose"), purpose);
+		}
 
 		// add status
 		try {

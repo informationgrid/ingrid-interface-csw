@@ -252,32 +252,48 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                 }
             }
 
-            Element CIAddress = CIContact.addElement("gmd:address").addElement("gmd:CI_Address");
+            Element CIAddress = null;
             String postBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_POSTBOX);
             String zipPostBox = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_ZIP_POSTBOX);
-            if (postBox != null && postBox.length() > 0 && zipPostBox != null && zipPostBox.length() > 0) {
-                this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), postBox);
-                this.addGCOCharacterString(CIAddress.addElement("gmd:city"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
-                this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), zipPostBox);
-            } else {
-                this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_STREET));
-                this.addGCOCharacterString(CIAddress.addElement("gmd:city"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_CITY));
-                this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), IngridQueryHelper.getDetailValueAsString(address,
-                        IngridQueryHelper.HIT_KEY_ADDRESS_ZIP));
+            String city = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_CITY);
+            String street = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_STREET);
+            String zip = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_ZIP);
+            if (IngridQueryHelper.hasValue(postBox) || IngridQueryHelper.hasValue(zipPostBox) || IngridQueryHelper.hasValue(city) || IngridQueryHelper.hasValue(street)) {
+	            if (CIAddress == null) {
+	            	CIAddress = CIContact.addElement("gmd:address").addElement("gmd:CI_Address");
+	            }
+            	if (postBox != null && postBox.length() > 0 && zipPostBox != null && zipPostBox.length() > 0) {
+	                this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), postBox);
+	                this.addGCOCharacterString(CIAddress.addElement("gmd:city"), city);
+	                this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), zipPostBox);
+	            } else {
+	                this.addGCOCharacterString(CIAddress.addElement("gmd:deliveryPoint"), street);
+	                this.addGCOCharacterString(CIAddress.addElement("gmd:city"), city);
+	                this.addGCOCharacterString(CIAddress.addElement("gmd:postalCode"), zip);
+	            }
             }
-            this.addGCOCharacterString(CIAddress.addElement("gmd:country"), getISO3166_1Alpha3LanguageCode(IngridQueryHelper.getDetailValueAsString(address,
-                    IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID)));
+            String stateId = IngridQueryHelper.getDetailValueAsString(address, IngridQueryHelper.HIT_KEY_ADDRESS_STATE_ID);
+            if (IngridQueryHelper.hasValue(stateId)) {
+	            if (CIAddress == null) {
+	            	CIAddress = CIContact.addElement("gmd:address").addElement("gmd:CI_Address");
+	            }
+                this.addGCOCharacterString(CIAddress.addElement("gmd:country"), getISO3166_1Alpha3LanguageCode(stateId));
+            }
+            
             ArrayList emails = (ArrayList) communications.get("email");
             for (int j = 0; j < emails.size(); j++) {
+	            if (CIAddress == null) {
+	            	CIAddress = CIContact.addElement("gmd:address").addElement("gmd:CI_Address");
+	            }
                 this.addGCOCharacterString(CIAddress.addElement("gmd:electronicMailAddress"), (String) emails.get(j));
             }
 
             // CSW 2.0 unterstuetzt nur eine online resource
             ArrayList url = (ArrayList) communications.get("url");
             if (url.size() > 0) {
+	            if (CIAddress == null) {
+	            	CIAddress = CIContact.addElement("gmd:address").addElement("gmd:CI_Address");
+	            }
                 Element CI_OnlineResource = CIContact.addElement("gmd:onlineResource").addElement(
                         "gmd:CI_OnlineResource");
                 this.addGMDUrl(CI_OnlineResource.addElement("gmd:linkage"), (String) url.get(0));
