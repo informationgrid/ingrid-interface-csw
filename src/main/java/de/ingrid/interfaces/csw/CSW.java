@@ -410,6 +410,7 @@ public class CSW {
         boolean prohibited = false;
         boolean sourceTypeIsDataset = false;
         boolean sourceTypeIsService = false;
+        boolean sourceTypeIsNonGeographicDataset = false;
 
         if (sessionParameters.isTypeNameIsDataset() || sessionParameters.isTypeNameIsDatasetcollection()) {
             sourceTypeIsDataset = true;
@@ -418,9 +419,16 @@ public class CSW {
         if (sessionParameters.isTypeNameIsApplication() || sessionParameters.isTypeNameIsService()) {
             sourceTypeIsService = true;
         }
+
+        if (sessionParameters.isTypeNameNonGeographicDataset()) {
+        	sourceTypeIsNonGeographicDataset = true;
+        }
+        
+        
         if (log.isDebugEnabled()) {
 	        log.debug("isDataset=" + sourceTypeIsDataset);
 	        log.debug("isService=" + sourceTypeIsService);
+	        log.debug("isNonGeographicDataset=" + sourceTypeIsNonGeographicDataset);
         }
 
         if (sourceTypeIsDataset && sourceTypeIsService) {
@@ -429,7 +437,32 @@ public class CSW {
             clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
             clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
             ingridQuery.addClause(clauseQuery);
-        	// nothing to be done, all meta data is queried
+        } else if (sourceTypeIsDataset && sourceTypeIsNonGeographicDataset) {
+                ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);
+                required = false;
+                clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
+                clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "document"));
+                clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "project"));
+                clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "database"));
+                clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "job"));
+                ingridQuery.addClause(clauseQuery);
+        } else if (sourceTypeIsService && sourceTypeIsNonGeographicDataset) {
+            ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);
+            required = false;
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "document"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "project"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "database"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "job"));
+            ingridQuery.addClause(clauseQuery);
+        } else if (sourceTypeIsNonGeographicDataset) {
+            ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);
+            required = false;
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "document"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "project"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "database"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "job"));
+            ingridQuery.addClause(clauseQuery);
         } else if (sourceTypeIsDataset) {
             required = true;
             ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));

@@ -30,6 +30,7 @@ public final class SessionParameters {
 	private boolean typeNameIsDatasetcollection = false;
 	private boolean typeNameIsService = false;
 	private boolean typeNameIsApplication = false;
+	private boolean typeNameIsNonGeographicDataset = false;
 	private int startPosition = STARTPOSITION;
 	private int numberOfRecordsMatched = 0;
 	private int numberOfRecordsReturned = 0;
@@ -317,6 +318,20 @@ public final class SessionParameters {
 		this.typeNameIsService = typeNameIsServ;
 	}
 
+	/**
+	 * @return Returns the typeNameIsNonGeographicDataset.
+	 */
+	public boolean isTypeNameNonGeographicDataset() {
+		return typeNameIsNonGeographicDataset;
+	}
+
+	/**
+	 * @param typeNameIsNonGeographicDataset The typeNameIsNonGeographicDataset to set.
+	 */
+	public void setTypeNameIsNonGeographicDataset(final boolean typeNameIsNonGeographicDataset) {
+		this.typeNameIsNonGeographicDataset = typeNameIsNonGeographicDataset;
+	}
+	
 	/**
 	 * @return Returns the idsList.
 	 */

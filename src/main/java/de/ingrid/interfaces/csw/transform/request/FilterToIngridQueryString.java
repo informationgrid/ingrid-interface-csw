@@ -201,7 +201,8 @@ public class FilterToIngridQueryString {
         if (log.isDebugEnabled()) {
         	log.debug("exiting, returning string: " + sb.toString());
         }
-		return sb.toString().replaceAll("(( AND)*|( OR)*|\\s) \\(\\s\\)", "");
+		// filter invalid query syntax that could not be handled before
+        return sb.toString().replaceAll("(( AND)*|( OR)*|\\s|)\\s*\\(\\s\\)", "");
 	}
 
 	/**
@@ -815,6 +816,8 @@ public class FilterToIngridQueryString {
 					_session.setTypeNameIsService(true);
 				} else if (type.equalsIgnoreCase("dataset") || type.equalsIgnoreCase("datasetcollections")) {
 					_session.setTypeNameIsDataset(true);
+				} else if (type.equalsIgnoreCase("nonGeographicDataset")) {
+					_session.setTypeNameIsNonGeographicDataset(true);
 				}
 				sb = deletePreOperator(sb);
 			} else {
