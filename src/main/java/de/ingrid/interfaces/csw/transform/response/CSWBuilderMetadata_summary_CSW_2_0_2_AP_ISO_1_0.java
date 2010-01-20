@@ -43,6 +43,8 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         metaData.add(gmd);
         metaData.add(srv);
 
+		metaData.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId());
+        
         this.addFileIdentifier(metaData, hit);
         this.addLanguage(metaData, hit);
 		this.addCharacterSet(metaData, hit);
@@ -212,18 +214,19 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 		String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCAN);
 		for (int i = 0; i < spacialResolutionScale.length; i++) {
-
 			if (IngridQueryHelper.hasValue(spacialResolutionScale[i])) {
 				this.addGCOInteger(mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 				"gmd:MD_Resolution").addElement("gmd:equivalentScale").addElement(
 						"gmd:MD_RepresentativeFraction").addElement("gmd:denominator"), spacialResolutionScale[i]);
 			}
-
+		}
+		for (int i = 0; i < spacialResolutionGround.length; i++) {
 			if (IngridQueryHelper.hasValue(spacialResolutionGround[i])) {
 				mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "meter").addText(spacialResolutionGround[i]);
 			}
-
+		}
+		for (int i = 0; i < spacialResolutionGround.length; i++) {
 			if (IngridQueryHelper.hasValue(spacialResolutionScan[i])) {
 				mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "dpi").addText(spacialResolutionScan[i]);;
@@ -338,24 +341,26 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 		String[] urlRefDescr = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_URL_REF_DESCR);
 		for (int i = 0; i < urlRefUrlLinks.length; i++) {
-			if (mdDistribution == null) {
-				mdDistribution = metaData.addElement("gmd:distributionInfo").addElement("gmd:MD_Distribution");
-			}
-			Element ciOnlineResource = mdDistribution.addElement("gmd:transferOptions").addElement(
-			"gmd:MD_DigitalTransferOptions").addElement("gmd:onLine").addElement(
-					"gmd:CI_OnlineResource");
-			// T017_url_ref.url_link
-			// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/linkage/gmd:URL
-			ciOnlineResource.addElement("gmd:linkage").addElement("gmd:URL").addText(urlRefUrlLinks[i]);
-			// T017_url_ref.content
-			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/name
-			if (IngridQueryHelper.hasValue(urlRefContent[i])) {
-				this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
-			}
-			// T017_url_ref.descr
-			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/description
-			if (IngridQueryHelper.hasValue(urlRefDescr[i])) {
-				this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+			if (IngridQueryHelper.hasValue(urlRefUrlLinks[i])) {
+				if (mdDistribution == null) {
+					mdDistribution = metaData.addElement("gmd:distributionInfo").addElement("gmd:MD_Distribution");
+				}
+				Element ciOnlineResource = mdDistribution.addElement("gmd:transferOptions").addElement(
+				"gmd:MD_DigitalTransferOptions").addElement("gmd:onLine").addElement(
+						"gmd:CI_OnlineResource");
+				// T017_url_ref.url_link
+				// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/linkage/gmd:URL
+				ciOnlineResource.addElement("gmd:linkage").addElement("gmd:URL").addText(urlRefUrlLinks[i]);
+				// T017_url_ref.content
+				// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/name
+				if (urlRefContent.length > i && IngridQueryHelper.hasValue(urlRefContent[i])) {
+					this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
+				}
+				// T017_url_ref.descr
+				// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/description
+				if (urlRefDescr.length > i && IngridQueryHelper.hasValue(urlRefDescr[i])) {
+					this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+				}
 			}
 		}
 		

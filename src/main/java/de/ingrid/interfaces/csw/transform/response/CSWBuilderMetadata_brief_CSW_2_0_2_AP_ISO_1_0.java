@@ -3,14 +3,23 @@
  */
 package de.ingrid.interfaces.csw.transform.response;
 
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
+import org.xml.sax.InputSource;
 
 import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
@@ -36,12 +45,14 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
         if (hierarchyInfo.hierarchyLevel == null) {
         	return null;
         }
-
-		Element metaData = DocumentFactory.getInstance().createElement("MD_Metadata",
-				"http://www.isotc211.org/2005/gmd");
+        
+        Element metaData = DocumentFactory.getInstance().createElement("MD_Metadata",
+					"http://www.isotc211.org/2005/gmd");
 		metaData.add(gmd);
 		metaData.add(gco);
 		metaData.add(srv);
+
+		metaData.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId());
 
 		this.addFileIdentifier(metaData, hit);
 		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), hierarchyInfo.hierarchyLevel);

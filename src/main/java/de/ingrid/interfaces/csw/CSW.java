@@ -335,6 +335,7 @@ public class CSW {
         ingridQuery = setDataTypeCSW(ingridQuery);
         ingridQuery = setSourceType(ingridQuery, sessionParameters);
         ingridQuery = setQueryExtensions(ingridQuery, sessionParameters);
+        ingridQuery.put("cswDirectResponse", sessionParameters.getElementSetName());
 
         IngridHits hits = callBus(ingridQuery, requestedHits, startPosition);
         long totalHits = hits.length();

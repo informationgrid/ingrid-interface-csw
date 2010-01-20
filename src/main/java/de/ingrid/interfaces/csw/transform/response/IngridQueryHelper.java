@@ -167,7 +167,8 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SERV_OPERATION_DESCR, HIT_KEY_OBJECT_SERV_INVOCATION_NAME,
             HIT_KEY_OBJECT_SERV_OP_PARAM_NAME, HIT_KEY_OBJECT_SERV_OP_PARAM_DIRECTION,
             HIT_KEY_OBJECT_SERV_OP_PARAM_DESCR, HIT_KEY_OBJECT_SERV_OP_PARAM_OPTIONAL,
-            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY, HIT_KEY_OBJECT_ORG_OBJ_ID};
+            HIT_KEY_OBJECT_SERV_OP_PARAM_REPEATABILITY, HIT_KEY_OBJECT_ORG_OBJ_ID, 
+            "t02_address.street", "t02_address.lastname", "t02_address.institution", "t02_address.city", "t02_address.postcode", "t02_address.country_code", "t02_address.job", "t02_address.descr", "t021_communication.comm_type", "t021_communication.comm_value"};
 
 
     public static final String HIT_KEY_OBJECT_METADATA_LANGUAGE = "T01_object.metadata_language";

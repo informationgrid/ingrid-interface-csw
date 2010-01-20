@@ -51,6 +51,8 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		metaData.add(srv);
 		metaData.add(gml);
 		metaData.add(gts);
+		
+		metaData.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId());
 
 		this.addFileIdentifier(metaData, hit, this.getNSPrefix());
 		this.addLanguage(metaData, hit, this.getNSPrefix());
@@ -163,15 +165,17 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			this.addGCOCharacterString(mdFormat.addElement("gmd:name"), formatNames[i]);
 			// T0110_avail_format.version
 			// MD_Metadata/distributionInfo/MD_Distribution/distributor/MD_Distributor/distributorFormat/MD_Format/version
-			this.addGCOCharacterString(mdFormat.addElement("gmd:version"), formatVersions[i]);
+			if (formatVersions.length > i && IngridQueryHelper.hasValue(formatVersions[i])) {
+				this.addGCOCharacterString(mdFormat.addElement("gmd:version"), formatVersions[i]);
+			}
 			// T0110_avail_format.specification
 			// MD_Metadata/distributionInfo/MD_Distribution/distributor/MD_Distributor/distributorFormat/MD_Format/specification
-			if (IngridQueryHelper.hasValue(formatSpecifications[i])) {
+			if (formatSpecifications.length > i && IngridQueryHelper.hasValue(formatSpecifications[i])) {
 				this.addGCOCharacterString(mdFormat.addElement("gmd:specification"), formatSpecifications[i]);
 			}
 			// T0110_avail_format.file_decompression_technique
 			// MD_Metadata/distributionInfo/MD_Distribution/distributor/MD_Distributor/distributorFormat/MD_Format/fileDecompressionTechnique
-			if (IngridQueryHelper.hasValue(formatFileDecompressionTechniques[i])) {
+			if (formatFileDecompressionTechniques.length > i && IngridQueryHelper.hasValue(formatFileDecompressionTechniques[i])) {
 				this.addGCOCharacterString(mdFormat.addElement("gmd:fileDecompressionTechnique"),
 						formatFileDecompressionTechniques[i]);
 			}
@@ -249,24 +253,26 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		String[] urlRefDescr = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_URL_REF_DESCR);
 		for (int i = 0; i < urlRefUrlLinks.length; i++) {
-			if (mdDistribution == null) {
-				mdDistribution = metaData.addElement("gmd:distributionInfo").addElement("gmd:MD_Distribution");
-			}
-			Element ciOnlineResource = mdDistribution.addElement("gmd:transferOptions").addElement(
-			"gmd:MD_DigitalTransferOptions").addElement("gmd:onLine").addElement(
-					"gmd:CI_OnlineResource");
-			// T017_url_ref.url_link
-			// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/linkage/gmd:URL
-			ciOnlineResource.addElement("gmd:linkage").addElement("gmd:URL").addText(urlRefUrlLinks[i]);
-			// T017_url_ref.content
-			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/name
-			if (IngridQueryHelper.hasValue(urlRefContent[i])) {
-				this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
-			}
-			// T017_url_ref.descr
-			// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/description
-			if (IngridQueryHelper.hasValue(urlRefDescr[i])) {
-				this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+			if (IngridQueryHelper.hasValue(urlRefUrlLinks[i])) {
+				if (mdDistribution == null) {
+					mdDistribution = metaData.addElement("gmd:distributionInfo").addElement("gmd:MD_Distribution");
+				}
+				Element ciOnlineResource = mdDistribution.addElement("gmd:transferOptions").addElement(
+				"gmd:MD_DigitalTransferOptions").addElement("gmd:onLine").addElement(
+						"gmd:CI_OnlineResource");
+				// T017_url_ref.url_link
+				// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/linkage/gmd:URL
+				ciOnlineResource.addElement("gmd:linkage").addElement("gmd:URL").addText(urlRefUrlLinks[i]);
+				// T017_url_ref.content
+				// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/name
+				if (urlRefContent.length > i && IngridQueryHelper.hasValue(urlRefContent[i])) {
+					this.addGCOCharacterString(ciOnlineResource.addElement("gmd:name"), urlRefContent[i]);
+				}
+				// T017_url_ref.descr
+				// MD_Metadata/full:distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/onLine/CI_OnlineResource/description
+				if (urlRefDescr.length > i && IngridQueryHelper.hasValue(urlRefDescr[i])) {
+					this.addGCOCharacterString(ciOnlineResource.addElement("gmd:description"), urlRefDescr[i]);
+				}
 			}
 		}
 
@@ -989,8 +995,14 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// add second identification info for all information that cannot be mapped into a SV_ServiceIdentification element
 		String systemEnvironment = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_ENVIROMENT);
 		String supplementalInformation = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_DESCRIPTION);
+		// add the elements that cannot be mapped into the SV_ServiceIdentification
 		String[] spacialResolutionScale = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_SERVICE_SPATIAL_RES_SCALE);
-		if (IngridQueryHelper.hasValue(systemEnvironment) || IngridQueryHelper.hasValue(supplementalInformation) || spacialResolutionScale.length > 0) {
+		String[] spacialResolutionGround = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_SERVICE_SPATIAL_RES_GROUND);
+		String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,
+				IngridQueryHelper.HIT_KEY_SERVICE_SPATIAL_RES_SCAN);
+		if (IngridQueryHelper.hasValue(systemEnvironment) || IngridQueryHelper.hasValue(supplementalInformation) || 
+				spacialResolutionScale.length > 0 || spacialResolutionGround.length > 0 || spacialResolutionScan.length > 0) {
 			Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 			"gmd:MD_DataIdentification");
 			// add necessary elements for schema validation
@@ -1003,21 +1015,20 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:abstract").addAttribute("gco:nilReason", "other:providedInPreviousIdentificationInfo"), "");
 			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language").addAttribute("gco:nilReason", "other:providedInPreviousIdentificationInfo"), "");
 			
-			// add the elements that cannot be mapped into the SV_ServiceIdentification
-			String[] spacialResolutionGround = IngridQueryHelper.getDetailValueAsArray(hit,
-					IngridQueryHelper.HIT_KEY_SERVICE_SPATIAL_RES_GROUND);
-			String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,
-					IngridQueryHelper.HIT_KEY_SERVICE_SPATIAL_RES_SCAN);
 			for (int i = 0; i < spacialResolutionScale.length; i++) {
 				if (IngridQueryHelper.hasValue(spacialResolutionScale[i])) {
 					this.addGCOInteger(mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 					"gmd:MD_Resolution").addElement("gmd:equivalentScale").addElement(
 							"gmd:MD_RepresentativeFraction").addElement("gmd:denominator"), spacialResolutionScale[i]);
 				}
+			}
+			for (int i = 0; i < spacialResolutionGround.length; i++) {
 				if (IngridQueryHelper.hasValue(spacialResolutionGround[i])) {
 					mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 					"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "meter").addText(spacialResolutionGround[i]);
 				}
+			}
+			for (int i = 0; i < spacialResolutionScan.length; i++) {
 				if (IngridQueryHelper.hasValue(spacialResolutionScan[i])) {
 					mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 					"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "dpi").addText(spacialResolutionScan[i]);
@@ -1079,7 +1090,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,
 					IngridQueryHelper.HIT_KEY_SERVICE_SPATIAL_RES_SCAN);
 			for (int i = 0; i < spacialResolutionScale.length; i++) {
-
 				if (IngridQueryHelper.hasValue(spacialResolutionScale[i])) {
 					if (abstractPostfix == null) {
 						abstractPostfix = abstractPostfixPrefix;
@@ -1087,7 +1097,8 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					abstractPostfix += "Erstellungsmassstab: " + spacialResolutionScale[i] + "\n";
 					abstractPostfix += "(spatialResolution/MD_Resolution/equivalentScale/MD_RepresentativeFraction/denominator/gco:Integer= " + spacialResolutionScale[i] + ")\n";
 				}
-
+			}
+			for (int i = 0; i < spacialResolutionGround.length; i++) {
 				if (IngridQueryHelper.hasValue(spacialResolutionGround[i])) {
 					if (abstractPostfix == null) {
 						abstractPostfix = abstractPostfixPrefix;
@@ -1095,7 +1106,8 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					abstractPostfix += "Bodenauflösung (Meter): " + spacialResolutionGround[i] + "\n";
 					abstractPostfix += "(spatialResolution/MD_Resolution/distance/gco:Distance[@uom=\"meter\"]= " + spacialResolutionGround[i] + ")\n";
 				}
-
+			}
+			for (int i = 0; i < spacialResolutionScan.length; i++) {
 				if (IngridQueryHelper.hasValue(spacialResolutionScan[i])) {
 					if (abstractPostfix == null) {
 						abstractPostfix = abstractPostfixPrefix;
@@ -1336,18 +1348,19 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		String[] spacialResolutionScan = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_RES_SCAN);
 		for (int i = 0; i < spacialResolutionScale.length; i++) {
-
 			if (IngridQueryHelper.hasValue(spacialResolutionScale[i])) {
 				this.addGCOInteger(mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 				"gmd:MD_Resolution").addElement("gmd:equivalentScale").addElement(
 						"gmd:MD_RepresentativeFraction").addElement("gmd:denominator"), spacialResolutionScale[i]);
 			}
-
+		}
+		for (int i = 0; i < spacialResolutionGround.length; i++) {
 			if (IngridQueryHelper.hasValue(spacialResolutionGround[i])) {
 				mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "meter").addText(spacialResolutionGround[i]);
 			}
-
+		}
+		for (int i = 0; i < spacialResolutionScan.length; i++) {
 			if (IngridQueryHelper.hasValue(spacialResolutionScan[i])) {
 				mdDataIdentification.addElement("gmd:spatialResolution").addElement(
 				"gmd:MD_Resolution").addElement("gmd:distance").addElement("gco:Distance").addAttribute("uom", "dpi").addText(spacialResolutionScan[i]);

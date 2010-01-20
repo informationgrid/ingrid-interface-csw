@@ -6,6 +6,7 @@ package de.ingrid.interfaces.csw.transform.response;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.logging.Log;
@@ -47,8 +48,10 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 						IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL));
 				hierarchyInfo.hierarchyLevel = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(525L, code);
 			} catch (NumberFormatException e) {
-				log.warn("Could not parse " + IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL + ". Value: " + IngridQueryHelper.getDetailValueAsString(hit,
-						IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL) + "could not be parsed to an Integer.");
+				if (log.isDebugEnabled()) {
+					log.warn("Could not parse " + IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL + ". Value: " + IngridQueryHelper.getDetailValueAsString(hit,
+							IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL) + "could not be parsed to an Integer.");
+				}
 			}
         } else if (udkClass.equals("3")) {
         	hierarchyInfo.hierarchyLevel = "service";
@@ -65,7 +68,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         } else if (udkClass.equals("0")) {
         	hierarchyInfo.hierarchyLevel = "nonGeographicDataset";
         	hierarchyInfo.hierarchyLevelName = "job";
-        } else {
+        } else if (udkClass.length() > 0) {
         	if (log.isInfoEnabled()) {
         		log.info("Unsupported UDK class '" + udkClass
                     + "'. Only class 0 to 5 are supported by the CSW interface.");
@@ -161,7 +164,16 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         		role = specialNames[i];
         	}
         	
-        	this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
+        	if (addressIds.length > i && IngridQueryHelper.hasValue(addressIds[i]) ) {
+        		this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
+        	} else {
+            	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
+                if (role != null && role.length() > 0) {
+                    ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
+                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                    .addAttribute("codeListValue", role);
+                }
+        	}
         }    
     }
 
@@ -214,7 +226,16 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         		role = specialNames[i];
         	}
         	
-        	this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
+        	if (addressIds.length > i && IngridQueryHelper.hasValue(addressIds[i]) ) {
+        		this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
+        	} else {
+            	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
+                if (role != null && role.length() > 0) {
+                    ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
+                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                    .addAttribute("codeListValue", role);
+                }
+        	}
         }    
     }    
 
@@ -298,16 +319,15 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                         "gmd:CI_OnlineResource");
                 this.addGMDUrl(CI_OnlineResource.addElement("gmd:linkage"), (String) url.get(0));
             }
-            if (role != null && role.length() > 0) {
-                ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
-                .addAttribute("codeListValue", role);
-            }
         } else {
         	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
         }
+        if (role != null && role.length() > 0) {
+            ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
+            .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+            .addAttribute("codeListValue", role);
+        }
     }
-    
     
     /**
      * Adds a CSW file identifier to a given element.
@@ -382,17 +402,15 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     	ciDate.addElement("gmd:date").addElement("gco:Date").addText(cswDate);
                     }
                     
-                    String codeListValue;
-                    if (referenceDateTypes[i].equals("1")) {
-                        codeListValue = "creation";
-                    } else if (referenceDateTypes[i].equals("2")) {
-                        codeListValue = "publication";
-                    } else if (referenceDateTypes[i].equals("3")) {
-                        codeListValue = "revision";
-                    } else {
-                        log.warn("Invalid UDK dataset reference date type: " + referenceDateTypes[i] + ".");
+                    String codeListValue = null;
+                    try {
+                    	codeListValue = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(502L, Long.parseLong(referenceDateTypes[i]));
+					} catch (NumberFormatException e) {
+                        if ( log.isDebugEnabled()) {
+                        	log.debug("Invalid UDK dataset reference date type: " + referenceDateTypes[i] + ".");
+                        }
                         codeListValue = "unspecified";
-                    }
+					}
                     ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
                             "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
                             "codeListValue", codeListValue);

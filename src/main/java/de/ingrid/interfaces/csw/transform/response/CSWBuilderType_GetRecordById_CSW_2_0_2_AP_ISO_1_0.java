@@ -5,8 +5,11 @@ package de.ingrid.interfaces.csw.transform.response;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.Node;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
@@ -48,10 +51,21 @@ public class CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilde
         if (hits.length() > 0) {
         	IngridHit hit = hits.getHits()[0];
 	        hit.put("hitDetail", details[0]);
-	        
-	        CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
-	        builder.setHit(hit);
-	        rootElement.add(builder.build());
+            if (IngridQueryHelper.hasValue(IngridQueryHelper.getDetailValueAsString(hit, "cswData"))) {
+            	Document document = DocumentHelper.parseText(IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
+            	Element metadataNode = (Element)document.selectSingleNode("//gmd:MD_Metadata");
+            	Node metadataIdNode = metadataNode.selectSingleNode("./@id");
+            	if (metadataIdNode != null) {
+            		metadataIdNode.setText("ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
+            	} else {
+            		metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
+            	}
+            	rootElement.add(metadataNode);
+            } else {
+                CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
+                builder.setHit(hit);
+                rootElement.add(builder.build());
+            }
         }
 
         return rootElement;
