@@ -418,9 +418,9 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	private void doGet_GetRecordById(final Properties reqParams, final HttpServletResponse response) throws Exception {
 
 		SessionParameters sessionParameters = new SessionParameters();
-		sessionParameters.setElementSetName(reqParams.getProperty("elementSetName", "brief"));
-		sessionParameters.setOutputSchema(reqParams.getProperty("outputSchema"));
-		sessionParameters.setVersion(reqParams.getProperty("version","2.0.2"));
+		sessionParameters.setElementSetName(reqParams.getProperty("ELEMENTSETNAME", "brief"));
+		sessionParameters.setOutputSchema(reqParams.getProperty("OUTPUTSCHEMA"));
+		sessionParameters.setVersion(reqParams.getProperty("VERSION","2.0.2"));
 		sessionParameters.setOperationIsGetRecById(true);
 		ArrayList<String> idList = new ArrayList<String>();
 		idList.add(reqParams.getProperty("ID"));

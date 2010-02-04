@@ -5,6 +5,14 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="1.2.2-SNAPSHOT" date="2010-xx-xx" description="Release">
+      <action type="fix">
+        Fix problem with GET request GetRecordById where the elementsetname was always set to 'brief'.
+      </action>
+      <action type="add">
+        Add complete mapping of the UDK data model, including also 'non-ISO' object classes.
+      </action>
+    </release> 
     <release version="1.2.1" date="2010-01-08" description="Release">
       <action type="fix">
         Fix order of results when the start position of the results was not a multiple of the requested hits.
@@ -24,7 +32,7 @@
         Problem bei Umsetzung von Filterquery zu InGrid Query mit logischen Verknüpfungen behoben.
       </action>
       <action type="add">
-        Anfragen können auf Partner, Anbieter und iPlug ID über GET Parameter eingeschränkt werden.
+        Anfragen koennen auf Partner, Anbieter und iPlug ID über GET Parameter eingeschraenkt werden.
       </action>
       <action type="fix">
         Kommentare zu Textfeldern im Installer (nur im Textmodus) werden erst nach der Eingabe angezeigt.
@@ -33,7 +41,7 @@
         Wiederholtes Laden eines gecachten Objektes fuehrt zu Vervielfachung der "organisation" Angaben in einer Adresse.
       </action>
       <action type="update">
-        Erweiterung der unterst&uuml;tzten Länder bei Transformation IGC - CSW
+        Erweiterung der unterstuetzten Laender bei Transformation IGC - CSW
       </action>
       <action type="add">
         POST Methode akzeptiert auch Anfragen mit Content-Type:text/xml.
