@@ -553,7 +553,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             	}
             }
             if (geoIdentifier != null) {
-            	super.addGCOCharacterString(exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicDescription").addElement("gmd:geographicIdentifier").addElement("gmd:MD_Identifier").addElement("gmd:code"), geoIdentifier);
+            	Element exGeographicDescription = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicDescription");
+            	super.addGCOBoolean(exGeographicDescription.addElement("gmd:extentTypeCode"), true);
+            	super.addGCOCharacterString(exGeographicDescription.addElement("gmd:geographicIdentifier").addElement("gmd:MD_Identifier").addElement("gmd:code"), geoIdentifier);
             }
             
             Element exGeographicBoundingBox = null;
@@ -570,6 +572,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             	if (exGeographicBoundingBox == null) {
             		exGeographicBoundingBox = exExent.addElement("gmd:geographicElement").addElement("gmd:EX_GeographicBoundingBox");
             	}
+            	super.addGCOBoolean(exGeographicBoundingBox.addElement("gmd:extentTypeCode"), true);
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:westBoundLongitude"), stBoxX1[i].replaceAll(",", "."));
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:eastBoundLongitude"), stBoxX2[i].replaceAll(",", "."));
             	super.addGCODecimal(exGeographicBoundingBox.addElement("gmd:southBoundLatitude"), stBoxY1[i].replaceAll(",", "."));

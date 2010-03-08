@@ -6,6 +6,9 @@
   </properties>
   <body>
     <release version="1.2.2-SNAPSHOT" date="2010-xx-xx" description="Release">
+      <action type="add">
+        Add mapping of extentTypeCode (set always to TRUE) and metadateStandardName (defaults to 'ISO19115') and metadataStandardVersion (defaults to '2003/Cor.1:2006').
+      </action>
       <action type="fix">
         Fix problem with GET request GetRecordById where the elementsetname was always set to 'brief'.
       </action>
