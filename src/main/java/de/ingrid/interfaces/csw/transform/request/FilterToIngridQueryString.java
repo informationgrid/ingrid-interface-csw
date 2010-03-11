@@ -1077,7 +1077,7 @@ public class FilterToIngridQueryString {
 			outprop = "t01_object.data_language_code";
 			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicDescription.geographicIdentifier.MD_Identifier.code
 		} else if (inPropWithoutNS.equalsIgnoreCase("GeographicDescriptionCode")) {
-			outprop = "spatial_ref_value.name_value";
+			outprop = "location";
 			// MD_Metadata.identificationInfo.MD_DataIdentification.spatialResolution.MD_Resolution.equivalentScale.MD_RepresentativeFraction.denominator
 		} else if (inPropWithoutNS.equalsIgnoreCase("Denominator")) {
 			outprop = "t011_obj_geo_scale.scale";
