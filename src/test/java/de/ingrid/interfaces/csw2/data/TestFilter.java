@@ -243,5 +243,42 @@ public final class TestFilter {
 			"<Literal>*JOHN*</Literal>\r\n" + 
 			"</PropertyIsLike>\r\n" + 
 			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_12 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<Overlaps>\r\n" + 
+			"<PropertyName>Geometry</PropertyName>\r\n" + 
+			"<gml:Polygon srsName=\"http://www.opengis.net/gml/srs/epsg.xml#4326\">\r\n" + 
+			"<gml:outerBoundaryIs>\r\n" + 
+			"<gml:LinearRing>\r\n" + 
+			"<gml:coordinates>13.0983,31.5899 35.5472,42.8143 35.5472,45.8143 13.0983,31.5899</gml:coordinates>\r\n" + 
+			"</gml:LinearRing>\r\n" + 
+			"</gml:outerBoundaryIs>\r\n" + 
+			"</gml:Polygon>\r\n" + 
+			"</Overlaps>" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_13 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<And>\r\n" + 
+			"<Or>\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<PropertyName>DistanceValue</PropertyName>\r\n" + 
+			"<Literal>10</Literal>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<PropertyName>DistanceValue</PropertyName>\r\n" + 
+			"<Literal>20</Literal>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"</Or>\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<PropertyName>Title</PropertyName>\r\n" + 
+			"<Literal>John</Literal>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"</And>\r\n" + 
+			"</Filter>";
+	
 	
 }

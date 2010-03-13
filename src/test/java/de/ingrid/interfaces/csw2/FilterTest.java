@@ -10,6 +10,7 @@ import org.geotools.util.logging.Logging;
 import org.w3c.dom.Document;
 
 import de.ingrid.interfaces.csw2.data.TestFilter;
+import de.ingrid.interfaces.csw2.data.UtilsSearch;
 import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw2.filter.FilterParser;
 import de.ingrid.interfaces.csw2.tools.XMLTools;
@@ -142,6 +143,20 @@ public class FilterTest extends OperationTestBase {
 			}
 		}
 		
-	
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_12));
+		try {
+			query = parser.parse(filterDoc);
+			fail("Overlaps should not be supported (missing exception).");
+		} catch (Throwable t) {
+			if (!(t.getCause() instanceof CSWOperationNotSupportedException)) {
+				fail("Exception cause must be a CSWOperationNotSupportedException!");
+			}
+		}
+
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_13));
+		query = parser.parse(filterDoc);
+		String qString = UtilsSearch.queryToString(query);
+		assertTrue("UtilsSearch.queryToString(query) does not contain '( ?t011_obj_geo_scale.resolution_ground:10 ?t011_obj_geo_scale.resolution_ground:20) title:John'", qString.contains("( ?t011_obj_geo_scale.resolution_ground:10 ?t011_obj_geo_scale.resolution_ground:20) title:John"));
+		
 	}
 }
