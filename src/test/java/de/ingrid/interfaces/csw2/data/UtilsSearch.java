@@ -4,7 +4,6 @@
 package de.ingrid.interfaces.csw2.data;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,6 +12,7 @@ import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.query.RangeQuery;
 import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
 
@@ -59,6 +59,16 @@ public class UtilsSearch {
 			for (int i = 0; i < fields.length; i++) {
 				qStr = qStr.concat(" ").concat(buildFieldQueryStr(fields[i]));
 			}
+			
+			RangeQuery[] rangeQueries = q.getRangeQueries();
+			for (RangeQuery rq : rangeQueries) {
+				if (!rq.isRequred()) {
+					qStr = qStr.concat(" OR ").concat(rq.getRangeName()+":["+rq.getRangeFrom()+ " TO " + rq.getRangeTo() + "]");
+				} else {
+					qStr = qStr.concat(" ").concat(rq.getRangeName()+":["+rq.getRangeFrom()+ " TO " + rq.getRangeTo() + "]");
+				}
+			}
+			
 
 			FieldQuery[] datatypes = q.getDataTypes();
 			for (int i = 0; i < datatypes.length; i++) {
@@ -204,7 +214,7 @@ public class UtilsSearch {
 	 */
 	public static FieldQuery[] getField(IngridQuery q, String fieldName) {
 		FieldQuery[] fields = q.getFields();
-		ArrayList resultFields = new ArrayList();
+		ArrayList<FieldQuery> resultFields = new ArrayList<FieldQuery>();
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i].getFieldName().equals(fieldName)) {
 				resultFields.add(fields[i]);

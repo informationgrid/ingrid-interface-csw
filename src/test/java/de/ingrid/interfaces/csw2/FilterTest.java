@@ -22,7 +22,7 @@ public class FilterTest extends OperationTestBase {
 	 * Test ogc filter parsing 
 	 * @throws Exception
 	 */
-	public void testGeoToolsFilterParsing() throws Exception {
+	public void testGeoToolsFilterParsingSpecSampleFilter() throws Exception {
 
 		final Logging logging = Logging.ALL;
 		try {
@@ -157,6 +157,33 @@ public class FilterTest extends OperationTestBase {
 		query = parser.parse(filterDoc);
 		String qString = UtilsSearch.queryToString(query);
 		assertTrue("UtilsSearch.queryToString(query) does not contain '( ?t011_obj_geo_scale.resolution_ground:10 ?t011_obj_geo_scale.resolution_ground:20) title:John'", qString.contains("( ?t011_obj_geo_scale.resolution_ground:10 ?t011_obj_geo_scale.resolution_ground:20) title:John"));
+		
+		
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_14));
+		query = parser.parse(filterDoc);
+		qString = UtilsSearch.queryToString(query);
+		assertTrue("UtilsSearch.queryToString(query) does not contain 'x1:13.0983 x2:35.5472 y1:31.5899 y2:45.8143 coord:inside t011_obj_geo_scale.resolution_ground:[400 TO 800]'", qString.contains("x1:13.0983 x2:35.5472 y1:31.5899 y2:45.8143 coord:inside t011_obj_geo_scale.resolution_ground:[400 TO 800]"));
+
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_15));
+		try {
+			query = parser.parse(filterDoc);
+			fail("Queriable 'Age' should not be supported (missing exception).");
+		} catch (Throwable t) {
+			if (!(t.getCause() instanceof CSWOperationNotSupportedException)) {
+				fail("Exception cause must be a CSWOperationNotSupportedException!");
+			}
+		}
+		
+		parser = new de.ingrid.interfaces.csw2.filter.impl.geotools.FilterParserImpl();
+		filterDoc = XMLTools.parse(new StringReader(TestFilter.OGC_FILTER_SAMPLE_15_1));
+		try {
+			parser.parse(filterDoc);
+			fail("Queriable '@Attribute' should not be supported (missing exception).");
+		} catch (Throwable t) {
+			if (!(t.getCause() instanceof CSWOperationNotSupportedException)) {
+				fail("Exception cause must be a CSWOperationNotSupportedException!");
+			}
+		}
 		
 	}
 }

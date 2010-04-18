@@ -279,6 +279,57 @@ public final class TestFilter {
 			"</PropertyIsEqualTo>\r\n" + 
 			"</And>\r\n" + 
 			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_14 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<And>\r\n" + 
+			"<Within>\r\n" + 
+			"<PropertyName>Geometry</PropertyName>\r\n" + 
+			"<gml:Polygon name=\"1\" srsName=\"EPSG:4326\">\r\n" + 
+			"<gml:outerBoundaryIs>\r\n" + 
+			"<gml:LinearRing>\r\n" + 
+			"<gml:coordinates>13.0983,31.5899 35.5472,42.8143 35.5472,45.8143 13.0983,31.5899</gml:coordinates>\r\n" + 
+			"</gml:LinearRing>\r\n" + 
+			"</gml:outerBoundaryIs>\r\n" + 
+			"</gml:Polygon>\r\n" + 
+			"</Within>\r\n" + 
+			"<PropertyIsBetween>\r\n" + 
+			"<PropertyName>DistanceValue</PropertyName>\r\n" + 
+			"<LowerBoundary><Literal>400</Literal></LowerBoundary>\r\n" + 
+			"<UpperBoundary><Literal>800</Literal></UpperBoundary>\r\n" + 
+			"</PropertyIsBetween>\r\n" + 
+			"</And> \r\n" + 
+			"</Filter>";
 	
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_15 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<And>\r\n" + 
+			"<PropertyIsGreaterThan>\r\n" + 
+			"<PropertyName>Person/Age</PropertyName>\r\n" + 
+			"<Literal>50</Literal>\r\n" + 
+			"</PropertyIsGreaterThan>\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<PropertyName>Person/Address/City</PropertyName>\r\n" + 
+			"<Literal>Toronto</Literal>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"</And>\r\n" + 
+			"</Filter>";
+
+	// sample filter from OGC 02-059 Filter Specification
+	public static final String OGC_FILTER_SAMPLE_15_1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+			"<Filter xmlns=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\">\r\n" + 
+			"<And>\r\n" + 
+			"<PropertyIsGreaterThan>\r\n" + 
+			"<PropertyName>Person/Age/@Attribute</PropertyName>\r\n" + 
+			"<Literal>50</Literal>\r\n" + 
+			"</PropertyIsGreaterThan>\r\n" + 
+			"<PropertyIsEqualTo>\r\n" + 
+			"<PropertyName>Person/Address/City</PropertyName>\r\n" + 
+			"<Literal>Toronto</Literal>\r\n" + 
+			"</PropertyIsEqualTo>\r\n" + 
+			"</And>\r\n" + 
+			"</Filter>";
 	
 }

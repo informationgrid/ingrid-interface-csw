@@ -55,7 +55,7 @@ import de.ingrid.interfaces.csw2.exceptions.CSWOperationNotSupportedException;
 public class IngridFilterVisitor extends DefaultFilterVisitor {
 
 	/** The logging object **/
-	private static Log log = LogFactory.getLog(FilterParserImpl.class);
+	private static Log log = LogFactory.getLog(IngridFilterVisitor.class);
 
 	@Override
 	public Object visit(And filter, Object data) {
@@ -340,10 +340,10 @@ public class IngridFilterVisitor extends DefaultFilterVisitor {
 					ingridPropertyName = PropertyNameMapping.map(curPropertyName, ctx);
 				} catch (Exception e) {
 					if (log.isInfoEnabled()) {
-						log.info("Queriable '"+curPropertyName+" is not supported.");
+						log.info("Queriable '"+curPropertyName+"' is not supported.");
 					}
 					throw new RuntimeException(new CSWOperationNotSupportedException(
-							"Queriable '"+curPropertyName+" is not supported.", "Filterquery"));
+							"Queriable '"+curPropertyName+"' is not supported.", "Filterquery"));
 				}
 				if (ingridPropertyName != null && ingridPropertyName.length() > 0) {
 					// build the query syntax according to the comparison
