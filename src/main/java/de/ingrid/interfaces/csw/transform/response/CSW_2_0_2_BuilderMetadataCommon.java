@@ -341,14 +341,40 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
      * @return The parent element.
      */
     protected void addFileIdentifier(Element parent, IngridHit hit, String ns) {
-    	String id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_ORG_OBJ_ID);
-        if (!IngridQueryHelper.hasValue(id)) {
-        	id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
-        }
+    	String id = getFileIdentifier(hit);
     	if (IngridQueryHelper.hasValue(id)) {
         	this.addGCOCharacterString(parent.addElement(getNSElementName(ns, "fileIdentifier")), id);
         }
     }
+    
+    protected String getFileIdentifier(IngridHit hit) {
+    	String id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_ORG_OBJ_ID);
+        if (!IngridQueryHelper.hasValue(id)) {
+        	id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
+        }
+        return id;
+    }
+
+    /**
+     * Create a citation identifier. Try to obtain the identifier from datasource uuid in IGC. 
+     * If this fails generate a new UUID based on the fileIdentifier, because the citation Identifier
+     * must not be the same as the fileIdentifier. 
+     * 
+     * @param hit
+     * @return
+     */
+    protected String getCitationIdentifier(IngridHit hit) {
+    	String id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_DATASOURCE_UUID);
+        if (!IngridQueryHelper.hasValue(id)) {
+        	id = getFileIdentifier(hit);
+        	id = java.util.UUID.nameUUIDFromBytes(getFileIdentifier(hit).getBytes()).toString();
+        } else {
+        	id.replaceAll(":", "#");
+        }
+        return id;
+    }
+    
+    
 
     protected void addFileIdentifier(Element parent, IngridHit hit) {
         addFileIdentifier(parent, hit, null);
@@ -688,40 +714,6 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 		String[] environmentalTopics = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_ENV_TOPIC_TOPIC_KEY);
 		
-		if (thesaurusKeywords.size() > 0) {
-			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < thesaurusKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
-								.get(i));
-			}
-			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
-			"codeListValue", "theme");
-			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
-			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "UMTHES Thesaurus");
-			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
-			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2009-01-15");
-			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
-				.addAttribute("codeListValue", "publication")
-				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
-		}
-		if (gemetKeywords.size() > 0) {
-			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
-			for (int i = 0; i < gemetKeywords.size(); i++) {
-				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) gemetKeywords
-								.get(i));
-			}
-			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
-			"codeListValue", "theme");
-			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
-			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "GEMET - Concepts, version 2.1");
-			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
-			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2008-06-13");
-			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
-				.addAttribute("codeListValue", "publication")
-				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
-		}		
 		if (inspireKeywords.size() > 0) {
 			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
 			for (int i = 0; i < inspireKeywords.size(); i++) {
@@ -739,6 +731,40 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 				.addAttribute("codeListValue", "publication")
 				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
 		}		
+		if (gemetKeywords.size() > 0) {
+			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+			for (int i = 0; i < gemetKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) gemetKeywords
+								.get(i));
+			}
+			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"codeListValue", "theme");
+			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
+			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "GEMET - Concepts, version 2.1");
+			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2008-06-13");
+			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
+				.addAttribute("codeListValue", "publication")
+				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
+		}		
+		if (thesaurusKeywords.size() > 0) {
+			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
+			for (int i = 0; i < thesaurusKeywords.size(); i++) {
+				this.addGCOCharacterString(keywordType.addElement("gmd:keyword"), (String) thesaurusKeywords
+								.get(i));
+			}
+			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
+			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"codeListValue", "theme");
+			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
+			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "UMTHES Thesaurus");
+			Element thesaurusCitationDate = thesaurusCitation.addElement("gmd:date").addElement("gmd:CI_Date");
+			thesaurusCitationDate.addElement("gmd:date").addElement("gco:Date").addText("2009-01-15");
+			thesaurusCitationDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode")
+				.addAttribute("codeListValue", "publication")
+				.addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode");
+		}
 		if (freeKeywords.size() > 0) {
 			Element keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
 			for (int i = 0; i < freeKeywords.size(); i++) {

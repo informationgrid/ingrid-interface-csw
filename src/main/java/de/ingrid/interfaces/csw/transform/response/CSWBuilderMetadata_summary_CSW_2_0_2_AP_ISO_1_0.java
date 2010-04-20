@@ -43,7 +43,7 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         metaData.add(gmd);
         metaData.add(srv);
 
-		metaData.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId());
+		metaData.addAttribute("id", "ingrid#" + hit.getPlugId() + "#" + hit.getDocumentId());
         
         this.addFileIdentifier(metaData, hit);
         this.addLanguage(metaData, hit);
@@ -105,6 +105,8 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         Element svServiceIdentification = metaData.addElement("identificationInfo").addElement(
                 "srv:SV_ServiceIdentification");
 
+        svServiceIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
+        
         // add citation construct
         this.addCitation(svServiceIdentification, hit);
 
@@ -169,6 +171,8 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
     private void addIdentificationInfoDataset(Element metaData, IngridHit hit) throws Exception {
         Element mdDataIdentification = metaData.addElement("identificationInfo").addElement(
                 "gmd:MD_DataIdentification");
+        
+        mdDataIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
 
         // add citation construct
         this.addCitation(mdDataIdentification, hit);

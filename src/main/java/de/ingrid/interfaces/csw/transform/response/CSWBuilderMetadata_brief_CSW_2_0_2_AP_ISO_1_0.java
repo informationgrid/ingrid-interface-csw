@@ -52,7 +52,7 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 		metaData.add(gco);
 		metaData.add(srv);
 
-		metaData.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId());
+		metaData.addAttribute("id", "ingrid#" + hit.getPlugId() + "#" + hit.getDocumentId());
 
 		this.addFileIdentifier(metaData, hit);
 		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), hierarchyInfo.hierarchyLevel);
@@ -73,8 +73,12 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 	private void addIdentificationInfoService(Element metaData, IngridHit hit) {
 		Element svServiceIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"srv:SV_ServiceIdentification");
+		
+		svServiceIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
+		
 		Element ciCitation = svServiceIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation");
 
+		
 		this.addGCOCharacterString(ciCitation.addElement("gmd:title"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
 
@@ -133,6 +137,9 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 	private void addIdentificationInfoDataset(Element metaData, IngridHit hit) {
 		Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"gmd:MD_DataIdentification");
+		
+		mdDataIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
+		
 		Element ciCitation = mdDataIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation");
 		// add title
 		this.addGCOCharacterString(ciCitation.addElement("gmd:title"), IngridQueryHelper.getDetailValueAsString(

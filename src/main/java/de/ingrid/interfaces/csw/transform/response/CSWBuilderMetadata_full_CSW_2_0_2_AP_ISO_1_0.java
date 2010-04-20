@@ -52,7 +52,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		metaData.add(gml);
 		metaData.add(gts);
 		
-		metaData.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId());
+		metaData.addAttribute("id", "ingrid#" + hit.getPlugId() + "#" + hit.getDocumentId());
 
 		this.addFileIdentifier(metaData, hit, this.getNSPrefix());
 		this.addLanguage(metaData, hit, this.getNSPrefix());
@@ -129,9 +129,14 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					"gmd:CI_Citation");
 			this.addGCOCharacterString(portrayalCICitation.addElement("gmd:title"), portrayalCatalogInfoTitles[i]);
 			String myDate = portrayalCatalogInfoDates[i];
+			Element ciDate = portrayalCICitation.addElement("gmd:date").addElement("gmd:CI_Date");
 			if (myDate != null && myDate.length() > 0) {
-				Element ciDate = portrayalCICitation.addElement("gmd:date").addElement("gmd:CI_Date");
 				ciDate.addElement("gmd:date").addElement("gco:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(myDate));
+				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
+						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+						"codeListValue", "creation");
+			} else {
+				ciDate.addElement("gmd:date").addElement("gco:Date").addAttribute("nilReason", "missing");
 				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
 						"codeListValue", "creation");
@@ -234,7 +239,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 	        boolean foundContact = false;
 	        for (int i = 0; i < addressTypes.length; i++) {
 	        	// leader
-	        	if (addressTypes[i].equals("5")) {
+	        	if (addressTypes[i].equals("5") && addressIds.length >= i) {
 	        		this.addResponsibleParty(ciResponsibleParteDistributorContact, hit, addressIds[i], "distributor");
 	        		foundContact = true;
 	        		break;
@@ -369,13 +374,15 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				// MD_Metadata/full:contentInfo/MD_FeatureCatalogueDescription/featureCatalogueCitation/CI_Citation/date/CI_Date/date/Date
 				// UND .../CI_Date/date/DateType/CI_DateTypeCode/....
 				String myDate = keycDates[i];
+				Element ciDate = ciCitation.addElement("gmd:date").addElement("gmd:CI_Date");
 				if (myDate != null && myDate.length() > 0) {
-					Element ciDate = ciCitation.addElement("gmd:date").addElement("gmd:CI_Date");
 					ciDate.addElement("gmd:date").addElement("gco:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(myDate));
-					ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
-							"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
-							"codeListValue", "creation");
+				} else {
+					ciDate.addElement("gmd:date").addElement("gco:Date").addAttribute("nilReason", "missing");
 				}
+				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
+				"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+				"codeListValue", "creation");
 				// T011_obj_geo_keyc.edition
 				// MD_Metadata/full:contentInfo/MD_FeatureCatalogueDescription/featureCatalogueCitation/CI_Citation/edition/CharacterString
 				this.addGCOCharacterString(ciCitation.addElement("gmd:edition"), keycEditions[i]);
@@ -797,9 +804,11 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		super.addCitationReferenceDates(ciCitation, hit, "gmd");
 
 		// add identifier
-		String identifier = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_DATASOURCE_UUID);
+		String identifier = getCitationIdentifier(hit);
 		if (IngridQueryHelper.hasValue(identifier)) {
-			this.addGCOCharacterString(ciCitation.addElement("gmd:identifier").addElement("gmd:RS_Identifier").addElement("gmd:code"), identifier);
+			Element rsIdentifier = ciCitation.addElement("gmd:identifier").addElement("gmd:RS_Identifier");
+			this.addGCOCharacterString(rsIdentifier.addElement("gmd:code"), identifier);
+			this.addGCOCharacterString(rsIdentifier.addElement("gmd:codeSpace"), "ingrid");
 		}
 		
 		
@@ -962,6 +971,8 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		Element svServiceIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"srv:SV_ServiceIdentification");
 
+        svServiceIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
+		
 		addGenericMetadataIndentification(svServiceIdentification, hit);
 
 		this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), IngridQueryHelper
@@ -1009,6 +1020,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				spacialResolutionScale.length > 0 || spacialResolutionGround.length > 0 || spacialResolutionScan.length > 0) {
 			Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 			"gmd:MD_DataIdentification");
+			mdDataIdentification.addAttribute("uuid", this.getFileIdentifier(hit));
 			// add necessary elements for schema validation
 			Element ciCitation = mdDataIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation");
 			this.addGCOCharacterString(ciCitation.addElement("gmd:title").addAttribute("gco:nilReason", "other:providedInPreviousIdentificationInfo"), "");
@@ -1316,7 +1328,9 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"gmd:MD_DataIdentification");
 
-		addGenericMetadataIndentification(mdDataIdentification, hit);
+        mdDataIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
+		
+        addGenericMetadataIndentification(mdDataIdentification, hit);
 
 		// add digital representation
 		// T011_obj_geo_spatial_rep.type ->

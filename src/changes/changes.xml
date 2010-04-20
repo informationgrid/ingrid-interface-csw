@@ -7,6 +7,27 @@
   <body>
     <release version="1.2.3-SNAPSHOT" date="2010-xx-xx" description="Release">
       <action type="change">
+        Map fileIdentifier to Original OBJ_ID or, if empty to OBJ_UUID.
+      </action>
+      <action type="add">
+        Add CitationIdentifier ID: use datasource uuid or, if empty, create new UUID.
+      </action>
+      <action type="change">
+        Make MD_Metadata ID ISO compliant (no ':' allowed).
+      </action>
+      <action type="change">
+        Add CI_Citation date elements even if date has no value. Use nilReason="missing" on such date elements.
+      </action>
+      <action type="change">
+        Improve robustness of address rendering (filter adress references without adresses).
+      </action>
+      <action type="add">
+        Add code space "Ingrid" to RS_Identifier entries.
+      </action>
+      <action type="change">
+        Map INSPIRE keywords first, if they exist. Keywords are mapped in the following order: INSPIRE, GEMET, UMTHES, FREE, SERVICE_CLASSIFICATION, ENV_CATEGORIES, ENV_TOPICS.
+      </action>
+      <action type="change">
         Map GeographicDescriptionCode to index field name 'location' instead of UDK table and fieldname.
       </action>
     </release> 
