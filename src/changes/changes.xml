@@ -7,6 +7,9 @@
   <body>
     <release version="1.2.3-SNAPSHOT" date="2010-xx-xx" description="Release">
       <action type="change">
+        Adapt capabilities document. This interface does not support typeName "csw:Record" nor CSW 2.0.0
+      </action>
+      <action type="change">
         Map fileIdentifier to Original OBJ_ID or, if empty to OBJ_UUID.
       </action>
       <action type="add">
