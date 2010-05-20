@@ -776,8 +776,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			for (int i = 0; i < serviceClassifications.length; i++) {
 		        String codeVal = "";
 		        try {
-		            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, serviceClassifications[i]));
-		            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(102L, code);
+		            Long code = Long.valueOf(serviceClassifications[i]);
+		            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(5200L, code);
 					if (keywordType == null) {
 						keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
 					}

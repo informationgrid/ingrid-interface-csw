@@ -125,8 +125,8 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         
         
         // add service type
-        String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);
-        String serviceType = null;
+        String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_KEY);
+        String serviceType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);;
         if (serviceTypeKey != null) {
         	if (serviceTypeKey.equals("1")) {
         		serviceType = "discovery";
@@ -143,7 +143,7 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
         	}
         }
         if (serviceType != null) {
-        	this.addGCOCharacterString(svServiceIdentification.addElement("serviceType"), serviceType);        	
+        	this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), serviceType);        	
         }
         
 

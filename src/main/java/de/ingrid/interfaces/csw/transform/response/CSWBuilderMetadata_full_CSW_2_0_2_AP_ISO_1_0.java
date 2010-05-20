@@ -975,8 +975,27 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		
 		addGenericMetadataIndentification(svServiceIdentification, hit);
 
-		this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), IngridQueryHelper
-				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE));
+        // add service type
+        String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_KEY);
+        String serviceType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);;
+        if (serviceTypeKey != null) {
+        	if (serviceTypeKey.equals("1")) {
+        		serviceType = "discovery";
+        	} else if (serviceTypeKey.equals("2")) {
+        		serviceType = "view";
+        	} else if (serviceTypeKey.equals("3")) {
+        		serviceType = "download";
+        	} else if (serviceTypeKey.equals("4")) {
+        		serviceType = "transformation";
+        	} else if (serviceTypeKey.equals("5")) {
+        		serviceType = "invoke";
+        	} else  {
+        		serviceType = "other";
+        	}
+        }
+        if (serviceType != null) {
+        	this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), serviceType);        	
+        }
 
 		String[] serviceTypeVersions = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_VERSION);
