@@ -814,7 +814,7 @@ public class FilterToIngridQueryString {
 				String type = (String)((Expression.Literal)  co.getSecondExpression().getExpression()).getLiteral();
 				if (type.equalsIgnoreCase("service") || type.equalsIgnoreCase("application")) {
 					_session.setTypeNameIsService(true);
-				} else if (type.equalsIgnoreCase("dataset") || type.equalsIgnoreCase("datasetcollections")) {
+				} else if (type.equalsIgnoreCase("dataset") || type.equalsIgnoreCase("datasetcollection")) {
 					_session.setTypeNameIsDataset(true);
 				} else if (type.equalsIgnoreCase("nonGeographicDataset")) {
 					_session.setTypeNameIsNonGeographicDataset(true);
