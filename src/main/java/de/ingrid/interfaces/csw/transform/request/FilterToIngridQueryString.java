@@ -1054,7 +1054,10 @@ public class FilterToIngridQueryString {
 			// Boolean: MD_Metadata.AbstractMD_Identification.resourceConstraints.MD_SecurityConstraints
 		} else if (inPropWithoutNS.equalsIgnoreCase("HasSecurityConstraints")) {
 			outprop = "object_access.restriction_key:[0 TO 9]";
-			// MD_Metadata.identificationInfo.AbstractMD_Identification.citation.CI_Citation.identifier.MD_Identifier.code		
+		} else if (inPropWithoutNS.equalsIgnoreCase("Language")) {
+			// TODO: value must be transformed to ISO 639-1
+			outprop = "t01_object.metadata_language_code";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicDescription.geographicIdentifier.MD_Identifier.code
 		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceIdentifier")) {
 			outprop = "t011_obj_geo.datasource_uuid";
 			// MD_Metadata.parentIdentifier

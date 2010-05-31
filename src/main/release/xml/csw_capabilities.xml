@@ -83,7 +83,6 @@
 			<ows:Parameter name="resultType">
 				<ows:Value>hits</ows:Value>
 				<ows:Value>results</ows:Value>
-<!-- 				<ows:Value>validate</ows:Value> -->
 			</ows:Parameter>
 			<ows:Parameter name="ElementSetName">
 				<ows:Value>brief</ows:Value>
@@ -103,29 +102,52 @@
 				<ows:Value>PublicationDate</ows:Value>
 				<ows:Value>OrganisationName</ows:Value>
 				<ows:Value>HasSecurityConstraints</ows:Value>
+				<!-- 
+				Currently not supported, Transformation into IGC Code required  			
 				<ows:Value>Language</ows:Value>
+				-->
 				<ows:Value>ResourceIdentifier</ows:Value>
 				<ows:Value>ParentIdentifier</ows:Value>
-				<ows:Value>KeywordType</ows:Value>
+				<!-- 
+				Currently not supported  			
+				<ows:Value>KeywordType</ows:Value> 
+				-->
+				<!-- 
+				Currently not supported, Transformation into IGC Code required
 				<ows:Value>TopicCategory</ows:Value>
+				-->
+				<!-- 
+				Currently not supported, Transformation into IGC Code required  			
 				<ows:Value>ResourceLanguage</ows:Value>
+				-->
 				<ows:Value>GeographicDescriptionCode</ows:Value>
 				<ows:Value>DistanceValue</ows:Value>
+				<!-- 
+				Currently not supported  			
 				<ows:Value>DistanceUOM</ows:Value>
+				-->
 				<ows:Value>TempExtent_begin</ows:Value>
 				<ows:Value>TempExtent_end</ows:Value>
 				<ows:Value>ServiceType</ows:Value>
 				<ows:Value>ServiceTypeVersion</ows:Value>
 				<ows:Value>Operation</ows:Value>
+				<!-- 
+				Currently not supported  			
 				<ows:Value>CouplingType</ows:Value>
+				-->
 				<ows:Value>OperatesOn</ows:Value>
 				<ows:Value>Denominator</ows:Value>
 				<ows:Value>OperatesOnIdentifier</ows:Value>
-				<ows:Value>OperatesOnWithOpName</ows:Value>
+				<!-- 
+				Currently not supported  			
+				<ows:Value>OperatesOnName</ows:Value>
+				-->
 			</ows:Constraint>
+			<!--
 			<ows:Constraint name="AdditionalQueryables">
 				<ows:Value>HierarchyLevelName</ows:Value>
 			</ows:Constraint>
+			-->
 		</ows:Operation>
 		<ows:Operation name="GetRecordById">
 			<ows:DCP>
