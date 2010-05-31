@@ -85,7 +85,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(510L, code);
 			if (IngridQueryHelper.hasValue(codeVal)) {
 				metaData.addElement("gmd:characterSet").addElement("gmd:MD_CharacterSetCode").addAttribute(
-						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode")
+						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CharacterSetCode")
 						.addAttribute("codeListValue", codeVal);
 			}
 		} catch (NumberFormatException e) {
@@ -111,7 +111,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     protected Element addHierarchyLevel(Element parent, String level) {
         // TODO: if dataset, get scope from T011_obj_geo.hierarchy_level and transform code with codelist 525
         parent.addElement("gmd:MD_ScopeCode").addAttribute("codeList",
-                "http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode").addAttribute("codeListValue",
+                "http://www.tc211.org/ISO19139/resources/codeList.xml#MD_ScopeCode").addAttribute("codeListValue",
                 level);
         return parent;
     }
@@ -170,7 +170,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
                 if (role != null && role.length() > 0) {
                     ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
                     .addAttribute("codeListValue", role);
                 }
         	}
@@ -232,7 +232,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
                 if (role != null && role.length() > 0) {
                     ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
                     .addAttribute("codeListValue", role);
                 }
         	}
@@ -324,7 +324,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         }
         if (role != null && role.length() > 0) {
             ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-            .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+            .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
             .addAttribute("codeListValue", role);
         }
     }
@@ -438,7 +438,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                         codeListValue = "unspecified";
 					}
                     ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
-                            "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+                            "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode").addAttribute(
                             "codeListValue", codeListValue);
                     
                 }
@@ -463,7 +463,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
             	ciDate.addElement("gmd:date").addElement("gco:Date").addText(cswDate);
             }
             ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
-            "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+            "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode").addAttribute(
             "codeListValue", "publication");
         }
     }
@@ -721,7 +721,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 								.get(i));
 			}
 			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode").addAttribute(
 			"codeListValue", "theme");
 			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
 			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "GEMET - INSPIRE themes, version 1.0");
@@ -738,7 +738,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 								.get(i));
 			}
 			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode").addAttribute(
 			"codeListValue", "theme");
 			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
 			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "GEMET - Concepts, version 2.1");
@@ -755,7 +755,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 								.get(i));
 			}
 			keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-			"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+			"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode").addAttribute(
 			"codeListValue", "theme");
 			Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
 			this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "UMTHES Thesaurus");
@@ -786,7 +786,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			}
 			if (keywordType != null) {
 				keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-				"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+				"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode").addAttribute(
 				"codeListValue", "theme");
 				Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
 				this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "Service Classification, version 1.0");
@@ -812,7 +812,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			}
 			if (keywordType != null) {
 				keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-				"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+				"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode").addAttribute(
 				"codeListValue", "theme");
 				Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
 				this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "German Environmental Classification - Category, version 1.0");
@@ -839,7 +839,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			}
 			if (keywordType != null) {
 				keywordType.addElement("gmd:type").addElement("gmd:MD_KeywordTypeCode").addAttribute("codeList",
-				"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode").addAttribute(
+				"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode").addAttribute(
 				"codeListValue", "theme");
 				Element thesaurusCitation = keywordType.addElement("gmd:thesaurusName").addElement("gmd:CI_Citation");
 				this.addGCOCharacterString(thesaurusCitation.addElement("gmd:title"), "German Environmental Classification - Topic, version 1.0");

@@ -133,12 +133,12 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			if (myDate != null && myDate.length() > 0) {
 				ciDate.addElement("gmd:date").addElement("gco:Date").addText(Udk2CswDateFieldParser.instance().parseToDate(myDate));
 				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
-						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+						"http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode").addAttribute(
 						"codeListValue", "creation");
 			} else {
 				ciDate.addElement("gmd:date").addElement("gco:Date").addAttribute("nilReason", "missing");
 				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
-						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+						"http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode").addAttribute(
 						"codeListValue", "creation");
 			}
 			this.addGCOCharacterString(portrayalCICitation.addElement("gmd:edition"),
@@ -248,7 +248,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 	        if (!foundContact) {
 		        // add dummy distributor role, because no distributor was found
 	        	ciResponsibleParteDistributorContact.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-		        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+		        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
 		        .addAttribute("codeListValue", "distributor");
 	        }
 		}
@@ -317,7 +317,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 						mdMedium = mdDigitalTransferOptions.addElement("gmd:offLine").addElement("gmd:MD_Medium");
 					}
 					mdMedium.addElement("gmd:name").addElement("gmd:MD_MediumNameCode").addAttribute("codeList",
-							"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode").addAttribute(
+							"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_MediumNameCode").addAttribute(
 							"codeListValue", codeVal);
 				}
 				// T0112_media_option.medium_note
@@ -381,7 +381,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					ciDate.addElement("gmd:date").addElement("gco:Date").addAttribute("nilReason", "missing");
 				}
 				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
-				"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+				"http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode").addAttribute(
 				"codeListValue", "creation");
 				// T011_obj_geo_keyc.edition
 				// MD_Metadata/full:contentInfo/MD_FeatureCatalogueDescription/featureCatalogueCitation/CI_Citation/edition/CharacterString
@@ -426,7 +426,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				Element ciDate = ciCitation.addElement("gmd:date").addElement("gmd:CI_Date");
 				ciDate.addElement("gmd:date").addElement("gco:Date").addText("2006-05-01");
 				ciDate.addElement("gmd:dateType").addElement("gmd:CI_DateTypeCode").addAttribute("codeList",
-						"http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode").addAttribute(
+						"http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode").addAttribute(
 						"codeListValue", "publication");
 			}
 		}
@@ -481,7 +481,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				mdVectorSpatialRepresentation = metaData.addElement("gmd:spatialRepresentationInfo").addElement("gmd:MD_VectorSpatialRepresentation");
 			}
 			mdVectorSpatialRepresentation.addElement("gmd:topologyLevel").addElement("gmd:MD_TopologyLevelCode")
-			.addAttribute("codeList","http://www.tc211.org/ISO19139/resources/codeList.xml?MD_TopologyLevelCode")
+			.addAttribute("codeList","http://www.tc211.org/ISO19139/resources/codeList.xml#MD_TopologyLevelCode")
 			.addAttribute("codeListValue", codeStr);
 		} catch (NumberFormatException e) {}
 		
@@ -511,7 +511,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			}
 			mdGeometricObjects.addElement("gmd:geometricObjectType").addElement("gmd:MD_GeometricObjectTypeCode")
 					.addAttribute("codeList",
-							"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_GeometricObjectTypeCode")
+							"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_GeometricObjectTypeCode")
 					.addAttribute("codeListValue", codeStr);
 			// T011_obj_geo_vector.geometric_object_count ->
 			// MD_Metadata/full:spatialRepresentationInfo/MD_VectorSpatialRepresentation/geometricObjects/MD_GeometricObjects/geometricObjectCount
@@ -824,7 +824,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				Element responsiblePartyOriginator = ciCitation.addElement("gmd:citedResponsibleParty").addElement("gmd:CI_ResponsibleParty");
 				this.addGCOCharacterString(responsiblePartyOriginator.addElement("gmd:individualName"), author);
 				responsiblePartyOriginator.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
                 .addAttribute("codeListValue", "originator");
 			}
 			
@@ -836,7 +836,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				this.addGCOCharacterString(responsiblePartyResourceProvider.addElement("gmd:contactInfo").addElement("gmd:CI_Contact")
 						.addElement("gmd:contactInstructions"), location);
 				responsiblePartyResourceProvider.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
                 .addAttribute("codeListValue", "resourceProvider");
 			}
 	        String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
@@ -865,7 +865,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 							.addElement("gmd:address").addElement("gmd:CI_Address").addElement("gmd:city"), editorLocation);
 				}
 				responsiblePartyPublisher.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
                 .addAttribute("codeListValue", "publisher");
 			}
 			
@@ -874,7 +874,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				Element responsiblePartyDistributor = ciCitation.addElement("gmd:citedResponsibleParty").addElement("gmd:CI_ResponsibleParty");
 				this.addGCOCharacterString(responsiblePartyDistributor.addElement("gmd:organisationName"), publisher);
 				responsiblePartyDistributor.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
                 .addAttribute("codeListValue", "distribute");
 			}
 					
@@ -918,7 +918,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				responsiblePartyOriginator = ciCitation.addElement("gmd:citedResponsibleParty").addElement("gmd:CI_ResponsibleParty");
 				this.addGCOCharacterString(responsiblePartyOriginator.addElement("gmd:individualName"), leader);
 				responsiblePartyOriginator.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
                 .addAttribute("codeListValue", "projectManager");
 			}
 	        String[] addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
@@ -938,7 +938,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				responsiblePartyMember = ciCitation.addElement("gmd:citedResponsibleParty").addElement("gmd:CI_ResponsibleParty");
 				this.addGCOCharacterString(responsiblePartyOriginator.addElement("gmd:individualName"), member);
 				responsiblePartyMember.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+                .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
                 .addAttribute("codeListValue", "projectParticipant");
 			}
 	        addressIds = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.adr_id");
@@ -1185,7 +1185,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(523L, code);
 			if (codeVal.length() > 0) {
 				parent.addElement("gmd:status").addElement("gmd:MD_ProgressCode").addAttribute("codeList",
-						"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode").addAttribute(
+						"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_ProgressCode").addAttribute(
 						"codeListValue", codeVal);
 			}
 		} catch (NumberFormatException e) {
@@ -1203,7 +1203,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				"gmd:MD_MaintenanceInformation");
 				mdMaintenanceInformation.addElement("gmd:maintenanceAndUpdateFrequency").addElement(
 						"gmd:MD_MaintenanceFrequencyCode").addAttribute("codeList",
-						"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode")
+						"http://www.tc211.org/ISO19139/resources/codeList.xml#MD_MaintenanceFrequencyCode")
 						.addAttribute("codeListValue", codeVal);
 				// userDefinedMaintenanceFrequency
 				String timeInterval = IngridQueryHelper.getDetailValueAsString(hit,
@@ -1263,7 +1263,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			this.addGCOCharacterString(usageType.addElement("gmd:specificUsage"), usage);
 			
 			usageType.addElement("gmd:userContactInfo").addElement("gmd:CI_ResponsibleParty").addElement("gmd:role").addElement("gmd:CI_RoleCode")
-	        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode")
+	        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
 	        .addAttribute("codeListValue", "pointOfContact");
 		}
 
@@ -1364,7 +1364,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("gmd:spatialRepresentationType").addElement(
 							"gmd:MD_SpatialRepresentationTypeCode").addAttribute("codeList",
-							"http://www.tc211.org/ISO19115/resources/codeList.xml?MD_SpatialRepresentationTypeCode")
+							"http://www.tc211.org/ISO19115/resources/codeList.xml#MD_SpatialRepresentationTypeCode")
 							.addAttribute("codeListValue", codeVal);
 				}
 			} catch (NumberFormatException e) {
@@ -1419,7 +1419,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(510L, code);
 			if (IngridQueryHelper.hasValue(codeVal)) {
 				mdDataIdentification.addElement("gmd:characterSet").addElement("gmd:MD_CharacterSetCode").addAttribute(
-						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode")
+						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CharacterSetCode")
 						.addAttribute("codeListValue", codeVal);
 			}
 		} catch (NumberFormatException e) {

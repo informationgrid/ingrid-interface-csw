@@ -201,7 +201,7 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("gmd:spatialRepresentationType").addElement(
 							"gmd:MD_SpatialRepresentationTypeCode").addAttribute("codeList",
-							"http://www.tc211.org/ISO19115/resources/codeList.xml?MD_SpatialRepresentationTypeCode")
+							"http://www.tc211.org/ISO19115/resources/codeList.xml#MD_SpatialRepresentationTypeCode")
 							.addAttribute("codeListValue", codeVal);
 				}
 			} catch (NumberFormatException e) {
