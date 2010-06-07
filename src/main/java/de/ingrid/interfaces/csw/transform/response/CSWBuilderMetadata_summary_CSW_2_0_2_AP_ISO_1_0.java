@@ -99,6 +99,14 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
                 IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
         // add dates (creation, revision etc.)
         super.addCitationReferenceDates(ciCitation, hit, null);
+		
+        // add identifier
+		String identifier = getCitationIdentifier(hit);
+		if (IngridQueryHelper.hasValue(identifier)) {
+			Element rsIdentifier = ciCitation.addElement("gmd:identifier").addElement("gmd:RS_Identifier");
+			this.addGCOCharacterString(rsIdentifier.addElement("gmd:code"), identifier);
+			this.addGCOCharacterString(rsIdentifier.addElement("gmd:codeSpace"), "ingrid");
+		}
     }
     
     private void addIdentificationInfoService(Element metaData, IngridHit hit) throws Exception {
