@@ -15,4 +15,5 @@ public final class DataTypes {
 	
 	/** datatype dsc_ecs(-iplug) */
 	public static final String DSCECS = "dsc_ecs";
+	public static final String DSCCSW = "dsc_csw";
 }

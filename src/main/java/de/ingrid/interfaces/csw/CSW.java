@@ -470,6 +470,17 @@ public class CSW {
         } else if (sourceTypeIsService) {
             required = true;
             ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
+        } else {
+            ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);
+            required = false;
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "document"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "project"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "database"));
+            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "job"));
+            ingridQuery.addClause(clauseQuery);
+        	
         }
 
         return ingridQuery;
@@ -489,6 +500,7 @@ public class CSW {
 //        ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.DATA_TYPE, DataTypes.CSW));
 //        ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.DATA_TYPE, DataTypes.ECS));
         ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.DATA_TYPE, DataTypes.DSCECS));
+        ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.DATA_TYPE, DataTypes.DSCCSW));
         ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.RANKED, IngridQuery.ANY_RANKED));
 
         return ingridQuery;
