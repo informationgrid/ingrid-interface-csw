@@ -7,7 +7,7 @@
   <body>
     <release version="1.2.3-SNAPSHOT" date="2010-xx-xx" description="Release">
       <action type="fix">
-        make sure only CSW compatible iPlugs will be queried by the CSW interface. 
+        Make sure only CSW compatible iPlugs will be queried by the CSW interface. 
       </action>      
       <action type="fix">
         Capabilities better reflects the supported Queriables. 
