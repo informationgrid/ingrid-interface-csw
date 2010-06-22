@@ -68,14 +68,22 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		if (IngridQueryHelper.hasValue(metaDataStandardName)) {
 			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardName"), metaDataStandardName);
 		} else {
-			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardName"), "ISO19115");
+			if (udkClass.equals("3")) {
+				this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardName"), "ISO19119");
+			} else {
+				this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardName"), "ISO19115");
+			}
 		}
 		
 		String metaDataStandardVersion = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_STANDARD_VERSION);
 		if (IngridQueryHelper.hasValue(metaDataStandardVersion)) {
 			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), metaDataStandardVersion);
 		} else {
-			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), "2003/Cor.1:2006");
+			if (udkClass.equals("3")) {
+				this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), "2005/PDAM 1");
+			} else {
+				this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), "2003/Cor.1:2006");
+			}
 		}
 		
 		// spatialRepresentationInfo

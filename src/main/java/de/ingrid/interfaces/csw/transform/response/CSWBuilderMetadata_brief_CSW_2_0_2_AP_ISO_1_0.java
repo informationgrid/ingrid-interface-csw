@@ -3,23 +3,13 @@
  */
 package de.ingrid.interfaces.csw.transform.response;
 
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.stream.XMLInputFactory;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
-import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
-import org.xml.sax.InputSource;
 
-import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**

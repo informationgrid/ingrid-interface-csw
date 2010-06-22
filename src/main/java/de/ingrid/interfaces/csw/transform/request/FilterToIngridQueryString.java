@@ -434,8 +434,8 @@ public class FilterToIngridQueryString {
 		Node node = null;
 		String nodeValue = null;
 		
-		Node firstNode = getNodeFromNodeList(nlCoords, 0);
-		Node secondNode = getNodeFromNodeList(nlCoords, 1);
+		Node firstNode = getElementFromNodeList(nlCoords, 0);
+		Node secondNode = getElementFromNodeList(nlCoords, 1);
 		
 		if (firstNode.getLocalName().equalsIgnoreCase("coordinates")) {
 			// 2006-10-13 Dirk Schwarzmann: This is the type "<gml:coordinates...>"
@@ -513,19 +513,19 @@ public class FilterToIngridQueryString {
 			if (coordXY.getChildNodes().getLength() != 2) {
 				throw new CSWInvalidParameterValueException("Values of coordinates are not correct (only X-Y pairs are allowed)", coordErrorLocator);
 			}
-			node = coordXY.getChildNodes().item(0);
+			node = getElementFromNodeList(coordXY.getChildNodes(), 0);
 			if (node.getLocalName().equals("X")) {
-				minx = node.getChildNodes().item(0).getNodeValue();
+				minx = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			if (node.getLocalName().equals("Y")) {
-				miny = node.getChildNodes().item(0).getNodeValue();
+				miny = getElementFromNodeList(node.getChildNodes(),0).getNodeValue();
 			}
-			node = coordXY.getChildNodes().item(1);
+			node = getElementFromNodeList(coordXY.getChildNodes(), 1);
 			if (node.getLocalName().equals("X")) {
-				minx = node.getChildNodes().item(0).getNodeValue();
+				minx = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			if (node.getLocalName().equals("Y")) {
-				miny = node.getChildNodes().item(0).getNodeValue();
+				miny = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			
 			// Grab the maximal boundary coord
@@ -533,19 +533,19 @@ public class FilterToIngridQueryString {
 			if (coordXY.getChildNodes().getLength() != 2) {
 				throw new CSWInvalidParameterValueException("Values of coordinates are not correct (only X-Y pairs are allowed)", coordErrorLocator);
 			}
-			node = coordXY.getChildNodes().item(0);
+			node = getElementFromNodeList(coordXY.getChildNodes(), 0);
 			if (node.getLocalName().equals("X")) {
-				maxx = node.getChildNodes().item(0).getNodeValue();
+				maxx = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			if (node.getLocalName().equals("Y")) {
-				maxy = node.getChildNodes().item(0).getNodeValue();
+				maxy = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
-			node = coordXY.getChildNodes().item(1);
+			node = getElementFromNodeList(coordXY.getChildNodes(), 1);
 			if (node.getLocalName().equals("X")) {
-				maxx = node.getChildNodes().item(0).getNodeValue();
+				maxx = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			if (node.getLocalName().equals("Y")) {
-				maxy = node.getChildNodes().item(0).getNodeValue();
+				maxy = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 		} else if (firstNode.getLocalName().equalsIgnoreCase("lowerCorner")) {
 			coordErrorLocator = "gml:envelope";
@@ -593,7 +593,7 @@ public class FilterToIngridQueryString {
         }
 	}
 	
-	private Node getNodeFromNodeList(NodeList nList, int idx) {
+	private Node getElementFromNodeList(NodeList nList, int idx) {
 		int nIdx = 0;
 		for (int i=0; i< nList.getLength(); i++) {
 			Node n = nList.item(i);
