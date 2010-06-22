@@ -434,10 +434,13 @@ public class FilterToIngridQueryString {
 		Node node = null;
 		String nodeValue = null;
 		
-		if (nlCoords.item(0).getLocalName().equalsIgnoreCase("coordinates")) {
+		Node firstNode = getNodeFromNodeList(nlCoords, 0);
+		Node secondNode = getNodeFromNodeList(nlCoords, 1);
+		
+		if (firstNode.getLocalName().equalsIgnoreCase("coordinates")) {
 			// 2006-10-13 Dirk Schwarzmann: This is the type "<gml:coordinates...>"
 			coordErrorLocator = "gml:coordinates";
-			Element elemCoords = (Element) nlCoords.item(0);
+			Element elemCoords = (Element) firstNode;
 			
 			if (elemCoords.getChildNodes() == null || elemCoords.getChildNodes().getLength() == 0) {
 				throw new CSWMissingParameterValueException("Values of coordinates are missing", coordErrorLocator);
@@ -496,7 +499,7 @@ public class FilterToIngridQueryString {
 			}
 			maxx = coords[0];
 			maxy = coords[1];
-		} else if (nlCoords.item(0).getLocalName().equalsIgnoreCase("coord")) {
+		} else if (firstNode.getLocalName().equalsIgnoreCase("coord")) {
 			// 2006-10-13 Dirk Schwarzmann: This is the type "<gml:coord><gml:X>..."
 			coordErrorLocator = "gml:coord";
 			
@@ -506,7 +509,7 @@ public class FilterToIngridQueryString {
 			
 			// Grab the minimal boundary coord
 			Node coordXY = null;
-			coordXY = nlCoords.item(0);
+			coordXY = firstNode;
 			if (coordXY.getChildNodes().getLength() != 2) {
 				throw new CSWInvalidParameterValueException("Values of coordinates are not correct (only X-Y pairs are allowed)", coordErrorLocator);
 			}
@@ -526,7 +529,7 @@ public class FilterToIngridQueryString {
 			}
 			
 			// Grab the maximal boundary coord
-			coordXY = nlCoords.item(1);
+			coordXY = secondNode;
 			if (coordXY.getChildNodes().getLength() != 2) {
 				throw new CSWInvalidParameterValueException("Values of coordinates are not correct (only X-Y pairs are allowed)", coordErrorLocator);
 			}
@@ -544,11 +547,11 @@ public class FilterToIngridQueryString {
 			if (node.getLocalName().equals("Y")) {
 				maxy = node.getChildNodes().item(0).getNodeValue();
 			}
-		} else if (nlCoords.item(0).getLocalName().equalsIgnoreCase("lowerCorner")) {
+		} else if (firstNode.getLocalName().equalsIgnoreCase("lowerCorner")) {
 			coordErrorLocator = "gml:envelope";
 			try {
-				String lowerCorner = nlCoords.item(0).getTextContent().trim();
-				String upperCorner = nlCoords.item(1).getTextContent().trim();
+				String lowerCorner = firstNode.getTextContent().trim();
+				String upperCorner = secondNode.getTextContent().trim();
 				String[] lowerCornerCoords = lowerCorner.split(" ");
 				String[] upperCornerCoords = upperCorner.split(" ");
 				minx = lowerCornerCoords[0];
@@ -589,6 +592,21 @@ public class FilterToIngridQueryString {
         	log.debug("exiting, coords: " + sb.toString());
         }
 	}
+	
+	private Node getNodeFromNodeList(NodeList nList, int idx) {
+		int nIdx = 0;
+		for (int i=0; i< nList.getLength(); i++) {
+			Node n = nList.item(i);
+			if (n instanceof Element) {
+				if (idx==nIdx) {
+					return n;
+				}
+				nIdx++;
+			}
+		}
+		return null;
+	}
+	
 
 	/**
 	 * runs a single expression e.g. a property
