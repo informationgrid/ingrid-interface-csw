@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
 
+import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
@@ -151,7 +152,15 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                  */
         	String role = null;
         	try {
-        		Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
+        		Long code = null;
+        		if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)
+        				|| IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
+        		
+        			code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
+        		} else {
+        			code = Long.valueOf(addressTypes[i]);
+        		}
+        		
                 if (code.longValue() == 999 || code.longValue() == -1) {
                 	role = specialNames[i];
                 } else {
