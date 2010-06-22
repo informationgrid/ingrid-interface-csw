@@ -686,7 +686,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 	        } catch (NumberFormatException e) {}
 	        Element verticalDatum = verticalCRS.addElement("gml:verticalDatum").addElement("gml:VerticalDatum").addAttribute("gml:id", "verticalDatum_ID_" + UUID.randomUUID());
 	        verticalDatum.addElement("gml:identifier").addAttribute("codeSpace", "");
-	        verticalDatum.addElement("gml:name").addText("codeVal");
+	        verticalDatum.addElement("gml:name").addText(codeVal);
 	        verticalDatum.addElement("gml:scope");
         }
 
