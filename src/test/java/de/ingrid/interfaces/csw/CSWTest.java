@@ -73,7 +73,7 @@ public class CSWTest extends TestCase {
 		ingridQuery = new IngridQuery();
 		sessionParameters = new SessionParameters();
 		ingridQuery = csw.setSourceType(ingridQuery, sessionParameters);
-		assertEquals(ingridQueryToString.transform(ingridQuery), "()");
+		assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR metaclass:map  OR metaclass:service  OR metaclass:document  OR metaclass:project  OR metaclass:database  OR metaclass:job ))");
 		
 		
 	}

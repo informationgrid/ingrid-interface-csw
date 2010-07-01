@@ -53,6 +53,7 @@ import de.ingrid.interfaces.csw.transform.SpatialOps.Intersects;
 import de.ingrid.interfaces.csw.transform.SpatialOps.Spatial;
 import de.ingrid.interfaces.csw.transform.SpatialOpsImpl.BoxImpl;
 import de.ingrid.interfaces.csw.utils.UtilsCSWDate;
+import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 /**
  * 
@@ -708,6 +709,19 @@ public class FilterToIngridQueryString {
 					literal = "\"" + literal + "\"";
 				}
 				
+				if (field.indexOf("t01_object.metadata_language_key") > -1  
+						|| field.indexOf("t01_object.data_language_key") > -1) {
+					Integer igcLangId = null;
+					if (literal.length() == 3) {
+						igcLangId = UtilsLanguageCodelist.getCodeFromIso639_2(literal);
+					} else if (literal.length() == 2) {
+						igcLangId = UtilsLanguageCodelist.getCodeFromShortcut(literal);
+					}
+					if (igcLangId != null) {
+						literal = igcLangId.toString();
+					}
+				} 
+				
 				sb.append(literal);
 			} else if (obj instanceof Double || obj instanceof Integer) {
 				if (field.equals("WEST") || field.equals("OST")
@@ -1074,7 +1088,7 @@ public class FilterToIngridQueryString {
 			outprop = "object_access.restriction_key:[0 TO 9]";
 		} else if (inPropWithoutNS.equalsIgnoreCase("Language")) {
 			// TODO: value must be transformed to ISO 639-1
-			outprop = "t01_object.metadata_language_code";
+			outprop = "t01_object.metadata_language_key";
 			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicDescription.geographicIdentifier.MD_Identifier.code
 		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceIdentifier")) {
 			outprop = "t011_obj_geo.datasource_uuid";
@@ -1095,7 +1109,7 @@ public class FilterToIngridQueryString {
 			// MD_Metadata.identificationInfo.MD_DataIdentification.language
 		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceLanguage")) {
 			// TODO: value must be transformed to ISO 639-1
-			outprop = "t01_object.data_language_code";
+			outprop = "t01_object.data_language_key";
 			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicDescription.geographicIdentifier.MD_Identifier.code
 		} else if (inPropWithoutNS.equalsIgnoreCase("GeographicDescriptionCode")) {
 			outprop = "location";
