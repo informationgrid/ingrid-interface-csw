@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid</groupId>
@@ -31,18 +31,6 @@
     </repository>
   </repositories>
   <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-utils</artifactId>
-        <version>1.2.4</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-iplug-se</artifactId>
-        <version>1.2.2</version>
-      </dependency>
-    </dependencies>
   </dependencyManagement>
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>

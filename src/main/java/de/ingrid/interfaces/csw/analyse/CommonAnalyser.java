@@ -166,7 +166,7 @@ public final class CommonAnalyser {
 	public boolean analyseResultType(final Element be) throws Exception {
 		String resultType = null;
 		resultType = be.getAttribute("resultType");
-		if (resultType != null) {
+		if (resultType != null && resultType.length() > 0) {
 			//TODO validate?
 			//Validate the request and return an Acknowledgement message if it
 			//passes. Continue processing the request asynchronously.
@@ -179,6 +179,8 @@ public final class CommonAnalyser {
 				Exception e = new CSWInvalidParameterValueException("Attribute 'resultType' is invalid.", "resultType");
 				throw e;
 			}
+		} else {
+			sessionParameters.setResultType("HITS");
 		}
 		return true;
 	}
