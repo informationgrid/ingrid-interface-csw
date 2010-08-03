@@ -518,6 +518,14 @@
           <groupId>ant</groupId>
           <artifactId>ant-optional</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>xerces</groupId>
+          <artifactId>xercesImpl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xerces</groupId>
+          <artifactId>xerces</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
