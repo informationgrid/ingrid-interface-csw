@@ -5,6 +5,14 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="1.2.4-SNAPSHOT" date="2010-XX-XX" description="Release">
+      <action type="fix">
+        Add interpretation of boolean logic to TYPE filter query constructs.
+      </action>
+      <action type="fix">
+        Remove PropertyEqualsNot from supported query types in capabilities.
+      </action>
+    </release>        
     <release version="1.2.3" date="2010-07-14" description="Release">
       <action type="fix" issue="INGRID-1828">
         Set resultType="HITS" as default resultType.
