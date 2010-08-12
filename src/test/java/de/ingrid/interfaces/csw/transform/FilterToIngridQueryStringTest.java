@@ -15,6 +15,7 @@ import org.w3c.dom.Element;
 
 
 import de.ingrid.interfaces.csw.TestRequests;
+import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.interfaces.csw.tools.AxisTools;
 import de.ingrid.interfaces.csw.tools.SOAPTools;
 import de.ingrid.interfaces.csw.tools.XMLTools;
@@ -152,7 +153,33 @@ public class FilterToIngridQueryStringTest extends TestCase {
      
         
      }
-
+    
+    
+    /**
+     * @throws Exception e
+     */
+    public final void testGenerateQueryFromFilterNotTypeGeographicDataset() throws Exception {
+        
+        SOAPMessage soapMessageRequest = null;
+        String ingridQueryString = null;
+        SOAPElement elem = null;
+        Element  elemFilter = null;
+        soapMessageRequest = AxisTools.createSOAPMessage(TestRequests.GET_RECORDS_NOT_TYPE_NONGEOGRAPHICDATASET);
+        elem = (SOAPElement) soapMessageRequest.getSOAPBody().getElementsByTagName("Filter").item(0);
+        Document doc = XMLTools.create();
+        doc.appendChild(doc.createElement("Filter"));
+        elemFilter = doc.getDocumentElement();
+		                     elemFilter = (Element) SOAPTools.copyNode(elem, elemFilter);
+        FilterImpl filter = new FilterImpl(elemFilter);
+        SessionParameters session = new SessionParameters();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(session);
+        ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
+        System.out.println(" ingridQueryString: " + ingridQueryString);
+        assertEquals("", ingridQueryString);
+        assertTrue(session.isTypeNameIsDataset() & session.isTypeNameIsService() & !session.isTypeNameNonGeographicDataset());
+        
+     }    
+    
     
     /**
      * @throws Exception e

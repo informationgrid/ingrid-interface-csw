@@ -203,7 +203,7 @@ public class FilterToIngridQueryString {
         	log.debug("exiting, returning string: " + sb.toString());
         }
 		// filter invalid query syntax that could not be handled before
-        return sb.toString().replaceAll("(( AND)*|( OR)*|\\s|)\\s*\\(\\s\\)", "");
+        return sb.toString().replaceAll("^\\sOR\\s$|^\\sAND\\s$|^\\sNOT\\s$|(( AND)*|( OR)*|\\s|)\\s*\\(\\s\\)", "");
 	}
 
 	/**
@@ -833,10 +833,6 @@ public class FilterToIngridQueryString {
 			log.debug("entering");
 		}
 
-		if (not) {
-			not = false;
-		}
-		
 		// check for type query
 		if (co.getFirstExpression().getExpression() instanceof Expression.PropertyName && co.getSecondExpression().getExpression() instanceof Expression.Literal) {
 			String property = ((Expression.PropertyName) co.getFirstExpression().getExpression()).getPropertyName();
@@ -845,11 +841,26 @@ public class FilterToIngridQueryString {
 			if (inPropWithoutNS.equalsIgnoreCase("type")) {	
 				String type = (String)((Expression.Literal)  co.getSecondExpression().getExpression()).getLiteral();
 				if (type.equalsIgnoreCase("service") || type.equalsIgnoreCase("application")) {
-					_session.setTypeNameIsService(true);
+					if (not) {
+						_session.setTypeNameIsDataset(true);
+						_session.setTypeNameIsNonGeographicDataset(true);
+					} else {
+						_session.setTypeNameIsService(true);
+					}
 				} else if (type.equalsIgnoreCase("dataset") || type.equalsIgnoreCase("datasetcollection")) {
-					_session.setTypeNameIsDataset(true);
+					if (not) {
+						_session.setTypeNameIsService(true);
+						_session.setTypeNameIsNonGeographicDataset(true);
+					} else {
+						_session.setTypeNameIsDataset(true);
+					}
 				} else if (type.equalsIgnoreCase("nonGeographicDataset")) {
-					_session.setTypeNameIsNonGeographicDataset(true);
+					if (not) {
+						_session.setTypeNameIsDataset(true);
+						_session.setTypeNameIsService(true);
+					} else {
+						_session.setTypeNameIsNonGeographicDataset(true);
+					}
 				}
 				sb = deletePreOperator(sb);
 			} else {
@@ -873,6 +884,9 @@ public class FilterToIngridQueryString {
 			runExpr(co.getSecondExpression());
 		}
 
+		if (not) {
+			not = false;
+		}
 
 		if (log.isDebugEnabled()) {
 			log.debug("exiting");

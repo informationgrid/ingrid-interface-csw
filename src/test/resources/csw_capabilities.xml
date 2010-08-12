@@ -221,8 +221,6 @@
 				<ogc:ComparisonOperator>LessThan</ogc:ComparisonOperator>
 				<ogc:ComparisonOperator>LessThanEqualTo</ogc:ComparisonOperator>
 				<ogc:ComparisonOperator>Like</ogc:ComparisonOperator>
-				<ogc:ComparisonOperator>NotEqualTo</ogc:ComparisonOperator>
-				<ogc:ComparisonOperator>NullCheck</ogc:ComparisonOperator>
 			</ogc:ComparisonOperators>
 		</ogc:Scalar_Capabilities>
 		<ogc:Id_Capabilities>
