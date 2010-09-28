@@ -360,7 +360,10 @@ public class IngridQueryHelper {
 
 	public static final String HIT_KEY_OBJECT_ACCESS_RESTRICTION_KEY = "object_access.restriction_key";
 
+	/** IGC Schema < 1.0.8 */
 	public static final String HIT_KEY_OBJECT_ACCESS_TERMS_OF_USE = "object_access.terms_of_use";
+	/** IGC Schema >= 1.0.8 */
+	public static final String HIT_KEY_OBJECT_USE_TERMS_OF_USE = "object_use.terms_of_use";
 	
 	public static final String HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION = "object_conformity.specification";
 	public static final String HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY = "object_conformity.degree_key";
@@ -457,7 +460,9 @@ public class IngridQueryHelper {
             HIT_KEY_OBJECT_SYMBOL_DATE, HIT_KEY_OBJECT_SYMBOL_EDITION, HIT_KEY_OBJECT_SPATIAL_REP_TYPE, HIT_KEY_OBJECT_GEO_REC_GRADE,
             HIT_KEY_OBJECT_SPATIAL_RES_SCALE, HIT_KEY_OBJECT_SPATIAL_RES_GROUND, HIT_KEY_OBJECT_SPATIAL_RES_SCAN, 
             HIT_KEY_OBJECT_GEO_POS_ACCURACY_VERTICAL, HIT_KEY_OBJECT_GEO_REC_EXACT, HIT_KEY_OBJECT_SUPPLINFO_FEATURE_TYPE, 
-            HIT_KEY_OBJECT_ACCESS_TERMS_OF_USE, "t011_obj_topic_cat.topic_category", "object_reference.special_ref", "areaid", 
+            HIT_KEY_OBJECT_ACCESS_TERMS_OF_USE, // < 1.0.8
+            HIT_KEY_OBJECT_USE_TERMS_OF_USE, // >= 1.0.8
+            "t011_obj_topic_cat.topic_category", "object_reference.special_ref", "areaid", 
             "object_reference.obj_to_uuid", "spatial_ref_value.name_value", HIT_KEY_OBJECT_PARENT_UUID, HIT_KEY_OBJECT_SERVICE_TYPE_KEY,
             HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL, HIT_KEY_OBJECT_ACCESS_RESTRICTION_KEY, HIT_KEY_OBJECT_AVAIL_ACCESS_NOTE,
             HIT_KEY_OBJECT_CONFORMITY_SPECIFICATION, HIT_KEY_OBJECT_CONFORMITY_DEGREE_KEY, HIT_KEY_OBJECT_CONFORMITY_PUBLICTAION_DATE,
@@ -855,7 +860,11 @@ public class IngridQueryHelper {
 
     public static List getReferenceIdentifiers(IngridHit hit) {
         ArrayList result = new ArrayList();
-    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
+        String iPlugVersion = IPlugVersionInspector.getIPlugVersion(hit);
+    	if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
             String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
             String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
             for (int i = 0; i < toIds.length; i++) {
@@ -882,7 +891,11 @@ public class IngridQueryHelper {
 
     public static List<String> getContentInfoReferenceIdentifiers(IngridHit hit) {
         ArrayList result = new ArrayList();
-    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
+        String iPlugVersion = IPlugVersionInspector.getIPlugVersion(hit);
+    	if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
             String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
             String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
             for (int i = 0; i < toIds.length; i++) {
@@ -909,7 +922,11 @@ public class IngridQueryHelper {
     
     public static List<String> getPortrayalCatalogInfoReferenceIdentifiers(IngridHit hit) {
         ArrayList result = new ArrayList();
-    	if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) || IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
+        String iPlugVersion = IPlugVersionInspector.getIPlugVersion(hit);
+    	if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT) ||
+    			iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
             String[] toIds = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_TO_ID);
             String[] specialRefs = getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJECT_SPECIAL_REF);
             for (int i = 0; i < toIds.length; i++) {
