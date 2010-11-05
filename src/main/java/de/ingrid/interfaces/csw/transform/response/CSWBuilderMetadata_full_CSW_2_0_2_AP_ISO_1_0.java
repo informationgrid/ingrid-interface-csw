@@ -68,7 +68,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		if (IngridQueryHelper.hasValue(metaDataStandardName)) {
 			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardName"), metaDataStandardName);
 		} else {
-			if (udkClass.equals("3")) {
+			if (udkClass.equals("3") || udkClass.equals("6")) {
 				this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardName"), "ISO19119");
 			} else {
 				this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardName"), "ISO19115");
@@ -79,7 +79,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		if (IngridQueryHelper.hasValue(metaDataStandardVersion)) {
 			this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), metaDataStandardVersion);
 		} else {
-			if (udkClass.equals("3")) {
+			if (udkClass.equals("3") || udkClass.equals("6")) {
 				this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), "2005/PDAM 1");
 			} else {
 				this.addGCOCharacterString(metaData.addElement("gmd:metadataStandardVersion"), "2003/Cor.1:2006");
@@ -92,7 +92,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		// referenceSystemInfo
 		this.addReferenceSystemInfo(metaData, hit);
 
-		if (udkClass.equals("3")) {
+		if (udkClass.equals("3") || udkClass.equals("6")) {
 			this.addIdentificationInfoService(metaData, hit);
 		} else {
 			this.addIdentificationInfoDataset(metaData, hit);
@@ -960,19 +960,6 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 	        }
 		}
 		
-		
-		// citedResponsibleParty not implemented, because only
-		// UDK classes 1 and 3 are supported. citedResponsibleParty always maps
-		// to
-		// udk class 2
-
-		// presentationForm not implemented, see citedResponsibleParty
-
-		// series, otherCitationDetails not implemented, see
-		// citedResponsibleParty
-
-		// collectiveTitle, ISBN, etc. see citedResponsibleParty
-
 	}
 
 	private void addIdentificationInfoService(Element metaData, IngridHit hit) throws Exception {
@@ -981,25 +968,42 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 
         svServiceIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
 		
-		addGenericMetadataIndentification(svServiceIdentification, hit);
+        addGenericMetadataIndentification(svServiceIdentification, hit);
 
         // add service type
-        String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_KEY);
-        String serviceType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);;
-        if (serviceTypeKey != null) {
-        	if (serviceTypeKey.equals("1")) {
-        		serviceType = "discovery";
-        	} else if (serviceTypeKey.equals("2")) {
-        		serviceType = "view";
-        	} else if (serviceTypeKey.equals("3")) {
-        		serviceType = "download";
-        	} else if (serviceTypeKey.equals("4")) {
-        		serviceType = "transformation";
-        	} else if (serviceTypeKey.equals("5")) {
-        		serviceType = "invoke";
-        	} else  {
-        		serviceType = "other";
-        	}
+        String serviceType = null;
+        if (this.udkClass.equals("3")) {
+  		    String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_KEY);
+          serviceType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);
+          if (serviceTypeKey != null) {
+          	if (serviceTypeKey.equals("1")) {
+          		serviceType = "discovery";
+          	} else if (serviceTypeKey.equals("2")) {
+          		serviceType = "view";
+          	} else if (serviceTypeKey.equals("3")) {
+          		serviceType = "download";
+          	} else if (serviceTypeKey.equals("4")) {
+          		serviceType = "transformation";
+          	} else if (serviceTypeKey.equals("5")) {
+          		serviceType = "invoke";
+          	} else  {
+          		serviceType = "other";
+          	}
+          }
+        } else if (this.udkClass.equals("6")) {
+          String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_KEY);
+          serviceType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);
+          if (serviceTypeKey != null) {
+            if (serviceTypeKey.equals("1")) {
+              serviceType = "information service";
+            } else if (serviceTypeKey.equals("2")) {
+              serviceType = "non geographic service";
+            } else if (serviceTypeKey.equals("3")) {
+              serviceType = "application";
+            } else  {
+              serviceType = "other";
+            }
+          }
         }
         if (serviceType != null) {
         	this.addGCOLocalName(svServiceIdentification.addElement("srv:serviceType"), serviceType);        	
@@ -1025,7 +1029,37 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 					"codeListValue", "loose");
 		}
 
-        super.addOperationMetadata(svServiceIdentification, hit);
+        if (this.udkClass.equals("3")) {
+          super.addOperationMetadata(svServiceIdentification, hit);
+        } else if  (this.udkClass.equals("6")) {
+          // operationMetadata
+          Element svOperationMetadata = null;
+          Element svContainsOperations = null;
+          String[] operationName = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_URL_NAME);
+          String[] descriptions = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_URL_DESCRIPTION);
+          String[] connectPoints = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_URL_URL);
+
+          if (operationName.length != 0 && connectPoints.length != 0) {
+            // there must be an operation name and at least one connection point !
+            if (svContainsOperations == null) {
+              svContainsOperations = svServiceIdentification.addElement("srv:containsOperations");
+            }
+            for (int i=0; i< operationName.length; i++) {
+              svOperationMetadata = svContainsOperations.addElement("srv:SV_OperationMetadata");
+              this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationName"), operationName[i]);
+              svOperationMetadata.addElement("srv:DCP").addElement("srv:DCPList")
+              .addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_DCPCodeType")
+              .addAttribute("codeListValue", "WebService");
+              String operationDescription = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_DESCR); 
+              if (IngridQueryHelper.hasValue(operationDescription)) {
+                  this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationDescription"), operationDescription);
+              }
+              svOperationMetadata.addElement("srv:connectPoint")
+              .addElement("gmd:CI_OnlineResource").addElement("gmd:linkage")
+                  .addElement("gmd:URL").addText(connectPoints[i]);
+            }
+          }
+        }
 		
 		List references = IngridQueryHelper.getReferenceIdentifiers(hit);
 		for (int i=0; i< references.size(); i++) {

@@ -66,13 +66,16 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         } else if (udkClass.equals("5")) {
         	hierarchyInfo.hierarchyLevel = "nonGeographicDataset";
         	hierarchyInfo.hierarchyLevelName = "database";
+        } else if (udkClass.equals("6")) {
+          hierarchyInfo.hierarchyLevel = "application";
+          hierarchyInfo.hierarchyLevelName = "application";
         } else if (udkClass.equals("0")) {
         	hierarchyInfo.hierarchyLevel = "nonGeographicDataset";
         	hierarchyInfo.hierarchyLevelName = "job";
         } else if (udkClass.length() > 0) {
         	if (log.isInfoEnabled()) {
         		log.info("Unsupported UDK class '" + udkClass
-                    + "'. Only class 0 to 5 are supported by the CSW interface.");
+                    + "'. Only class 0 to 6 are supported by the CSW interface.");
         	}
         }
         return hierarchyInfo;
