@@ -210,7 +210,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 			//allow only Filter encoding 1.1.0
 			if (!constraintLangVersion.equals("1.1.0")) {
 				Exception e =
-					new CSWInvalidParameterValueException("Attribute 'version' of Element 'Constraint' is not '1.0.0'.", "version");
+					new CSWInvalidParameterValueException("Attribute 'version' of Element 'Constraint' is not '1.1.0'.", "version");
 				throw e;
 			}
 		} else {

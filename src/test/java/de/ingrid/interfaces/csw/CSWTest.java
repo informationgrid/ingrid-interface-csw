@@ -31,12 +31,20 @@ public class CSWTest extends TestCase {
         IngridQueryToString ingridQueryToString = new IngridQueryToString();
 		assertEquals(ingridQueryToString.transform(ingridQuery), "( AND metaclass:map )");
 		
-		//SERVICE
+		//GEOSERVICE
 		ingridQuery = new IngridQuery();
 		sessionParameters = new SessionParameters();
 		sessionParameters.setTypeNameIsService(true);
 		ingridQuery = csw.setSourceType(ingridQuery, sessionParameters);
-		assertEquals(ingridQueryToString.transform(ingridQuery), "( AND metaclass:service )");
+		assertEquals(ingridQueryToString.transform(ingridQuery), "( AND metaclass:geoservice )");
+
+    //APPLICATION
+    ingridQuery = new IngridQuery();
+    sessionParameters = new SessionParameters();
+    sessionParameters.setTypeNameIsApplication(true);
+    ingridQuery = csw.setSourceType(ingridQuery, sessionParameters);
+    assertEquals(ingridQueryToString.transform(ingridQuery), "( AND metaclass:service )");
+		
 		
 		//non geographic dataset
 		ingridQuery = new IngridQuery();
@@ -51,7 +59,7 @@ public class CSWTest extends TestCase {
 		sessionParameters.setTypeNameIsNonGeographicDataset(true);
 		sessionParameters.setTypeNameIsService(true);
 		ingridQuery = csw.setSourceType(ingridQuery, sessionParameters);
-		assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR metaclass:service  OR metaclass:document  OR metaclass:project  OR metaclass:database  OR metaclass:job ))");
+		assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR metaclass:geoservice  OR metaclass:document  OR metaclass:project  OR metaclass:database  OR metaclass:job ))");
 
 		//non geographic dataset & dataset
 		ingridQuery = new IngridQuery();
@@ -67,13 +75,13 @@ public class CSWTest extends TestCase {
 		sessionParameters.setTypeNameIsDataset(true);
 		sessionParameters.setTypeNameIsService(true);
 		ingridQuery = csw.setSourceType(ingridQuery, sessionParameters);
-		assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR metaclass:map  OR metaclass:service ))");
+		assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR metaclass:map  OR metaclass:geoservice ))");
 		
 		//DEFAULT:Nothing --> every source type!
 		ingridQuery = new IngridQuery();
 		sessionParameters = new SessionParameters();
 		ingridQuery = csw.setSourceType(ingridQuery, sessionParameters);
-		assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR metaclass:map  OR metaclass:service  OR metaclass:document  OR metaclass:project  OR metaclass:database  OR metaclass:job ))");
+		assertEquals(ingridQueryToString.transform(ingridQuery), "(AND ( OR metaclass:map  OR metaclass:geoservice  OR metaclass:service  OR metaclass:document  OR metaclass:project  OR metaclass:database  OR metaclass:job ))");
 		
 		
 	}
