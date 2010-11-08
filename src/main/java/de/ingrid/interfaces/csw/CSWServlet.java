@@ -255,6 +255,10 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+		  // ignore keep alive messages
+		  if (req.getContentType() == null) {
+		    return;
+		  }
 			if (req.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				super.doPost(req, resp);
 			} else if (req.getContentType().toLowerCase().indexOf("application/xml") != -1

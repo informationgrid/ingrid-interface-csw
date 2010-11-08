@@ -1050,9 +1050,8 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
               svOperationMetadata.addElement("srv:DCP").addElement("srv:DCPList")
               .addAttribute("codeList", "http://opengis.org/codelistRegistry?CSW_DCPCodeType")
               .addAttribute("codeListValue", "WebService");
-              String operationDescription = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERV_OPERATION_DESCR); 
-              if (IngridQueryHelper.hasValue(operationDescription)) {
-                  this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationDescription"), operationDescription);
+              if (IngridQueryHelper.hasValue(descriptions[i])) {
+                  this.addGCOCharacterString(svOperationMetadata.addElement("srv:operationDescription"), descriptions[i]);
               }
               svOperationMetadata.addElement("srv:connectPoint")
               .addElement("gmd:CI_OnlineResource").addElement("gmd:linkage")
