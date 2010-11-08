@@ -7,6 +7,9 @@
   <body>
     <release version="1.2.4-SNAPSHOT" date="2010-XX-XX" description="Release">
       <action type="add">
+        Added mapping of IGC Schema 1.0.9 (separate class service into geodata service and other services).
+      </action>
+      <action type="add">
         Added mapping of IGC Schema 1.0.8 (separate accessConstraints (gmd:otherConstraints) and useConstraints (gmd:useLimitation)).
       </action>
       <action type="fix">
