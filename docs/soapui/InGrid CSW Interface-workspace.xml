@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-workspace name="InGrid CSW Interface" soapui-version="3.6.1" xmlns:con="http://eviware.com/soapui/config">
+<con:soapui-workspace name="InGrid CSW Interface" soapui-version="3.6.1" projectRoot="" xmlns:con="http://eviware.com/soapui/config">
   <con:settings/>
   <con:project name="localhost">/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-1.2/docs/soapui/localhost-soapui-project.xml</con:project>
 </con:soapui-workspace>
