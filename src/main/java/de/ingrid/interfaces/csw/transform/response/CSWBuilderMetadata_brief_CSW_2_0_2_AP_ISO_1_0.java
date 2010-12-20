@@ -141,10 +141,12 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 		this.addGCOCharacterString(mdDataIdentification.addElement("gmd:abstract"), IngridQueryHelper.getDetailValueAsString(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
 		
-		// add language
+		// add metadata language
 		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
 		if (IngridQueryHelper.hasValue(dataLang)) {
-			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
+            mdDataIdentification.addElement("gmd:language").addElement("gmd:LanguageCode")
+            .addAttribute("codeList", "http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode")
+            .addAttribute("codeListValue", getISO639_2LanguageCode(dataLang));
 		}
 
 		// T011_obj_geo_topic_cat.topic_category

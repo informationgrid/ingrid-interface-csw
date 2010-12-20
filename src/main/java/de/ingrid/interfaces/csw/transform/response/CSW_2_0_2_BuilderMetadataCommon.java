@@ -401,7 +401,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     protected void addLanguage(Element metaData, IngridHit hit, String ns) {
         String metadataLang =  IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_METADATA_LANGUAGE);
         if (IngridQueryHelper.hasValue(metadataLang)) {
-        	this.addGCOCharacterString(metaData.addElement(getNSElementName(ns, "language")), getISO639_2LanguageCode(metadataLang));
+            metaData.addElement(getNSElementName(ns, "language")).addElement("gmd:LanguageCode")
+            .addAttribute("codeList", "http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode")
+            .addAttribute("codeListValue", getISO639_2LanguageCode(metadataLang));
         }
     }
     
