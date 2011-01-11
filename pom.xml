@@ -18,20 +18,9 @@
 	</scm>
 	<repositories>
 		<repository>
-			<id>de.ingrid.m1</id>
-			<name>Maven1 Repo InGrid</name>
-			<url>http://harrison.its-technidata.de/ingrid/maven</url>
-			<layout>legacy</layout>
-		</repository>
-		<!--
-			Repo of parent pom needed, parent pom may not be installed locally
-			yet
-		-->
-		<repository>
-			<snapshots />
-			<id>de.ingrid.m2</id>
-			<name>Maven2 Repo InGrid</name>
-			<url>http://harrison.its-technidata.de/ingrid/maven2</url>
+		  <id>de.ingrid.all</id>
+		  <name>Maven Repo InGrid</name>
+		  <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
 		</repository>
 		<repository>
 			<id>osgeo</id>
