@@ -186,6 +186,9 @@ public class CSW {
         String opName = be.getLocalName();
 
         if (nameSpaceURI != null && !"".equals(nameSpaceURI) && !Namespaces.CSW.equals(nameSpaceURI) && !Namespaces.CSW_2_0_2.equals(nameSpaceURI)) {
+    		if (log.isInfoEnabled()) {
+    			log.info("Operation '" + opName + "' within namespace URI '" + nameSpaceURI + "' is not supported. Request was: " + XMLTools.toString(inDoc));
+    		}
             Exception e = new CSWOperationNotSupportedException("Operation '" + opName + "' within namespace URI '"
                     + nameSpaceURI + "' is not supported.", opName);
             throw e;
@@ -193,7 +196,10 @@ public class CSW {
 
         // TODO remove opName analyse in analysers?
         if (!commonAnalyser.analyseOperationName(opName)) {
-            throw new CSWOperationNotSupportedException("Operation '" + opName + "' is not supported.", opName);
+    		if (log.isInfoEnabled()) {
+    			log.info("Operation '" + opName + "' is not supported. Request was: " + XMLTools.toString(inDoc));
+    		}
+        	throw new CSWOperationNotSupportedException("Operation '" + opName + "' is not supported.", opName);
         }
 
         if (sessionParameters.isOperationIsGetCap()) {

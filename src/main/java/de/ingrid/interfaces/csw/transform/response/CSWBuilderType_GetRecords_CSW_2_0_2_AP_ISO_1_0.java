@@ -55,18 +55,22 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
             if (IngridQueryHelper.hasValue(IngridQueryHelper.getDetailValueAsString(hit, "cswData"))) {
             	Document document = DocumentHelper.parseText(IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
             	Element metadataNode = (Element)document.selectSingleNode("//gmd:MD_Metadata");
-            	Node metadataIdNode = metadataNode.selectSingleNode("./@id");
-            	if (metadataIdNode != null) {
-            		metadataIdNode.setText("ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
+            	if (metadataNode != null) {
+                	Node metadataIdNode = metadataNode.selectSingleNode("./@id");
+                	if (metadataIdNode != null) {
+                		metadataIdNode.setText("ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
+                	} else {
+                		metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":pass-through");
+                	}
+                	searchResults.add(metadataNode);
             	} else {
-            		metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":pass-through");
+                    log.warn("Could not find valid metadata in direct data response:" + IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
+                    log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));
             	}
-            	searchResults.add(metadataNode);
-            } else {
-                CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
-                builder.setHit(hit);
-                searchResults.add(builder.build());
             }
+            CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
+            builder.setHit(hit);
+            searchResults.add(builder.build());
         }
 
         return rootElement;

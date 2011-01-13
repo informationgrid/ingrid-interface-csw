@@ -1080,7 +1080,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 				spacialResolutionScale.length > 0 || spacialResolutionGround.length > 0 || spacialResolutionScan.length > 0) {
 			Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 			"gmd:MD_DataIdentification");
-			mdDataIdentification.addAttribute("uuid", this.getFileIdentifier(hit));
+			mdDataIdentification.addAttribute("uuid", IngridQueryHelper.getFileIdentifier(hit));
 			// add necessary elements for schema validation
 			Element ciCitation = mdDataIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation");
 			this.addGCOCharacterString(ciCitation.addElement("gmd:title").addAttribute("gco:nilReason", "other:providedInPreviousIdentificationInfo"), "");
