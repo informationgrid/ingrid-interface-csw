@@ -73,6 +73,7 @@ public class ServletTools {
 				serviceExceptionReportElement.addElement("ServiceException").addAttribute("code", "NoApplicableCode").addText(e.getLocalizedMessage());
 			} else {
 				log.error("Impossible to create NoApplicableCode ServiceException. Exception localized message is null.", e);
+				serviceExceptionReportElement.addElement("ServiceException").addAttribute("code", "NoApplicableCode").addText("null");
 			}
 		}
 		DOMWriter writer = new DOMWriter();
