@@ -8,12 +8,15 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.dom4j.io.DOMWriter;
 
+import de.ingrid.interfaces.csw.CSW;
 import de.ingrid.interfaces.csw.exceptions.CSWException;
 
 /**
@@ -22,6 +25,10 @@ import de.ingrid.interfaces.csw.exceptions.CSWException;
  * @date 2006-09-19
  */
 public class ServletTools {
+
+    private static Log log = LogFactory.getLog(ServletTools.class);
+	
+	
 	/**
 	 * Creates a Properties object containing all keys and values in the given http request.
 	 * 
@@ -59,7 +66,14 @@ public class ServletTools {
 			serviceExceptionReportElement.addElement("ServiceException").addAttribute("code", ((CSWException) e)
 					.getExceptionCode()).addAttribute("locator", ((CSWException) e).getLocator()).addText(e.getMessage());
 		} else {
-			serviceExceptionReportElement.addElement("ServiceException").addAttribute("code", "NoApplicableCode").addText(e.getMessage());
+			if (log.isInfoEnabled()) {
+				log.info("Impossible to create specific ServiceException. Create NoApplicableCode Exception", e);
+			}
+			if (e.getLocalizedMessage() != null) {
+				serviceExceptionReportElement.addElement("ServiceException").addAttribute("code", "NoApplicableCode").addText(e.getLocalizedMessage());
+			} else {
+				log.error("Impossible to create NoApplicableCode ServiceException. Exception localized message is null.", e);
+			}
 		}
 		DOMWriter writer = new DOMWriter();
 		return writer.write(DocumentFactory.getInstance().createDocument(serviceExceptionReportElement));

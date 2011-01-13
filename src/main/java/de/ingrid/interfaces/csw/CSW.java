@@ -575,7 +575,7 @@ public class CSW {
             	hits = new IngridHits((int)hits.length(), requestedIngridHitsArray);
             }
         } catch (Throwable t) {
-            log.error("Error getting IBus: " + t.getMessage());
+            log.error("Error getting IBus.", t);
             throw new Exception("Timeout problem while connecting to subsequent servers.");
         }
 
