@@ -66,7 +66,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 		boolean getRecordsRequestValid = false;
 		String opName = null;
 		String startPosition = null;
-		int startPositionInt = 0;
+		int startPositionInt = 1;
 		String maxRecords = null;
 		int maxRecordsInt = 0;
 		CommonAnalyser commonAnalyser = new CommonAnalyser(this.sessionParameters);
@@ -88,51 +88,48 @@ public class GetRecAnalyser implements CSWAnalyser {
 		sessionParameters.setVersion(commonAnalyser.analyseVersion(be));
 		commonAnalyser.analyseResultType(be);
 
-		//if result type is HITS don't analyse the request for startPosition and so on ..
-		if (!this.sessionParameters.getResultType().equalsIgnoreCase("HITS")) {
-			commonAnalyser.analyseOutputFormat(be);
-			commonAnalyser.analyseOutputSchema(be);
-			startPosition = be.getAttribute("startPosition");
+		commonAnalyser.analyseOutputFormat(be);
+		commonAnalyser.analyseOutputSchema(be);
+		startPosition = be.getAttribute("startPosition");
 
-			if (startPosition != null) {
-				startPositionInt = Integer.parseInt(startPosition);
-				if (startPositionInt < 1) {
-					Exception e =
-						new CSWInvalidParameterValueException("Attribute 'startPosition' is invalid.", "startPosition");
-					throw e;
-				} else {
-					sessionParameters.setStartPosition(startPositionInt);
-				}
-			}
-			maxRecords = be.getAttribute("maxRecords");
-
-			if (maxRecords != null && !maxRecords.equals("")) {
-				maxRecordsInt = Integer.parseInt(maxRecords);
-
-				if (maxRecordsInt < 1) {
-					Exception e =
-						new CSWInvalidParameterValueException("Attribute 'maxRecords' must be 1 or above.", "maxRecords");
-					throw e;
-				} else if (maxRecordsInt > Integer.parseInt(cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS))) {
-					// Silently limit the maxRecords request parameter to the value we configured
-					maxRecordsInt = Integer.parseInt(cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS));
-					sessionParameters.setMaxRecords(maxRecordsInt);
-					/*
-					Exception e =
-						new CSWInvalidParameterValueException("Attribute 'maxRecords' is invalid because " +
-							" its value is greater than " +
-							cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS) +
-							" (value of CSW configuration).", "maxRecords");
-					throw e;
-					*/
-				} else {
-					sessionParameters.setMaxRecords(maxRecordsInt);
-				}
+		if (startPosition != null && !startPosition.equals("")) {
+			startPositionInt = Integer.parseInt(startPosition);
+			if (startPositionInt < 1) {
+				Exception e =
+					new CSWInvalidParameterValueException("Attribute 'startPosition' is invalid.", "startPosition");
+				throw e;
 			} else {
-				// Set the default value if parameter was not specified
-				sessionParameters.setMaxRecords(10);
+				sessionParameters.setStartPosition(startPositionInt);
 			}
-		} //end if result type != HITS
+		}
+		maxRecords = be.getAttribute("maxRecords");
+
+		if (maxRecords != null && !maxRecords.equals("")) {
+			maxRecordsInt = Integer.parseInt(maxRecords);
+
+			if (maxRecordsInt < 1) {
+				Exception e =
+					new CSWInvalidParameterValueException("Attribute 'maxRecords' must be 1 or above.", "maxRecords");
+				throw e;
+			} else if (maxRecordsInt > Integer.parseInt(cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS))) {
+				// Silently limit the maxRecords request parameter to the value we configured
+				maxRecordsInt = Integer.parseInt(cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS));
+				sessionParameters.setMaxRecords(maxRecordsInt);
+				/*
+				Exception e =
+					new CSWInvalidParameterValueException("Attribute 'maxRecords' is invalid because " +
+						" its value is greater than " +
+						cswConfig.getString(CSWInterfaceConfig.MAX_RECORDS) +
+						" (value of CSW configuration).", "maxRecords");
+				throw e;
+				*/
+			} else {
+				sessionParameters.setMaxRecords(maxRecordsInt);
+			}
+		} else {
+			// Set the default value if parameter was not specified
+			sessionParameters.setMaxRecords(10);
+		}
 		analyseQuery(be);
 		commonAnalyser.analyseElementSetName(be);
 		analyseConstraint(be);
@@ -154,7 +151,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 		String typeNames = null;
 		NodeList nl = be.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "Query");
 
-		if (nl != null || nl.getLength() != 0) {
+		if (nl != null && nl.getLength() > 0) {
 			elemQuery = (Element) nl.item(0);
 		}
 
@@ -213,7 +210,7 @@ public class GetRecAnalyser implements CSWAnalyser {
 			//allow only Filter encoding 1.1.0
 			if (!constraintLangVersion.equals("1.1.0")) {
 				Exception e =
-					new CSWInvalidParameterValueException("Attribute 'version' of Element 'Constraint' is not '1.0.0'.", "version");
+					new CSWInvalidParameterValueException("Attribute 'version' of Element 'Constraint' is not '1.1.0'.", "version");
 				throw e;
 			}
 		} else {

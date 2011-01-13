@@ -8,10 +8,11 @@ import java.io.Reader;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
-import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPMessage;
 
 import org.apache.axis.Message;
@@ -20,7 +21,6 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.analyse.CommonAnalyser;
@@ -33,6 +33,7 @@ import de.ingrid.interfaces.csw.analyse.SessionParameters;
 import de.ingrid.interfaces.csw.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.tools.AxisTools;
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
+import de.ingrid.interfaces.csw.tools.ServletTools;
 import de.ingrid.interfaces.csw.tools.XMLTools;
 import de.ingrid.interfaces.csw.tools.XPathUtils;
 import de.ingrid.interfaces.csw.transform.RequestTransformer;
@@ -41,6 +42,7 @@ import de.ingrid.interfaces.csw.utils.CswConfig;
 import de.ingrid.interfaces.csw.utils.IBusHelper;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.ClauseQuery;
 import de.ingrid.utils.query.FieldQuery;
@@ -62,7 +64,14 @@ public class CSW {
      * Static object used to retrieve the config data
      */
     private static CSWInterfaceConfig cswConfig = CSWInterfaceConfig.getInstance();
+    
+    private HttpServletRequest request = null;
 
+    public CSW(HttpServletRequest request) {
+    	this.request = request;
+    }
+    
+    
     /**
      * This method performs a SOAP request
      * 
@@ -73,9 +82,15 @@ public class CSW {
      *             e
      */
     protected final Message doSoapRequest(final SOAPMessage soapRequestMessage) throws Exception {
-        Document responseDoc = null;
+    	Document responseDoc = null;
+		Properties reqParams = ServletTools.createPropertiesFromRequest(request, true); // all
+
         SessionParameters sessionParameters = new SessionParameters();
-        CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
+		sessionParameters.setPartner(reqParams.getProperty("PARTNER"));
+		sessionParameters.setProvider(reqParams.getProperty("PROVIDER"));
+		sessionParameters.setIplugId(reqParams.getProperty("IPLUG"));
+
+		CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
         SOAPBody body = soapRequestMessage.getSOAPBody();
         SOAPBodyElement be = (SOAPBodyElement) body.getFirstChild();
 
@@ -150,7 +165,13 @@ public class CSW {
      */
     protected final Document doPostRequest(final Document inDoc) throws Exception {
         Document respDoc = null;
+		Properties reqParams = ServletTools.createPropertiesFromRequest(request, true); // all
+
         SessionParameters sessionParameters = new SessionParameters();
+		sessionParameters.setPartner(reqParams.getProperty("PARTNER"));
+		sessionParameters.setProvider(reqParams.getProperty("PROVIDER"));
+		sessionParameters.setIplugId(reqParams.getProperty("IPLUG"));
+
         CommonAnalyser commonAnalyser = new CommonAnalyser(sessionParameters);
         Element be = (Element)inDoc.getFirstChild();
 
@@ -234,7 +255,6 @@ public class CSW {
      *             e
      */
     private Document doGetCapabilitiesRequest() throws Exception {
-        Message soapResponseMessage = null;
         URL url = new URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_GETCAPABILITIES));
         Reader reader = new InputStreamReader(url.openStream());
         Document doc = XMLTools.parse(reader);
@@ -255,11 +275,14 @@ public class CSW {
         }
 		// get port
         String port = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PORT, "80");
-        // replace interface host and port
+		// get path
+        String path = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PATH, "csw");
+        // replace interface host and port and path
         for (int idx = 0; idx < nodes.getLength(); idx++) {
 			String s = nodes.item(idx).getTextContent();
 			s = s.replaceAll(CswConfig.KEY_INTERFACE_HOST, host);
 			s = s.replaceAll(CswConfig.KEY_INTERFACE_PORT, port);
+			s = s.replaceAll(CswConfig.KEY_INTERFACE_PATH, path);
 			nodes.item(idx).setTextContent(s);
 		}
         
@@ -311,6 +334,8 @@ public class CSW {
 
         ingridQuery = setDataTypeCSW(ingridQuery);
         ingridQuery = setSourceType(ingridQuery, sessionParameters);
+        ingridQuery = setQueryExtensions(ingridQuery, sessionParameters);
+        ingridQuery.put("cswDirectResponse", sessionParameters.getElementSetName());
 
         IngridHits hits = callBus(ingridQuery, requestedHits, startPosition);
         long totalHits = hits.length();
@@ -323,7 +348,21 @@ public class CSW {
         return hits;
     }
 
-    /**
+    private static IngridQuery setQueryExtensions(IngridQuery ingridQuery, final SessionParameters sessionParameters) {
+            if (sessionParameters.getPartner() != null && sessionParameters.getPartner().length() > 0) {
+            	ingridQuery.addField(new FieldQuery(true, false, "partner", sessionParameters.getPartner()));
+            }
+            if (sessionParameters.getProvider() != null && sessionParameters.getProvider().length() > 0) {
+            	ingridQuery.addField(new FieldQuery(true, false, "provider", sessionParameters.getProvider()));
+            }
+            if (sessionParameters.getIplugId() != null && sessionParameters.getIplugId().length() > 0) {
+            	ingridQuery.addField(new FieldQuery(true, false, "iplugs", sessionParameters.getIplugId()));
+            }
+            
+            return ingridQuery;
+	}
+
+	/**
      * performs a get record by id request
      * 
      * @param be
@@ -372,31 +411,82 @@ public class CSW {
         boolean prohibited = false;
         boolean sourceTypeIsDataset = false;
         boolean sourceTypeIsService = false;
+        boolean sourceTypeIsApplication = false;
+        boolean sourceTypeIsNonGeographicDataset = false;
+        int sourceTypeCount = 0;
 
         if (sessionParameters.isTypeNameIsDataset() || sessionParameters.isTypeNameIsDatasetcollection()) {
             sourceTypeIsDataset = true;
+            sourceTypeCount++;
         }
 
-        if (sessionParameters.isTypeNameIsApplication() || sessionParameters.isTypeNameIsService()) {
-            sourceTypeIsService = true;
+        if (sessionParameters.isTypeNameIsApplication()) {
+          sourceTypeIsApplication = true;
+          sourceTypeCount++;
         }
+
+        if (sessionParameters.isTypeNameIsService()) {
+            sourceTypeIsService = true;
+            sourceTypeCount++;
+        }
+
+        if (sessionParameters.isTypeNameNonGeographicDataset()) {
+        	sourceTypeIsNonGeographicDataset = true;
+          sourceTypeCount++;
+        }
+        
+        
         if (log.isDebugEnabled()) {
 	        log.debug("isDataset=" + sourceTypeIsDataset);
 	        log.debug("isService=" + sourceTypeIsService);
+          log.debug("isApplication=" + sourceTypeIsApplication);
+	        log.debug("isNonGeographicDataset=" + sourceTypeIsNonGeographicDataset);
         }
 
-        if (sourceTypeIsDataset && sourceTypeIsService) {
-            ClauseQuery clauseQuery = new ClauseQuery(required, prohibited);
-            required = false;
-            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
-            clauseQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
-            ingridQuery.addClause(clauseQuery);
-        } else if (sourceTypeIsDataset) {
-            required = true;
-            ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "map"));
-        } else if (sourceTypeIsService) {
-            required = true;
-            ingridQuery.addField(new FieldQuery(required, prohibited, "metaclass", "service"));
+        
+        ClauseQuery clauseQuery = null;
+        if (sourceTypeCount != 1 || sourceTypeIsNonGeographicDataset) {
+          clauseQuery = new ClauseQuery(true, prohibited);
+        }
+        
+        if (sourceTypeIsDataset) {
+          if (sourceTypeCount == 1) {
+            ingridQuery.addField(new FieldQuery(true, prohibited, "metaclass", "map"));
+          } else {
+            clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "map"));
+          }
+        }
+        if (sourceTypeIsService) {
+          if (sourceTypeCount == 1) {
+            ingridQuery.addField(new FieldQuery(true, prohibited, "metaclass", "geoservice"));
+          } else {
+            clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "geoservice"));
+          }
+        }
+        if (sourceTypeIsApplication) {
+          if (sourceTypeCount == 1) {
+            ingridQuery.addField(new FieldQuery(true, prohibited, "metaclass", "service"));
+          } else {
+            clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "service"));
+          }
+        }
+        if (sourceTypeIsNonGeographicDataset) {
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "document"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "project"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "database"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "job"));
+        }
+        if (sourceTypeCount == 0) {
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "map"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "geoservice"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "service"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "document"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "project"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "database"));
+          clauseQuery.addField(new FieldQuery(false, prohibited, "metaclass", "job"));
+        }
+        if (sourceTypeCount != 1 || sourceTypeIsNonGeographicDataset) {
+          ingridQuery.addClause(clauseQuery);
         }
 
         return ingridQuery;
@@ -416,6 +506,7 @@ public class CSW {
 //        ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.DATA_TYPE, DataTypes.CSW));
 //        ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.DATA_TYPE, DataTypes.ECS));
         ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.DATA_TYPE, DataTypes.DSCECS));
+        ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.DATA_TYPE, DataTypes.DSCCSW));
         ingridQuery.addField(new FieldQuery(required, prohibited, IngridQuery.RANKED, IngridQuery.ANY_RANKED));
 
         return ingridQuery;
@@ -437,13 +528,28 @@ public class CSW {
         String str_timeOut = cswConfig.getString(CSWInterfaceConfig.TIMEOUT);
         int timeOut = Integer.parseInt(str_timeOut);
 
-        // set pageNo to the first page (zero)
-        int pageNo = (int) (startPosition / requestedHits) + 1;
         
-        // set to requestedHits
-        int hitsPerPage = requestedHits;
+        int pageNo = 0;
+        int hitsPerPage = 0;
+        // the iBus search interface takes only pageNo and pageSize as parameter 
+        // to determine the start- and number of hits to return
+        // if startPosition is no multiple of requestedHits we need special treatment.
+        // Get paging based on the startPosition and requested hits.
+        // see below for cutting the right results out from the result array.
+        int[] paging = IBusHelper.getPaging(startPosition, requestedHits);
+        pageNo = paging[0];
+        hitsPerPage = paging[1];
+		int searchResultStart = paging[1] == 1 ? paging[0] : Math.max((paging[0] - 1) * paging[1] + 1, 1);
+		int searchResultEnd = searchResultStart + paging[1] - 1;
+        boolean diffResultRange = searchResultStart != startPosition || searchResultEnd != (requestedHits + startPosition - 1);
+        if (log.isDebugEnabled()) {
+	        log.debug("translating start position and reuqested hits into page number and page size for ibus querying.");
+	        log.debug("start,length : first,last (" + startPosition + "," + requestedHits + " : " + startPosition + "," + (requestedHits + startPosition - 1) + ")");
+	        log.debug("pageNo,pageSize : first,last (" + pageNo + "," + hitsPerPage + " : " + searchResultStart + "," + searchResultEnd + ")");
+        }
+        
         IngridHits hits = null;
-
+        
         try {
             IBus myBus = cswConfig.getIBus();
             if (log.isDebugEnabled()) {
@@ -451,6 +557,23 @@ public class CSW {
             }
             IBusHelper.injectCache(ingridQuery);
             hits = myBus.search(ingridQuery, hitsPerPage, pageNo, (pageNo-1) * hitsPerPage, timeOut);
+            if (hits.length() < startPosition) {
+            	// oh another funny behavior of the ibus: if more results than 
+            	// available are requested the ibus returns STILL results
+            	// make sure the CSW interface does NOT
+            	hits = new IngridHits((int)hits.length(), new IngridHit[0]);
+            } else if (diffResultRange) {
+            	// see comment above
+            	// here we cut the right hits out of the requested hits,
+            	// so we match the CSW request
+            	int length = Math.min(hits.getHits().length - (startPosition - searchResultStart), requestedHits);
+            	IngridHit[] requestedIngridHitsArray = new IngridHit[length];
+                if (log.isDebugEnabled()) {
+                	log.debug("Cutting " + length + " results: starting with result no " + (startPosition - searchResultStart) + ".");
+                }
+            	System.arraycopy(hits.getHits(), (startPosition - searchResultStart), requestedIngridHitsArray, 0, length);
+            	hits = new IngridHits((int)hits.length(), requestedIngridHitsArray);
+            }
         } catch (Throwable t) {
             log.error("Error getting IBus: " + t.getMessage());
             throw new Exception("Timeout problem while connecting to subsequent servers.");

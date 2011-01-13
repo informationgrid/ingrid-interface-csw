@@ -15,6 +15,13 @@ import javax.xml.soap.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import de.ingrid.interfaces.csw.CSW;
+import de.ingrid.interfaces.csw.CSWServlet;
+import de.ingrid.interfaces.csw.tools.XMLTools;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -42,7 +49,10 @@ import java.util.StringTokenizer;
 public abstract class JAXMServlet 
     extends HttpServlet
 {
-   /**
+    
+	private static Log log = LogFactory.getLog(JAXMServlet.class);    
+
+	/**
     * The <code>MessageFactory</code> object that will be used internally
     * to create the <code>SOAPMessage</code> object to be passed to the
     * method <code>onMessage</code>. This new message will contain the data
@@ -183,11 +193,21 @@ public abstract class JAXMServlet
             // Now internalize the contents of a HTTP request and
             // create a SOAPMessage
 	    SOAPMessage msg = msgFactory.createMessage(headers, is);
+	    // remove whitespace text nodes from the soap part of the message
+	    // this is a workaround for a bug with the Message.getSoapBody() method
+	    // which fails if the soap:Body Element is followed my a whitespace in the
+	    // textual xml representation of the SOAP message.
+	    XMLTools.removeWhitespaceNodes(msg.getSOAPPart());
 	    
 	    SOAPMessage reply = null;
 
-            // There are no replies in case of an OnewayListener.
-            if (this instanceof ReqRespListener) 
+	    	// THIS IS AN UGLY HACK
+	    	// but the whole solutions from GIStec is an ugly hack
+	        // we are otherwise not be able to pass the request parameter to the CSW handler
+	    	// but we need it to get the query extensions like partner, provider, iplug
+	    	if (this instanceof CSWServlet)
+        		reply = ((CSWServlet)this).onMessage(msg, req);
+        	else if (this instanceof ReqRespListener) 
                 reply = ((ReqRespListener) this).onMessage(msg);
             else if (this instanceof OnewayListener)
                 ((OnewayListener) this).onMessage(msg);
@@ -220,7 +240,8 @@ public abstract class JAXMServlet
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         }
         catch(Exception ex) {
-            throw new ServletException("JAXM POST failed "+ex.getMessage());
+            log.error("JAXM POST failed.", ex);
+        	throw new ServletException("JAXM POST failed "+ex.getMessage());
 	}
     }
 }

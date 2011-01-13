@@ -6,6 +6,9 @@ package de.ingrid.interfaces.csw;
 // IMPORTS java.io
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.net.InetAddress;
 import java.net.URL;
@@ -21,11 +24,14 @@ import javax.xml.messaging.JAXMServlet;
 import javax.xml.messaging.ReqRespListener;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.TransformerException;
 
 import org.apache.axis.AxisFault;
 import org.apache.axis.Message;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.DocumentException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -105,7 +111,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 		try {
         	if (log.isInfoEnabled()) {
-        		log.info("trying to connect to bus via JXTA client... ");
+        		log.info("trying to connect to bus via ibus client... ");
         	}
 			bus = IBusHelper.getIBus();
 		} catch (Exception e) {
@@ -121,6 +127,11 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		logMemoryInfo("init");
 	}
 
+	public final SOAPMessage onMessage(final SOAPMessage message) {
+		throw new RuntimeException("The Method should never be called!!");
+	}
+	
+	
 	/**
 	 * This method handles SOAP 1.2 requests via http-POST. It called by the
 	 * servlet engine. The resulting message is sent to the client.
@@ -129,7 +140,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	 *            SOAPMessage
 	 * @return soapResponseMessage SOAPMessage
 	 */
-	public final SOAPMessage onMessage(final SOAPMessage message) {
+	public final SOAPMessage onMessage(final SOAPMessage message, HttpServletRequest request) {
+		
 		if (log.isDebugEnabled()) {
 			log.debug("javax.xml.soap.MessageFactory: " + System.getProperty("javax.xml.soap.MessageFactory"));
 			log.debug("javax.xml.soap.SOAPFactory: " + System.getProperty("javax.xml.soap.SOAPFactory"));
@@ -147,7 +159,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 					"http://www.w3.org/2003/05/soap-envelope")) {
 				throw new Exception("Only SOAP 1.2 is supported.");
 			}
-			csw = new CSW();
+			csw = new CSW(request);
 			soapResponseMessage = csw.doSoapRequest(message);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -243,16 +255,21 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+		  // ignore keep alive messages
+		  if (req.getContentType() == null) {
+		    return;
+		  }
 			if (req.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				super.doPost(req, resp);
-			} else if (req.getContentType().toLowerCase().indexOf("application/xml") != -1) {
+			} else if (req.getContentType().toLowerCase().indexOf("application/xml") != -1
+					|| req.getContentType().toLowerCase().indexOf("text/xml") != -1) {
 	            // Get the body of the HTTP request.
 	            
 				DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
 				df.setNamespaceAware(true);
 				Document inDoc = df.newDocumentBuilder().parse(req.getInputStream());
 
-				CSW csw = new CSW();
+				CSW csw = new CSW(req);
 	            Document responseDoc = csw.doPostRequest(inDoc);
 	    		if (log.isDebugEnabled()) {
 	    			log.debug("CSW response: " + XMLTools.toString(responseDoc));
@@ -260,13 +277,26 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	    		resp.setContentType("application/xml");
 	    		resp.setCharacterEncoding("UTF-8");
-	    		resp.getOutputStream().print(XMLTools.toString(responseDoc));
-	    		resp.getOutputStream().flush();
+	    		OutputStream os = resp.getOutputStream();
+	    		OutputStreamWriter osw = new OutputStreamWriter(os , "UTF-8");
+	    		PrintWriter pw = new PrintWriter(osw);
+	    		pw.print(XMLTools.toString(responseDoc));
+	    		pw.flush();
 			} else {
 				throw new ServletException("Unsupported Content Type in POST request: " + req.getContentType());
 			}
 		} catch (Exception ex) {
-			throw new ServletException("POST failed " + ex.getMessage(), ex);
+    		if (log.isDebugEnabled()) {
+    			log.debug("Error serving POST request.", ex);
+    		}
+			resp.setContentType("application/xml");
+    		resp.setCharacterEncoding("UTF-8");
+    		try {
+				resp.getOutputStream().print(XMLTools.toString(ServletTools.createServiceException(ex)));
+			} catch (Exception e) {
+				throw new ServletException("POST failed (generating service exception failed): " + e.getMessage(), e);
+			}
+    		resp.getOutputStream().flush();
 		}
 	}
 
@@ -305,11 +335,13 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			}
 			// get port
 			String port = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PORT, "80");
+			String path = CswConfig.getInstance().getString(CswConfig.SERVER_INTERFACE_PATH, "csw");
 			// replace interface host and port
 			for (int idx = 0; idx < nodes.getLength(); idx++) {
 				String s = nodes.item(idx).getTextContent();
 				s = s.replaceAll(CswConfig.KEY_INTERFACE_HOST, host);
 				s = s.replaceAll(CswConfig.KEY_INTERFACE_PORT, port);
+				s = s.replaceAll(CswConfig.KEY_INTERFACE_PATH, path);
 				nodes.item(idx).setTextContent(s);
 			}
 
@@ -360,7 +392,6 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	 * @throws Exception
 	 */
 	private void doGet_GetRecords(final Properties reqParams, final HttpServletResponse response) throws Exception {
-		log.debug("enter");
 		GetRecAnalyser getRecAnalyser = new GetRecAnalyser();
 		if (getRecAnalyser.analyse(reqParams)) {
 			StringBuffer result = new StringBuffer();
@@ -371,7 +402,6 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			response.setCharacterEncoding("UTF-8");
 			response.getOutputStream().print(result.toString());
 		}
-		log.debug("leaving");
 	}
 
 	/**
@@ -392,13 +422,16 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	private void doGet_GetRecordById(final Properties reqParams, final HttpServletResponse response) throws Exception {
 
 		SessionParameters sessionParameters = new SessionParameters();
-		sessionParameters.setElementSetName(reqParams.getProperty("elementSetName", "brief"));
-		sessionParameters.setOutputSchema(reqParams.getProperty("outputSchema"));
-		sessionParameters.setVersion(reqParams.getProperty("version","2.0.2"));
+		sessionParameters.setElementSetName(reqParams.getProperty("ELEMENTSETNAME", "brief"));
+		sessionParameters.setOutputSchema(reqParams.getProperty("OUTPUTSCHEMA"));
+		sessionParameters.setVersion(reqParams.getProperty("VERSION","2.0.2"));
 		sessionParameters.setOperationIsGetRecById(true);
 		ArrayList<String> idList = new ArrayList<String>();
 		idList.add(reqParams.getProperty("ID"));
 		sessionParameters.setIdsList(idList);
+		sessionParameters.setPartner(reqParams.getProperty("PARTNER"));
+		sessionParameters.setProvider(reqParams.getProperty("PROVIDER"));
+		sessionParameters.setIplugId(reqParams.getProperty("IPLUG"));
 
 		IngridQuery ingridQuery = null;
 		RequestTransformer requestTransformer = new RequestTransformer();

@@ -5,9 +5,86 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="1.3.0" date="xxxx-xx-xx" description="Release">
+    <release version="2.3.0" date="2010-12-20" description="Release">
+      <action type="fix">
+        Unify language construct in ISO answer (user "LanguageCode" in all "language" elements).
+      </action>
+      <action type="add">
+        Added mapping of IGC Schema 1.0.9 (separate class service into geodata service and other services).
+      </action>
+      <action type="add">
+        Added mapping of IGC Schema 1.0.8 (separate accessConstraints (gmd:otherConstraints) and useConstraints (gmd:useLimitation)).
+      </action>
+      <action type="fix">
+        Add interpretation of boolean logic to TYPE filter query constructs.
+      </action>
+      <action type="fix">
+        Remove PropertyEqualsNot from supported query types in capabilities.
+      </action>
+    </release>
+
+    <release version="1.2.3" date="2010-07-14" description="Release">
+      <action type="fix" issue="INGRID-1828">
+        Set resultType="HITS" as default resultType.
+      </action>      
+      <action type="fix">
+        Parsing of queriables "Language" and "ResourceLanguage" will be mapped to internal IGC language keys. 
+      </action>      
+      <action type="add">
+        Add handling of ISO fields metadata name and version. Set default values if they are not set in the underlying data. 
+      </action>      
+      <action type="fix">
+        Make parsing of spatial query more robust. 
+      </action>      
+      <action type="fix">
+        Make handling of address IDs iPlug version specific (distinguish between UDK5 and others). 
+      </action>      
+      <action type="fix">
+        Make sure only CSW compatible iPlugs will be queried by the CSW interface. 
+      </action>      
+      <action type="fix">
+        Capabilities better reflects the supported Queriables. 
+      </action>      
+      <action type="fix">
+        Change codelist reference URIs from '...codeList.xml?...' to '...codeList.xml#...' 
+      </action>
       <action type="update">
-        General refactoring of the CSW interface.
+        Adapt capabilities document. This interface does not support typeName "csw:Record" nor CSW 2.0.0
+      </action>
+      <action type="update">
+        Map fileIdentifier to Original OBJ_ID or, if empty to OBJ_UUID.
+      </action>
+      <action type="add">
+        Add CitationIdentifier ID: use datasource uuid or, if empty, create new UUID.
+      </action>
+      <action type="update">
+        Make MD_Metadata ID ISO compliant (no ':' allowed).
+      </action>
+      <action type="update">
+        Add CI_Citation date elements even if date has no value. Use nilReason="missing" on such date elements.
+      </action>
+      <action type="update">
+        Improve robustness of address rendering (filter adress references without adresses).
+      </action>
+      <action type="add">
+        Add code space "Ingrid" to RS_Identifier entries.
+      </action>
+      <action type="update">
+        Map INSPIRE keywords first, if they exist. Keywords are mapped in the following order: INSPIRE, GEMET, UMTHES, FREE, SERVICE_CLASSIFICATION, ENV_CATEGORIES, ENV_TOPICS.
+      </action>
+      <action type="update">
+        Map GeographicDescriptionCode to index field name 'location' instead of UDK table and fieldname.
+      </action>
+    </release> 
+    <release version="1.2.2" date="2010-03-09" description="Release">
+      <action type="add">
+        Add mapping of extentTypeCode (set always to TRUE) and metadateStandardName (defaults to 'ISO19115') and metadataStandardVersion (defaults to '2003/Cor.1:2006').
+      </action>
+      <action type="fix">
+        Fix problem with GET request GetRecordById where the elementsetname was always set to 'brief'.
+      </action>
+      <action type="add">
+        Add complete mapping of the UDK data model, including also 'non-ISO' object classes.
       </action>
     </release> 
     <release version="1.2.1" date="2010-01-08" description="Release">
@@ -29,7 +106,7 @@
         Problem bei Umsetzung von Filterquery zu InGrid Query mit logischen Verknüpfungen behoben.
       </action>
       <action type="add">
-        Anfragen können auf Partner, Anbieter und iPlug ID über GET Parameter eingeschränkt werden.
+        Anfragen koennen auf Partner, Anbieter und iPlug ID über GET Parameter eingeschraenkt werden.
       </action>
       <action type="fix">
         Kommentare zu Textfeldern im Installer (nur im Textmodus) werden erst nach der Eingabe angezeigt.
@@ -38,7 +115,7 @@
         Wiederholtes Laden eines gecachten Objektes fuehrt zu Vervielfachung der "organisation" Angaben in einer Adresse.
       </action>
       <action type="update">
-        Erweiterung der unterst&uuml;tzten Länder bei Transformation IGC - CSW
+        Erweiterung der unterstuetzten Laender bei Transformation IGC - CSW
       </action>
       <action type="add">
         POST Methode akzeptiert auch Anfragen mit Content-Type:text/xml.

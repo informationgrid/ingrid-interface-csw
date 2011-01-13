@@ -47,7 +47,7 @@ public class CSWBuilderType_GetRecordById_DE_1_0_1 extends CSWBuilderType {
         
         if (hits.length() > 0) {
         	IngridHit hit = hits.getHits()[0];
-	        hit.put("detail", details[0]);
+	        hit.put("hitDetail", details[0]);
 	        
 	        CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
 	        builder.setHit(hit);

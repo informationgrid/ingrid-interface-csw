@@ -561,7 +561,7 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
 					IngridQueryHelper.HIT_KEY_OBJECT_TIME_STATUS));
-			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(518L, code);
+			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(523L, code);
 			if (codeVal.length() > 0) {
 				parent.addElement("smXML:status").addElement("smXML:MD_ProgressCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode").addAttribute(

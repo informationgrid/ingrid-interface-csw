@@ -55,7 +55,7 @@ public class Server {
         // Start the http server
         server.start();
     	if (log.isInfoEnabled()) {
-    		log.info("... started wainting for requests.");
+    		log.info("... started on http://localhost:" + CswConfig.getInstance().getInt(CswConfig.SERVER_PORT, 80) + "/csw waiting for requests.");
     	}
     }
 

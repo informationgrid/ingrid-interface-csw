@@ -52,7 +52,8 @@ import de.ingrid.interfaces.csw.transform.SpatialOps.Disjoint;
 import de.ingrid.interfaces.csw.transform.SpatialOps.Intersects;
 import de.ingrid.interfaces.csw.transform.SpatialOps.Spatial;
 import de.ingrid.interfaces.csw.transform.SpatialOpsImpl.BoxImpl;
-import de.ingrid.utils.udk.UtilsCSWDate;
+import de.ingrid.interfaces.csw.utils.UtilsCSWDate;
+import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 /**
  * 
@@ -201,7 +202,8 @@ public class FilterToIngridQueryString {
         if (log.isDebugEnabled()) {
         	log.debug("exiting, returning string: " + sb.toString());
         }
-		return sb.toString();
+		// filter invalid query syntax that could not be handled before
+        return sb.toString().replaceAll("^\\sOR\\s$|^\\sAND\\s$|^\\sNOT\\s$|(( AND)*|( OR)*|\\s|)\\s*\\(\\s\\)", "");
 	}
 
 	/**
@@ -433,10 +435,13 @@ public class FilterToIngridQueryString {
 		Node node = null;
 		String nodeValue = null;
 		
-		if (nlCoords.item(0).getLocalName().equalsIgnoreCase("coordinates")) {
+		Node firstNode = getElementFromNodeList(nlCoords, 0);
+		Node secondNode = getElementFromNodeList(nlCoords, 1);
+		
+		if (firstNode.getLocalName().equalsIgnoreCase("coordinates")) {
 			// 2006-10-13 Dirk Schwarzmann: This is the type "<gml:coordinates...>"
 			coordErrorLocator = "gml:coordinates";
-			Element elemCoords = (Element) nlCoords.item(0);
+			Element elemCoords = (Element) firstNode;
 			
 			if (elemCoords.getChildNodes() == null || elemCoords.getChildNodes().getLength() == 0) {
 				throw new CSWMissingParameterValueException("Values of coordinates are missing", coordErrorLocator);
@@ -495,7 +500,7 @@ public class FilterToIngridQueryString {
 			}
 			maxx = coords[0];
 			maxy = coords[1];
-		} else if (nlCoords.item(0).getLocalName().equalsIgnoreCase("coord")) {
+		} else if (firstNode.getLocalName().equalsIgnoreCase("coord")) {
 			// 2006-10-13 Dirk Schwarzmann: This is the type "<gml:coord><gml:X>..."
 			coordErrorLocator = "gml:coord";
 			
@@ -505,49 +510,49 @@ public class FilterToIngridQueryString {
 			
 			// Grab the minimal boundary coord
 			Node coordXY = null;
-			coordXY = nlCoords.item(0);
+			coordXY = firstNode;
 			if (coordXY.getChildNodes().getLength() != 2) {
 				throw new CSWInvalidParameterValueException("Values of coordinates are not correct (only X-Y pairs are allowed)", coordErrorLocator);
 			}
-			node = coordXY.getChildNodes().item(0);
+			node = getElementFromNodeList(coordXY.getChildNodes(), 0);
 			if (node.getLocalName().equals("X")) {
-				minx = node.getChildNodes().item(0).getNodeValue();
+				minx = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			if (node.getLocalName().equals("Y")) {
-				miny = node.getChildNodes().item(0).getNodeValue();
+				miny = getElementFromNodeList(node.getChildNodes(),0).getNodeValue();
 			}
-			node = coordXY.getChildNodes().item(1);
+			node = getElementFromNodeList(coordXY.getChildNodes(), 1);
 			if (node.getLocalName().equals("X")) {
-				minx = node.getChildNodes().item(0).getNodeValue();
+				minx = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			if (node.getLocalName().equals("Y")) {
-				miny = node.getChildNodes().item(0).getNodeValue();
+				miny = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			
 			// Grab the maximal boundary coord
-			coordXY = nlCoords.item(1);
+			coordXY = secondNode;
 			if (coordXY.getChildNodes().getLength() != 2) {
 				throw new CSWInvalidParameterValueException("Values of coordinates are not correct (only X-Y pairs are allowed)", coordErrorLocator);
 			}
-			node = coordXY.getChildNodes().item(0);
+			node = getElementFromNodeList(coordXY.getChildNodes(), 0);
 			if (node.getLocalName().equals("X")) {
-				maxx = node.getChildNodes().item(0).getNodeValue();
+				maxx = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			if (node.getLocalName().equals("Y")) {
-				maxy = node.getChildNodes().item(0).getNodeValue();
+				maxy = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
-			node = coordXY.getChildNodes().item(1);
+			node = getElementFromNodeList(coordXY.getChildNodes(), 1);
 			if (node.getLocalName().equals("X")) {
-				maxx = node.getChildNodes().item(0).getNodeValue();
+				maxx = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
 			if (node.getLocalName().equals("Y")) {
-				maxy = node.getChildNodes().item(0).getNodeValue();
+				maxy = getElementFromNodeList(node.getChildNodes(), 0).getNodeValue();
 			}
-		} else if (nlCoords.item(0).getLocalName().equalsIgnoreCase("lowerCorner")) {
+		} else if (firstNode.getLocalName().equalsIgnoreCase("lowerCorner")) {
 			coordErrorLocator = "gml:envelope";
 			try {
-				String lowerCorner = nlCoords.item(0).getTextContent().trim();
-				String upperCorner = nlCoords.item(1).getTextContent().trim();
+				String lowerCorner = firstNode.getTextContent().trim();
+				String upperCorner = secondNode.getTextContent().trim();
 				String[] lowerCornerCoords = lowerCorner.split(" ");
 				String[] upperCornerCoords = upperCorner.split(" ");
 				minx = lowerCornerCoords[0];
@@ -588,6 +593,21 @@ public class FilterToIngridQueryString {
         	log.debug("exiting, coords: " + sb.toString());
         }
 	}
+	
+	private Node getElementFromNodeList(NodeList nList, int idx) {
+		int nIdx = 0;
+		for (int i=0; i< nList.getLength(); i++) {
+			Node n = nList.item(i);
+			if (n instanceof Element) {
+				if (idx==nIdx) {
+					return n;
+				}
+				nIdx++;
+			}
+		}
+		return null;
+	}
+	
 
 	/**
 	 * runs a single expression e.g. a property
@@ -688,6 +708,19 @@ public class FilterToIngridQueryString {
 				if (literal.indexOf(' ') > -1) {
 					literal = "\"" + literal + "\"";
 				}
+				
+				if (field.indexOf("t01_object.metadata_language_key") > -1  
+						|| field.indexOf("t01_object.data_language_key") > -1) {
+					Integer igcLangId = null;
+					if (literal.length() == 3) {
+						igcLangId = UtilsLanguageCodelist.getCodeFromIso639_2(literal);
+					} else if (literal.length() == 2) {
+						igcLangId = UtilsLanguageCodelist.getCodeFromShortcut(literal);
+					}
+					if (igcLangId != null) {
+						literal = igcLangId.toString();
+					}
+				} 
 				
 				sb.append(literal);
 			} else if (obj instanceof Double || obj instanceof Integer) {
@@ -800,10 +833,6 @@ public class FilterToIngridQueryString {
 			log.debug("entering");
 		}
 
-		if (not) {
-			not = false;
-		}
-		
 		// check for type query
 		if (co.getFirstExpression().getExpression() instanceof Expression.PropertyName && co.getSecondExpression().getExpression() instanceof Expression.Literal) {
 			String property = ((Expression.PropertyName) co.getFirstExpression().getExpression()).getPropertyName();
@@ -812,9 +841,26 @@ public class FilterToIngridQueryString {
 			if (inPropWithoutNS.equalsIgnoreCase("type")) {	
 				String type = (String)((Expression.Literal)  co.getSecondExpression().getExpression()).getLiteral();
 				if (type.equalsIgnoreCase("service") || type.equalsIgnoreCase("application")) {
-					_session.setTypeNameIsService(true);
-				} else {
-					_session.setTypeNameIsDataset(true);
+					if (not) {
+						_session.setTypeNameIsDataset(true);
+						_session.setTypeNameIsNonGeographicDataset(true);
+					} else {
+						_session.setTypeNameIsService(true);
+					}
+				} else if (type.equalsIgnoreCase("dataset") || type.equalsIgnoreCase("datasetcollection")) {
+					if (not) {
+						_session.setTypeNameIsService(true);
+						_session.setTypeNameIsNonGeographicDataset(true);
+					} else {
+						_session.setTypeNameIsDataset(true);
+					}
+				} else if (type.equalsIgnoreCase("nonGeographicDataset")) {
+					if (not) {
+						_session.setTypeNameIsDataset(true);
+						_session.setTypeNameIsService(true);
+					} else {
+						_session.setTypeNameIsNonGeographicDataset(true);
+					}
 				}
 				sb = deletePreOperator(sb);
 			} else {
@@ -838,6 +884,9 @@ public class FilterToIngridQueryString {
 			runExpr(co.getSecondExpression());
 		}
 
+		if (not) {
+			not = false;
+		}
 
 		if (log.isDebugEnabled()) {
 			log.debug("exiting");
@@ -1051,7 +1100,10 @@ public class FilterToIngridQueryString {
 			// Boolean: MD_Metadata.AbstractMD_Identification.resourceConstraints.MD_SecurityConstraints
 		} else if (inPropWithoutNS.equalsIgnoreCase("HasSecurityConstraints")) {
 			outprop = "object_access.restriction_key:[0 TO 9]";
-			// MD_Metadata.identificationInfo.AbstractMD_Identification.citation.CI_Citation.identifier.MD_Identifier.code		
+		} else if (inPropWithoutNS.equalsIgnoreCase("Language")) {
+			// TODO: value must be transformed to ISO 639-1
+			outprop = "t01_object.metadata_language_key";
+			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicDescription.geographicIdentifier.MD_Identifier.code
 		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceIdentifier")) {
 			outprop = "t011_obj_geo.datasource_uuid";
 			// MD_Metadata.parentIdentifier
@@ -1071,10 +1123,10 @@ public class FilterToIngridQueryString {
 			// MD_Metadata.identificationInfo.MD_DataIdentification.language
 		} else if (inPropWithoutNS.equalsIgnoreCase("ResourceLanguage")) {
 			// TODO: value must be transformed to ISO 639-1
-			outprop = "t01_object.data_language_code";
+			outprop = "t01_object.data_language_key";
 			// MD_Metadata.identificationInfo.MD_DataIdentification.extent.EX_Extent.geographicElement.EX_GeographicDescription.geographicIdentifier.MD_Identifier.code
 		} else if (inPropWithoutNS.equalsIgnoreCase("GeographicDescriptionCode")) {
-			outprop = "spatial_ref_value.name_value";
+			outprop = "location";
 			// MD_Metadata.identificationInfo.MD_DataIdentification.spatialResolution.MD_Resolution.equivalentScale.MD_RepresentativeFraction.denominator
 		} else if (inPropWithoutNS.equalsIgnoreCase("Denominator")) {
 			outprop = "t011_obj_geo_scale.scale";

@@ -65,25 +65,14 @@ public class CommonAnalyserTest extends TestCase {
         
         assertTrue(typeNamesIsValid);
         
-        assertTrue(sessionParameters.isTypeNameIsDataset());
-        
         
         typeNamesIsValid = commonAnalyser.analyseTypeNames("csw:dataset,csw:datasetcollection");
         
         assertTrue(typeNamesIsValid);
-       
-        assertTrue(sessionParameters.isTypeNameIsDataset());
-        
-        assertTrue(sessionParameters.isTypeNameIsDatasetcollection());
-        
         
         typeNamesIsValid = commonAnalyser.analyseTypeNames("csw:service");
         
         assertTrue(typeNamesIsValid);
-       
-        assertTrue(sessionParameters.isTypeNameIsService());
-        
-        
         
         
     }

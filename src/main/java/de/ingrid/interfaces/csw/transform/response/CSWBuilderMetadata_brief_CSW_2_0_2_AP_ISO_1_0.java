@@ -9,7 +9,6 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
 
-import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
@@ -31,28 +30,31 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 		Namespace gmd = new Namespace("gmd", "http://www.isotc211.org/2005/gmd");
 		Namespace srv = new Namespace("srv", "http://www.isotc211.org/2005/srv");
 
-		String objectId = IngridQueryHelper.getDetailValueAsString(hit, "t01_object.obj_id");
-
 		String udkClass = IngridQueryHelper.getDetailValueAsString(hit, "t01_object.obj_class");
-        String typeName = getTypeName();
-        if (typeName == null) {
+        HierarchyInfo hierarchyInfo = getTypeName();
+        if (hierarchyInfo.hierarchyLevel == null) {
         	return null;
         }
-
-		Element metaData = DocumentFactory.getInstance().createElement("MD_Metadata",
-				"http://www.isotc211.org/2005/gmd");
+        
+        Element metaData = DocumentFactory.getInstance().createElement("MD_Metadata",
+					"http://www.isotc211.org/2005/gmd");
 		metaData.add(gmd);
 		metaData.add(gco);
 		metaData.add(srv);
 
-		this.addFileIdentifier(metaData, objectId);
-		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), typeName);
+		metaData.addAttribute("id", hit.getPlugId().replaceAll("[^_\\.\\-A-Za-z0-9]", "_") + "_" + hit.getDocumentId());
+
+		this.addFileIdentifier(metaData, hit);
+		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), hierarchyInfo.hierarchyLevel);
+		if (IngridQueryHelper.hasValue(hierarchyInfo.hierarchyLevelName)) {
+			this.addGCOCharacterString(metaData.addElement("gmd:hierarchyLevelName"), hierarchyInfo.hierarchyLevelName);
+		}
 		this.addContacts(metaData, hit, this.nsPrefix);
 		this.addDateStamp(metaData, hit, this.nsPrefix);
-		if (udkClass.equals("1")) {
-			this.addIdentificationInfoDataset(metaData, hit);
-		} else {
+		if (udkClass.equals("3")) {
 			this.addIdentificationInfoService(metaData, hit);
+		} else {
+			this.addIdentificationInfoDataset(metaData, hit);
 		}
 
 		return metaData;
@@ -61,8 +63,12 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 	private void addIdentificationInfoService(Element metaData, IngridHit hit) {
 		Element svServiceIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"srv:SV_ServiceIdentification");
+		
+		svServiceIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
+		
 		Element ciCitation = svServiceIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation");
 
+		
 		this.addGCOCharacterString(ciCitation.addElement("gmd:title"), IngridQueryHelper
 				.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_TITLE));
 
@@ -74,8 +80,8 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 				IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
 		
         // add service type
-        String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);
-        String serviceType = null;
+        String serviceTypeKey = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE_KEY);
+        String serviceType = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_SERVICE_TYPE);;
         if (serviceTypeKey != null) {
         	if (serviceTypeKey.equals("1")) {
         		serviceType = "discovery";
@@ -121,6 +127,9 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 	private void addIdentificationInfoDataset(Element metaData, IngridHit hit) {
 		Element mdDataIdentification = metaData.addElement("gmd:identificationInfo").addElement(
 				"gmd:MD_DataIdentification");
+		
+		mdDataIdentification.addAttribute("uuid", "ingrid#" + getCitationIdentifier(hit));
+		
 		Element ciCitation = mdDataIdentification.addElement("gmd:citation").addElement("gmd:CI_Citation");
 		// add title
 		this.addGCOCharacterString(ciCitation.addElement("gmd:title"), IngridQueryHelper.getDetailValueAsString(
@@ -132,10 +141,12 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 		this.addGCOCharacterString(mdDataIdentification.addElement("gmd:abstract"), IngridQueryHelper.getDetailValueAsString(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_DESCR));
 		
-		// add language
+		// add metadata language
 		String dataLang = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_DATA_LANGUAGE);
 		if (IngridQueryHelper.hasValue(dataLang)) {
-			this.addGCOCharacterString(mdDataIdentification.addElement("gmd:language"), getISO639_2LanguageCode(dataLang));
+            mdDataIdentification.addElement("gmd:language").addElement("gmd:LanguageCode")
+            .addAttribute("codeList", "http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode")
+            .addAttribute("codeListValue", getISO639_2LanguageCode(dataLang));
 		}
 
 		// T011_obj_geo_topic_cat.topic_category

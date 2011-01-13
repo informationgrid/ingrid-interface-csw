@@ -7,8 +7,11 @@ import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
 import org.dom4j.DocumentFactory;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.Node;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.utils.IngridHit;
@@ -48,11 +51,22 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
 
         for (int i = 0; i < hits.getHits().length; i++) {
             IngridHit hit = hits.getHits()[i];
-            hit.put("detail", details[i]);
-            
-            CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
-            builder.setHit(hit);
-            searchResults.add(builder.build());
+            hit.put("hitDetail", details[i]);
+            if (IngridQueryHelper.hasValue(IngridQueryHelper.getDetailValueAsString(hit, "cswData"))) {
+            	Document document = DocumentHelper.parseText(IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
+            	Element metadataNode = (Element)document.selectSingleNode("//gmd:MD_Metadata");
+            	Node metadataIdNode = metadataNode.selectSingleNode("./@id");
+            	if (metadataIdNode != null) {
+            		metadataIdNode.setText("ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
+            	} else {
+            		metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":pass-through");
+            	}
+            	searchResults.add(metadataNode);
+            } else {
+                CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
+                builder.setHit(hit);
+                searchResults.add(builder.build());
+            }
         }
 
         return rootElement;

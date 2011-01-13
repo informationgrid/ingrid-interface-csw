@@ -30,10 +30,58 @@ public final class SessionParameters {
 	private boolean typeNameIsDatasetcollection = false;
 	private boolean typeNameIsService = false;
 	private boolean typeNameIsApplication = false;
+	private boolean typeNameIsNonGeographicDataset = false;
 	private int startPosition = STARTPOSITION;
 	private int numberOfRecordsMatched = 0;
 	private int numberOfRecordsReturned = 0;
 	private String version = null; 
+
+	private String partner = null; 
+	private String provider = null; 
+	private String iplugId = null; 
+	
+	/**
+	 * @return the partner
+	 */
+	public String getPartner() {
+		return partner;
+	}
+
+	/**
+	 * @param partner the partner to set
+	 */
+	public void setPartner(String partner) {
+		this.partner = partner;
+	}
+
+	/**
+	 * @return the provider
+	 */
+	public String getProvider() {
+		return provider;
+	}
+
+	/**
+	 * @param provider the provider to set
+	 */
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+
+	/**
+	 * @return the iplugId
+	 */
+	public String getIplugId() {
+		return iplugId;
+	}
+
+	/**
+	 * @param iplugId the iplugId to set
+	 */
+	public void setIplugId(String iplugId) {
+		this.iplugId = iplugId;
+	}
+
 	
 
 	public String getVersion() {
@@ -270,6 +318,20 @@ public final class SessionParameters {
 		this.typeNameIsService = typeNameIsServ;
 	}
 
+	/**
+	 * @return Returns the typeNameIsNonGeographicDataset.
+	 */
+	public boolean isTypeNameNonGeographicDataset() {
+		return typeNameIsNonGeographicDataset;
+	}
+
+	/**
+	 * @param typeNameIsNonGeographicDataset The typeNameIsNonGeographicDataset to set.
+	 */
+	public void setTypeNameIsNonGeographicDataset(final boolean typeNameIsNonGeographicDataset) {
+		this.typeNameIsNonGeographicDataset = typeNameIsNonGeographicDataset;
+	}
+	
 	/**
 	 * @return Returns the idsList.
 	 */
