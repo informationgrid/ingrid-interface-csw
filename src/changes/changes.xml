@@ -5,6 +5,18 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="2.3.1" date="2011-01-24" description="Update dependencies Release">
+      <action type="fix">
+		Improve robustness if direct data response has no valid MD_Metadata construct
+      </action>
+      <action type="update">
+		Improve logging and exception handling (in any case add a csw service exception!)
+      </action>
+      <action type="update">
+		Use most current dependencies (jars)!
+      </action>
+    </release>
+
     <release version="2.3.0" date="2010-12-20" description="Release">
       <action type="fix">
         Unify language construct in ISO answer (user "LanguageCode" in all "language" elements).
