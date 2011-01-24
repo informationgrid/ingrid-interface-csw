@@ -353,18 +353,10 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
      * @return The parent element.
      */
     protected void addFileIdentifier(Element parent, IngridHit hit, String ns) {
-    	String id = getFileIdentifier(hit);
+    	String id = IngridQueryHelper.getFileIdentifier(hit);
     	if (IngridQueryHelper.hasValue(id)) {
         	this.addGCOCharacterString(parent.addElement(getNSElementName(ns, "fileIdentifier")), id);
         }
-    }
-    
-    protected String getFileIdentifier(IngridHit hit) {
-    	String id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_ORG_OBJ_ID);
-        if (!IngridQueryHelper.hasValue(id)) {
-        	id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
-        }
-        return id;
     }
 
     /**
@@ -378,8 +370,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     protected String getCitationIdentifier(IngridHit hit) {
     	String id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_DATASOURCE_UUID);
         if (!IngridQueryHelper.hasValue(id)) {
-        	id = getFileIdentifier(hit);
-        	id = java.util.UUID.nameUUIDFromBytes(getFileIdentifier(hit).getBytes()).toString();
+        	id = IngridQueryHelper.getFileIdentifier(hit);
+        	id = java.util.UUID.nameUUIDFromBytes(id.getBytes()).toString();
         } else {
         	id.replaceAll(":", "#");
         }

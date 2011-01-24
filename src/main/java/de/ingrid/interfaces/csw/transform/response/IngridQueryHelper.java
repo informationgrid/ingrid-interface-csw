@@ -115,7 +115,7 @@ public class IngridQueryHelper {
 
     public static final String HIT_KEY_OBJECT_OBJ_ID = "t01_object.obj_id";
 
-    public static final String HIT_KEY_OBJECT_ORG_OBJ_ID = "t01_object.org_obj_id ";
+    public static final String HIT_KEY_OBJECT_ORG_OBJ_ID = "t01_object.org_obj_id";
     
     public static final String HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY = "t011_obj_geo_topic_cat.topic_category";
 
@@ -964,5 +964,22 @@ public class IngridQueryHelper {
     public static boolean hasValue(String str) {
     	return (str != null && str.length() > 0);
     }
+
+    /**
+     * Returns the file Identifier of the IGD result. The fileIdentifier 
+     * is first retrieved from the entry 't01_object.org_obj_id'. If this value
+     * does not exist, the value is taken from the entry 't01_object.obj_id'.
+     * 
+     * @param hit
+     * @return
+     */
+    public static String getFileIdentifier(IngridHit hit) {
+    	String id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_ORG_OBJ_ID);
+        if (!IngridQueryHelper.hasValue(id)) {
+        	id = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_ID);
+        }
+        return id;
+    }
+    
     
 }
