@@ -134,7 +134,6 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
         String[] specialNames = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ADR_SPECIAL_NAME);
         for (int i = 0; i < addressTypes.length; i++) {
-            Element ciResponsibleParty = parent.addElement(getNSElementName(ns, "contact")).addElement("gmd:CI_ResponsibleParty");
         	
             // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
             //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
@@ -175,17 +174,21 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         	if (role == null) {
         		role = specialNames[i];
         	}
-        	
-        	if (addressIds.length > i && IngridQueryHelper.hasValue(addressIds[i]) ) {
-        		this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
-        	} else {
-            	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
-                if (role != null && role.length() > 0) {
-                    ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
-                    .addAttribute("codeListValue", role);
-                }
-        	}
+        	// add all address types with "pointOfContact" all other address types will be added to identificationInfo/pointOfContact
+        	if (role != null && role.equals("pointOfContact")) {
+            	Element ciResponsibleParty = parent.addElement(getNSElementName(ns, "contact")).addElement("gmd:CI_ResponsibleParty");
+            	
+            	if (addressIds.length > i && IngridQueryHelper.hasValue(addressIds[i]) ) {
+            		this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
+            	} else {
+                	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
+                    if (role != null && role.length() > 0) {
+                        ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
+                        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
+                        .addAttribute("codeListValue", role);
+                    }
+            	}
+            }
         }    
     }
 
@@ -204,7 +207,6 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         String[] addressTypes = IngridQueryHelper.getDetailValueAsArray(hit, "t012_obj_adr.typ");
         String[] specialNames = IngridQueryHelper.getDetailValueAsArray(hit, IngridQueryHelper.HIT_KEY_OBJECT_ADR_SPECIAL_NAME);
         for (int i = 0; i < addressTypes.length; i++) {
-            Element ciResponsibleParty = parent.addElement(getNSElementName(ns, "pointOfContact")).addElement("gmd:CI_ResponsibleParty");
         	
             // t012_obj_adr.typ CodeList 505  MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
             //  if t012_obj_adr.typ  999  use T012_obj_adr.special_name MD_Metadata/contact/CI_ResponsibleParty/role/CI_RoleCode
@@ -237,16 +239,22 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
         	if (role == null) {
         		role = specialNames[i];
         	}
+            
+        	// add all address types except "pointOfContact" which will be added to MD_Metadata/contact
+        	if (role != null && !role.equals("pointOfContact")) {
         	
-        	if (addressIds.length > i && IngridQueryHelper.hasValue(addressIds[i]) ) {
-        		this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
-        	} else {
-            	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
-                if (role != null && role.length() > 0) {
-                    ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
-                    .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
-                    .addAttribute("codeListValue", role);
-                }
+            	Element ciResponsibleParty = parent.addElement(getNSElementName(ns, "pointOfContact")).addElement("gmd:CI_ResponsibleParty");
+            	
+            	if (addressIds.length > i && IngridQueryHelper.hasValue(addressIds[i]) ) {
+            		this.addResponsibleParty(ciResponsibleParty, hit, addressIds[i], role);
+            	} else {
+                	ciResponsibleParty.addAttribute("gco:nilReason", "unknown");
+                    if (role != null && role.length() > 0) {
+                        ciResponsibleParty.addElement("gmd:role").addElement("gmd:CI_RoleCode")
+                        .addAttribute("codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode")
+                        .addAttribute("codeListValue", role);
+                    }
+            	}
         	}
         }    
     }    
