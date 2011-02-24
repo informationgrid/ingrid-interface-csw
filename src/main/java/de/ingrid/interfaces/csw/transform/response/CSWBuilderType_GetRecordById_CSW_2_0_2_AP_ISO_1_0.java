@@ -62,6 +62,8 @@ public class CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilde
             	}
             	rootElement.add(metadataNode);
             } else {
+                log.warn("Could not find valid metadata in direct data response:" + IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
+                log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));
                 CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
                 builder.setHit(hit);
                 rootElement.add(builder.build());

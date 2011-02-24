@@ -14,9 +14,11 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
+import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.tool.GZipTool;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -52,8 +54,20 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
         for (int i = 0; i < hits.getHits().length; i++) {
             IngridHit hit = hits.getHits()[i];
             hit.put("hitDetail", details[i]);
+            String cswData = null;
+            boolean compressed = false;
+            if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDF_1_0_DSC_OBJECT)) {
+                String compressedCswData = IngridQueryHelper.getDetailValueAsString(hit, "compressedCswData");
+                if (compressedCswData != null && compressedCswData.equals("true")) {
+                    compressed = true;
+                }
+            }
             if (IngridQueryHelper.hasValue(IngridQueryHelper.getDetailValueAsString(hit, "cswData"))) {
-            	Document document = DocumentHelper.parseText(IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
+            	cswData = IngridQueryHelper.getDetailValueAsString(hit, "cswData");
+            	if (compressed) {
+            	    cswData = GZipTool.ungzip(cswData);
+            	}
+                Document document = DocumentHelper.parseText(cswData);
             	Element metadataNode = (Element)document.selectSingleNode("//gmd:MD_Metadata");
             	if (metadataNode != null) {
                 	Node metadataIdNode = metadataNode.selectSingleNode("./@id");
@@ -63,6 +77,7 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
                 		metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":pass-through");
                 	}
                 	searchResults.add(metadataNode);
+                	continue;
             	} else {
                     log.warn("Could not find valid metadata in direct data response:" + IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
                     log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));

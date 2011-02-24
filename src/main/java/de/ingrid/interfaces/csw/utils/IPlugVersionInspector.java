@@ -42,6 +42,8 @@ public class IPlugVersionInspector {
 	public static final String VERSION_IDC_1_0_5_DSC_ADDRESS = "VERSION_IDC_1_0_5_DSC_ADDRESS";
 	
 	public static final String VERSION_UDK_5_0_DSC_ADDRESS = "VERSION_UDK_5_0_DSC_ADDRESS";
+    
+	public static final String VERSION_IDF_1_0_DSC_OBJECT = "VERSION_IDF_1_0_DSC_OBJECT";
 	
 	public static final String VERSION_UNKNOWN = "VERSION_UNKNOWN";
 	
@@ -64,7 +66,9 @@ public class IPlugVersionInspector {
 		
 		ArrayList fields = (ArrayList)plugDescription.get(PlugDescription.FIELDS);
 		
-		if (fields != null && fields.contains("object_use.terms_of_use")) {
+		if (hasDataType(plugDescription, "IDF_1.0")) {
+		    return VERSION_IDF_1_0_DSC_OBJECT;
+		} else if (fields != null && fields.contains("object_use.terms_of_use")) {
 			return VERSION_IDC_1_0_8_DSC_OBJECT;
 		} else if (fields != null && fields.contains("t01_object.data_language_key") && fields.contains("t01_object.metadata_language_key") && fields.contains("t02_address.country_key")) {
 			return VERSION_IDC_1_0_5_DSC_OBJECT;
@@ -106,5 +110,15 @@ public class IPlugVersionInspector {
 		}
 		return iPlugVersion;
 	}
+	
+    public static boolean hasDataType(PlugDescription iPlug, String dataType) {
+        String[] dataTypes = iPlug.getDataTypes();
+        for (int i=0; i<dataTypes.length; i++) {
+            if (dataTypes[i].equalsIgnoreCase(dataType)) {
+                return true;
+            }
+        }
+        return false;
+    }
 	
 }
