@@ -3,6 +3,8 @@
  */
 package de.ingrid.interfaces.csw.transform.response;
 
+import java.util.HashMap;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -10,11 +12,16 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.jaxen.SimpleNamespaceContext;
+import org.jaxen.XPath;
+import org.jaxen.dom4j.Dom4jXPath;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.idf.IdfTool;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -49,21 +56,46 @@ public class CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilde
         
         
         if (hits.length() > 0) {
+            // prepare hit for usage with helper function
         	IngridHit hit = hits.getHits()[0];
 	        hit.put("hitDetail", details[0]);
-            if (IngridQueryHelper.hasValue(IngridQueryHelper.getDetailValueAsString(hit, "cswData"))) {
-            	Document document = DocumentHelper.parseText(IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
-            	Element metadataNode = (Element)document.selectSingleNode("//gmd:MD_Metadata");
-            	Node metadataIdNode = metadataNode.selectSingleNode("./@id");
-            	if (metadataIdNode != null) {
-            		metadataIdNode.setText("ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
-            	} else {
-            		metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
-            	}
-            	rootElement.add(metadataNode);
+
+            Element metadataNode = null;
+            if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDF_1_0_DSC_OBJECT)) {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put( "idf", "http://www.portalu.de/IDF/1.0");
+                map.put( "gmd", "http://www.isotc211.org/2005/gmd");
+                
+                XPath xpath = new Dom4jXPath( "//gmd:MD_Metadata");
+                xpath.setNamespaceContext( new SimpleNamespaceContext( map));
+
+                Record idfRecord = (Record)details[0].get("idfRecord"); 
+                String idfData = IdfTool.getIdfDataFromRecord(idfRecord);
+                Document idfDoc = DocumentHelper.parseText(idfData);
+                Element metadata = (Element)xpath.selectSingleNode(idfDoc);
+                metadataNode = DocumentHelper.createDocument(metadata.createCopy()).getRootElement();
+                if (metadataNode == null) {
+                    log.warn("Could not find valid metadata in IDF data response:" + idfData);
+                    log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));
+                }
+            } else if (IngridQueryHelper.hasValue(IngridQueryHelper.getDetailValueAsString(hit, "cswData"))) {
+                String cswData = IngridQueryHelper.getDetailValueAsString(hit, "cswData");
+                Document document = DocumentHelper.parseText(cswData);
+                metadataNode = (Element)document.selectSingleNode("//gmd:MD_Metadata");
+                if (metadataNode == null) {
+                    log.warn("Could not find valid metadata in direct data response:" + cswData);
+                    log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));
+                }
+            }
+            if (metadataNode != null) {
+                Node metadataIdNode = metadataNode.selectSingleNode("./@id");
+                if (metadataIdNode != null) {
+                    metadataIdNode.setText("ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
+                } else {
+                    metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":pass-through");
+                }
+                rootElement.add(metadataNode);
             } else {
-                log.warn("Could not find valid metadata in direct data response:" + IngridQueryHelper.getDetailValueAsString(hit, "cswData"));
-                log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));
                 CSWBuilderMetaData builder = CSWBuilderFactory.getBuilderMetadata(session);
                 builder.setHit(hit);
                 rootElement.add(builder.build());
