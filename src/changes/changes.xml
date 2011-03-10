@@ -5,6 +5,18 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.0.0-SNAPSHOT" date="????-??-??" description="?">
+      <action type="update">
+		Add direct IDF (InGrid Detaildata Format) record response handling.
+      </action>
+      <action type="fix">
+		Fix characterSet of Metadata (MD_Metadata/characterSet/MD_CharacterSetCode/@codeListValue), now read from t01_object.metadata_character_set (not dataset_character_set).
+      </action>
+      <action type="fix" issue="INGRID-1891">
+        Allow only addresses with role "pointOfContact" under element MD_Metadata/contact. Other addresses are referenced below identificationInfo/pointOfConact.
+      </action>      
+    </release>
+
     <release version="2.3.1" date="2011-01-24" description="Update dependencies Release">
       <action type="fix">
 		Improve robustness if direct data response has no valid MD_Metadata construct

@@ -85,7 +85,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     protected void addCharacterSet(Element metaData, IngridHit hit) {
 		try {
 			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-					IngridQueryHelper.HIT_KEY_OBJECT_DATASET_CHARACTER_SET));
+					IngridQueryHelper.HIT_KEY_OBJECT_METADATA_CHARACTER_SET));
 			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(510L, code);
 			if (IngridQueryHelper.hasValue(codeVal)) {
 				metaData.addElement("gmd:characterSet").addElement("gmd:MD_CharacterSetCode").addAttribute(
