@@ -5,6 +5,8 @@ package de.ingrid.interfaces.csw.transform.response;
 
 import java.util.HashMap;
 
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -15,8 +17,10 @@ import org.dom4j.Node;
 import org.jaxen.SimpleNamespaceContext;
 import org.jaxen.XPath;
 import org.jaxen.dom4j.Dom4jXPath;
+import org.springframework.core.io.ClassPathResource;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
+import de.ingrid.interfaces.csw.tools.DocumentStyler;
 import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -31,6 +35,17 @@ import de.ingrid.utils.idf.IdfTool;
 public class CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderType {
 
     private static Log log = LogFactory.getLog(CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0.class);
+    
+    DocumentStyler docStyler; 
+    
+    public CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0() {
+        try {
+            docStyler = new DocumentStyler(new StreamSource( new ClassPathResource("idf_1_0_0_to_iso_metadata.xsl").getInputStream()));
+        } catch (Exception e) {
+            log.error("Cannot load IDF 1.0 to ISO Metadata transformer stylesheet 'idf_1_0_0_to_iso_metadata.xsl'.", e);
+            throw new RuntimeException("Cannot load IDF 1.0 to ISO Metadata transformer stylesheet 'idf_1_0_0_to_iso_metadata.xsl'");
+        }        
+    }
     
     public Element build() throws Exception {
 
@@ -69,9 +84,12 @@ public class CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilde
                 XPath xpath = new Dom4jXPath( "//gmd:MD_Metadata");
                 xpath.setNamespaceContext( new SimpleNamespaceContext( map));
 
+                // TODO fall back to getRecord if the directData response is empty
+                
                 Record idfRecord = (Record)details[0].get("idfRecord"); 
                 String idfData = IdfTool.getIdfDataFromRecord(idfRecord);
                 Document idfDoc = DocumentHelper.parseText(idfData);
+                Document metadataDoc = docStyler.transform(idfDoc);
                 Element metadata = (Element)xpath.selectSingleNode(idfDoc);
                 metadataNode = DocumentHelper.createDocument(metadata.createCopy()).getRootElement();
                 if (metadataNode == null) {
