@@ -6,6 +6,9 @@ package de.ingrid.interfaces.csw.transform.response;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -13,11 +16,15 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
 import org.jaxen.SimpleNamespaceContext;
 import org.jaxen.XPath;
 import org.jaxen.dom4j.Dom4jXPath;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
+import de.ingrid.interfaces.csw.tools.DocumentStyler;
 import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -63,18 +70,20 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
             
             Element metadataNode = null;
             if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDF_1_0_DSC_OBJECT)) {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put( "idf", "http://www.portalu.de/IDF/1.0");
-                map.put( "gmd", "http://www.isotc211.org/2005/gmd");
-                
-                XPath xpath = new Dom4jXPath( "//gmd:MD_Metadata");
-                xpath.setNamespaceContext( new SimpleNamespaceContext( map));
 
                 Record idfRecord = (Record)details[i].get("idfRecord"); 
+                // if no idf record was found in detail data, fall back to get data from getRecord
+                if (idfRecord == null) {
+                    idfRecord = CSWInterfaceConfig.getInstance().getIBus().getRecord(hit);
+                }
                 String idfData = IdfTool.getIdfDataFromRecord(idfRecord);
                 Document idfDoc = DocumentHelper.parseText(idfData);
-                Element metadata = (Element)xpath.selectSingleNode(idfDoc);
-                metadataNode = DocumentHelper.createDocument(metadata.createCopy()).getRootElement();
+                // extract MD_Metadata
+                Source style = new StreamSource(new FileSystemResource("src/main/resources/idf_1_0_0_to_iso_metadata.xsl").getInputStream());
+                DocumentStyler docStyler = new DocumentStyler(style);
+                Document metadataDoc = docStyler.transform(idfDoc);
+                
+                metadataNode = metadataDoc.getRootElement();
                 if (metadataNode == null) {
                     log.warn("Could not find valid metadata in IDF data response:" + idfData);
                     log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));
