@@ -175,14 +175,6 @@
           <artifactId>nekohtml</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-beans</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-core</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>ant</groupId>
           <artifactId>ant</artifactId>
         </exclusion>
@@ -247,14 +239,6 @@
         <exclusion>
           <groupId>htmlparser</groupId>
           <artifactId>htmlparser</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-beans</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-core</artifactId>
         </exclusion>
         <exclusion>
           <groupId>xerces</groupId>
@@ -337,14 +321,6 @@
         <exclusion>
           <groupId>uba</groupId>
           <artifactId>xtmStubs</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-beans</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-core</artifactId>
         </exclusion>
         <exclusion>
           <groupId>tomcat</groupId>
@@ -527,6 +503,14 @@
           <artifactId>xerces</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
     </dependency>
     <dependency>
       <groupId>xmlunit</groupId>
