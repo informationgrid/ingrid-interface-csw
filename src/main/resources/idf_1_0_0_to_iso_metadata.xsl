@@ -31,27 +31,4 @@
 		</gmd:CI_ResponsibleParty>
 	</xsl:template>
 
-	<!--
-
-		<xsl:template match="idf:idfMdMetadata"> <gmd:MD_Metadata>
-		<xsl:apply-templates select="node()" /> </gmd:MD_Metadata>
-		</xsl:template> <xsl:template match="idf:idfMdMetadata/node()">
-		<xsl:choose> <xsl:when test="idf:*"> </xsl:when> <xsl:otherwise>
-		<xsl:copy> <xsl:apply-templates /> </xsl:copy> </xsl:otherwise>
-		</xsl:choose> </xsl:template> <xsl:template
-		match="idf:idfMdMetadata//*/node()"> <xsl:choose> <xsl:when
-		test="idf:*"> </xsl:when> <xsl:otherwise> <xsl:copy>
-		<xsl:apply-templates /> </xsl:copy> </xsl:otherwise> </xsl:choose>
-		</xsl:template>
-	-->
-
-	<!--
-		<xsl:template match="idf:idfMdMetadata"> <gmd:MD_Metadata>
-		<xsl:apply-templates/> </gmd:MD_Metadata> </xsl:template>
-
-		<xsl:template match="idf:idfMdMetadata/idf:*" /> <xsl:template
-		match="idf:idfMdMetadata/gmd:*"> <xsl:copy> <xsl:copy-of select="*"/>
-		</xsl:copy> </xsl:template>
-	-->
-
 </xsl:stylesheet>
