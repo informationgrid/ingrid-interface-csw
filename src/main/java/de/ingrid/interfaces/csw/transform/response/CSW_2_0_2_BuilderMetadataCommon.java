@@ -227,7 +227,12 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                  */
         	String role = null;
         	try {
-        		Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
+        	    Long code;
+        	    if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
+        	        code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
+        	    } else {
+        	        code = Long.valueOf(addressTypes[i]);
+        	    }
                 if (code.longValue() == 999 || code.longValue() == -1) {
                 	role = specialNames[i];
                 } else {

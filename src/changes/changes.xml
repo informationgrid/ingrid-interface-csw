@@ -6,6 +6,9 @@
   </properties>
   <body>
     <release version="3.0.0-SNAPSHOT" date="????-??-??" description="?">
+      <action type="fix">
+        Do not apply UDK5 address role id transformation on NON-UDK5 iPlugs. (keyword: principalInvestigator an all objects)
+      </action>
       <action type="update">
 		Add direct IDF (InGrid Detaildata Format) record response handling.
       </action>
