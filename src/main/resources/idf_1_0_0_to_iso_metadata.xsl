@@ -15,6 +15,7 @@
 	</xsl:template>
 
     <xsl:template match="idf:last-modified" />
+    <xsl:template match="idf:onlineResource" />
     <xsl:template match="idf:superiorParty" />
     <xsl:template match="idf:subordinatedParty" />
     <xsl:template match="idf:responsibleParty" />
@@ -24,6 +25,7 @@
     <xsl:template match="idf:superiorReference" />
     <xsl:template match="idf:subordinatedReference" />
     <xsl:template match="idf:crossReference" />
+    <xsl:template match="idf:additionalDataSection" />
 
 	<xsl:template match="idf:idfResponsibleParty">
 		<gmd:CI_ResponsibleParty>

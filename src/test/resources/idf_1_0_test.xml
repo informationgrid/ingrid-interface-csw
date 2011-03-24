@@ -700,6 +700,15 @@
         <objectName>object name 3</objectName>
         <objectType>3</objectType>
       </crossReference>
+      <additionalDataSection id="ad1">
+        <title lang="de">ein titel</title>
+        <title lang="en">a title</title>
+        <additionalDataField id="adf1">
+          <title lang="de">ein feld</title>
+          <title lang="en">a field</title>
+          <data>data</data>
+        </additionalDataField>
+      </additionalDataSection>
     </idfMdMetadata>
     <p>
       <strong>Geographical reference 1</strong>
