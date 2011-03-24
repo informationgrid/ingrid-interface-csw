@@ -5,9 +5,9 @@
 	<xsl:output method="xml" />
 
 	<xsl:template match="idf:idfMdMetadata">
-		<gmd:Metadata>
+		<gmd:MD_Metadata>
 			<xsl:apply-templates select="@*|node()" />
-		</gmd:Metadata>
+		</gmd:MD_Metadata>
 	</xsl:template>
 	
 	<xsl:template match="*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">

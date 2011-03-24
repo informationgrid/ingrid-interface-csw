@@ -15,7 +15,7 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ClassPathResource;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
 import de.ingrid.interfaces.csw.tools.DocumentStyler;
@@ -73,7 +73,7 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
                 String idfData = IdfTool.getIdfDataFromRecord(idfRecord);
                 Document idfDoc = DocumentHelper.parseText(idfData);
                 // extract MD_Metadata
-                Source style = new StreamSource(new FileSystemResource("src/main/resources/idf_1_0_0_to_iso_metadata.xsl").getInputStream());
+                Source style = new StreamSource(new ClassPathResource("idf_1_0_0_to_iso_metadata.xsl").getInputStream());
                 DocumentStyler docStyler = new DocumentStyler(style);
                 Document metadataDoc = docStyler.transform(idfDoc);
                 
