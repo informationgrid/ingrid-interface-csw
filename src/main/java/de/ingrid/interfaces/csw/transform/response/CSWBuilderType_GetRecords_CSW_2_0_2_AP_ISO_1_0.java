@@ -4,7 +4,6 @@
 package de.ingrid.interfaces.csw.transform.response;
 
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -16,11 +15,6 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.dom4j.io.SAXReader;
-import org.jaxen.SimpleNamespaceContext;
-import org.jaxen.XPath;
-import org.jaxen.dom4j.Dom4jXPath;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;

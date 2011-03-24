@@ -3,8 +3,6 @@
  */
 package de.ingrid.interfaces.csw.transform.response;
 
-import java.util.HashMap;
-
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
@@ -15,10 +13,6 @@ import org.dom4j.DocumentFactory;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.jaxen.SimpleNamespaceContext;
-import org.jaxen.XPath;
-import org.jaxen.dom4j.Dom4jXPath;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 
 import de.ingrid.interfaces.csw.tools.CSWInterfaceConfig;
@@ -38,16 +32,6 @@ public class CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilde
 
     private static Log log = LogFactory.getLog(CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0.class);
     
-    DocumentStyler docStyler; 
-    
-    public CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0() {
-        try {
-            docStyler = new DocumentStyler(new StreamSource( new ClassPathResource("idf_1_0_0_to_iso_metadata.xsl").getInputStream()));
-        } catch (Exception e) {
-            log.error("Cannot load IDF 1.0 to ISO Metadata transformer stylesheet 'idf_1_0_0_to_iso_metadata.xsl'.", e);
-            throw new RuntimeException("Cannot load IDF 1.0 to ISO Metadata transformer stylesheet 'idf_1_0_0_to_iso_metadata.xsl'");
-        }        
-    }
     
     public Element build() throws Exception {
 
