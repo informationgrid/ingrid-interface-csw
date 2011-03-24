@@ -7,6 +7,10 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
+      <directory>src/main/resources</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/conf</outputDirectory>
+    </fileSet>
+    <fileSet>
       <directory>src/main/release/conf</directory>
       <outputDirectory>${project.artifactId}-${project.version}/conf</outputDirectory>
     </fileSet>
