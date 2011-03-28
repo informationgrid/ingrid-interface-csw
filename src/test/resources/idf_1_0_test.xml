@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.portalu.de/IDF/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="ingrid_xsd_test.xsd">
+    xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd">
   <head>
     <title>IDF Test XML</title>
   </head>
@@ -607,9 +608,8 @@
                     codeListValue="resourceProvider">
                     resourceProvider</gmd:CI_RoleCode>
                   </gmd:role>
-                  <last-modified><gmd:DateTime>2011-03-12T23:12:34</gmd:DateTime></last-modified>
+                  <last-modified><gco:DateTime>2011-03-12T23:12:34</gco:DateTime></last-modified>
                   <superiorParty>
-                    <idfResponsibleParty>
 	                  <gmd:individualName>
 	                    <gco:CharacterString>parent address</gco:CharacterString>
 	                  </gmd:individualName>
@@ -618,7 +618,6 @@
 	                    codeListValue="not applicable">
 	                    not applicable</gmd:CI_RoleCode>
 	                  </gmd:role>
-                    </idfResponsibleParty>
                   </superiorParty>
                 </idfResponsibleParty>
               </gmd:distributorContact>
