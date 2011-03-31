@@ -14,18 +14,22 @@
 		<xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
 	</xsl:template>
 
+    <!--  filter IDF_ResponsibleParty_Type specific elements -->
     <xsl:template match="idf:last-modified" />
-    <xsl:template match="idf:onlineResource" />
-    <xsl:template match="idf:superiorParty" />
+    <xsl:template match="idf:additionalOnlineResource" />
+    <xsl:template match="idf:hierarchyParty" />
     <xsl:template match="idf:subordinatedParty" />
     <xsl:template match="idf:responsibleParty" />
     <xsl:template match="idf:objectReference" />
-    <xsl:template match="@orig-uuid" />
     <xsl:template match="@type" />
+    <!--  filter IDF_MD_Metadata_Type specific elements -->
     <xsl:template match="idf:superiorReference" />
     <xsl:template match="idf:subordinatedReference" />
     <xsl:template match="idf:crossReference" />
     <xsl:template match="idf:additionalDataSection" />
+    <!--  both -->
+    <xsl:template match="@orig-uuid" />
+
 
 	<xsl:template match="idf:idfResponsibleParty">
 		<gmd:CI_ResponsibleParty>
