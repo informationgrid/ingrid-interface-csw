@@ -151,7 +151,7 @@
         </gmd:MD_ReferenceSystem>
       </gmd:referenceSystemInfo>
       <gmd:identificationInfo>
-        <gmd:MD_DataIdentification>
+        <gmd:MD_DataIdentification uuid="ingrid#anyid">
           <gmd:citation>
             <gmd:CI_Citation>
               <gmd:title>

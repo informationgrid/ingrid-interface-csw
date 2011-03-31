@@ -10,7 +10,7 @@
 		</gmd:MD_Metadata>
 	</xsl:template>
 	
-	<xsl:template match="*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
+	<xsl:template match="@*|*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
 		<xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy>
 	</xsl:template>
 

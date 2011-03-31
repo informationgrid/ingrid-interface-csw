@@ -2,7 +2,6 @@
 
 <!-- LIVE - extern -->
 <!--
--->
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="communication.xsd">
         <client name="/kug-group:csw-interface-jm-test">
@@ -15,6 +14,7 @@
         </client>
         <messages queueSize="2000" handleTimeout="120"/>
 </communication>
+-->
 
 <!-- Harrison - extern -->
 <!--
@@ -23,7 +23,7 @@
     <client name="/torwald-group:csw-interface-jm-test">
         <connections>
             <server name="/torwald-group:torwald-ibus">
-                <socket port="9900" timeout="10" ip="213.144.28.245" />
+                <socket port="9900" timeout="10" ip="213.144.28.209" />
                 <messages maximumSize="1048576" threadCount="100" />
             </server>
         </connections>
@@ -32,3 +32,35 @@
 </communication>
 -->
 
+<!-- Summers - extern -->
+<!--
+-->
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="communication.xsd">
+    <client name="/ingrid-group:csw-interface-jm-test">
+        <connections>
+            <server name="/ingrid-group:ibus-summers">
+                <socket port="9900" timeout="10" ip="213.144.28.244" />
+                <messages maximumSize="1048576" threadCount="100" />
+            </server>
+        </connections>
+    </client>
+    <messages queueSize="2000" handleTimeout="10"/>
+</communication>
+
+
+<!-- joachim dev -->
+<!--
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="communication.xsd">
+    <client name="/ingrid-group:csw-interface-joachim">
+        <connections>
+            <server name="/ingrid-group:ibus-joachim">
+                <socket port="9900" timeout="10" ip="127.0.0.1" />
+                <messages maximumSize="1048576" threadCount="100" />
+            </server>
+        </connections>
+    </client>
+    <messages queueSize="2000" handleTimeout="10"/>
+</communication>
+-->
