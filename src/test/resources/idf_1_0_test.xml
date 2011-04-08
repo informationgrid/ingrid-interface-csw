@@ -609,16 +609,24 @@
                     resourceProvider</gmd:CI_RoleCode>
                   </gmd:role>
                   <last-modified><gco:DateTime>2011-03-12T23:12:34</gco:DateTime></last-modified>
-                  <superiorParty>
-	                  <gmd:individualName>
-	                    <gco:CharacterString>parent address</gco:CharacterString>
-	                  </gmd:individualName>
-	                  <gmd:role>
-	                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
-	                    codeListValue="not applicable">
-	                    not applicable</gmd:CI_RoleCode>
-	                  </gmd:role>
-                  </superiorParty>
+                  <!-- address itself again, NOT PARENT ! -->
+                  <hierarchyParty  uuid="55290A4C-D7AE-11D2-BB32-006097FE70B1">
+                    <addressIndividualName>Georg
+                      Zimmermann</addressIndividualName>
+                    <addressOrganisationName>Deutsche Fotothek,
+                      SLUB</addressOrganisationName>
+                    <addressType>2</addressType>
+                  </hierarchyParty>
+                  <!-- parent -->
+                  <hierarchyParty uuid="15C69BE2-FE15-11D2-AF34-0060084A4596">
+                    <addressOrganisationName>Parent Organisation Einheit</addressOrganisationName>
+                    <addressType>1</addressType>
+                  </hierarchyParty>
+                  <!-- parent, last one = top  -->
+                  <hierarchyParty uuid="15C69BE2-FE15-11D2-AF34-0060084A4597">
+                    <addressOrganisationName>Top</addressOrganisationName>
+                    <addressType>0</addressType>
+                  </hierarchyParty>
                 </idfResponsibleParty>
               </gmd:distributorContact>
             </gmd:MD_Distributor>
@@ -699,12 +707,14 @@
         <objectName>object name 3</objectName>
         <objectType>3</objectType>
       </crossReference>
-      <additionalDataSection id="ad1">
+      <additionalDataSection isLegacy="false" id="ad1">
         <title lang="de">ein titel</title>
         <title lang="en">a title</title>
         <additionalDataField id="adf1">
-          <title lang="de">ein feld</title>
+          <title lang="de">Ein Feld</title>
           <title lang="en">a field</title>
+          <postfix lang="de">Einheit</postfix>
+          <postfix lang="en">unit</postfix>
           <data>data</data>
         </additionalDataField>
       </additionalDataSection>
