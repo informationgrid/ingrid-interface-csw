@@ -3,9 +3,10 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:idf="http://www.portalu.de/IDF/1.0"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv"
 	exclude-result-prefixes="idf xsi">
 	<xsl:output method="xml" />
-	<xsl:strip-space elements="*"/>
+	<xsl:strip-space elements="*" />
 
 	<xsl:template match="idf:idfMdMetadata">
 		<gmd:MD_Metadata>
@@ -13,9 +14,11 @@
 		</gmd:MD_Metadata>
 	</xsl:template>
 
-	<xsl:template match="@*|*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
+	<xsl:template
+		match="@*|*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml' or namespace-uri() = 'http://www.isotc211.org/2005/gts' or namespace-uri() = 'http://www.isotc211.org/2005/srv') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
 		<xsl:element name="{name(.)}" namespace="{namespace-uri(.)}">
-			<xsl:copy-of select="namespace::*[name(.)!='idf' and name(.)!='fn' and name(.)!='fo' and name(.)!='ms' and name(.)!='csw' and name(.)!='wfs' and name(.)!='xsi' and name(.)!='xs' and name(.)!='']" />
+			<xsl:copy-of
+				select="namespace::*[name(.)!='idf' and name(.)!='srv' and name(.)!='ms' and name(.)!='csw' and name(.)!='xlink' and name(.)!='xsi' and name(.)!='xs' and name(.)!='']" />
 			<xsl:copy-of select="@*" />
 			<xsl:apply-templates />
 		</xsl:element>
@@ -38,20 +41,67 @@
 	<xsl:template match="@orig-uuid" />
 	<xsl:template match="@xsi:schemaLocation" />
 
-<!--
+	<!--
     Trim Text nodes 
- -->
-    <xsl:template match='text()'>
-        <xsl:variable name="x" select="string(.)"/>
-        <xsl:value-of select="substring($x, 
-    string-length(substring-before($x, substring(normalize-space($x), 1, 1))) + 1,
-                  string-length($x) - string-length(substring-before($x, substring(normalize-space($x), 1,1))) - string-length(substring-after($x,substring(normalize-space($x),string-length(normalize-space($x)), 1))))"/>        
-    </xsl:template>
+-->
+ 	<xsl:template match='text()'>
+		<xsl:call-template name="trim">
+			<xsl:with-param name="s" select="." />
+		</xsl:call-template>
+	</xsl:template>
 
 	<xsl:template match="idf:idfResponsibleParty">
 		<gmd:CI_ResponsibleParty>
 			<xsl:apply-templates select="@*|node()" />
 		</gmd:CI_ResponsibleParty>
+	</xsl:template>
+
+
+	<!-- Template for trimming strings -->
+	<xsl:template name="left-trim">
+		<xsl:param name="s" />
+		<xsl:choose>
+			<xsl:when test="substring($s, 1, 1) = ''">
+				<xsl:value-of select="$s" />
+			</xsl:when>
+			<xsl:when test="normalize-space(substring($s, 1, 1)) = ''">
+				<xsl:call-template name="left-trim">
+					<xsl:with-param name="s" select="substring($s, 2)" />
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$s" />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="right-trim">
+		<xsl:param name="s" />
+		<xsl:choose>
+			<xsl:when test="substring($s, 1, 1) = ''">
+				<xsl:value-of select="$s" />
+			</xsl:when>
+			<xsl:when test="normalize-space(substring($s, string-length($s))) = ''">
+				<xsl:call-template name="right-trim">
+					<xsl:with-param name="s"
+						select="substring($s, 1, string-length($s) - 1)" />
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$s" />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="trim">
+		<xsl:param name="s" />
+		<xsl:call-template name="right-trim">
+			<xsl:with-param name="s">
+				<xsl:call-template name="left-trim">
+					<xsl:with-param name="s" select="$s" />
+				</xsl:call-template>
+			</xsl:with-param>
+		</xsl:call-template>
 	</xsl:template>
 
 </xsl:stylesheet>
