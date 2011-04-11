@@ -35,7 +35,9 @@
     xmlns:ms="http://mapserver.gis.umn.edu/mapserver"
     xmlns:wfs="http://www.opengis.net/wfs"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xmlns:idf="http://www.portalu.de/IDF/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
       <gmd:fileIdentifier>
         <gco:CharacterString>
         898f6767-7296-4cca-b478-67dbb113eab1</gco:CharacterString>

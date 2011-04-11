@@ -35,7 +35,12 @@ public class DocumentStylerTest extends TestCase {
         SAXReader xmlReader = new SAXReader();
         Document source = xmlReader.read(new ClassPathResource("idf_1_0_test.xml").getInputStream());
 
+        long start = System.currentTimeMillis();
         Document dest = docStyler.transform(source);
+        long next = System.currentTimeMillis();
+        System.out.println("Transformation Time: " + (next - start));
+        dest = docStyler.transform(source);
+        System.out.println("Transformation Time (second run): " + (System.currentTimeMillis() - next));
         
         System.out.println(dest.asXML());
 
