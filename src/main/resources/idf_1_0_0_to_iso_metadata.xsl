@@ -36,6 +36,8 @@
 	<xsl:template match="idf:superiorReference" />
 	<xsl:template match="idf:subordinatedReference" />
 	<xsl:template match="idf:crossReference" />
+    <xsl:template match="idf:hasAccessConstraint" />
+    <xsl:template match="idf:exportCriteria" />
 	<xsl:template match="idf:additionalDataSection" />
 	<!--  both -->
 	<xsl:template match="@orig-uuid" />
