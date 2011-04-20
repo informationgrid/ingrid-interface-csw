@@ -26,7 +26,7 @@
     </table>
     <p>p 1</p>
     <p>p 1</p>
-    <idfMdMetadata orig-uuid="my uuid" xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    <idfMdMetadata orig-uuid="my original uuid" uuid="my-uuid" id="my-id" xmlns:gmd="http://www.isotc211.org/2005/gmd"
     xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
     xmlns:fn="http://www.w3.org/2005/xpath-functions"
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
@@ -550,7 +550,7 @@
           <gmd:distributor>
             <gmd:MD_Distributor>
               <gmd:distributorContact>
-                <idfResponsibleParty>
+                <idfResponsibleParty type="2" uuid="my-special-uuid" id="my-party-id">
                   <gmd:individualName>
                     <gco:CharacterString>Georg
                     Zimmermann</gco:CharacterString>

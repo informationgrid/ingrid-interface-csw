@@ -13,6 +13,16 @@
 			<xsl:apply-templates select="@*|node()" />
 		</gmd:MD_Metadata>
 	</xsl:template>
+    <xsl:template match="@uuid[parent::idf:idfMdMetadata]">
+        <xsl:attribute name="uuid">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+    <xsl:template match="@id[parent::idf:idfMdMetadata]">
+        <xsl:attribute name="id">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
 
 	<xsl:template
 		match="@*|*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml' or namespace-uri() = 'http://www.isotc211.org/2005/gts' or namespace-uri() = 'http://www.isotc211.org/2005/srv') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
@@ -57,6 +67,17 @@
 			<xsl:apply-templates select="@*|node()" />
 		</gmd:CI_ResponsibleParty>
 	</xsl:template>
+	<xsl:template match="@uuid[parent::idf:idfResponsibleParty]">
+        <xsl:attribute name="uuid">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+    <xsl:template match="@id[parent::idf:idfResponsibleParty]">
+        <xsl:attribute name="id">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+	
 
 
 	<!-- Template for trimming strings -->
