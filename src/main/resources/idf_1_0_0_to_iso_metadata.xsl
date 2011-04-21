@@ -49,6 +49,8 @@
     <xsl:template match="idf:hasAccessConstraint" />
     <xsl:template match="idf:exportCriteria" />
 	<xsl:template match="idf:additionalDataSection" />
+    <!--  filter IDF_OnlineResource_Type specific elements -->
+    <xsl:template match="idf:datatype" />
 	<!--  both -->
 	<xsl:template match="@orig-uuid" />
 	<xsl:template match="@xsi:schemaLocation" />
@@ -78,6 +80,21 @@
         </xsl:attribute>
     </xsl:template>
 	
+    <xsl:template match="idf:idfOnlineResource">
+        <gmd:CI_OnlineResource>
+            <xsl:apply-templates select="@*|node()" />
+        </gmd:CI_OnlineResource>
+    </xsl:template>   
+    <xsl:template match="@uuid[parent::idf:idfOnlineResource]">
+        <xsl:attribute name="uuid">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+    <xsl:template match="@id[parent::idf:idfOnlineResource]">
+        <xsl:attribute name="id">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
 
 
 	<!-- Template for trimming strings -->
