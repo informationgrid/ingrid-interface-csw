@@ -416,6 +416,16 @@
               </gmd:useLimitation>
             </gmd:MD_LegalConstraints>
           </gmd:resourceConstraints>
+          <gmd:resourceConstraints>
+            <idf:IDF_LegalBasisConstraints>
+              <gmd:accessConstraints>
+                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+              </gmd:accessConstraints>
+              <gmd:otherConstraints>
+                <gco:CharacterString>Nieders&amp;#228;chsisches Gesetz &amp;#252;ber Raumordnung und Landesplanung (NROG) vom 18.5.2001</gco:CharacterString>
+              </gmd:otherConstraints>
+            </idf:IDF_LegalBasisConstraints>
+          </gmd:resourceConstraints>
           <gmd:spatialResolution>
             <gmd:MD_Resolution>
               <gmd:equivalentScale>

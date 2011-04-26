@@ -95,6 +95,22 @@
             <xsl:value-of select="."/>
         </xsl:attribute>
     </xsl:template>
+    
+    <xsl:template match="idf:idfLegalBasisConstraintss">
+        <gmd:CI_OnlineResource>
+            <xsl:apply-templates select="@*|node()" />
+        </gmd:CI_OnlineResource>
+    </xsl:template>   
+    <xsl:template match="@uuid[parent::idf:idfLegalBasisConstraints]">
+        <xsl:attribute name="uuid">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+    <xsl:template match="@id[parent::idf:idfLegalBasisConstraints]">
+        <xsl:attribute name="id">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
 
 
 	<!-- Template for trimming strings -->
