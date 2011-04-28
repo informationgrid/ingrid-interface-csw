@@ -26,7 +26,7 @@
 
   <dependencyManagement>
     <dependencies>
-<!-- Use old iPlug SE, just needed for instanceof. New one not released yet ! -->
+<!-- Use old iPlug SE, just needed for instanceof. New iPlug SE does not have a jar file! -->
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-iplug-se</artifactId>
