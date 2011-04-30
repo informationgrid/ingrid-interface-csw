@@ -66,20 +66,26 @@ public class CSWBuilderType_GetRecordById_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilde
             if (IPlugVersionInspector.getIPlugVersion(hit).equals(IPlugVersionInspector.VERSION_IDF_1_0_DSC_OBJECT)) {
                 Record idfRecord = (Record)details[0].get("idfRecord"); 
                 // if no idf record was found in detail data, fall back to get data from getRecord
-                if (idfRecord == null) {
+                if (idfRecord == null && elementSetName.equalsIgnoreCase("full")) {
                     idfRecord = CSWInterfaceConfig.getInstance().getIBus().getRecord(hit);
                 }
-                String idfData = IdfTool.getIdfDataFromRecord(idfRecord);
-                Document idfDoc = DocumentHelper.parseText(idfData);
-                // extract MD_Metadata
-                Source style = new StreamSource(new ClassPathResource("idf_1_0_0_to_iso_metadata.xsl").getInputStream());
-                DocumentStyler docStyler = new DocumentStyler(style);
-                Document metadataDoc = docStyler.transform(idfDoc);
-                
-                metadataNode = metadataDoc.getRootElement();
-                if (metadataNode == null) {
-                    log.warn("Could not find valid metadata in IDF data response:" + idfData);
-                    log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));
+                if (idfRecord != null) {
+                    String idfData = IdfTool.getIdfDataFromRecord(idfRecord);
+                    Document idfDoc = DocumentHelper.parseText(idfData);
+                    // extract MD_Metadata
+                    Source style = new StreamSource(new ClassPathResource("idf_1_0_0_to_iso_metadata.xsl").getInputStream());
+                    DocumentStyler docStyler = new DocumentStyler(style);
+                    Document metadataDoc = docStyler.transform(idfDoc);
+                    
+                    metadataNode = metadataDoc.getRootElement();
+                    if (metadataNode == null) {
+                        log.warn("Could not find valid metadata in IDF data response:" + idfData);
+                        log.warn("Build CSW answer via data reconstruction from iplugs (" + hit.getPlugId() + ") index data for record with file identifier: " + IngridQueryHelper.getFileIdentifier(hit));
+                    }
+                } else {
+                    if (log.isDebugEnabled()) {
+                        log.debug("IDF record could not be retrieved from the datasource (" + hit.getPlugId() + "). Try to build record from index data.");
+                    }
                 }
             } else if (IngridQueryHelper.hasValue(IngridQueryHelper.getDetailValueAsString(hit, "cswData"))) {
                 String cswData = IngridQueryHelper.getDetailValueAsString(hit, "cswData");
