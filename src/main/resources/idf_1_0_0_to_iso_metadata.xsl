@@ -96,10 +96,10 @@
         </xsl:attribute>
     </xsl:template>
     
-    <xsl:template match="idf:idfLegalBasisConstraintss">
-        <gmd:CI_OnlineResource>
+    <xsl:template match="idf:idfLegalBasisConstraints">
+        <gmd:MD_LegalConstraints>
             <xsl:apply-templates select="@*|node()" />
-        </gmd:CI_OnlineResource>
+        </gmd:MD_LegalConstraints>
     </xsl:template>   
     <xsl:template match="@uuid[parent::idf:idfLegalBasisConstraints]">
         <xsl:attribute name="uuid">
