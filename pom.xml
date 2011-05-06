@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid</groupId>
@@ -31,6 +31,12 @@
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-iplug-se</artifactId>
         <version>1.2.2</version>
+      </dependency>
+			<!-- Move to Base-POM in next release -->
+			<dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-iplug-dsc-scripted</artifactId>
+        <version>3.0.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -118,6 +124,10 @@
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus</artifactId>
       <exclusions>
+			  <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-iplug-dsc</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>tomcat</groupId>
           <artifactId>jasper-compiler</artifactId>
@@ -274,7 +284,7 @@
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-dsc</artifactId>
+      <artifactId>ingrid-iplug-dsc-scripted</artifactId>
       <exclusions>
         <exclusion>
           <groupId>hsqldb</groupId>
@@ -390,6 +400,10 @@
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-tamino</artifactId>
       <exclusions>
+			  <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-iplug-dsc</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>TaminoAPI4J</groupId>
           <artifactId>TaminoAPI4J</artifactId>
