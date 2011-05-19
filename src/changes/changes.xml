@@ -5,6 +5,14 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.0.1-SNAPSHOT" date="2011-xx-xx" description="Bugfix Release">
+      <action type="fix">
+        Remove 'text/xml' from supported output formats in capabilities. Restrict possible output format to 'application/xml'.
+      </action>
+      <action type="fix">
+        Use "application/xml" as default output format if not supplied.
+      </action>
+    </release>
     <release version="3.0.0" date="2011-05-06" description="Release InGrid3.0">
       <action type="fix">
         Do not apply UDK5 address role id transformation on NON-UDK5 iPlugs. (keyword: principalInvestigator an all objects)

@@ -254,8 +254,10 @@ public final class CommonAnalyser {
 	public boolean analyseOutputFormat(final Element be) throws Exception {
 		String outputFormat = null;
 		outputFormat = be.getAttribute("outputFormat");
-		if (outputFormat != null && !outputFormat.equalsIgnoreCase("text/xml") && !outputFormat.equalsIgnoreCase("application/xml")) {
-			Exception e = new CSWInvalidParameterValueException("Attribute 'outputFormat' is not 'text/xml'. It is set to '" + outputFormat + "'", "outputFormat");
+		if (outputFormat == null || outputFormat.trim().length() == 0) {
+		    outputFormat = "application/xml";
+		} else if (!outputFormat.equalsIgnoreCase("application/xml")) {
+			Exception e = new CSWInvalidParameterValueException("Attribute 'outputFormat' is not 'text/xml' or 'application/xml'. It is set to '" + outputFormat + "'", "outputFormat");
 			throw e;
 		}
 		return true;

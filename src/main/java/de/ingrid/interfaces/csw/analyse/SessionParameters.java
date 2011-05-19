@@ -23,7 +23,7 @@ public final class SessionParameters {
 	private boolean operationIsDescRec = false;
 	private int maxRecords = MAXRECORDS;
 	private String resultType = "hits";
-	private String outputFormat = "text/xml";
+	private String outputFormat = "application/xml";
 	private String outputSchema = "csw:ogccore";
 	private String typeNames = null;
 	private boolean typeNameIsDataset = false;
