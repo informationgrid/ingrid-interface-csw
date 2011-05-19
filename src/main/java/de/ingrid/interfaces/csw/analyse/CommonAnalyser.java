@@ -257,7 +257,7 @@ public final class CommonAnalyser {
 		if (outputFormat == null || outputFormat.trim().length() == 0) {
 		    outputFormat = "application/xml";
 		} else if (!outputFormat.equalsIgnoreCase("application/xml")) {
-			Exception e = new CSWInvalidParameterValueException("Attribute 'outputFormat' is not 'text/xml' or 'application/xml'. It is set to '" + outputFormat + "'", "outputFormat");
+			Exception e = new CSWInvalidParameterValueException("Attribute 'outputFormat' is not 'application/xml'. It is set to '" + outputFormat + "'", "outputFormat");
 			throw e;
 		}
 		return true;
