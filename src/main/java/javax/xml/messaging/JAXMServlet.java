@@ -15,6 +15,7 @@ import javax.xml.soap.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.apache.axis.utils.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,7 +25,10 @@ import de.ingrid.interfaces.csw.tools.XMLTools;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.StringTokenizer;
@@ -189,6 +193,11 @@ public abstract class JAXMServlet
 
             // Get the body of the HTTP request.
             InputStream is = req.getInputStream();
+            if (log.isDebugEnabled()) {
+                log.debug("Incoming Request: " + streamToString(is));
+                // reset stream
+                is.reset();
+            }
 
             // Now internalize the contents of a HTTP request and
             // create a SOAPMessage
@@ -243,5 +252,19 @@ public abstract class JAXMServlet
             log.error("JAXM POST failed.", ex);
         	throw new ServletException("JAXM POST failed "+ex.getMessage());
 	}
+    }
+    
+    private String streamToString(InputStream is) throws IOException {
+        final char[] buffer = new char[0x10000];
+        StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(is, "UTF-8");
+        int read;
+        do {
+          read = in.read(buffer, 0, buffer.length);
+          if (read>0) {
+            out.append(buffer, 0, read);
+          }
+        } while (read>=0);
+        return out.toString();
     }
 }
