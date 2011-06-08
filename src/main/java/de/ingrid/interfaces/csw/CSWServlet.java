@@ -5,6 +5,7 @@ package de.ingrid.interfaces.csw;
 
 // IMPORTS java.io
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -259,7 +260,15 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		  if (req.getContentType() == null) {
 		    return;
 		  }
-			if (req.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
+          if (log.isDebugEnabled()) {
+        	  InputStream is = req.getInputStream();
+        	  log.debug("Incoming Request: " + streamToString(is));
+              // reset stream
+              is.reset();
+          }
+			
+		  
+		  if (req.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				super.doPost(req, resp);
 			} else if (req.getContentType().toLowerCase().indexOf("application/xml") != -1
 					|| req.getContentType().toLowerCase().indexOf("text/xml") != -1) {
@@ -473,4 +482,20 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	public void destroy() {
 	}
+
+    private String streamToString(InputStream is) throws IOException {
+        final char[] buffer = new char[0x10000];
+        StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(is, "UTF-8");
+        int read;
+        do {
+          read = in.read(buffer, 0, buffer.length);
+          if (read>0) {
+            out.append(buffer, 0, read);
+          }
+        } while (read>=0);
+        return out.toString();
+    }
+
+
 }

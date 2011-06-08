@@ -238,7 +238,7 @@ public final class CommonAnalyser {
 				outputSchema.equalsIgnoreCase("http://www.isotc211.org/2005/gmd")) {
 				sessionParameters.setOutputSchema(outputSchema);
 			} else {
-				Exception e = new CSWInvalidParameterValueException("Attribute 'outputSchema' is invalid.", "outputSchema");
+				Exception e = new CSWInvalidParameterValueException("Attribute 'outputSchema=" + outputSchema + "' is invalid.", "outputSchema");
 				throw e;
 			}
 		}
