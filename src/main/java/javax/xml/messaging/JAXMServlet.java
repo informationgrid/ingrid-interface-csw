@@ -10,28 +10,32 @@
  */
 package javax.xml.messaging;
 
-import javax.xml.soap.*;
-
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-import org.apache.axis.utils.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import de.ingrid.interfaces.csw.CSW;
-import de.ingrid.interfaces.csw.CSWServlet;
-import de.ingrid.interfaces.csw.tools.XMLTools;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.StringTokenizer;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.MimeHeader;
+import javax.xml.soap.MimeHeaders;
+import javax.xml.soap.SOAPConstants;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import de.ingrid.interfaces.csw.CSWServlet;
+import de.ingrid.interfaces.csw.tools.XMLTools;
 
 /**
  * The superclass for components that
@@ -193,7 +197,12 @@ public abstract class JAXMServlet
 
             // Get the body of the HTTP request.
             InputStream is = req.getInputStream();
-
+            if (log.isDebugEnabled()) {
+            	log.debug("Incoming Request: " + streamToString(is));
+            	// reset stream
+            	is.reset();
+           	}
+            
             // Now internalize the contents of a HTTP request and
             // create a SOAPMessage
 	    SOAPMessage msg = msgFactory.createMessage(headers, is);
@@ -246,7 +255,20 @@ public abstract class JAXMServlet
         catch(Exception ex) {
             log.error("JAXM POST failed.", ex);
         	throw new ServletException("JAXM POST failed "+ex.getMessage());
-	}
+        }
     }
     
+    private String streamToString(InputStream is) throws IOException {
+        final char[] buffer = new char[0x10000];
+        StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(is, "UTF-8");
+        int read;
+        do {
+          read = in.read(buffer, 0, buffer.length);
+          if (read>0) {
+            out.append(buffer, 0, read);
+          }
+        } while (read>=0);
+        return out.toString();
+    }
 }

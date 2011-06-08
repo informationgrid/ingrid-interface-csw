@@ -25,14 +25,11 @@ import javax.xml.messaging.JAXMServlet;
 import javax.xml.messaging.ReqRespListener;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.transform.TransformerException;
 
 import org.apache.axis.AxisFault;
 import org.apache.axis.Message;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.DocumentException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -260,15 +257,8 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		  if (req.getContentType() == null) {
 		    return;
 		  }
-          if (log.isDebugEnabled()) {
-        	  InputStream is = req.getInputStream();
-        	  log.debug("Incoming Request: " + streamToString(is));
-              // reset stream
-              is.reset();
-          }
-			
-		  
-		  if (req.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
+          
+		  	if (req.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				super.doPost(req, resp);
 			} else if (req.getContentType().toLowerCase().indexOf("application/xml") != -1
 					|| req.getContentType().toLowerCase().indexOf("text/xml") != -1) {
@@ -482,20 +472,4 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	public void destroy() {
 	}
-
-    private String streamToString(InputStream is) throws IOException {
-        final char[] buffer = new char[0x10000];
-        StringBuilder out = new StringBuilder();
-        Reader in = new InputStreamReader(is, "UTF-8");
-        int read;
-        do {
-          read = in.read(buffer, 0, buffer.length);
-          if (read>0) {
-            out.append(buffer, 0, read);
-          }
-        } while (read>=0);
-        return out.toString();
-    }
-
-
 }
