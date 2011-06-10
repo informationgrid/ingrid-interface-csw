@@ -6,6 +6,9 @@
   </properties>
   <body>
     <release version="3.0.1-SNAPSHOT" date="2011-xx-xx" description="Bugfix Release">
+      <action type="add" issue="INGRID23-268">
+        Add header "Content-Encoding: UTF-8" to servlet response.
+      </action>
       <action type="fix">
         Remove 'text/xml' from supported output formats in capabilities. Restrict possible output format to 'application/xml'.
       </action>
