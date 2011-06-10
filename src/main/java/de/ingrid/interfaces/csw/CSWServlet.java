@@ -276,6 +276,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	    		resp.setContentType("application/xml");
 	    		resp.setCharacterEncoding("UTF-8");
+	    		resp.setHeader("Content-Encoding", "UTF-8");
 	    		OutputStream os = resp.getOutputStream();
 	    		OutputStreamWriter osw = new OutputStreamWriter(os , "UTF-8");
 	    		PrintWriter pw = new PrintWriter(osw);
@@ -346,6 +347,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 			response.setContentType("application/xml");
 			response.setCharacterEncoding("UTF-8");
+            response.setHeader("Content-Encoding", "UTF-8");
 			
 			response.getOutputStream().write(XMLTools.toString(doc).getBytes());
 		}
@@ -370,6 +372,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			URL url = new URL(cswConfig.getUrlPath(CSWInterfaceConfig.FILE_DESCRIBERECORD));
 			response.setContentType("application/xml");
 			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Content-Encoding", "UTF-8");
 			IOTools.writeInputToOutputStream(url.openStream(), response.getOutputStream());
 		}
 		log.debug("leaving");
@@ -399,6 +402,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 			result.append("<RobMeldung>Anfrage ist ok</RobMeldung>\n");
 			response.setContentType("application/xml");
 			response.setCharacterEncoding("UTF-8");
+            response.setHeader("Content-Encoding", "UTF-8");
 			response.getOutputStream().print(result.toString());
 		}
 	}
@@ -449,6 +453,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 		}
 		response.setContentType("application/xml");
 		response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-Encoding", "UTF-8");
 
 		response.getOutputStream().write(XMLTools.toString(responseDoc).getBytes("UTF-8"));
 	}
