@@ -197,11 +197,6 @@ public abstract class JAXMServlet
 
             // Get the body of the HTTP request.
             InputStream is = req.getInputStream();
-            if (log.isDebugEnabled()) {
-            	log.debug("Incoming Request: " + streamToString(is));
-            	// reset stream
-            	is.reset();
-           	}
             
             // Now internalize the contents of a HTTP request and
             // create a SOAPMessage
@@ -256,19 +251,5 @@ public abstract class JAXMServlet
             log.error("JAXM POST failed.", ex);
         	throw new ServletException("JAXM POST failed "+ex.getMessage());
         }
-    }
-    
-    private String streamToString(InputStream is) throws IOException {
-        final char[] buffer = new char[0x10000];
-        StringBuilder out = new StringBuilder();
-        Reader in = new InputStreamReader(is, "UTF-8");
-        int read;
-        do {
-          read = in.read(buffer, 0, buffer.length);
-          if (read>0) {
-            out.append(buffer, 0, read);
-          }
-        } while (read>=0);
-        return out.toString();
     }
 }
