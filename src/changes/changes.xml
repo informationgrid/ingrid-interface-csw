@@ -5,6 +5,11 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.1.0.0-SNAPSHOT" date="2011-xx-xx" description="">
+      <action type="add" dev="wemove" issue="INGRID-1882">
+        Remove unsupported outputSchema 'http://www.opengis.net/cat/csw/2.0.2'.
+      </action>
+    </release>
     <release version="3.0.1" date="2011-07-04" description="Add-Ons + Bugfixes for InGrid 3.0">
       <action type="add" dev="wemove" issue="INGRID23-268">
         Add header "Content-Encoding: UTF-8" to servlet response.
