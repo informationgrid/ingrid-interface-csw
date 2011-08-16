@@ -2,7 +2,7 @@
 <!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
 <installer
 			ui                  ="swing,text,swing-auto,text-auto"
-      oadDefaults         ="prompt"
+            loadDefaults         ="prompt"
 			verbose		          ="true"
 			debug		            ="true"
 			lookAndFeel	        ="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
