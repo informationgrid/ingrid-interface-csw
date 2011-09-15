@@ -225,6 +225,8 @@ public abstract class JAXMServlet
                                            " implement ReqRespListener or OnewayListener");
 
             if (reply != null) {
+                reply.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
+                reply.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
                 
                 // Need to saveChanges 'cos we're going to use the
                 // MimeHeaders to set HTTP response information. These
@@ -236,8 +238,8 @@ public abstract class JAXMServlet
 
                 resp.setStatus(HttpServletResponse.SC_OK);
 
+
                 putHeaders(reply.getMimeHeaders(), resp);
-                resp.setHeader("Content-Encoding", "UTF-8");
                     
                     // Write out the message on the response stream.
                     OutputStream os = resp.getOutputStream();
