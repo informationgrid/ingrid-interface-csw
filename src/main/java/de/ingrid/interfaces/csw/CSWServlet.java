@@ -253,6 +253,7 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+          resp.setCharacterEncoding("UTF-8");
 		  // ignore keep alive messages
 		  if (req.getContentType() == null) {
 		    return;
@@ -275,8 +276,6 @@ public class CSWServlet extends JAXMServlet implements ReqRespListener {
 	    		}
 
 	    		resp.setContentType("application/xml");
-	    		resp.setCharacterEncoding("UTF-8");
-	    		resp.setHeader("Content-Encoding", "UTF-8");
 	    		OutputStream os = resp.getOutputStream();
 	    		OutputStreamWriter osw = new OutputStreamWriter(os , "UTF-8");
 	    		PrintWriter pw = new PrintWriter(osw);
