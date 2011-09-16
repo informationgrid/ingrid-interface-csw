@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Capabilities xmlns="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/ows exampleCapabilities.xsd" version="1.2.0" updateSequence="ABC123">
+	<!-- Partial example for WMS. Primary editor: Arliss Whiteside. Last updated 2006-10-04 -->
+	<ServiceIdentification>
+		<Title>Acme Corp. Map Server</Title>
+		<Abstract>
+      Map Server maintained by Acme Corporation.
+      Contact: webmaster@wmt.acme.com.
+      High quality maps showing roadrunner nests and possible ambush locations. </Abstract>
+		<Keywords>
+			<Keyword>bird</Keyword>
+			<Keyword>roadrunner</Keyword>
+			<Keyword>ambush</Keyword>
+		</Keywords>
+		<ServiceType>OGC:WMS</ServiceType>
+		<ServiceTypeVersion>1.2.0</ServiceTypeVersion>
+		<ServiceTypeVersion>1.1.1</ServiceTypeVersion>
+		<Fees>NONE</Fees>
+		<AccessConstraints>NONE</AccessConstraints>
+	</ServiceIdentification>
+	<ServiceProvider>
+		<ProviderName>Acme Corporation</ProviderName>
+		<ProviderSite xlink:href="http://hostname/"/>
+		<ServiceContact>
+			<IndividualName>Jeff Smith, Server Administrator</IndividualName>
+			<PositionName>Computer Scientist</PositionName>
+			<ContactInfo>
+				<Phone>
+					<Voice>+1 301 555-1212</Voice>
+					<Facsimile>+1 301 555-1212</Facsimile>
+				</Phone>
+				<Address>
+					<DeliveryPoint>NASA Goddard Space Flight Center</DeliveryPoint>
+					<City>Greenbelt</City>
+					<AdministrativeArea>MD</AdministrativeArea>
+					<PostalCode>20771</PostalCode>
+					<Country>USA</Country>
+					<ElectronicMailAddress>user@host.com</ElectronicMailAddress>
+				</Address>
+			</ContactInfo>
+		</ServiceContact>
+	</ServiceProvider>
+	<OperationsMetadata>
+		<Operation name="GetCapabilities">
+			<DCP>
+				<HTTP>
+					<Get xlink:href="http://ww.lat-lon.de/transform?"/>
+				</HTTP>
+			</DCP>
+			<Parameter name="Format">
+				<Value>text/xml</Value>
+			</Parameter>
+		</Operation>
+		<Operation name="GetMap">
+			<DCP>
+				<HTTP>
+					<Get xlink:href="http://ww.lat-lon.de/transform?"/>
+					<Post xlink:href="http://ww.lat-lon.de/transform?"/>
+				</HTTP>
+			</DCP>
+			<Parameter name="Format">
+				<Value>image/gif</Value>
+				<Value>image/png</Value>
+				<Value>image/jpeg</Value>
+			</Parameter>
+			<Parameter name="ExceptionFormat">
+				<Value>text/xml</Value>
+				<Value>text/plain</Value>
+				<Value>text/html</Value>
+				<Value>application/vnd.ogc.se_inimage</Value>
+			</Parameter>
+		</Operation>
+		<Parameter name="ExceptionFormat">
+			<Value>text/xml</Value>
+			<Value>text/plain</Value>
+			<Value>text/html</Value>
+		</Parameter>
+		<Constraint name="MaximumLayerLevels">
+			<Value>5</Value>
+		</Constraint>
+		<Constraint name="MaximumWidth">
+				<Value>4000</Value>
+			</Constraint>
+		<Constraint name="MaximumHeight">
+					<Value>4000</Value>
+		</Constraint>
+	</OperationsMetadata>
+	<Contents>
+		<DatasetDescriptionSummary>
+			<Title/>
+			<Abstract/>
+			<Keywords>
+				<Keyword/>
+			</Keywords>
+			<WGS84BoundingBox>
+				<LowerCorner>999 999</LowerCorner>
+				<UpperCorner>999 999</UpperCorner>
+			</WGS84BoundingBox>
+			<Identifier/>
+			<BoundingBox>
+				<LowerCorner>999 999</LowerCorner>
+				<UpperCorner>999 999</UpperCorner>
+			</BoundingBox>
+			<Metadata/>
+		</DatasetDescriptionSummary>
+	</Contents>
+</Capabilities>

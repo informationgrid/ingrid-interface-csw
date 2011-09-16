@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw">
+   <csw:RequestId/>
+   <csw:SearchStatus status="subset" timestamp="2007-06-01T14:16:52"/>
+   <csw:SearchResults elementSet="" numberOfRecordsMatched="336" numberOfRecordsReturned="10" resultSetId=""/>
+  </csw:GetRecordsResponse>
+ </soapenv:Body>
+</soapenv:Envelope>

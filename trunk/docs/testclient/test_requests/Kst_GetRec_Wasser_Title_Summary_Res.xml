@@ -1,0 +1,1231 @@
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw">
+   <csw:RequestId/>
+   <csw:SearchStatus status="subset" timestamp="2007-06-01T09:33:30"/>
+   <csw:SearchResults elementSet="" numberOfRecordsMatched="21" numberOfRecordsReturned="10" resultSetId="">
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">55E85353-D48F-11D3-BAF0-0060971A0BF7</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Klaus-Peter Schulz</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Umweltministerium Baden-W&#xFC;rttemberg (UM), Abteilung 5 - Wasser und Boden, Referat 52 - Altlasten, F&#xF6;rderangelegenheiten / WAABIS-Gesch&#xE4;ftsstelle</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0711/126-1525</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0711/126-1529</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Kernerplatz 9</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Stuttgart</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>70182</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Klaus-Peter.Schulz@um.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-12-01T14:04:39</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Informationssystem Wasser, Abfall, Altlasten, Boden (WAABIS)</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2000-01-27T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2004-12-01T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">WAABIS ist ein seit 1997 entwickelter Systemkomplex, in dem alle wesentlichen hoheitlichen Fachanwendungen aus den Umweltbereichen Wasser, Abfall, Altlasten und Boden zusammengef&#xFC;hrt werden. Nutzer sind die staatlichen und kommunalen &#xDC;berwachungs- und Vollzugsbeh&#xF6;rden (Stadt- und Landkreise als untere Verwaltungsbeh&#xF6;rden, Gew&#xE4;sserdirektionen, Staatliche Gewerbeaufsichts&#xE4;mter und Regierungspr&#xE4;sidien, ferner die Landesanstalt f&#xFC;r Umweltschutz, das Landesamt f&#xFC;r Geologie, Rohstoffe und Bergbau sowie weitere Landesbeh&#xF6;rden).  WAABIS ist modular aufgebaut und besteht (derzeit insbesondere) aus folgenden Komponenten: &#xB7; Wasserrechtsverfahren, Automatisiertes Wasserbuch &#xB7; Anlagenbezogener Gew&#xE4;sserschutz - Vollzug Kl&#xE4;rschlammverordnung - Vollzug VAWS &#xB7; FIS Altlasten, Schadensf&#xE4;lle, Bodenbelastungen &#xB7; Gew&#xE4;sserinformationssystem &#xB7; Grundwasserdatenbank &#xB7; FIS Bodenschutz &#xB7; Geosystem Wasserwirtschaft/Bodenschutz - Vollzug Wasserentnahmeentgelt - Vollzug Abwasserabgabe &#xB7; WAABIS-Berichtssystem &#xB7; Labordaten-&#xDC;bertragungssystem  Wegen der tiefgreifenden Reform der Umweltverwaltung in Baden-W&#xFC;rttemberg zum 1.1.2005 (u. a. Eingliederung der Gew&#xE4;sserdirektionen und der Staatlichen Gewerbeaufsichts&#xE4;mter teils in die unteren Verwaltungsbeh&#xF6;rden, teils in die Regierungspr&#xE4;sidien) besteht die Absicht, WAABIS und das Informationssystem der Gewerbeaufsicht (IS-GAA) in den n&#xE4;chsten Jahren stufenweise zusammenzuf&#xFC;hren.</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Fachinformationssystem, Berichtssystem</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">62B5BE9E-DC4B-11D2-9A86-080000507261</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr  Harald Friesel</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Umweltschutz (LAU) Sachsen-Anhalt, Fachbereich 2: Abfallwirtschaft, Bodenschutz, Anlagentechnik Wasserwirtschaft, Fachgebiet 21: Abwasserbeseitigung</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 5704-380</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 5704-190</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Reideburger Stra&#xDF;e 47</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle (Saale)</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06116</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>friesel@lau.mlu.lsa-net.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.mu.sachsen-anhalt.de/start/main.htm</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-11-03T14:26:33</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Landesamt f&#xFC;r Umweltschutz (LAU) Sachsen-Anhalt / Wasserwirtschaft / Fachinformationssystem Wasser</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Datenbank enth&#xE4;lt Wasserrechtsdaten, Wasserg&#xFC;tedaten, Anlagedaten, Wasserbaudaten, hydrologische Daten, Wassergewinnungsanlagen</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>Datenzug&#xE4;nglichkeit: zug&#xE4;nglich, Bezugsquelle:  STAU  s</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">5AEC2DB7-CE55-11D3-8BF6-00105A493192</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Arnd Br&#xE4;unig</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>S&#xE4;chsisches Landesamt f&#xFC;r Umwelt und Geologie, Abteilung 4 (Natur, Landschaft, Boden)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Referent f&#xFC;r Bodenschutz</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>(03731) - 294 228</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>(03731) - 22 918</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Zur Wetterwarte 11</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Dresden</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>01109</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>arnd.braeunig@lfug.smul.sachsen.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-04-13T09:36:48</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Simulationsmodell zur Bodenerosion durch Wasser</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Programmname: EROSION 2D/3D Prozessorientiertes physikalisch begr&#xFC;ndetes und computergest&#xFC;tztes Simulationsmodell zur Modellierung der Wassererosion f&#xFC;r Hangprofile (E2D) und in Gew&#xE4;ssereinzugsgebieten (E3D).</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Modell E3D /ArcGIS</smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">F3659A31-26C3-4017-BF82-6DCB483460D6</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   RIPS-Pool-Administrator</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>LUBW Landesanstalt f&#xFC;r Umwelt, Messungen und Naturschutz Baden-W&#xFC;rttemberg, Abteilung 5 - Informationstechnisches Zentrum Umwelt, Referat 53 - UIS-Fachsysteme</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:facsimile>
+            <smXML:CharacterString>0721/5600-1515</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Griesbachstra&#xDF;e 1</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Karlsruhe</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>76185</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>ripspool.Mail@lubw.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Custodian"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Regierungspr&#xE4;sidium Freiburg, Landesamt f&#xFC;r Geologie, Rohstoffe und Bergbau Baden-W&#xFC;rttemberg (LGRB)</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0761/204-4400</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0761/204-4438</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Albertstra&#xDF;e 5</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Freiburg</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>79104</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Abteilung9@rpf.bwl.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-05-24T11:15:42</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:MD_DataIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Wasser- und Bodenatlas (WABOA) Teil Boden</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2003-03-12T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2004-05-24T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Bodenkundliche Einheiten mit 395 Kartiereinheiten  Das Thema Bodenkundliche Einheiten zeigt die r&#xE4;umliche Verbreitung von Bodengesellschaften in Baden-W&#xFC;rttemberg auf dem Niveau der Leitbodengesellschaft, gegliedert nach Bodenregionen und Bodenlandschaften.  Neben den Bodenkundlichen Einheiten im Ma&#xDF;stab 1:200000 mit 395 Kartiereinheiten, die im WaBoA digital enthalten sind, gibt es eine generalisierte Version mit 55 Einheiten (Boden&#xFC;bersichtskarte). Diese wird f&#xFC;r die gedruckte Atlasversion eingesetzt. &#xDC;ber das Schl&#xFC;sselfeld buek55 sind die Datens&#xE4;tze verkn&#xFC;pfbar.   Die bodenkundlichen Einheiten stellen die Basis f&#xFC;r mehrere Boden-Kennwertkarten dar, die als Attributfelder im Datensatz verankert sind. Dazu geh&#xF6;ren die Themen Bodenart und Gr&#xFC;ndigkeit, Bodenwasserregime, Feldkapazit&#xE4;t, nutzbare Feldkapazit&#xE4;t und die potenzielle Kationenaustauschkapazit&#xE4;t der B&#xF6;den.  </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+      </iso19115summary:MD_DataIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">62B5BE73-DC4B-11D2-9A86-080000507261</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Frau  Petra Hiller</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Umweltschutz (LAU) Sachsen-Anhalt, Fachbereich 2: Abfallwirtschaft, Bodenschutz, Anlagentechnik Wasserwirtschaft, Fachgebiet 21: Abwasserbeseitigung</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 5704-381</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 5704-190</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>Reideburger Stra&#xDF;e 47</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle (Saale)</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06116</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>creutzmann@lau.mlu.lsa-net.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.mu.sachsen-anhalt.de/start/main.htm</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2004-11-03T14:26:33</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Landesamt f&#xFC;r Umweltschutz (LAU) Sachsen-Anhalt / Wasserwirtschaft / Gew&#xE4;sserschutz / Einleiter&#xFC;berwachung im FIS Wasser</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Software f&#xFC;r Auswertungsstatistik und f&#xFC;r Fachberechnung</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>Datenzug&#xE4;nglichkeit: verwaltungsintern zug&#xE4;nglich, Bezugsquelle:  STAU  s</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">7C31F57D-888A-11D4-9FCC-0020AFC07BC2</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Dieter Feldhaus</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Geologie und Bergwesen (LAGB) Sachsen-Anhalt / Halle (Saale), Bodenkunde</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Dezernatsgruppenleiter</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 5212-103/104</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 5229910</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>K&#xF6;thener Str. 34</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06118</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>dfeldhaus@lagb.mw.lsa-net.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.mw.sachsen-anhalt.de/gla</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Klaus-J&#xF6;rg Hartmann</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Geologie und Bergwesen (LAGB) Sachsen-Anhalt / Halle (Saale), Bodenkunde, Bodenkundliche Landesaufnahme und FIS Boden</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Dezernatsleiter 22: Bodenkundliche Landesaufnahme und FIS Boden</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 5212-117</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 5229910</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>K&#xF6;thener Str. 34</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06118</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>joerg.hartmann@lagb.mw.lsa-net.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.mw.sachsen-anhalt.de/gla</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-03-27T13:32:40</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Landesamt f&#xFC;r Geologie und Bergwesen (LAGB) Sachsen-Anhalt / Fachinformationssystem Boden / Auswertungsmethoden zu Wasser- und Stoffhaushalt</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Die Bodenschutzgesetze beinhalten als eine wesentliche Forderung den nachhaltigen Erhalt der Bodenfunktionen. In diesem Zusammenhang spielt der Wasser- und Stoffhaushalt eines Bodens eine wichtige Rolle hinsichtlich seiner Funktionen als Filter und Puffer f&#xFC;r das Grundwasser sowie seiner Funktion als Pflanzenstandort. Dazu haben die Staatlichen Geologischen Dienste eine Reihe von Auswertungs- und Bewertungsmethoden entwickelt und in den Fachinformationssystemen zur Verf&#xFC;gung gestellt. </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">7C31F57F-888A-11D4-9FCC-0020AFC07BC2</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="service" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Dieter Feldhaus</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Geologie und Bergwesen (LAGB) Sachsen-Anhalt / Halle (Saale), Bodenkunde</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Dezernatsgruppenleiter</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 5212-103/104</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 5229910</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>K&#xF6;thener Str. 34</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06118</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>dfeldhaus@lagb.mw.lsa-net.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.mw.sachsen-anhalt.de/gla</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Klaus-J&#xF6;rg Hartmann</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Geologie und Bergwesen (LAGB) Sachsen-Anhalt / Halle (Saale), Bodenkunde, Bodenkundliche Landesaufnahme und FIS Boden</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Dezernatsleiter 22: Bodenkundliche Landesaufnahme und FIS Boden</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 5212-117</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 5229910</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>K&#xF6;thener Str. 34</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06118</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>joerg.hartmann@lagb.mw.lsa-net.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.mw.sachsen-anhalt.de/gla</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>Herr Dr. Henrik Helbig</smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesamt f&#xFC;r Geologie und Bergwesen (LAGB) Sachsen-Anhalt / Halle (Saale), Bodenkunde, Angewandte Bodenkunde</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString>Dezernatsleiter 21: Grundlagen und Bodenschutz</smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 5212-117</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 5229910</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>K&#xF6;thener Str. 34</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06118</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>helbig@lagb.mw.lsa-net.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.mw.sachsen-anhalt.de/gla</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2006-03-14T16:24:43</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:SV_ServiceIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Landesamt f&#xFC;r Geologie und Bergwesen (LAGB) Sachsen-Anhalt / Fachinformationssystem Boden / Auswertungsmethoden zu Wasser- und Stoffhaushalt / Sickerwasserrate</smXML:CharacterString>
+         </title>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Die Sickerwasserrate beschreibt die Wassermenge im Boden, die sich unter Einwirkung der Schwerkraft abw&#xE4;rts bewegt. Sie ist ein wesentlicher Faktor f&#xFC;r die Grundwasserneubildung. </smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+       <serviceType>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML"></smXML:CharacterString>
+       </serviceType>
+      </iso19115summary:SV_ServiceIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">54567C62-6D7A-11D6-BE48-00E07D50C053</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesverwaltungsamt (LVwA) Sachsen-Anhalt, Landwirtschaft und Umwelt, Wasser</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 514-0</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 514-1444</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>DessauerStra&#xDF;e 70</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle (Saale)</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06118</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Poststelle@lvwa.sachsen-anhalt.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.landesverwaltungsamt.sachsen-anhalt.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2005-06-29T15:04:11</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:MD_DataIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Land Sachsen-Anhalt / Landesverwaltungsamt (LVwA) / Wasser / Wasserversorgung / Kartierung zur Gewinnung von Bodensch&#xE4;tzen</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2005-05-24T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2005-06-27T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Land Sachsen-Anhalt / Landesverwaltungsamt (LVwA) / Kartierung zur Gewinnung von Bodensch&#xE4;tzen  Zus&#xE4;tzliche Informationen Datengewinnung: digital u. analog, liegt vor als: Karte, beziehbar: digital u. analog, Beschreibung:  fl&#xE4;chenhafte Darstellung mit Unterscheidung aktiver bzw. passiver Abbaugebiete</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>Datenzug&#xE4;nglichkeit: verwaltungsintern zug&#xE4;nglich, Bezugsquelle:  Bargbauamt Halle und RP Dessau</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+      </iso19115summary:MD_DataIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">54567C67-6D7A-11D6-BE48-00E07D50C053</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesverwaltungsamt (LVwA) Sachsen-Anhalt, Landwirtschaft und Umwelt, Wasser</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 514-0</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 514-1444</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>DessauerStra&#xDF;e 70</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle (Saale)</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06118</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Poststelle@lvwa.sachsen-anhalt.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.landesverwaltungsamt.sachsen-anhalt.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2005-06-29T15:04:11</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:MD_DataIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Land Sachsen-Anhalt / Landesverwaltungsamt (LVwA) / Wasser / Wasserversorgung / Trinkwasserschutzzonenkartierung und Datenbank Kataster</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2005-05-24T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2005-06-27T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Darstellung der Wasserschutzgebiete, die gesetzlich festgelegt sind. Zu jedem dargestellten Wasserschutzgebiet geh&#xF6;rt eine Schutzgebietsverordnung (alte Bezeichnung: Beschlu&#xDF;), die in der Vollzugsbeh&#xF6;rde, d.h. den Landkreisen, und zur Information vorliegt.  Zus&#xE4;tzliche Informationen Datengewinnung: digital u. analog, liegt vor als: Karte, beziehbar: digital u. analog, Beschreibung:  fl&#xE4;chenhafte Darstellung der Schutzzonen (siehe Zusatzinfo)</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString>Datenzug&#xE4;nglichkeit: verwaltungsintern zug&#xE4;nglich, Bezugsquelle:  Landkreisverwaltungen</smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+      </iso19115summary:MD_DataIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+    <iso19115summary:MD_Metadata xmlns:iso19115summary="http://schemas.opengis.net/iso19115summary" xmlns:iso19119="http://schemas.opengis.net/iso19119" xmlns:smXML="http://metadata.dgiwg.org/smXML">
+     <fileIdentifier>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">54567C6C-6D7A-11D6-BE48-00E07D50C053</smXML:CharacterString>
+     </fileIdentifier>
+     <language>
+      <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">de</smXML:CharacterString>
+     </language>
+     <hierarchyLevel>
+      <smXML:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset" xmlns:smXML="http://metadata.dgiwg.org/smXML"/>
+     </hierarchyLevel>
+     <contact>
+      <smXML:CI_ResponsibleParty xmlns:smXML="http://metadata.dgiwg.org/smXML">
+       <smXML:role>
+        <smXML:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="Point of Contact"/>
+       </smXML:role>
+       <smXML:individualName>
+        <smXML:CharacterString>   </smXML:CharacterString>
+       </smXML:individualName>
+       <smXML:organisationName>
+        <smXML:CharacterString>Landesverwaltungsamt (LVwA) Sachsen-Anhalt, Landwirtschaft und Umwelt, Wasser</smXML:CharacterString>
+       </smXML:organisationName>
+       <smXML:positionName>
+        <smXML:CharacterString></smXML:CharacterString>
+       </smXML:positionName>
+       <smXML:contactInfo>
+        <smXML:CI_Contact>
+         <smXML:phone>
+          <smXML:CI_Telephone>
+           <smXML:voice>
+            <smXML:CharacterString>0345 514-0</smXML:CharacterString>
+           </smXML:voice>
+           <smXML:facsimile>
+            <smXML:CharacterString>0345 514-1444</smXML:CharacterString>
+           </smXML:facsimile>
+          </smXML:CI_Telephone>
+         </smXML:phone>
+         <smXML:address>
+          <smXML:CI_Address>
+           <smXML:deliveryPoint>
+            <smXML:CharacterString>DessauerStra&#xDF;e 70</smXML:CharacterString>
+           </smXML:deliveryPoint>
+           <smXML:city>
+            <smXML:CharacterString>Halle (Saale)</smXML:CharacterString>
+           </smXML:city>
+           <smXML:postalCode>
+            <smXML:CharacterString>06118</smXML:CharacterString>
+           </smXML:postalCode>
+           <smXML:country>
+            <smXML:CharacterString>D</smXML:CharacterString>
+           </smXML:country>
+           <smXML:electronicMailAddress>
+            <smXML:CharacterString>Poststelle@lvwa.sachsen-anhalt.de</smXML:CharacterString>
+           </smXML:electronicMailAddress>
+          </smXML:CI_Address>
+         </smXML:address>
+         <smXML:onlineResource>
+          <smXML:CI_OnlineResource>
+           <smXML:linkage>
+            <smXML:CharacterString>http://www.landesverwaltungsamt.sachsen-anhalt.de</smXML:CharacterString>
+           </smXML:linkage>
+          </smXML:CI_OnlineResource>
+         </smXML:onlineResource>
+        </smXML:CI_Contact>
+       </smXML:contactInfo>
+      </smXML:CI_ResponsibleParty>
+     </contact>
+     <dateStamp>
+      <smXML:Date xmlns:smXML="http://metadata.dgiwg.org/smXML">2005-06-29T15:04:11</smXML:Date>
+     </dateStamp>
+     <identificationInfo>
+      <iso19115summary:MD_DataIdentification>
+       <citation>
+        <iso19115summary:CI_Citation>
+         <title>
+          <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Land Sachsen-Anhalt / Landesverwaltungsamt (LVwA) / Wasser / Wasserrecht / Karten zur Zust&#xE4;ndigkeit nach Gew&#xE4;sserordnung</smXML:CharacterString>
+         </title>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2002-05-22T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+         <smXML:date xmlns:smXML="http://metadata.dgiwg.org/smXML">
+          <smXML:CI_Date>
+           <smXML:date>
+            <smXML:Date>2005-06-27T00:00:00</smXML:Date>
+           </smXML:date>
+           <smXML:dateType>
+            <smXML:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+           </smXML:dateType>
+          </smXML:CI_Date>
+         </smXML:date>
+        </iso19115summary:CI_Citation>
+       </citation>
+       <abstract>
+        <smXML:CharacterString xmlns:smXML="http://metadata.dgiwg.org/smXML">Land Sachsen-Anhalt / Landesverwaltungsamt (LVaW) / Wasserrecht / Karten zur Zust&#xE4;ndigkeit nach Gew&#xE4;sserordnung</smXML:CharacterString>
+       </abstract>
+       <resourceConstraints>
+        <smXML:MD_Constraints xmlns:smXML="http://metadata.dgiwg.org/smXML">
+         <smXML:useLimitation>
+          <smXML:CharacterString></smXML:CharacterString>
+         </smXML:useLimitation>
+        </smXML:MD_Constraints>
+       </resourceConstraints>
+      </iso19115summary:MD_DataIdentification>
+     </identificationInfo>
+    </iso19115summary:MD_Metadata>
+   </csw:SearchResults>
+  </csw:GetRecordsResponse>
+ </soapenv:Body>
+</soapenv:Envelope>

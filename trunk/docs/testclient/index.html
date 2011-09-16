@@ -1,0 +1,212 @@
+<html>
+	<head>
+
+<script language="JavaScript" type="text/javascript">
+//
+// make request
+//
+function ajax_request() 
+{
+    //
+    // send an ajax get request
+    //
+    this.open_get = function(url, callback_function, text) 
+    {
+        if (this.openXMLHttpRequest()) 
+        {
+            if (text == 1) this.xml = 0;
+            else this.xml = 1;
+
+            this.callback_function = callback_function;
+            this.xmlHttpRequest.open('GET', url, true);
+            this.xmlHttpRequest.send(null);
+            return true;
+        }
+        return false;
+    }
+
+    //
+    // send an ajax post request
+    //
+    this.open_post = function(url, data, callback_function, text) 
+    {
+        if (this.openXMLHttpRequest()) 
+        {
+            if (text == 1) this.xml = 0;
+            else this.xml = 1;
+
+            this.callback_function = callback_function;
+            this.xmlHttpRequest.open('POST', url, true);
+            this.xmlHttpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            this.xmlHttpRequest.setRequestHeader("Content-length", data.length);
+            this.xmlHttpRequest.send(data);
+            return true;
+        }
+        return false;
+    }
+
+    //
+    // try to get XMLHttpRequester
+    //
+    this.openXMLHttpRequest = function() 
+    {
+        if (this.xmlHttpRequest) 
+        {
+            if (this.xmlHttpRequest.readyState != 0 && this.xmlHttpRequest.readyState != 4) 
+            {
+                return false;
+            }
+        
+            this.xmlHttpRequest.abort();
+        }
+        else
+        {
+            this.xmlHttpRequest = false;
+        }
+
+        // try to create a new instance of the xmlhttprequest object        
+        try 
+        {
+            // Internet Explorer
+            if (window.ActiveXObject) 
+            {
+                for (var i = 5; i; i--) 
+                {
+                    try 
+                    {
+                        // loading of a newer version of msxml dll (msxml3 - msxml5) failed
+                        // use fallback solution
+                        // old style msxml version independent, deprecated
+                        if (i == 2) 
+                        {
+                            this.xmlHttpRequest = new ActiveXObject( "Microsoft.XMLHTTP" );    
+                        }
+                        else 
+                        {
+                            // try to use the latest msxml dll
+                            this.xmlHttpRequest = new ActiveXObject( "Msxml2.XMLHTTP." + i + ".0" );
+                        }
+                        break;
+                    } 
+                    catch (excNotLoadable) 
+                    {                        
+                        this.xmlHttpRequest = false;
+                    }
+                }
+            }
+            else if (window.XMLHttpRequest) 
+            {
+                // Mozilla, Opera und Safari
+                this.xmlHttpRequest = new XMLHttpRequest();
+                if (this.xmlHttpRequest.overrideMimeType) {
+                    this.xmlHttpRequest.overrideMimeType('text/xml');
+                }
+            }
+        } 
+        catch (excNotLoadable) 
+        {
+            // loading of xmlhttp object failed
+            this.xmlHttpRequest = false;
+        }
+
+        // add event listener
+        if (this.xmlHttpRequest)
+        {
+            this.xmlHttpRequest.onreadystatechange = this.handleResponse;
+            return this.xmlHttpRequest;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    /**
+     * handle response of the request
+     */
+    this.handleResponse = function() 
+    {
+        // status 0 UNINITIALIZED open() has not been called yet.
+        // status 1 LOADING send() has not been called yet.
+        // status 2 LOADED send() has been called, headers and status are available.
+        // status 3 INTERACTIVE Downloading, responseText holds the partial data.
+        // status 4 COMPLETED Finished with all operations.
+        if (ajax)
+        {
+
+        switch(ajax.xmlHttpRequest.readyState) 
+        {
+            // uninitialized
+            case 0:
+            // loading
+            case 1:
+            // loaded
+            case 2:
+            // interactive
+            case 3:
+            break;
+            // complete
+            case 4:    
+                // check http status
+                if (ajax.xmlHttpRequest.status == 200) 
+                {
+                    if (ajax.callback_function)
+                    {
+                        // call callback function
+                        if (ajax.xmlHttpRequest.responseText && ajax.xml == 0)
+                        {
+                            ajax.response = ajax.xmlHttpRequest.responseText;
+                        }
+                        else if (ajax.xmlHttpRequest.responseXML)
+                        {
+                            ajax.response = ajax.xmlHttpRequest.responseXML;
+                        }
+                        eval(ajax.callback_function);
+                    }
+                    else if (ajax.xmlHttpRequest.responseText != '')
+                    {
+                        alert(ajax.xmlHttpRequest.responseText);
+                    }
+                } 
+                else 
+                {
+                    // loading not successfull, e.g. page not available
+                    alert("Ajax error:\n Http status = " + ajax.xmlHttpRequest.status+"\n" + ajax.xmlHttpRequest.statusText + "\n" + ajax.xmlHttpRequest.responseText);
+                }
+        }
+    }
+
+    }
+}
+
+var ajax = new ajax_request();
+
+function callbackCSWResponse() {
+	var foo=document.getElementById('result');
+	foo.innerHTML=encode(ajax.response);
+}
+
+function encode(string) {
+	return string.replace(/\&/g,'&amp;').replace(/\</g,"'\n&lt;").replace(/\>/g,'&gt;').replace(/\'/g,'&apos;').replace(/\"/g,'&quot;');
+}
+
+function submitRequest() {
+	ajax.open_post("proxy.php?proxy_url="+document.getElementById('interface').value, "data="+document.getElementById('request').value, "callbackCSWResponse()", 1);
+}
+	
+</script>
+	</head>
+	<body>
+		<form>
+			<input id="interface" name="interface" value="www.portalu.de/csw"/>
+			<br/>
+			<br/>
+			<textarea id="request" name="request" cols="80" rows="20"></textarea>
+			<input type="button" onclick="submitRequest()">
+			<br/>
+			<br/>
+			<pre><div id="result">Result</div></pre>
+		</form>
+	</body>
+</html>
+		

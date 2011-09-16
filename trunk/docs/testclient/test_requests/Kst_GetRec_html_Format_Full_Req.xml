@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope">
+	<SOAP-ENV:Body>
+		<csw:GetRecords maxRecords="9999" resultType="results" service="CSW" startPosition="1" version="2.0.0" xmlns:csw="http://www.opengis.net/cat/csw">
+			<csw:Query typeNames="csw:dataset csw:service">
+				<csw:ElementSetName>full</csw:ElementSetName>
+				<csw:Constraint version="1.0.0">
+					<ogc:Filter xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc">
+						<ogc:PropertyIsEqualTo escape="\" singleChar="?" wildCard="*">
+							<ogc:PropertyName>Format</ogc:PropertyName>
+							<ogc:Literal>html</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+				</csw:Constraint>
+			</csw:Query>
+		</csw:GetRecords>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

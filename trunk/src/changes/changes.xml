@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+  <properties>
+    <title>History Ingrid CSW Interface</title>
+    <author email="joachim@wemove.com">Joachim Müller</author>
+  </properties>
+  <body>
+    <release version="3.1.0" date="2011-09-15" description="Release InGrid 3.1">
+      <action type="fix" dev="wemove">
+        Avoid escaping of UTF-8 characters in SOAP output.
+      </action>
+      <action type="fix" dev="wemove">
+        Revert header "Content-Encoding: UTF-8" to servlet response, since this is invalid.
+      </action>
+      <action type="add" dev="wemove" issue="INGRID-1882">
+        Remove unsupported outputSchema 'http://www.opengis.net/cat/csw/2.0.2'.
+      </action>
+      <action type="fix" issue="INGRID-1992">
+        Changed logging behavior, so that not so many files will be created.
+      </action>
+    </release>
+    <release version="3.0.1" date="2011-07-04" description="Add-Ons + Bugfixes for InGrid 3.0">
+      <action type="add" dev="wemove" issue="INGRID23-268">
+        Add header "Content-Encoding: UTF-8" to servlet response.
+      </action>
+      <action type="fix" dev="wemove">
+        Remove 'text/xml' from supported output formats in capabilities. Restrict possible output format to 'application/xml'.
+      </action>
+      <action type="fix" dev="wemove">
+        Use "application/xml" as default output format if not supplied.
+      </action>
+    </release>
+
+    <release version="3.0.0" date="2011-05-06" description="Release InGrid3.0">
+      <action type="fix">
+        Do not apply UDK5 address role id transformation on NON-UDK5 iPlugs. (keyword: principalInvestigator an all objects)
+      </action>
+      <action type="update">
+        Add direct IDF (InGrid Detaildata Format) record response handling.
+      </action>
+      <action type="fix">
+        Fix characterSet of Metadata (MD_Metadata/characterSet/MD_CharacterSetCode/@codeListValue), now read from t01_object.metadata_character_set (not dataset_character_set).
+      </action>
+      <action type="fix" issue="INGRID-1891">
+        Allow only addresses with role "pointOfContact" under element MD_Metadata/contact. Other addresses are referenced below identificationInfo/pointOfConact.
+      </action>      
+    </release>
+
+    <release version="2.3.1" date="2011-01-24" description="Update dependencies Release">
+      <action type="fix">
+        Improve robustness if direct data response has no valid MD_Metadata construct
+      </action>
+      <action type="update">
+        Improve logging and exception handling (in any case add a csw service exception!)
+      </action>
+      <action type="update">
+        Use most current dependencies (jars)!
+      </action>
+    </release>
+
+    <release version="2.3.0" date="2010-12-20" description="Release">
+      <action type="fix">
+        Unify language construct in ISO answer (user "LanguageCode" in all "language" elements).
+      </action>
+      <action type="add">
+        Added mapping of IGC Schema 1.0.9 (separate class service into geodata service and other services).
+      </action>
+      <action type="add">
+        Added mapping of IGC Schema 1.0.8 (separate accessConstraints (gmd:otherConstraints) and useConstraints (gmd:useLimitation)).
+      </action>
+      <action type="fix">
+        Add interpretation of boolean logic to TYPE filter query constructs.
+      </action>
+      <action type="fix">
+        Remove PropertyEqualsNot from supported query types in capabilities.
+      </action>
+    </release>
+
+    <release version="1.2.3" date="2010-07-14" description="Release">
+      <action type="fix" issue="INGRID-1828">
+        Set resultType="HITS" as default resultType.
+      </action>      
+      <action type="fix">
+        Parsing of queriables "Language" and "ResourceLanguage" will be mapped to internal IGC language keys. 
+      </action>      
+      <action type="add">
+        Add handling of ISO fields metadata name and version. Set default values if they are not set in the underlying data. 
+      </action>      
+      <action type="fix">
+        Make parsing of spatial query more robust. 
+      </action>      
+      <action type="fix">
+        Make handling of address IDs iPlug version specific (distinguish between UDK5 and others). 
+      </action>      
+      <action type="fix">
+        Make sure only CSW compatible iPlugs will be queried by the CSW interface. 
+      </action>      
+      <action type="fix">
+        Capabilities better reflects the supported Queriables. 
+      </action>      
+      <action type="fix">
+        Change codelist reference URIs from '...codeList.xml?...' to '...codeList.xml#...' 
+      </action>
+      <action type="update">
+        Adapt capabilities document. This interface does not support typeName "csw:Record" nor CSW 2.0.0
+      </action>
+      <action type="update">
+        Map fileIdentifier to Original OBJ_ID or, if empty to OBJ_UUID.
+      </action>
+      <action type="add">
+        Add CitationIdentifier ID: use datasource uuid or, if empty, create new UUID.
+      </action>
+      <action type="update">
+        Make MD_Metadata ID ISO compliant (no ':' allowed).
+      </action>
+      <action type="update">
+        Add CI_Citation date elements even if date has no value. Use nilReason="missing" on such date elements.
+      </action>
+      <action type="update">
+        Improve robustness of address rendering (filter adress references without adresses).
+      </action>
+      <action type="add">
+        Add code space "Ingrid" to RS_Identifier entries.
+      </action>
+      <action type="update">
+        Map INSPIRE keywords first, if they exist. Keywords are mapped in the following order: INSPIRE, GEMET, UMTHES, FREE, SERVICE_CLASSIFICATION, ENV_CATEGORIES, ENV_TOPICS.
+      </action>
+      <action type="update">
+        Map GeographicDescriptionCode to index field name 'location' instead of UDK table and fieldname.
+      </action>
+    </release> 
+    <release version="1.2.2" date="2010-03-09" description="Release">
+      <action type="add">
+        Add mapping of extentTypeCode (set always to TRUE) and metadateStandardName (defaults to 'ISO19115') and metadataStandardVersion (defaults to '2003/Cor.1:2006').
+      </action>
+      <action type="fix">
+        Fix problem with GET request GetRecordById where the elementsetname was always set to 'brief'.
+      </action>
+      <action type="add">
+        Add complete mapping of the UDK data model, including also 'non-ISO' object classes.
+      </action>
+    </release> 
+    <release version="1.2.1" date="2010-01-08" description="Release">
+      <action type="fix">
+        Fix order of results when the start position of the results was not a multiple of the requested hits.
+      </action>
+      <action type="fix">
+        Fix problem transforming a result when no summary and geographic location was supplied.
+      </action>
+    </release> 
+    <release version="1.2.0" date="2009-12-04" description="Release">
+      <action type="fix">
+        Fix Character Encoding Problem bei POST requests unter Windows.
+      </action>
+      <action type="fix">
+        Fix Problem beim Parsen von Id Attribut bei der SOAP basierten GetRecordById Methode.
+      </action>
+      <action type="fix">
+        Problem bei Umsetzung von Filterquery zu InGrid Query mit logischen Verknüpfungen behoben.
+      </action>
+      <action type="add">
+        Anfragen koennen auf Partner, Anbieter und iPlug ID über GET Parameter eingeschraenkt werden.
+      </action>
+      <action type="fix">
+        Kommentare zu Textfeldern im Installer (nur im Textmodus) werden erst nach der Eingabe angezeigt.
+      </action>
+      <action type="fix">
+        Wiederholtes Laden eines gecachten Objektes fuehrt zu Vervielfachung der "organisation" Angaben in einer Adresse.
+      </action>
+      <action type="update">
+        Erweiterung der unterstuetzten Laender bei Transformation IGC - CSW
+      </action>
+      <action type="add">
+        POST Methode akzeptiert auch Anfragen mit Content-Type:text/xml.
+      </action>
+      <action type="fix">
+        Exceptions während der POST Methode werden in einem ServiceExceptionReport gekapselt.
+      </action>
+      <action type="fix">
+        Transformation von GeometricObjectTypeCode war nicht korrekt 
+      </action>
+      <action type="add">
+        Integration eines Installers
+      </action>
+      <action type="add">
+        Migration zu build system Maven 2.0
+      </action>
+      <action type="add">
+        Unterstützung für IGC DB Version 1.0.5
+      </action>
+      <action type="add">
+        Unterstützung für CSW 2.0.2
+      </action>
+      <action type="add">
+        Unterstützung für Anforderungen aus der INSPIRE Richtlinie
+      </action>
+      <action type="add">
+		Caching der InGrid-Anfragen
+      </action>
+      <action type="add">
+		Verbesserte Performance beim Abfragen des iBus (Methode searchAndDetail)
+      </action>
+      <action type="add">
+		neue Kommunikation, kompatibel mit InGrid 2.0 (Konfigurationsfile f. die communication hat sich geändert: communication.xml statt communication.proerties)
+      </action>
+      <action type="add">
+		Aktualisierung auf JAVA6 (ACHTUNG: JAVA6 ist jetzt erforderlich)
+      </action>
+      <action type="add">
+		Build Prozess auf Maven2 Basis
+      </action>
+    </release>
+
+    <release version="1.1.7" date="2008-11-05" description="Letztes CSW 2.0.0 kompatibles Release">
+      <action type="fix">
+        verschiedene CSW Formatfehler behoben
+      </action>
+      <action type="fix">
+        Verbesserung der Standard Kompatibilität
+      </action>
+      <action type="add">
+        Unterstützung von IDC 1.0.2 basierten UDK-DSCs
+      </action>
+      <action type="add">
+		Unterstützung von IDC 1.0.3 (INSPIRE) basierten UDK-DSCs
+      </action>
+    </release>
+
+    <release version="1.1.6" date="2008-02-15" description="Release">
+      <action type="add">
+        Optimierter Zugriff auf hierarchische Adressenstruktur der UDK Kataloge
+      </action>
+      <action type="update">
+        Aktualisierung von AXIS auf Version 1.4
+      </action>
+      <action type="add">
+        Postfach Angaben werden bevorzugt uebernommen, wenn angegeben
+      </action>
+      <action type="add">
+        Erhoehung der Zuverlaessigkeit der Kommunikationsschicht bei Reconnects
+      </action>
+    </release>
+
+    <release version="1.1.5" date="2007-10-30" description="Release">
+      <action type="add">
+        Im Filter Encoding der CSW Anfragen werden die PropertyNamen nun "case insensitive" interpretiert
+      </action>
+      <action type="fix">
+        Fehlerhafte IngridQuerys, die aus CSW Abfragen resultieren werden als SOAP Exception zurückgegeben (war 500 Servlet Error)
+      </action>
+    </release>
+
+    <release version="1.1.4" date="2007-10-12" description="BugFix-Release">
+      <action dev="" type="fix">
+        Beachte Proxies, die kein EOF senden
+      </action>
+      <action dev="" type="fix" issue="INGRID-1609">
+        Behebe erneute Anmeldung nach Herunterfahren
+      </action>
+    </release>
+    
+    <release version="1.1.3" date="2007-09-03" description="Release">
+      <action dev="" type="add">
+        Anpassungen für Anschluss an GeoPortal (per default nicht aktiviert)
+      </action>
+      <action dev="" type="update">
+        Bessere CSW-DE-1.0.1 Kompatibilität
+      </action>
+      <action dev="" type="update">
+        Anpassung der Defaultwerte der Kommunikationskomponente
+      </action>
+    </release>
+      
+    <release version="1.1.2" date="2007-08-31" description="Release">
+      <action dev="" type="update">
+        Verbesserung der Kommunikationskomponente. 
+      </action>
+      <action dev="" type="add">
+        ProxyUser und ProxyPassword werden jetzt Ueber Konfigurationsdatei gesetzt.
+      </action>
+      <action dev="" type="add">
+        Eine Http-Proxy Verbindung kann auch ohne Username und Password aufgebaut werden.
+      </action>
+    </release>
+    
+    <release version="1.1.1" date="2007-08-21" description="Fix-Release">
+      <action dev="" type="fix">
+        Bugfix: Fehlendes file communication.properties ergänzt
+      </action>
+    </release>
+    
+    <release version="1.1.0" date="2007-08-01" description="Initial-Release">
+      <action dev="" type="update">
+        Austausch JXTA-Kommunikation gegen TCP/IP-Kommunikation
+      </action>
+    </release>
+  </body>
+</document>
