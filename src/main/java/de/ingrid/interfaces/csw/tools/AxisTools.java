@@ -9,6 +9,8 @@ package de.ingrid.interfaces.csw.tools;
 
 import java.io.InputStream;
 
+import javax.xml.soap.SOAPMessage;
+
 import org.apache.axis.Message;
 import org.apache.axis.SOAPPart;
 import org.apache.axis.message.MimeHeaders;
@@ -71,8 +73,11 @@ public final class AxisTools {
         MimeHeaders mimeHeaders = new MimeHeaders();
         mimeHeaders.addHeader("Content-Type", "application/xml;charset=UTF-8");
         smsg = new Message(SOAPTools.SOAP12ENV, false, mimeHeaders);
+        smsg.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
+
         //smsg = new Message(SOAPTools.SOAP11ENV, false);
 	    SOAPPart sp = (SOAPPart) smsg.getSOAPPart();
+	    sp.setEncoding("UT8");
         SOAPEnvelope se = (SOAPEnvelope) sp.getEnvelope();
 //        SOAPBody body = (SOAPBody) se.getBody();
 

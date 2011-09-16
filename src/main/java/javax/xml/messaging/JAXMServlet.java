@@ -12,9 +12,7 @@ package javax.xml.messaging;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.StringTokenizer;
@@ -30,9 +28,15 @@ import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.CSWServlet;
 import de.ingrid.interfaces.csw.tools.XMLTools;
@@ -225,7 +229,7 @@ public abstract class JAXMServlet
                                            " implement ReqRespListener or OnewayListener");
 
             if (reply != null) {
-                reply.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
+                reply.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "utf-8");
                 reply.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
                 
                 // Need to saveChanges 'cos we're going to use the
@@ -240,12 +244,14 @@ public abstract class JAXMServlet
 
 
                 putHeaders(reply.getMimeHeaders(), resp);
-                    
-                    // Write out the message on the response stream.
-                    OutputStream os = resp.getOutputStream();
-                    reply.writeTo(os);
-
-                    os.flush();
+                Node root = null;
+                // Write out the message on the response stream.
+                root = reply.getSOAPPart().getDocumentElement();                    
+                Transformer transformer = TransformerFactory.newInstance().newTransformer();
+                transformer.setOutputProperty(OutputKeys.INDENT, "no");
+                OutputStream os = resp.getOutputStream();
+                transformer.transform(new DOMSource(root), new StreamResult(os));                    
+                os.flush();
                     
             } else 
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
