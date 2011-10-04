@@ -1018,6 +1018,31 @@ public final class TestRequests {
     		"      </GetRecords>\r\n" + 
     		"   </soapenv:Body>\r\n" + 
     		"</soapenv:Envelope>\r\n";
+
+    public static final String GET_RECORDS_HH_SERVICE_RESTRICTION = "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n" + 
+    "   <soapenv:Body>\r\n" + 
+    "      <GetRecords startPosition=\"1\" maxRecords=\"9\" outputFormat=\"application/xml\" outputSchema=\"http://www.isotc211.org/2005/gmd\" resultType=\"results\" service=\"CSW\" version=\"2.0.2\" xmlns=\"http://www.opengis.net/cat/csw/2.0.2\" xmlns:apiso=\"http://www.opengis.net/cat/csw/apiso/1.0\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dct=\"http://purl.org/dc/terms/\" xmlns:gmd=\"http://www.isotc211.org/2005/gmd\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:ows=\"http://www.opengis.net/ows\">\r\n" + 
+    "         <Query typeNames=\"gmd:MD_Metadata\">\r\n" + 
+    "            <ElementSetName>full</ElementSetName>\r\n" + 
+    "            <Constraint version=\"1.1.0\">\r\n" + 
+    "               <ogc:Filter>\r\n" + 
+    "        <ogc:And>\r\n" + 
+    "                     <ogc:PropertyIsEqualTo>\r\n" + 
+    "                        <ogc:PropertyName>apiso:type</ogc:PropertyName>\r\n" + 
+    "                        <ogc:Literal>service</ogc:Literal>\r\n" + 
+    "                     </ogc:PropertyIsEqualTo>\r\n" + 
+    "               <ogc:PropertyIsLike escapeChar=\"\\\" singleChar=\"?\" wildCard=\"*\">" +
+    "                   <ogc:PropertyName>apiso:AnyText</ogc:PropertyName>" +
+    "                   <ogc:Literal>wms Hamburg</ogc:Literal>" +
+    "               </ogc:PropertyIsLike>" +
+    "         </ogc:And>\r\n" + 
+    "               </ogc:Filter>\r\n" + 
+    "            </Constraint>\r\n" + 
+    "         </Query>\r\n" + 
+    "      </GetRecords>\r\n" + 
+    "   </soapenv:Body>\r\n" + 
+    "</soapenv:Envelope>\r\n";
+
     
     
     // Although object are declared final, they are filled by this block

@@ -179,6 +179,32 @@ public class FilterToIngridQueryStringTest extends TestCase {
         assertTrue(session.isTypeNameIsDataset() & session.isTypeNameIsService() & !session.isTypeNameNonGeographicDataset());
         
      }    
+
+    
+    /**
+     * @throws Exception e
+     */
+    public final void testGenerateQueryFromFilterHHServiceRestriction() throws Exception {
+        
+        SOAPMessage soapMessageRequest = null;
+        String ingridQueryString = null;
+        SOAPElement elem = null;
+        Element  elemFilter = null;
+        soapMessageRequest = AxisTools.createSOAPMessage(TestRequests.GET_RECORDS_HH_SERVICE_RESTRICTION);
+        elem = (SOAPElement) soapMessageRequest.getSOAPBody().getElementsByTagName("Filter").item(0);
+        Document doc = XMLTools.create();
+        doc.appendChild(doc.createElement("Filter"));
+        elemFilter = doc.getDocumentElement();
+                             elemFilter = (Element) SOAPTools.copyNode(elem, elemFilter);
+        FilterImpl filter = new FilterImpl(elemFilter);
+        SessionParameters session = new SessionParameters();
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(session);
+        ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
+        System.out.println(" ingridQueryString: " + ingridQueryString);
+        assertEquals("(\"wms Hamburg\")", ingridQueryString);
+        assertTrue(session.isTypeNameIsService());
+        
+     }    
     
     
     /**

@@ -348,6 +348,7 @@ public class FilterToIngridQueryString {
 		} else {
 			sb.append(leftBracket);
 		}
+		String sbBeforeFirstOperation = sb.toString();
 
 		FilterOperation fo = logic.getFirstFilterOperation();
 
@@ -367,7 +368,9 @@ public class FilterToIngridQueryString {
 		FilterOperation[] fos = logic.getAdditionalFilterOperations();
 
 		for (int i = 0; i < fos.length; i++) {
-			sb.append(" " + logic.getOpName().toUpperCase() + " ");
+			if (!sbBeforeFirstOperation.equals(sb.toString())) {
+			    sb.append(" " + logic.getOpName().toUpperCase() + " ");
+			}
 
 			if (fos[i] instanceof ComparisonOps) {
 				runComparison((ComparisonOps) fos[i]);
