@@ -707,11 +707,6 @@ public class FilterToIngridQueryString {
 					}
 				}
 				
-				// transform <.. ..> to "<.. ..>"
-				if (literal.indexOf(' ') > -1) {
-					literal = "\"" + literal + "\"";
-				}
-				
 				if (field.indexOf("t01_object.metadata_language_key") > -1  
 						|| field.indexOf("t01_object.data_language_key") > -1) {
 					Integer igcLangId = null;

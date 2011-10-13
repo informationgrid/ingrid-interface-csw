@@ -201,7 +201,7 @@ public class FilterToIngridQueryStringTest extends TestCase {
         FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(session);
         ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
         System.out.println(" ingridQueryString: " + ingridQueryString);
-        assertEquals("(\"wms Hamburg\")", ingridQueryString);
+        assertEquals("(wms Hamburg)", ingridQueryString);
         assertTrue(session.isTypeNameIsService());
         
      }    
