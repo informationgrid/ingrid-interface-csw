@@ -24,35 +24,81 @@ stopIplug()
 {
   echo "Try stopping ingrid component ($INGRID_HOME)..."
   if [ -f $PID ]; then
-      procid=`cat $PID`
-      idcount=`ps -p $procid | wc -l`
-      if [ $idcount -eq 2 ]; then
-        echo stopping $command
-        kill `cat $PID`
-        echo "process ($procid) has been terminated."
-      else
-        echo "process is not running. Exit."
-        exit 1
-      fi
-    else
-      echo "process is not running. Exit."
-      exit 1
-    fi
+		procid=`cat $PID`
+		idcount=`ps -p $procid | wc -l`
+		if [ $idcount -eq 2 ]; then
+			echo stopping $command, wait 3 sec to exit.
+			kill `cat $PID`
+			sleep 3
+			idcount=`ps -p $procid | wc -l`
+			if [ $idcount -eq 1 ]; then
+				echo "process ($procid) has been terminated."
+				unlink $PID
+				exit 0
+			else
+				COUNTER=1
+				SECS=0
+				while [  $COUNTER -lt 10 ]; 
+				do
+					COUNTER=$(($COUNTER + 1))
+					echo "process is still running. wait 1 more sec."
+					sleep 1
+					idcount=`ps -p $procid | wc -l`
+					if [ $idcount -eq 1 ]; then
+						SECS=$(($COUNTER + $SECS))
+					    echo "process ($procid) has been terminated after $SECS sec."
+					    unlink $PID
+					    exit 0
+					fi					
+				done
+				echo "process is still running. force kill -9."
+				kill -9 `cat $PID`
+				exit 0
+			fi 
+		else
+			echo "process is not running. Exit."
+			unlink $PID 
+		fi
+	else
+		echo "process is not running. Exit."
+	fi
 }
 
 stopNoExitIplug()
 {
   echo "Try stopping ingrid component ($INGRID_HOME)..."
   if [ -f $PID ]; then
-      procid=`cat $PID`
-      idcount=`ps -p $procid | wc -l`
-      if [ $idcount -eq 2 ]; then
-        echo stopping $command
-        kill `cat $PID`
-        echo "process ($procid) has been terminated."
-      else
-        echo "process is not running. Exit."
-      fi
+		procid=`cat $PID`
+		idcount=`ps -p $procid | wc -l`
+		if [ $idcount -eq 2 ]; then
+			echo stopping $command, wait 3 sec to exit.
+			kill `cat $PID`
+			sleep 3
+			idcount=`ps -p $procid | wc -l`
+			if [ $idcount -eq 1 ]; then
+				echo "process ($procid) has been terminated."
+				unlink $PID
+			else
+				COUNTER=1
+				SECS=0
+				while [  $COUNTER -lt 10 ]; 
+				do
+					COUNTER=$(($COUNTER + 1))
+					echo "process is still running. wait 1 more sec."
+					sleep 1
+					idcount=`ps -p $procid | wc -l`
+					if [ $idcount -eq 1 ]; then
+						SECS=$(($COUNTER + $SECS))
+					    echo "process ($procid) has been terminated after $SECS sec."
+					    unlink $PID
+					fi					
+				done
+				echo "process is still running. force kill -9."
+				kill -9 `cat $PID`
+			fi
+		else
+			echo "process is not running. Exit."			
+		fi
     else
       echo "process is not running. Exit."
     fi
@@ -69,12 +115,6 @@ startIplug()
         echo plug running as process `cat $PID`.  Stop it first.
         exit 1
       fi
-  fi
-  
-  if [ -d "$INGRID_HOME/../repository/" ]; then
-  	echo 'syncronize libs from repository...'
-	rsync -av --update --existing $INGRID_HOME/../repository/ $INGRID_HOME/lib/
-	echo 'finished syncronize.'
   fi
   
   # some Java parameters
