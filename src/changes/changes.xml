@@ -7,6 +7,9 @@
   <body>
     <release version="3.2.0-SNAPSHOT" date="2011-??-??" description="Feature Release">
       <action type="update" dev="wemove" issue="">
+        Encode iplug ids to be conform with XML-ID specification.
+      </action>
+      <action type="update" dev="wemove" issue="">
         Update query generation for GetRecordById GET Request. It now accepts ':' characters.
       </action>
       <action type="update" dev="wemove" issue="INGRID-1885">

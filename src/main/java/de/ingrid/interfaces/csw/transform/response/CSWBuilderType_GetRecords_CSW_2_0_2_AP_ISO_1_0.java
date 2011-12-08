@@ -100,9 +100,9 @@ public class CSWBuilderType_GetRecords_CSW_2_0_2_AP_ISO_1_0 extends CSWBuilderTy
             if (metadataNode != null) {
                 Node metadataIdNode = metadataNode.selectSingleNode("./@id");
                 if (metadataIdNode != null) {
-                    metadataIdNode.setText("ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":original-response");
+                    metadataIdNode.setText("ingrid:" + hit.getPlugId().replaceAll("[^_\\.\\-A-Za-z0-9]", "_") + ":" + hit.getDocumentId() + ":original-response");
                 } else {
-                    metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId() + ":" + hit.getDocumentId() + ":pass-through");
+                    metadataNode.addAttribute("id", "ingrid:" + hit.getPlugId().replaceAll("[^_\\.\\-A-Za-z0-9]", "_") + ":" + hit.getDocumentId() + ":pass-through");
                 }
                 searchResults.add(metadataNode);
                 continue;
