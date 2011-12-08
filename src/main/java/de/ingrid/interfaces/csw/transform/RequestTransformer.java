@@ -62,7 +62,7 @@ public class RequestTransformer implements CSWRequestTransformer {
         int listSize = idsList.size();
         
         for (int i = 0; i < listSize; i++) {
-            queryString = queryString + " " + idField + (String) idsList.get(i);
+            queryString = queryString + " " + idField + "\"" +(String) idsList.get(i) + "\"";
         }
         
         if (log.isDebugEnabled()) {
