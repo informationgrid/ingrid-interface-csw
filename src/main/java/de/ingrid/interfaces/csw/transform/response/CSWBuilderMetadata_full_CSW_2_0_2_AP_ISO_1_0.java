@@ -52,7 +52,7 @@ public class CSWBuilderMetadata_full_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Buil
 		metaData.add(gml);
 		metaData.add(gts);
 		
-		metaData.addAttribute("id", hit.getPlugId().replaceAll("[^_\\.\\-A-Za-z0-9]", "_") + "_" + hit.getDocumentId());
+		metaData.addAttribute("id", (hit.getPlugId() + "_" + hit.getDocumentId()).replaceAll(INVALID_XML_ID_CHARS_REGEX_STR, "_"));
 
 		this.addFileIdentifier(metaData, hit, this.getNSPrefix());
 		this.addLanguage(metaData, hit, this.getNSPrefix());

@@ -42,7 +42,7 @@ public class CSWBuilderMetadata_brief_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_Bui
 		metaData.add(gco);
 		metaData.add(srv);
 
-		metaData.addAttribute("id", hit.getPlugId().replaceAll("[^_\\.\\-A-Za-z0-9]", "_") + "_" + hit.getDocumentId());
+		metaData.addAttribute("id", (hit.getPlugId() + "_" + hit.getDocumentId()).replaceAll(INVALID_XML_ID_CHARS_REGEX_STR, "_"));
 
 		this.addFileIdentifier(metaData, hit);
 		this.addHierarchyLevel(metaData.addElement("hierarchyLevel"), hierarchyInfo.hierarchyLevel);

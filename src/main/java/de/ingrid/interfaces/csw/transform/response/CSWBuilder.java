@@ -14,4 +14,6 @@ public abstract class CSWBuilder implements ICSWBuilder {
 
     protected static SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     
+    protected static String INVALID_XML_ID_CHARS_REGEX_STR = "[^_\\.\\-A-Za-z0-9]";
+    
 }
