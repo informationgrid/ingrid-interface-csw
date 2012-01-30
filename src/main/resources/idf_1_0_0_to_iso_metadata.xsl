@@ -50,8 +50,8 @@
     <xsl:template match="idf:exportCriteria" />
 	<xsl:template match="idf:additionalDataSection" />
     <!--  filter IDF_OnlineResource_Type specific elements -->
-    <xsl:template match="idf:datatype" />
-	<!--  both -->
+    <xsl:template match="idf:attachedToField" />
+    <!-- shared and common attributes -->
 	<xsl:template match="@orig-uuid" />
 	<xsl:template match="@xsi:schemaLocation" />
 

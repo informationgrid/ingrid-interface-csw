@@ -6,6 +6,9 @@
   </properties>
   <body>
     <release version="3.2.0-SNAPSHOT" date="2011-??-??" description="Feature Release">
+      <action type="update" dev="wemove" issue="INGRID-2087">
+        Filter IDF 3.2.0 to valid CSW response.
+      </action>
       <action type="update" dev="wemove" issue="">
         Encode iplug ids to be conform with XML-ID specification.
       </action>
