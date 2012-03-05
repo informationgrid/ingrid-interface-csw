@@ -337,6 +337,55 @@ public class FilterToIngridQueryStringTest extends TestCase {
         
      }
     
+    /**
+     * @throws Exception e
+     */
+    public final void testGenerateQueryFromFilter7() throws Exception {
+       
+        
+       
+        SOAPMessage soapMessageRequest = null;
+        
+        String ingridQueryString = null;
+        
+        SOAPElement elem = null;
+        
+        Element  elemFilter = null;
+        
+        soapMessageRequest = AxisTools.createSOAPMessage(TestRequests.GETREC7);
+        
+        elem = (SOAPElement) soapMessageRequest.getSOAPBody().getElementsByTagName("Filter").item(0);
+        
+        
+        Document doc = XMLTools.create();
+        
+        doc.appendChild(doc.createElement("Filter"));
+        
+        elemFilter = doc.getDocumentElement();
+                             elemFilter = (Element) SOAPTools.copyNode(elem, elemFilter);
+        
+        FilterImpl filter = new FilterImpl(elemFilter);
+        
+        
+        FilterToIngridQueryString filterToIngrid = new FilterToIngridQueryString(null);
+        
+       try  {
+           
+        ingridQueryString = filterToIngrid.generateQueryFromFilter(filter);
+        
+        assertEquals("(t01_object.obj_id:\"ABC D\" OR t01_object.org_obj_id:\"ABC D\")", ingridQueryString);
+        
+        System.out.println(" ingridQueryString: " + ingridQueryString);
+       
+       } catch (Exception e) {
+     
+           e.printStackTrace();  
+       
+            
+        }
+     
+        
+     }
     
     
     /**

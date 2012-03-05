@@ -57,12 +57,10 @@ public class RequestTransformer implements CSWRequestTransformer {
         IngridQuery ingridQuery = null;
         String queryString = "";
         
-        //FIXME name of field?
-        String idField = "T01_object.obj_id:";
         int listSize = idsList.size();
         
         for (int i = 0; i < listSize; i++) {
-            queryString = queryString + " " + idField + "\"" +(String) idsList.get(i) + "\"";
+            queryString = queryString + " t01_object.obj_id:\"" +(String) idsList.get(i) + "\" OR t01_object.org_obj_id:\"" +(String) idsList.get(i) + "\"";
         }
         
         if (log.isDebugEnabled()) {

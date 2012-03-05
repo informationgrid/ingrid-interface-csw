@@ -720,7 +720,17 @@ public class FilterToIngridQueryString {
 					}
 				} 
 				
+				if (field.length() > 0 && literal.indexOf(" ") > -1) {
+				    literal = "\"" + literal + "\"";
+				}
+				
+				if (field.indexOf("t01_object.obj_id") > -1) {
+				    sb.delete(sb.indexOf("t01_object.obj_id"), sb.length());
+				    literal = "(t01_object.obj_id:" + literal + " OR t01_object.org_obj_id:" + literal + ")";
+				}
+                
 				sb.append(literal);
+				
 			} else if (obj instanceof Double || obj instanceof Integer) {
 				if (field.equals("WEST") || field.equals("OST")
 						|| field.equals("SUED") || field.equals("NORD")) {

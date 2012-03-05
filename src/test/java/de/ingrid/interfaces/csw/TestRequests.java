@@ -364,25 +364,6 @@ public final class TestRequests {
             + "        version=\"2.0.0\" xmlns=\"http://www.opengis.net/cat/csw\">\n"
             + "<Query typeNames=\"csw:dataset\">\n" + "<ElementSetName typeNames=\"\">brief</ElementSetName>\n"
             + " <Constraint version=\"1.0.0\">\n" + "<Filter xmlns=\"http://www.opengis.net/ogc\">\n" +
-            // "<Or>\n" +
-            // "<And>\n" +
-            //				 
-            //
-            //				
-            //				 
-            // "<PropertyIsEqualTo>\n" +
-            // "<PropertyName>AnyText</PropertyName>\n" +
-            // "<Literal>blabla</Literal>\n" +
-            // "</PropertyIsEqualTo>\n" +
-            //				
-            //				
-            // "<PropertyIsEqualTo>\n" +
-            // "<PropertyName>AnyText</PropertyName>\n" +
-            // "<Literal>rarbrarb</Literal>\n" +
-            // "</PropertyIsEqualTo>\n" +
-
-            // "</And>\n" +
-
             "<And>\n" +
 
             "<PropertyIsEqualTo>\n" + "<PropertyName>AnyText</PropertyName>\n" + "<Literal>kraken</Literal>\n"
@@ -391,40 +372,37 @@ public final class TestRequests {
             + "</PropertyIsEqualTo>\n" +
 
             "<Not>\n" +
-            // "<Or>\n" +
             "<PropertyIsLike escape=\"!\" singleChar=\"#\" wildCard=\"*\">\n"
             + "<PropertyName>AnyText</PropertyName>\n" + "<Literal>saale</Literal>\n" + "</PropertyIsLike>\n" +
-            // "<PropertyIsEqualTo>\n" +
-            // "<PropertyName>AnyText</PropertyName>\n" +
-            // "<Literal>hufeisensee</Literal>\n" +
-            // "</PropertyIsEqualTo>\n" +
-            // "</Or>\n" +
             "</Not>\n" +
-
-            // "<Not>\n" +
-            //					
-            // "<PropertyIsEqualTo>\n" +
-            // "<PropertyName>AnyText</PropertyName>\n" +
-            // "<Literal>hufeisensee</Literal>\n" +
-            // "</PropertyIsEqualTo>\n" +
-            //					  
-            // "</Not>\n" +
-
-            // "<PropertyIsEqualTo>\n" +
-            // "<PropertyName>AnyText</PropertyName>\n" +
-            // "<Literal>fische</Literal>\n" +
-            // "</PropertyIsEqualTo>\n" +
-            // "<PropertyIsEqualTo>\n" +
-            // "<PropertyName>GeographicDescriptionCode</PropertyName>\n" +
-            // "<Literal>halle</Literal>\n" +
-            // "</PropertyIsEqualTo>\n" +
-
             "</And>\n" +
-            // "</Or>\n" +
             "</Filter>\n" + "</Constraint>\n" + "</Query>\n" + "</" + GETREC_WORD + ">\n" +
 
             " </soapenv:Body>\n" + "</soapenv:Envelope>";
 
+    
+    public static final String GETREC7 =
+
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
+                + "                   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
+                + "                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+                " <soapenv:Body>\n" +
+                "<" + GETREC_WORD + " maxRecords=\"4\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+                + "      requestId=\"csw:1\" resultType=\"results\" service=\"CSW\" startPosition=\"1\"\n"
+                + "        version=\"2.0.0\" xmlns=\"http://www.opengis.net/cat/csw\">\n"
+                + "<Query typeNames=\"csw:dataset\">\n" + "<ElementSetName typeNames=\"\">brief</ElementSetName>\n"
+                + "<Constraint version=\"1.0.0\">\n" 
+                + "<Filter xmlns=\"http://www.opengis.net/ogc\">\n" 
+                + "<PropertyIsEqualTo>\n" + "<PropertyName>Identifier</PropertyName>\n" + "<Literal>ABC D</Literal>\n" + "</PropertyIsEqualTo>\n"
+                + "</Filter>\n" 
+                + "</Constraint>\n" 
+                + "<SortBy>\n" 
+                + "<SortProperty>\n" + "<PropertyName>Identifier</PropertyName>\n" + "<SortOrder>ASC</SortOrder>\n" + "</SortProperty>\n" + "</SortBy>" 
+                + "</Query>\n" + "</" + GETREC_WORD + ">\n" 
+                + " </soapenv:Body>\n" + "</soapenv:Envelope>";
+    
+    
     /**
      * request GETHITS with resultType=hits for just getting the number of
      * matched records
