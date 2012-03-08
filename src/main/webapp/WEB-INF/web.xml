@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>springapp</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springapp</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Any User</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Free</web-resource-name>
+			<url-pattern>/css/*</url-pattern>
+			<url-pattern>/images/*</url-pattern>
+			<url-pattern>/js/*</url-pattern>
+			<url-pattern>/auth/*</url-pattern>
+			<url-pattern>/index.jsp</url-pattern>
+		</web-resource-collection>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/auth/login.html</form-login-page>
+			<form-error-page>/auth/loginFailure.html</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/auth/roleFailure.html</location>
+	</error-page>
+	
+	<error-page>
+	   <exception-type>org.springframework.web.HttpSessionRequiredException</exception-type>
+	   <location>/</location>
+	</error-page>
+</web-app>
