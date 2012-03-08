@@ -5,7 +5,7 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="3.2.0-SNAPSHOT" date="2011-??-??" description="Feature Release">
+    <release version="3.1.1-SNAPSHOT" date="2011-??-??" description="Feature Release">
       <action type="update" dev="wemove">
         Add compatibility code to query also alternative object IDs of asked. Now CSW records can be queried with their internal IGC UUID and also with their original UUID if they were imported via ISO import.
       </action>
