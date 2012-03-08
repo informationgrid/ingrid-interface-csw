@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>de.ingrid</groupId>
+    <artifactId>ingrid-releases-pom</artifactId>
+    <version>3.2.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.ingrid</groupId>
+  <artifactId>ingrid-interface-csw</artifactId>
+  <version>3.2.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>ingrid-interface-csw</name>
+  <scm>
+    <connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-3.x.x</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-3.x.x</developerConnection>
+  </scm>
+  <repositories>
+    <!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
+	<repository>
+		<id>de.ingrid.all</id>
+		<name>Maven Repo InGrid</name>
+		<url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
+	</repository>
+  </repositories>
+
+  <dependencyManagement>
+    <dependencies>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkMode>always</forkMode>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <!-- Add Type of Component to Manifest of Installer for Upgrade Server -->
+        <configuration>
+            <archive>
+              <manifestEntries>
+                  <ingridComponentType>INTERFACE_CSW</ingridComponentType>
+            </manifestEntries>
+            </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

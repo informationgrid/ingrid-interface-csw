@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+  <properties>
+    <title>History Ingrid CSW Interface</title>
+    <author email="joachim@wemove.com">Joachim Müller</author>
+  </properties>
+  <body>
+    <release version="3.2.0-SNAPSHOT" date="2011-??-??" description="Initial Release">
+      <action type="add" dev="wemove">
+        Initial Release.
+      </action>
+    </release>
+  </body>
+</document>
