@@ -1,0 +1,109 @@
+/*
+ * Copyright (c) 2012 wemove digital solutions. All rights reserved.
+ */
+package de.ingrid.interfaces.csw.cache;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
+
+/**
+ * Cache interface.
+ * 
+ * Transaction support. A transaction allows to do all cache operations in a
+ * temporary store. The cache guarantees that changes do not affect the content
+ * of the cache from which the transaction started until the transaction is
+ * committed. A rollback ends the transaction without changing the original
+ * content.
+ * 
+ * @author ingo herwig <ingo@wemove.com>
+ */
+public interface DocumentCache<T> {
+
+    /**
+     * Get the ids all the documents, that are cached.
+     * 
+     * @return List
+     */
+    public Set<Serializable> getCachedIds();
+
+    /**
+     * Check if a document is cached.
+     * 
+     * @param id
+     * @return boolean
+     */
+    public boolean isCached(Serializable id) throws IOException;
+
+    /**
+     * Get a document.
+     * 
+     * @param id
+     * @return document
+     */
+    public T get(Serializable id) throws IOException;
+
+    /**
+     * Store a document. Overrides the old document with the same id.
+     * 
+     * @param document
+     */
+    public void put(T document) throws IOException;
+
+    /**
+     * Remove a document.
+     * 
+     * @param id
+     */
+    public void remove(Serializable id);
+
+    /**
+     * Remove all documents.
+     */
+    public void removeAll();
+
+    /**
+     * Check wether the cache is in transaction mode.
+     * 
+     * @param boolean
+     */
+    public boolean isInTransaction();
+
+    /**
+     * Start the transaction. The content of the returned cache is the same as
+     * the content of this cache initially.
+     * 
+     * @param Returns
+     *            a new cache instance in transaction mode.
+     */
+    public DocumentCache<T> startTransaction() throws IOException;
+
+    /**
+     * Commit the transaction. Transfer all changes, that are done since the
+     * transaction was opened, to the original content.
+     */
+    public void commitTransaction() throws IOException;
+
+    /**
+     * Rollback the transaction. Discard all changes, that are done since the
+     * transaction was opened.
+     */
+    public void rollbackTransaction();
+
+    /**
+     * Get the cache from that a transaction was started. If the cache is not in
+     * transaction, the result is the same instance on which the method is
+     * called.
+     * 
+     * @param Returns
+     *            the initial cache instance.
+     */
+    public DocumentCache<T> getInitialCache();
+
+    /**
+     * Get the date of the last commit, returns null, if it could not be
+     * determined
+     */
+    public Date getLastCommitDate();
+}
