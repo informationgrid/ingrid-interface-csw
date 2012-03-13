@@ -15,28 +15,28 @@ import de.ingrid.utils.idf.IdfTool;
  * @author ingo herwig <ingo@wemove.com>
  */
 public class RecordCache extends AbstractFileCache<Record> implements
-	Serializable {
+Serializable {
 
-    private static final long serialVersionUID = RecordCache.class.getName()
-	    .hashCode();
+	private static final long serialVersionUID = RecordCache.class.getName()
+			.hashCode();
 
-    @Override
-    public Serializable getDocumentId(Record document) {
-	return document.getId();
-    }
+	@Override
+	public Serializable getCacheId(Record document) {
+		return document.getId();
+	}
 
-    @Override
-    public String serializeDocument(Record document) {
-	return IdfTool.getIdfDataFromRecord(document);
-    }
+	@Override
+	public String serializeDocument(Record document) {
+		return IdfTool.getIdfDataFromRecord(document);
+	}
 
-    @Override
-    public Record unserializeDocument(String str) {
-	return IdfTool.createIdfRecord(str, true);
-    }
+	@Override
+	public Record unserializeDocument(String str) {
+		return IdfTool.createIdfRecord(str, true);
+	}
 
-    @Override
-    public AbstractFileCache<Record> newInstance() {
-	return new RecordCache();
-    }
+	@Override
+	public AbstractFileCache<Record> newInstance() {
+		return new RecordCache();
+	}
 }

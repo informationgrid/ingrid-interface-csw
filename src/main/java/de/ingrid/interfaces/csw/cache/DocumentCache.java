@@ -21,89 +21,97 @@ import java.util.Set;
  */
 public interface DocumentCache<T> {
 
-    /**
-     * Get the ids all the documents, that are cached.
-     * 
-     * @return List
-     */
-    public Set<Serializable> getCachedIds();
+	/**
+	 * Get the ids all the documents, that are cached.
+	 * 
+	 * @return List
+	 */
+	public Set<Serializable> getCachedIds();
 
-    /**
-     * Check if a document is cached.
-     * 
-     * @param id
-     * @return boolean
-     */
-    public boolean isCached(Serializable id) throws IOException;
+	/**
+	 * Get the id of a document.
+	 * 
+	 * @param document
+	 * @return Serializable
+	 */
+	public Serializable getCacheId(T document);
 
-    /**
-     * Get a document.
-     * 
-     * @param id
-     * @return document
-     */
-    public T get(Serializable id) throws IOException;
+	/**
+	 * Check if a document is cached.
+	 * 
+	 * @param id
+	 * @return boolean
+	 */
+	public boolean isCached(Serializable id) throws IOException;
 
-    /**
-     * Store a document. Overrides the old document with the same id.
-     * 
-     * @param document
-     */
-    public void put(T document) throws IOException;
+	/**
+	 * Get a document.
+	 * 
+	 * @param id
+	 * @return document
+	 */
+	public T get(Serializable id) throws IOException;
 
-    /**
-     * Remove a document.
-     * 
-     * @param id
-     */
-    public void remove(Serializable id);
+	/**
+	 * Store a document. Overrides the old document with the same id.
+	 * 
+	 * @param document
+	 */
+	public void put(T document) throws IOException;
 
-    /**
-     * Remove all documents.
-     */
-    public void removeAll();
+	/**
+	 * Remove a document.
+	 * 
+	 * @param id
+	 */
+	public void remove(Serializable id);
 
-    /**
-     * Check wether the cache is in transaction mode.
-     * 
-     * @param boolean
-     */
-    public boolean isInTransaction();
+	/**
+	 * Remove all documents.
+	 */
+	public void removeAll();
 
-    /**
-     * Start the transaction. The content of the returned cache is the same as
-     * the content of this cache initially.
-     * 
-     * @param Returns
-     *            a new cache instance in transaction mode.
-     */
-    public DocumentCache<T> startTransaction() throws IOException;
+	/**
+	 * Check wether the cache is in transaction mode.
+	 * 
+	 * @param boolean
+	 */
+	public boolean isInTransaction();
 
-    /**
-     * Commit the transaction. Transfer all changes, that are done since the
-     * transaction was opened, to the original content.
-     */
-    public void commitTransaction() throws IOException;
+	/**
+	 * Start the transaction. The content of the returned cache is the same as
+	 * the content of this cache initially.
+	 * 
+	 * @param Returns
+	 *            a new cache instance in transaction mode.
+	 */
+	public DocumentCache<T> startTransaction() throws IOException;
 
-    /**
-     * Rollback the transaction. Discard all changes, that are done since the
-     * transaction was opened.
-     */
-    public void rollbackTransaction();
+	/**
+	 * Commit the transaction. Transfer all changes, that are done since the
+	 * transaction was opened, to the original content.
+	 */
+	public void commitTransaction() throws IOException;
 
-    /**
-     * Get the cache from that a transaction was started. If the cache is not in
-     * transaction, the result is the same instance on which the method is
-     * called.
-     * 
-     * @param Returns
-     *            the initial cache instance.
-     */
-    public DocumentCache<T> getInitialCache();
+	/**
+	 * Rollback the transaction. Discard all changes, that are done since the
+	 * transaction was opened.
+	 */
+	public void rollbackTransaction();
 
-    /**
-     * Get the date of the last commit, returns null, if it could not be
-     * determined
-     */
-    public Date getLastCommitDate();
+	/**
+	 * Get the cache from that a transaction was started. If the cache is not in
+	 * transaction, the result is the same instance on which the method is
+	 * called.
+	 * 
+	 * @param Returns
+	 *            the initial cache instance.
+	 */
+	public DocumentCache<T> getInitialCache();
+
+	/**
+	 * Get the date of the last commit, returns null, if it could not be
+	 * determined
+	 */
+	public Date getLastCommitDate();
 }

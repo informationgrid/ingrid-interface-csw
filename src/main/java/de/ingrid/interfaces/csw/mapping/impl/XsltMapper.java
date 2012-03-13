@@ -16,18 +16,18 @@ import de.ingrid.utils.dsc.Record;
  */
 public class XsltMapper implements CSWRecordMapper {
 
-    /**
-     * The cache used to store records.
-     */
-    private CSWRecordCache cache;
+	/**
+	 * The cache used to store records.
+	 */
+	private CSWRecordCache cache;
 
-    public void configure(CSWRecordCache cache) {
-	this.cache = cache;
-    }
+	public void configure(CSWRecordCache cache) {
+		this.cache = cache;
+	}
 
-    @Override
-    public Node map(Record record, ElementSetName elementSetName) {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	@Override
+	public Node map(Record record, ElementSetName elementSetName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -17,37 +17,37 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
  * @author ingo herwig <ingo@wemove.com>
  */
 public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements
-	Serializable {
+Serializable {
 
-    private static final long serialVersionUID = CSWRecordCache.class.getName()
-	    .hashCode();
+	private static final long serialVersionUID = CSWRecordCache.class.getName()
+			.hashCode();
 
-    @Override
-    public Serializable getDocumentId(CSWRecord document) {
-	return document.getId() + "_" + document.getElementSetName();
-    }
-
-    @Override
-    public String serializeDocument(CSWRecord document) {
-	return StringUtils.nodeToString(document.getDocument());
-    }
-
-    @Override
-    public CSWRecord unserializeDocument(String str) {
-	CSWRecord record = null;
-	try {
-	    Document document = StringUtils.stringToDocument(str);
-	    // TODO create the record instance
-	    // record.initialize(elementSetName, document.getFirstChild());
-	} catch (Exception e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	@Override
+	public Serializable getCacheId(CSWRecord document) {
+		return document.getId() + "_" + document.getElementSetName();
 	}
-	return record;
-    }
 
-    @Override
-    public AbstractFileCache<CSWRecord> newInstance() {
-	return new CSWRecordCache();
-    }
+	@Override
+	public String serializeDocument(CSWRecord document) {
+		return StringUtils.nodeToString(document.getDocument());
+	}
+
+	@Override
+	public CSWRecord unserializeDocument(String str) {
+		CSWRecord record = null;
+		try {
+			Document document = StringUtils.stringToDocument(str);
+			// TODO create the record instance
+			// record.initialize(elementSetName, document.getFirstChild());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return record;
+	}
+
+	@Override
+	public AbstractFileCache<CSWRecord> newInstance() {
+		return new CSWRecordCache();
+	}
 }

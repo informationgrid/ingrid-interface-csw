@@ -3,6 +3,7 @@
  */
 package de.ingrid.interfaces.csw.search;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import de.ingrid.interfaces.csw.domain.CSWRecord;
@@ -15,11 +16,11 @@ import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
  */
 public interface CSWRecordRepository {
 
-    /**
-     * Get the record with the given id and elementset name.
-     * 
-     * @param id
-     * @param elementSetName
-     */
-    public CSWRecord getRecord(Serializable id, ElementSetName elementSetName);
+	/**
+	 * Get the record with the given id and element set name.
+	 * 
+	 * @param id
+	 * @param elementSetName
+	 */
+	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName) throws IOException;
 }

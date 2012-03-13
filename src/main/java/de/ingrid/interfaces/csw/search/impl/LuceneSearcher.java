@@ -18,31 +18,41 @@ import de.ingrid.interfaces.csw.search.Searcher;
  */
 public class LuceneSearcher implements Searcher {
 
-    /**
-     * The path to the lucene index
-     */
-    private File indexPath;
+	/**
+	 * The path to the lucene index
+	 */
+	private File indexPath;
 
-    /**
-     * The repository where the CSW records are retrieved from
-     */
-    private CSWRecordRepository recordRepository;
+	/**
+	 * The repository where the CSW records are retrieved from
+	 */
+	private CSWRecordRepository recordRepository;
 
-    /**
-     * Configure the searcher.
-     * 
-     * @param indexPath
-     *            The path to the lucene index.
-     * @param recordRepository
-     */
-    public void configure(File indexPath, CSWRecordRepository recordRepository) {
-	this.indexPath = indexPath;
-	this.recordRepository = recordRepository;
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param indexPath
+	 *            The path to the lucene index.
+	 * @param recordRepository
+	 */
+	public LuceneSearcher(File indexPath, CSWRecordRepository recordRepository) {
+		this.indexPath = indexPath;
+		this.recordRepository = recordRepository;
+	}
 
-    @Override
-    public List<CSWRecord> search(CSWQuery query) {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public List<CSWRecord> search(CSWQuery query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

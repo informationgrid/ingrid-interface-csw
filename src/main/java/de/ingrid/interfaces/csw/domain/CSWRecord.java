@@ -3,6 +3,8 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
+import java.io.Serializable;
+
 import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
@@ -12,36 +14,73 @@ import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
  * 
  * @author ingo herwig <ingo@wemove.com>
  */
-public interface CSWRecord {
+public class CSWRecord {
 
-    /**
-     * Initialize the record with the given DOM node.
-     * 
-     * @param elementSetName
-     * @param node
-     */
-    public void initialize(ElementSetName elementSetName, Node node)
-	    throws Exception;
+	/**
+	 * The record id
+	 */
+	private Serializable id;
 
-    /**
-     * Get the id of the record.
-     * 
-     * @return String
-     */
-    public String getId();
+	/**
+	 * The element set name of the record
+	 */
+	private ElementSetName elementSetName;
 
-    /**
-     * Get the elementset name of the record.
-     * 
-     * @return ElementSetName
-     */
-    public ElementSetName getElementSetName();
+	/**
+	 * The XML content of the record
+	 */
+	private Node node;
 
-    /**
-     * Get the DOM representation of the record.
-     * 
-     * @return Node
-     */
-    public Node getDocument();
+	/**
+	 * Initialize the record with the given DOM node.
+	 * 
+	 * @param elementSetName
+	 * @param node
+	 */
+	public CSWRecord(ElementSetName elementSetName, Node node) {
+		this.elementSetName = elementSetName;
+		this.node = node;
+		// TODO implement id extraction from record
+	}
 
+	/**
+	 * Create a proxy record from a given id and element set name.
+	 * The proxy does not contain the XML content, but may be used to
+	 * identify the real subject.
+	 * 
+	 * @param id
+	 * @param elementSetName
+	 */
+	public static CSWRecord getProxy(Serializable id, ElementSetName elementSetName) {
+		CSWRecord proxy = new CSWRecord(elementSetName, null);
+		proxy.id = null;
+		return proxy;
+	}
+
+	/**
+	 * Get the id of the record.
+	 * 
+	 * @return String
+	 */
+	public Serializable getId() {
+		return this.id;
+	}
+
+	/**
+	 * Get the element set name of the record.
+	 * 
+	 * @return ElementSetName
+	 */
+	public ElementSetName getElementSetName() {
+		return this.elementSetName;
+	}
+
+	/**
+	 * Get the DOM representation of the record.
+	 * 
+	 * @return Node
+	 */
+	public Node getDocument() {
+		return this.node;
+	}
 }

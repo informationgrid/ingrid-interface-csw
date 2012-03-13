@@ -15,12 +15,12 @@ import de.ingrid.utils.dsc.Record;
  */
 public interface CSWRecordMapper {
 
-    /**
-     * Map an IDF record to a CSW record
-     * 
-     * @param record
-     * @param elementSetName
-     * @return Node
-     */
-    public Node map(Record record, ElementSetName elementSetName);
+	/**
+	 * Map an IDF record to a CSW record
+	 * 
+	 * @param record
+	 * @param elementSetName
+	 * @return Node
+	 */
+	public Node map(Record record, ElementSetName elementSetName);
 }

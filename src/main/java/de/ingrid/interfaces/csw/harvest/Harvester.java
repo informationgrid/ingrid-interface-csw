@@ -3,32 +3,59 @@
  */
 package de.ingrid.interfaces.csw.harvest;
 
-import java.util.List;
+import java.util.Date;
 
 import de.ingrid.interfaces.csw.Monitorable;
-import de.ingrid.utils.dsc.Record;
+import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 
 /**
  * Harvester defines the interface for document harvesting implementations.
+ * The documents are fetched into a cache by using the configured
+ * HarvestStrategy. A filter string may be given to get only a subset of
+ * all documents.
  * 
  * @author ingo herwig <ingo@wemove.com>
  */
 public interface Harvester extends Monitorable {
 
-    /**
-     * Get the identifier of the harvester.
-     */
-    public String getId();
+	/**
+	 * Get the identifier of the harvester.
+	 */
+	public String getId();
 
-    /**
-     * Execute the harvesting job.
-     */
-    public void run();
+	/**
+	 * Execute the harvesting job.
+	 * 
+	 * @param lastExecutionDate
+	 * @throws Exception
+	 */
+	public void run(Date lastExecutionDate) throws Exception;
 
-    /**
-     * Get all records fetched by the harvester.
-     * 
-     * @return List<Record>
-     */
-    public List<Record> getRecords();
+	/**
+	 * Set the cache for the fetched records.
+	 * 
+	 * @param cache
+	 */
+	public void setCache(RecordCache cache);
+
+	/**
+	 * Get the cache containing the records fetched by the harvester.
+	 * 
+	 * @return RecordCache
+	 */
+	public RecordCache getCache();
+
+	/**
+	 * Set the HarvestStrategy to be used to fetch the records.
+	 * 
+	 * @param harvestStrategy
+	 */
+	public void setHarvestStrategy(HarvestStrategy harvestStrategy);
+
+	/**
+	 * Set the filter string to be used to select records.
+	 * 
+	 * @param filter
+	 */
+	public void setFilter(String filter);
 }

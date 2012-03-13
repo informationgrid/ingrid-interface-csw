@@ -14,5 +14,21 @@ import de.ingrid.interfaces.csw.domain.CSWRecord;
  */
 public interface Searcher {
 
-    public List<CSWRecord> search(CSWQuery query);
+	/**
+	 * Start the searcher.
+	 */
+	public void start();
+
+	/**
+	 * Stop the searcher.
+	 */
+	public void stop();
+
+	/**
+	 * Search for CSW records using the given query.
+	 * 
+	 * @param query
+	 * @return List<CSWRecord>
+	 */
+	public List<CSWRecord> search(CSWQuery query);
 }
