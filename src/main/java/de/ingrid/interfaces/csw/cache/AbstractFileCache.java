@@ -85,9 +85,10 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		if (!this.isInitialized) {
 			// check for original path
 			String originalPath = this.getCachePath();
-			if (originalPath == null)
+			if (originalPath == null) {
 				throw new RuntimeException(
 						"DefaultFileCache is not configured properly: cachePath not set.");
+			}
 
 			// check if the original path exists and create it if not
 			File cacheLocation = new File(originalPath);
@@ -319,7 +320,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	}
 
 	@Override
-	public void put(T document) throws IOException {
+	public Serializable put(T document) throws IOException {
 		if (!this.isInitialized()) {
 			this.initialize();
 		}
@@ -342,6 +343,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 				output.close();
 			}
 		}
+		return cacheId;
 	}
 
 	@Override

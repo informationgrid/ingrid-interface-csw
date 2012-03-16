@@ -44,18 +44,4 @@ public interface Harvester extends Monitorable {
 	 * @return RecordCache
 	 */
 	public RecordCache getCache();
-
-	/**
-	 * Set the HarvestStrategy to be used to fetch the records.
-	 * 
-	 * @param harvestStrategy
-	 */
-	public void setHarvestStrategy(HarvestStrategy harvestStrategy);
-
-	/**
-	 * Set the filter string to be used to select records.
-	 * 
-	 * @param filter
-	 */
-	public void setFilter(String filter);
 }

@@ -19,6 +19,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
 
+import de.ingrid.interfaces.csw.config.ConfigurationProvider;
+import de.ingrid.interfaces.csw.config.model.Configuration;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.Harvester;
@@ -43,12 +45,19 @@ public class UpdateJob {
 	final private static String DATE_FILENAME = "updatejob.dat";
 	final private static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+	private ConfigurationProvider configurationProvider;
+
 	/**
 	 * Constructor
 	 */
 	public UpdateJob() {}
 
-	public void init() {
+	/**
+	 * Set the configuration provider.
+	 * @param configurationProvider
+	 */
+	public void setConfigurationProvider(ConfigurationProvider configurationProvider) {
+		this.configurationProvider = configurationProvider;
 	}
 
 	/**
@@ -61,6 +70,12 @@ public class UpdateJob {
 		Date lastExecutionDate = this.getLastExecutionDate();
 		log.info("Starting update job");
 		log.info("Last execution was on "+DATEFORMAT.format(lastExecutionDate));
+
+		//get the job configuration
+		if (this.configurationProvider == null) {
+			throw new Exception("No configuration provider set for the update job.");
+		}
+		Configuration configuration = this.configurationProvider.getConfiguration();
 
 		List<RecordCache> recordCacheList = new ArrayList<RecordCache>();
 

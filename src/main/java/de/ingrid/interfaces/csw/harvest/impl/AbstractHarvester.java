@@ -13,7 +13,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.interfaces.csw.Status;
-import de.ingrid.interfaces.csw.harvest.HarvestStrategy;
 import de.ingrid.interfaces.csw.harvest.Harvester;
 
 /**
@@ -21,24 +20,14 @@ import de.ingrid.interfaces.csw.harvest.Harvester;
  * 
  * @author ingo herwig <ingo@wemove.com>
  */
-public class DefaultHarvester implements Harvester {
+public abstract class AbstractHarvester implements Harvester {
 
-	final protected static Log log = LogFactory.getLog(DefaultHarvester.class);
+	final protected static Log log = LogFactory.getLog(AbstractHarvester.class);
 
 	/**
 	 * The cache used to store records.
 	 */
-	private RecordCache cache;
-
-	/**
-	 * The strategy used for fetching records.
-	 */
-	private HarvestStrategy harvestStrategy;
-
-	/**
-	 * The filter used to select records.
-	 */
-	private String filter;
+	public RecordCache cache;
 
 	@Override
 	public Status getStatus() {
@@ -59,8 +48,8 @@ public class DefaultHarvester implements Harvester {
 		// get cached record ids (for later removal of records that do not exist anymore)
 		Set<Serializable> cachedRecordIds = this.cache.getCachedIds();
 
-		// delegate execution to the strategy
-		List<Serializable> allRecordIds = this.harvestStrategy.execute(lastExecutionDate);
+		// delegate execution to specialized method
+		List<Serializable> allRecordIds = this.fetchRecords(lastExecutionDate);
 
 		// remove deprecated records
 		for (Serializable cachedRecordId : cachedRecordIds) {
@@ -83,13 +72,12 @@ public class DefaultHarvester implements Harvester {
 		return this.cache;
 	}
 
-	@Override
-	public void setHarvestStrategy(HarvestStrategy harvestStrategy) {
-		this.harvestStrategy = harvestStrategy;
-	}
-
-	@Override
-	public void setFilter(String filter) {
-		this.filter = filter;
-	}
+	/**
+	 * Actually fetch the records from the source and return the list of fetched record ids.
+	 *
+	 * @param lastExecutionDate
+	 * @return List<Serializable>
+	 * @throws Exception
+	 */
+	protected abstract List<Serializable> fetchRecords(Date lastExecutionDate) throws Exception;
 }

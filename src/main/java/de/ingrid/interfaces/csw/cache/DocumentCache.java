@@ -54,10 +54,12 @@ public interface DocumentCache<T> {
 
 	/**
 	 * Store a document. Overrides the old document with the same id.
+	 * Returns the id of the document in the cache.
 	 * 
 	 * @param document
+	 * @return Serializable
 	 */
-	public void put(T document) throws IOException;
+	public Serializable put(T document) throws IOException;
 
 	/**
 	 * Remove a document.
