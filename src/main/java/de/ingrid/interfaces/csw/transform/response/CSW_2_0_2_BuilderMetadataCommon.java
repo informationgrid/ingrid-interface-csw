@@ -12,10 +12,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
 
+import de.ingrid.codelists.CodeListService;
+import de.ingrid.interfaces.csw.Server;
 import de.ingrid.interfaces.csw.utils.IPlugVersionInspector;
 import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.udk.UtilsLanguageCodelist;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 /**
@@ -26,6 +27,8 @@ import de.ingrid.utils.udk.UtilsUDKCodeLists;
 public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderMetaData {
 
     private static Log log = LogFactory.getLog(CSW_2_0_2_BuilderMetadataCommon.class);
+    
+    protected CodeListService codelistService = Server.getCodeListService();
 
     /**
      * Container for hierarchyLevel information.
@@ -44,9 +47,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 		String udkClass = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_OBJ_CLASS);
         if (udkClass.equals("1")) {
 			try {
-				Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-						IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL));
-				hierarchyInfo.hierarchyLevel = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(525L, code);
+				String code = IngridQueryHelper.getDetailValueAsString(hit,
+						IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL);
+				hierarchyInfo.hierarchyLevel = codelistService.getCodeListValue("525", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 			} catch (NumberFormatException e) {
 				if (log.isDebugEnabled()) {
 					log.warn("Could not parse " + IngridQueryHelper.HIT_KEY_OBJECT_GEO_HIERARCHY_LEVEL + ". Value: " + IngridQueryHelper.getDetailValueAsString(hit,
@@ -83,9 +86,9 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
     
     protected void addCharacterSet(Element metaData, IngridHit hit) {
 		try {
-			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-					IngridQueryHelper.HIT_KEY_OBJECT_METADATA_CHARACTER_SET));
-			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(510L, code);
+			String code = IngridQueryHelper.getDetailValueAsString(hit,
+					IngridQueryHelper.HIT_KEY_OBJECT_METADATA_CHARACTER_SET);
+			String codeVal = codelistService.getCodeListValue("510", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 			if (IngridQueryHelper.hasValue(codeVal)) {
 				metaData.addElement("gmd:characterSet").addElement("gmd:MD_CharacterSetCode").addAttribute(
 						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CharacterSetCode")
@@ -165,7 +168,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                 if (code.longValue() == 999 || code.longValue() == -1) {
                 	role = specialNames[i];
                 } else {
-                	role = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
+                	role = codelistService.getCodeListValue("505", String.valueOf(code), UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
                 }
         	} catch (NumberFormatException e) {
         		role = specialNames[i];
@@ -235,7 +238,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                 if (code.longValue() == 999 || code.longValue() == -1) {
                 	role = specialNames[i];
                 } else {
-                	role = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
+                	role = codelistService.getCodeListValue("505", String.valueOf(code), UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
                 }
         	} catch (NumberFormatException e) {
         		role = specialNames[i];
@@ -448,7 +451,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
                     
                     String codeListValue = null;
                     try {
-                    	codeListValue = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(502L, Long.parseLong(referenceDateTypes[i]));
+                    	codeListValue = codelistService.getCodeListValue("502", referenceDateTypes[i], UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 					} catch (NumberFormatException e) {
                         if ( log.isDebugEnabled()) {
                         	log.debug("Invalid UDK dataset reference date type: " + referenceDateTypes[i] + ".");
@@ -675,8 +678,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 	        // T01_object.vertical_extent_unit = Wert [Domain-ID Codelist 102] MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis@gml:uom
 	        String codeVal = "";
 	        try {
-	            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
-	            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(102L, code);
+	            String code = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT);
+	            codeVal = codelistService.getCodeListValue("102", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 	        } catch (NumberFormatException e) {}
 	        verticalCRS.addElement("gml:identifier").addAttribute("codeSpace", "");
 	        verticalCRS.addElement("gml:scope");
@@ -690,8 +693,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 	        // T01_object.vertical_extent_vdatum = Wert [Domain-Id Codelist 101] MD_Metadata/identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/verticalCRS/gml:VerticalCRS/gml:verticalDatum/gml:VerticalDatum/gml:name
 	        codeVal = "";
 	        try {
-	            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
-	            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(101L, code);
+	            String code = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM);
+	            codeVal = codelistService.getCodeListValue("101", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 	        } catch (NumberFormatException e) {}
 	        Element verticalDatum = verticalCRS.addElement("gml:verticalDatum").addElement("gml:VerticalDatum").addAttribute("gml:id", "verticalDatum_ID_" + UUID.randomUUID());
 	        verticalDatum.addElement("gml:identifier").addAttribute("codeSpace", "");
@@ -794,8 +797,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			for (int i = 0; i < serviceClassifications.length; i++) {
 		        String codeVal = "";
 		        try {
-		            Long code = Long.valueOf(serviceClassifications[i]);
-		            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(5200L, code);
+		            String code = serviceClassifications[i];
+		            codeVal = codelistService.getCodeListValue("5200", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 					if (keywordType == null) {
 						keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
 					}
@@ -820,8 +823,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			for (int i = 0; i < environmentalCategories.length; i++) {
 		        String codeVal = "";
 		        try {
-		            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, environmentalCategories[i]));
-		            codeVal = UtilsUDKCodeLists.getCodeListEntryName(1410L, code, UtilsLanguageCodelist.getCodeFromShortcut("en").longValue());
+		            String code = IngridQueryHelper.getDetailValueAsString(hit, environmentalCategories[i]);
+		            codeVal = codelistService.getCodeListValue("1410", code, "en");
 					if (keywordType == null) {
 						keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
 					}
@@ -847,8 +850,8 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 			for (int i = 0; i < environmentalTopics.length; i++) {
 		        String codeVal = "";
 		        try {
-		            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, environmentalTopics[i]));
-		            codeVal = UtilsUDKCodeLists.getCodeListEntryName(1400L, code, UtilsLanguageCodelist.getCodeFromShortcut("en").longValue());
+		            String code = IngridQueryHelper.getDetailValueAsString(hit, environmentalTopics[i]);
+		            codeVal = codelistService.getCodeListValue("1400", code, "en");
 					if (keywordType == null) {
 						keywordType = indentification.addElement("gmd:descriptiveKeywords").addElement("gmd:MD_Keywords");
 					}
@@ -872,4 +875,7 @@ public abstract class CSW_2_0_2_BuilderMetadataCommon extends CSW_2_0_2_BuilderM
 	
 	}    
 
+	public void setCodelistService(CodeListService codelistService) {
+	    this.codelistService = codelistService;
+	}
 }

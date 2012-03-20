@@ -228,8 +228,8 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 				// T0112_media_option.medium_name [Domain-ID Codeliste 520]
 				// MD_Metadata/distributionInfo/MD_Distribution/transferOptions/MD_DigitalTransferOptions/offLine/MD_Medium/name/MD_MediumNameCode@codeListValue
-				Long code = Long.valueOf(mediaMediaNames[i]);
-				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(520L, code);
+				String code = mediaMediaNames[i];
+				String codeVal = codelistService.getCodeListValue("520", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 				if (codeVal.length() > 0) {
 					mdMedium.addElement("smXML:name").addElement("smXML:MD_MediumNameCode").addAttribute("codeList",
 							"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MediumNameCode").addAttribute(
@@ -306,12 +306,12 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 		// T011_obj_geo.referencesystem_id == [Domain-ID Codelist 100]
 		// MD_Metadata/full:referenceSystemInfo/MD_ReferenceSystem/referenceSystemIdentifier/RS_Identifier/code/CharacterString
-		Long code = null;
+		String code = null;
 		String codeVal = null;
 		try {
-			code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-					IngridQueryHelper.HIT_KEY_OBJECT_GEO_REFERENCESYSTEM_ID));
-			codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(100L, code);
+			code = IngridQueryHelper.getDetailValueAsString(hit,
+					IngridQueryHelper.HIT_KEY_OBJECT_GEO_REFERENCESYSTEM_ID);
+			codeVal = codelistService.getCodeListValue("100", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 		} catch (NumberFormatException e) {
 			codeVal = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_GEO_REFERENCESYSTEM_ID);
 		}
@@ -330,9 +330,9 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		// MD_Metadata/full:spatialRepresentationInfo/MD_VectorSpatialRepresentation/topologyLevel/MD_TopologyLevelCode/@CodeListValue
 		String codeStr;
 		try {
-			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-					IngridQueryHelper.HIT_KEY_OBJECT_VECTOR_TOPOLOGY_LEVEL));
-			codeStr = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(518L, code);
+			String code = IngridQueryHelper.getDetailValueAsString(hit,
+					IngridQueryHelper.HIT_KEY_OBJECT_VECTOR_TOPOLOGY_LEVEL);
+			codeStr = codelistService.getCodeListValue("518", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 			mdVectorSpatialRepresentation.addElement("smXML:topologyLevel").addElement("smXML:MD_TopologyLevelCode")
 			.addAttribute("codeList","http://www.tc211.org/ISO19139/resources/codeList.xml?MD_TopologyLevelCode")
 			.addAttribute("codeListValue", codeStr);
@@ -459,9 +459,9 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 	private void addCharacterSet(Element metaData, IngridHit hit) {
 		try {
-			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-					IngridQueryHelper.HIT_KEY_OBJECT_DATASET_CHARACTER_SET));
-			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(510L, code);
+			String code = IngridQueryHelper.getDetailValueAsString(hit,
+					IngridQueryHelper.HIT_KEY_OBJECT_DATASET_CHARACTER_SET);
+			String codeVal = codelistService.getCodeListValue("510", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 			if (IngridQueryHelper.hasValue(codeVal)) {
 				metaData.addElement("iso19115full:characterSet").addElement("smXML:MD_CharacterSetCode").addAttribute(
 						"codeList", "http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode")
@@ -559,9 +559,9 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 		// add status
 		try {
-			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-					IngridQueryHelper.HIT_KEY_OBJECT_TIME_STATUS));
-			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(523L, code);
+			String code = IngridQueryHelper.getDetailValueAsString(hit,
+					IngridQueryHelper.HIT_KEY_OBJECT_TIME_STATUS);
+			String codeVal = codelistService.getCodeListValue("523", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 			if (codeVal.length() > 0) {
 				parent.addElement("smXML:status").addElement("smXML:MD_ProgressCode").addAttribute("codeList",
 						"http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode").addAttribute(
@@ -621,9 +621,9 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 
 		// resource maintenance
 		try {
-			Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit,
-					IngridQueryHelper.HIT_KEY_OBJECT_TIME_PERIOD));
-			String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(518L, code);
+			String code = IngridQueryHelper.getDetailValueAsString(hit,
+					IngridQueryHelper.HIT_KEY_OBJECT_TIME_PERIOD);
+			String codeVal = codelistService.getCodeListValue("518", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 			if (codeVal.length() > 0) {
 				Element mdMaintenanceInformation = parent.addElement("smXML:resourceMaintenance").addElement(
 				"smXML:MD_MaintenanceInformation");
@@ -681,10 +681,10 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		String[] digitalRepresentations = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_REP_TYPE);
 		for (int i = 0; i < digitalRepresentations.length; i++) {
-			Long code;
+			String code;
 			try {
-				code = Long.valueOf(digitalRepresentations[i]);
-				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(526L, code);
+				code = digitalRepresentations[i];
+				String codeVal = codelistService.getCodeListValue("526", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("smXML:spatialRepresentationType").addElement(
 							"smXML:MD_SpatialRepresentationTypeCode").addAttribute("codeList",
@@ -736,10 +736,10 @@ public class CSWBuilderMetadata_full_DE_1_0_1 extends CSWBuilderMetadataCommon {
 		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY);
 		for (int i = 0; i < topicCategories.length; i++) {
-			Long code;
+			String code;
 			try {
-				code = Long.valueOf(topicCategories[i]);
-				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(527L, code);
+				code = topicCategories[i];
+				String codeVal = codelistService.getCodeListValue("527", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("smXML:topicCategory").addElement("smXML:MD_TopicCategoryCode")
 							.addText(codeVal);

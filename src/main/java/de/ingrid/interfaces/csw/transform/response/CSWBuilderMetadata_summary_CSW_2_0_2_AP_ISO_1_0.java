@@ -210,10 +210,10 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 		String[] digitalRepresentations = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_SPATIAL_REP_TYPE);
 		for (int i = 0; i < digitalRepresentations.length; i++) {
-			Long code;
+			String code;
 			try {
-				code = Long.valueOf(digitalRepresentations[i]);
-				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(526L, code);
+				code = digitalRepresentations[i];
+				String codeVal = codelistService.getCodeListValue("526", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("gmd:spatialRepresentationType").addElement(
 							"gmd:MD_SpatialRepresentationTypeCode").addAttribute("codeList",
@@ -269,10 +269,10 @@ public class CSWBuilderMetadata_summary_CSW_2_0_2_AP_ISO_1_0 extends CSW_2_0_2_B
 		String[] topicCategories = IngridQueryHelper.getDetailValueAsArray(hit,
 				IngridQueryHelper.HIT_KEY_OBJECT_GEO_TOPIC_CATEGORY);
 		for (int i = 0; i < topicCategories.length; i++) {
-			Long code;
+			String code;
 			try {
-				code = Long.valueOf(topicCategories[i]);
-				String codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(527L, code);
+				code = topicCategories[i];
+				String codeVal = codelistService.getCodeListValue("527", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
 				if (codeVal.length() > 0) {
 					mdDataIdentification.addElement("gmd:topicCategory").addElement("gmd:MD_TopicCategoryCode")
 							.addText(codeVal);

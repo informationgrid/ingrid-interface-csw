@@ -10,6 +10,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
 
+import de.ingrid.codelists.CodeListService;
+import de.ingrid.interfaces.csw.Server;
 import de.ingrid.interfaces.csw.utils.Udk2CswDateFieldParser;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
@@ -22,6 +24,8 @@ import de.ingrid.utils.udk.UtilsUDKCodeLists;
 public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
 
     private static Log log = LogFactory.getLog(CSWBuilderMetadataCommon.class);
+    
+    protected CodeListService codelistService = Server.getCodeListService();
 
     /**
      * Add the hierarchy level construct to a given element
@@ -130,12 +134,12 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
                     9 | 10 | Herausgeber
                     999 | keine Entsprechung, mapping auf codeListValue | Sonstige Angaben
                      */
-                    Long code = Long.valueOf(UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]));
+                    String code = UtilsUDKCodeLists.udkToCodeList505(addressTypes[i]);
                     String codeVal;
-                    if (code.longValue() == 999) {
+                    if ("999".equals(code)) {
                         codeVal = specialNames[i];
                     } else {
-                        codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(505L, code);
+                        codeVal = codelistService.getCodeListValue("505", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
                     }
                     if (codeVal != null && codeVal.length() > 0) {
                         ciResponsibleParty.addElement("smXML:role").addElement("smXML:CI_RoleCode")
@@ -313,16 +317,16 @@ public abstract class CSWBuilderMetadataCommon extends CSWBuilderMetaData {
         // T01_object.vertical_extent_unit = Wert [Domain-ID Codelist 102] MD_Metadata/full:identificationInfo/MD_DataIdentification/extent/EX_Extent/verticalElement/EX_VerticalExtent/unitOfMeasure/UomLength/uomName/CharacterString
         String codeVal = "";
         try {
-            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT));
-            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(102L, code);
+            String code = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_UNIT);
+            codeVal = codelistService.getCodeListValue("102", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
         } catch (NumberFormatException e) {}
         super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:unitOfMeasure").addElement("smXML:UomLength").addElement("smXML:uomName"), codeVal);
 
         // T01_object.vertical_extent_vdatum = Wert [Domain-Id Codelist 101] MD_Metadata/smXML:identificationInfo/iso19119:CSW_ServiceIdentification/iso19119:extent/smXML:EX_Extent/verticalElement/EX_VerticalExtent/verticalDatum/smXML:RS_Identifier/code/smXML:CharacterString
         codeVal = "";
         try {
-            Long code = Long.valueOf(IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM));
-            codeVal = UtilsUDKCodeLists.getIsoCodeListEntryFromIgcId(101L, code);
+            String code = IngridQueryHelper.getDetailValueAsString(hit, IngridQueryHelper.HIT_KEY_OBJECT_VERTICAL_EXTENT_VDATUM);
+            codeVal = codelistService.getCodeListValue("101", code, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
         } catch (NumberFormatException e) {}
         super.addSMXMLCharacterString(exVerticalExtent.addElement("smXML:verticalDatum").addElement("smXML:RS_Identifier").addElement("smXML:code"), codeVal);
         
