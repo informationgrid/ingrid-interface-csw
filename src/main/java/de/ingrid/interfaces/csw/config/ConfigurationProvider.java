@@ -15,8 +15,9 @@ import java.io.OutputStreamWriter;
 import com.thoughtworks.xstream.XStream;
 
 import de.ingrid.interfaces.csw.config.model.Configuration;
-import de.ingrid.interfaces.csw.config.model.IBusHarvester;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
+import de.ingrid.interfaces.csw.config.model.impl.IBusHarvesterConfiguration;
+import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 
 /**
  * ConfigurationProvider gives access to the configuration of the update job client.
@@ -154,6 +155,7 @@ public class ConfigurationProvider {
 	private void setXStreamAliases(XStream xstream) {
 		xstream.alias("configuration", Configuration.class);
 		xstream.alias("request", RequestDefinition.class);
-		xstream.alias("iBusHarvester", IBusHarvester.class);
+		xstream.alias("iBusHarvester", IBusHarvesterConfiguration.class);
+		xstream.alias("recordCache", RecordCacheConfiguration.class);
 	}
 }

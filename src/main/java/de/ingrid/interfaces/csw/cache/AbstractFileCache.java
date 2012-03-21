@@ -1,7 +1,6 @@
 /*
- * Copyright (c) 2009 wemove digital solutions. All rights reserved.
+ * Copyright (c) 2012 wemove digital solutions. All rights reserved.
  */
-
 package de.ingrid.interfaces.csw.cache;
 
 import java.io.BufferedReader;
@@ -92,9 +91,9 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 
 			// check if the original path exists and create it if not
 			File cacheLocation = new File(originalPath);
-			if (!cacheLocation.exists())
+			if (!cacheLocation.exists()) {
 				cacheLocation.mkdir();
-
+			}
 			this.isInitialized = true;
 		}
 	}

@@ -6,6 +6,8 @@ package de.ingrid.interfaces.csw.config.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
+
 /**
  * Configuration holds the dynamic configuration of the update job that
  * is managed in the administration application.
@@ -14,13 +16,27 @@ import java.util.List;
  */
 public class Configuration {
 
-	private List<IBusHarvester> harvesters = new ArrayList<IBusHarvester>();
+	private List<HarvesterConfiguration> harvesterConfigs = new ArrayList<HarvesterConfiguration>();
 
-	public List<IBusHarvester> getHarvesters() {
-		return this.harvesters;
+	public List<HarvesterConfiguration> getHarvesterConfigurations() {
+		return this.harvesterConfigs;
 	}
 
-	public void setHarvesters(List<IBusHarvester> harvester) {
-		this.harvesters = harvester;
+	public void setHarvesterConfigurations(List<HarvesterConfiguration> harvester) {
+		this.harvesterConfigs = harvester;
+	}
+
+	/**
+	 * Create an instance from the given class configuration
+	 * @param config
+	 * @return T
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T createInstance(ClassConfiguration config) throws Exception {
+		Class<?> clazz = Class.forName(config.getClassName());
+		T instance = (T)clazz.newInstance();
+		BeanUtils.copyProperties(config, instance);
+		return instance;
 	}
 }

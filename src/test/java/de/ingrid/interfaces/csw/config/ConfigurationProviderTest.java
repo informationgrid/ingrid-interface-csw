@@ -9,8 +9,10 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.config.model.Configuration;
-import de.ingrid.interfaces.csw.config.model.IBusHarvester;
+import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
+import de.ingrid.interfaces.csw.config.model.impl.IBusHarvesterConfiguration;
+import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 
 /**
  * @author ingo@wemove.com
@@ -18,6 +20,7 @@ import de.ingrid.interfaces.csw.config.model.RequestDefinition;
 public class ConfigurationProviderTest extends TestCase {
 
 	private static final File CONFIGURATION_FILE = new File("tmp/config.xml");
+	private static final String CACHE_PATH = "tmp/cache";
 
 	public void testSave() throws Exception {
 
@@ -39,18 +42,25 @@ public class ConfigurationProviderTest extends TestCase {
 		request2.setTimeout(2000);
 		requests.add(request2);
 
+		// configure record cache
+		// NOTE several harvester can use the same configuration instance
+		RecordCacheConfiguration cache = new RecordCacheConfiguration();
+		cache.setCachePath(CACHE_PATH);
+
 		// configure a harvesters
-		List<IBusHarvester> harvesters = new ArrayList<IBusHarvester>();
-		IBusHarvester harvester1 = new IBusHarvester();
+		List<HarvesterConfiguration> harvesters = new ArrayList<HarvesterConfiguration>();
+		IBusHarvesterConfiguration harvester1 = new IBusHarvesterConfiguration();
 		harvester1.setCommunicationXml("path/to/communication1.xml");
 		harvester1.setRequestDefinitions(requests);
+		harvester1.setCacheConfiguration(cache);
 		harvesters.add(harvester1);
 
-		IBusHarvester harvester2 = new IBusHarvester();
+		IBusHarvesterConfiguration harvester2 = new IBusHarvesterConfiguration();
 		harvester2.setCommunicationXml("path/to/communication2.xml");
+		harvester2.setCacheConfiguration(cache);
 		harvesters.add(harvester2);
 
-		configuration.setHarvesters(harvesters);
+		configuration.setHarvesterConfigurations(harvesters);
 
 		// write the configuration
 		ConfigurationProvider configProvider = new ConfigurationProvider();

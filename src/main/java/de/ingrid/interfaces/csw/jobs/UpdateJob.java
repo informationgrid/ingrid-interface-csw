@@ -21,6 +21,8 @@ import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
+import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
+import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.Harvester;
@@ -71,18 +73,33 @@ public class UpdateJob {
 		log.info("Starting update job");
 		log.info("Last execution was on "+DATEFORMAT.format(lastExecutionDate));
 
-		//get the job configuration
+		// get the job configuration
 		if (this.configurationProvider == null) {
 			throw new Exception("No configuration provider set for the update job.");
 		}
 		Configuration configuration = this.configurationProvider.getConfiguration();
 
+		// create all instances from the configuration
 		List<RecordCache> recordCacheList = new ArrayList<RecordCache>();
+		List<Harvester> harvesterInstanceList = new ArrayList<Harvester>();
+		List<HarvesterConfiguration> harvesterConfigs = configuration.getHarvesterConfigurations();
+		for (HarvesterConfiguration harvesterConfig : harvesterConfigs) {
+
+			// set up the cache
+			RecordCacheConfiguration cacheConfig = harvesterConfig.getCacheConfiguration();
+			RecordCache cacheInstance = configuration.createInstance(cacheConfig);
+
+			// set up the harvester
+			Harvester harvesterInstance = configuration.createInstance(harvesterConfig);
+			harvesterInstance.setCache(cacheInstance);
+
+			// add instances to lists
+			recordCacheList.add(cacheInstance);
+			harvesterInstanceList.add(harvesterInstance);
+		}
 
 		// fetch all records
-		// TODO get harvester instances from config
-		List<Harvester> harvesterList = new ArrayList<Harvester>();
-		for (Harvester harvester : harvesterList) {
+		for (Harvester harvester : harvesterInstanceList) {
 			harvester.run(lastExecutionDate);
 			recordCacheList.add(harvester.getCache());
 		}

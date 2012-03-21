@@ -1,0 +1,31 @@
+<configuration>
+  <harvesterConfigs>
+    <iBusHarvester>
+      <communicationXml>src/test/resources/communication.xml</communicationXml>
+      <requestDefinitions>
+        <request>
+          <timeout>1000</timeout>
+          <pause>10</pause>
+          <recordsPerCall>100</recordsPerCall>
+          <queryString>iplugs:&quot;/kug-group:kug-iplug-udk-db_uba&quot;</queryString>
+        </request>
+        <request>
+          <timeout>2000</timeout>
+          <pause>20</pause>
+          <recordsPerCall>200</recordsPerCall>
+          <queryString>iplugs:&quot;/ingrid-group:iplug-csw-dsc-be&quot;</queryString>
+        </request>
+      </requestDefinitions>
+      <cache>
+        <cachePath>tmp/cache</cachePath>
+        <className>de.ingrid.interfaces.csw.harvest.impl.RecordCache</className>
+      </cache>
+      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
+    </iBusHarvester>
+    <iBusHarvester>
+      <communicationXml>src/test/resources/communication.xml</communicationXml>
+      <cache reference="../../iBusHarvester/cache"/>
+      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
+    </iBusHarvester>
+  </harvesterConfigs>
+</configuration>

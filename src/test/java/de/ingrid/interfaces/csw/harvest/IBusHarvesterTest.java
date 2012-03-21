@@ -17,17 +17,20 @@ import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
  */
 public class IBusHarvesterTest extends TestCase {
 
+	private static final String COMMUNICATION_XML_PATH = "src/test/resources/communication.xml";
+	private static final String CACHE_PATH = "tmp/cache";
+
 	public void testSimple() throws Exception {
-		String communicationFilename = "src/test/resources/communication.xml";
+		String communicationFilename = COMMUNICATION_XML_PATH;
 
 		// setup cache
 		RecordCache cache = new RecordCache();
-		cache.setCachePath("cache");
+		cache.setCachePath(CACHE_PATH);
 
 		// setup requests
 		List<RequestDefinition> requestDefinitions = new ArrayList<RequestDefinition>();
 		RequestDefinition request = new RequestDefinition();
-		request.setQueryString("iplugs:\"/kug-group:kug-iplug-udk-db_uba\"");
+		request.setQueryString("iplugs:\"/kug-group:kug-iplug-udk-db_uba\" ranking:score");
 		requestDefinitions.add(request);
 
 		// setup harvester

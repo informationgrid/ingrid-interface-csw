@@ -62,7 +62,7 @@ public class IBusHarvester extends AbstractHarvester {
 	public List<Serializable> fetchRecords(Date lastExecutionDate) throws Exception {
 
 		if (this.requestDefinitions == null || this.requestDefinitions.size() == 0) {
-			throw new RuntimeException("IBusHarvester is not configured properly: requestDefinitions not set or empty.");
+			throw new RuntimeException("IBusHarvesterConfiguration is not configured properly: requestDefinitions not set or empty.");
 		}
 
 		// setup the IBus client
@@ -121,7 +121,7 @@ public class IBusHarvester extends AbstractHarvester {
 		IngridHits hits = bus.search(query, pageSize, currentPage, startHit, timeout);
 		int numHits = hits.getHits().length;
 		if (log.isDebugEnabled()) {
-			log.debug("Found "+numHits+" hits starting from "+startHit);
+			log.debug("Fetching "+numHits+" records of "+hits.length()+" starting from "+startHit);
 		}
 		List<Serializable> cacheIds = this.cacheRecords(hits, bus);
 		return cacheIds;

@@ -27,7 +27,7 @@ public abstract class AbstractHarvester implements Harvester {
 	/**
 	 * The cache used to store records.
 	 */
-	public RecordCache cache;
+	protected RecordCache cache;
 
 	@Override
 	public Status getStatus() {
@@ -37,13 +37,15 @@ public abstract class AbstractHarvester implements Harvester {
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getClass().getName()+":"+this.cache.getCachePath();
 	}
 
 	@Override
 	public void run(Date lastExecutionDate) throws Exception {
 		log.info("Running harvester "+this.getId());
+		if (this.cache == null) {
+			throw new RuntimeException("Harvester is not configured properly: cache not set.");
+		}
 
 		// get cached record ids (for later removal of records that do not exist anymore)
 		Set<Serializable> cachedRecordIds = this.cache.getCachedIds();
