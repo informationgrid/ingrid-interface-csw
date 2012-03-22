@@ -94,9 +94,7 @@ public class IBusHarvester extends AbstractHarvester {
 				int timeout = request.getTimeout();
 				String queryStr = request.getQueryString();
 
-				if (log.isDebugEnabled()) {
-					log.debug("Running harvesting request: ["+request.toString()+"]");
-				}
+				log.info("Running harvesting request: ["+request.toString()+"]");
 
 				IngridQuery query = QueryStringParser.parse(queryStr);
 

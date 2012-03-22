@@ -11,7 +11,7 @@
         </request>
       </requestDefinitions>
       <cache>
-        <cachePath>tmp/cache</cachePath>
+        <cachePath>tmp/cache/udk-db_uba</cachePath>
         <className>de.ingrid.interfaces.csw.harvest.impl.RecordCache</className>
       </cache>
       <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
@@ -26,7 +26,10 @@
           <queryString>iplugs:&quot;/ingrid-group:iplug-csw-dsc-be&quot; ranking:score</queryString>
         </request>
       </requestDefinitions>
-      <cache reference="../../iBusHarvester/cache"/>
+      <cache>
+        <cachePath>tmp/cache/csw-dsc-be</cachePath>
+        <className>de.ingrid.interfaces.csw.harvest.impl.RecordCache</className>
+      </cache>
       <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
     </iBusHarvester>
   </harvesterConfigs>

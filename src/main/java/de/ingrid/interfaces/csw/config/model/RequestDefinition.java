@@ -107,6 +107,6 @@ public class RequestDefinition {
 
 	@Override
 	public String toString() {
-		return "Query:'"+this.queryString+"', Records per call:"+this.recordsPerCall+", Pause:"+this.pause+", Timeout:"+this.timeout;
+		return "Query:'"+this.queryString+"', RecordsPerCall:"+this.recordsPerCall+", Pause:"+this.pause+", Timeout:"+this.timeout;
 	}
 }

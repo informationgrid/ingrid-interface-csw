@@ -16,14 +16,12 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
  * 
  * @author ingo herwig <ingo@wemove.com>
  */
-public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements
-Serializable {
+public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements Serializable {
 
-	private static final long serialVersionUID = CSWRecordCache.class.getName()
-			.hashCode();
+	private static final long serialVersionUID = CSWRecordCache.class.getName().hashCode();
 
 	@Override
-	public Serializable getCacheId(CSWRecord document) {
+	public Serializable getCacheId(CSWRecord document) throws Exception {
 		return document.getId() + "_" + document.getElementSetName();
 	}
 

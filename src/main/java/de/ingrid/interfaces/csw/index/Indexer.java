@@ -16,6 +16,7 @@ public interface Indexer {
 
 	/**
 	 * Execute the indexing job.
+	 * @throws Exception
 	 */
-	void run(List<RecordCache> recordCacheList);
+	void run(List<RecordCache> recordCacheList) throws Exception;
 }

@@ -21,6 +21,7 @@ public interface CSWRecordMapper {
 	 * @param record
 	 * @param elementSetName
 	 * @return Node
+	 * @throws Exception
 	 */
-	public Node map(Record record, ElementSetName elementSetName);
+	public Node map(Record record, ElementSetName elementSetName) throws Exception;
 }

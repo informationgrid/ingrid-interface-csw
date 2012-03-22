@@ -100,8 +100,8 @@ public class UpdateJob {
 
 		// fetch all records
 		for (Harvester harvester : harvesterInstanceList) {
+			log.info("Run harvester "+harvester.getId());
 			harvester.run(lastExecutionDate);
-			recordCacheList.add(harvester.getCache());
 		}
 
 		// index all records
@@ -113,9 +113,12 @@ public class UpdateJob {
 		CSWRecordCache cswCache = new CSWRecordCache();
 		CSWRecordMapper mapper = new XsltMapper();
 		for (RecordCache recordCache : recordCacheList) {
-			for (Serializable recordId : recordCache.getCachedIds()) {
+			for (Serializable cacheId : recordCache.getCachedIds()) {
 				for (ElementSetName elementSetName : ElementSetName.values()) {
-					Node mappedRecord = mapper.map(recordCache.get(recordId), elementSetName);
+					if (log.isDebugEnabled()) {
+						log.debug("Mapping record "+cacheId+" to csw "+elementSetName);
+					}
+					Node mappedRecord = mapper.map(recordCache.get(cacheId), elementSetName);
 					CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
 					cswCache.put(cswRecord);
 				}
