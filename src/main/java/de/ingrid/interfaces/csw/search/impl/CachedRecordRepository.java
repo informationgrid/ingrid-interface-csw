@@ -3,7 +3,6 @@
  */
 package de.ingrid.interfaces.csw.search.impl;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import de.ingrid.interfaces.csw.cache.DocumentCache;
@@ -33,7 +32,7 @@ public class CachedRecordRepository implements CSWRecordRepository {
 	}
 
 	@Override
-	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName) throws IOException {
+	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName) throws Exception {
 		// create a proxy to get the cache id for the record
 		CSWRecord proxy = CSWRecord.getProxy(id, elementSetName);
 		Serializable cacheId = this.cache.getCacheId(proxy);

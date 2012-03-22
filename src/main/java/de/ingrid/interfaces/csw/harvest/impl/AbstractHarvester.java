@@ -61,7 +61,7 @@ public abstract class AbstractHarvester implements Harvester {
 
 		// duplicates are filtered out automatically by the cache, so there is no need for action here
 		int duplicates = allRecordIds.size() - new HashSet<Serializable>(allRecordIds).size();
-		log.info("Fetched "+allRecordIds.size()+" records of "+allRecordIds.size()+". Duplicates: "+duplicates);
+		log.info("Fetched "+allRecordIds.size()+" records. Duplicates: "+duplicates);
 	}
 
 	@Override

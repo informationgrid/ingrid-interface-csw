@@ -65,50 +65,58 @@ public class IBusHarvester extends AbstractHarvester {
 			throw new RuntimeException("IBusHarvesterConfiguration is not configured properly: requestDefinitions not set or empty.");
 		}
 
-		// setup the IBus client
-		File file = new File(this.communicationXml);
-		BusClient client = BusClientFactory.createBusClient(file);
-		if (!client.allConnected()) {
-			client.start();
-		}
-		IBus bus = client.getNonCacheableIBus();
-		if (log.isDebugEnabled()) {
-			log.debug("Available i-plugs:");
-			for (PlugDescription desc : bus.getAllIPlugs()) {
-				log.debug(desc.getPlugId());
-			}
-		}
-
-		// fetch the records
+		// record ids
 		List<Serializable> allCacheIds = new ArrayList<Serializable>();
 
-		// process all request definitions
-		for (RequestDefinition request : this.requestDefinitions) {
-
-			int currentPage = 1;
-			int startHit = 0;
-			int pageSize = request.getRecordsPerCall();
-			int pause = request.getPause();
-			int timeout = request.getTimeout();
-			String queryStr = request.getQueryString();
-
+		// setup the IBus client
+		File file = new File(this.communicationXml);
+		BusClient client = null;
+		try {
+			client = BusClientFactory.createBusClient(file);
+			if (!client.allConnected()) {
+				client.start();
+			}
+			IBus bus = client.getNonCacheableIBus();
 			if (log.isDebugEnabled()) {
-				log.debug("Running harvesting request: ["+request.toString()+"]");
+				log.debug("Available i-plugs:");
+				for (PlugDescription desc : bus.getAllIPlugs()) {
+					log.debug(desc.getPlugId());
+				}
 			}
 
-			IngridQuery query = QueryStringParser.parse(queryStr);
+			// process all request definitions
+			for (RequestDefinition request : this.requestDefinitions) {
 
-			// first request
-			List<Serializable> cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
-			allCacheIds.addAll(cacheIds);
+				int currentPage = 0;
+				int startHit = 0;
+				int pageSize = request.getRecordsPerCall();
+				int pause = request.getPause();
+				int timeout = request.getTimeout();
+				String queryStr = request.getQueryString();
 
-			// continue fetching as long as we get a full page
-			while (cacheIds.size() == request.getRecordsPerCall()) {
-				Thread.sleep(pause);
-				startHit = ++currentPage*pageSize;
+				if (log.isDebugEnabled()) {
+					log.debug("Running harvesting request: ["+request.toString()+"]");
+				}
 
-				cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
+				IngridQuery query = QueryStringParser.parse(queryStr);
+
+				// first request
+				List<Serializable> cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
 				allCacheIds.addAll(cacheIds);
+
+				// continue fetching as long as we get a full page
+				while (cacheIds.size() == request.getRecordsPerCall()) {
+					Thread.sleep(pause);
+					startHit = ++currentPage*pageSize;
+
+					cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
+					allCacheIds.addAll(cacheIds);
+				}
+			}
+		}
+		finally {
+			if (client != null && client.allConnected()) {
+				client.shutdown();
 			}
 		}
 
@@ -119,11 +127,12 @@ public class IBusHarvester extends AbstractHarvester {
 			int startHit, int timeout) throws Exception {
 		// TODO make sure that document ids in hits are the same as in the finally fetched records
 		IngridHits hits = bus.search(query, pageSize, currentPage, startHit, timeout);
+		List<Serializable> cacheIds = this.cacheRecords(hits, bus);
 		int numHits = hits.getHits().length;
 		if (log.isDebugEnabled()) {
-			log.debug("Fetching "+numHits+" records of "+hits.length()+" starting from "+startHit);
+			int endHit = startHit+numHits > 0 ? startHit+numHits-1 : 0;
+			log.debug("Fetched records "+startHit+" to "+endHit+" of "+hits.length());
 		}
-		List<Serializable> cacheIds = this.cacheRecords(hits, bus);
 		return cacheIds;
 	}
 
@@ -140,7 +149,7 @@ public class IBusHarvester extends AbstractHarvester {
 			Record record = bus.getRecord(hit);
 			Serializable cacheId = this.cache.put(record);
 			if (log.isDebugEnabled()) {
-				log.debug("Fetched record ["+record.getId()+"]. Cache id is "+cacheId);
+				log.debug("Fetched record "+hit.getDocumentId()+". Cache id: "+cacheId);
 			}
 			cacheIds.add(cacheId);
 		}

@@ -276,7 +276,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	}
 
 	@Override
-	public boolean isCached(Serializable id) throws IOException {
+	public boolean isCached(Serializable id) {
 		if (!this.isInitialized()) {
 			this.initialize();
 		}
@@ -286,7 +286,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	}
 
 	@Override
-	public T get(Serializable id) throws IOException {
+	public T get(Serializable id) throws Exception {
 		if (!this.isInitialized()) {
 			this.initialize();
 		}
@@ -319,7 +319,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	}
 
 	@Override
-	public Serializable put(T document) throws IOException {
+	public Serializable put(T document) throws Exception {
 		if (!this.isInitialized()) {
 			this.initialize();
 		}

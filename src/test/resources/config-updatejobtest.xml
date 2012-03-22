@@ -7,13 +7,7 @@
           <timeout>1000</timeout>
           <pause>10</pause>
           <recordsPerCall>100</recordsPerCall>
-          <queryString>iplugs:&quot;/kug-group:kug-iplug-udk-db_uba&quot;</queryString>
-        </request>
-        <request>
-          <timeout>2000</timeout>
-          <pause>20</pause>
-          <recordsPerCall>200</recordsPerCall>
-          <queryString>iplugs:&quot;/ingrid-group:iplug-csw-dsc-be&quot;</queryString>
+          <queryString>iplugs:&quot;/kug-group:kug-iplug-udk-db_uba&quot; ranking:score</queryString>
         </request>
       </requestDefinitions>
       <cache>
@@ -24,6 +18,14 @@
     </iBusHarvester>
     <iBusHarvester>
       <communicationXml>src/test/resources/communication.xml</communicationXml>
+      <requestDefinitions>
+        <request>
+          <timeout>2000</timeout>
+          <pause>20</pause>
+          <recordsPerCall>200</recordsPerCall>
+          <queryString>iplugs:&quot;/ingrid-group:iplug-csw-dsc-be&quot; ranking:score</queryString>
+        </request>
+      </requestDefinitions>
       <cache reference="../../iBusHarvester/cache"/>
       <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
     </iBusHarvester>

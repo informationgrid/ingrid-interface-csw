@@ -34,7 +34,7 @@ public interface DocumentCache<T> {
 	 * @param document
 	 * @return Serializable
 	 */
-	public Serializable getCacheId(T document);
+	public Serializable getCacheId(T document) throws Exception;
 
 	/**
 	 * Check if a document is cached.
@@ -42,7 +42,7 @@ public interface DocumentCache<T> {
 	 * @param id
 	 * @return boolean
 	 */
-	public boolean isCached(Serializable id) throws IOException;
+	public boolean isCached(Serializable id);
 
 	/**
 	 * Get a document.
@@ -50,7 +50,7 @@ public interface DocumentCache<T> {
 	 * @param id
 	 * @return document
 	 */
-	public T get(Serializable id) throws IOException;
+	public T get(Serializable id) throws Exception;
 
 	/**
 	 * Store a document. Overrides the old document with the same id.
@@ -59,7 +59,7 @@ public interface DocumentCache<T> {
 	 * @param document
 	 * @return Serializable
 	 */
-	public Serializable put(T document) throws IOException;
+	public Serializable put(T document) throws Exception;
 
 	/**
 	 * Remove a document.
