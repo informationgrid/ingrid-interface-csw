@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.thoughtworks.xstream.XStream;
 
 import de.ingrid.interfaces.csw.config.model.Configuration;
@@ -25,6 +28,8 @@ import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
  * @author ingo@wemove.com
  */
 public class ConfigurationProvider {
+
+	final protected static Log log = LogFactory.getLog(ConfigurationProvider.class);
 
 	/**
 	 * The XML configuration file
@@ -58,6 +63,8 @@ public class ConfigurationProvider {
 
 		// create empty configuration, if not existing yet
 		if (!this.configurationFile.exists()) {
+			log.warn("Configuration file "+this.configurationFile+" does not exist.");
+			log.info("Creating configuration file "+this.configurationFile);
 			this.configurationFile.createNewFile();
 		}
 
@@ -73,6 +80,10 @@ public class ConfigurationProvider {
 			}
 			input.close();
 			input = null;
+
+			if (content.length() == 0) {
+				log.warn("Configuration file "+this.configurationFile+" is empty.");
+			}
 
 			// deserialize a temporary Configuration instance from xml
 			String xml = content.toString();

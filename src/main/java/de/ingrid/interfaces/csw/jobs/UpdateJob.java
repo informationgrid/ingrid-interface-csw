@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,10 +46,19 @@ import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 public class UpdateJob {
 
 	final protected static Log log = LogFactory.getLog(UpdateJob.class);
+
 	final private static String DATE_FILENAME = "updatejob.dat";
 	final private static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+	/**
+	 * The update job configuration provider
+	 */
 	private ConfigurationProvider configurationProvider;
+
+	/**
+	 * The lock assuring that ther is only one execution at a time
+	 */
+	private static ReentrantLock executeLock = new ReentrantLock();
 
 	/**
 	 * Constructor
@@ -63,87 +74,102 @@ public class UpdateJob {
 	}
 
 	/**
-	 * Execute the update job.
+	 * Execute the update job. Returns true/false whether the job was executed or not.
+	 * @return Boolean
 	 * @throws Exception
 	 */
-	public void execute() throws Exception {
-		Date start = new Date();
+	public boolean execute() throws Exception {
+		// try to aquire the lock
+		if (executeLock.tryLock(0, TimeUnit.SECONDS)) {
+			try {
+				Date start = new Date();
 
-		Date lastExecutionDate = this.getLastExecutionDate();
-		log.info("Starting update job");
-		log.info("Last execution was on "+DATEFORMAT.format(lastExecutionDate));
+				Date lastExecutionDate = this.getLastExecutionDate();
+				log.info("Starting update job.");
+				log.info("Last execution was on "+DATEFORMAT.format(lastExecutionDate));
 
-		// get the job configuration
-		if (this.configurationProvider == null) {
-			throw new Exception("No configuration provider set for the update job.");
-		}
-		Configuration configuration = this.configurationProvider.getConfiguration();
-
-		// create all instances from the configuration
-		List<RecordCache> recordCacheList = new ArrayList<RecordCache>();
-		List<Harvester> harvesterInstanceList = new ArrayList<Harvester>();
-		List<HarvesterConfiguration> harvesterConfigs = configuration.getHarvesterConfigurations();
-		for (HarvesterConfiguration harvesterConfig : harvesterConfigs) {
-
-			// set up the cache
-			RecordCacheConfiguration cacheConfig = harvesterConfig.getCacheConfiguration();
-			RecordCache cacheInstance = configuration.createInstance(cacheConfig);
-
-			// set up the harvester
-			Harvester harvesterInstance = configuration.createInstance(harvesterConfig);
-			harvesterInstance.setCache(cacheInstance);
-
-			// add instances to lists
-			recordCacheList.add(cacheInstance);
-			harvesterInstanceList.add(harvesterInstance);
-		}
-
-		// fetch all records
-		for (Harvester harvester : harvesterInstanceList) {
-			log.info("Run harvester "+harvester.getId());
-			harvester.run(lastExecutionDate);
-		}
-
-		// index all records
-		// TODO index into a tmp directory and switch to live later
-		Indexer indexer = new LuceneIndexer();
-		indexer.run(recordCacheList);
-
-		// map ingrid records to csw records
-		CSWRecordCache cswCache = new CSWRecordCache();
-		CSWRecordMapper mapper = new XsltMapper();
-		for (RecordCache recordCache : recordCacheList) {
-			for (Serializable cacheId : recordCache.getCachedIds()) {
-				for (ElementSetName elementSetName : ElementSetName.values()) {
-					if (log.isDebugEnabled()) {
-						log.debug("Mapping record "+cacheId+" to csw "+elementSetName);
-					}
-					Node mappedRecord = mapper.map(recordCache.get(cacheId), elementSetName);
-					CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
-					cswCache.put(cswRecord);
+				// get the job configuration
+				if (this.configurationProvider == null) {
+					throw new Exception("No configuration provider set for the update job.");
 				}
+				Configuration configuration = this.configurationProvider.getConfiguration();
+
+				// create all instances from the configuration
+				List<RecordCache> recordCacheList = new ArrayList<RecordCache>();
+				List<Harvester> harvesterInstanceList = new ArrayList<Harvester>();
+				List<HarvesterConfiguration> harvesterConfigs = configuration.getHarvesterConfigurations();
+				for (HarvesterConfiguration harvesterConfig : harvesterConfigs) {
+
+					// set up the cache
+					RecordCacheConfiguration cacheConfig = harvesterConfig.getCacheConfiguration();
+					RecordCache cacheInstance = configuration.createInstance(cacheConfig);
+
+					// set up the harvester
+					Harvester harvesterInstance = configuration.createInstance(harvesterConfig);
+					harvesterInstance.setCache(cacheInstance);
+
+					// add instances to lists
+					recordCacheList.add(cacheInstance);
+					harvesterInstanceList.add(harvesterInstance);
+				}
+
+				// fetch all records
+				for (Harvester harvester : harvesterInstanceList) {
+					log.info("Run harvester "+harvester.getId());
+					harvester.run(lastExecutionDate);
+				}
+
+				// index all records
+				// TODO index into a tmp directory and switch to live later
+				Indexer indexer = new LuceneIndexer();
+				indexer.run(recordCacheList);
+
+				// map ingrid records to csw records
+				CSWRecordCache cswCache = new CSWRecordCache();
+				CSWRecordMapper mapper = new XsltMapper();
+				for (RecordCache recordCache : recordCacheList) {
+					for (Serializable cacheId : recordCache.getCachedIds()) {
+						for (ElementSetName elementSetName : ElementSetName.values()) {
+							if (log.isDebugEnabled()) {
+								log.debug("Mapping record "+cacheId+" to csw "+elementSetName);
+							}
+							Node mappedRecord = mapper.map(recordCache.get(cacheId), elementSetName);
+							CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
+							cswCache.put(cswRecord);
+						}
+					}
+				}
+
+				// TODO get index path from config
+				File indexPath = null;
+
+				CSWRecordRepository cswRecordRepo = new CachedRecordRepository(cswCache);
+				// TODO get running searcher instance
+				Searcher searcher = new LuceneSearcher(indexPath, cswRecordRepo);
+				searcher.stop();
+				// TODO copy tmp index to live location
+				searcher.start();
+
+				// write the execution date as last operation
+				// this is the start date, to make sure that the next execution will fetch
+				// all modified records from the job execution start on
+				this.writeLastExecutionDate(start);
+
+				// summary
+				Date end = new Date();
+				long diff = end.getTime()-start.getTime();
+				log.info("Job executed within "+diff+" ms.");
+				return true;
+			}
+			finally {
+				// release the lock
+				executeLock.unlock();
 			}
 		}
-
-		// TODO get index path from config
-		File indexPath = null;
-
-		CSWRecordRepository cswRecordRepo = new CachedRecordRepository(cswCache);
-		// TODO get running searcher instance
-		Searcher searcher = new LuceneSearcher(indexPath, cswRecordRepo);
-		searcher.stop();
-		// TODO copy tmp index to live location
-		searcher.start();
-
-		// write the execution date as last operation
-		// this is the start date, to make sure that the next execution will fetch
-		// all modified records from the job execution start on
-		this.writeLastExecutionDate(start);
-
-		// summary
-		Date end = new Date();
-		long diff = end.getTime()-start.getTime();
-		log.info("Job executed within "+diff+" ms.");
+		else {
+			log.info("Can't execute update job, because it is already running.");
+			return false;
+		}
 	}
 
 	/**
