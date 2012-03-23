@@ -4,15 +4,21 @@
 package de.ingrid.interfaces.csw.mapping.impl;
 
 import java.io.File;
+import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
+import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
+import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
+import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.interfaces.csw.tools.XsltUtils;
 import de.ingrid.utils.dsc.Record;
 
@@ -26,21 +32,110 @@ public class XsltMapper implements CSWRecordMapper {
 	final protected static Log log = LogFactory.getLog(XsltMapper.class);
 
 	/**
-	 * The xslt style sheet
+	 * Used for xslt
 	 */
-	private static final File stylesheet = new File("idf_1_0_0_to_iso_metadata.xsl");
+	private XsltUtils xslt = new XsltUtils();
+
+	/**
+	 * The cache used to store records.
+	 */
+	protected CSWRecordCache cache;
+
+	/**
+	 * The xslt style sheet for csw iso19139
+	 */
+	private static final File xslFull = new File("idf_1_0_0_to_iso_metadata.xsl");
+	private static final File xslSummary = new File("iso-summary.xsl");
+	private static final File xslBrief = new File("iso-brief.xsl");
 
 	@Override
+	public void run(List<RecordCache> recordCacheList) throws Exception {
+		// iterate over all caches and records
+		for (RecordCache recordCache : recordCacheList) {
+			for (Serializable cacheId : recordCache.getCachedIds()) {
+				for (ElementSetName elementSetName : ElementSetName.values()) {
+					if (log.isDebugEnabled()) {
+						log.debug("Mapping record "+cacheId+" to csw "+elementSetName);
+					}
+					Node mappedRecord = this.map(recordCache.get(cacheId), elementSetName);
+					CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
+					this.cache.put(cswRecord);
+				}
+			}
+		}
+	}
+
+	@Override
+	public CSWRecordRepository getRecordRepository() {
+		return this.cache;
+	}
+
+	/**
+	 * Set the record cache.
+	 * @param cache
+	 */
+	public void setCache(CSWRecordCache cache) {
+		this.cache = cache;
+	}
+
+	/**
+	 * Map the given IDF record to the given CSW element set.
+	 * @param record
+	 * @param elementSetName
+	 * @return Node
+	 * @throws Exception
+	 */
 	public Node map(Record record, ElementSetName elementSetName) throws Exception {
 
 		Node cswNode = null;
 
-		// use the stylesheet for FULL
-		if (elementSetName == ElementSetName.FULL) {
-			Document idfDoc = IdfUtils.getIdfDocument(record);
-			XsltUtils xslt = new XsltUtils(stylesheet);
-			cswNode = xslt.transform(idfDoc);
+		// use appropriate stylesheet for each element set name
+		switch (elementSetName) {
+		case FULL:
+			cswNode = this.mapFull(record);
+		case SUMMARY:
+			cswNode = this.mapSummary(record);
+		case BRIEF:
+			cswNode = this.mapBrief(record);
 		}
+		log.debug(StringUtils.nodeToString(cswNode));
 		return cswNode;
+	}
+
+	/**
+	 * Map the given record to iso19139 FULL
+	 * @param record
+	 * @return Node
+	 * @throws Exception
+	 */
+	protected Node mapFull(Record record) throws Exception {
+		Document idfDoc = IdfUtils.getIdfDocument(record);
+		return this.xslt.transform(idfDoc, xslFull);
+	}
+
+	/**
+	 * Map the given record to iso19139 SUMMARY
+	 * @param record
+	 * @return Node
+	 * @throws Exception
+	 */
+	protected Node mapSummary(Record record) throws Exception {
+		Document idfDoc = IdfUtils.getIdfDocument(record);
+		// for summary we need to transform to full first
+		Node full = this.xslt.transform(idfDoc, xslFull);
+		return this.xslt.transform(full, xslSummary);
+	}
+
+	/**
+	 * Map the given record to iso19139 BRIEF
+	 * @param record
+	 * @return Node
+	 * @throws Exception
+	 */
+	protected Node mapBrief(Record record) throws Exception {
+		Document idfDoc = IdfUtils.getIdfDocument(record);
+		// for brief we need to transform to full first
+		Node full = this.xslt.transform(idfDoc, xslFull);
+		return this.xslt.transform(full, xslBrief);
 	}
 }

@@ -9,6 +9,8 @@ import org.w3c.dom.Document;
 
 import de.ingrid.interfaces.csw.cache.AbstractFileCache;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
+import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
+import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
 /**
@@ -16,7 +18,7 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
  * 
  * @author ingo herwig <ingo@wemove.com>
  */
-public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements Serializable {
+public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWRecordRepository, Serializable {
 
 	private static final long serialVersionUID = CSWRecordCache.class.getName().hashCode();
 
@@ -47,5 +49,17 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements Seri
 	@Override
 	public AbstractFileCache<CSWRecord> newInstance() {
 		return new CSWRecordCache();
+	}
+
+	/**
+	 * CSWRecordRepository implementation
+	 */
+
+	@Override
+	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName) throws Exception {
+		// create a proxy to get the cache id for the record
+		CSWRecord proxy = CSWRecord.getProxy(id, elementSetName);
+		Serializable cacheId = this.getCacheId(proxy);
+		return this.get(cacheId);
 	}
 }

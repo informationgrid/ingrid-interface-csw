@@ -4,6 +4,8 @@
 package de.ingrid.interfaces.csw.tools;
 
 import java.io.File;
+import java.util.Hashtable;
+import java.util.Map;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -13,41 +15,33 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 
 import org.springframework.core.io.ClassPathResource;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 public class XsltUtils {
 
-	private Transformer transformer;
-	private File styleSheet;
-
-	/**
-	 * Constructor
-	 * @param styleSheet
-	 */
-	public XsltUtils(File styleSheet) {
-		this.styleSheet = styleSheet;
-	}
+	private Map<File, Transformer> transformers = new Hashtable<File, Transformer>();
 
 	/**
 	 * Transform the given document using the stylesheet
-	 * @param document
+	 * @param full
+	 * @param stylesheet
 	 * @return Node
 	 * @throws Exception
 	 */
-	public Node transform(Document document) throws Exception {
+	public Node transform(Node full, File styleSheet) throws Exception {
 
-		if (this.transformer == null) {
-			// create transformer
-			Source source = new StreamSource(new ClassPathResource(this.styleSheet.getName()).getInputStream());
+		if (!this.transformers.containsKey(styleSheet)) {
+			// create transformer for the stylesheet, if it does not exist yet
+			Source source = new StreamSource(new ClassPathResource(styleSheet.getName()).getInputStream());
 			TransformerFactory factory = TransformerFactory.newInstance();
-			this.transformer = factory.newTransformer(source);
+			this.transformers.put(styleSheet, factory.newTransformer(source));
 		}
 
 		// perform transformation
-		DOMSource source = new DOMSource(document);
+		Transformer transformer = this.transformers.get(styleSheet);
+		DOMSource source = new DOMSource(full);
 		DOMResult result = new DOMResult();
-		this.transformer.transform(source, result);
+		transformer.transform(source, result);
 
 		return result.getNode();
 	}

@@ -10,6 +10,9 @@ import java.util.concurrent.FutureTask;
 
 import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
+import de.ingrid.interfaces.csw.index.impl.LuceneIndexer;
+import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
+import de.ingrid.interfaces.csw.mapping.impl.XsltMapper;
 
 /**
  * @author ingo@wemove.com
@@ -18,6 +21,7 @@ public class UpdateJobTest extends TestCase {
 
 	private static final File CONFIGURATION_FILE_1 = new File("src/test/resources/config-updatejobtest-1iplug.xml");
 	private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
+	private static final String CSW_CACHE_PATH = "tmp/cache/csw";
 
 	public void testSimple() throws Exception {
 		UpdateJob job = this.createJob(CONFIGURATION_FILE_2);
@@ -43,12 +47,25 @@ public class UpdateJobTest extends TestCase {
 	/**
 	 * Helper methods / classes
 	 */
+
+	/**
+	 * Set up an update job with the given configuration
+	 * @param configFile
+	 * @return UpdateJob
+	 */
 	public UpdateJob createJob(File configFile) {
 		ConfigurationProvider configProvider = new ConfigurationProvider();
 		configProvider.setConfigurationFile(configFile);
 
 		UpdateJob job = new UpdateJob();
 		job.setConfigurationProvider(configProvider);
+		job.setIndexer(new LuceneIndexer());
+
+		CSWRecordCache cache = new CSWRecordCache();
+		cache.setCachePath(CSW_CACHE_PATH);
+		XsltMapper mapper = new XsltMapper();
+		mapper.setCache(cache);
+		job.setCswRecordMapper(mapper);
 		return job;
 	}
 

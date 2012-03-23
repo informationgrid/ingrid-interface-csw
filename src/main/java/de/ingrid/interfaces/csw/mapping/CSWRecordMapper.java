@@ -3,25 +3,29 @@
  */
 package de.ingrid.interfaces.csw.mapping;
 
-import org.w3c.dom.Node;
+import java.util.List;
 
-import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
-import de.ingrid.utils.dsc.Record;
+import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
+import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 
 /**
- * Interface for classes that map IDF files to CSW records.
+ * Interface for classes that map IDF records to CSW records.
  * 
  * @author ingo herwig <ingo@wemove.com>
  */
 public interface CSWRecordMapper {
 
 	/**
-	 * Map an IDF record to a CSW record
-	 * 
-	 * @param record
-	 * @param elementSetName
-	 * @return Node
+	 * Execute the mapping job.
 	 * @throws Exception
 	 */
-	public Node map(Record record, ElementSetName elementSetName) throws Exception;
+	void run(List<RecordCache> recordCacheList) throws Exception;
+
+
+	/**
+	 * Get the repository containing the mapped records.
+	 * 
+	 * @return CSWRecordRepository
+	 */
+	public CSWRecordRepository getRecordRepository();
 }

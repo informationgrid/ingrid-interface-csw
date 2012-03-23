@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.Serializable;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,24 +18,17 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
 import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
-import de.ingrid.interfaces.csw.domain.CSWRecord;
-import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.Harvester;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.Indexer;
-import de.ingrid.interfaces.csw.index.impl.LuceneIndexer;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
-import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
-import de.ingrid.interfaces.csw.mapping.impl.XsltMapper;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.search.Searcher;
-import de.ingrid.interfaces.csw.search.impl.CachedRecordRepository;
 import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 
 /**
@@ -56,7 +48,17 @@ public class UpdateJob {
 	private ConfigurationProvider configurationProvider;
 
 	/**
-	 * The lock assuring that ther is only one execution at a time
+	 * The Indexer instance
+	 */
+	private Indexer indexer;
+
+	/**
+	 * The CSWRecordMapper instance
+	 */
+	private CSWRecordMapper cswRecordMapper;
+
+	/**
+	 * The lock assuring that there is only one execution at a time
 	 */
 	private static ReentrantLock executeLock = new ReentrantLock();
 
@@ -74,12 +76,28 @@ public class UpdateJob {
 	}
 
 	/**
+	 * Set the indexer.
+	 * @param indexer
+	 */
+	public void setIndexer(Indexer indexer) {
+		this.indexer = indexer;
+	}
+
+	/**
+	 * Set the record mapper.
+	 * @param cswRecordMapper
+	 */
+	public void setCswRecordMapper(CSWRecordMapper cswRecordMapper) {
+		this.cswRecordMapper = cswRecordMapper;
+	}
+
+	/**
 	 * Execute the update job. Returns true/false whether the job was executed or not.
 	 * @return Boolean
 	 * @throws Exception
 	 */
 	public boolean execute() throws Exception {
-		// try to aquire the lock
+		// try to acquire the lock
 		if (executeLock.tryLock(0, TimeUnit.SECONDS)) {
 			try {
 				Date start = new Date();
@@ -93,6 +111,8 @@ public class UpdateJob {
 					throw new Exception("No configuration provider set for the update job.");
 				}
 				Configuration configuration = this.configurationProvider.getConfiguration();
+
+				// TODO check configuration, indexer, mapper
 
 				// create all instances from the configuration
 				List<RecordCache> recordCacheList = new ArrayList<RecordCache>();
@@ -121,29 +141,15 @@ public class UpdateJob {
 
 				// index all records
 				// TODO index into a tmp directory and switch to live later
-				Indexer indexer = new LuceneIndexer();
-				indexer.run(recordCacheList);
+				this.indexer.run(recordCacheList);
 
 				// map ingrid records to csw records
-				CSWRecordCache cswCache = new CSWRecordCache();
-				CSWRecordMapper mapper = new XsltMapper();
-				for (RecordCache recordCache : recordCacheList) {
-					for (Serializable cacheId : recordCache.getCachedIds()) {
-						for (ElementSetName elementSetName : ElementSetName.values()) {
-							if (log.isDebugEnabled()) {
-								log.debug("Mapping record "+cacheId+" to csw "+elementSetName);
-							}
-							Node mappedRecord = mapper.map(recordCache.get(cacheId), elementSetName);
-							CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
-							cswCache.put(cswRecord);
-						}
-					}
-				}
+				this.cswRecordMapper.run(recordCacheList);
 
 				// TODO get index path from config
 				File indexPath = null;
 
-				CSWRecordRepository cswRecordRepo = new CachedRecordRepository(cswCache);
+				CSWRecordRepository cswRecordRepo = this.cswRecordMapper.getRecordRepository();
 				// TODO get running searcher instance
 				Searcher searcher = new LuceneSearcher(indexPath, cswRecordRepo);
 				searcher.stop();
