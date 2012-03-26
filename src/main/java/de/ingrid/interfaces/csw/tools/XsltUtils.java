@@ -23,12 +23,12 @@ public class XsltUtils {
 
 	/**
 	 * Transform the given document using the stylesheet
-	 * @param full
+	 * @param document
 	 * @param stylesheet
 	 * @return Node
 	 * @throws Exception
 	 */
-	public Node transform(Node full, File styleSheet) throws Exception {
+	public Node transform(Node document, File styleSheet) throws Exception {
 
 		if (!this.transformers.containsKey(styleSheet)) {
 			// create transformer for the stylesheet, if it does not exist yet
@@ -39,7 +39,7 @@ public class XsltUtils {
 
 		// perform transformation
 		Transformer transformer = this.transformers.get(styleSheet);
-		DOMSource source = new DOMSource(full);
+		DOMSource source = new DOMSource(document);
 		DOMResult result = new DOMResult();
 		transformer.transform(source, result);
 

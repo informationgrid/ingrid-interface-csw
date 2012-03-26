@@ -55,9 +55,7 @@ public class StringUtils {
 				.newInstance();
 		domFactory.setNamespaceAware(true);
 		DocumentBuilder builder = domFactory.newDocumentBuilder();
-		InputSource inStream = new InputSource();
-		inStream.setCharacterStream(new StringReader(string));
-		Document doc = builder.parse(inStream);
+		Document doc = builder.parse(new InputSource(new StringReader(string)));
 		return doc;
 	}
 

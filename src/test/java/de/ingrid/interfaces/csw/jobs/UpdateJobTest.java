@@ -13,6 +13,7 @@ import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.index.impl.LuceneIndexer;
 import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
 import de.ingrid.interfaces.csw.mapping.impl.XsltMapper;
+import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 
 /**
  * @author ingo@wemove.com
@@ -21,10 +22,15 @@ public class UpdateJobTest extends TestCase {
 
 	private static final File CONFIGURATION_FILE_1 = new File("src/test/resources/config-updatejobtest-1iplug.xml");
 	private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
+
+	private static final File MAPPING_FILE = new File("src/main/resources/idf_to_lucene-igc-1.0.3.js");
+
 	private static final String CSW_CACHE_PATH = "tmp/cache/csw";
+	private static final String TMP_INDEX_PATH = "tmp/index/tmp";
+	private static final String LIVE_INDEX_PATH = "tmp/index/live";
 
 	public void testSimple() throws Exception {
-		UpdateJob job = this.createJob(CONFIGURATION_FILE_2);
+		UpdateJob job = this.createJob(CONFIGURATION_FILE_1);
 
 		boolean result = job.execute();
 		assertTrue(result);
@@ -59,13 +65,25 @@ public class UpdateJobTest extends TestCase {
 
 		UpdateJob job = new UpdateJob();
 		job.setConfigurationProvider(configProvider);
-		job.setIndexer(new LuceneIndexer());
 
+		// set up indexer
+		LuceneIndexer indexer = new LuceneIndexer();
+		indexer.setIndexPath(new File(TMP_INDEX_PATH));
+		indexer.setMappingScript(MAPPING_FILE);
+		job.setIndexer(indexer);
+
+		// set up mapper
 		CSWRecordCache cache = new CSWRecordCache();
 		cache.setCachePath(CSW_CACHE_PATH);
 		XsltMapper mapper = new XsltMapper();
 		mapper.setCache(cache);
 		job.setCswRecordMapper(mapper);
+
+		// set up searcher
+		LuceneSearcher searcher = new LuceneSearcher();
+		searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+		job.setSearcher(searcher);
+
 		return job;
 	}
 

@@ -21,7 +21,6 @@ public class RecordCacheTest extends TestCase {
 
 	private static final File IDF_FILE = new File("src/test/resources/idf-example.xml");
 
-
 	public void testPut() throws Exception {
 		RecordCache cache = new RecordCache();
 		cache.setCachePath(CACHE_PATH);

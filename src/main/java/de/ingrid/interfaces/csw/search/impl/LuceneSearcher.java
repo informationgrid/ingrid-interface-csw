@@ -28,18 +28,6 @@ public class LuceneSearcher implements Searcher {
 	 */
 	private CSWRecordRepository recordRepository;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param indexPath
-	 *            The path to the lucene index.
-	 * @param recordRepository
-	 */
-	public LuceneSearcher(File indexPath, CSWRecordRepository recordRepository) {
-		this.indexPath = indexPath;
-		this.recordRepository = recordRepository;
-	}
-
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
@@ -54,5 +42,23 @@ public class LuceneSearcher implements Searcher {
 	public List<CSWRecord> search(CSWQuery query) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public File getIndexPath() {
+		return this.indexPath;
+	}
+
+	/**
+	 * Set the path to the Lucene index
+	 * @param indexPath
+	 */
+	public void setIndexPath(File indexPath) {
+		this.indexPath = indexPath;
+	}
+
+	@Override
+	public void setRecordRepository(CSWRecordRepository recordRepository) {
+		this.recordRepository = recordRepository;
 	}
 }

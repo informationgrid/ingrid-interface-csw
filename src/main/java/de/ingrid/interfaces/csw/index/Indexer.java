@@ -3,6 +3,7 @@
  */
 package de.ingrid.interfaces.csw.index;
 
+import java.io.File;
 import java.util.List;
 
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
@@ -19,4 +20,10 @@ public interface Indexer {
 	 * @throws Exception
 	 */
 	void run(List<RecordCache> recordCacheList) throws Exception;
+
+	/**
+	 * Get the path to the Lucene index
+	 * @return File
+	 */
+	public File getIndexPath();
 }

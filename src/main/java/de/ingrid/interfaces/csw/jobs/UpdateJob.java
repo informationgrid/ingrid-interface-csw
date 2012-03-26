@@ -29,7 +29,7 @@ import de.ingrid.interfaces.csw.index.Indexer;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.search.Searcher;
-import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
+import de.ingrid.interfaces.csw.tools.FileUtils;
 
 /**
  * The update job.
@@ -53,9 +53,19 @@ public class UpdateJob {
 	private Indexer indexer;
 
 	/**
+	 * The path to the lucene index
+	 */
+	private File indexPath;
+
+	/**
 	 * The CSWRecordMapper instance
 	 */
 	private CSWRecordMapper cswRecordMapper;
+
+	/**
+	 * The Searcher instance
+	 */
+	private Searcher searcher;
 
 	/**
 	 * The lock assuring that there is only one execution at a time
@@ -84,11 +94,27 @@ public class UpdateJob {
 	}
 
 	/**
+	 * Set the index path.
+	 * @param indexPath
+	 */
+	public void setIndexPath(File indexPath) {
+		this.indexPath = indexPath;
+	}
+
+	/**
 	 * Set the record mapper.
 	 * @param cswRecordMapper
 	 */
 	public void setCswRecordMapper(CSWRecordMapper cswRecordMapper) {
 		this.cswRecordMapper = cswRecordMapper;
+	}
+
+	/**
+	 * Set the searcher.
+	 * @param searcher
+	 */
+	public void setSearcher(Searcher searcher) {
+		this.searcher = searcher;
 	}
 
 	/**
@@ -139,22 +165,24 @@ public class UpdateJob {
 					harvester.run(lastExecutionDate);
 				}
 
-				// index all records
-				// TODO index into a tmp directory and switch to live later
+				// index all records into a temporary directory and switch to live later
 				this.indexer.run(recordCacheList);
 
 				// map ingrid records to csw records
 				this.cswRecordMapper.run(recordCacheList);
 
-				// TODO get index path from config
-				File indexPath = null;
-
 				CSWRecordRepository cswRecordRepo = this.cswRecordMapper.getRecordRepository();
-				// TODO get running searcher instance
-				Searcher searcher = new LuceneSearcher(indexPath, cswRecordRepo);
-				searcher.stop();
-				// TODO copy tmp index to live location
-				searcher.start();
+				// stop the searcher instance to access index in filesystem
+				this.searcher.stop();
+
+				// copy temporary index to live location
+				FileUtils.copyRecursive(this.indexer.getIndexPath(), this.searcher.getIndexPath());
+
+				// set the updated record repository on the searcher
+				this.searcher.setRecordRepository(cswRecordRepo);
+
+				// restart the searcher
+				this.searcher.start();
 
 				// write the execution date as last operation
 				// this is the start date, to make sure that the next execution will fetch

@@ -93,12 +93,17 @@ public class XsltMapper implements CSWRecordMapper {
 		switch (elementSetName) {
 		case FULL:
 			cswNode = this.mapFull(record);
+			break;
 		case SUMMARY:
 			cswNode = this.mapSummary(record);
+			break;
 		case BRIEF:
 			cswNode = this.mapBrief(record);
+			break;
 		}
-		log.debug(StringUtils.nodeToString(cswNode));
+		if (log.isDebugEnabled()) {
+			log.debug("Mapping result ("+elementSetName+"): "+StringUtils.nodeToString(cswNode));
+		}
 		return cswNode;
 	}
 

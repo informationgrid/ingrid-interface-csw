@@ -3,6 +3,7 @@
  */
 package de.ingrid.interfaces.csw.search;
 
+import java.io.File;
 import java.util.List;
 
 import de.ingrid.interfaces.csw.domain.CSWRecord;
@@ -31,4 +32,16 @@ public interface Searcher {
 	 * @return List<CSWRecord>
 	 */
 	public List<CSWRecord> search(CSWQuery query);
+
+	/**
+	 * Get the path to the Lucene index
+	 * @return File
+	 */
+	public File getIndexPath();
+
+	/**
+	 * Set the repository where the CSW records are retrieved from
+	 * @param recordRepository
+	 */
+	public void setRecordRepository(CSWRecordRepository recordRepository);
 }

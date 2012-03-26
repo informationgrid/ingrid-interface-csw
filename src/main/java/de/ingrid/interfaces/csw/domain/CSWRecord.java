@@ -8,6 +8,8 @@ import java.io.Serializable;
 import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 
 /**
  * Representation of a record returned by a CSW server.
@@ -15,6 +17,11 @@ import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
  * @author ingo herwig <ingo@wemove.com>
  */
 public class CSWRecord {
+
+	private static final String ID_XPATH = "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString";
+
+	private static XPathUtils xpath = new XPathUtils(new IDFNamespaceContext());
+
 
 	/**
 	 * The record id
@@ -40,7 +47,8 @@ public class CSWRecord {
 	public CSWRecord(ElementSetName elementSetName, Node node) {
 		this.elementSetName = elementSetName;
 		this.node = node;
-		// TODO implement id extraction from record
+		// extract record id
+		this.id = xpath.getString(node, ID_XPATH);
 	}
 
 	/**
