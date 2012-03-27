@@ -6,7 +6,7 @@ package de.ingrid.interfaces.csw.search;
 import java.io.Serializable;
 
 import de.ingrid.interfaces.csw.domain.CSWRecord;
-import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 
 /**
  * Interface for repositories that contain CSW records.

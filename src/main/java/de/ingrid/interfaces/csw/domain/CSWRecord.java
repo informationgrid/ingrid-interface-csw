@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 import org.w3c.dom.Node;
 
-import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 

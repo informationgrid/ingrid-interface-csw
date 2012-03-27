@@ -13,7 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.domain.CSWRecord;
-import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;

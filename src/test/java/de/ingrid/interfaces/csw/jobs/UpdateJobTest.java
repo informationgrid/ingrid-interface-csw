@@ -30,7 +30,7 @@ public class UpdateJobTest extends TestCase {
 	private static final String LIVE_INDEX_PATH = "tmp/index/live";
 
 	public void testSimple() throws Exception {
-		UpdateJob job = this.createJob(CONFIGURATION_FILE_1);
+		UpdateJob job = this.createJob(CONFIGURATION_FILE_2);
 
 		boolean result = job.execute();
 		assertTrue(result);
@@ -48,6 +48,16 @@ public class UpdateJobTest extends TestCase {
 
 		assertTrue(execution1.get());
 		assertFalse(execution2.get()); // Job2 did not run, because execution was blocked by Job1
+	}
+
+	public void testWithRunningSearcher() throws Exception {
+		LuceneSearcher searcher = new LuceneSearcher();
+		searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+		searcher.start();
+
+		UpdateJob job = this.createJob(CONFIGURATION_FILE_1);
+		boolean result = job.execute();
+		assertTrue(result);
 	}
 
 	/**

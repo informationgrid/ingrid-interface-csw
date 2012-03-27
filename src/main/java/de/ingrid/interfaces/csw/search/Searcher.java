@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.List;
 
 import de.ingrid.interfaces.csw.domain.CSWRecord;
+import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 
 /**
  * Interface for CSW search implementations.
@@ -17,13 +18,15 @@ public interface Searcher {
 
 	/**
 	 * Start the searcher.
+	 * @throws Exception
 	 */
-	public void start();
+	public void start() throws Exception;
 
 	/**
 	 * Stop the searcher.
+	 * @throws Exception
 	 */
-	public void stop();
+	public void stop() throws Exception;
 
 	/**
 	 * Search for CSW records using the given query.
