@@ -15,7 +15,7 @@ public class ApplicationProperties {
 
 	private static final String CONFIG_PROPERTIES_FILE = "config.properties";
 
-	private static Properties properties = new Properties();
+	private static Properties properties = null;
 
 	/**
 	 * Load the properties if not done already.
@@ -23,6 +23,7 @@ public class ApplicationProperties {
 	private static void initialize() {
 		if (properties == null) {
 			try {
+				properties = new Properties();
 				properties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream(CONFIG_PROPERTIES_FILE));
 			} catch (IOException e) {
 				throw new RuntimeException("Missing configuration '"+CONFIG_PROPERTIES_FILE+"'.");

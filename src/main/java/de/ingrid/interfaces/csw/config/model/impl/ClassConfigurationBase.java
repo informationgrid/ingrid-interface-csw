@@ -18,6 +18,7 @@ public abstract class ClassConfigurationBase implements ClassConfiguration {
 	 * The class to be configured. XStream accesses this
 	 * field directly.
 	 */
+	@SuppressWarnings("unused")
 	private String className;
 
 	/**

@@ -18,7 +18,7 @@ import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 /**
  * @author ingo@wemove.com
  */
-public class UpdateJobTest extends TestCase {
+public class UpdateJobTestLocal extends TestCase {
 
 	private static final File CONFIGURATION_FILE_1 = new File("src/test/resources/config-updatejobtest-1iplug.xml");
 	private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
@@ -29,7 +29,7 @@ public class UpdateJobTest extends TestCase {
 	private static final String TMP_INDEX_PATH = "tmp/index/tmp";
 	private static final String LIVE_INDEX_PATH = "tmp/index/live";
 
-	public void _testSimple() throws Exception {
+	public void testSimple() throws Exception {
 		UpdateJob job = this.createJob(CONFIGURATION_FILE_2);
 
 		boolean result = job.execute();
@@ -37,7 +37,6 @@ public class UpdateJobTest extends TestCase {
 	}
 
 	public void testConcurrentExecution() throws Exception {
-
 		ThreadPerTaskExecutor executor = new ThreadPerTaskExecutor();
 
 		FutureTask<Boolean> execution1 = new FutureTask<Boolean>(new JobRunner(CONFIGURATION_FILE_1, "Job1"));
@@ -69,7 +68,7 @@ public class UpdateJobTest extends TestCase {
 	 * @param configFile
 	 * @return UpdateJob
 	 */
-	public UpdateJob createJob(File configFile) {
+	private UpdateJob createJob(File configFile) {
 		ConfigurationProvider configProvider = new ConfigurationProvider();
 		configProvider.setConfigurationFile(configFile);
 
@@ -116,7 +115,7 @@ public class UpdateJobTest extends TestCase {
 		public Boolean call() {
 			try {
 				System.out.println("Starting: "+this.name);
-				boolean result = UpdateJobTest.this.createJob(this.configFile).execute();
+				boolean result = UpdateJobTestLocal.this.createJob(this.configFile).execute();
 				System.out.println("Finished: "+this.name);
 				return result;
 			}

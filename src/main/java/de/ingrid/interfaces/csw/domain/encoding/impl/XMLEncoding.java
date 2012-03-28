@@ -54,16 +54,29 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	}));
 
 	@Override
-	public void initialize(HttpServletRequest request, HttpServletResponse response) {
+	public final void initialize(HttpServletRequest request, HttpServletResponse response) {
 		this.setRequest(request);
 		this.setResponse(response);
 
-		// get the body of the HTTP request
+		// reset member variables
+		this.requestBody = null;
+		this.operation = null;
+		this.acceptVersions = null;
+
+		this.setRequestBody(this.extractRequestBody(request));
+	}
+
+	/**
+	 * Extract the request body from the request. Subclasses will override this.
+	 * @param request
+	 * @return Element
+	 */
+	protected Element extractRequestBody(HttpServletRequest request) {
 		DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
 		df.setNamespaceAware(true);
 		try {
 			Document requestDocument = df.newDocumentBuilder().parse(request.getInputStream());
-			this.setRequestBody((Element)requestDocument.getFirstChild());
+			return (Element)requestDocument.getFirstChild();
 		} catch(Exception e) {
 			throw new RuntimeException("Error parsing request: ", e);
 		}

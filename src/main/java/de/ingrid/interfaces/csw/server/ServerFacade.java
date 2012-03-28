@@ -183,8 +183,9 @@ public class ServerFacade {
 		} catch (Exception e) {
 			try {
 				log.warn(e.getMessage(), e);
-				if (encodingImpl != null)
+				if (encodingImpl != null) {
 					encodingImpl.reportError(e);
+				}
 			} catch (IOException ioe) {
 				log.error("Unable to send error message to client: " + ioe.getMessage());
 			}

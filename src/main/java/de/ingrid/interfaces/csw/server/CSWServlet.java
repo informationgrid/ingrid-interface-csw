@@ -41,7 +41,9 @@ public class CSWServlet extends HttpServlet {
 	 */
 	@Override
 	public final void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
-
+		if (this.serverFacade == null) {
+			throw new RuntimeException("CSWServlet is not configured properly: serverFacade is not set.");
+		}
 		try {
 			this.serverFacade.handleGetRequest(request, response);
 		} catch (Exception ex) {

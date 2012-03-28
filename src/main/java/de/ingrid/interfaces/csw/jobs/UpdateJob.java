@@ -53,11 +53,6 @@ public class UpdateJob {
 	private Indexer indexer;
 
 	/**
-	 * The path to the lucene index
-	 */
-	private File indexPath;
-
-	/**
 	 * The CSWRecordMapper instance
 	 */
 	private CSWRecordMapper cswRecordMapper;
@@ -91,14 +86,6 @@ public class UpdateJob {
 	 */
 	public void setIndexer(Indexer indexer) {
 		this.indexer = indexer;
-	}
-
-	/**
-	 * Set the index path.
-	 * @param indexPath
-	 */
-	public void setIndexPath(File indexPath) {
-		this.indexPath = indexPath;
 	}
 
 	/**

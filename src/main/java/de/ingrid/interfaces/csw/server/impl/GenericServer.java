@@ -142,7 +142,8 @@ public class GenericServer implements CSWServer {
 			// fetch the document from the file system if it is not cached
 			String filename = ApplicationProperties.getMandatory(key);
 			try {
-				File file = new File(this.getClass().getClassLoader().getResource(filename).getPath().replaceAll("%20", " "));
+				String path = this.getClass().getClassLoader().getResource(filename).getPath().replaceAll("%20", " ");
+				File file = new File(path);
 				String content = new Scanner(file).useDelimiter("\\A").next();
 				Document doc = StringUtils.stringToDocument(content);
 

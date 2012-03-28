@@ -46,15 +46,19 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	}));
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void initialize(HttpServletRequest request, HttpServletResponse response) {
 		this.setRequest(request);
 		this.setResponse(response);
 
+		// reset member variables
+		this.requestParams = null;
+		this.operation = null;
+		this.acceptVersions = null;
+
 		// get all parameters from the request and store them in a map
 		// to make sure they are uppercase
 		this.requestParams = new Hashtable<String, String>();
-		Enumeration paramEnum = request.getParameterNames();
+		Enumeration<?> paramEnum = request.getParameterNames();
 		while (paramEnum.hasMoreElements()) {
 			String key = (String) paramEnum.nextElement();
 			this.requestParams.put(key.toUpperCase(), request.getParameter(key));

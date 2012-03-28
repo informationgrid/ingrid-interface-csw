@@ -43,32 +43,34 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 			"<?xml version=\"1.0\" encoding=\"" + ApplicationProperties.get(ConfigurationKeys.RESPONSE_ENCODING) + "\"?>\n" +
 					"<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n" +
 					"		xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n" +
-					"       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+					"		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
 					"	<soapenv:Body>\n" +
 					"	</soapenv:Body>\n" +
 					"</soapenv:Envelope>";
 
 	private SOAPMessage soapMessage = null;
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * Extract the request body from the request. Subclasses will override this.
+	 * @param request
+	 * @return Element
+	 */
 	@Override
-	public void initialize(HttpServletRequest request, HttpServletResponse response) {
-		this.setRequest(request);
-		this.setResponse(response);
-
+	protected Element extractRequestBody(HttpServletRequest request) {
 		try {
 			// get the envelope and body of the SOAP request
 			MessageFactory msgFactory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
 
 			// get the request headers
 			MimeHeaders headers = new MimeHeaders();
-			Enumeration headerEnum = request.getHeaderNames();
+			Enumeration<?> headerEnum = request.getHeaderNames();
 			while (headerEnum.hasMoreElements()) {
 				String headerName = (String)headerEnum.nextElement();
 				String headerValue = request.getHeader(headerName);
 				StringTokenizer values = new StringTokenizer(headerValue, ",");
-				while (values.hasMoreTokens())
+				while (values.hasMoreTokens()) {
 					headers.addHeader(headerName, values.nextToken().trim());
+				}
 			}
 
 			// create the soap message
@@ -76,12 +78,12 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 
 			// get the request body
 			Element requestBody = getMessagePayload(this.soapMessage);
-			this.setRequestBody(requestBody);
-
+			return requestBody;
 		} catch(Exception e) {
 			throw new RuntimeException("Error parsing request: ", e);
 		}
 	}
+
 
 	@Override
 	public void validateRequest() throws CSWException {
@@ -92,7 +94,6 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void writeResponse(Document document) throws Exception {
 
 		SOAPMessage message = Soap12Encoding.createSoapMessage(document);
@@ -109,20 +110,22 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 
 		// copy MimeHeaders from the message to the response
 		MimeHeaders headers = message.getMimeHeaders();
-		Iterator it = headers.getAllHeaders();
+		Iterator<?> it = headers.getAllHeaders();
 		while (it.hasNext()) {
 			MimeHeader header = (MimeHeader)it.next();
 
 			String[] values = headers.getHeader(header.getName());
-			if (values.length == 1)
+			if (values.length == 1) {
 				response.setHeader(header.getName(), header.getValue());
+			}
 			else
 			{
 				StringBuffer concat = new StringBuffer();
 				int i = 0;
 				while (i < values.length) {
-					if (i != 0)
+					if (i != 0) {
 						concat.append(',');
+					}
 					concat.append(values[i++]);
 				}
 				response.setHeader(header.getName(), concat.toString());
@@ -179,11 +182,10 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 	 * @return Element
 	 * @throws SOAPException
 	 */
-	@SuppressWarnings("unchecked")
 	private static Element getMessagePayload(SOAPMessage message) throws SOAPException {
 		Element requestBody = null;
 		SOAPBody body = message.getSOAPBody();
-		Iterator children = body.getChildElements();
+		Iterator<?> children = body.getChildElements();
 		while (children.hasNext()) {
 			Object obj = children.next();
 			if (obj instanceof SOAPElement) {
