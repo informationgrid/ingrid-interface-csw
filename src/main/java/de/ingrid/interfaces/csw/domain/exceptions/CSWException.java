@@ -1,8 +1,13 @@
 package de.ingrid.interfaces.csw.domain.exceptions;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import de.ingrid.interfaces.csw.tools.StringUtils;
 
 /**
  * Von dieser Klasse werden alle moeglichen Ausnahmen des Catalog Service abgeleitet
@@ -82,7 +87,7 @@ public class CSWException extends Exception {
 	 * @throws Exception
 	 */
 	public Document toXmlExceptionReport() throws Exception {
-		Document reportDoc = XMLTools.create();
+		Document reportDoc = this.createDocument();
 
 		Element rootElement = reportDoc.createElementNS("http://www.opengis.net/ows", "ExceptionReport");
 		reportDoc.appendChild(rootElement);
@@ -120,7 +125,7 @@ public class CSWException extends Exception {
 	 * @throws Exception
 	 */
 	public Document toSoapExceptionReport() throws Exception {
-		Document reportDoc = XMLTools.create();
+		Document reportDoc = this.createDocument();
 
 		Element faultElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Fault");
 		reportDoc.appendChild(faultElement);
@@ -142,10 +147,24 @@ public class CSWException extends Exception {
 		reasonTextElement.setAttributeNode(langAttribute);
 		reasonElement.appendChild(codeValueElement);
 
+		// add the xml report as Detail
 		Element detailElement = reportDoc.createElement("Detail");
-		XMLTools.insertNodeInto(this.toXmlExceptionReport().getLastChild(), detailElement);
+		String report = StringUtils.nodeToString(this.toXmlExceptionReport().getLastChild());
+		detailElement.setTextContent(report);
 		faultElement.appendChild(detailElement);
 
 		return reportDoc;
+	}
+
+	/**
+	 * Create an xml document
+	 * @return Document
+	 * @throws Exception
+	 */
+	protected Document createDocument() throws Exception {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+		Document document = docBuilder.newDocument();
+		return document;
 	}
 }

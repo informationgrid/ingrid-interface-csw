@@ -3,6 +3,7 @@
  */
 package de.ingrid.interfaces.csw.domain.request.impl;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWVersionNegotiationFailedException;
@@ -23,7 +24,7 @@ public class DescribeRecordRequestImpl extends AbstractRequestImpl implements De
 	protected void validateVersion() throws CSWVersionNegotiationFailedException {
 
 		// get the version from the configuration
-		String cswVersion = CSWConfig.getInstance().getStringMandatory(ConfigurationKeys.CSW_VERSION);
+		String cswVersion = ApplicationProperties.getMandatory(ConfigurationKeys.CSW_VERSION);
 
 		// the requested version must match the configured version
 		String version = this.getEncoding().getVersion();

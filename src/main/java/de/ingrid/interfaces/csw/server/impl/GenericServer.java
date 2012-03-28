@@ -3,18 +3,19 @@
  */
 package de.ingrid.interfaces.csw.server.impl;
 
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
@@ -27,7 +28,10 @@ import de.ingrid.interfaces.csw.domain.request.GetDomainRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordByIdRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordsRequest;
 import de.ingrid.interfaces.csw.server.CSWServer;
+import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.xml.Csw202NamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 
 public class GenericServer implements CSWServer {
 
@@ -36,6 +40,22 @@ public class GenericServer implements CSWServer {
 
 	/** A cache for static documents returned for special requests **/
 	protected Map<String, Document> documentCache = new Hashtable<String, Document>();
+
+	/** Tool for evaluating xpath **/
+	private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
+
+	/**
+	 * The FilterParser instance that converts csw queries to InGrid queries
+	 */
+	private FilterParser filterParser;
+
+	/**
+	 * Set the FilterParser instance
+	 * @param filterParser
+	 */
+	public void setFilterParser(FilterParser filterParser) {
+		this.filterParser = filterParser;
+	}
 
 	@Override
 	public Document process(GetCapabilitiesRequest request) throws CSWException {
@@ -48,9 +68,9 @@ public class GenericServer implements CSWServer {
 			Document doc = this.getDocument(documentKey);
 
 			// try to replace the interface URLs
-			NodeList nodes = new XPathUtils.getNodeList(doc, "//ows:Operation/*/ows:HTTP/*/@xlink:href");
+			NodeList nodes = this.xpath.getNodeList(doc, "//ows:Operation/*/ows:HTTP/*/@xlink:href");
 			// get host
-			String host = CSWConfig.getInstance().getString(ConfigurationKeys.SERVER_INTERFACE_HOST, null);
+			String host = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_HOST, null);
 			if (host == null) {
 				log.info("The interface host address is not specified, use local hosts address instead.");
 				try {
@@ -62,7 +82,7 @@ public class GenericServer implements CSWServer {
 				}
 			}
 			// get the port (defaults to 80)
-			String port = CSWConfig.getInstance().getString(ConfigurationKeys.SERVER_INTERFACE_PORT, "80");
+			String port = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PORT, "80");
 			// replace interface host and port
 			for (int idx = 0; idx < nodes.getLength(); idx++) {
 				String s = nodes.item(idx).getTextContent();
@@ -96,9 +116,12 @@ public class GenericServer implements CSWServer {
 
 	@Override
 	public Document process(GetRecordsRequest request) throws CSWException {
+		if (this.filterParser == null) {
+			throw new RuntimeException("GenericServer is not configured properly: filterParser is not set.");
+		}
 		CSWQuery query = request.getQuery();
-		FilterParser filterParser = this.getFilterParserInstance();
-		IngridQuery ingridQuery = filterParser.parse(query.getConstraint());
+		IngridQuery ingridQuery = this.filterParser.parse(query.getConstraint());
+		// TODO execute the query
 		return null;
 	}
 
@@ -117,11 +140,11 @@ public class GenericServer implements CSWServer {
 		if (!this.documentCache.containsKey(key)) {
 
 			// fetch the document from the file system if it is not cached
-			String filename = CSWConfig.getInstance().getStringMandatory(key);
+			String filename = ApplicationProperties.getMandatory(key);
 			try {
-				Reader reader = new FileReader(this.getClass().getClassLoader()
-						.getResource(filename).getPath().replaceAll("%20", " "));
-				Document doc = XMLTools.parse(reader);
+				File file = new File(this.getClass().getClassLoader().getResource(filename).getPath().replaceAll("%20", " "));
+				String content = new Scanner(file).useDelimiter("\\A").next();
+				Document doc = StringUtils.stringToDocument(content);
 
 				// cache the document
 				this.documentCache.put(key, doc);
@@ -132,15 +155,5 @@ public class GenericServer implements CSWServer {
 			}
 		}
 		return this.documentCache.get(key);
-	}
-
-	/**
-	 * Get the CSWMesageEncoding implementation for a given request type from the server configuration
-	 * @param type The request type
-	 * @return The CSWMesageEncoding instance
-	 */
-	private FilterParser getFilterParserInstance() {
-		return SimpleSpringBeanFactory.INSTANCE.getBeanMandatory(
-				ConfigurationKeys.CSW_FILTERPARSER_IMPLEMENTATION, FilterParser.class);
 	}
 }

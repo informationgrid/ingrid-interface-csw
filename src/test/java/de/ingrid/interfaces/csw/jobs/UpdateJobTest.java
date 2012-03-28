@@ -29,7 +29,7 @@ public class UpdateJobTest extends TestCase {
 	private static final String TMP_INDEX_PATH = "tmp/index/tmp";
 	private static final String LIVE_INDEX_PATH = "tmp/index/live";
 
-	public void testSimple() throws Exception {
+	public void _testSimple() throws Exception {
 		UpdateJob job = this.createJob(CONFIGURATION_FILE_2);
 
 		boolean result = job.execute();

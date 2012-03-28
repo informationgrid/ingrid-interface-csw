@@ -23,6 +23,19 @@ public class CSWServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * The server facade that handles all requests
+	 */
+	private ServerFacade serverFacade;
+
+	/**
+	 * Set the server facade
+	 * @param serverFacade
+	 */
+	public void setServerFacade(ServerFacade serverFacade) {
+		this.serverFacade = serverFacade;
+	}
+
+	/**
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
 	 *      javax.servlet.http.HttpServletResponse)
 	 */
@@ -30,7 +43,7 @@ public class CSWServlet extends HttpServlet {
 	public final void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
 
 		try {
-			ServerFacade.handleGetRequest(request, response);
+			this.serverFacade.handleGetRequest(request, response);
 		} catch (Exception ex) {
 			throw new ServletException("GET failed: "+ex.getMessage(), ex);
 		}
@@ -45,11 +58,11 @@ public class CSWServlet extends HttpServlet {
 		try {
 			if (request.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 
-				ServerFacade.handleSoapRequest(request, response);
+				this.serverFacade.handleSoapRequest(request, response);
 			}
 			else if (request.getContentType().toLowerCase().indexOf("application/xml") != -1) {
 
-				ServerFacade.handlePostRequest(request, response);
+				this.serverFacade.handlePostRequest(request, response);
 			}
 			else {
 				throw new ServletException("Unsupported Content-Type in POST request: "+request.getContentType());

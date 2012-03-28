@@ -14,7 +14,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 
-import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.constants.RequestType;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
@@ -38,8 +37,47 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
  */
 public class ServerFacade {
 
-	/** The logging object **/
 	private static Log log = LogFactory.getLog(ServerFacade.class);
+
+	/**
+	 * The csw server implementation
+	 */
+	private CSWServer cswServerImpl;
+
+	/**
+	 * A map of csw message encoding implementations
+	 */
+	private Map<RequestType, CSWMessageEncoding> cswMessageEncodingImplMap;
+
+	/**
+	 * A map of csw request implementations
+	 */
+	private Map<Operation, CSWRequest> cswRequestImplMap;
+
+	/**
+	 * Set the csw server implementation
+	 * @param cswServerImpl
+	 */
+	public void setCswServerImpl(CSWServer cswServerImpl) {
+		this.cswServerImpl = cswServerImpl;
+	}
+
+	/**
+	 * Set the map of csw message encoding implementations
+	 * @param cswMessageEncodingImplMap
+	 */
+	public void setCswMessageEncodingImplMap(
+			Map<RequestType, CSWMessageEncoding> cswMessageEncodingImplMap) {
+		this.cswMessageEncodingImplMap = cswMessageEncodingImplMap;
+	}
+
+	/**
+	 * Set the map of csw request implementations
+	 * @param cswRequestImplMap
+	 */
+	public void setCswRequestImplMap(Map<Operation, CSWRequest> cswRequestImplMap) {
+		this.cswRequestImplMap = cswRequestImplMap;
+	}
 
 	/**
 	 * Handle a GET Request
@@ -47,9 +85,8 @@ public class ServerFacade {
 	 * @param response
 	 * @throws CSWException
 	 */
-	static public void handleGetRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		handleRequest(RequestType.GET, request, response);
+	public void handleGetRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		this.handleRequest(RequestType.GET, request, response);
 	}
 
 	/**
@@ -58,9 +95,8 @@ public class ServerFacade {
 	 * @param response
 	 * @throws CSWException
 	 */
-	static public void handlePostRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		handleRequest(RequestType.POST, request, response);
+	public void handlePostRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		this.handleRequest(RequestType.POST, request, response);
 	}
 
 	/**
@@ -69,9 +105,8 @@ public class ServerFacade {
 	 * @param response
 	 * @throws CSWException
 	 */
-	static public void handleSoapRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		handleRequest(RequestType.SOAP, request, response);
+	public void handleSoapRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		this.handleRequest(RequestType.SOAP, request, response);
 	}
 
 	/**
@@ -80,13 +115,13 @@ public class ServerFacade {
 	 * @param request
 	 * @throws CSWException
 	 */
-	static protected void handleRequest(RequestType type, HttpServletRequest request,
+	protected void handleRequest(RequestType type, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
 		CSWMessageEncoding encodingImpl = null;
 		try {
 			// initialize the CSWMessageEncoding
-			encodingImpl = ServerFacade.getMessageEncodingInstance(type);
+			encodingImpl = this.getMessageEncodingInstance(type);
 			encodingImpl.initialize(request, response);
 			if (log.isDebugEnabled()) {
 				log.debug("Handle "+type+" request");
@@ -110,32 +145,33 @@ public class ServerFacade {
 			}
 
 			// initialize the CSWRequest instance
-			CSWRequest requestImpl = ServerFacade.getRequestInstance(operation);
+			CSWRequest requestImpl = this.getRequestInstance(operation);
 			requestImpl.initialize(encodingImpl);
 
 			// validate the request message operation-specific
 			requestImpl.validate();
 
-			// initialize the CSWServer instance
-			CSWServer serverImpl = SimpleSpringBeanFactory.INSTANCE.getBean(
-					ConfigurationKeys.CSW_SERVER_IMPLEMENTATION, CSWServer.class);
+			// check the CSWServer instance
+			if (this.cswServerImpl == null) {
+				throw new RuntimeException("ServerFacade is not configured properly: cswServerImpl is not set.");
+			}
 
 			// perform the requested operation
 			Document result = null;
 			if (operation == Operation.GET_CAPABILITIES) {
-				result = serverImpl.process((GetCapabilitiesRequest)requestImpl);
+				result = this.cswServerImpl.process((GetCapabilitiesRequest)requestImpl);
 			}
 			else if(operation == Operation.DESCRIBE_RECORD) {
-				result = serverImpl.process((DescribeRecordRequest)requestImpl);
+				result = this.cswServerImpl.process((DescribeRecordRequest)requestImpl);
 			}
 			else if(operation == Operation.GET_DOMAIN) {
-				result = serverImpl.process((GetDomainRequest)requestImpl);
+				result = this.cswServerImpl.process((GetDomainRequest)requestImpl);
 			}
 			else if(operation == Operation.GET_RECORDS) {
-				result = serverImpl.process((GetRecordsRequest)requestImpl);
+				result = this.cswServerImpl.process((GetRecordsRequest)requestImpl);
 			}
 			else if(operation == Operation.GET_RECORD_BY_ID) {
-				result = serverImpl.process((GetRecordByIdRequest)requestImpl);
+				result = this.cswServerImpl.process((GetRecordByIdRequest)requestImpl);
 			}
 			if (log.isDebugEnabled()) {
 				log.debug("Result: "+StringUtils.nodeToString(result));
@@ -160,16 +196,14 @@ public class ServerFacade {
 	 * @param type The request type
 	 * @return The CSWMesageEncoding instance
 	 */
-	@SuppressWarnings({"unchecked"})
-	private static CSWMessageEncoding getMessageEncodingInstance(RequestType type) {
-		Map encodingImplementations = SimpleSpringBeanFactory.INSTANCE.getBeanMandatory(
-				ConfigurationKeys.CSW_ENCODING_IMPLEMENTATIONS, Map.class);
-		String beanId = (String)encodingImplementations.get(type.toString());
-		if (beanId == null)
-			throw new RuntimeException("Unknown encoding type requested for '"+
-					ConfigurationKeys.CSW_ENCODING_IMPLEMENTATIONS+"' in server configuration: "+type);
-
-		CSWMessageEncoding encoding = SimpleSpringBeanFactory.INSTANCE.getBean(beanId, CSWMessageEncoding.class);
+	private CSWMessageEncoding getMessageEncodingInstance(RequestType type) {
+		if (this.cswMessageEncodingImplMap == null) {
+			throw new RuntimeException("ServerFacade is not configured properly: cswMessageEncodingImplMap is not set.");
+		}
+		if (!this.cswMessageEncodingImplMap.containsKey(type)) {
+			throw new RuntimeException("Unknown encoding type requested: "+type);
+		}
+		CSWMessageEncoding encoding = this.cswMessageEncodingImplMap.get(type);
 		return encoding;
 	}
 
@@ -178,17 +212,14 @@ public class ServerFacade {
 	 * @param operation The operation
 	 * @return The CSWRequest instance
 	 */
-	@SuppressWarnings({"unchecked"})
-	static CSWRequest getRequestInstance(Operation operation) {
-		Map requestImplementations = SimpleSpringBeanFactory.INSTANCE.getBeanMandatory(
-				ConfigurationKeys.CSW_REQUEST_IMPLEMENTATIONS, Map.class);
-		CSWRequest request = null;
-		try {
-			request = (CSWRequest)Class.forName(requestImplementations.get(operation.toString()).toString()).newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException("ServerFacade is not configured properly. No class found for operation "+
-					operation+" in map '"+ConfigurationKeys.CSW_REQUEST_IMPLEMENTATIONS+"'.");
+	private CSWRequest getRequestInstance(Operation operation) {
+		if (this.cswRequestImplMap == null) {
+			throw new RuntimeException("ServerFacade is not configured properly: cswRequestImplMap is not set.");
 		}
+		if (!this.cswRequestImplMap.containsKey(operation)) {
+			throw new RuntimeException("No request implementation found for operation: "+operation);
+		}
+		CSWRequest request = this.cswRequestImplMap.get(operation);
 		return request;
 	}
 }

@@ -24,6 +24,7 @@ import javax.xml.soap.SOAPMessage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
@@ -39,7 +40,7 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 	 * the soap envelope for SOAP version 1.2
 	 */
 	private static final String SOAP12ENV =
-			"<?xml version=\"1.0\" encoding=\"" + CSWConfig.getInstance().getString(ConfigurationKeys.RESPONSE_ENCODING) + "\"?>\n" +
+			"<?xml version=\"1.0\" encoding=\"" + ApplicationProperties.get(ConfigurationKeys.RESPONSE_ENCODING) + "\"?>\n" +
 					"<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n" +
 					"		xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n" +
 					"       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +

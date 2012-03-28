@@ -5,6 +5,7 @@ package de.ingrid.interfaces.csw.domain.request.impl;
 
 import java.util.List;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWVersionNegotiationFailedException;
@@ -26,7 +27,7 @@ public class GetCapabilitiesRequestImpl extends AbstractRequestImpl implements G
 	protected void validateAcceptVersions() throws CSWVersionNegotiationFailedException {
 
 		// get the version from the configuration
-		String cswVersion = CSWConfig.getInstance().getStringMandatory(ConfigurationKeys.CSW_VERSION);
+		String cswVersion = ApplicationProperties.getMandatory(ConfigurationKeys.CSW_VERSION);
 
 		// if accepted versions are given in the request, they must include the
 		// configured version. if no version are requested, we default to the configured one

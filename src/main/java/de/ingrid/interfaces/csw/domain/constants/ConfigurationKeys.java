@@ -9,6 +9,7 @@ package de.ingrid.interfaces.csw.domain.constants;
 public class ConfigurationKeys {
 
 	/** beans.xml **/
+	// TODO deprecated, can be removed
 	public static final String CSW_SERVER_IMPLEMENTATION = "cswServerImpl";
 	public static final String CSW_ENCODING_IMPLEMENTATIONS = "cswMessageEncodingImpl";
 	public static final String CSW_REQUEST_IMPLEMENTATIONS = "cswRequestImpl";

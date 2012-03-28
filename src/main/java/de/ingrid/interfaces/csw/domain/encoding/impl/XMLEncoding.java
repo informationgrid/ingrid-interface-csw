@@ -24,6 +24,8 @@ import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWMissingParameterValueException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
+import de.ingrid.utils.xml.Csw202NamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 
 /**
  * XMLEncoding deals with messages defined in the XML format.
@@ -35,6 +37,9 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	private Element requestBody = null;
 	private Operation operation = null;
 	private List<String> acceptVersions = null;
+
+	/** Tool for evaluating xpath **/
+	private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
 	/** Parameter names **/
 	private static String SERVICE_PARAM = "service";
@@ -106,7 +111,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		if (this.acceptVersions == null) {
 			this.acceptVersions = new ArrayList<String>();
 
-			NodeList versionNodes = XPathUtils.getNodeList(this.getRequestBody(), "//AcceptVersions/Version");
+			NodeList versionNodes = this.xpath.getNodeList(this.getRequestBody(), "//AcceptVersions/Version");
 			int length = versionNodes.getLength();
 			for (int i=0; i<length; i++) {
 				Node curVersionNode = versionNodes.item(i);
@@ -122,12 +127,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	@Override
 	public String getVersion() {
 		this.checkInitialized();
-
-		Node descRecordNode = XPathUtils.getNode(this.getRequestBody(), "//DescribeRecord");
-		if (descRecordNode != null) {
-			return String.valueOf(XMLTools.getAttrValue(descRecordNode, VERSION_PARAM));
-		}
-		return null;
+		return this.xpath.getString(this.getRequestBody(), "//DescribeRecord/@"+VERSION_PARAM);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 
 import org.w3c.dom.Node;
 
-import de.ingrid.interfaces.csw.domain.enums.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.mapping.impl.XsltMapper;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.idf.IdfTool;

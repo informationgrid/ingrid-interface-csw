@@ -30,7 +30,7 @@ public class IBusHarvesterTest extends TestCase {
 		// setup requests
 		List<RequestDefinition> requestDefinitions = new ArrayList<RequestDefinition>();
 		RequestDefinition request = new RequestDefinition();
-		request.setQueryString("iplugs:\"/kug-group:kug-iplug-udk-db_uba\" ranking:score");
+		request.setQueryString("iplugs:\"/kug-group:kug-iplug-udk-db_be\" ranking:score");
 		requestDefinitions.add(request);
 
 		// setup harvester
