@@ -63,6 +63,11 @@ public class RequestTransformer implements CSWRequestTransformer {
             queryString = queryString + " t01_object.obj_id:\"" +(String) idsList.get(i) + "\" OR t01_object.org_obj_id:\"" +(String) idsList.get(i) + "\"";
         }
         
+        // DO NOT FORGET !!!!!!!
+        if (queryString.length() > 0) {
+        	queryString = " (" + queryString + ")";
+        }
+
         if (log.isDebugEnabled()) {
         	log.debug("ingridQueryString: " + queryString);
         }

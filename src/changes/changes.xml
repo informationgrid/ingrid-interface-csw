@@ -21,7 +21,11 @@
       <action type="update" dev="wemove" issue="INGRID-1885">
         Updated start.sh, which had an issue when being batch-invoked, deleted RSYNC which is no longer used, see https://dev.wemove.com/jira/browse/INGRID-1885
       </action>
+      <action type="fix" dev="wemove">
+        Fix GetRecordById when ID does not exist. Delivered wrong results not matching ID.
+      </action>
     </release>
+
     <release version="3.1.0" date="2011-09-15" description="Release InGrid 3.1">
       <action type="fix" dev="wemove">
         Avoid escaping of UTF-8 characters in SOAP output.
@@ -36,6 +40,7 @@
         Changed logging behavior, so that not so many files will be created.
       </action>
     </release>
+
     <release version="3.0.1" date="2011-07-04" description="Add-Ons + Bugfixes for InGrid 3.0">
       <action type="add" dev="wemove" issue="INGRID23-268">
         Add header "Content-Encoding: UTF-8" to servlet response.
