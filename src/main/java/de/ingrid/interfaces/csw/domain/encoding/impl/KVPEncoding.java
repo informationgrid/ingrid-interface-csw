@@ -13,12 +13,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWMissingParameterValueException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
+import de.ingrid.interfaces.csw.domain.query.CSWQuery;
+import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
 
 
 /**
@@ -31,12 +35,17 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	private Map<String, String> requestParams = null;
 	private Operation operation;
 	private List<String> acceptVersions = null;
+	private CSWQuery query = null;
 
 	/** Parameter names **/
 	private static final String SERVICE_PARAM = "SERVICE";
 	private static final String REQUEST_PARAM = "REQUEST";
 	private static final String ACCEPTVERSION_PARAM = "ACCEPTVERSION";
 	private static final String VERSION_PARAM = "VERSION";
+
+	private static final String ID_PARAM = "ID";
+	private static final String ELEMENTSETNAME_PARAM = "ELEMENTSETNAME";
+	private static final String OUTPUTSCHEMA_PARAM = "OUTPUTSCHEMA";
 
 	/** Supported operations **/
 	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
@@ -54,6 +63,7 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		this.requestParams = null;
 		this.operation = null;
 		this.acceptVersions = null;
+		this.query = null;
 
 		// get all parameters from the request and store them in a map
 		// to make sure they are uppercase
@@ -125,6 +135,40 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		this.checkInitialized();
 
 		return this.requestParams.get(VERSION_PARAM);
+	}
+
+	@Override
+	public CSWQuery getQuery() {
+		this.checkInitialized();
+
+		if (this.query == null) {
+			this.query = new GenericQuery();
+			try {
+				// only required for GetRecordById operation
+				Operation operation = this.getOperation();
+				if (operation == Operation.GET_RECORD_BY_ID) {
+					// NOTE: getting enum values may throw an IllegalArgumentException,
+					// which is ok
+
+					// extract the ids
+					if (this.requestParams.containsKey(ID_PARAM)) {
+						this.query.setId(this.requestParams.get(ID_PARAM));
+					}
+					// extract the element set name
+					if (this.requestParams.containsKey(ELEMENTSETNAME_PARAM)) {
+						String elementSetNameStr = this.requestParams.get(ELEMENTSETNAME_PARAM);
+						this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
+					}
+					// extract the output schema
+					if (this.requestParams.containsKey(OUTPUTSCHEMA_PARAM)) {
+						String schemaUri = this.requestParams.get(OUTPUTSCHEMA_PARAM);
+						this.query.setOutputSchema(Namespace.getByUri(schemaUri));
+					}
+				}
+			}
+			catch (CSWOperationNotSupportedException ex) {}
+		}
+		return this.query;
 	}
 
 	@Override

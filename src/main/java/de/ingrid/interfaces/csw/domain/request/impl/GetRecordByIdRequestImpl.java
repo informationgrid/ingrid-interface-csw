@@ -15,7 +15,6 @@ public class GetRecordByIdRequestImpl extends AbstractRequestImpl implements Get
 
 	@Override
 	public CSWQuery getQuery() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getEncoding().getQuery();
 	}
 }

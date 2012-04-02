@@ -22,7 +22,6 @@ public class CSWRecord {
 
 	private static XPathUtils xpath = new XPathUtils(new IDFNamespaceContext());
 
-
 	/**
 	 * The record id
 	 */
@@ -49,20 +48,6 @@ public class CSWRecord {
 		this.node = node;
 		// extract record id
 		this.id = xpath.getString(node, ID_XPATH);
-	}
-
-	/**
-	 * Create a proxy record from a given id and element set name.
-	 * The proxy does not contain the XML content, but may be used to
-	 * identify the real subject.
-	 * 
-	 * @param id
-	 * @param elementSetName
-	 */
-	public static CSWRecord getProxy(Serializable id, ElementSetName elementSetName) {
-		CSWRecord proxy = new CSWRecord(elementSetName, null);
-		proxy.id = null;
-		return proxy;
 	}
 
 	/**

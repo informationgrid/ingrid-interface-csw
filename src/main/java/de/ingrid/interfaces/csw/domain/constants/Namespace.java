@@ -3,6 +3,9 @@
  */
 package de.ingrid.interfaces.csw.domain.constants;
 
+import java.util.Hashtable;
+import java.util.Map;
+
 import javax.xml.namespace.QName;
 
 public enum Namespace {
@@ -77,6 +80,14 @@ public enum Namespace {
 	 */
 	public abstract QName getQName();
 
+	public static Namespace getByUri(String name) {
+		Namespace ns = nameMapping.get(name);
+		if (ns == null) {
+			throw new IllegalArgumentException("The namespace '"+name+"' is unknown.");
+		}
+		return ns;
+	}
+
 	/**
 	 * namespaces
 	 */
@@ -92,4 +103,15 @@ public enum Namespace {
 	private static final QName nsCSW_DATASET = new QName(nsCSW.getNamespaceURI(), "dataset", nsCSW.getPrefix());
 
 	private static final QName nsISO_METADATA = new QName(nsGMD.getNamespaceURI(), "MD_Metadata", nsGMD.getPrefix());
+
+	/**
+	 * Namespace URI to namespace mapping
+	 */
+	private static Map<String, Namespace> nameMapping = null;
+	static {
+		nameMapping = new Hashtable<String, Namespace>();
+		for (Namespace ns : Namespace.values()) {
+			nameMapping.put(ns.getQName().getNamespaceURI(), ns);
+		}
+	}
 }

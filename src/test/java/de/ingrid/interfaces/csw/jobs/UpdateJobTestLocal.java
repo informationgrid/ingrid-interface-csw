@@ -83,7 +83,7 @@ public class UpdateJobTestLocal extends TestCase {
 
 		// set up mapper
 		CSWRecordCache cache = new CSWRecordCache();
-		cache.setCachePath(CSW_CACHE_PATH);
+		cache.setCachePath(new File(CSW_CACHE_PATH));
 		XsltMapper mapper = new XsltMapper();
 		mapper.setCache(cache);
 		job.setCswRecordMapper(mapper);

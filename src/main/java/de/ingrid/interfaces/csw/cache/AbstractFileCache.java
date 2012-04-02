@@ -35,15 +35,15 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 
 	/**
 	 * The original path of the cache. If the cache is not in transaction mode,
-	 * all content is served from and stored in there. Commited content will be
+	 * all content is served from and stored in there. Committed content will be
 	 * copied to there.
 	 */
-	protected String cachePath = null;
+	protected File cachePath = null;
 
 	/**
 	 * The temporary path of the cache, that is used in transaction mode.
 	 */
-	protected String tmpPath = null;
+	protected File tmpPath = null;
 
 	/**
 	 * The initial cache from which a transaction was started.
@@ -83,14 +83,13 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	protected void initialize() {
 		if (!this.isInitialized) {
 			// check for original path
-			String originalPath = this.getCachePath();
-			if (originalPath == null) {
+			File cacheLocation = this.getCachePath();
+			if (cacheLocation == null) {
 				throw new RuntimeException(
 						"DefaultFileCache is not configured properly: cachePath not set.");
 			}
 
 			// check if the original path exists and create it if not
-			File cacheLocation = new File(originalPath);
 			if (!cacheLocation.exists()) {
 				cacheLocation.mkdir();
 			}
@@ -102,9 +101,9 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 * Get the work path of the cache. If the cache is in transaction mode, the
 	 * path will differ from cachePath.
 	 * 
-	 * @return String
+	 * @return File
 	 */
-	protected String getWorkPath() {
+	protected File getWorkPath() {
 		if (this.isInTransaction()) {
 			return this.getTempPath();
 		} else {
@@ -202,10 +201,12 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		File[] files = directory.listFiles();
 		if (files != null) {
 			for (File file : files) {
-				if (cacheFileFilter.accept(file))
+				if (cacheFileFilter.accept(file)) {
 					documentIds.add(this.getIdFromFilename(file.getName()));
-				if (file.isDirectory())
+				}
+				if (file.isDirectory()) {
 					documentIds.addAll(this.getDocumentIds(file));
+				}
 			}
 		}
 		return documentIds;
@@ -216,7 +217,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 * 
 	 * @param cachePath
 	 */
-	public void setCachePath(String cachePath) {
+	public void setCachePath(File cachePath) {
 		this.cachePath = cachePath;
 	}
 
@@ -225,26 +226,27 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 * 
 	 * @return String
 	 */
-	public String getCachePath() {
+	public File getCachePath() {
 		return this.cachePath;
 	}
 
 	/**
 	 * Get the root path of the cache if it is in transaction mode.
 	 * 
-	 * @return String
+	 * @return File
 	 */
-	public String getTempPath() {
+	public File getTempPath() {
 		if (this.tmpPath == null) {
-			File originalPath = new File(this.getCachePath());
+			File originalPath = this.getCachePath();
 			File newPath = new File(originalPath.getParent()
 					+ File.separatorChar + originalPath.getName() + "_"
 					+ StringUtils.generateUuid());
 
 			// check if the cache path exists and create it if not
-			if (!newPath.exists())
+			if (!newPath.exists()) {
 				newPath.mkdir();
-			this.tmpPath = newPath.getName();
+			}
+			this.tmpPath = newPath;
 		}
 		return this.tmpPath;
 	}
@@ -258,8 +260,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 */
 	public String getAbsoluteFilename(Serializable id) {
 		StringBuffer buf = new StringBuffer();
-		buf.append(this.getAbsolutePath(id)).append(File.separatorChar)
-		.append(this.getFilename(id));
+		buf.append(this.getAbsolutePath(id)).append(File.separatorChar).append(this.getFilename(id));
 		return new File(buf.toString()).getAbsolutePath();
 	}
 
@@ -272,7 +273,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		if (!this.isInitialized()) {
 			this.initialize();
 		}
-		return this.getDocumentIds(new File(this.getWorkPath()));
+		return this.getDocumentIds(this.getWorkPath());
 	}
 
 	@Override
@@ -307,7 +308,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 				input.close();
 				input = null;
 
-				return this.unserializeDocument(content.toString());
+				return this.unserializeDocument(id, content.toString());
 			} catch (Exception e) {
 				throw new IOException(e);
 			} finally {
@@ -323,17 +324,17 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		if (!this.isInitialized()) {
 			this.initialize();
 		}
-		Serializable cacheId = this.getCacheId(document);
+		Serializable id = this.getCacheId(document);
 
 		// ensure that the directory exists
-		String path = this.getAbsolutePath(cacheId);
+		String path = this.getAbsolutePath(id);
 		new File(path).mkdirs();
 
-		String filePath = this.getAbsoluteFilename(cacheId);
+		String filePath = this.getAbsoluteFilename(id);
 		BufferedWriter output = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(filePath), "UTF8"));
 		try {
-			String content = this.serializeDocument(document);
+			String content = this.serializeDocument(id, document);
 			output.write(content);
 			output.close();
 			output = null;
@@ -342,7 +343,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 				output.close();
 			}
 		}
-		return cacheId;
+		return id;
 	}
 
 	@Override
@@ -350,7 +351,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		if (!this.isInitialized()) {
 			this.initialize();
 		}
-		File workPath = new File(this.getWorkPath());
+		File workPath = this.getWorkPath();
 		FileUtils.deleteRecursive(workPath);
 		workPath.mkdirs();
 	}
@@ -386,8 +387,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		cache.inTransaction = true;
 
 		// copy content of this instance to the new cache
-		FileUtils.copyRecursive(new File(this.getWorkPath()),
-				new File(cache.getWorkPath()));
+		FileUtils.copyRecursive(this.getWorkPath(), cache.getWorkPath());
 
 		return cache;
 	}
@@ -399,8 +399,8 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		}
 		if (this.isInTransaction()) {
 			// move content of this instance to the original cache
-			File originalDir = new File(this.getCachePath());
-			File tmpDir = new File(this.getWorkPath());
+			File originalDir = this.getCachePath();
+			File tmpDir = this.getWorkPath();
 			FileUtils.deleteRecursive(originalDir);
 			tmpDir.renameTo(originalDir);
 
@@ -417,7 +417,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		}
 		if (this.isInTransaction()) {
 			// remove content of this instance
-			File tmpDir = new File(this.getWorkPath());
+			File tmpDir = this.getWorkPath();
 			FileUtils.deleteRecursive(tmpDir);
 
 			this.inTransaction = false;
@@ -434,7 +434,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	@Override
 	public Date getLastCommitDate() {
 		// return the last modified date of the cache directory
-		File cacheDir = new File(this.getCachePath());
+		File cacheDir = this.getCachePath();
 		return new Date(cacheDir.lastModified());
 	}
 
@@ -446,18 +446,22 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	/**
 	 * Serialize a document into a string.
 	 * 
+	 * @param id
 	 * @param document
 	 * @return String
+	 * @throws Exception
 	 */
-	protected abstract String serializeDocument(T document);
+	protected abstract String serializeDocument(Serializable id, T document) throws Exception;
 
 	/**
 	 * Unserialize a string into a document.
 	 * 
+	 * @param id
 	 * @param str
 	 * @return T
+	 * @throws Exception
 	 */
-	protected abstract T unserializeDocument(String str);
+	protected abstract T unserializeDocument(Serializable id, String str) throws Exception;
 
 	/**
 	 * Create a new cache instance.

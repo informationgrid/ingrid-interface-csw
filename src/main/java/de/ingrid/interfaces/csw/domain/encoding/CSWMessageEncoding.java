@@ -13,6 +13,7 @@ import org.w3c.dom.Document;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
+import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 
 /**
  * CSWMessageEncoding defines the interface for dealing with
@@ -75,6 +76,12 @@ public interface CSWMessageEncoding {
 	 * @return The version
 	 */
 	String getVersion();
+
+	/**
+	 * Get the csw query from the request
+	 * @return CSWQuery
+	 */
+	CSWQuery getQuery();
 
 	/**
 	 * Response specific operations

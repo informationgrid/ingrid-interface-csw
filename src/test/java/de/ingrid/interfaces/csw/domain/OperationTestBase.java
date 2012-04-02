@@ -3,6 +3,7 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -19,13 +20,15 @@ import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.encoding.impl.KVPEncoding;
 import de.ingrid.interfaces.csw.domain.encoding.impl.Soap12Encoding;
 import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
+import de.ingrid.interfaces.csw.domain.filter.LuceneFilterParser;
 import de.ingrid.interfaces.csw.domain.request.CSWRequest;
 import de.ingrid.interfaces.csw.domain.request.impl.DescribeRecordRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetCapabilitiesRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetDomainRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetRecordByIdRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetRecordsRequestImpl;
-import de.ingrid.interfaces.csw.server.CSWServer;
+import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
+import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.server.ServerFacade;
 import de.ingrid.interfaces.csw.server.impl.GenericServer;
@@ -35,6 +38,9 @@ import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
 public abstract class OperationTestBase extends TestCase {
+
+	private static final String LIVE_INDEX_PATH = "tmp/index/live";
+	private static final String CSW_CACHE_PATH = "tmp/cache/csw";
 
 	protected static XPathUtils xpath;
 	static {
@@ -94,7 +100,16 @@ public abstract class OperationTestBase extends TestCase {
 		requestMap.put(Operation.GET_RECORDS, new GetRecordsRequestImpl());
 		requestMap.put(Operation.GET_RECORD_BY_ID, new GetRecordByIdRequestImpl());
 
-		CSWServer server = new GenericServer();
+		CSWRecordCache cache = new CSWRecordCache();
+		cache.setCachePath(new File(CSW_CACHE_PATH));
+
+		LuceneSearcher searcher = new LuceneSearcher();
+		searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+		searcher.setFilterParser(new LuceneFilterParser());
+		searcher.setRecordRepository(cache);
+
+		GenericServer server = new GenericServer();
+		server.setSearcher(searcher);
 
 		ServerFacade serverFacade = new ServerFacade();
 		serverFacade.setCswServerImpl(server);

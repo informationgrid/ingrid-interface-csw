@@ -15,7 +15,6 @@ public class GetRecordsRequestImpl extends AbstractRequestImpl implements GetRec
 
 	@Override
 	public CSWQuery getQuery() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getEncoding().getQuery();
 	}
 }

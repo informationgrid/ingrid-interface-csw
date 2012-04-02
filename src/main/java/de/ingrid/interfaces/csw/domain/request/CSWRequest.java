@@ -19,7 +19,8 @@ import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 public interface CSWRequest {
 
 	/**
-	 * Initialize the request instance
+	 * Initialize the request instance. This should reset the internal state,
+	 * because request classes may be reused.
 	 * @param encoding
 	 * @throws CSWException
 	 */

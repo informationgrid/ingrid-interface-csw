@@ -23,7 +23,7 @@ public class RecordCacheTest extends TestCase {
 
 	public void testPut() throws Exception {
 		RecordCache cache = new RecordCache();
-		cache.setCachePath(CACHE_PATH);
+		cache.setCachePath(new File(CACHE_PATH));
 
 		Record record = new Record();
 		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();

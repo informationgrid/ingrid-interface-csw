@@ -27,12 +27,12 @@ public class RecordCache extends AbstractFileCache<Record> implements Serializab
 	}
 
 	@Override
-	public String serializeDocument(Record document) {
+	public String serializeDocument(Serializable id, Record document) {
 		return IdfTool.getIdfDataFromRecord(document);
 	}
 
 	@Override
-	public Record unserializeDocument(String str) {
+	public Record unserializeDocument(Serializable id, String str) {
 		return IdfTool.createIdfRecord(str, true);
 	}
 

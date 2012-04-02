@@ -3,6 +3,8 @@
  */
 package de.ingrid.interfaces.csw.domain.query;
 
+import java.util.List;
+
 import org.w3c.dom.Document;
 
 import de.ingrid.interfaces.csw.domain.constants.ConstraintLanguage;
@@ -15,10 +17,11 @@ import de.ingrid.interfaces.csw.domain.constants.TypeName;
 /**
  * Representation of a CSW query. Encapsulates the varying parts of a query.
  * Instances may be used for the GetRecords or the GetRecordById request, where the
- * first would reuqire a constraint to be set, while the latter requires an id to be
+ * first would require a constraint to be set, while the latter requires an id to be
  * set. Properties that are not needed for the specific request are ignored.
  * @see OpenGIS Catalogue Services Specification 2.0.2 - ISO Metadata Application Profile 8.2.2.1 and
  * OpenGIS Catalogue Services Specification 2.0.2 - ISO Metadata Application Profile 8.2.2.2
+ * 
  * @author ingo herwig <ingo@wemove.com>
  */
 public interface CSWQuery {
@@ -168,14 +171,23 @@ public interface CSWQuery {
 	public int getMaxRecords();
 
 	/**
-	 * Set the id of the record to retrieve
-	 * @param id
+	 * Set the ids of the records to retrieve
+	 * @param ids
 	 */
-	public void setId(String id);
+	public void setIds(List<String> ids);
 
 	/**
-	 * Get the id of the record to retrieve
-	 * @return String
+	 * Get the ids of the records to retrieve.
+	 * This will return null, if not explicitly set.
+	 * @return List<String>
 	 */
-	public String getId();
+	public List<String> getIds();
+
+	/**
+	 * Set the id value of the query. This maybe a comma-separated list
+	 * which will be parsed into a list of strings by this method.
+	 * @see CSWQuery::setIds, CSWQuery::getIds
+	 * @param idStr
+	 */
+	public void setId(String idStr);
 }

@@ -22,12 +22,13 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
+import de.ingrid.interfaces.csw.tools.StringUtils;
 
 /**
  * Soap12Encoding deals with messages defined in the SOAP 1.2 format.
@@ -53,10 +54,10 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 	/**
 	 * Extract the request body from the request. Subclasses will override this.
 	 * @param request
-	 * @return Element
+	 * @return Node
 	 */
 	@Override
-	protected Element extractRequestBody(HttpServletRequest request) {
+	protected Node extractRequestBody(HttpServletRequest request) {
 		try {
 			// get the envelope and body of the SOAP request
 			MessageFactory msgFactory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
@@ -77,8 +78,11 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 			this.soapMessage = msgFactory.createMessage(headers, request.getInputStream());
 
 			// get the request body
-			Element requestBody = getMessagePayload(this.soapMessage);
-			return requestBody;
+			Node requestBody = getMessagePayload(this.soapMessage);
+
+			// create a new document with requestBody as root to get rid of the soap parts
+			Document requestDoc = StringUtils.stringToDocument(StringUtils.nodeToString(requestBody));
+			return requestDoc.getDocumentElement();
 		} catch(Exception e) {
 			throw new RuntimeException("Error parsing request: ", e);
 		}
@@ -179,17 +183,17 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 	/**
 	 * Get the payload of a SOAP message
 	 * @param message The message
-	 * @return Element
+	 * @return Node
 	 * @throws SOAPException
 	 */
-	private static Element getMessagePayload(SOAPMessage message) throws SOAPException {
-		Element requestBody = null;
+	private static Node getMessagePayload(SOAPMessage message) throws SOAPException {
+		Node requestBody = null;
 		SOAPBody body = message.getSOAPBody();
 		Iterator<?> children = body.getChildElements();
 		while (children.hasNext()) {
 			Object obj = children.next();
 			if (obj instanceof SOAPElement) {
-				requestBody = (Element)obj;
+				requestBody = (Node)obj;
 				break;
 			}
 		}

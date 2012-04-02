@@ -28,21 +28,16 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
 	}
 
 	@Override
-	public String serializeDocument(CSWRecord document) {
+	public String serializeDocument(Serializable id, CSWRecord document) throws Exception {
 		return StringUtils.nodeToString(document.getDocument());
 	}
 
 	@Override
-	public CSWRecord unserializeDocument(String str) {
-		CSWRecord record = null;
-		try {
-			Document document = StringUtils.stringToDocument(str);
-			// TODO create the record instance
-			// record.initialize(elementSetName, document.getFirstChild());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public CSWRecord unserializeDocument(Serializable id, String str) throws Exception {
+		Document document;
+		document = StringUtils.stringToDocument(str);
+		ElementSetName elementSetName = this.getElementSetNameFromCacheId(id);
+		CSWRecord record = new CSWRecord(elementSetName, document);
 		return record;
 	}
 
@@ -52,14 +47,57 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
 	}
 
 	/**
+	 * Get the cache id for a given id and element set name
+	 * @param id
+	 * @param elementSetName
+	 * @return Serializable
+	 */
+	protected Serializable getCacheId(Serializable id, ElementSetName elementSetName) {
+		return id + "_" + elementSetName;
+	}
+
+	/**
+	 * Get the record id from the given cache id
+	 * @param cacheId
+	 * @return Serializable
+	 */
+	protected Serializable getRecordIdFromCacheId(Serializable cacheId) {
+		if (cacheId != null) {
+			return cacheId.toString().replaceAll("_\\w+$", "");
+		}
+		else {
+			throw new IllegalArgumentException("Id argument must not be null");
+		}
+	}
+
+	/**
+	 * Get the element set name from the given cache id
+	 * @param cacheId
+	 * @return ElementSetName
+	 */
+	protected ElementSetName getElementSetNameFromCacheId(Serializable cacheId) {
+		if (cacheId != null) {
+			String elementSetNameStr = cacheId.toString().replaceAll("^.*_", "").toUpperCase();
+			return ElementSetName.valueOf(elementSetNameStr);
+		}
+		else {
+			throw new IllegalArgumentException("Id argument must not be null");
+		}
+	}
+
+	/**
 	 * CSWRecordRepository implementation
 	 */
 
 	@Override
 	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName) throws Exception {
-		// create a proxy to get the cache id for the record
-		CSWRecord proxy = CSWRecord.getProxy(id, elementSetName);
-		Serializable cacheId = this.getCacheId(proxy);
+		Serializable cacheId = this.getCacheId(id, elementSetName);
 		return this.get(cacheId);
+	}
+
+	@Override
+	public boolean containsRecord(String id) {
+		Serializable cacheId = this.getCacheId(id, ElementSetName.FULL);
+		return this.isCached(cacheId);
 	}
 }

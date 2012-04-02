@@ -534,7 +534,7 @@
 			<xs:annotation>
 				<xs:documentation>This file was generated from ISO TC/211 UML
 					class diagrams == 10-13-2006 11:14:04 ======
-        </xs:documentation>
+				</xs:documentation>
 			</xs:annotation>
 			<!--
 				================================== Imports

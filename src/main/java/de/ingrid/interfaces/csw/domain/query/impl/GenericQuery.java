@@ -4,6 +4,8 @@
 package de.ingrid.interfaces.csw.domain.query.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.w3c.dom.Document;
 
@@ -41,7 +43,7 @@ public class GenericQuery implements Serializable, CSWQuery {
 	/**
 	 * GetRecordById specific
 	 */
-	protected String id = null;
+	protected List<String> ids = null;
 
 	/**
 	 * Constructor
@@ -183,12 +185,23 @@ public class GenericQuery implements Serializable, CSWQuery {
 	}
 
 	@Override
-	public void setId(String id) {
-		this.id = id;
+	public void setIds(List<String> ids) {
+		this.ids = ids;
 	}
 
 	@Override
-	public String getId() {
-		return this.id;
+	public List<String> getIds() {
+		return this.ids;
+	}
+
+	@Override
+	public void setId(String idStr) {
+		this.ids = new ArrayList<String>();
+		if (idStr != null) {
+			String[] idList = idStr.split("\\s*,\\s*");
+			for (String id : idList) {
+				this.ids.add(id);
+			}
+		}
 	}
 }

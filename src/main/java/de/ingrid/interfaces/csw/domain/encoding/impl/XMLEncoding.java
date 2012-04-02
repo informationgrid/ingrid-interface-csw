@@ -12,18 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWInvalidParameterValueException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWMissingParameterValueException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
+import de.ingrid.interfaces.csw.domain.query.CSWQuery;
+import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -34,16 +36,18 @@ import de.ingrid.utils.xpath.XPathUtils;
  */
 public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
-	private Element requestBody = null;
+	private Node requestBody = null;
 	private Operation operation = null;
 	private List<String> acceptVersions = null;
+	private CSWQuery query = null;
 
 	/** Tool for evaluating xpath **/
 	private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
-	/** Parameter names **/
-	private static String SERVICE_PARAM = "service";
-	private static String VERSION_PARAM = "version";
+	/** Parameter xpath **/
+	private static String SERVICE_PARAM_XPATH = "/*/@service";
+	private static String DESCREC_VERSION_PARAM_XPATH = "DescribeRecord/@version";
+	private static String GETCAP_VERSION_PARAM_XPATH = "//AcceptVersions/Version";
 
 	/** Supported operations **/
 	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
@@ -62,6 +66,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		this.requestBody = null;
 		this.operation = null;
 		this.acceptVersions = null;
+		this.query = null;
 
 		this.setRequestBody(this.extractRequestBody(request));
 	}
@@ -71,12 +76,12 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	 * @param request
 	 * @return Element
 	 */
-	protected Element extractRequestBody(HttpServletRequest request) {
+	protected Node extractRequestBody(HttpServletRequest request) {
 		DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
 		df.setNamespaceAware(true);
 		try {
 			Document requestDocument = df.newDocumentBuilder().parse(request.getInputStream());
-			return (Element)requestDocument.getFirstChild();
+			return requestDocument;
 		} catch(Exception e) {
 			throw new RuntimeException("Error parsing request: ", e);
 		}
@@ -87,16 +92,16 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		this.checkInitialized();
 
 		// check the service parameter
-		Attr serviceAttribute = this.getRequestBody().getAttributeNode(SERVICE_PARAM);
-		if (serviceAttribute == null || serviceAttribute.getNodeValue().length() == 0) {
-			throw new CSWMissingParameterValueException("Attribute '"+SERVICE_PARAM+"' is not specified or has no value",
-					SERVICE_PARAM);
+		String service = this.xpath.getString(this.getRequestBody(), SERVICE_PARAM_XPATH);
+		if (service == null || service.length() == 0) {
+			throw new CSWMissingParameterValueException("Attribute 'service' is not specified or has no value",
+					"version");
 		} else {
-			if (!serviceAttribute.getNodeValue().equals("CSW")) {
+			if (!service.equals("CSW")) {
 				StringBuffer errorMsg = new StringBuffer();
-				errorMsg.append("Parameter '"+SERVICE_PARAM+"' has an unsupported value.\n");
+				errorMsg.append("Parameter 'version' has an unsupported value.\n");
 				errorMsg.append("Supported values: CSW\n");
-				throw new CSWInvalidParameterValueException(errorMsg.toString(), SERVICE_PARAM);
+				throw new CSWInvalidParameterValueException(errorMsg.toString(), "version");
 			}
 		}
 	}
@@ -124,7 +129,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		if (this.acceptVersions == null) {
 			this.acceptVersions = new ArrayList<String>();
 
-			NodeList versionNodes = this.xpath.getNodeList(this.getRequestBody(), "//AcceptVersions/Version");
+			NodeList versionNodes = this.xpath.getNodeList(this.getRequestBody(), GETCAP_VERSION_PARAM_XPATH);
 			int length = versionNodes.getLength();
 			for (int i=0; i<length; i++) {
 				Node curVersionNode = versionNodes.item(i);
@@ -140,7 +145,43 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	@Override
 	public String getVersion() {
 		this.checkInitialized();
-		return this.xpath.getString(this.getRequestBody(), "//DescribeRecord/@"+VERSION_PARAM);
+		return this.xpath.getString(this.getRequestBody(), DESCREC_VERSION_PARAM_XPATH);
+	}
+
+	@Override
+	public CSWQuery getQuery() {
+		this.checkInitialized();
+
+		if (this.query == null) {
+			this.query = new GenericQuery();
+			try {
+				// only required for GetRecordById, GetRecords operations
+				Operation operation = this.getOperation();
+				if (operation == Operation.GET_RECORD_BY_ID) {
+					// NOTE: getting enum values may throw an IllegalArgumentException,
+					// which is ok
+					Node requestBody = this.getRequestBody();
+
+					// extract the id
+					String id = this.xpath.getString(requestBody, "/GetRecordById/Id");
+					if (id != null) {
+						this.query.setId(id);
+					}
+					// extract the element set name
+					String elementSetNameStr = this.xpath.getString(requestBody, "/GetRecordById/ElementSetName");
+					if (elementSetNameStr != null) {
+						this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
+					}
+					// extract the output schema
+					String schemaUri = this.xpath.getString(requestBody, "/GetRecordById/OutputSchema");
+					if (schemaUri != null) {
+						this.query.setOutputSchema(Namespace.getByUri(schemaUri));
+					}
+				}
+			}
+			catch (CSWOperationNotSupportedException ex) {}
+		}
+		return this.query;
 	}
 
 	@Override
@@ -159,17 +200,17 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
 	/**
 	 * Get the request body
-	 * @return The Element
+	 * @return Node
 	 */
-	protected Element getRequestBody() {
+	protected Node getRequestBody() {
 		return this.requestBody;
 	}
 
 	/**
 	 * Set the request body
-	 * @param requestBody The requestBody Element to set
+	 * @param requestBody The requestBody node to set
 	 */
-	protected void setRequestBody(Element requestBody) {
+	protected void setRequestBody(Node requestBody) {
 		this.requestBody = requestBody;
 	}
 }

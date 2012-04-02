@@ -33,8 +33,9 @@ public interface Searcher {
 	 * 
 	 * @param query
 	 * @return List<CSWRecord>
+	 * @throws Exception
 	 */
-	public List<CSWRecord> search(CSWQuery query);
+	public List<CSWRecord> search(CSWQuery query) throws Exception;
 
 	/**
 	 * Get the path to the Lucene index

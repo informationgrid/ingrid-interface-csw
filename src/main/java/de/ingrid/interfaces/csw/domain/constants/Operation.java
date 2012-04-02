@@ -51,14 +51,14 @@ public enum Operation {
 	 * Operation name to Operation mapping
 	 */
 	private static Map<String, Operation> nameMapping = null;
+	static {
+		nameMapping = new Hashtable<String, Operation>();
+		for (Operation op : Operation.values()) {
+			nameMapping.put(op.toString(), op);
+		}
+	}
 
 	public static Operation getByName(String name) throws CSWOperationNotSupportedException {
-		if (nameMapping == null) {
-			nameMapping = new Hashtable<String, Operation>();
-			for (Operation op : Operation.values()) {
-				nameMapping.put(op.toString(), op);
-			}
-		}
 		Operation op = nameMapping.get(name);
 		if (op == null) {
 			throw new CSWOperationNotSupportedException("The operation '"+name+"' is unknown.", name);

@@ -7,29 +7,35 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
-import de.ingrid.interfaces.csw.domain.filter.FilterParser;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.request.DescribeRecordRequest;
 import de.ingrid.interfaces.csw.domain.request.GetCapabilitiesRequest;
 import de.ingrid.interfaces.csw.domain.request.GetDomainRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordByIdRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordsRequest;
+import de.ingrid.interfaces.csw.search.Searcher;
 import de.ingrid.interfaces.csw.server.CSWServer;
 import de.ingrid.interfaces.csw.tools.StringUtils;
-import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -45,16 +51,16 @@ public class GenericServer implements CSWServer {
 	private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
 	/**
-	 * The FilterParser instance that converts csw queries to InGrid queries
+	 * The Searcher instance to use for searching records
 	 */
-	private FilterParser filterParser;
+	private Searcher searcher;
 
 	/**
-	 * Set the FilterParser instance
-	 * @param filterParser
+	 * Set the Searcher instance
+	 * @param searcher
 	 */
-	public void setFilterParser(FilterParser filterParser) {
-		this.filterParser = filterParser;
+	public void setSearcher(Searcher searcher) {
+		this.searcher = searcher;
 	}
 
 	@Override
@@ -116,19 +122,50 @@ public class GenericServer implements CSWServer {
 
 	@Override
 	public Document process(GetRecordsRequest request) throws CSWException {
-		if (this.filterParser == null) {
-			throw new RuntimeException("GenericServer is not configured properly: filterParser is not set.");
+		try {
+			CSWQuery query = request.getQuery();
+			List<CSWRecord> result = this.searcher.search(query);
+
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement("GetRecordsResponse");
+			doc.appendChild(rootElement);
+			for (CSWRecord record : result) {
+				Node recordNode = record.getDocument().getFirstChild();
+				doc.adoptNode(recordNode);
+				rootElement.appendChild(recordNode);
+			}
+			return doc;
 		}
-		CSWQuery query = request.getQuery();
-		IngridQuery ingridQuery = this.filterParser.parse(query.getConstraint());
-		// TODO execute the query
-		return null;
+		catch (Exception ex) {
+			log.error("An error occured processing GetRecordsRequest", ex);
+			throw new CSWException("An error occured processing GetRecordsRequest");
+		}
 	}
 
 	@Override
 	public Document process(GetRecordByIdRequest request) throws CSWException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			CSWQuery query = request.getQuery();
+			List<CSWRecord> result = this.searcher.search(query);
+
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement("GetRecordByIdResponse");
+			doc.appendChild(rootElement);
+			for (CSWRecord record : result) {
+				Node recordNode = record.getDocument().getFirstChild();
+				doc.adoptNode(recordNode);
+				rootElement.appendChild(recordNode);
+			}
+			return doc;
+		}
+		catch (Exception ex) {
+			log.error("An error occured processing GetRecordByIdRequest", ex);
+			throw new CSWException("An error occured processing GetRecordByIdRequest");
+		}
 	}
 
 	/**

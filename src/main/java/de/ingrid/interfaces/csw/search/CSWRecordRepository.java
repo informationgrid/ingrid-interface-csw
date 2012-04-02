@@ -22,4 +22,11 @@ public interface CSWRecordRepository {
 	 * @param elementSetName
 	 */
 	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName) throws Exception;
+
+	/**
+	 * Check if the record with the given id is contained in the repository.
+	 * 
+	 * @param id
+	 */
+	public boolean containsRecord(String id);
 }

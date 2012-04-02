@@ -7,14 +7,15 @@ import org.apache.lucene.search.Query;
 import org.w3c.dom.Document;
 
 /**
- * @author ingo herwig <ingo@wemove.com>
+ * @author ingo@wemove.com
+ *
  */
-public interface FilterParser {
+public class LuceneFilterParser implements FilterParser {
 
-	/**
-	 * Pass a OGC filter document into a Lucene query
-	 * @param filterDoc
-	 * @return Query
-	 */
-	Query parse(Document filterDoc);
+	@Override
+	public Query parse(Document filterDoc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

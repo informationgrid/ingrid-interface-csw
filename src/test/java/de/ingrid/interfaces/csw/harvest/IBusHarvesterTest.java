@@ -3,6 +3,7 @@
  */
 package de.ingrid.interfaces.csw.harvest;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public class IBusHarvesterTest extends TestCase {
 
 		// setup cache
 		RecordCache cache = new RecordCache();
-		cache.setCachePath(CACHE_PATH);
+		cache.setCachePath(new File(CACHE_PATH));
 
 		// setup requests
 		List<RequestDefinition> requestDefinitions = new ArrayList<RequestDefinition>();
