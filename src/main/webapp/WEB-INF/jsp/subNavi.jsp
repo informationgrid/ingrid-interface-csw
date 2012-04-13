@@ -5,7 +5,7 @@
 		<h2>Configuration</h2>
 	</div>
 	<ul>
-		<li class="active"><a href="${pageContext.request.contextPath}">Manage Harvester</a></li>
+		<li class="active"><a href="${pageContext.request.contextPath}/list_harvester.html">Manage Harvester</a></li>
         <li><a href="${pageContext.request.contextPath}">Control Scheduler</a></li>
         <li><a href="${pageContext.request.contextPath}">Manually issue harvesting</a></li>
 	</ul>

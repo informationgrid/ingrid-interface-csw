@@ -13,4 +13,6 @@ import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 public interface HarvesterConfiguration extends ClassConfiguration {
 
 	RecordCacheConfiguration getCacheConfiguration();
+	
+	String getName();
 }

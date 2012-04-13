@@ -14,6 +14,7 @@ import java.io.OutputStreamWriter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Service;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -27,7 +28,10 @@ import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
  * 
  * @author ingo@wemove.com
  */
+@Service
 public class ConfigurationProvider {
+    
+    public static final String CONFIGURATION_FILE_NAME_PROPERTY = "config"; 
 
 	final protected static Log log = LogFactory.getLog(ConfigurationProvider.class);
 
@@ -44,7 +48,10 @@ public class ConfigurationProvider {
 	/**
 	 * Constructor.
 	 */
-	public ConfigurationProvider() {}
+	public ConfigurationProvider() {
+	    
+	    this.configurationFile = new File(System.getProperty(CONFIGURATION_FILE_NAME_PROPERTY));	    
+	}
 
 	/**
 	 * Set the configuration file.

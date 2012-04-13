@@ -1,0 +1,25 @@
+<configuration>
+  <harvesterConfigs>
+    <iBusHarvester>
+      <communicationXml>src/test/resources/communication.xml</communicationXml>
+      <requestDefinitions>
+        <request>
+          <timeout>2000</timeout>
+          <pause>20</pause>
+          <recordsPerCall>200</recordsPerCall>
+          <queryString>iplugs:&quot;/ingrid-group:iplug-csw-dsc-be&quot; ranking:score</queryString>
+        </request>
+      </requestDefinitions>
+      <cache>
+        <cachePath>tmp/cache/csw-dsc-be</cachePath>
+        <className>de.ingrid.interfaces.csw.harvest.impl.RecordCache</className>
+      </cache>
+      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
+      <name>a harvester test</name>
+    </iBusHarvester>
+    <iBusHarvester>
+      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
+      <name>fdgdfgfdg</name>
+    </iBusHarvester>
+  </harvesterConfigs>
+</configuration>

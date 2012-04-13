@@ -18,6 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
@@ -42,15 +43,21 @@ public class UpdateJob {
 	final private static String DATE_FILENAME = "updatejob.dat";
 	final private static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	/**
-	 * The update job configuration provider
-	 */
+    /**
+     * The update job configuration provider
+     */
+    @Autowired
 	private ConfigurationProvider configurationProvider;
 
 	/**
 	 * The Indexer instance
 	 */
 	private Indexer indexer;
+
+	/**
+	 * The path to the lucene index
+	 */
+	private File indexPath;
 
 	/**
 	 * The CSWRecordMapper instance
@@ -86,6 +93,14 @@ public class UpdateJob {
 	 */
 	public void setIndexer(Indexer indexer) {
 		this.indexer = indexer;
+	}
+
+	/**
+	 * Set the index path.
+	 * @param indexPath
+	 */
+	public void setIndexPath(File indexPath) {
+		this.indexPath = indexPath;
 	}
 
 	/**
