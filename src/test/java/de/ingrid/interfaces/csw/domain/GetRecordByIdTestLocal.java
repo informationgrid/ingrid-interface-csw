@@ -26,7 +26,7 @@ public class GetRecordByIdTestLocal extends OperationTestBase {
 		Mockery context = new Mockery();
 		HttpServletRequest request = context.mock(HttpServletRequest.class);
 		HttpServletResponse response = context.mock(HttpServletResponse.class);
-		String requestStr = TestRequests.GETRECORDBYID_SOAP;
+		String requestStr = TestRequests.getRequest(TestRequests.GETRECORDBYID_SOAP);
 
 		// expectations
 		this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
@@ -62,7 +62,7 @@ public class GetRecordByIdTestLocal extends OperationTestBase {
 		Mockery context = new Mockery();
 		final HttpServletRequest request = context.mock(HttpServletRequest.class);
 		final HttpServletResponse response = context.mock(HttpServletResponse.class);
-		String requestStr = TestRequests.GETRECORDBYID_MULTIPLE_SOAP;
+		String requestStr = TestRequests.getRequest(TestRequests.GETRECORDBYID_MULTIPLE_SOAP);
 
 		// expectations
 		this.setupDefaultSoapExpectations(context, request, response, result, requestStr);

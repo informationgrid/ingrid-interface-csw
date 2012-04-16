@@ -56,7 +56,7 @@ public class DescribeRecordTestLocal extends OperationTestBase {
 		Mockery context = new Mockery();
 		final HttpServletRequest request = context.mock(HttpServletRequest.class);
 		final HttpServletResponse response = context.mock(HttpServletResponse.class);
-		String requestStr = TestRequests.DESCREC_POST;
+		String requestStr = TestRequests.getRequest(TestRequests.DESCREC_POST);
 
 		// expectations
 		this.setupDefaultPostExpectations(context, request, response, result, requestStr);
@@ -87,7 +87,7 @@ public class DescribeRecordTestLocal extends OperationTestBase {
 		Mockery context = new Mockery();
 		final HttpServletRequest request = context.mock(HttpServletRequest.class);
 		final HttpServletResponse response = context.mock(HttpServletResponse.class);
-		String requestStr = TestRequests.DESCREC_SOAP;
+		String requestStr = TestRequests.getRequest(TestRequests.DESCREC_SOAP);
 
 		// expectations
 		this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
