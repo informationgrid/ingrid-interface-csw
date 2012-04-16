@@ -3,15 +3,9 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -26,27 +20,17 @@ public class DescribeRecordTestLocal extends OperationTestBase {
 	 * @throws Exception
 	 */
 	public void testKVPDescribeRecordRequest() throws Exception {
-		Mockery context = new Mockery();
-
-		final HttpServletRequest request = context.mock(HttpServletRequest.class);
-		final HttpServletResponse response = context.mock(HttpServletResponse.class);
 
 		StringBuffer result = new StringBuffer();
-		final ServletOutputStream sos = new TestServletOutputStream(result);
+		Mockery context = new Mockery();
+		final HttpServletRequest request = context.mock(HttpServletRequest.class);
+		final HttpServletResponse response = context.mock(HttpServletResponse.class);
+		String requestStr = "DescribeRecord";
 
 		// expectations
-		final List<String> parameters = Arrays.asList(new String[]{"SERVICE", "REQUEST", "version"});
-		context.checking(new Expectations() {{
-			this.allowing(request).getParameterNames(); this.will(returnEnumeration(parameters));
-			this.allowing(request).getParameter("SERVICE"); this.will(returnValue("CSW"));
-			this.allowing(request).getParameter("REQUEST"); this.will(returnValue("DescribeRecord"));
-			this.allowing(request).getParameter("version"); this.will(returnValue("2.0.2"));
-			this.allowing(response).setContentType("application/xml");
-			this.allowing(response).setCharacterEncoding("UTF-8");
-			this.allowing(response).getOutputStream(); this.will(returnValue(sos));
-		}});
+		this.setupDefaultGetExpectations(context, request, response, result, requestStr);
 
-		// test
+		// make request
 		CSWServlet servlet = this.createServlet();
 		servlet.doGet(request, response);
 
@@ -67,26 +51,17 @@ public class DescribeRecordTestLocal extends OperationTestBase {
 	 * @throws Exception
 	 */
 	public void testXMLDescribeRecordRequest() throws Exception {
-		Mockery context = new Mockery();
-
-		final HttpServletRequest request = context.mock(HttpServletRequest.class);
-		final HttpServletResponse response = context.mock(HttpServletResponse.class);
 
 		StringBuffer result = new StringBuffer();
-		final ServletInputStream sis = new TestServletInputStream(TestRequests.DESCREC_POST);
-		final ServletOutputStream sos = new TestServletOutputStream(result);
+		Mockery context = new Mockery();
+		final HttpServletRequest request = context.mock(HttpServletRequest.class);
+		final HttpServletResponse response = context.mock(HttpServletResponse.class);
+		String requestStr = TestRequests.DESCREC_POST;
 
 		// expectations
-		context.checking(new Expectations() {{
-			this.allowing(request).getContentType(); this.will(returnValue("application/xml"));
-			this.allowing(request).getHeaderNames();
-			this.allowing(request).getInputStream(); this.will(returnValue(sis));
-			this.allowing(response).setContentType("application/xml");
-			this.allowing(response).setCharacterEncoding("UTF-8");
-			this.allowing(response).getOutputStream(); this.will(returnValue(sos));
-		}});
+		this.setupDefaultPostExpectations(context, request, response, result, requestStr);
 
-		// test
+		// make request
 		CSWServlet servlet = this.createServlet();
 		servlet.doPost(request, response);
 
@@ -107,29 +82,17 @@ public class DescribeRecordTestLocal extends OperationTestBase {
 	 * @throws Exception
 	 */
 	public void testSoapDescribeRecordRequest() throws Exception {
-		Mockery context = new Mockery();
-
-		final HttpServletRequest request = context.mock(HttpServletRequest.class);
-		final HttpServletResponse response = context.mock(HttpServletResponse.class);
 
 		StringBuffer result = new StringBuffer();
-		final ServletInputStream sis = new TestServletInputStream(TestRequests.DESCREC_SOAP);
-		final ServletOutputStream sos = new TestServletOutputStream(result);
+		Mockery context = new Mockery();
+		final HttpServletRequest request = context.mock(HttpServletRequest.class);
+		final HttpServletResponse response = context.mock(HttpServletResponse.class);
+		String requestStr = TestRequests.DESCREC_SOAP;
 
 		// expectations
-		context.checking(new Expectations() {{
-			this.allowing(request).getHeaderNames();
-			this.allowing(request).getContentType(); this.will(returnValue("application/soap+xml"));
-			this.allowing(request).getInputStream(); this.will(returnValue(sis));
-			this.allowing(response).setStatus(HttpServletResponse.SC_OK);
-			this.allowing(response).setHeader("Content-Type", "application/soap+xml; charset=utf-8");
-			this.allowing(response).setHeader(this.with(any(String.class)), this.with(any(String.class)));
-			this.allowing(response).setContentType("application/soap+xml");
-			this.allowing(response).setCharacterEncoding("UTF-8");
-			this.allowing(response).getOutputStream(); this.will(returnValue(sos));
-		}});
+		this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
 
-		// test
+		// make request
 		CSWServlet servlet = this.createServlet();
 		servlet.doPost(request, response);
 

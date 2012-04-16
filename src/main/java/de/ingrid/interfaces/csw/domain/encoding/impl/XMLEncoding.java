@@ -46,8 +46,8 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
 	/** Parameter xpath **/
 	private static String SERVICE_PARAM_XPATH = "/*/@service";
-	private static String DESCREC_VERSION_PARAM_XPATH = "DescribeRecord/@version";
-	private static String GETCAP_VERSION_PARAM_XPATH = "//AcceptVersions/Version";
+	private static String DESCREC_VERSION_PARAM_XPATH = "/DescribeRecord/@version";
+	private static String GETCAP_VERSION_PARAM_XPATH = "/GetCapabilities/AcceptVersions/Version";
 
 	/** Supported operations **/
 	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
@@ -81,7 +81,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		df.setNamespaceAware(true);
 		try {
 			Document requestDocument = df.newDocumentBuilder().parse(request.getInputStream());
-			return requestDocument;
+			return requestDocument.getDocumentElement();
 		} catch(Exception e) {
 			throw new RuntimeException("Error parsing request: ", e);
 		}
@@ -95,11 +95,11 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		String service = this.xpath.getString(this.getRequestBody(), SERVICE_PARAM_XPATH);
 		if (service == null || service.length() == 0) {
 			throw new CSWMissingParameterValueException("Attribute 'service' is not specified or has no value",
-					"version");
+					"service");
 		} else {
 			if (!service.equals("CSW")) {
 				StringBuffer errorMsg = new StringBuffer();
-				errorMsg.append("Parameter 'version' has an unsupported value.\n");
+				errorMsg.append("Parameter 'service' has an unsupported value.\n");
 				errorMsg.append("Supported values: CSW\n");
 				throw new CSWInvalidParameterValueException(errorMsg.toString(), "version");
 			}

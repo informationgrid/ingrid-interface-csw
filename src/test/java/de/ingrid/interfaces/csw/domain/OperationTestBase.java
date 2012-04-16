@@ -7,13 +7,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import junit.framework.TestCase;
+
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.constants.RequestType;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
@@ -120,5 +128,81 @@ public abstract class OperationTestBase extends TestCase {
 		servlet.setServerFacade(serverFacade);
 
 		return servlet;
+	}
+
+	/**
+	 * Set up default expectations for get requests.
+	 * @param context
+	 * @param request
+	 * @param response
+	 * @param result
+	 * @param requestStr
+	 * @throws IOException
+	 */
+	protected void setupDefaultGetExpectations(Mockery context, final HttpServletRequest request,
+			final HttpServletResponse response, StringBuffer result, final String requestStr) throws IOException {
+		final ServletOutputStream sos = new TestServletOutputStream(result);
+		final List<String> parameters = Arrays.asList(new String[]{"SERVICE", "REQUEST", "version"});
+		context.checking(new Expectations() {{
+			this.allowing(request).getParameterNames(); this.will(returnEnumeration(parameters));
+			this.allowing(request).getParameter("SERVICE"); this.will(returnValue("CSW"));
+			this.allowing(request).getParameter("REQUEST"); this.will(returnValue(requestStr));
+			this.allowing(request).getParameter("version"); this.will(returnValue("2.0.2"));
+			this.allowing(response).setContentType("application/xml");
+			this.allowing(response).setCharacterEncoding("UTF-8");
+			this.allowing(response).getOutputStream(); this.will(returnValue(sos));
+		}});
+	}
+
+	/**
+	 * Set up default expectations for post requests.
+	 * @param context
+	 * @param request
+	 * @param response
+	 * @param result
+	 * @param requestStr
+	 * @throws IOException
+	 */
+	protected void setupDefaultPostExpectations(Mockery context, final HttpServletRequest request,
+			final HttpServletResponse response, StringBuffer result, String requestStr) throws IOException {
+		final ServletInputStream sis = new TestServletInputStream(requestStr);
+		final ServletOutputStream sos = new TestServletOutputStream(result);
+		context.checking(new Expectations() {{
+			this.allowing(request).getHeaderNames();
+			this.allowing(request).getContentType(); this.will(returnValue("application/xml"));
+			this.allowing(request).getInputStream(); this.will(returnValue(sis));
+			this.allowing(response).setStatus(HttpServletResponse.SC_OK);
+			this.allowing(response).setHeader("Content-Type", "application/xml; charset=utf-8");
+			this.allowing(response).setHeader(this.with(any(String.class)), this.with(any(String.class)));
+			this.allowing(response).setContentType("application/xml");
+			this.allowing(response).setCharacterEncoding("UTF-8");
+			this.allowing(response).getOutputStream(); this.will(returnValue(sos));
+		}});
+	}
+
+	/**
+	 * Set up default expectations for soap requests.
+	 * @param context
+	 * @param request
+	 * @param response
+	 * @param result
+	 * @param requestStr
+	 * @throws IOException
+	 */
+	protected void setupDefaultSoapExpectations(Mockery context, final HttpServletRequest request,
+			final HttpServletResponse response, StringBuffer result, String requestStr) throws IOException {
+		final ServletInputStream sis = new TestServletInputStream(requestStr);
+		final ServletOutputStream sos = new TestServletOutputStream(result);
+		context.checking(new Expectations() {{
+			this.allowing(request).getHeaderNames();
+			this.allowing(request).getContentType(); this.will(returnValue("application/soap+xml"));
+			this.allowing(request).getInputStream(); this.will(returnValue(sis));
+			this.allowing(response).setStatus(HttpServletResponse.SC_OK);
+			this.allowing(response).setHeader("Content-Type", "application/soap+xml; charset=utf-8");
+			this.allowing(response).setHeader(this.with(any(String.class)), this.with(any(String.class)));
+			this.allowing(response).setContentType("application/soap+xml");
+			this.allowing(response).setCharacterEncoding("UTF-8");
+			this.allowing(response).getOutputStream(); this.will(returnValue(sos));
+		}});
 	}
 }

@@ -59,11 +59,9 @@ public class CSWServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		try {
 			if (request.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
-
 				this.serverFacade.handleSoapRequest(request, response);
 			}
 			else if (request.getContentType().toLowerCase().indexOf("application/xml") != -1) {
-
 				this.serverFacade.handlePostRequest(request, response);
 			}
 			else {

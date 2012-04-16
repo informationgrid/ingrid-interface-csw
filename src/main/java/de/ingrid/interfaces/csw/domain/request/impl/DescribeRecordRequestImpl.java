@@ -30,7 +30,7 @@ public class DescribeRecordRequestImpl extends AbstractRequestImpl implements De
 		String version = this.getEncoding().getVersion();
 		if (version == null || !cswVersion.equals(version)) {
 			StringBuffer errorMsg = new StringBuffer();
-			errorMsg.append("Version has an unsupported value.\n");
+			errorMsg.append("Parameter 'version' has an unsupported value.\n");
 			errorMsg.append("Supported value: ").append(cswVersion).append("\n");
 			throw new CSWVersionNegotiationFailedException(errorMsg.toString());
 		}

@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -128,9 +129,9 @@ public class GenericServer implements CSWServer {
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("GetRecordsResponse");
-			doc.appendChild(rootElement);
+			DOMImplementation domImpl = docBuilder.getDOMImplementation();
+			Document doc = domImpl.createDocument("http://www.opengis.net/cat/csw/2.0.2", "csw:GetRecordsResponse", null);
+			Element rootElement = doc.getDocumentElement();
 			for (CSWRecord record : result) {
 				Node recordNode = record.getDocument().getFirstChild();
 				doc.adoptNode(recordNode);
@@ -151,10 +152,11 @@ public class GenericServer implements CSWServer {
 			List<CSWRecord> result = this.searcher.search(query);
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			docFactory.setNamespaceAware(true);
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("GetRecordByIdResponse");
-			doc.appendChild(rootElement);
+			DOMImplementation domImpl = docBuilder.getDOMImplementation();
+			Document doc = domImpl.createDocument("http://www.opengis.net/cat/csw/2.0.2", "csw:GetRecordByIdResponse", null);
+			Element rootElement = doc.getDocumentElement();
 			for (CSWRecord record : result) {
 				Node recordNode = record.getDocument().getFirstChild();
 				doc.adoptNode(recordNode);

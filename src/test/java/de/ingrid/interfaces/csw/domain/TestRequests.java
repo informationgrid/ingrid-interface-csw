@@ -37,4 +37,13 @@ public final class TestRequests {
 			+ "<Id>04068592-709f-3c7a-85de-f2d68e585fca</Id>\n" + "<ElementSetName>full</ElementSetName>\n" + "</GetRecordById>\n"
 			+ "</soapenv:Body>\n" + "</soapenv:Envelope>";
 
+	public static final String GETRECORDBYID_MULTIPLE_SOAP = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+			+ "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"\n"
+			+ "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
+			+ "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"
+			+ " <soapenv:Body>\n"
+			+ "<GetRecordById service=\"CSW\" version=\"2.0.0\">\n"
+			+ "<Id>04068592-709f-3c7a-85de-f2d68e585fca, 16f6d74b-f5b7-3efb-ae3c-0128549b8ac6</Id>\n" + "<ElementSetName>full</ElementSetName>\n" + "</GetRecordById>\n"
+			+ "</soapenv:Body>\n" + "</soapenv:Envelope>";
+
 }
