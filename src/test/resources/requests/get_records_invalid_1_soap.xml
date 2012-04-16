@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<GetRecord maxRecords="10" outputFormat="text/xml"
+			outputSchema="csw:profile" requestId="csw:1" resultType="results"
+			service="CSW" startPosition="1" version="2.0.0"
+			xmlns="http://www.opengis.net/cat/csw">
+			<Query typeNames="csw:dataset">
+				<ElementSetName typeNames="">brief</ElementSetName>
+				<Constraint version="1.0.0">
+					<Filter xmlns="http://www.opengis.net/ogc">
+						<Or>
+							<PropertyIsLike escape="!" singleChar="#"
+								wildCard="*">
+								<PropertyName>Abstract</PropertyName>
+								<Literal>arte*</Literal>
+							</PropertyIsLike>
+							<PropertyIsEqualTo>
+								<PropertyName>Title</PropertyName>
+								<Literal>Test</Literal>
+							</PropertyIsEqualTo>
+						</Or>
+					</Filter>
+				</Constraint>
+			</Query>
+		</GetRecord>
+	</soapenv:Body>
+</soapenv:Envelope>

@@ -28,7 +28,7 @@ import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.encoding.impl.KVPEncoding;
 import de.ingrid.interfaces.csw.domain.encoding.impl.Soap12Encoding;
 import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
-import de.ingrid.interfaces.csw.domain.filter.LuceneFilterParser;
+import de.ingrid.interfaces.csw.domain.filter.impl.LuceneFilterParser;
 import de.ingrid.interfaces.csw.domain.request.CSWRequest;
 import de.ingrid.interfaces.csw.domain.request.impl.DescribeRecordRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetCapabilitiesRequestImpl;
@@ -93,8 +93,9 @@ public abstract class OperationTestBase extends TestCase {
 	/**
 	 * Create and configure the servlet
 	 * @return CSWServlet
+	 * @throws Exception
 	 */
-	protected CSWServlet createServlet() {
+	protected CSWServlet createServlet() throws Exception {
 
 		Map<RequestType, CSWMessageEncoding> messageEncodingMap = new Hashtable<RequestType, CSWMessageEncoding>();
 		messageEncodingMap.put(RequestType.GET, new KVPEncoding());
@@ -126,6 +127,8 @@ public abstract class OperationTestBase extends TestCase {
 
 		CSWServlet servlet = new CSWServlet();
 		servlet.setServerFacade(serverFacade);
+
+		searcher.start();
 
 		return servlet;
 	}

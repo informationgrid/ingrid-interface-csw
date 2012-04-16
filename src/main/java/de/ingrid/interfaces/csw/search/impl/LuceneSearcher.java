@@ -88,6 +88,9 @@ public class LuceneSearcher implements Searcher {
 		if (this.recordRepository == null) {
 			throw new RuntimeException("LuceneSearcher is not configured properly: recordRepository is not set.");
 		}
+		if (this.indexSearcher == null) {
+			throw new RuntimeException("LuceneSearcher is not started.");
+		}
 
 		List<CSWRecord> result = new ArrayList<CSWRecord>();
 		ElementSetName elementSetName = query.getElementSetName();
@@ -104,6 +107,9 @@ public class LuceneSearcher implements Searcher {
 		else {
 			// use the query constraints to search for records in the Lucene index
 			Query luceneQuery = this.filterParser.parse(query.getConstraint());
+			if (luceneQuery == null) {
+				throw new RuntimeException("Error parsing query constraint: Lucene query is null");
+			}
 			TopScoreDocCollector collector = TopScoreDocCollector.create(this.indexSearcher.maxDoc(), true);
 			this.indexSearcher.search(luceneQuery, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<GetRecords maxRecords="10" outputFormat="text/xml" outputSchema="csw:profile"
+			requestId="csw:1" resultType="results" service="CSW" startPosition="1"
+			version="2.0.0" xmlns="http://www.opengis.net/cat/csw">
+			<Query typeNames="csw:dataset">
+				<ElementSetName typeNames="">brief</ElementSetName>
+				<!-- kraken ort:darmstadt NOT (saale) -->
+				<Constraint version="1.0.0">
+					<Filter xmlns="http://www.opengis.net/ogc">
+						<And>
+							<PropertyIsEqualTo>
+								<PropertyName>AnyText</PropertyName>
+								<Literal>kraken</Literal>
+							</PropertyIsEqualTo>
+							<PropertyIsEqualTo>
+								<PropertyName>GeographicDescriptionCode</PropertyName>
+								<Literal>darmstadt</Literal>
+							</PropertyIsEqualTo>
+							<Not>
+								<PropertyIsLike escape="!" singleChar="#" wildCard="*">
+									<PropertyName>AnyText</PropertyName>
+									<Literal>saale</Literal>
+								</PropertyIsLike>
+							</Not>
+						</And>
+					</Filter>
+				</Constraint>
+			</Query>
+		</GetRecords>
+	</soapenv:Body>
+</soapenv:Envelope>

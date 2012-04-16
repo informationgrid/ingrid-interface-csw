@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<GetRecords outputFormat="text/xml" requestId="csw:1"
+			resultType="hits" service="CSW" version="2.0.0"
+			xmlns="http://www.opengis.net/cat/csw">
+			<Query typeNames="csw:dataset">
+				<Constraint version="1.0.0">
+					<Filter xmlns="http://www.opengis.net/ogc">
+						<PropertyIsEqualTo>
+							<PropertyName>Title</PropertyName>
+							<Literal>Wasser</Literal>
+						</PropertyIsEqualTo>
+					</Filter>
+				</Constraint>
+			</Query>
+		</GetRecords>
+	</soapenv:Body>
+</soapenv:Envelope>

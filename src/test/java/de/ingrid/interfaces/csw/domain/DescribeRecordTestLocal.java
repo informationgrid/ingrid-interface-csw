@@ -38,12 +38,11 @@ public class DescribeRecordTestLocal extends OperationTestBase {
 
 		// expect describe record document
 		assertTrue("The response length is > 0.", result.length() > 0);
-
 		Document responseDoc = StringUtils.stringToDocument(result.toString());
-		assertTrue("The response is no ExceptionReport.",
-				!responseDoc.getDocumentElement().getNodeName().equals("ExceptionReport"));
-		assertTrue("The response is a DescribeRecordResponse document.",
-				responseDoc.getDocumentElement().getNodeName().equals("csw:DescribeRecordResponse"));
+		Node payload = responseDoc.getLastChild();
+
+		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+		assertEquals("The response is a DescribeRecordResponse document.", "DescribeRecordResponse", payload.getLocalName());
 	}
 
 	/**
@@ -69,12 +68,11 @@ public class DescribeRecordTestLocal extends OperationTestBase {
 
 		// expect describe record document
 		assertTrue("The response length is > 0.", result.length() > 0);
-
 		Document responseDoc = StringUtils.stringToDocument(result.toString());
-		assertTrue("The response is no ExceptionReport.",
-				!responseDoc.getDocumentElement().getNodeName().equals("ExceptionReport"));
-		assertTrue("The response is a DescribeRecordResponse document.",
-				responseDoc.getDocumentElement().getNodeName().equals("csw:DescribeRecordResponse"));
+		Node payload = responseDoc.getLastChild();
+
+		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+		assertEquals("The response is a DescribeRecordResponse document.", "DescribeRecordResponse", payload.getLocalName());
 	}
 
 	/**
@@ -103,9 +101,7 @@ public class DescribeRecordTestLocal extends OperationTestBase {
 		Document responseDoc = StringUtils.stringToDocument(result.toString());
 		Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-		assertTrue("The response is no ExceptionReport.",
-				!payload.getNodeName().equals("ExceptionReport"));
-		assertTrue("The response is a DescribeRecordResponse document.",
-				payload.getNodeName().equals("csw:DescribeRecordResponse"));
+		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+		assertEquals("The response is a DescribeRecordResponse document.", "DescribeRecordResponse", payload.getLocalName());
 	}
 }

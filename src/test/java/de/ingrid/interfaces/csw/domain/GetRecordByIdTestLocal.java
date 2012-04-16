@@ -17,7 +17,7 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
 public class GetRecordByIdTestLocal extends OperationTestBase {
 
 	/**
-	 * Test GetRecordById with POST method using Soap encoding
+	 * Test GetRecordById with SOAP method using Soap encoding
 	 * @throws Exception
 	 */
 	public void testSoapGetRecordByIdRequestSimple() throws Exception {
@@ -42,8 +42,8 @@ public class GetRecordByIdTestLocal extends OperationTestBase {
 		Document responseDoc = StringUtils.stringToDocument(result.toString());
 		Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-		assertNotSame("The response is no ExceptionReport.", "ExceptionReport", payload.getNodeName());
-		assertEquals("The response is a GetRecordByIdResponse document.", "csw:GetRecordByIdResponse", payload.getNodeName());
+		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+		assertEquals("The response is a GetRecordByIdResponse document.", "GetRecordByIdResponse", payload.getLocalName());
 
 		// check records
 		NodeList recordNodes = payload.getChildNodes();
@@ -78,8 +78,8 @@ public class GetRecordByIdTestLocal extends OperationTestBase {
 		Document responseDoc = StringUtils.stringToDocument(result.toString());
 		Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-		assertNotSame("The response is no ExceptionReport.", "ExceptionReport", payload.getNodeName());
-		assertEquals("The response is a GetRecordByIdResponse document.", "csw:GetRecordByIdResponse", payload.getNodeName());
+		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+		assertEquals("The response is a GetRecordByIdResponse document.", "GetRecordByIdResponse", payload.getLocalName());
 
 		// check records
 		NodeList recordNodes = payload.getChildNodes();
@@ -88,5 +88,34 @@ public class GetRecordByIdTestLocal extends OperationTestBase {
 		assertEquals("04068592-709f-3c7a-85de-f2d68e585fca", xpath.getString(record1, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
 		Document record2 = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(1)));
 		assertEquals("16f6d74b-f5b7-3efb-ae3c-0128549b8ac6", xpath.getString(record2, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+	}
+
+	/**
+	 * Test GetRecordById with POST method using Soap encoding and invalid request
+	 * @throws Exception
+	 */
+	public void testSoapGetRecordByIdRequestInvalid() throws Exception {
+
+		StringBuffer result = new StringBuffer();
+		Mockery context = new Mockery();
+		final HttpServletRequest request = context.mock(HttpServletRequest.class);
+		final HttpServletResponse response = context.mock(HttpServletResponse.class);
+		String requestStr = TestRequests.getRequest(TestRequests.GETRECBYIDINVALID_SOAP);
+
+		// expectations
+		this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
+
+		// make request
+		CSWServlet servlet = this.createServlet();
+		servlet.doPost(request, response);
+
+		context.assertIsSatisfied();
+
+		// check csw payload
+		assertTrue("The response length is > 0.", result.length() > 0);
+		Document responseDoc = StringUtils.stringToDocument(result.toString());
+		Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
+
+		assertTrue("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
 	}
 }
