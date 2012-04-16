@@ -20,14 +20,12 @@ public abstract class ClassConfigurationBase implements ClassConfiguration {
 	 */
 	@SuppressWarnings("unused")
 	private String className;
-	
+
 	/**
-	 * The name of the harvester, this is used for the adminstration interface.
-	 * 
+	 * The human readable name of the configured class. This is used for the
+	 * administration interface.
 	 */
 	private String name;
-	
-	
 
 	/**
 	 * Constructor
@@ -38,15 +36,19 @@ public abstract class ClassConfigurationBase implements ClassConfiguration {
 		this.className = this.getClassName();
 	}
 
+	/**
+	 * Set the name of the configured class.
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Get the name of the configured class.
+	 * @return String
+	 */
+	public String getName() {
+		return this.name;
+	}
 }

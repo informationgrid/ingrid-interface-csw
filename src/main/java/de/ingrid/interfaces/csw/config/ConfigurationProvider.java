@@ -30,10 +30,13 @@ import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
  */
 @Service
 public class ConfigurationProvider {
-    
-    public static final String CONFIGURATION_FILE_NAME_PROPERTY = "config"; 
 
 	final protected static Log log = LogFactory.getLog(ConfigurationProvider.class);
+
+	/**
+	 * The name of the system property that defines the configuration file
+	 */
+	private static final String CONFIGURATION_FILE_NAME_PROPERTY = "config";
 
 	/**
 	 * The XML configuration file
@@ -49,8 +52,13 @@ public class ConfigurationProvider {
 	 * Constructor.
 	 */
 	public ConfigurationProvider() {
-	    
-	    this.configurationFile = new File(System.getProperty(CONFIGURATION_FILE_NAME_PROPERTY));	    
+
+		// check if the config property is set and load the appropriate
+		// file if yes
+		String configurationFilename = System.getProperty(CONFIGURATION_FILE_NAME_PROPERTY);
+		if (configurationFilename != null) {
+			this.configurationFile = new File(configurationFilename);
+		}
 	}
 
 	/**
