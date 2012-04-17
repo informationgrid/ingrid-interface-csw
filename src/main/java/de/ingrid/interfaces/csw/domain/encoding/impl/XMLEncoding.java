@@ -26,6 +26,7 @@ import de.ingrid.interfaces.csw.domain.exceptions.CSWMissingParameterValueExcept
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
+import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -44,10 +45,10 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	/** Tool for evaluating xpath **/
 	private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
-	/** Parameter xpath **/
+	/** Parameter xpath (namespace agnostic) **/
 	private static String SERVICE_PARAM_XPATH = "/*/@service";
-	private static String DESCREC_VERSION_PARAM_XPATH = "/DescribeRecord/@version";
-	private static String GETCAP_VERSION_PARAM_XPATH = "/GetCapabilities/AcceptVersions/Version";
+	private static String DESCREC_VERSION_PARAM_XPATH = "/child::*[name()='DescribeRecord']/@version";
+	private static String GETCAP_VERSION_PARAM_XPATH = "/child::*[name()='GetCapabilities']/child::*[name()='AcceptVersions']/child::*[name()='Version']";
 
 	/** Supported operations **/
 	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
@@ -116,7 +117,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		this.checkInitialized();
 
 		if (this.operation == null) {
-			String operationName = this.getRequestBody().getLocalName();
+			String operationName = this.getRequestBody().getNodeName();
 			this.operation = Operation.getByName(operationName);
 		}
 		return this.operation;
@@ -155,13 +156,11 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		if (this.query == null) {
 			this.query = new GenericQuery();
 			try {
+				// NOTE: getting enum values may throw an IllegalArgumentException, which is ok
+				Node requestBody = this.getRequestBody();
 				// only required for GetRecordById, GetRecords operations
 				Operation operation = this.getOperation();
 				if (operation == Operation.GET_RECORD_BY_ID) {
-					// NOTE: getting enum values may throw an IllegalArgumentException,
-					// which is ok
-					Node requestBody = this.getRequestBody();
-
 					// extract the id
 					String id = this.xpath.getString(requestBody, "/GetRecordById/Id");
 					if (id != null) {
@@ -178,8 +177,26 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 						this.query.setOutputSchema(Namespace.getByUri(schemaUri));
 					}
 				}
+				else if (operation == Operation.GET_RECORDS) {
+					// extract the filter constraint
+					Node filter = this.xpath.getNode(requestBody, "/child::*[name()='GetRecords']/child::*[name()='Query']/child::*[name()='Constraint']/child::*[name()='Filter']");
+					if (filter != null) {
+						this.query.setConstraint(StringUtils.stringToDocument(StringUtils.nodeToString(filter)));
+					}
+					// extract the constraint language version
+					String filterVersion = this.xpath.getString(requestBody, "/GetRecords/Query/Constraint/@version");
+					if (filterVersion != null) {
+						this.query.setConstraintLanguageVersion(filterVersion);
+					}
+					// extract the element set name
+					String elementSetNameStr = this.xpath.getString(requestBody, "/GetRecords/Query/ElementSetName");
+					if (elementSetNameStr != null) {
+						this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
+					}
+				}
 			}
-			catch (CSWOperationNotSupportedException ex) {}
+			catch (Exception ex) {
+			}
 		}
 		return this.query;
 	}

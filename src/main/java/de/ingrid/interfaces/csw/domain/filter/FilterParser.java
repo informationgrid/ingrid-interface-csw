@@ -15,6 +15,7 @@ public interface FilterParser {
 	 * Pass a OGC filter document into a Lucene query
 	 * @param filterDoc
 	 * @return Query
+	 * @throws Exception
 	 */
-	Query parse(Document filterDoc);
+	Query parse(Document filterDoc) throws Exception;
 }

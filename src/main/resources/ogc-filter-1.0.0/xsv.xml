@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='../style/xsv.xsl'?>
+<xsv xmlns="http://www.w3.org/2000/05/xsv" crash="true" instanceAssessed="false"
+     realName="http://www.pvretano.com/schemas/WFS_SAMPLE.xml"
+     server="Apache/2.2.22 (Fedora)" size="343"
+     target="http://www.pvretano.com/schemas/WFS_SAMPLE.xml"
+     version="XSV 3.1-1 of 2007/12/11 16:20:05">
+  <bug>validator crash during target reading</bug>
+  <XMLMessages>
+Error: can't retrieve "http://www.pvretano.com/schemas/WFS_SAMPLE.xml": 404 Not Found
+</XMLMessages>
+</xsv>
