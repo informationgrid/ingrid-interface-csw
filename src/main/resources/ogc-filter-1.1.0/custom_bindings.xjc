@@ -1,0 +1,23 @@
+<bindings version="2.0" xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <bindings schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/geometryPrimitives.xsd">
+    <bindings node="//child::*[name()='element'][@name='_Solid']">
+      <class name="SolidAbstract" />
+    </bindings>
+  </bindings>
+
+  <bindings schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/geometryBasic2d.xsd">
+    <bindings node="//child::*[name()='element'][@name='_Surface']">
+      <class name="SurfaceAbstract" />
+    </bindings>
+    <bindings node="//child::*[name()='element'][@name='_Ring']">
+      <class name="RingAbstract" />
+    </bindings>
+  </bindings>
+
+  <bindings schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/geometryBasic0d1d.xsd">
+    <bindings node="//child::*[name()='element'][@name='_Curve']">
+      <class name="CurveAbstract" />
+    </bindings>
+  </bindings>
+
+</bindings>

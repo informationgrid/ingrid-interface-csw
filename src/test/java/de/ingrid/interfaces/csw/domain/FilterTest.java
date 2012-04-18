@@ -15,11 +15,11 @@ import junit.framework.TestCase;
 
 import org.w3c.dom.Document;
 
-import de.ingrid.interfaces.csw.domain.filter.ogc1_0_0.BinaryComparisonOpType;
-import de.ingrid.interfaces.csw.domain.filter.ogc1_0_0.ComparisonOpsType;
-import de.ingrid.interfaces.csw.domain.filter.ogc1_0_0.FilterType;
-import de.ingrid.interfaces.csw.domain.filter.ogc1_0_0.LiteralType;
-import de.ingrid.interfaces.csw.domain.filter.ogc1_0_0.PropertyNameType;
+import de.ingrid.interfaces.csw.domain.filter.ogc1_1_0.BinaryComparisonOpType;
+import de.ingrid.interfaces.csw.domain.filter.ogc1_1_0.ComparisonOpsType;
+import de.ingrid.interfaces.csw.domain.filter.ogc1_1_0.FilterType;
+import de.ingrid.interfaces.csw.domain.filter.ogc1_1_0.LiteralType;
+import de.ingrid.interfaces.csw.domain.filter.ogc1_1_0.PropertyNameType;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
 public class FilterTest extends TestCase {
