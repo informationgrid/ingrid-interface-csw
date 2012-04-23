@@ -15,7 +15,7 @@ import de.ingrid.interfaces.csw.config.model.communication.CommunicationClient;
 public class CommunicationProviderTest extends TestCase {
 
     private static final File CONFIGURATION_FILE = new File("src/test/resources/communication-testcase.xml");
-    private static final File CONFIGURATION_FILE_TMP = new File("communication-testcase-tmp.xml");
+    private static final File CONFIGURATION_FILE_TMP = new File("communication-testcase-tmp.xml").getAbsoluteFile();
 
     public void testSave() throws Exception {
 

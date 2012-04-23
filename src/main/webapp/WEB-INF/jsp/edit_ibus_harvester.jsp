@@ -34,38 +34,18 @@
 		<h1 id="head">iPlug Konfiguration</h1>
 		
 		<div id="content">
-		<c:if test="${not empty errorKey}">
-		<div class="error"><spring:message code="${errorKey}"/></div>
-		</c:if>
 		<br/>
-		<h2>Manage Harvester!</h2>
+		<h2>Edit Harvester!</h2>
 		
-        <form:form method="post" action="list_harvester.html" modelAttribute="harvester">
+        <form:form method="post" action="edit_ibus_harvester.html" modelAttribute="harvester">
 
-        <table class="data">
-        <tr>
-            	<th class="leftCol">Harvester</th>
-            	<th>&nbsp;</th>
-        </tr>
-        <c:set var="i" value="0" />
-        <c:forEach items="${harvesterConfigs}" var="harvesterConfig">
-        <tr>
-        	<td class="leftCol">${harvesterConfig.name}</td>
-            <td>
-            	<button type="submit" name="edit" value="${i}" id="${i}">Edit</button>
-                <button type="submit" name="delete" value="${i}" id="${i}">Delete</button>                	
-            </td>
-        </tr>
-        <c:set var="i" value="${i + 1}" />
-        </c:forEach>
-        </table>
-		
-        
+        <form:hidden path="id" />
+
 		<table id="konfigForm">
 		<tbody>
 		<tr>
 			<td colspan="2">
-				<h3>Create a new harvester:</h3>
+				<h3>Edit a harvester:</h3>
 			</td>
 			
 		</tr>		
@@ -79,20 +59,18 @@
             </td>
         </tr>
         <tr>
-    		<td class="leftCol">Type</td>
+    		<td class="leftCol">Working directory</td>
     		<td>
-    			<form:select path="type">
-    				<form:options items="${harvesterTypes}" />
-    			</form:select>
-    			<br>
-    			<span>The type of harvester.</span>
-    			<form:errors path="type" cssClass="error" element="div" />
+        	<form:input path="workingDirectory" />
+        	<br>
+        	<span>The name of the workingDirectory.</span>
+        	<form:errors path="workingDirectory" cssClass="error" element="div" />
     		</td>
-    </tr>
+    	</tr>
         <tr>
     	<td class="leftCol">&nbsp;</td>
         <td>
-        	<button type="submit" name="new" value="new">New</button>
+			<button type="submit" name="next" value="next">Next</button>
         </td>
         </tr>
         </table>

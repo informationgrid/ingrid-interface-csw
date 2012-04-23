@@ -1,6 +1,8 @@
 <configuration>
   <harvesterConfigs>
     <iBusHarvester>
+      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
+      <name>a harvester test</name>
       <communicationXml>src/test/resources/communication.xml</communicationXml>
       <requestDefinitions>
         <request>
@@ -11,15 +13,14 @@
         </request>
       </requestDefinitions>
       <cache>
-        <cachePath>tmp/cache/csw-dsc-be</cachePath>
         <className>de.ingrid.interfaces.csw.harvest.impl.RecordCache</className>
+        <cachePath>tmp/cache/csw-dsc-be</cachePath>
       </cache>
-      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
-      <name>a harvester test</name>
     </iBusHarvester>
     <iBusHarvester>
       <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
-      <name>fdgdfgfdg</name>
+      <name>asdsadsad</name>
+      <workingDirectory>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/test</workingDirectory>
     </iBusHarvester>
   </harvesterConfigs>
 </configuration>

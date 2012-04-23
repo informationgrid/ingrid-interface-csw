@@ -35,61 +35,57 @@
 		
 		<div id="content">
 		<br/>
-		<h2>Manage Harvester!</h2>
+		<h2>Edit Harvester!</h2>
 		
-        <form:form method="post" action="manage_harvester.html" modelAttribute="harvester">
+        <form:form method="post" action="edit_ibus_harvester_2.html" modelAttribute="harvester">
 
-        <table class="data">
-        <tr>
-            	<th class="leftCol">Harvester</th>
-            	<th>&nbsp;</th>
-        </tr>
-        <c:set var="i" value="0" />
-        <c:forEach items="${harvesterConfigs}" var="harvesterConfig">
-        <tr>
-        	<td class="leftCol">${harvesterConfig.name}</td>
-            <td>
-            	<button type="submit" name="edit" value="${i}" id="${i}">Edit</button>
-                <button type="submit" name="delete" value="${i}" id="${i}">Delete</button>                	
-            </td>
-        </tr>
-        <c:set var="i" value="${i + 1}" />
-        </c:forEach>
-        </table>
-		
-        
 		<table id="konfigForm">
 		<tbody>
 		<tr>
 			<td colspan="2">
-				<h3>Create a new harvester:</h3>
+				<h3>Edit communication to iBus:</h3>
 			</td>
-			
 		</tr>		
         <tr>
-        	<td class="leftCol">Name</td>
-            <td>
-            	<form:input path="name" />
-            	<br>
-            	<span>The name of the harvester.</span>
-            	<form:errors path="name" cssClass="error" element="div" />
-            </td>
-        </tr>
+			<td class="leftCol">iBus IP</td>
+			<td>
+	    	<form:input path="iBusIp" />
+	    	<br>
+	    	<span>The IP address of the iBus (i.e. 127.0.0.1).</span>
+	    	<form:errors path="iBusIp" cssClass="error" element="div" />
+			</td>
+		</tr>
         <tr>
-    		<td class="leftCol">Type</td>
-    		<td>
-    			<form:select path="type">
-    				<form:options items="${harvesterTypes}" />
-    			</form:select>
-    			<br>
-    			<span>The type of harvester.</span>
-    			<form:errors path="type" cssClass="error" element="div" />
-    		</td>
-    </tr>
+			<td class="leftCol">iBus port</td>
+			<td>
+	    	<form:input path="iBusPort" />
+	    	<br>
+	    	<span>The port of the iBus (i.e. 9900).</span>
+	    	<form:errors path="iBusPort" cssClass="error" element="div" />
+			</td>
+		</tr>
+        <tr>
+			<td class="leftCol">iBus proxy id</td>
+			<td>
+	    	<form:input path="iBusProxyId" />
+	    	<br>
+	    	<span>The proxy id of the iBus (i.e. /ingrid-group:kug-ibus).</span>
+	    	<form:errors path="iBusProxyId" cssClass="error" element="div" />
+			</td>
+		</tr>
+        <tr>
+			<td class="leftCol">client proxy Id</td>
+			<td>
+	    	<form:input path="clientProxyId" />
+	    	<br>
+	    	<span>The proxy id of the harvester-client (i.e. /ingrid-group:csw-harvester).</span>
+	    	<form:errors path="clientProxyId" cssClass="error" element="div" />
+			</td>
+		</tr>
         <tr>
     	<td class="leftCol">&nbsp;</td>
         <td>
-        	<button type="submit" name="new" value="new">New</button>
+			<button type="submit" name="next" value="next">Save</button>
         </td>
         </tr>
         </table>

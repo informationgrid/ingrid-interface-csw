@@ -31,11 +31,6 @@ public class CommunicationProvider {
     final protected static Log log = LogFactory.getLog(CommunicationProvider.class);
 
     /**
-     * The name of the system property that defines the configuration file
-     */
-    private static final String CONFIGURATION_FILE_NAME_PROPERTY = "communication";
-
-    /**
      * The XML configuration file
      */
     private File configurationFile = null;
@@ -50,12 +45,6 @@ public class CommunicationProvider {
      */
     public CommunicationProvider() {
 
-        // check if the config property is set and load the appropriate
-        // file if yes
-        String configurationFilename = System.getProperty(CONFIGURATION_FILE_NAME_PROPERTY);
-        if (configurationFilename != null) {
-            this.configurationFile = new File(configurationFilename);
-        }
     }
 
     /**
@@ -65,6 +54,20 @@ public class CommunicationProvider {
      */
     public void setConfigurationFile(File configurationFile) {
         this.configurationFile = configurationFile;
+    }
+    
+    public File getConfigurationFile() {
+        return configurationFile;
+    }
+    
+
+    /**
+     * Set the configuration file based on the working directory. It actually creates a file ./conf/communication.xml.
+     * 
+     * @param workingDirectory
+     */
+    public void setWorkingDirectory(File workingDirectory) {
+        this.configurationFile = new File(new File(workingDirectory.getAbsolutePath(), "conf"), "communication.xml");
     }
 
     /**
@@ -77,6 +80,9 @@ public class CommunicationProvider {
         if (!this.configurationFile.exists()) {
             log.warn("Configuration file " + this.configurationFile + " does not exist.");
             log.info("Creating configuration file " + this.configurationFile);
+            if (this.configurationFile.getParentFile().exists() && !this.configurationFile.getParentFile().mkdirs()) {
+                log.error("Unable to create directories for '"+this.configurationFile.getParentFile()+"'");
+            }
             this.configurationFile.createNewFile();
         }
 
@@ -188,13 +194,13 @@ public class CommunicationProvider {
         xstream.alias("security", CommunicationServerSecurity.class);
         xstream.alias("messages", CommunicationMessages.class);
 
-        
         xstream.aliasAttribute(CommunicationClient.class, "name", "name");
         xstream.aliasAttribute(CommunicationServer.class, "name", "name");
         xstream.aliasAttribute(CommunicationServerSecurity.class, "keystore", "keystore");
         xstream.aliasAttribute(CommunicationServerSecurity.class, "password", "password");
         xstream.aliasAttribute(CommunicationServerSocket.class, "port", "port");
         xstream.aliasAttribute(CommunicationServerSocket.class, "timeout", "timeout");
+        xstream.aliasAttribute(CommunicationServerSocket.class, "ip", "ip");
         xstream.aliasAttribute(CommunicationMessages.class, "maximumSize", "maximumSize");
         xstream.aliasAttribute(CommunicationMessages.class, "threadCount", "threadCount");
         xstream.aliasAttribute(CommunicationMessages.class, "handleTimeout", "handleTimeout");

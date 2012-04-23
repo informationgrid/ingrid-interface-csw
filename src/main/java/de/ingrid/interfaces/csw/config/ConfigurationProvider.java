@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.thoughtworks.xstream.XStream;
 
 import de.ingrid.interfaces.csw.config.model.Configuration;
+import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
 import de.ingrid.interfaces.csw.config.model.impl.IBusHarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
@@ -134,7 +135,7 @@ public class ConfigurationProvider {
 
 		// make sure the configuration is loaded
 		this.getConfiguration();
-
+		
 		// serialize the Configuration instance to xml
 		XStream xstream = new XStream();
 		this.setXStreamAliases(xstream);

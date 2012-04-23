@@ -15,4 +15,5 @@ public interface ClassConfiguration {
 	 * @return String
 	 */
 	public String getClassName();
+	
 }

@@ -15,4 +15,8 @@ public interface HarvesterConfiguration extends ClassConfiguration {
 	RecordCacheConfiguration getCacheConfiguration();
 	
 	String getName();
+
+    String getWorkingDirectory();
+    
+	
 }

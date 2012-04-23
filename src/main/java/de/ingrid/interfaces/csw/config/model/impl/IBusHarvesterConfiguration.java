@@ -21,11 +21,17 @@ public class IBusHarvesterConfiguration extends ClassConfigurationBase implement
 	 */
 	private String communicationXml;
 
+    /**
+     * The working directory of the harvester
+     */
+    private String workingDirectory;
+	
 	/**
 	 * List of request definitions
 	 */
 	private List<RequestDefinition> requestDefinitions;
-
+	
+	
 	/**
 	 * The record cache configuration
 	 */
@@ -60,4 +66,14 @@ public class IBusHarvesterConfiguration extends ClassConfigurationBase implement
 	public String getClassName() {
 		return de.ingrid.interfaces.csw.harvest.impl.IBusHarvester.class.getName();
 	}
+
+    public void setWorkingDirectory(String workingDirectory) {
+        this.workingDirectory = workingDirectory;
+    }
+
+    @Override
+    public String getWorkingDirectory() {
+        return workingDirectory;
+    }
+
 }

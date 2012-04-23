@@ -31,6 +31,12 @@ public class RequestDefinition {
 	 */
 	private String queryString = "";
 
+    /**
+     * The proxy id of the iPlug.
+     */
+    private String proxyId = "";
+	
+	
 	/**
 	 * Get the time in msec to wait for a response after sending a request
 	 * to the harvesting source.
@@ -109,4 +115,12 @@ public class RequestDefinition {
 	public String toString() {
 		return "Query:'"+this.queryString+"', RecordsPerCall:"+this.recordsPerCall+", Pause:"+this.pause+", Timeout:"+this.timeout;
 	}
+
+    public void setProxyId(String proxyId) {
+        this.proxyId = proxyId;
+    }
+
+    public String getProxyId() {
+        return proxyId;
+    }
 }
