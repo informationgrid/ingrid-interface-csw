@@ -190,11 +190,11 @@ public class FilterParserTest extends TestCase {
 				"    <ogc:And>                                        "             +
 				"        <ogc:PropertyIsEqualTo>"                                   +
 				"            <ogc:PropertyName>apiso:Title</ogc:PropertyName>"      +
-				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"           +
+				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"     +
 				"        </ogc:PropertyIsEqualTo>"                                  +
 				"        <ogc:PropertyIsEqualTo>"                                   +
 				"            <ogc:PropertyName>apiso:Author</ogc:PropertyName>"     +
-				"            <ogc:Literal>Georg Büchner</ogc:Literal>"           +
+				"            <ogc:Literal>Georg Buechner</ogc:Literal>"             +
 				"        </ogc:PropertyIsEqualTo>"                                  +
 				"    </ogc:And>"                                                    +
 				"</ogc:Filter>";
@@ -202,7 +202,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" AND Author:\"Georg Büchner\")");
+		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" AND Author:\"Georg Buechner\")");
 
 		/**
 		 * Test 2: a simple Filter OR between two propertyIsEqualTo
@@ -211,11 +211,11 @@ public class FilterParserTest extends TestCase {
 				"    <ogc:Or>                                        "          +
 				"        <ogc:PropertyIsEqualTo>"                               +
 				"            <ogc:PropertyName>apiso:Title</ogc:PropertyName>"  +
-				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"       +
+				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>" +
 				"        </ogc:PropertyIsEqualTo>"                              +
 				"        <ogc:PropertyIsEqualTo>"                               +
 				"            <ogc:PropertyName>apiso:Author</ogc:PropertyName>" +
-				"            <ogc:Literal>Georg Büchner</ogc:Literal>"       +
+				"            <ogc:Literal>Georg Buechner</ogc:Literal>"         +
 				"        </ogc:PropertyIsEqualTo>"                              +
 				"    </ogc:Or>"                                                 +
 				"</ogc:Filter>";
@@ -223,33 +223,33 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" OR Author:\"Georg Büchner\")");
+		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" OR Author:\"Georg Buechner\")");
 
 
 		/**
 		 * Test 3: a simple Filter OR between three propertyIsEqualTo
 		 */
-		XMLrequest ="<ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\">"     +
-				"    <ogc:Or>                                        "          +
-				"        <ogc:PropertyIsEqualTo>"                               +
-				"            <ogc:PropertyName>apiso:Title</ogc:PropertyName>"  +
-				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"       +
-				"        </ogc:PropertyIsEqualTo>"                              +
-				"        <ogc:PropertyIsEqualTo>"                               +
-				"            <ogc:PropertyName>apiso:Author</ogc:PropertyName>" +
-				"            <ogc:Literal>Georg Büchner</ogc:Literal>"       +
-				"        </ogc:PropertyIsEqualTo>"                              +
-				"        <ogc:PropertyIsEqualTo>"                               +
-				"            <ogc:PropertyName>apiso:Identifier</ogc:PropertyName>"     +
-				"            <ogc:Literal>268</ogc:Literal>"                    +
-				"        </ogc:PropertyIsEqualTo>"                              +
-				"    </ogc:Or> "                                                +
+		XMLrequest ="<ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\">"         +
+				"    <ogc:Or>                                        "              +
+				"        <ogc:PropertyIsEqualTo>"                                   +
+				"            <ogc:PropertyName>apiso:Title</ogc:PropertyName>"      +
+				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"     +
+				"        </ogc:PropertyIsEqualTo>"                                  +
+				"        <ogc:PropertyIsEqualTo>"                                   +
+				"            <ogc:PropertyName>apiso:Author</ogc:PropertyName>"     +
+				"            <ogc:Literal>Georg Buechner</ogc:Literal>"             +
+				"        </ogc:PropertyIsEqualTo>"                                  +
+				"        <ogc:PropertyIsEqualTo>"                                   +
+				"            <ogc:PropertyName>apiso:Identifier</ogc:PropertyName>" +
+				"            <ogc:Literal>268</ogc:Literal>"                        +
+				"        </ogc:PropertyIsEqualTo>"                                  +
+				"    </ogc:Or> "                                                    +
 				"</ogc:Filter>";
 		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" OR Author:\"Georg Büchner\" OR Identifier:\"268\")");
+		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" OR Author:\"Georg Buechner\" OR Identifier:\"268\")");
 
 
 		/**
@@ -259,7 +259,7 @@ public class FilterParserTest extends TestCase {
 				"    <ogc:Not>                                        "          +
 				"        <ogc:PropertyIsEqualTo>"                                +
 				"            <ogc:PropertyName>apiso:Title</ogc:PropertyName>"   +
-				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"        +
+				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"  +
 				"        </ogc:PropertyIsEqualTo>"                               +
 				"    </ogc:Not>"                                                 +
 				"</ogc:Filter>";
