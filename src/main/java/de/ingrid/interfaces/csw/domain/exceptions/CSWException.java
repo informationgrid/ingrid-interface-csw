@@ -32,6 +32,15 @@ public class CSWException extends Exception {
 
 	/**
 	 * Constructor
+	 * @param message String
+	 * @param cause Throwable
+	 */
+	public CSWException(final String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	/**
+	 * Constructor
 	 * @param message
 	 * @param code
 	 * @param locator

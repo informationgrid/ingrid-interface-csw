@@ -12,11 +12,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
+import org.geotoolkit.lucene.filter.SpatialQuery;
 
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
@@ -106,12 +106,13 @@ public class LuceneSearcher implements Searcher {
 		}
 		else {
 			// use the query constraints to search for records in the Lucene index
-			Query luceneQuery = this.filterParser.parse(query.getConstraint());
+			SpatialQuery luceneQuery = this.filterParser.parse(query.getConstraint());
 			if (luceneQuery == null) {
 				throw new RuntimeException("Error parsing query constraint: Lucene query is null");
 			}
 			TopScoreDocCollector collector = TopScoreDocCollector.create(this.indexSearcher.maxDoc(), true);
-			this.indexSearcher.search(luceneQuery, collector);
+			// TODO implement searching
+			//this.indexSearcher.search(luceneQuery, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 			log.debug("Found " + hits.length + " hits.");
 

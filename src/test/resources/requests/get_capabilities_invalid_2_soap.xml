@@ -2,7 +2,7 @@
 <soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<soapenv:Body>
-		<GetCapabilities>
+		<GetCapabilities xmlns="http://www.opengis.net/cat/csw/2.0.2" version="2.0.2">
 			<AcceptVersions>
 				<Version>0.0.6</Version>
 				<Version>1.0.0</Version>

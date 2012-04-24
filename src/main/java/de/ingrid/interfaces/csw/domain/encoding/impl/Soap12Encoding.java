@@ -17,8 +17,6 @@ import javax.xml.soap.MimeHeader;
 import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPConstants;
-import javax.xml.soap.SOAPElement;
-import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 import org.w3c.dom.Document;
@@ -28,7 +26,6 @@ import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
-import de.ingrid.interfaces.csw.tools.StringUtils;
 
 /**
  * Soap12Encoding deals with messages defined in the SOAP 1.2 format.
@@ -48,8 +45,6 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 					"	<soapenv:Body>\n" +
 					"	</soapenv:Body>\n" +
 					"</soapenv:Envelope>";
-
-	private SOAPMessage soapMessage = null;
 
 	/**
 	 * Extract the request body from the request. Subclasses will override this.
@@ -75,13 +70,14 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 			}
 
 			// create the soap message
-			this.soapMessage = msgFactory.createMessage(headers, request.getInputStream());
+			SOAPMessage soapMessage = msgFactory.createMessage(headers, request.getInputStream());
+			SOAPBody body = soapMessage.getSOAPBody();
 
 			// get the request body
-			Node requestBody = getMessagePayload(this.soapMessage);
+			Document requestBody = body.extractContentAsDocument();
 
 			// create a new document with requestBody as root to get rid of the soap parts
-			Document requestDoc = StringUtils.stringToDocument(StringUtils.nodeToString(requestBody));
+			Document requestDoc = extractFromDocument(requestBody.getDocumentElement());
 			return requestDoc.getDocumentElement();
 		} catch(Exception e) {
 			throw new RuntimeException("Error parsing request: ", e);
@@ -178,25 +174,5 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 		soapBody.addDocument(document);
 
 		return message;
-	}
-
-	/**
-	 * Get the payload of a SOAP message
-	 * @param message The message
-	 * @return Node
-	 * @throws SOAPException
-	 */
-	private static Node getMessagePayload(SOAPMessage message) throws SOAPException {
-		Node requestBody = null;
-		SOAPBody body = message.getSOAPBody();
-		Iterator<?> children = body.getChildElements();
-		while (children.hasNext()) {
-			Object obj = children.next();
-			if (obj instanceof SOAPElement) {
-				requestBody = (Node)obj;
-				break;
-			}
-		}
-		return requestBody;
 	}
 }

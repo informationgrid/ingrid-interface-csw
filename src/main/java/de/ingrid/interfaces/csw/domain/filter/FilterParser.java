@@ -3,7 +3,7 @@
  */
 package de.ingrid.interfaces.csw.domain.filter;
 
-import org.apache.lucene.search.Query;
+import org.geotoolkit.lucene.filter.SpatialQuery;
 import org.w3c.dom.Document;
 
 /**
@@ -14,8 +14,8 @@ public interface FilterParser {
 	/**
 	 * Pass a OGC filter document into a Lucene query
 	 * @param filterDoc
-	 * @return Query
+	 * @return SpatialQuery
 	 * @throws Exception
 	 */
-	Query parse(Document filterDoc) throws Exception;
+	SpatialQuery parse(Document filterDoc) throws Exception;
 }

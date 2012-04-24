@@ -1,6 +1,0 @@
-<Filter xmlns="http://www.opengis.net/ogc">
-	<PropertyIsEqualTo>
-		<PropertyName>Title</PropertyName>
-		<Literal>Wasser</Literal>
-	</PropertyIsEqualTo>
-</Filter>

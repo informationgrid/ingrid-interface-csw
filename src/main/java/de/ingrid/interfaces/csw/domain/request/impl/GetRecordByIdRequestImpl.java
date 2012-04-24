@@ -19,7 +19,7 @@ public class GetRecordByIdRequestImpl extends AbstractRequestImpl implements Get
 	}
 
 	@Override
-	public CSWQuery getQuery() {
+	public CSWQuery getQuery() throws CSWException {
 		return this.getEncoding().getQuery();
 	}
 }

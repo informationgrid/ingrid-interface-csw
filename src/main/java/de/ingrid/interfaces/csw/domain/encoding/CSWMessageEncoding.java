@@ -80,8 +80,9 @@ public interface CSWMessageEncoding {
 	/**
 	 * Get the csw query from the request
 	 * @return CSWQuery
+	 * @throws CSWException
 	 */
-	CSWQuery getQuery();
+	CSWQuery getQuery() throws CSWException;
 
 	/**
 	 * Response specific operations

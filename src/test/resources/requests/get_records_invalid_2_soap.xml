@@ -3,12 +3,11 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<soapenv:Body>
 		<GetRecords maxRecords="10" outputFormat="text/xml"
-			outputSchema="csw:profile" requestId="csw:1" resultType="results"
-			service="WMS" startPosition="1" version="2.0.0"
-			xmlns="http://www.opengis.net/cat/csw">
+			outputSchema="csw:profile" requestId="csw:1" resultType="results" startPosition="1"
+			xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
 			<Query typeNames="csw:dataset">
 				<ElementSetName typeNames="">brief</ElementSetName>
-				<Constraint version="1.0.0">
+				<Constraint version="1.1.0">
 					<Filter xmlns="http://www.opengis.net/ogc">
 						<Or>
 							<PropertyIsLike escape="!" singleChar="#"

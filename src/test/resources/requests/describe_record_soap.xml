@@ -3,6 +3,6 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<soapenv:Body>
-		<DescribeRecord service="CSW" version="2.0.2"></DescribeRecord>
+		<DescribeRecord xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2"></DescribeRecord>
 	</soapenv:Body>
 </soapenv:Envelope>

@@ -3,6 +3,7 @@
  */
 package de.ingrid.interfaces.csw.domain.request.impl;
 
+import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.request.GetRecordsRequest;
 
@@ -14,7 +15,7 @@ public class GetRecordsRequestImpl extends AbstractRequestImpl implements GetRec
 	}
 
 	@Override
-	public CSWQuery getQuery() {
+	public CSWQuery getQuery() throws CSWException {
 		return this.getEncoding().getQuery();
 	}
 }

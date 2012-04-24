@@ -17,24 +17,27 @@
 		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-3.x.x</developerConnection>
 	</scm>
 	<repositories>
-		<!--
-			Repo of parent pom needed, parent pom may not be installed locally
-			yet
-		-->
+		<!-- Repo of parent pom needed, parent pom may not be installed locally 
+			yet -->
 		<repository>
 			<id>de.ingrid.all</id>
 			<name>Maven Repo InGrid</name>
 			<url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
 		</repository>
+		<repository>
+			<id>geotoolkit</id>
+			<name>Geotoolkit repository</name>
+			<url>http://maven.geotoolkit.org/</url>
+		</repository>
 	</repositories>
 
 	<dependencyManagement>
 		<dependencies>
-		  <dependency>
-		  <groupId>com.thoughtworks.xstream</groupId>
-		  <artifactId>xstream</artifactId>
-		  <version>1.4.2</version>
-		  </dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>1.4.2</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -234,6 +237,21 @@
 			<version>4.4</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.geotoolkit.pending</groupId>
+			<artifactId>geotk-spatial-lucene</artifactId>
+			<version>3.x-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotoolkit.pending</groupId>
+			<artifactId>geotk-xml-ogc</artifactId>
+			<version>3.x-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotoolkit.pending</groupId>
+			<artifactId>geotk-xml-gml</artifactId>
+			<version>3.x-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -258,9 +276,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<!--
-					Add Type of Component to Manifest of Installer for Upgrade Server
-				-->
+				<!-- Add Type of Component to Manifest of Installer for Upgrade Server -->
 				<configuration>
 					<archive>
 						<manifestEntries>

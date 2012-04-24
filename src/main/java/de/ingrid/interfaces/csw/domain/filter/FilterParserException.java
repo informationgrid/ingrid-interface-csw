@@ -9,4 +9,5 @@ package de.ingrid.interfaces.csw.domain.filter;
  */
 public class FilterParserException extends Exception {
 
+	private static final long serialVersionUID = 7608915398209234713L;
 }

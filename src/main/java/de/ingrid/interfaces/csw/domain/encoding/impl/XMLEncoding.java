@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
@@ -26,7 +27,6 @@ import de.ingrid.interfaces.csw.domain.exceptions.CSWMissingParameterValueExcept
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
-import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -47,8 +47,8 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
 	/** Parameter xpath (namespace agnostic) **/
 	private static String SERVICE_PARAM_XPATH = "/*/@service";
-	private static String DESCREC_VERSION_PARAM_XPATH = "/child::*[name()='DescribeRecord']/@version";
-	private static String GETCAP_VERSION_PARAM_XPATH = "/child::*[name()='GetCapabilities']/child::*[name()='AcceptVersions']/child::*[name()='Version']";
+	private static String DESCREC_VERSION_PARAM_XPATH = "/csw:DescribeRecord/@version";
+	private static String GETCAP_VERSION_PARAM_XPATH = "/csw:GetCapabilities/csw:AcceptVersions/csw:Version";
 
 	/** Supported operations **/
 	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
@@ -70,6 +70,17 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 		this.query = null;
 
 		this.setRequestBody(this.extractRequestBody(request));
+	}
+
+	protected static Document extractFromDocument(Node node) throws Exception {
+		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+		domFactory.setNamespaceAware(true);
+		DocumentBuilder builder = domFactory.newDocumentBuilder();
+		Document doc = builder.newDocument();
+		Node copy  = node.cloneNode(true);
+		Node adopted = doc.adoptNode(copy);
+		doc.appendChild(adopted);
+		return doc;
 	}
 
 	/**
@@ -150,7 +161,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 	}
 
 	@Override
-	public CSWQuery getQuery() {
+	public CSWQuery getQuery() throws CSWException {
 		this.checkInitialized();
 
 		if (this.query == null) {
@@ -162,40 +173,41 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 				Operation operation = this.getOperation();
 				if (operation == Operation.GET_RECORD_BY_ID) {
 					// extract the id
-					String id = this.xpath.getString(requestBody, "/GetRecordById/Id");
+					String id = this.xpath.getString(requestBody, "/csw:GetRecordById/csw:Id");
 					if (id != null) {
 						this.query.setId(id);
 					}
 					// extract the element set name
-					String elementSetNameStr = this.xpath.getString(requestBody, "/GetRecordById/ElementSetName");
+					String elementSetNameStr = this.xpath.getString(requestBody, "/csw:GetRecordById/csw:ElementSetName");
 					if (elementSetNameStr != null) {
 						this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
 					}
 					// extract the output schema
-					String schemaUri = this.xpath.getString(requestBody, "/GetRecordById/OutputSchema");
+					String schemaUri = this.xpath.getString(requestBody, "/csw:GetRecordById/csw:OutputSchema");
 					if (schemaUri != null) {
 						this.query.setOutputSchema(Namespace.getByUri(schemaUri));
 					}
 				}
 				else if (operation == Operation.GET_RECORDS) {
 					// extract the filter constraint
-					Node filter = this.xpath.getNode(requestBody, "/child::*[name()='GetRecords']/child::*[name()='Query']/child::*[name()='Constraint']/child::*[name()='Filter']");
+					Node filter = this.xpath.getNode(requestBody, "/csw:GetRecords/csw:Query/csw:Constraint/ogc:Filter");
 					if (filter != null) {
-						this.query.setConstraint(StringUtils.stringToDocument(StringUtils.nodeToString(filter)));
+						this.query.setConstraint(extractFromDocument(filter));
 					}
 					// extract the constraint language version
-					String filterVersion = this.xpath.getString(requestBody, "/GetRecords/Query/Constraint/@version");
+					String filterVersion = this.xpath.getString(requestBody, "/csw:GetRecords/csw:Query/csw:Constraint/@version");
 					if (filterVersion != null) {
 						this.query.setConstraintLanguageVersion(filterVersion);
 					}
 					// extract the element set name
-					String elementSetNameStr = this.xpath.getString(requestBody, "/GetRecords/Query/ElementSetName");
+					String elementSetNameStr = this.xpath.getString(requestBody, "/csw:GetRecords/csw:Query/csw:ElementSetName");
 					if (elementSetNameStr != null) {
 						this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
 					}
 				}
 			}
 			catch (Exception ex) {
+				throw new CSWException("An error occured while extracting the query: ", ex);
 			}
 		}
 		return this.query;
