@@ -17,6 +17,8 @@ import org.springframework.beans.BeanUtils;
 public class Configuration {
 
 	private List<HarvesterConfiguration> harvesterConfigs = new ArrayList<HarvesterConfiguration>();
+	
+	private String mappingScript = "idf_to_lucene.js";
 
 	public List<HarvesterConfiguration> getHarvesterConfigurations() {
 		return this.harvesterConfigs;
@@ -39,4 +41,12 @@ public class Configuration {
 		BeanUtils.copyProperties(config, instance);
 		return instance;
 	}
+
+    public void setMappingScript(String mappingScript) {
+        this.mappingScript = mappingScript;
+    }
+
+    public String getMappingScript() {
+        return mappingScript;
+    }
 }

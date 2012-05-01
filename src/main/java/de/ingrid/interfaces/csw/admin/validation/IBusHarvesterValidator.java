@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject;
+import de.ingrid.interfaces.csw.config.model.RequestDefinition;
 
 public class IBusHarvesterValidator {
 
@@ -50,4 +51,18 @@ public class IBusHarvesterValidator {
         }
     }
 
+    @Service
+    public static class IBusHarvesterValidatorStep4 extends AbstractValidator<RequestDefinition> {
+
+        public final Errors validate(final Errors errors) {
+            rejectIfEmptyOrWhitespace(errors, "queryString");
+            rejectIfEmptyOrWhitespace(errors, "timeout");
+            rejectIfEmptyOrWhitespace(errors, "pause");
+            rejectIfEmptyOrWhitespace(errors, "recordsPerCall");
+            rejectIfEmptyOrWhitespace(errors, "plugId");
+
+            return errors;
+        }
+    }
+    
 }

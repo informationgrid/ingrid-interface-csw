@@ -1,26 +1,55 @@
 <configuration>
   <harvesterConfigs>
-    <iBusHarvester>
+    <de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject>
       <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
       <name>a harvester test</name>
-      <communicationXml>src/test/resources/communication.xml</communicationXml>
+      <communicationXml>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/./test2/conf/communication.xml</communicationXml>
+      <workingDirectory>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/./test2</workingDirectory>
       <requestDefinitions>
         <request>
-          <timeout>2000</timeout>
-          <pause>20</pause>
-          <recordsPerCall>200</recordsPerCall>
-          <queryString>iplugs:&quot;/ingrid-group:iplug-csw-dsc-be&quot; ranking:score</queryString>
+          <timeout>1000</timeout>
+          <pause>1000</pause>
+          <recordsPerCall>10</recordsPerCall>
+          <queryString>iplugs:&quot;/ingrid-group:iplug-management-joachim&quot;</queryString>
+          <plugId>/ingrid-group:iplug-management-joachim</plugId>
         </request>
       </requestDefinitions>
       <cache>
         <className>de.ingrid.interfaces.csw.harvest.impl.RecordCache</className>
         <cachePath>tmp/cache/csw-dsc-be</cachePath>
       </cache>
-    </iBusHarvester>
-    <iBusHarvester>
+      <iBusIp>127.0.0.1</iBusIp>
+      <iBusPort>9900</iBusPort>
+      <iBusProxyId>/ingrid-group:kug-ibus</iBusProxyId>
+      <clientProxyId>/ingrid-group:kug-client</clientProxyId>
+      <id>0</id>
+    </de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject>
+    <de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject>
       <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
       <name>asdsadsad</name>
+      <communicationXml>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/test/conf/communication.xml</communicationXml>
       <workingDirectory>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/test</workingDirectory>
-    </iBusHarvester>
+      <requestDefinitions>
+        <request>
+          <timeout>100000000</timeout>
+          <pause>1000</pause>
+          <recordsPerCall>10</recordsPerCall>
+          <queryString>iplugs:&quot;/ingrid-group:iplug-management-joachim&quot;</queryString>
+          <plugId>/ingrid-group:iplug-management-joachim</plugId>
+        </request>
+        <request>
+          <timeout>1000</timeout>
+          <pause>1000</pause>
+          <recordsPerCall>10</recordsPerCall>
+          <queryString>iplugs:&quot;/ingrid-group:iplug-se-3.1.0-SNAPSHOT-index&quot;</queryString>
+          <plugId>/ingrid-group:iplug-se-3.1.0-SNAPSHOT-index</plugId>
+        </request>
+      </requestDefinitions>
+      <iBusIp>127.0.0.1</iBusIp>
+      <iBusPort>9900</iBusPort>
+      <iBusProxyId>/ingrid-group:kug-ibus</iBusProxyId>
+      <clientProxyId>/ingrid-group:kug-client</clientProxyId>
+      <id>1</id>
+    </de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject>
   </harvesterConfigs>
 </configuration>

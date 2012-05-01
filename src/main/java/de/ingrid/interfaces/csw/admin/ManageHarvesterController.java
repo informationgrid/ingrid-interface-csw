@@ -42,7 +42,7 @@ public class ManageHarvesterController {
     public String welcome(final HttpSession session, final ModelMap modelMap,
             @ModelAttribute("harvester") final HarvesterCommandObject harvester) throws Exception {
 
-        modelMap.addAttribute("harvesterConfigs", cProvider.getConfiguration().getHarvesterConfigurations());
+        modelMap.addAttribute("harvesterConfigs", cProvider.reloadConfiguration().getHarvesterConfigurations());
         modelMap.addAttribute("harvesterTypes", HARVESTER_TYPES);
 
         return "/list_harvester";

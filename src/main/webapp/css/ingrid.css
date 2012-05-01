@@ -39,14 +39,14 @@ h3 { font:bold 12px/15px Verdana, Arial, Helvetica, sans-serif; padding:0; margi
 /* --- Seit-Navigation --- */
 
 #navi_vertical { position:absolute; top:116px; left:0; width:240px; }
-#navi_vertical .konf { font-weight:bold; padding:12px 0; vertical-align:center; width:230px; background:transparent url(../../images/base/konf_1hg.gif) repeat-y; margin-bottom:10px;}
+#navi_vertical .konf { font-weight:bold; padding:12px 0; vertical-align:center; width:230px; background:transparent url(../images/konf_1hg.gif) repeat-y; margin-bottom:10px;}
 #navi_vertical .konf p.no { padding-left:10px; float:left; width:40px; color:#FFF; font-size:20px}
 #navi_vertical h2 { margin:0; }
 #navi_vertical .freitext { background:#F5F8EB; padding:5px 15px; margin-bottom:1px; }
 #navi_vertical ul { background:#F5F8EB; margin-bottom:10px; padding:20px 0; }
 #navi_vertical ul li { padding:0 20px 0 50px; margin-bottom:8px; line-height:14px; }
 #navi_vertical ul li a { color:#464646; }
-#navi_vertical ul li.active { background:transparent url(../../images/base/list_active.gif) repeat-y; font-weight:bold;}
+#navi_vertical ul li.active { background:transparent url(../images/list_active.gif) repeat-y; font-weight:bold;}
 
 
 /* --- Inhaltsbereich --- */

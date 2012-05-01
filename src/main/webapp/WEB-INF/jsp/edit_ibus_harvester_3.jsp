@@ -29,7 +29,7 @@
 	</div>
 	
 	<div id="help"><a href="#">[?]</a></div>
-	
+	<c:set var="active" value="harvester" scope="request"/>
 	<c:import url="subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
@@ -59,7 +59,7 @@
 		</tbody>
 		</table>
 		
-		<h3>Enabled iPlugs:</h3>
+		<h3>iPlugs:</h3>
 		
         <table class="data">
         <tr>
@@ -68,37 +68,39 @@
             	<th>Query</th>
             	<th>&nbsp;</th>
         </tr>
+		<tr>
+			<td colspan="4">
+				<h3>Enabled iPlugs:</h3>
+			</td>
+		</tr>		
 		<c:set var="i" value="0" />
         <c:forEach items="${enabledIPlugs}" var="enabledIPlug">
         <tr>
-	    	<td class="leftCol">${enabledIPlug.plugId}</td>
+	    	<td>${enabledIPlug.plugId}</td>
 	    	<td>${enabledIPlug.dataSourceName}</td>
 	    	<td>${enabledIPlug.queryString}</td>
 	        <td>
-	        	<button type="submit" name="edit" value="${i}" id="${enabledIPlug.plugId}">Enable</button>
-	        	<button type="submit" name="delete" value="${i}" id="${enabledIPlug.plugId}">delete</button>
+	        	<button type="submit" name="edit" value="${enabledIPlug.plugId}" id="${enabledIPlug.plugId}">Edit</button>
+	        	<button type="submit" name="disable" value="${enabledIPlug.plugId}" id="${enabledIPlug.plugId}">Disable</button>
 	        </td>
 	    </tr>
         <c:set var="i" value="${i + 1}" />
         </c:forEach>
         
-        </table>
-
-        <h3>Available iPlugs:</h3>
+		<tr>
+			<td colspan="4">
+				<h3>Available iPlugs:</h3>
+			</td>
+		</tr>		
 		
-        <table class="data">
-        <tr>
-            	<th class="leftCol">iPlug</th>
-            	<th>Name</th>
-            	<th>&nbsp;</th>
-        </tr>
 		<c:set var="i" value="0" />
         <c:forEach items="${availableIPlugs}" var="plugDescription">
         <tr>
-	    	<td class="leftCol"><%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %></td>
+	    	<td><%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %></td>
 	    	<td><%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getDataSourceName() %></td>
+	    	<td>&nbsp;</td>
 	        <td>
-	        	<button type="submit" name="edit" value="${i}" id="<%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %>">Enable</button>
+	        	<button type="submit" name="enable" value="<%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %>" id="<%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %>">Enable</button>
 	        </td>
 	    </tr>
         <c:set var="i" value="${i + 1}" />
@@ -111,7 +113,8 @@
         <tr>
     	<td class="leftCol">&nbsp;</td>
         <td>
-			<button type="submit" name="next" value="next">Save</button>
+        	<button type="submit" name="back" value="back">Back</button>
+        	<button type="submit" name="save" value="save">Save</button>
         </td>
         </tr>
         </tbody>

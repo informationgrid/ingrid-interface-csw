@@ -5,9 +5,9 @@
 		<h2>Configuration</h2>
 	</div>
 	<ul>
-		<li class="active"><a href="${pageContext.request.contextPath}/list_harvester.html">Manage Harvester</a></li>
-        <li><a href="${pageContext.request.contextPath}">Control Scheduler</a></li>
-        <li><a href="${pageContext.request.contextPath}">Manually issue harvesting</a></li>
+		<li <c:if test="${active == 'harvester'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/list_harvester.html">Manage Harvester</a></li>
+        <li <c:if test="${active == 'scheduling'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/scheduling.html">Control Scheduler</a></li>
+        <li <c:if test="${active == 'indexing'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/indexing.html">Manually issue harvesting</a></li>
 	</ul>
 	<div class="konf">
 		<p class="no">2</p>

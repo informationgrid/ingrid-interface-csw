@@ -30,127 +30,157 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class IBusHarvester extends AbstractHarvester {
 
-	final protected static Log log = LogFactory.getLog(IBusHarvester.class);
+    public enum IBusClosableLock {
 
-	/**
-	 * The path to the communication XML file.
-	 */
-	private String communicationXml;
+        INSTANCE;
 
-	/**
-	 * The list of request definitions for harvesting.
-	 */
-	private List<RequestDefinition> requestDefinitions;
+        private String lockToken = null;
 
-	/**
-	 * Set the path to the communication XML file.
-	 * @param communicationXml
-	 */
-	public void setCommunicationXml(String communicationXml) {
-		this.communicationXml = communicationXml;
-	}
+        public void lock(String token) {
+            if (lockToken == null) {
+                lockToken = token;
+            }
+        }
 
-	/**
-	 * Set the list of request definitions for harvesting.
-	 * @param requestDefinitions
-	 */
-	public void setRequestDefinitions(List<RequestDefinition> requestDefinitions) {
-		this.requestDefinitions = requestDefinitions;
-	}
+        public void unlock() {
+            lockToken = null;
+        }
 
-	@Override
-	public List<Serializable> fetchRecords(Date lastExecutionDate) throws Exception {
+        public boolean isLockedBy(String token) {
+            return lockToken.equals(token);
+        }
 
-		if (this.requestDefinitions == null || this.requestDefinitions.size() == 0) {
-			throw new RuntimeException("IBusHarvesterConfiguration is not configured properly: requestDefinitions not set or empty.");
-		}
+    }
 
-		// record ids
-		List<Serializable> allCacheIds = new ArrayList<Serializable>();
+    final protected static Log log = LogFactory.getLog(IBusHarvester.class);
 
-		// setup the IBus client
-		File file = new File(this.communicationXml);
-		BusClient client = null;
-		try {
-			client = BusClientFactory.createBusClient(file);
-			if (!client.allConnected()) {
-				client.start();
-			}
-			IBus bus = client.getNonCacheableIBus();
-			if (log.isDebugEnabled()) {
-				log.debug("Available i-plugs:");
-				for (PlugDescription desc : bus.getAllIPlugs()) {
-					log.debug(desc.getPlugId());
-				}
-			}
+    /**
+     * The path to the communication XML file.
+     */
+    private String communicationXml;
 
-			// process all request definitions
-			for (RequestDefinition request : this.requestDefinitions) {
+    /**
+     * The list of request definitions for harvesting.
+     */
+    private List<RequestDefinition> requestDefinitions;
 
-				int currentPage = 0;
-				int startHit = 0;
-				int pageSize = request.getRecordsPerCall();
-				int pause = request.getPause();
-				int timeout = request.getTimeout();
-				String queryStr = request.getQueryString();
+    /**
+     * Set the path to the communication XML file.
+     * 
+     * @param communicationXml
+     */
+    public void setCommunicationXml(String communicationXml) {
+        this.communicationXml = communicationXml;
+    }
 
-				log.info("Running harvesting request: ["+request.toString()+"]");
+    /**
+     * Set the list of request definitions for harvesting.
+     * 
+     * @param requestDefinitions
+     */
+    public void setRequestDefinitions(List<RequestDefinition> requestDefinitions) {
+        this.requestDefinitions = requestDefinitions;
+    }
 
-				IngridQuery query = QueryStringParser.parse(queryStr);
+    @Override
+    public List<Serializable> fetchRecords(Date lastExecutionDate) throws Exception {
 
-				// first request
-				List<Serializable> cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
-				allCacheIds.addAll(cacheIds);
+        if (this.requestDefinitions == null || this.requestDefinitions.size() == 0) {
+            throw new RuntimeException(
+                    "IBusHarvesterConfiguration is not configured properly: requestDefinitions not set or empty.");
+        }
 
-				// continue fetching as long as we get a full page
-				while (cacheIds.size() == request.getRecordsPerCall()) {
-					Thread.sleep(pause);
-					startHit = ++currentPage*pageSize;
+        // record ids
+        List<Serializable> allCacheIds = new ArrayList<Serializable>();
 
-					cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
-					allCacheIds.addAll(cacheIds);
-				}
-			}
-		}
-		finally {
-			if (client != null && client.allConnected()) {
-				client.shutdown();
-			}
-		}
+        // setup the IBus client
+        File file = new File(this.communicationXml);
+        BusClient client = null;
+        try {
+            client = BusClientFactory.createBusClient(file);
+            // lock iBus client so it is not closed by accident
+            IBusClosableLock.INSTANCE.lock(this.getClass().getName());
+            if (!client.allConnected()) {
+                client.start();
+            }
+            IBus bus = client.getNonCacheableIBus();
+            if (log.isDebugEnabled()) {
+                log.debug("Available i-plugs:");
+                for (PlugDescription desc : bus.getAllIPlugs()) {
+                    log.debug(desc.getPlugId());
+                }
+            }
 
-		return allCacheIds;
-	}
+            // process all request definitions
+            for (RequestDefinition request : this.requestDefinitions) {
 
-	private List<Serializable> makeRequest(IBus bus, IngridQuery query, int pageSize, int currentPage,
-			int startHit, int timeout) throws Exception {
-		// TODO make sure that document ids in hits are the same as in the finally fetched records
-		IngridHits hits = bus.search(query, pageSize, currentPage, startHit, timeout);
-		List<Serializable> cacheIds = this.cacheRecords(hits, bus);
-		int numHits = hits.getHits().length;
-		if (log.isDebugEnabled()) {
-			int endHit = startHit+numHits > 0 ? startHit+numHits-1 : 0;
-			log.debug("Fetched records "+startHit+" to "+endHit+" of "+hits.length());
-		}
-		return cacheIds;
-	}
+                int currentPage = 0;
+                int startHit = 0;
+                int pageSize = request.getRecordsPerCall();
+                int pause = request.getPause();
+                int timeout = request.getTimeout();
+                String queryStr = request.getQueryString();
 
-	/**
-	 * Fetch and cache the records referenced in the given hits instance.
-	 * @param hits
-	 * @param bus
-	 * @return List<Serializable>
-	 * @throws Exception
-	 */
-	private List<Serializable> cacheRecords(IngridHits hits, IBus bus) throws Exception {
-		List<Serializable> cacheIds = new ArrayList<Serializable>();
-		for (IngridHit hit : hits.getHits()) {
-			Record record = bus.getRecord(hit);
-			Serializable cacheId = this.cache.put(record);
-			if (log.isDebugEnabled()) {
-				log.debug("Fetched record "+hit.getDocumentId()+". Cache id: "+cacheId);
-			}
-			cacheIds.add(cacheId);
-		}
-		return cacheIds;
-	}
+                log.info("Running harvesting request: [" + request.toString() + "]");
+
+                IngridQuery query = QueryStringParser.parse(queryStr);
+
+                // first request
+                List<Serializable> cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
+                allCacheIds.addAll(cacheIds);
+
+                // continue fetching as long as we get a full page
+                while (cacheIds.size() == request.getRecordsPerCall()) {
+                    Thread.sleep(pause);
+                    startHit = ++currentPage * pageSize;
+
+                    cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
+                    allCacheIds.addAll(cacheIds);
+                }
+            }
+        } finally {
+            if (client != null && IBusClosableLock.INSTANCE.isLockedBy(this.getClass().getName())) {
+                client.shutdown();
+                // unlock iBus client for close
+                IBusClosableLock.INSTANCE.unlock();
+            }
+        }
+
+        return allCacheIds;
+    }
+
+    private List<Serializable> makeRequest(IBus bus, IngridQuery query, int pageSize, int currentPage, int startHit,
+            int timeout) throws Exception {
+        // TODO make sure that document ids in hits are the same as in the
+        // finally fetched records
+        IngridHits hits = bus.search(query, pageSize, currentPage, startHit, timeout);
+        List<Serializable> cacheIds = this.cacheRecords(hits, bus);
+        int numHits = hits.getHits().length;
+        if (log.isDebugEnabled()) {
+            int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
+            log.debug("Fetched records " + startHit + " to " + endHit + " of " + hits.length());
+        }
+        return cacheIds;
+    }
+
+    /**
+     * Fetch and cache the records referenced in the given hits instance.
+     * 
+     * @param hits
+     * @param bus
+     * @return List<Serializable>
+     * @throws Exception
+     */
+    private List<Serializable> cacheRecords(IngridHits hits, IBus bus) throws Exception {
+        List<Serializable> cacheIds = new ArrayList<Serializable>();
+        for (IngridHit hit : hits.getHits()) {
+            Record record = bus.getRecord(hit);
+            Serializable cacheId = this.cache.put(record);
+            if (log.isDebugEnabled()) {
+                log.debug("Fetched record " + hit.getDocumentId() + ". Cache id: " + cacheId);
+            }
+            cacheIds.add(cacheId);
+        }
+        return cacheIds;
+    }
 }

@@ -31,10 +31,14 @@ public class FileUtils {
 				if (file.isDirectory()) {
 					deleteRecursive(file);
 				}
-				file.delete();
+				if (!file.delete()) {
+				    log.warn("Could not delete file: " + file);
+				}
 			}
 		}
-		src.delete();
+        if (!src.delete()) {
+            log.warn("Could not delete file: " + src);
+        }
 	}
 
 	/**

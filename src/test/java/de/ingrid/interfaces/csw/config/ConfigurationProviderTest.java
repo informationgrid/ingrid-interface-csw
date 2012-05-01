@@ -45,7 +45,7 @@ public class ConfigurationProviderTest extends TestCase {
 		// configure record cache
 		// NOTE several harvester can use the same configuration instance
 		RecordCacheConfiguration cache = new RecordCacheConfiguration();
-		cache.setCachePath(CACHE_PATH);
+		cache.setCachePath(new File(CACHE_PATH));
 
 		// configure a harvesters
 		List<HarvesterConfiguration> harvesters = new ArrayList<HarvesterConfiguration>();

@@ -34,7 +34,7 @@ public class RequestDefinition {
     /**
      * The proxy id of the iPlug.
      */
-    private String proxyId = "";
+    private String plugId = "";
 	
 	
 	/**
@@ -116,11 +116,11 @@ public class RequestDefinition {
 		return "Query:'"+this.queryString+"', RecordsPerCall:"+this.recordsPerCall+", Pause:"+this.pause+", Timeout:"+this.timeout;
 	}
 
-    public void setProxyId(String proxyId) {
-        this.proxyId = proxyId;
+    public void setPlugId(String plugId) {
+        this.plugId = plugId;
     }
 
-    public String getProxyId() {
-        return proxyId;
+    public String getPlugId() {
+        return plugId;
     }
 }

@@ -55,4 +55,12 @@ public abstract class AbstractValidator<T> {
             rejectError(errors, field, "null");
         }
     }
+    
+    public void rejectIfNaN(final Errors errors, final String field) {
+        Object val = errors.getFieldValue(field);
+        if (val == null || (val instanceof Double && Double.isNaN((Double) val))) {
+            rejectError(errors, field, "invalid");
+        }
+        
+    }
 }

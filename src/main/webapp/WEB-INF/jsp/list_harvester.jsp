@@ -27,7 +27,7 @@
 	</div>
 	
 	<div id="help"><a href="#">[?]</a></div>
-	
+	<c:set var="active" value="harvester" scope="request"/>
 	<c:import url="subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">

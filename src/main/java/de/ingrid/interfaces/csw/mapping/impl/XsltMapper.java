@@ -9,9 +9,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
@@ -27,120 +30,141 @@ import de.ingrid.utils.dsc.Record;
  * 
  * @author ingo herwig <ingo@wemove.com>
  */
+@Service
 public class XsltMapper implements CSWRecordMapper {
 
-	final protected static Log log = LogFactory.getLog(XsltMapper.class);
+    final protected static Log log = LogFactory.getLog(XsltMapper.class);
 
-	/**
-	 * Used for xslt
-	 */
-	private XsltUtils xslt = new XsltUtils();
+    /**
+     * The update job configuration provider
+     */
+    @Autowired
+    private ConfigurationProvider configurationProvider;
 
-	/**
-	 * The cache used to store records.
-	 */
-	protected CSWRecordCache cache;
+    /**
+     * Used for xslt
+     */
+    private XsltUtils xslt = new XsltUtils();
 
-	/**
-	 * The xslt style sheet for csw iso19139
-	 */
-	private static final File xslFull = new File("idf_1_0_0_to_iso_metadata.xsl");
-	private static final File xslSummary = new File("iso-summary.xsl");
-	private static final File xslBrief = new File("iso-brief.xsl");
+    /**
+     * The cache used to store records.
+     */
+    protected CSWRecordCache cache;
 
-	@Override
-	public void run(List<RecordCache> recordCacheList) throws Exception {
-		// iterate over all caches and records
-		for (RecordCache recordCache : recordCacheList) {
-			for (Serializable cacheId : recordCache.getCachedIds()) {
-				for (ElementSetName elementSetName : ElementSetName.values()) {
-					if (log.isDebugEnabled()) {
-						log.debug("Mapping record "+cacheId+" to csw "+elementSetName);
-					}
-					Node mappedRecord = this.map(recordCache.get(cacheId), elementSetName);
-					CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
-					this.cache.put(cswRecord);
-				}
-			}
-		}
-	}
+    /**
+     * The xslt style sheet for csw iso19139
+     */
+    private static final File xslFull = new File("idf_1_0_0_to_iso_metadata.xsl");
+    private static final File xslSummary = new File("iso-summary.xsl");
+    private static final File xslBrief = new File("iso-brief.xsl");
 
-	@Override
-	public CSWRecordRepository getRecordRepository() {
-		return this.cache;
-	}
+    
+    @Override
+    public void run(List<RecordCache> recordCacheList) throws Exception {
+        if (configurationProvider != null) {
+            this.cache = new CSWRecordCache();
+            this.cache.setCachePath(configurationProvider.getRecordCachePath());
+        }
+        // iterate over all caches and records
+        for (RecordCache recordCache : recordCacheList) {
+            for (Serializable cacheId : recordCache.getCachedIds()) {
+                for (ElementSetName elementSetName : ElementSetName.values()) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Mapping record " + cacheId + " to csw " + elementSetName);
+                    }
+                    Node mappedRecord = this.map(recordCache.get(cacheId), elementSetName);
+                    CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
+                    this.cache.put(cswRecord);
+                }
+            }
+        }
+    }
 
-	/**
-	 * Set the record cache.
-	 * @param cache
-	 */
-	public void setCache(CSWRecordCache cache) {
-		this.cache = cache;
-	}
+    @Override
+    public CSWRecordRepository getRecordRepository() {
+        if (configurationProvider != null) {
+            this.cache = new CSWRecordCache();
+            this.cache.setCachePath(configurationProvider.getRecordCachePath());
+        }
+        return this.cache;
+    }
 
-	/**
-	 * Map the given IDF record to the given CSW element set.
-	 * @param record
-	 * @param elementSetName
-	 * @return Node
-	 * @throws Exception
-	 */
-	public Node map(Record record, ElementSetName elementSetName) throws Exception {
+    /**
+     * Set the record cache.
+     * 
+     * @param cache
+     */
+    public void setCache(CSWRecordCache cache) {
+        this.cache = cache;
+    }
 
-		Node cswNode = null;
+    /**
+     * Map the given IDF record to the given CSW element set.
+     * 
+     * @param record
+     * @param elementSetName
+     * @return Node
+     * @throws Exception
+     */
+    public Node map(Record record, ElementSetName elementSetName) throws Exception {
 
-		// use appropriate stylesheet for each element set name
-		switch (elementSetName) {
-		case FULL:
-			cswNode = this.mapFull(record);
-			break;
-		case SUMMARY:
-			cswNode = this.mapSummary(record);
-			break;
-		case BRIEF:
-			cswNode = this.mapBrief(record);
-			break;
-		}
-		if (log.isDebugEnabled()) {
-			log.debug("Mapping result ("+elementSetName+"): "+StringUtils.nodeToString(cswNode));
-		}
-		return cswNode;
-	}
+        Node cswNode = null;
 
-	/**
-	 * Map the given record to iso19139 FULL
-	 * @param record
-	 * @return Node
-	 * @throws Exception
-	 */
-	protected Node mapFull(Record record) throws Exception {
-		Document idfDoc = IdfUtils.getIdfDocument(record);
-		return this.xslt.transform(idfDoc, xslFull);
-	}
+        // use appropriate stylesheet for each element set name
+        switch (elementSetName) {
+        case FULL:
+            cswNode = this.mapFull(record);
+            break;
+        case SUMMARY:
+            cswNode = this.mapSummary(record);
+            break;
+        case BRIEF:
+            cswNode = this.mapBrief(record);
+            break;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("Mapping result (" + elementSetName + "): " + StringUtils.nodeToString(cswNode));
+        }
+        return cswNode;
+    }
 
-	/**
-	 * Map the given record to iso19139 SUMMARY
-	 * @param record
-	 * @return Node
-	 * @throws Exception
-	 */
-	protected Node mapSummary(Record record) throws Exception {
-		Document idfDoc = IdfUtils.getIdfDocument(record);
-		// for summary we need to transform to full first
-		Node full = this.xslt.transform(idfDoc, xslFull);
-		return this.xslt.transform(full, xslSummary);
-	}
+    /**
+     * Map the given record to iso19139 FULL
+     * 
+     * @param record
+     * @return Node
+     * @throws Exception
+     */
+    protected Node mapFull(Record record) throws Exception {
+        Document idfDoc = IdfUtils.getIdfDocument(record);
+        return this.xslt.transform(idfDoc, xslFull);
+    }
 
-	/**
-	 * Map the given record to iso19139 BRIEF
-	 * @param record
-	 * @return Node
-	 * @throws Exception
-	 */
-	protected Node mapBrief(Record record) throws Exception {
-		Document idfDoc = IdfUtils.getIdfDocument(record);
-		// for brief we need to transform to full first
-		Node full = this.xslt.transform(idfDoc, xslFull);
-		return this.xslt.transform(full, xslBrief);
-	}
+    /**
+     * Map the given record to iso19139 SUMMARY
+     * 
+     * @param record
+     * @return Node
+     * @throws Exception
+     */
+    protected Node mapSummary(Record record) throws Exception {
+        Document idfDoc = IdfUtils.getIdfDocument(record);
+        // for summary we need to transform to full first
+        Node full = this.xslt.transform(idfDoc, xslFull);
+        return this.xslt.transform(full, xslSummary);
+    }
+
+    /**
+     * Map the given record to iso19139 BRIEF
+     * 
+     * @param record
+     * @return Node
+     * @throws Exception
+     */
+    protected Node mapBrief(Record record) throws Exception {
+        Document idfDoc = IdfUtils.getIdfDocument(record);
+        // for brief we need to transform to full first
+        Node full = this.xslt.transform(idfDoc, xslFull);
+        return this.xslt.transform(full, xslBrief);
+    }
 }

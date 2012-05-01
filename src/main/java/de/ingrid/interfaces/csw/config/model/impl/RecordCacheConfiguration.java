@@ -3,6 +3,8 @@
  */
 package de.ingrid.interfaces.csw.config.model.impl;
 
+import java.io.File;
+
 /**
  * Configuration a
  * de.ingrid.interfaces.csw.harvest.impl.RecordCache instance.
@@ -11,13 +13,13 @@ package de.ingrid.interfaces.csw.config.model.impl;
  */
 public class RecordCacheConfiguration extends ClassConfigurationBase {
 
-	private String cachePath;
+	private File cachePath;
 
-	public void setCachePath(String cachePath) {
+	public void setCachePath(File cachePath) {
 		this.cachePath = cachePath;
 	}
 
-	public String getCachePath() {
+	public File getCachePath() {
 		return this.cachePath;
 	}
 

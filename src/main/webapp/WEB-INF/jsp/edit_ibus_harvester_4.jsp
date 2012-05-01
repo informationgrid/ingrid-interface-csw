@@ -20,14 +20,13 @@
 		java.security.Principal  principal = request.getUserPrincipal();
 		if(principal != null && !(principal instanceof IngridPrincipal.SuperAdmin)) {
 		%>
-			<div id="language"><a href="/auth/logout.html">Logout</a></div>
+			<div id="language"><a href="auth/logout.html">Logout</a></div>
 		<%
 		}
 		%>
 	</div>
 	
 	<div id="help"><a href="#">[?]</a></div>
-	
 	<c:set var="active" value="harvester" scope="request"/>
 	<c:import url="subNavi.jsp"></c:import>
 	
@@ -38,56 +37,57 @@
 		<br/>
 		<h2>Edit Harvester!</h2>
 		
-        <form:form method="post" action="edit_ibus_harvester_2.html" modelAttribute="harvester">
-
+        <form:form method="post" action="edit_ibus_harvester_4.html" modelAttribute="rd">
+        <form:hidden path="plugId" />
+        
 		<table id="konfigForm">
 		<tbody>
 		<tr>
 			<td colspan="2">
-				<h3>Edit communication to iBus:</h3>
+				<h3>Edit iPlug request definition:</h3>
 			</td>
 		</tr>		
         <tr>
-			<td class="leftCol">iBus IP</td>
+			<td class="leftCol">Query</td>
 			<td>
-	    	<form:input path="iBusIp" />
+	    	<form:input path="queryString" />
 	    	<br>
-	    	<span>The IP address of the iBus (i.e. 127.0.0.1).</span>
-	    	<form:errors path="iBusIp" cssClass="error" element="div" />
+	    	<span>The query the iPlugs records will be requested with.</span>
+	    	<form:errors path="queryString" cssClass="error" element="div" />
 			</td>
 		</tr>
         <tr>
-			<td class="leftCol">iBus port</td>
+			<td class="leftCol">Timeout</td>
 			<td>
-	    	<form:input path="iBusPort" />
+	    	<form:input path="timeout" />
 	    	<br>
-	    	<span>The port of the iBus (i.e. 9900).</span>
-	    	<form:errors path="iBusPort" cssClass="error" element="div" />
+	    	<span>The time in msec to wait for a response after sending a request to the harvesting source.</span>
+	    	<form:errors path="timeout" cssClass="error" element="div" />
 			</td>
 		</tr>
         <tr>
-			<td class="leftCol">iBus proxy id</td>
+			<td class="leftCol">Pause between requests</td>
 			<td>
-	    	<form:input path="iBusProxyId" />
+	    	<form:input path="pause" />
 	    	<br>
-	    	<span>The proxy id of the iBus (i.e. /ingrid-group:kug-ibus).</span>
-	    	<form:errors path="iBusProxyId" cssClass="error" element="div" />
+	    	<span>The time in msec to pause between requests to harvesting source.</span>
+	    	<form:errors path="pause" cssClass="error" element="div" />
 			</td>
 		</tr>
         <tr>
-			<td class="leftCol">client proxy Id</td>
+			<td class="leftCol">Records per Call</td>
 			<td>
-	    	<form:input path="clientProxyId" />
+	    	<form:input path="recordsPerCall" />
 	    	<br>
-	    	<span>The proxy id of the harvester-client (i.e. /ingrid-group:csw-harvester).</span>
-	    	<form:errors path="clientProxyId" cssClass="error" element="div" />
+	    	<span>The number of records to request at once during fetching of records.</span>
+	    	<form:errors path="recordsPerCall" cssClass="error" element="div" />
 			</td>
 		</tr>
         <tr>
     	<td class="leftCol">&nbsp;</td>
         <td>
         	<button type="submit" name="back" value="back">Back</button>
-			<button type="submit" name="next" value="next">Save Communication &amp; Next</button>
+			<button type="submit" name="save" value="save">Save</button>
         </td>
         </tr>
         </table>

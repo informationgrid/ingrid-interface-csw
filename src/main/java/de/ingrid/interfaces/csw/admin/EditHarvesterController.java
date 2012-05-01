@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.util.WebUtils;
 
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.BusClientFactory;
@@ -34,7 +36,9 @@ import de.ingrid.interfaces.csw.config.model.communication.CommunicationClient;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationMessages;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServer;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServerSocket;
+import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 import de.ingrid.interfaces.csw.harvest.impl.IBusHarvester;
+import de.ingrid.interfaces.csw.harvest.impl.IBusHarvester.IBusClosableLock;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.PlugDescription;
 import edu.emory.mathcs.backport.java.util.Arrays;
@@ -46,6 +50,7 @@ public class EditHarvesterController {
     public static final String TEMPLATE_EDIT_HARVESTER = "/edit_ibus_harvester.html";
     public static final String TEMPLATE_EDIT_HARVESTER_2 = "/edit_ibus_harvester_2.html";
     public static final String TEMPLATE_EDIT_HARVESTER_3 = "/edit_ibus_harvester_3.html";
+    public static final String TEMPLATE_EDIT_HARVESTER_4 = "/edit_ibus_harvester_4.html";
 
     ConfigurationProvider cProvider = new ConfigurationProvider();
 
@@ -55,46 +60,53 @@ public class EditHarvesterController {
     @Autowired
     private final IBusHarvesterValidator.IBusHarvesterValidatorStep2 _validatorStep2 = null;
 
+    @Autowired
+    private final IBusHarvesterValidator.IBusHarvesterValidatorStep4 _validatorStep4 = null;
+    
     final private static Log log = LogFactory.getLog(EditHarvesterController.class);
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.GET)
-    public String step1Get(final HttpSession session, final ModelMap modelMap, @RequestParam("id") final Integer id)
+    public String step1Get(final HttpSession session, final ModelMap modelMap, @RequestParam(value = "id", required = false) final Integer id)
             throws Exception {
 
-        List<HarvesterConfiguration> hConfigs = cProvider.getConfiguration().getHarvesterConfigurations();
-        HarvesterConfiguration hConfig = hConfigs.get(id);
-        modelMap.addAttribute("id", id);
-        if (hConfig.getClassName().equals(IBusHarvester.class.getName())) {
-            IBusHarvesterCommandObject commandObject = new IBusHarvesterCommandObject(hConfig);
-            commandObject.setId(id);
-            modelMap.addAttribute("harvester", commandObject);
-            return "/edit_ibus_harvester";
-        } else {
+        if (id != null && id >= 0) {
+            List<HarvesterConfiguration> hConfigs = cProvider.getConfiguration().getHarvesterConfigurations();
+            HarvesterConfiguration hConfig = hConfigs.get(id);
+            modelMap.addAttribute("id", id);
+            if (hConfig.getClassName().equals(IBusHarvester.class.getName())) {
+                IBusHarvesterCommandObject commandObject = new IBusHarvesterCommandObject(hConfig);
+                commandObject.setId(id);
+                // put into session
+                session.setAttribute("harvester", commandObject);
+                modelMap.addAttribute("harvester", commandObject);
+            }
+        } else if (session.getAttribute("harvester") == null) {
             modelMap.addAttribute("errorKey", "harvester.type.notfound");
+            modelMap.addAttribute("harvester",  new IBusHarvesterCommandObject());
+        } else {
+            modelMap.addAttribute("harvester", session.getAttribute("harvester"));
         }
         return "/edit_ibus_harvester";
     }
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.POST)
-    public String step1Post(final HttpSession session, final ModelMap modelMap,
+    public String step1Post(final HttpServletRequest request, final HttpSession session, final ModelMap modelMap,
             @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors)
             throws Exception {
+
+        if (WebUtils.hasSubmitParameter(request, "back")) {
+            return "redirect:" + ManageHarvesterController.TEMPLATE_LIST_HARVESTER;
+        }
 
         if (_validatorStep1.validate(errors).hasErrors()) {
             return "/edit_ibus_harvester";
         }
 
-        // put into session
-        session.setAttribute("harvester", harvester);
-
         // transform to absolute path
         harvester.setWorkingDirectory((new File(harvester.getWorkingDirectory())).getAbsolutePath());
-
-        Configuration configuration = cProvider.getConfiguration();
-        List<HarvesterConfiguration> hConfigs = configuration.getHarvesterConfigurations();
-        HarvesterConfiguration config = hConfigs.get(harvester.getId());
-        BeanUtils.copyProperties(harvester, config);
-        cProvider.write(configuration);
+        RecordCacheConfiguration rcc = new RecordCacheConfiguration();
+        rcc.setCachePath(new File(harvester.getWorkingDirectory(), "records").getAbsoluteFile());
+        harvester.setCacheConfiguration(rcc);
 
         return "redirect:" + TEMPLATE_EDIT_HARVESTER_2;
 
@@ -118,10 +130,14 @@ public class EditHarvesterController {
     }
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER_2, method = RequestMethod.POST)
-    public String step2Post(final HttpSession session, final ModelMap modelMap,
+    public String step2Post(final HttpServletRequest request, final HttpSession session, final ModelMap modelMap,
             @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors)
             throws Exception {
 
+        if (WebUtils.hasSubmitParameter(request, "back")) {
+            return "redirect:" + TEMPLATE_EDIT_HARVESTER;
+        }
+        
         if (_validatorStep2.validate(errors).hasErrors()) {
             return "/edit_ibus_harvester_2";
         }
@@ -151,11 +167,14 @@ public class EditHarvesterController {
         BusClient client = null;
         try {
             client = BusClientFactory.createBusClient(file);
+            // lock iBus client so it is not closed by accident
+            IBusClosableLock.INSTANCE.lock(this.getClass().getName());
             if (!client.allConnected()) {
                 client.start();
             }
             IBus bus = client.getNonCacheableIBus();
             PlugDescription[] allPlugDescriptions = bus.getAllIPlugs();
+            session.setAttribute("allPlugDescriptions", allPlugDescriptions);
 
             List<PlugDescription> availableIPlugs = new ArrayList<PlugDescription>();
             List<RequestDefinitionCommandObject> enabledIPlugs = new ArrayList<RequestDefinitionCommandObject>();
@@ -167,7 +186,7 @@ public class EditHarvesterController {
                 for (PlugDescription pd : allPlugDescriptions) {
                     boolean isEnabled = false;
                     for (RequestDefinition rd : harvester.getRequestDefinitions()) {
-                        if (rd.getProxyId().equalsIgnoreCase(pd.getPlugId())) {
+                        if (rd.getPlugId() != null && rd.getPlugId().equalsIgnoreCase(pd.getPlugId())) {
                             isEnabled = true;
                             RequestDefinitionCommandObject rdco = new RequestDefinitionCommandObject(rd);
                             rdco.setDataSourceName(pd.getDataSourceName());
@@ -183,7 +202,7 @@ public class EditHarvesterController {
                 for (RequestDefinition rd : harvester.getRequestDefinitions()) {
                     boolean isCurrentlyRegistered = false;
                     for (RequestDefinitionCommandObject rdco : enabledIPlugs) {
-                        if (rdco.getProxyId().equalsIgnoreCase(rd.getProxyId())) {
+                        if (rdco.getPlugId().equalsIgnoreCase(rd.getPlugId())) {
                             isCurrentlyRegistered = true;
                             break;
                         }
@@ -202,10 +221,110 @@ public class EditHarvesterController {
         } catch (Exception e) {
             log.error("Error accessing iPlugs.", e);
 
+        } finally {
+            if (client != null && IBusClosableLock.INSTANCE.isLockedBy(this.getClass().getName())) {
+                client.shutdown();
+                // unlock iBus client for close
+                IBusClosableLock.INSTANCE.unlock();
+            }
         }
 
         return "/edit_ibus_harvester_3";
     }
+
+    @RequestMapping(value = TEMPLATE_EDIT_HARVESTER_3, method = RequestMethod.POST)
+    public String step3Post(final HttpServletRequest request, final HttpSession session, final ModelMap modelMap,
+            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors,
+            @RequestParam(value = "enable", required = false) final String enable,
+            @RequestParam(value = "disable", required = false) final String disable,
+            @RequestParam(value = "edit", required = false) final String edit) throws Exception {
+
+        if (enable != null && enable.length() > 0) {
+            RequestDefinition rd = new RequestDefinition();
+            rd.setPlugId(enable);
+            rd.setQueryString("iplugs:\"" + enable + "\"");
+            if (harvester.getRequestDefinitions() == null) {
+                harvester.setRequestDefinitions(new ArrayList<RequestDefinition>());
+            }
+            harvester.getRequestDefinitions().add(rd);
+        } else if (disable != null && disable.length() > 0) {
+            int idx = -1;
+            for (RequestDefinition rd : harvester.getRequestDefinitions()) {
+                if (rd.getPlugId().equals(disable)) {
+                    idx = harvester.getRequestDefinitions().indexOf(rd);
+                    break;
+                }
+            }
+            if (idx > -1) {
+                harvester.getRequestDefinitions().remove(idx);
+            }
+        } else if (edit != null && edit.length() > 0) {
+            return "redirect:" + EditHarvesterController.TEMPLATE_EDIT_HARVESTER_4 + "?plugid=" + edit;
+        } else if (WebUtils.hasSubmitParameter(request, "save")) {
+            
+            Configuration configuration = cProvider.getConfiguration();
+            List<HarvesterConfiguration> hConfigs = configuration.getHarvesterConfigurations();
+            hConfigs.set(harvester.getId(), (HarvesterConfiguration)harvester);
+            if (log.isDebugEnabled()) {
+                log.debug("Save configuration to: " + cProvider.getConfigurationFile());
+            }
+            cProvider.write(configuration);
+            
+            return "redirect:" + TEMPLATE_EDIT_HARVESTER_3;
+        } else if (WebUtils.hasSubmitParameter(request, "back")) {
+            return "redirect:" + TEMPLATE_EDIT_HARVESTER_2;
+        }
+
+        return "redirect:" + TEMPLATE_EDIT_HARVESTER_3;
+    }
+    
+
+    @RequestMapping(value = TEMPLATE_EDIT_HARVESTER_4, method = RequestMethod.GET)
+    public String step4Get(final HttpSession session, final ModelMap modelMap,
+            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester,  final Errors errors, @RequestParam("plugid") final String plugId)
+            throws Exception {
+        
+        for (RequestDefinition rd : harvester.getRequestDefinitions()) {
+            if (rd.getPlugId().equals(plugId)) {
+                modelMap.addAttribute("rd", rd);
+                return "/edit_ibus_harvester_4";
+            }
+        }
+        
+        return "/edit_ibus_harvester_3";
+    }
+
+    @RequestMapping(value = TEMPLATE_EDIT_HARVESTER_4, method = RequestMethod.POST)
+    public String step4Post(final HttpServletRequest request, final HttpSession session, final ModelMap modelMap,
+            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester,  @ModelAttribute("rd") final RequestDefinition rd,  final Errors errors)
+            throws Exception {
+        
+        if (WebUtils.hasSubmitParameter(request, "back")) {
+            return "redirect:" + TEMPLATE_EDIT_HARVESTER_3;
+        }
+        
+        if (_validatorStep4.validate(errors).hasErrors()) {
+            return "/edit_ibus_harvester_4";
+        }
+        
+        for (RequestDefinition def : harvester.getRequestDefinitions()) {
+            if (def.getPlugId().equals(rd.getPlugId())) {
+                BeanUtils.copyProperties(rd, def);
+                break;
+            }
+        }
+        
+        Configuration configuration = cProvider.getConfiguration();
+        List<HarvesterConfiguration> hConfigs = configuration.getHarvesterConfigurations();
+        hConfigs.set(harvester.getId(), (HarvesterConfiguration)harvester);
+        if (log.isDebugEnabled()) {
+            log.debug("Save configuration to: " + cProvider.getConfigurationFile());
+        }
+        cProvider.write(configuration);
+        
+        return "redirect:" + TEMPLATE_EDIT_HARVESTER_3;
+    }
+    
 
     private Communication createCommunication(IBusHarvesterCommandObject harvester) {
         Communication communication = new Communication();
