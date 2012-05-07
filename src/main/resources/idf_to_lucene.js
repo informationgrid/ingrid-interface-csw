@@ -55,8 +55,12 @@ var transformationDescriptions = [
 			"xpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString"
 		},
 		{	"indexField":"identifier",
-			"tokenized":true,
-			"xpath":"//gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"
+			"tokenized":false,
+			"xpath":"//gmd:fileIdentifier/gco:CharacterString"
+		},
+		{	"indexField":"id",
+			"tokenized":false,
+			"xpath":"//gmd:fileIdentifier/gco:CharacterString"
 		},
 		{	"indexField":"modified",
 			"xpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]",
@@ -67,6 +71,9 @@ var transformationDescriptions = [
 		{	"indexField":"type",
 			"xpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
 			"defaultValue":"dataset"
+		},
+		{	"indexField":"metafile",
+			"defaultValue":"doc"
 		}
 	];
 
@@ -164,8 +171,8 @@ function addToDoc(field, content, tokenized) {
 		var analyzed = Field.Index.ANALYZED;
 		if (!tokenized) analyzed = Field.Index.NOT_ANALYZED;
 		document.add(new Field(field, content, Field.Store.YES, analyzed));
-		document.add(new Field("anytext", content, Field.Store.NO, analyzed));
-		document.add(new Field("anytext", LuceneTools.filterTerm(content), Field.Store.NO, Field.Index.ANALYZED));
+		document.add(new Field("AnyText", content, Field.Store.NO, analyzed));
+		document.add(new Field("AnyText", LuceneTools.filterTerm(content), Field.Store.NO, Field.Index.ANALYZED));
 	}
 }
 

@@ -44,6 +44,7 @@ import org.geotoolkit.xml.MarshallerPool;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.util.FactoryException;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -58,6 +59,7 @@ import de.ingrid.interfaces.csw.domain.filter.queryable.QueryableType;
 /**
  * A FilterParser that creates a Lucene query from an ogc filter document.
  */
+@Service
 public class LuceneFilterParser implements FilterParser {
 
 	protected final static Log log = LogFactory.getLog(AbstractFileCache.class);
@@ -246,7 +248,7 @@ public class LuceneFilterParser implements FilterParser {
 			if (pil.getPropertyName() != null) {
 				propertyName = pil.getPropertyName().getContent();
 				propertyNameLocal = this.removePrefix(propertyName);
-				response.append(propertyNameLocal).append(':');
+				response.append(propertyNameLocal.toLowerCase()).append(':');
 			}
 			else {
 				throw new CSWFilterException("Missing propertyName parameter for propertyIsLike operator.",
@@ -286,7 +288,7 @@ public class LuceneFilterParser implements FilterParser {
 
 			// get the field
 			if (pin.getPropertyName() != null) {
-				response.append(this.removePrefix(pin.getPropertyName().getContent())).append(':').append("null");
+				response.append(this.removePrefix(pin.getPropertyName().getContent().toLowerCase())).append(':').append("null");
 			} else {
 				throw new CSWFilterException("Missing propertyName parameter for propertyIsNull operator.",
 						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
@@ -318,14 +320,16 @@ public class LuceneFilterParser implements FilterParser {
 				}
 				QueryableType queryableType = queryableProperty.getType();
 
+				propertyNameLocal = propertyNameLocal.toLowerCase();
+				
 				// property == value -> property:"value"
 				if (operator.equals("PropertyIsEqualTo")) {
-					response.append(propertyNameLocal).append(":\"").append(literal).append('"');
+			        response.append(propertyNameLocal).append(":").append(maskPhrase(literal));
 				}
 				// property != value -> metafile:doc NOT property:"value"
 				else if (operator.equals("PropertyIsNotEqualTo")) {
 					response.append(defaultField).append(" NOT ");
-					response.append(propertyNameLocal).append(":\"").append(literal).append('"');
+                    response.append(propertyNameLocal).append(":").append(maskPhrase(literal));
 				}
 				// property >= value -> property:[value UPPER_BOUND]
 				else if (operator.equals("PropertyIsGreaterThanOrEqualTo")) {
@@ -652,4 +656,13 @@ public class LuceneFilterParser implements FilterParser {
 		}
 		return spatialFilter;
 	}
+	
+	private String maskPhrase(String str) {
+	    if (str.contains(" ")) {
+	        return "\""+str+"\"";
+	    } else {
+	        return str;
+	    }
+	}
+	
 }

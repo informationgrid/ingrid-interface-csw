@@ -153,7 +153,7 @@ public interface CSWQuery {
 	public void setStartPosition(int position);
 
 	/**
-	 * Get the start position
+	 * Get the start position. Starts by 1.
 	 * @return int
 	 */
 	public int getStartPosition();

@@ -65,7 +65,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "Title:*VM*");
+		assertEquals(spaQuery.getQuery(), "title:*VM*");
 
 
 		/**
@@ -81,7 +81,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "Title:\"VM\"");
+		assertEquals(spaQuery.getQuery(), "title:VM");
 
 		/**
 		 * Test 3: a simple Filter PropertyIsNotEqualTo
@@ -96,7 +96,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "metafile:doc NOT Title:\"VM\"");
+		assertEquals(spaQuery.getQuery(), "metafile:doc NOT title:VM");
 
 
 		/**
@@ -111,7 +111,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "Title:null");
+		assertEquals(spaQuery.getQuery(), "title:null");
 
 		/**
 		 * Test 5: a simple Filter PropertyIsGreaterThanOrEqualTo
@@ -126,7 +126,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "CreationDate:[2007-06-02 9999-01-01]");
+		assertEquals(spaQuery.getQuery(), "creationdate:[2007-06-02 9999-01-01]");
 
 		/**
 		 * Test 6: a simple Filter PropertyIsGreaterThan
@@ -141,7 +141,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "CreationDate:{2007-06-02 9999-01-01}");
+		assertEquals(spaQuery.getQuery(), "creationdate:{2007-06-02 9999-01-01}");
 
 		/**
 		 * Test 7: a simple Filter PropertyIsLessThan
@@ -156,7 +156,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "CreationDate:{0000-01-01 2007-06-02}");
+		assertEquals(spaQuery.getQuery(), "creationdate:{0000-01-01 2007-06-02}");
 
 
 		/**
@@ -172,7 +172,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "CreationDate:[0000-01-01 2007-06-02]");
+		assertEquals(spaQuery.getQuery(), "creationdate:[0000-01-01 2007-06-02]");
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" AND Author:\"Georg Buechner\")");
+		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" AND author:\"Georg Buechner\")");
 
 		/**
 		 * Test 2: a simple Filter OR between two propertyIsEqualTo
@@ -223,7 +223,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" OR Author:\"Georg Buechner\")");
+		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" OR author:\"Georg Buechner\")");
 
 
 		/**
@@ -249,7 +249,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(Title:\"Der Hessische Landbote\" OR Author:\"Georg Buechner\" OR Identifier:\"268\")");
+		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" OR author:\"Georg Buechner\" OR identifier:268)");
 
 
 		/**
@@ -267,7 +267,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "Title:\"Der Hessische Landbote\"");
+		assertEquals(spaQuery.getQuery(), "title:\"Der Hessische Landbote\"");
 		assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.NOT);
 	}
 
@@ -665,7 +665,7 @@ public class FilterParserTest extends TestCase {
 		SpatialQuery spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
-		assertEquals(spaQuery.getQuery(), "(Title:*VM*)");
+		assertEquals(spaQuery.getQuery(), "(title:*VM*)");
 		assertEquals(spaQuery.getSubQueries().size(), 0);
 
 		assertTrue(spaQuery.getSpatialFilter() instanceof LuceneOGCFilter);
@@ -699,7 +699,7 @@ public class FilterParserTest extends TestCase {
 		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
-		assertEquals(spaQuery.getQuery(), "(Title:*VM* AND Title:\"VM\")");
+		assertEquals(spaQuery.getQuery(), "(title:*VM* AND title:VM)");
 		assertEquals(spaQuery.getSubQueries().size(), 0);
 
 		assertTrue(spaQuery.getSpatialFilter() instanceof LuceneOGCFilter);
@@ -736,7 +736,7 @@ public class FilterParserTest extends TestCase {
 		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
-		assertEquals(spaQuery.getQuery(), "(Title:\"VM\")");
+		assertEquals(spaQuery.getQuery(), "(title:VM)");
 		assertEquals(spaQuery.getSubQueries().size(), 0);
 
 		assertTrue(spaQuery.getSpatialFilter() instanceof SerialChainFilter);
@@ -778,7 +778,7 @@ public class FilterParserTest extends TestCase {
 		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
-		assertEquals(spaQuery.getQuery(), "(Title:*VM* OR Title:\"VM\")");
+		assertEquals(spaQuery.getQuery(), "(title:*VM* OR title:VM)");
 		assertEquals(spaQuery.getSubQueries().size(), 0);
 		assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.OR);
 
@@ -816,7 +816,7 @@ public class FilterParserTest extends TestCase {
 		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
-		assertEquals(spaQuery.getQuery(), "(Title:\"VM\")");
+		assertEquals(spaQuery.getQuery(), "(title:VM)");
 		assertEquals(spaQuery.getSubQueries().size(), 0);
 		assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.OR);
 
@@ -875,7 +875,7 @@ public class FilterParserTest extends TestCase {
 
 		SpatialQuery subQuery1 = spaQuery.getSubQueries().get(0);
 		assertTrue  (subQuery1.getSpatialFilter() != null);
-		assertEquals(subQuery1.getQuery(), "(Title:\"VM\")");
+		assertEquals(subQuery1.getQuery(), "(title:VM)");
 		assertEquals(subQuery1.getSubQueries().size(), 0);
 		assertEquals(subQuery1.getLogicalOperator(), SerialChainFilter.OR);
 
@@ -912,13 +912,13 @@ public class FilterParserTest extends TestCase {
 		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
-		assertEquals(spaQuery.getQuery(), "(metafile:doc NOT Title:\"VMAI\")");
+		assertEquals(spaQuery.getQuery(), "(metafile:doc NOT title:VMAI)");
 		assertEquals(spaQuery.getSubQueries().size(), 1);
 		assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.OR);
 
 		subQuery1 = spaQuery.getSubQueries().get(0);
 		assertTrue  (subQuery1.getSpatialFilter() != null);
-		assertEquals(subQuery1.getQuery(), "(Title:LO?Li)");
+		assertEquals(subQuery1.getQuery(), "(title:LO?Li)");
 		assertEquals(subQuery1.getSubQueries().size(), 0);
 		assertEquals(subQuery1.getLogicalOperator(), SerialChainFilter.AND);
 
@@ -982,7 +982,7 @@ public class FilterParserTest extends TestCase {
 		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
-		assertEquals(spaQuery.getQuery(), "(Title:*VM*)");
+		assertEquals(spaQuery.getQuery(), "(title:*VM*)");
 		assertEquals(spaQuery.getSubQueries().size(), 2);
 		assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.AND);
 
@@ -993,7 +993,7 @@ public class FilterParserTest extends TestCase {
 
 		subQuery1 = spaQuery.getSubQueries().get(0);
 		assertTrue  (subQuery1.getSpatialFilter() != null);
-		assertEquals(subQuery1.getQuery(), "(Title:\"PLOUF\")");
+		assertEquals(subQuery1.getQuery(), "(title:PLOUF)");
 		assertEquals(subQuery1.getSubQueries().size(), 0);
 		assertEquals(subQuery1.getLogicalOperator(), SerialChainFilter.OR);
 
@@ -1004,13 +1004,13 @@ public class FilterParserTest extends TestCase {
 
 		SpatialQuery subQuery2 = spaQuery.getSubQueries().get(1);
 		assertTrue  (subQuery2.getSpatialFilter() == null);
-		assertEquals(subQuery2.getQuery(), "(metafile:doc NOT Title:\"VMAI\")");
+		assertEquals(subQuery2.getQuery(), "(metafile:doc NOT title:VMAI)");
 		assertEquals(subQuery2.getSubQueries().size(), 1);
 		assertEquals(subQuery2.getLogicalOperator(), SerialChainFilter.OR);
 
 		SpatialQuery subQuery2_1 = subQuery2.getSubQueries().get(0);
 		assertTrue  (subQuery2_1.getSpatialFilter() != null);
-		assertEquals(subQuery2_1.getQuery(), "(Title:LO?Li)");
+		assertEquals(subQuery2_1.getQuery(), "(title:LO?Li)");
 		assertEquals(subQuery2_1.getSubQueries().size(), 0);
 		assertEquals(subQuery2_1.getLogicalOperator(), SerialChainFilter.AND);
 
@@ -1098,7 +1098,7 @@ public class FilterParserTest extends TestCase {
 		// first sub-query
 		subQuery1 = spaQuery.getSubQueries().get(0);
 		assertTrue  (subQuery1.getSpatialFilter() == null);
-		assertEquals(subQuery1.getQuery(), "Title:*VM*");
+		assertEquals(subQuery1.getQuery(), "title:*VM*");
 		assertEquals(subQuery1.getSubQueries().size(), 0);
 		assertEquals(subQuery1.getLogicalOperator(), SerialChainFilter.NOT);
 
@@ -1113,7 +1113,7 @@ public class FilterParserTest extends TestCase {
 		// second subQuery => first subQuery
 		subQuery2_1 = subQuery2.getSubQueries().get(0);
 		assertTrue  (subQuery2_1.getSpatialFilter() != null);
-		assertEquals(subQuery2_1.getQuery(), "(Title:\"PLOUF\")");
+		assertEquals(subQuery2_1.getQuery(), "(title:PLOUF)");
 		assertEquals(subQuery2_1.getSubQueries().size(), 0);
 		assertEquals(subQuery2_1.getLogicalOperator(), SerialChainFilter.OR);
 
@@ -1125,13 +1125,13 @@ public class FilterParserTest extends TestCase {
 		// third sub-query
 		SpatialQuery subQuery3 = spaQuery.getSubQueries().get(2);
 		assertTrue  (subQuery3.getSpatialFilter() == null);
-		assertEquals(subQuery3.getQuery(), "(metafile:doc NOT Title:\"VMAI\")");
+		assertEquals(subQuery3.getQuery(), "(metafile:doc NOT title:VMAI)");
 		assertEquals(subQuery3.getSubQueries().size(), 1);
 		assertEquals(subQuery3.getLogicalOperator(), SerialChainFilter.OR);
 
 		SpatialQuery subQuery3_1 = subQuery3.getSubQueries().get(0);
 		assertTrue  (subQuery3_1.getSpatialFilter() != null);
-		assertEquals(subQuery3_1.getQuery(), "(Title:LO?Li)");
+		assertEquals(subQuery3_1.getQuery(), "(title:LO?Li)");
 		assertEquals(subQuery3_1.getSubQueries().size(), 0);
 		assertEquals(subQuery3_1.getLogicalOperator(), SerialChainFilter.AND);
 

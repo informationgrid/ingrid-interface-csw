@@ -37,209 +37,227 @@ import de.ingrid.utils.xpath.XPathUtils;
  */
 public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
-	private Node requestBody = null;
-	private Operation operation = null;
-	private List<String> acceptVersions = null;
-	private CSWQuery query = null;
+    private Node requestBody = null;
+    private Operation operation = null;
+    private List<String> acceptVersions = null;
+    private CSWQuery query = null;
 
-	/** Tool for evaluating xpath **/
-	private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
+    /** Tool for evaluating xpath **/
+    private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
-	/** Parameter xpath (namespace agnostic) **/
-	private static String SERVICE_PARAM_XPATH = "/*/@service";
-	private static String DESCREC_VERSION_PARAM_XPATH = "/csw:DescribeRecord/@version";
-	private static String GETCAP_VERSION_PARAM_XPATH = "/csw:GetCapabilities/csw:AcceptVersions/csw:Version";
+    /** Parameter xpath (namespace agnostic) **/
+    private static String SERVICE_PARAM_XPATH = "/*/@service";
+    private static String DESCREC_VERSION_PARAM_XPATH = "/csw:DescribeRecord/@version";
+    private static String GETCAP_VERSION_PARAM_XPATH = "/csw:GetCapabilities/csw:AcceptVersions/csw:Version";
 
-	/** Supported operations **/
-	private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
-			Operation.GET_CAPABILITIES,
-			Operation.DESCRIBE_RECORD,
-			Operation.GET_RECORDS,
-			Operation.GET_RECORD_BY_ID
-	}));
+    /** Supported operations **/
+    private static List<Operation> SUPPORTED_OPERATIONS = Collections
+            .unmodifiableList(Arrays.asList(new Operation[] { Operation.GET_CAPABILITIES, Operation.DESCRIBE_RECORD,
+                    Operation.GET_RECORDS, Operation.GET_RECORD_BY_ID }));
 
-	@Override
-	public final void initialize(HttpServletRequest request, HttpServletResponse response) {
-		this.setRequest(request);
-		this.setResponse(response);
+    @Override
+    public final void initialize(HttpServletRequest request, HttpServletResponse response) {
+        this.setRequest(request);
+        this.setResponse(response);
 
-		// reset member variables
-		this.requestBody = null;
-		this.operation = null;
-		this.acceptVersions = null;
-		this.query = null;
+        // reset member variables
+        this.requestBody = null;
+        this.operation = null;
+        this.acceptVersions = null;
+        this.query = null;
 
-		this.setRequestBody(this.extractRequestBody(request));
-	}
+        this.setRequestBody(this.extractRequestBody(request));
+    }
 
-	protected static Document extractFromDocument(Node node) throws Exception {
-		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-		domFactory.setNamespaceAware(true);
-		DocumentBuilder builder = domFactory.newDocumentBuilder();
-		Document doc = builder.newDocument();
-		Node copy  = node.cloneNode(true);
-		Node adopted = doc.adoptNode(copy);
-		doc.appendChild(adopted);
-		return doc;
-	}
+    protected static Document extractFromDocument(Node node) throws Exception {
+        DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+        domFactory.setNamespaceAware(true);
+        DocumentBuilder builder = domFactory.newDocumentBuilder();
+        Document doc = builder.newDocument();
+        Node copy = node.cloneNode(true);
+        Node adopted = doc.adoptNode(copy);
+        doc.appendChild(adopted);
+        return doc;
+    }
 
-	/**
-	 * Extract the request body from the request. Subclasses will override this.
-	 * @param request
-	 * @return Element
-	 */
-	protected Node extractRequestBody(HttpServletRequest request) {
-		DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
-		df.setNamespaceAware(true);
-		try {
-			Document requestDocument = df.newDocumentBuilder().parse(request.getInputStream());
-			return requestDocument.getDocumentElement();
-		} catch(Exception e) {
-			throw new RuntimeException("Error parsing request: ", e);
-		}
-	}
+    /**
+     * Extract the request body from the request. Subclasses will override this.
+     * 
+     * @param request
+     * @return Element
+     */
+    protected Node extractRequestBody(HttpServletRequest request) {
+        DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
+        df.setNamespaceAware(true);
+        try {
+            Document requestDocument = df.newDocumentBuilder().parse(request.getInputStream());
+            return requestDocument.getDocumentElement();
+        } catch (Exception e) {
+            throw new RuntimeException("Error parsing request: ", e);
+        }
+    }
 
-	@Override
-	public void validateRequest() throws CSWException {
-		this.checkInitialized();
+    @Override
+    public void validateRequest() throws CSWException {
+        this.checkInitialized();
 
-		// check the service parameter
-		String service = this.xpath.getString(this.getRequestBody(), SERVICE_PARAM_XPATH);
-		if (service == null || service.length() == 0) {
-			throw new CSWMissingParameterValueException("Attribute 'service' is not specified or has no value",
-					"service");
-		} else {
-			if (!service.equals("CSW")) {
-				StringBuffer errorMsg = new StringBuffer();
-				errorMsg.append("Parameter 'service' has an unsupported value.\n");
-				errorMsg.append("Supported values: CSW\n");
-				throw new CSWInvalidParameterValueException(errorMsg.toString(), "version");
-			}
-		}
-	}
+        // check the service parameter
+        String service = this.xpath.getString(this.getRequestBody(), SERVICE_PARAM_XPATH);
+        if (service == null || service.length() == 0) {
+            throw new CSWMissingParameterValueException("Attribute 'service' is not specified or has no value",
+                    "service");
+        } else {
+            if (!service.equals("CSW")) {
+                StringBuffer errorMsg = new StringBuffer();
+                errorMsg.append("Parameter 'service' has an unsupported value.\n");
+                errorMsg.append("Supported values: CSW\n");
+                throw new CSWInvalidParameterValueException(errorMsg.toString(), "version");
+            }
+        }
+    }
 
-	@Override
-	public List<Operation> getSupportedOperations() {
-		return SUPPORTED_OPERATIONS;
-	}
+    @Override
+    public List<Operation> getSupportedOperations() {
+        return SUPPORTED_OPERATIONS;
+    }
 
-	@Override
-	public Operation getOperation() throws CSWOperationNotSupportedException {
-		this.checkInitialized();
+    @Override
+    public Operation getOperation() throws CSWOperationNotSupportedException {
+        this.checkInitialized();
 
-		if (this.operation == null) {
-			String operationName = this.getRequestBody().getNodeName();
-			this.operation = Operation.getByName(operationName);
-		}
-		return this.operation;
-	}
+        if (this.operation == null) {
+            String operationName = this.getRequestBody().getNodeName();
+            this.operation = Operation.getByName(operationName);
+        }
+        return this.operation;
+    }
 
-	@Override
-	public List<String> getAcceptVersions() {
-		this.checkInitialized();
+    @Override
+    public List<String> getAcceptVersions() {
+        this.checkInitialized();
 
-		if (this.acceptVersions == null) {
-			this.acceptVersions = new ArrayList<String>();
+        if (this.acceptVersions == null) {
+            this.acceptVersions = new ArrayList<String>();
 
-			NodeList versionNodes = this.xpath.getNodeList(this.getRequestBody(), GETCAP_VERSION_PARAM_XPATH);
-			int length = versionNodes.getLength();
-			for (int i=0; i<length; i++) {
-				Node curVersionNode = versionNodes.item(i);
-				if (curVersionNode != null) {
-					this.acceptVersions.add(curVersionNode.getTextContent());
-				}
-			}
-			this.acceptVersions = Collections.unmodifiableList(this.acceptVersions);
-		}
-		return this.acceptVersions;
-	}
+            NodeList versionNodes = this.xpath.getNodeList(this.getRequestBody(), GETCAP_VERSION_PARAM_XPATH);
+            int length = versionNodes.getLength();
+            for (int i = 0; i < length; i++) {
+                Node curVersionNode = versionNodes.item(i);
+                if (curVersionNode != null) {
+                    this.acceptVersions.add(curVersionNode.getTextContent());
+                }
+            }
+            this.acceptVersions = Collections.unmodifiableList(this.acceptVersions);
+        }
+        return this.acceptVersions;
+    }
 
-	@Override
-	public String getVersion() {
-		this.checkInitialized();
-		return this.xpath.getString(this.getRequestBody(), DESCREC_VERSION_PARAM_XPATH);
-	}
+    @Override
+    public String getVersion() {
+        this.checkInitialized();
+        return this.xpath.getString(this.getRequestBody(), DESCREC_VERSION_PARAM_XPATH);
+    }
 
-	@Override
-	public CSWQuery getQuery() throws CSWException {
-		this.checkInitialized();
+    @Override
+    public CSWQuery getQuery() throws CSWException {
+        this.checkInitialized();
 
-		if (this.query == null) {
-			this.query = new GenericQuery();
-			try {
-				// NOTE: getting enum values may throw an IllegalArgumentException, which is ok
-				Node requestBody = this.getRequestBody();
-				// only required for GetRecordById, GetRecords operations
-				Operation operation = this.getOperation();
-				if (operation == Operation.GET_RECORD_BY_ID) {
-					// extract the id
-					String id = this.xpath.getString(requestBody, "/csw:GetRecordById/csw:Id");
-					if (id != null) {
-						this.query.setId(id);
-					}
-					// extract the element set name
-					String elementSetNameStr = this.xpath.getString(requestBody, "/csw:GetRecordById/csw:ElementSetName");
-					if (elementSetNameStr != null) {
-						this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
-					}
-					// extract the output schema
-					String schemaUri = this.xpath.getString(requestBody, "/csw:GetRecordById/csw:OutputSchema");
-					if (schemaUri != null) {
-						this.query.setOutputSchema(Namespace.getByUri(schemaUri));
-					}
-				}
-				else if (operation == Operation.GET_RECORDS) {
-					// extract the filter constraint
-					Node filter = this.xpath.getNode(requestBody, "/csw:GetRecords/csw:Query/csw:Constraint/ogc:Filter");
-					if (filter != null) {
-						this.query.setConstraint(extractFromDocument(filter));
-					}
-					// extract the constraint language version
-					String filterVersion = this.xpath.getString(requestBody, "/csw:GetRecords/csw:Query/csw:Constraint/@version");
-					if (filterVersion != null) {
-						this.query.setConstraintLanguageVersion(filterVersion);
-					}
-					// extract the element set name
-					String elementSetNameStr = this.xpath.getString(requestBody, "/csw:GetRecords/csw:Query/csw:ElementSetName");
-					if (elementSetNameStr != null) {
-						this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
-					}
-				}
-			}
-			catch (Exception ex) {
-				throw new CSWException("An error occured while extracting the query: ", ex);
-			}
-		}
-		return this.query;
-	}
+        // NOTE: getting enum values may throw an IllegalArgumentException,
+        // which is ok
+        return this.getQuery(this.getRequestBody());
 
-	@Override
-	public void validateResponse() throws CSWException {
-		// TODO Auto-generated method stub
-	}
+    }
 
-	/**
-	 * Check if the instance is initialized
-	 */
-	protected void checkInitialized() {
-		if (this.getRequestBody() == null) {
-			throw new RuntimeException("No request document found. Maybe initialize() was not called.");
-		}
-	}
+    /**
+     * Get a CSWQuery from a request node. 
+     * 
+     * @param requestNode
+     * @return
+     * @throws CSWException
+     */
+    public CSWQuery getQuery(Node requestNode) throws CSWException {
 
-	/**
-	 * Get the request body
-	 * @return Node
-	 */
-	protected Node getRequestBody() {
-		return this.requestBody;
-	}
+        this.requestBody = requestNode;
+        
+        if (this.query == null) {
+            this.query = new GenericQuery();
+            try {
+                // only required for GetRecordById, GetRecords operations
+                Operation operation = this.getOperation();
+                if (operation == Operation.GET_RECORD_BY_ID) {
+                    // extract the id
+                    String id = this.xpath.getString(requestNode, "/csw:GetRecordById/csw:Id");
+                    if (id != null) {
+                        this.query.setId(id);
+                    }
+                    // extract the element set name
+                    String elementSetNameStr = this.xpath.getString(requestNode,
+                            "/csw:GetRecordById/csw:ElementSetName");
+                    if (elementSetNameStr != null) {
+                        this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
+                    }
+                    // extract the output schema
+                    String schemaUri = this.xpath.getString(requestNode, "/csw:GetRecordById/csw:OutputSchema");
+                    if (schemaUri != null) {
+                        this.query.setOutputSchema(Namespace.getByUri(schemaUri));
+                    }
+                } else if (operation == Operation.GET_RECORDS) {
+                    // extract the filter constraint
+                    Node filter = this.xpath
+                            .getNode(requestNode, "/csw:GetRecords/csw:Query/csw:Constraint/ogc:Filter");
+                    if (filter != null) {
+                        this.query.setConstraint(extractFromDocument(filter));
+                    }
+                    // extract the constraint language version
+                    String filterVersion = this.xpath.getString(requestNode,
+                            "/csw:GetRecords/csw:Query/csw:Constraint/@version");
+                    if (filterVersion != null) {
+                        this.query.setConstraintLanguageVersion(filterVersion);
+                    }
+                    // extract the element set name
+                    String elementSetNameStr = this.xpath.getString(requestNode,
+                            "/csw:GetRecords/csw:Query/csw:ElementSetName");
+                    if (elementSetNameStr != null) {
+                        this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
+                    }
+                }
+            } catch (Exception ex) {
+                throw new CSWException("An error occured while extracting the query: ", ex);
+            }
+        }
+        return this.query;
+    }
 
-	/**
-	 * Set the request body
-	 * @param requestBody The requestBody node to set
-	 */
-	protected void setRequestBody(Node requestBody) {
-		this.requestBody = requestBody;
-	}
+    @Override
+    public void validateResponse() throws CSWException {
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     * Check if the instance is initialized
+     */
+    protected void checkInitialized() {
+        if (this.getRequestBody() == null) {
+            throw new RuntimeException("No request document found. Maybe initialize() was not called.");
+        }
+    }
+
+    /**
+     * Get the request body
+     * 
+     * @return Node
+     */
+    protected Node getRequestBody() {
+        return this.requestBody;
+    }
+
+    /**
+     * Set the request body
+     * 
+     * @param requestBody
+     *            The requestBody node to set
+     */
+    protected void setRequestBody(Node requestBody) {
+        this.requestBody = requestBody;
+    }
 }

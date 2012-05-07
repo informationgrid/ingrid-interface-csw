@@ -25,5 +25,5 @@ public interface Indexer {
 	 * Get the path to the Lucene index
 	 * @return File
 	 */
-	public File getIndexPath();
+	public File getIndexConfigPath();
 }

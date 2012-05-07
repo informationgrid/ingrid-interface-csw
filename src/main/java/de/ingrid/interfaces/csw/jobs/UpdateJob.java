@@ -186,11 +186,11 @@ public class UpdateJob {
                     FileUtils.deleteRecursive(this.searcher.getIndexPath());
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("Rename new index: " + this.indexer.getIndexPath().getAbsolutePath() + " to "
+                    log.debug("Rename new index: " + this.indexer.getIndexConfigPath().getAbsolutePath() + " to "
                             + this.searcher.getIndexPath().getAbsolutePath());
                 }
-                if (!this.indexer.getIndexPath().renameTo(this.searcher.getIndexPath())) {
-                    log.warn("Could not renam old index: " + this.indexer.getIndexPath().getAbsolutePath() + " to "
+                if (!this.indexer.getIndexConfigPath().renameTo(this.searcher.getIndexPath())) {
+                    log.warn("Could not renam old index: " + this.indexer.getIndexConfigPath().getAbsolutePath() + " to "
                             + this.searcher.getIndexPath().getAbsolutePath());
                 }
 

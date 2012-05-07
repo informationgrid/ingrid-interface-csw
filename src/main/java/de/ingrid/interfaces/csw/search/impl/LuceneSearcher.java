@@ -4,19 +4,20 @@
 package de.ingrid.interfaces.csw.search.impl;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.lucene.analysis.standard.ClassicAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.FilteredQuery;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopScoreDocCollector;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.SimpleFSDirectory;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.util.Version;
 import org.geotoolkit.lucene.filter.SpatialQuery;
+import org.geotoolkit.lucene.index.LuceneIndexSearcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.domain.filter.FilterParser;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
+import de.ingrid.interfaces.csw.search.CSWRecordResults;
 import de.ingrid.interfaces.csw.search.Searcher;
 
 /**
@@ -52,12 +54,13 @@ public class LuceneSearcher implements Searcher {
     /**
      * The FilterParser instance that converts csw queries to InGrid queries
      */
+    @Autowired
     private FilterParser filterParser;
 
     /**
      * The Lucene index searcher
      */
-    protected IndexSearcher indexSearcher;
+    protected LuceneIndexSearcher lis = null;
 
     /**
      * The started state
@@ -67,6 +70,7 @@ public class LuceneSearcher implements Searcher {
     /**
      * The repository where the CSW records are retrieved from
      */
+    @Autowired
     private CSWRecordRepository recordRepository;
 
     @Override
@@ -74,42 +78,43 @@ public class LuceneSearcher implements Searcher {
         if (this.isStarted) {
             this.stop();
         }
-
+        
         // overwrite indexer path with configuration
         if (configurationProvider != null) {
             this.indexPath = configurationProvider.getIndexPath();
         }
 
-        log.info("Open search index: " + this.indexPath);
-        Directory indexDir = new SimpleFSDirectory(this.indexPath);
-        this.indexSearcher = new IndexSearcher(IndexReader.open(indexDir, true));
-        log.info("Number of docs: " + this.indexSearcher.maxDoc());
+        lis = new LuceneIndexSearcher(this.indexPath, "");
+        
         this.isStarted = true;
     }
 
     @Override
     public void stop() throws Exception {
-        if (this.indexSearcher != null) {
+        if (lis != null) {
             log.info("Close search index: " + this.indexPath);
-            this.indexSearcher.getIndexReader().close();
-            this.indexSearcher.close();
+            lis.destroy();
             this.isStarted = false;
         }
     }
 
     @Override
-    public List<CSWRecord> search(CSWQuery query) throws Exception {
+    public CSWRecordResults search(CSWQuery query) throws Exception {
         if (this.filterParser == null) {
             throw new RuntimeException("LuceneSearcher is not configured properly: filterParser is not set.");
         }
         if (this.recordRepository == null) {
             throw new RuntimeException("LuceneSearcher is not configured properly: recordRepository is not set.");
         }
-        if (this.indexSearcher == null) {
+        if (!this.isStarted) {
+            start();
+        }
+        if (this.lis == null) {
             throw new RuntimeException("LuceneSearcher is not started.");
         }
 
-        List<CSWRecord> result = new ArrayList<CSWRecord>();
+        CSWRecordResults results = new CSWRecordResults();
+
         ElementSetName elementSetName = query.getElementSetName();
         if (query.getIds() != null) {
             // there are records specified by id. So we can search in the record
@@ -118,31 +123,39 @@ public class LuceneSearcher implements Searcher {
             for (String id : query.getIds()) {
                 if (this.recordRepository.containsRecord(id)) {
                     CSWRecord record = this.recordRepository.getRecord(id, elementSetName);
-                    result.add(record);
+                    results.add(record);
                 }
             }
+            // add number of results as total hits
+            results.setTotalHits(results.getResults().size());
         } else {
             // use the query constraints to search for records in the Lucene
             // index
-            SpatialQuery luceneQuery = this.filterParser.parse(query.getConstraint());
-            if (luceneQuery == null) {
+            SpatialQuery spatialQuery = this.filterParser.parse(query.getConstraint());
+            if (spatialQuery == null) {
                 throw new RuntimeException("Error parsing query constraint: Lucene query is null");
             }
-            TopScoreDocCollector collector = TopScoreDocCollector.create(this.indexSearcher.maxDoc(), true);
-            // TODO implement searching
-            // this.indexSearcher.search(luceneQuery, collector);
-            ScoreDoc[] hits = collector.topDocs().scoreDocs;
-            log.debug("Found " + hits.length + " hits.");
+            Set<String> resultIds = lis.doSearch(spatialQuery);
+            
+            if (log.isDebugEnabled()) {
+                log.debug("Found " + resultIds.size() + " hits, returning " + Math.min((query.getStartPosition() + query.getMaxRecords() -1), resultIds.size()) + ".");
+            }
 
             // get the CSWRecord for each document found in the index
-            for (ScoreDoc hit : hits) {
-                Document doc = this.indexSearcher.doc(hit.doc);
-                String recordId = doc.get("recordId");
-                CSWRecord record = this.recordRepository.getRecord(recordId, elementSetName);
-                result.add(record);
+            int cnt=1;
+            int endIdx = Math.min((query.getStartPosition() + query.getMaxRecords() -1), resultIds.size());
+            for (String resultId : resultIds) {
+                if (cnt >= query.getStartPosition() && cnt <= endIdx) {
+                    CSWRecord record = this.recordRepository.getRecord(resultId, elementSetName);
+                    results.add(record);
+                } else if (cnt > endIdx) {
+                    break;
+                }
+                cnt++;
             }
+            results.setTotalHits(resultIds.size());
         }
-        return result;
+        return results;
     }
 
     @Override
@@ -175,4 +188,9 @@ public class LuceneSearcher implements Searcher {
     public void setRecordRepository(CSWRecordRepository recordRepository) {
         this.recordRepository = recordRepository;
     }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
 }

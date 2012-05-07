@@ -4,9 +4,7 @@
 package de.ingrid.interfaces.csw.search;
 
 import java.io.File;
-import java.util.List;
 
-import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 
 /**
@@ -32,10 +30,10 @@ public interface Searcher {
 	 * Search for CSW records using the given query.
 	 * 
 	 * @param query
-	 * @return List<CSWRecord>
+	 * @return CSWRecordResults
 	 * @throws Exception
 	 */
-	public List<CSWRecord> search(CSWQuery query) throws Exception;
+	public CSWRecordResults search(CSWQuery query) throws Exception;
 
 	/**
 	 * Get the path to the Lucene index

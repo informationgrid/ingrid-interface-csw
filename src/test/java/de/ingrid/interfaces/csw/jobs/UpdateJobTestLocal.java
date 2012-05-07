@@ -10,7 +10,9 @@ import java.util.concurrent.FutureTask;
 
 import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
+import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
 import de.ingrid.interfaces.csw.index.impl.LuceneIndexer;
+import de.ingrid.interfaces.csw.index.impl.ScriptedIDFRecordLuceneMapper;
 import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
 import de.ingrid.interfaces.csw.mapping.impl.XsltMapper;
 import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
@@ -23,7 +25,7 @@ public class UpdateJobTestLocal extends TestCase {
 	private static final File CONFIGURATION_FILE_1 = new File("src/test/resources/config-updatejobtest-1iplug.xml");
 	private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
 
-	private static final File MAPPING_FILE = new File("src/main/resources/idf_to_lucene-igc-1.0.3.js");
+	private static final File MAPPING_FILE = new File("src/main/resources/idf_to_lucene.js");
 
 	private static final String CSW_CACHE_PATH = "tmp/cache/csw";
 	private static final String TMP_INDEX_PATH = "tmp/index/tmp";
@@ -76,9 +78,12 @@ public class UpdateJobTestLocal extends TestCase {
 		job.setConfigurationProvider(configProvider);
 
 		// set up indexer
+		ScriptedIDFRecordLuceneMapper recordMapper = new ScriptedIDFRecordLuceneMapper();
+		recordMapper.setMappingScript(MAPPING_FILE);
+		
 		LuceneIndexer indexer = new LuceneIndexer();
-		indexer.setIndexPath(new File(TMP_INDEX_PATH));
-		indexer.setMappingScript(MAPPING_FILE);
+		indexer.setIndexConfigPath(new File(TMP_INDEX_PATH));
+		indexer.setMapper(recordMapper);
 		job.setIndexer(indexer);
 
 		// set up mapper
