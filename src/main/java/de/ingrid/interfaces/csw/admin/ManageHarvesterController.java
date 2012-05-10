@@ -21,13 +21,16 @@ import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
 import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.IBusHarvesterConfiguration;
+import de.ingrid.interfaces.csw.config.model.impl.TestSuiteHarvesterConfiguration;
 import de.ingrid.interfaces.csw.harvest.impl.IBusHarvester;
+import de.ingrid.interfaces.csw.harvest.impl.TestSuiteHarvester;
 
 @Controller
 public class ManageHarvesterController {
 
     public static final String TEMPLATE_LIST_HARVESTER = "/list_harvester.html";
-    public static final String[] HARVESTER_TYPES = {IBusHarvesterConfiguration.class.getName()};
+    public static final String[] HARVESTER_TYPES = { IBusHarvesterConfiguration.class.getName(),
+            TestSuiteHarvesterConfiguration.class.getName() };
 
     ConfigurationProvider cProvider = new ConfigurationProvider();
 
@@ -53,10 +56,10 @@ public class ManageHarvesterController {
             @ModelAttribute("harvester") final HarvesterCommandObject harvester, final Errors errors,
             @RequestParam(value = "delete", required = false) final Integer delete,
             @RequestParam(value = "edit", required = false) final Integer edit) throws Exception {
-        
+
         Configuration conf = cProvider.getConfiguration();
         List<HarvesterConfiguration> hConfigs = conf.getHarvesterConfigurations();
-        
+
         if (WebUtils.hasSubmitParameter(request, "new")) {
             if (!_validator.validate(errors).hasErrors()) {
                 if (harvester.getType().equals(IBusHarvesterConfiguration.class.getName())) {
@@ -67,20 +70,30 @@ public class ManageHarvesterController {
                     cProvider.write(conf);
                     harvester.setName("");
                     harvester.setType("");
+                } else if (harvester.getType().equals(TestSuiteHarvesterConfiguration.class.getName())) {
+                    TestSuiteHarvesterConfiguration newHarvesterConfig = new TestSuiteHarvesterConfiguration();
+                    newHarvesterConfig.setName(harvester.getName());
+                    newHarvesterConfig.setWorkingDirectory(".");
+                    hConfigs.add(newHarvesterConfig);
+                    cProvider.write(conf);
+                    harvester.setName("");
+                    harvester.setType("");
                 }
+
             } else {
                 modelMap.addAttribute("harvesterConfigs", cProvider.getConfiguration().getHarvesterConfigurations());
                 modelMap.addAttribute("harvesterTypes", HARVESTER_TYPES);
                 return "/list_harvester";
             }
-        } else if (delete != null && delete >= 0
-                && delete < hConfigs.size()) {
+        } else if (delete != null && delete >= 0 && delete < hConfigs.size()) {
             hConfigs.remove(delete.intValue());
             cProvider.write(conf);
         } else if (edit != null && edit >= 0 && edit < hConfigs.size()) {
             HarvesterConfiguration hConfig = hConfigs.get(edit);
             if (hConfig.getClassName().equals(IBusHarvester.class.getName())) {
-                return "redirect:" + EditHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id=" + edit;
+                return "redirect:" + EditIBusHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id=" + edit;
+            } else if (hConfig.getClassName().equals(TestSuiteHarvester.class.getName())) {
+                return "redirect:" + EditTestSuiteHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id=" + edit;
             } else {
                 modelMap.addAttribute("errorKey", "harvester.type.notfound");
                 modelMap.addAttribute("harvesterConfigs", hConfigs);

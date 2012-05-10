@@ -50,7 +50,7 @@ public class ApplicationProperties {
 	 */
 	public static String get(String propertyName, String defaultValue) {
 		initialize();
-		if (!properties.contains(propertyName)) {
+		if (!properties.containsKey(propertyName)) {
 			return defaultValue;
 		}
 		return properties.getProperty(propertyName);

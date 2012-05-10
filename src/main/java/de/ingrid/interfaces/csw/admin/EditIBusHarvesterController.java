@@ -45,7 +45,7 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
 @SessionAttributes("harvester")
-public class EditHarvesterController {
+public class EditIBusHarvesterController {
 
     public static final String TEMPLATE_EDIT_HARVESTER = "/edit_ibus_harvester.html";
     public static final String TEMPLATE_EDIT_HARVESTER_2 = "/edit_ibus_harvester_2.html";
@@ -63,7 +63,7 @@ public class EditHarvesterController {
     @Autowired
     private final IBusHarvesterValidator.IBusHarvesterValidatorStep4 _validatorStep4 = null;
     
-    final private static Log log = LogFactory.getLog(EditHarvesterController.class);
+    final private static Log log = LogFactory.getLog(EditIBusHarvesterController.class);
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.GET)
     public String step1Get(final HttpSession session, final ModelMap modelMap, @RequestParam(value = "id", required = false) final Integer id)
@@ -259,7 +259,7 @@ public class EditHarvesterController {
                 harvester.getRequestDefinitions().remove(idx);
             }
         } else if (edit != null && edit.length() > 0) {
-            return "redirect:" + EditHarvesterController.TEMPLATE_EDIT_HARVESTER_4 + "?plugid=" + edit;
+            return "redirect:" + EditIBusHarvesterController.TEMPLATE_EDIT_HARVESTER_4 + "?plugid=" + edit;
         } else if (WebUtils.hasSubmitParameter(request, "save")) {
             
             Configuration configuration = cProvider.getConfiguration();

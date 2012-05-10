@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 /**
  * The CSW Servlet. Entry point for incoming requests.
  * Dispatches the requests according to method and content type
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author ingo herwig <ingo@wemove.com>
  */
+@Service
 public class CSWServlet extends HttpServlet {
 
 	/**
@@ -25,8 +29,14 @@ public class CSWServlet extends HttpServlet {
 	/**
 	 * The server facade that handles all requests
 	 */
+	@Autowired
 	private ServerFacade serverFacade;
 
+	public CSWServlet() {
+	    super();
+	}
+	
+	
 	/**
 	 * Set the server facade
 	 * @param serverFacade

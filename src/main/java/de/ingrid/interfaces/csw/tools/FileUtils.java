@@ -13,6 +13,8 @@ import java.net.URLEncoder;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 public class FileUtils {
 
@@ -154,4 +156,32 @@ public class FileUtils {
 			return s;
 		}
 	}
+	
+    /**
+     * Get all resources specified by pattern. For pattern syntax see (@link PathMatchingResourcePatternResolver).
+     * 
+     * @param packageName
+     * @return
+     * @throws IOException
+     */
+    public static Resource[] getPackageContent(String pattern) throws IOException{
+        PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
+        Resource[] resources = pmrpr.getResources(pattern);
+        return resources;
+    }
+    
+    /**
+     * Convert stream to string.
+     * 
+     * @param is
+     * @return
+     */
+    public static String convertStreamToString(java.io.InputStream is) {
+        try {
+            return new java.util.Scanner(is).useDelimiter("\\A").next();
+        } catch (java.util.NoSuchElementException e) {
+            return "";
+        }
+    }
+
 }
