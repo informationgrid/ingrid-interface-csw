@@ -8,6 +8,7 @@ import java.io.File;
 import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.config.model.communication.Communication;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationClient;
+import de.ingrid.interfaces.csw.tools.FileUtils;
 
 /**
  * @author joachim@wemove.com
@@ -31,8 +32,10 @@ public class CommunicationProviderTest extends TestCase {
 
         assertEquals(true, CONFIGURATION_FILE_TMP.exists());
 
+        
         if (CONFIGURATION_FILE_TMP.exists()) {
             CONFIGURATION_FILE_TMP.delete();
+            FileUtils.deleteRecursive(CONFIGURATION_FILE_TMP);
         }
 
     }
