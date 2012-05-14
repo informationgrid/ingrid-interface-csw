@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,7 @@ import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.search.CSWRecordResults;
 import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
+import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -61,7 +63,7 @@ public class SearchTestController {
                         .parse(
                                 new InputSource(
                                         new StringReader(
-                                                "<GetRecords maxRecords=\"4\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+                                                "<GetRecords maxRecords=\"10\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
                                                         + "            requestId=\"csw:1\" resultType=\"results\" startPosition=\"1\"\n"
                                                         + "            xmlns=\"http://www.opengis.net/cat/csw/2.0.2\" service=\"CSW\" version=\"2.0.2\">\n"
                                                         + "            <Query typeNames=\"csw:service,csw:dataset\">\n"
@@ -84,6 +86,9 @@ public class SearchTestController {
         }
         XMLEncoding encoding = new XMLEncoding();
         try {
+            if (Log.isDebugEnabled()) {
+                Log.debug("Incoming request: " + StringUtils.nodeToString(queryDocument.getDocumentElement()));
+            }
             CSWQuery cswQuery = encoding.getQuery(queryDocument.getDocumentElement());
             CSWRecordResults results = searcher.search(cswQuery);
             XPathUtils xpath = new XPathUtils(new IDFNamespaceContext());

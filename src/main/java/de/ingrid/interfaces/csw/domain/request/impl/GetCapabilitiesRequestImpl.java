@@ -27,7 +27,7 @@ public class GetCapabilitiesRequestImpl extends AbstractRequestImpl implements G
 	protected void validateAcceptVersions() throws CSWVersionNegotiationFailedException {
 
 		// get the version from the configuration
-		String cswVersion = ApplicationProperties.getMandatory(ConfigurationKeys.CSW_VERSION);
+		String cswVersion = ConfigurationKeys.CSW_VERSION_2_0_2;
 
 		// if accepted versions are given in the request, they must include the
 		// configured version. if no version are requested, we default to the configured one

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+			ui                  ="swing,text,swing-auto,text-auto"
+            loadDefaults         ="prompt"
+			verbose		          ="true"
+			debug		            ="true"
+			lookAndFeel	        ="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+			name		            ="InGrid CSW Interface Installation"
+			windowIcon	        ="/resources/icons/logoIcon.gif"
+			defaultImageResource="/resources/makewavesdawn.png"
+			minJavaVersion		  ="1.6"
+			version             ="1.0">
+			
+	<!--  The target "extract" must be called first, so it is defined on the first page -->
+	<page
+			type		="input"
+			name		="intro"
+			displayText	="Willkommen zur InGrid CSW Interface Installation"
+			target		="extract">
+			<comment displayText="" bold="true" explanatoryText="Dieser Assistent hilft Ihnen bei der Installation sowie Konfiguration der Komponente."/>
+            <comment displayText="Hinweis: " bold="true"/>
+            <comment displayText="" explanatoryText="Wenn dies ein Update ist, dann können die Einstellungen der vorherigen Installation verwendet werden. Dazu muss sich die Datei 'ant.install.properties' im gleichen Verzeichnis wie der Installer befinden. Es empfiehlt sich daher, die Updates immer vom gelichen Verzeichnis auszuführen."/>
+	</page>
+
+	<page
+			type		="input"
+			name		="componentOptions"
+			displayText	="Einstellungen fuer die CSW Kommunikation"
+			>
+			
+            <text property="ingridAdminPassword" displayText="Password:" defaultValue="admin" explanatoryText="Passwort für den Zugang zum Administrations-Interface."/>
+            <comment displayText="" />
+			<text property="localServerPort" displayText="Lokaler Port:" defaultValue="8084" explanatoryText="Lokaler Port, unter dem der CSW Server laufen soll. Lokal kann der CSW Server dann per http://localhost:PORT/csw aufgerufen werden."/>
+			<comment displayText="" />
+			<text property="maxRecords" displayText="max. Ergebnisse:" defaultValue="100" explanatoryText="Anzahl der Ergebnisse, die pro CSW Anfrage zurückgegeben werden. Diese Eigenschaft dient der Performance Sicherung."/>
+	</page>
+
+	<page
+			type		="input"
+			name		="componentOptions2"
+			displayText	="Proxy-Einstellungen fuer die CSW Schnittstelle"
+			target		="csw"
+			>
+			
+            <comment displayText="" explanatoryText="Die externen Einstellungen werden in der GetCapabilities verwendet, um den externen Zugriff auf die Schnittstelle zu beschreiben. Die Werte können geändert werden, wenn z.B. eine Proxy-Weiterleitung zum CSW Server eingerichtet wurde."/>
+			<text property="externalInterfaceHost"   displayText="Externer Servername:"   defaultValue="127.0.0.1"/>
+			<text property="externalInterfacePort"   displayText="Externer Port:"   defaultValue="8084"/>
+			<text property="externalInterfacePath"   displayText="Externer Pfad:"   defaultValue="csw"/>
+	</page>
+	
+	<!--  type="input" shows a list of editable options for the installer -->
+	<page
+			type		="input"
+			name		="properties"
+			displayText	="Benötigte Installationsoptionen">
+		<directory
+				property		="installDir"
+				defaultValue	="/opt/ingrid/${project.artifactId}-${project.version}"
+				defaultValueWin	="${env.ProgramFiles}\${project.artifactId}-${project.version}"
+				displayText		="Installationsverzeichnis"
+				create			="true"/>
+	</page>
+
+	<page
+			type		="progress"
+			name		="progress"
+			displayText	="Installationsfortschritt"
+			showTargets	="true"
+			target		="startIPlug">
+	</page>
+</installer>
+
+

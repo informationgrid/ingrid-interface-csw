@@ -30,7 +30,7 @@ public class TestSuiteHarvester extends AbstractHarvester {
     @Override
     protected List<Serializable> fetchRecords(Date lastExecutionDate) throws Exception {
         // get list of test datasets
-        Resource[] resources = FileUtils.getPackageContent("classpath*:gdide_test_data/**");
+        Resource[] resources = FileUtils.getPackageContent("classpath*:gdide_test_data/*xml");
         List<Serializable> cacheIds = new ArrayList<Serializable>();
         for (Resource resource : resources) {
             String iso = FileUtils.convertStreamToString(resource.getInputStream());

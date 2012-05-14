@@ -5,6 +5,7 @@ package de.ingrid.interfaces.csw.search.impl;
 
 import java.io.File;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,6 +22,7 @@ import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.search.CSWRecordResults;
 import de.ingrid.interfaces.csw.search.Searcher;
+import de.ingrid.interfaces.csw.tools.StringUtils;
 
 /**
  * A Searcher implementation that searches in a Lucene index.
@@ -75,8 +77,11 @@ public class LuceneSearcher implements Searcher {
         if (configurationProvider != null) {
             this.indexPath = configurationProvider.getIndexPath();
         }
+        
+        log.info("Start search index: " + this.indexPath);
 
         lis = new LuceneIndexSearcher(this.indexPath, "");
+        lis.setLogLevel(log.isDebugEnabled() ? Level.FINEST : (log.isInfoEnabled() ? Level.INFO : (log.isWarnEnabled() ? Level.WARNING : Level.SEVERE)));
         
         this.isStarted = true;
     }
@@ -123,7 +128,13 @@ public class LuceneSearcher implements Searcher {
         } else {
             // use the query constraints to search for records in the Lucene
             // index
+            if (log.isDebugEnabled()) {
+                log.debug("Incoming constraint:" + StringUtils.nodeToString(query.getConstraint().getDocumentElement()));
+            }
             SpatialQuery spatialQuery = this.filterParser.parse(query.getConstraint());
+            if (log.isDebugEnabled()) {
+                log.debug("Incoming spatial query:" + spatialQuery);
+            }
             if (spatialQuery == null) {
                 throw new RuntimeException("Error parsing query constraint: Lucene query is null");
             }

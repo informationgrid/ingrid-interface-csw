@@ -9,14 +9,13 @@
     <fileSet>
       <directory>src/main/resources</directory>
       <outputDirectory>${project.artifactId}-${project.version}/conf</outputDirectory>
+      <excludes>
+	      <exclude>config.properties</exclude>
+      </excludes>
     </fileSet>
     <fileSet>
       <directory>src/main/release/conf</directory>
       <outputDirectory>${project.artifactId}-${project.version}/conf</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>src/main/release/xml</directory>
-      <outputDirectory>${project.artifactId}-${project.version}/xml</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>src/main/release/scripts</directory>
@@ -34,6 +33,10 @@
     <fileSet>
       <directory>target/site</directory>
       <outputDirectory>${project.artifactId}-${project.version}/doc</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/webapp</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/webapp</outputDirectory>
     </fileSet>
   </fileSets>
   <dependencySets>

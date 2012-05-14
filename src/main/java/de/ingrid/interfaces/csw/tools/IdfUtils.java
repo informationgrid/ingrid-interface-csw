@@ -6,6 +6,8 @@ package de.ingrid.interfaces.csw.tools;
 import java.io.IOException;
 import java.io.Serializable;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 
 import de.ingrid.utils.dsc.Record;
@@ -17,6 +19,8 @@ public class IdfUtils {
 
 	private static final String ID_XPATH = "idf:html/idf:body/idf:idfMdMetadata/gmd:fileIdentifier/gco:CharacterString";
 
+    final protected static Log log = LogFactory.getLog(IdfUtils.class);
+	
 	/**
 	 * Extract the idf document from the given record. Throws an exception
 	 * if there is not idf content.
@@ -27,7 +31,12 @@ public class IdfUtils {
 	public static Document getIdfDocument(Record record) throws Exception {
 		String content = IdfTool.getIdfDataFromRecord(record);
 		if (content != null) {
-			return StringUtils.stringToDocument(content);
+			try {
+			    return StringUtils.stringToDocument(content);
+			} catch (Throwable t) {
+			    log.error("Error transforming record to DOM: " + content, t);
+			    throw new Exception(t);
+			}
 		}
 		else {
 			throw new IOException("Document contains no IDF data.");

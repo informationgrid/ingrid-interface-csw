@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.w3c.dom.Document;
 
-import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.ConstraintLanguage;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
@@ -55,7 +54,7 @@ public class GenericQuery implements Serializable, CSWQuery {
         this.schema = Namespace.CSW_2_0_2;
         this.outputSchema = Namespace.GMD;
         this.outputFormat = OutputFormat.APPLICATION_XML;
-        this.version = ApplicationProperties.get(ConfigurationKeys.CSW_VERSION);
+        this.version = ConfigurationKeys.CSW_VERSION_2_0_2;
         this.elementSetName = ElementSetName.SUMMARY;
         this.typeNames = new TypeName[] { TypeName.RECORD };
         this.resultType = ResultType.HITS;

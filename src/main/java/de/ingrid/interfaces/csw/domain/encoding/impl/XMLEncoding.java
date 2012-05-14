@@ -13,10 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
@@ -27,6 +31,7 @@ import de.ingrid.interfaces.csw.domain.exceptions.CSWMissingParameterValueExcept
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
+import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -50,6 +55,8 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
     private static String DESCREC_VERSION_PARAM_XPATH = "/csw:DescribeRecord/@version";
     private static String GETCAP_VERSION_PARAM_XPATH = "/csw:GetCapabilities/csw:AcceptVersions/csw:Version";
 
+    private static Log log = LogFactory.getLog(XMLEncoding.class);
+    
     /** Supported operations **/
     private static List<Operation> SUPPORTED_OPERATIONS = Collections
             .unmodifiableList(Arrays.asList(new Operation[] { Operation.GET_CAPABILITIES, Operation.DESCRIBE_RECORD,
@@ -67,6 +74,11 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
         this.query = null;
 
         this.setRequestBody(this.extractRequestBody(request));
+        
+        if (log.isDebugEnabled()) {
+            log.debug("Request initialized with: " + StringUtils.nodeToString(this.extractRequestBody(request)));
+        }
+        
     }
 
     protected static Document extractFromDocument(Node node) throws Exception {
@@ -169,7 +181,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
     }
 
     /**
-     * Get a CSWQuery from a request node. 
+     * Get a CSWQuery from a request node.
      * 
      * @param requestNode
      * @return
@@ -178,7 +190,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
     public CSWQuery getQuery(Node requestNode) throws CSWException {
 
         this.requestBody = requestNode;
-        
+
         if (this.query == null) {
             this.query = new GenericQuery();
             try {
@@ -220,6 +232,23 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     if (elementSetNameStr != null) {
                         this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
                     }
+
+                    // extract the maxRecords
+                    Integer maxRecords = this.xpath.getInt(requestNode, "/csw:GetRecords/@maxRecords");
+                    if (maxRecords == null) {
+                        maxRecords = 0;
+                    }
+                    maxRecords = Math.min(maxRecords, ApplicationProperties.getInteger(
+                            ConfigurationKeys.MAX_RETURNED_HITS, 10));
+                    this.query.setMaxRecords(maxRecords);
+
+                    // extract the startPosition
+                    Integer startPosition = this.xpath.getInt(requestNode, "/csw:GetRecords/@startPosition");
+                    if (startPosition == null) {
+                        startPosition = 1;
+                    }
+                    this.query.setStartPosition(startPosition);
+
                 }
             } catch (Exception ex) {
                 throw new CSWException("An error occured while extracting the query: ", ex);

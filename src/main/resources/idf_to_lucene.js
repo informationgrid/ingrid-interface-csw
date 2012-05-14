@@ -171,8 +171,8 @@ function addToDoc(field, content, tokenized) {
 		var analyzed = Field.Index.ANALYZED;
 		if (!tokenized) analyzed = Field.Index.NOT_ANALYZED;
 		document.add(new Field(field, content, Field.Store.YES, analyzed));
-		document.add(new Field("AnyText", content, Field.Store.NO, analyzed));
-		document.add(new Field("AnyText", LuceneTools.filterTerm(content), Field.Store.NO, Field.Index.ANALYZED));
+		document.add(new Field("anytext", content, Field.Store.NO, analyzed));
+		document.add(new Field("anytext", LuceneTools.filterTerm(content), Field.Store.NO, Field.Index.ANALYZED));
 	}
 }
 

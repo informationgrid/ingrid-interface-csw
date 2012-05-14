@@ -40,6 +40,22 @@ public class ApplicationProperties {
 		initialize();
 		return properties.getProperty(propertyName);
 	}
+	
+	/**
+	 * Get a value as Integer.
+	 * 
+	 * @param propertyName
+	 * @param defaultValue
+	 * @return
+	 * @throws NumberFormatException
+	 */
+	public static Integer getInteger(String propertyName, Integer defaultValue) throws NumberFormatException {
+        initialize();
+        if (!properties.containsKey(propertyName)) {
+            return defaultValue;
+        }
+        return Integer.parseInt(properties.getProperty(propertyName));
+	}
 
 	/**
 	 * Get the value for the given property name. If the property does not exist,
