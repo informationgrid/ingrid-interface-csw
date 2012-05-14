@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -55,14 +56,14 @@ public class CommunicationProvider {
     public void setConfigurationFile(File configurationFile) {
         this.configurationFile = configurationFile;
     }
-    
+
     public File getConfigurationFile() {
         return configurationFile;
     }
-    
 
     /**
-     * Set the configuration file based on the working directory. It actually creates a file ./conf/communication.xml.
+     * Set the configuration file based on the working directory. It actually
+     * creates a file ./conf/communication.xml.
      * 
      * @param workingDirectory
      */
@@ -80,8 +81,9 @@ public class CommunicationProvider {
         if (!this.configurationFile.exists()) {
             log.warn("Configuration file " + this.configurationFile + " does not exist.");
             log.info("Creating configuration file " + this.configurationFile);
-            if (this.configurationFile.getParentFile() != null && !this.configurationFile.getParentFile().exists() && !this.configurationFile.getParentFile().mkdirs()) {
-                log.error("Unable to create directories for '"+this.configurationFile.getParentFile()+"'");
+            if (this.configurationFile.getParentFile() != null && !this.configurationFile.getParentFile().exists()
+                    && !this.configurationFile.getParentFile().mkdirs()) {
+                log.error("Unable to create directories for '" + this.configurationFile.getParentFile() + "'");
             }
             this.configurationFile.createNewFile();
         }
@@ -160,11 +162,7 @@ public class CommunicationProvider {
 
         // move the temporary file to the configuration file
         this.configurationFile.delete();
-        boolean result = tmpFile.renameTo(this.configurationFile.getAbsoluteFile());
-        if (!result) {
-            throw new IOException("The configuration could not be stored. (Rename '" + tmpFile.getAbsolutePath()
-                    + "' to '" + this.configurationFile.getAbsolutePath() + "' failed.)");
-        }
+        FileUtils.moveFileToDirectory(tmpFile, this.configurationFile, true);
     }
 
     /**

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -131,7 +132,7 @@ public class ConfigurationProvider {
         // create empty configuration, if not existing yet
         if (!this.configurationFile.exists()) {
             log.warn("Configuration file " + this.configurationFile + " does not exist.");
-            if (this.configurationFile.getParentFile() != null && !this.configurationFile.getParentFile().mkdirs()) {
+            if (this.configurationFile.getParentFile() != null && !this.configurationFile.getParentFile().exists() && !this.configurationFile.getParentFile().mkdirs()) {
                 log.error("Unable to create directories for '"+this.configurationFile.getParentFile()+"'");
             }
             log.info("Creating configuration file " + this.configurationFile);
@@ -215,11 +216,7 @@ public class ConfigurationProvider {
 
         // move the temporary file to the configuration file
         this.configurationFile.delete();
-        boolean result = tmpFile.renameTo(this.configurationFile);
-        if (!result) {
-            throw new IOException("The configuration could not be stored. (Rename '" + tmpFile.getAbsolutePath()
-                    + "' to '" + this.configurationFile.getAbsolutePath() + "' failed.)");
-        }
+        FileUtils.moveFileToDirectory(tmpFile, this.configurationFile, true);
     }
 
     /**
