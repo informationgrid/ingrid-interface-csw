@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="communication.xsd">
+    <client name="/kug-group:csw-interface-test">
+         <connections>
+             <server name="/kug-group:kug-ibus">
+                 <socket port="80" timeout="10" ip="213.144.28.236" />
+                 <messages maximumSize="1048576" threadCount="100" />
+             </server>
+         </connections>
+    </client>
+    <messages queueSize="2000" handleTimeout="120"/>
+</communication>
