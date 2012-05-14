@@ -33,7 +33,8 @@ public class EditTestSuiteHarvesterController {
 
     public static final String TEMPLATE_EDIT_HARVESTER = "/edit_testsuite_harvester.html";
 
-    ConfigurationProvider cProvider = new ConfigurationProvider();
+    @Autowired
+    ConfigurationProvider cProvider = null;
 
     @Autowired
     private final TestSuiteHarvesterValidator.TestSuiteHarvesterValidatorStep1 _validatorStep1 = null;

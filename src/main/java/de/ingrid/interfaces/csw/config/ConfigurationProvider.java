@@ -85,7 +85,7 @@ public class ConfigurationProvider {
      * @param configurationFile
      */
     public void setConfigurationFile(File configurationFile) {
-        this.configurationFile = configurationFile;
+        this.configurationFile = configurationFile.getAbsoluteFile();
     }
     
     public File getRecordCachePath() {
@@ -216,7 +216,7 @@ public class ConfigurationProvider {
 
         // move the temporary file to the configuration file
         this.configurationFile.delete();
-        FileUtils.moveFileToDirectory(tmpFile, this.configurationFile, true);
+        FileUtils.moveFile(tmpFile, this.configurationFile);
     }
 
     /**

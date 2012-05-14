@@ -162,7 +162,7 @@ public class CommunicationProvider {
 
         // move the temporary file to the configuration file
         this.configurationFile.delete();
-        FileUtils.moveFileToDirectory(tmpFile, this.configurationFile, true);
+        FileUtils.moveFile(tmpFile, this.configurationFile);
     }
 
     /**

@@ -32,7 +32,8 @@ public class ManageHarvesterController {
     public static final String[] HARVESTER_TYPES = { IBusHarvesterConfiguration.class.getName(),
             TestSuiteHarvesterConfiguration.class.getName() };
 
-    ConfigurationProvider cProvider = new ConfigurationProvider();
+    @Autowired
+    ConfigurationProvider cProvider = null;
 
     private final HarvesterValidator _validator;
 

@@ -52,7 +52,8 @@ public class EditIBusHarvesterController {
     public static final String TEMPLATE_EDIT_HARVESTER_3 = "/edit_ibus_harvester_3.html";
     public static final String TEMPLATE_EDIT_HARVESTER_4 = "/edit_ibus_harvester_4.html";
 
-    ConfigurationProvider cProvider = new ConfigurationProvider();
+    @Autowired
+    ConfigurationProvider cProvider = null;
 
     @Autowired
     private final IBusHarvesterValidator.IBusHarvesterValidatorStep1 _validatorStep1 = null;
