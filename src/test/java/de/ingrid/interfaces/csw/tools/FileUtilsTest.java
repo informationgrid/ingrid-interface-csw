@@ -27,7 +27,7 @@ public class FileUtilsTest {
     public void testGetPackageContent() {
         Resource[] resources = null;
         try {
-            resources = FileUtils.getPackageContent("classpath*:gdide_test_data/**");
+            resources = FileUtils.getPackageContent("classpath*:gdide_test_data/*xml");
         } catch (IOException e) {
             fail("Test failed");
         }
