@@ -80,7 +80,7 @@ public class CommunicationProvider {
         if (!this.configurationFile.exists()) {
             log.warn("Configuration file " + this.configurationFile + " does not exist.");
             log.info("Creating configuration file " + this.configurationFile);
-            if (this.configurationFile.getParentFile() != null && !this.configurationFile.getParentFile().mkdirs()) {
+            if (this.configurationFile.getParentFile() != null && !this.configurationFile.getParentFile().exists() && !this.configurationFile.getParentFile().mkdirs()) {
                 log.error("Unable to create directories for '"+this.configurationFile.getParentFile()+"'");
             }
             this.configurationFile.createNewFile();

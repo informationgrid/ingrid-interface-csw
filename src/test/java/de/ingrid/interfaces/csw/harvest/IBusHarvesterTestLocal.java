@@ -16,7 +16,7 @@ import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 /**
  * @author ingo@wemove.com
  */
-public class IBusHarvesterTest extends TestCase {
+public class IBusHarvesterTestLocal extends TestCase {
 
 	private static final String COMMUNICATION_XML_PATH = "src/test/resources/communication.xml";
 	private static final String CACHE_PATH = "tmp/cache";
