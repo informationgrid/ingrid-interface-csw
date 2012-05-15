@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.portalu.de/IDF/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd">
+  <head>
+    <title>IDF Test XML</title>
+  </head>
+  <body>
+    <p style="float:right">p 1</p>
+    <table border="1" >
+      <tr>
+        <th>Berlin</th>
+        <th>Hamburg</th>
+        <th> M&#252;nchen</th>
+      </tr>
+      <tr>
+        <td>Milj&#252;h</td>
+        <td>Kiez</td>
+        <td>Bierdampf</td>
+      </tr>
+      <tr>
+        <td>Buletten</td>
+        <td>Frikadellen</td>
+        <td>Fleischpflanzerl</td>
+      </tr>
+    </table>
+    <p>p 1</p>
+    <p>p 1</p>
+    <idfMdMetadata orig-uuid="my original uuid" uuid="my-uuid" id="my-id" xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions"
+    xmlns:fo="http://www.w3.org/1999/XSL/Format"
+    xmlns:gco="http://www.isotc211.org/2005/gco"
+    xmlns:gml="http://www.opengis.net/gml"
+    xmlns:ms="http://mapserver.gis.umn.edu/mapserver"
+    xmlns:wfs="http://www.opengis.net/wfs"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:idf="http://www.portalu.de/IDF/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+      <gmd:fileIdentifier>
+        <gco:CharacterString>
+        c301cc5c-614f-4e31-a619-92fd28be20af</gco:CharacterString>
+      </gmd:fileIdentifier>
+      <gmd:language>
+        <gmd:LanguageCode xmlns="http://www.isotc211.org/2005/gmd"
+        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode"
+        codeListValue="ger" />
+      </gmd:language>
+      <gmd:characterSet>
+        <gmd:MD_CharacterSetCode xmlns="http://www.isotc211.org/2005/gmd"
+        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
+        codeListValue="utf8" />
+      </gmd:characterSet>
+      <gmd:parentIdentifier>
+        <gco:CharacterString>
+        2d484845-7e20-4ef4-9210-36fd60704caf</gco:CharacterString>
+      </gmd:parentIdentifier>
+      <gmd:hierarchyLevel>
+        <gmd:MD_ScopeCode xmlns="http://www.isotc211.org/2005/gmd"
+        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+        codeListValue="dataset" />
+      </gmd:hierarchyLevel>
+      <gmd:hierarchyLevelName>
+        <gco:CharacterString />
+      </gmd:hierarchyLevelName>
+      <gmd:contact>
+        <gmd:CI_ResponsibleParty>
+          <gmd:individualName>
+            <gco:CharacterString>Andre
+            M&#252;ller</gco:CharacterString>
+          </gmd:individualName>
+          <gmd:organisationName>
+            <gco:CharacterString>HTW Dresden, Fakult&#228;t
+            Geoinformation</gco:CharacterString>
+          </gmd:organisationName>
+          <gmd:positionName>
+            <gco:CharacterString>Mitarbeiter
+            Forschung</gco:CharacterString>
+          </gmd:positionName>
+          <gmd:contactInfo>
+            <gmd:CI_Contact>
+              <gmd:phone>
+                <gmd:CI_Telephone>
+                  <gmd:voice>
+                    <gco:CharacterString>+49
+                    351/462-3138</gco:CharacterString>
+                  </gmd:voice>
+                  <gmd:facsimile>
+                    <gco:CharacterString>+49
+                    351/462-2191</gco:CharacterString>
+                  </gmd:facsimile>
+                </gmd:CI_Telephone>
+              </gmd:phone>
+              <gmd:address>
+                <gmd:CI_Address>
+                  <gmd:deliveryPoint>
+                    <gco:CharacterString>Friedrich-List-Platz
+                    1</gco:CharacterString>
+                  </gmd:deliveryPoint>
+                  <gmd:city>
+                    <gco:CharacterString>
+                    Dresden</gco:CharacterString>
+                  </gmd:city>
+                  <gmd:administrativeArea>
+                    <gco:CharacterString>Labor
+                    Geoinformatik</gco:CharacterString>
+                  </gmd:administrativeArea>
+                  <gmd:postalCode>
+                    <gco:CharacterString>
+                    01069</gco:CharacterString>
+                  </gmd:postalCode>
+                  <gmd:country>
+                    <gco:CharacterString>
+                    Deutschland</gco:CharacterString>
+                  </gmd:country>
+                  <gmd:electronicMailAddress>
+                    <gco:CharacterString>
+                    andre.mueller@htw-dresden.de</gco:CharacterString>
+                  </gmd:electronicMailAddress>
+                </gmd:CI_Address>
+              </gmd:address>
+            </gmd:CI_Contact>
+          </gmd:contactInfo>
+          <gmd:role>
+            <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+            codeListValue="originator">originator</gmd:CI_RoleCode>
+          </gmd:role>
+        </gmd:CI_ResponsibleParty>
+      </gmd:contact>
+      <gmd:dateStamp>
+        <gco:Date>2010-11-24</gco:Date>
+      </gmd:dateStamp>
+      <gmd:metadataStandardName>
+        <gco:CharacterString>ISO19115</gco:CharacterString>
+      </gmd:metadataStandardName>
+      <gmd:referenceSystemInfo>
+        <gmd:MD_ReferenceSystem>
+          <gmd:referenceSystemIdentifier>
+            <gmd:RS_Identifier>
+              <gmd:code>
+                <gco:CharacterString>Gradabteilung Nullmeridian
+                Ferro</gco:CharacterString>
+              </gmd:code>
+              <gmd:codeSpace>
+                <gco:CharacterString>-</gco:CharacterString>
+              </gmd:codeSpace>
+              <gmd:version>
+                <gco:CharacterString>-</gco:CharacterString>
+              </gmd:version>
+            </gmd:RS_Identifier>
+          </gmd:referenceSystemIdentifier>
+        </gmd:MD_ReferenceSystem>
+      </gmd:referenceSystemInfo>
+      <gmd:identificationInfo>
+        <gmd:MD_DataIdentification uuid="ingrid#anyid">
+          <gmd:citation>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>Hist. TK 1:25000
+                Messtischblatt, Blatt 34, Radeburg
+                (1921)</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>1910-12-31</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode xmlns="http://www.isotc211.org/2005/gmd"
+                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                    codeListValue="creation" />
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gco:CharacterString>
+                    df_dk_0000196</gco:CharacterString>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:citation>
+          <gmd:abstract>
+            <gco:CharacterString>Das Kartenblatt "Dresden" mit der
+            Blattnummer 66 aus dem Jahr 1910 stammt aus dem
+            historischen topographischen Kartenwerk der
+            Messtischbl&#228;tter. Diese wurden aufgrund von
+            Neumessungen und Verbesserungen aus den
+            &#196;quidistantenkarten (nach 1872 entstanden)
+            erstellt, welche wiederum auf den s&#228;chsischen
+            Meilenbl&#228;tter basieren. Anders als bei den
+            heutigen Topographischen Karten handelt es sich um
+            Gradabteilungskarten bei dem der Nullmeridian von Ferro
+            (17&#176;40&#180;westlich von Greenwich) verwendet
+            wurde. Die Kartenbl&#228;tter liegen als gescannte
+            Karten bei der S&#228;chsischen Landes und
+            Staatsbibliothek SLUB vor. Von den
+            &#196;quidistantenkarten Sachsens sind 156 Blatt,
+            vereinzelt in versch. Auflagen beim SLUB Angebot
+            "Deutsche Fotothek" recherchierbar. Eine
+            Blattschnitt&#252;bersicht aller Kartenbl&#228;tter
+            steht als Kartendienst (WMS) mit dem Titel "WMS
+            Historische Topographische Karten Sachsens" zur
+            Verf&#252;gung und wird betrieben durch die
+            Fakult&#228;t Geoinformation, Labor Geoinformatik der
+            HTW Dresden. Der WMS Dienst ist unter folgender URL
+            erreichbar:
+            http://geoinformatik.htw-dresden.de/cgi-bin/hist_tk.
+            &#220;ber die Funktion GetFeatureInfo gelangt man zur
+            Detailansicht (Lichttisch) des Kartenforums der SLUB
+            und kann dort einen hochaufl&#246;senden Scan
+            betrachten, weitere Informationen abrufen und eine
+            Bestellung vornehmen.</gco:CharacterString>
+          </gmd:abstract>
+          <gmd:pointOfContact>
+            <gmd:CI_ResponsibleParty>
+              <gmd:individualName>
+                <gco:CharacterString>Georg
+                Zimmermann</gco:CharacterString>
+              </gmd:individualName>
+              <gmd:organisationName>
+                <gco:CharacterString>Deutsche Fotothek,
+                SLUB</gco:CharacterString>
+              </gmd:organisationName>
+              <gmd:contactInfo>
+                <gmd:CI_Contact>
+                  <gmd:phone>
+                    <gmd:CI_Telephone>
+                      <gmd:voice>
+                        <gco:CharacterString>(0351)
+                        4677-601</gco:CharacterString>
+                      </gmd:voice>
+                      <gmd:facsimile>
+                        <gco:CharacterString>(0351)
+                        4677-736</gco:CharacterString>
+                      </gmd:facsimile>
+                    </gmd:CI_Telephone>
+                  </gmd:phone>
+                  <gmd:address>
+                    <gmd:CI_Address>
+                      <gmd:deliveryPoint>
+                        <gco:CharacterString>Zellescher Weg
+                        18</gco:CharacterString>
+                      </gmd:deliveryPoint>
+                      <gmd:city>
+                        <gco:CharacterString>
+                        Dresden</gco:CharacterString>
+                      </gmd:city>
+                      <gmd:administrativeArea>
+                        <gco:CharacterString>S&#228;chsische
+                        Landesbibliothek - Staats- und
+                        Universit&#228;tsbibliothek
+                        Dresden</gco:CharacterString>
+                      </gmd:administrativeArea>
+                      <gmd:postalCode>
+                        <gco:CharacterString>
+                        01054</gco:CharacterString>
+                      </gmd:postalCode>
+                      <gmd:country>
+                        <gco:CharacterString>
+                        Deutschland</gco:CharacterString>
+                      </gmd:country>
+                      <gmd:electronicMailAddress>
+                        <gco:CharacterString>
+                        deutsche.fotothek@slub-dresden.de</gco:CharacterString>
+                      </gmd:electronicMailAddress>
+                    </gmd:CI_Address>
+                  </gmd:address>
+                </gmd:CI_Contact>
+              </gmd:contactInfo>
+              <gmd:role>
+                <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                codeListValue="owner">owner</gmd:CI_RoleCode>
+              </gmd:role>
+            </gmd:CI_ResponsibleParty>
+          </gmd:pointOfContact>
+          <gmd:graphicOverview>
+            <gmd:MD_BrowseGraphic>
+              <gmd:fileName>
+                <gco:CharacterString>
+                http://fotothek.slub-dresden.de/thumbs/df/dk/0000000/df_dk_0000196.jpg</gco:CharacterString>
+              </gmd:fileName>
+              <gmd:fileDescription>
+                <gco:CharacterString>
+                Vorschaubild</gco:CharacterString>
+              </gmd:fileDescription>
+            </gmd:MD_BrowseGraphic>
+          </gmd:graphicOverview>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>
+                Messtischbl&#228;tter</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>
+                Messtischblaetter</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>
+                Me&#223;tischbl&#228;tter</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>
+                Me&#223;tischblaetter</gco:CharacterString>
+              </gmd:keyword>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>Topographische
+                Karte</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>topographischen
+                Landesaufnahme</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>
+                Landeskartenwerk</gco:CharacterString>
+              </gmd:keyword>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>
+                historisch</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode xmlns="http://www.isotc211.org/2005/gmd"
+                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                codeListValue="temporal" />
+              </gmd:type>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>Deutsche
+                Fotothek</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>
+                Kartenforum</gco:CharacterString>
+              </gmd:keyword>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>Sachsen Radeburg Thiendorf
+                Ebersbach R&#246;dern Dobra &amp; Tauscha
+                R&#246;hrsdorf Gro&#223;dittmannsdorf Cunnersdorf
+                &amp; Freitelsdorf Kleinnauendorf W&#252;rschnitz
+                L&#246;tzschen Sacka</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode xmlns="http://www.isotc211.org/2005/gmd"
+                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                codeListValue="place" />
+              </gmd:type>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>
+                Basiskarte</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode xmlns="http://www.isotc211.org/2005/gmd"
+                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                codeListValue="theme" />
+              </gmd:type>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>Geographical
+                names</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>GEMET - INSPIRE themes,
+                    version 1.0</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2008-06-01</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode xmlns="http://www.isotc211.org/2005/gmd"
+                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                        codeListValue="creation" />
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+              <gmd:useLimitation>
+                <gco:CharacterString>Copyright siehe
+                Nutzungsbestimmungen auf den Webseiten der SLUB
+                http://www.deutschefotothek.de</gco:CharacterString>
+              </gmd:useLimitation>
+            </gmd:MD_LegalConstraints>
+          </gmd:resourceConstraints>
+          <gmd:resourceConstraints>
+            <idf:IDF_LegalBasisConstraints>
+              <gmd:accessConstraints>
+                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+              </gmd:accessConstraints>
+              <gmd:otherConstraints>
+                <gco:CharacterString>Nieders&amp;#228;chsisches Gesetz &amp;#252;ber Raumordnung und Landesplanung (NROG) vom 18.5.2001</gco:CharacterString>
+              </gmd:otherConstraints>
+            </idf:IDF_LegalBasisConstraints>
+          </gmd:resourceConstraints>
+          <gmd:spatialResolution>
+            <gmd:MD_Resolution>
+              <gmd:equivalentScale>
+                <gmd:MD_RepresentativeFraction>
+                  <gmd:denominator>
+                    <gco:Integer>25000</gco:Integer>
+                  </gmd:denominator>
+                </gmd:MD_RepresentativeFraction>
+              </gmd:equivalentScale>
+            </gmd:MD_Resolution>
+          </gmd:spatialResolution>
+          <gmd:language>
+            <gmd:LanguageCode xmlns="http://www.isotc211.org/2005/gmd"
+            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode"
+            codeListValue="ger" />
+          </gmd:language>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>structure</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>inlandWaters</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>society</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>boundaries</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>farming</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>location</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>transportation</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:extent>
+            <gmd:EX_Extent>
+              <gmd:temporalElement>
+                <gmd:EX_TemporalExtent>
+                  <gmd:extent>
+                    <gml:TimePeriod gml:id="w27523aaa">
+                      <gml:beginPosition>
+                      1921-01-01</gml:beginPosition>
+                      <gml:endPosition>1921-12-31</gml:endPosition>
+                    </gml:TimePeriod>
+                  </gmd:extent>
+                </gmd:EX_TemporalExtent>
+              </gmd:temporalElement>
+            </gmd:EX_Extent>
+          </gmd:extent>
+          <gmd:extent>
+            <gmd:EX_Extent>
+              <gmd:geographicElement>
+                <gmd:EX_GeographicDescription>
+                  <gmd:geographicIdentifier>
+                    <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gco:CharacterString>Sachsen Radeburg
+                        Thiendorf Ebersbach R&#246;dern Dobra &amp;
+                        Tauscha R&#246;hrsdorf
+                        Gro&#223;dittmannsdorf Cunnersdorf &amp;
+                        Freitelsdorf Kleinnauendorf W&#252;rschnitz
+                        L&#246;tzschen Sacka</gco:CharacterString>
+                      </gmd:code>
+                    </gmd:MD_Identifier>
+                  </gmd:geographicIdentifier>
+                </gmd:EX_GeographicDescription>
+              </gmd:geographicElement>
+            </gmd:EX_Extent>
+          </gmd:extent>
+          <gmd:extent>
+            <gmd:EX_Extent>
+              <gmd:geographicElement>
+                <gmd:EX_GeographicBoundingBox>
+                  <gmd:extentTypeCode>
+                    <gco:Boolean>true</gco:Boolean>
+                  </gmd:extentTypeCode>
+                  <gmd:westBoundLongitude>
+                    <gco:Decimal>13.6667</gco:Decimal>
+                  </gmd:westBoundLongitude>
+                  <gmd:eastBoundLongitude>
+                    <gco:Decimal>13.8333</gco:Decimal>
+                  </gmd:eastBoundLongitude>
+                  <gmd:southBoundLatitude>
+                    <gco:Decimal>51.2000</gco:Decimal>
+                  </gmd:southBoundLatitude>
+                  <gmd:northBoundLatitude>
+                    <gco:Decimal>51.3000</gco:Decimal>
+                  </gmd:northBoundLatitude>
+                </gmd:EX_GeographicBoundingBox>
+              </gmd:geographicElement>
+            </gmd:EX_Extent>
+          </gmd:extent>
+        </gmd:MD_DataIdentification>
+      </gmd:identificationInfo>
+      <gmd:distributionInfo>
+        <gmd:MD_Distribution>
+          <gmd:distributionFormat>
+            <gmd:MD_Format>
+              <gmd:name>
+                <gco:CharacterString>JPEG</gco:CharacterString>
+              </gmd:name>
+              <gmd:version>
+                <gco:CharacterString>300dpi</gco:CharacterString>
+              </gmd:version>
+            </gmd:MD_Format>
+          </gmd:distributionFormat>
+          <gmd:distributionFormat>
+            <gmd:MD_Format>
+              <gmd:name>
+                <gco:CharacterString>TIFF</gco:CharacterString>
+              </gmd:name>
+              <gmd:version>
+                <gco:CharacterString>300dpi</gco:CharacterString>
+              </gmd:version>
+            </gmd:MD_Format>
+          </gmd:distributionFormat>
+          <gmd:distributionFormat>
+            <gmd:MD_Format>
+              <gmd:name>
+                <gco:CharacterString>
+                Papierabzug</gco:CharacterString>
+              </gmd:name>
+              <gmd:version>
+                <gco:CharacterString>matt oder
+                gl&#228;nzend</gco:CharacterString>
+              </gmd:version>
+            </gmd:MD_Format>
+          </gmd:distributionFormat>
+          <gmd:distributor>
+            <gmd:MD_Distributor>
+              <gmd:distributorContact>
+                <idfResponsibleParty type="2" uuid="my-special-uuid" id="my-party-id">
+                  <gmd:individualName>
+                    <gco:CharacterString>Georg
+                    Zimmermann</gco:CharacterString>
+                  </gmd:individualName>
+                  <gmd:organisationName>
+                    <gco:CharacterString>Deutsche Fotothek,
+                    SLUB</gco:CharacterString>
+                  </gmd:organisationName>
+                  <gmd:contactInfo>
+                    <gmd:CI_Contact>
+                      <gmd:phone>
+                        <gmd:CI_Telephone>
+                          <gmd:voice>
+                            <gco:CharacterString>(0351)
+                            4677-601</gco:CharacterString>
+                          </gmd:voice>
+                          <gmd:facsimile>
+                            <gco:CharacterString>(0351)
+                            4677-736</gco:CharacterString>
+                          </gmd:facsimile>
+                        </gmd:CI_Telephone>
+                      </gmd:phone>
+                      <gmd:address>
+                        <gmd:CI_Address>
+                          <gmd:deliveryPoint>
+                            <gco:CharacterString>Zellescher Weg
+                            18</gco:CharacterString>
+                          </gmd:deliveryPoint>
+                          <gmd:city>
+                            <gco:CharacterString>
+                            Dresden</gco:CharacterString>
+                          </gmd:city>
+                          <gmd:administrativeArea>
+                            <gco:CharacterString>S&#228;chsische
+                            Landesbibliothek - Staats- und
+                            Universit&#228;tsbibliothek
+                            Dresden</gco:CharacterString>
+                          </gmd:administrativeArea>
+                          <gmd:postalCode>
+                            <gco:CharacterString>
+                            01054</gco:CharacterString>
+                          </gmd:postalCode>
+                          <gmd:country>
+                            <gco:CharacterString>
+                            Deutschland</gco:CharacterString>
+                          </gmd:country>
+                          <gmd:electronicMailAddress>
+                            <gco:CharacterString>
+                            deutsche.fotothek@slub-dresden.de</gco:CharacterString>
+                          </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                      </gmd:address>
+                    </gmd:CI_Contact>
+                  </gmd:contactInfo>
+                  <gmd:role>
+                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                    codeListValue="resourceProvider">
+                    resourceProvider</gmd:CI_RoleCode>
+                  </gmd:role>
+                  <last-modified><gco:DateTime>2011-03-12T23:12:34</gco:DateTime></last-modified>
+                  <!-- address itself again, NOT PARENT ! -->
+                  <hierarchyParty  uuid="55290A4C-D7AE-11D2-BB32-006097FE70B1">
+                    <addressIndividualName>Georg
+                      Zimmermann</addressIndividualName>
+                    <addressOrganisationName>Deutsche Fotothek,
+                      SLUB</addressOrganisationName>
+                    <addressType>2</addressType>
+                  </hierarchyParty>
+                  <!-- parent -->
+                  <hierarchyParty uuid="15C69BE2-FE15-11D2-AF34-0060084A4596">
+                    <addressOrganisationName>Parent Organisation Einheit</addressOrganisationName>
+                    <addressType>1</addressType>
+                  </hierarchyParty>
+                  <!-- parent, last one = top  -->
+                  <hierarchyParty uuid="15C69BE2-FE15-11D2-AF34-0060084A4597">
+                    <addressOrganisationName>Top</addressOrganisationName>
+                    <addressType>0</addressType>
+                  </hierarchyParty>
+                </idfResponsibleParty>
+              </gmd:distributorContact>
+            </gmd:MD_Distributor>
+          </gmd:distributor>
+          <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+              <gmd:onLine>
+                <idf:idfOnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>
+                    http://www.deutschefotothek.de/?df_dk_0000196&amp;dmode=zoom</gmd:URL>
+                  </gmd:linkage>
+                  <gmd:function>
+                    <gmd:CI_OnLineFunctionCode xmlns="http://www.isotc211.org/2005/gmd"
+                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                    codeListValue="information" />
+                  </gmd:function>
+                  <idf:attachedToField entry-id="3520" list-id="2000">Fachliche Grundlage</idf:attachedToField>
+               </idf:idfOnlineResource>
+               </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+          </gmd:transferOptions>
+          <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+              <gmd:onLine>
+                <gmd:CI_OnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>
+                    http://fotothek.slub-dresden.de/fotos/df/dk/0000000/df_dk_0000196.jpg</gmd:URL>
+                  </gmd:linkage>
+                  <gmd:function>
+                    <gmd:CI_OnLineFunctionCode xmlns="http://www.isotc211.org/2005/gmd"
+                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                    codeListValue="download" />
+                  </gmd:function>
+                </gmd:CI_OnlineResource>
+              </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+          </gmd:transferOptions>
+        </gmd:MD_Distribution>
+      </gmd:distributionInfo>
+      <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+          <gmd:scope>
+            <gmd:DQ_Scope>
+              <gmd:level>
+                <gmd:MD_ScopeCode xmlns="http://www.isotc211.org/2005/gmd"
+                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                codeListValue="dataset" />
+              </gmd:level>
+            </gmd:DQ_Scope>
+          </gmd:scope>
+          <gmd:lineage>
+            <gmd:LI_Lineage>
+              <gmd:statement>
+                <gco:CharacterString>Deutsche Fotothek der
+                S&#228;chsischen Landesbibliothek - Staats- und
+                Universit&#228;tsbibliothek Dresden
+                Geb&#252;hrenordnung:
+                http://www.deutschefotothek.de/info/gebuehren.pdf</gco:CharacterString>
+              </gmd:statement>
+            </gmd:LI_Lineage>
+          </gmd:lineage>
+        </gmd:DQ_DataQuality>
+      </gmd:dataQualityInfo>
+      <superiorReference uuid="my uuid">
+        <objectName>object name</objectName>
+        <objectType>1</objectType>
+      </superiorReference>
+      <subordinatedReference uuid="my uuid1">
+        <objectName>object name 1</objectName>
+        <objectType>1</objectType>
+      </subordinatedReference>
+      <subordinatedReference uuid="my uuid2">
+        <objectName>object name 2</objectName>
+        <objectType>2</objectType>
+      </subordinatedReference>
+      <crossReference uuid="my uuid3">
+        <objectName>object name 3</objectName>
+        <objectType>3</objectType>
+      </crossReference>
+      <additionalDataSection isLegacy="false" id="ad1">
+        <title lang="de">ein titel</title>
+        <title lang="en">a title</title>
+        <additionalDataField id="adf1">
+          <title lang="de">Ein Feld</title>
+          <title lang="en">a field</title>
+          <postfix lang="de">Einheit</postfix>
+          <postfix lang="en">unit</postfix>
+          <data>data</data>
+        </additionalDataField>
+      </additionalDataSection>
+    </idfMdMetadata>
+    <p>
+      <strong>Geographical reference 1</strong>
+      <a type="application/vnd.ogc.wms_xml"
+      href="http://gateway.hamburg.de/OGCFassade/HH_WMS_Geobasisdaten.aspx?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetCapabilities">
+      Test</a>
+    </p>
+    <p>
+      <strong>Geographical reference 2</strong>
+      <a type="application/vnd.ogc.wms_xml"
+      href="http://gdzims.lkvk.saarland.de/wmsconnector/com.esri.wms.Esrimap/GDI_Natur?SERVICE=WMS&amp;VERSION=1.1.1&amp;Request=GetCapabilities">
+      Saarland LKVK Natur (Schutzgebiet)</a>
+    </p>
+    <p><a href="http://www.google.de">Test</a></p>
+    <p>p 1</p>
+    <p>p 1</p>
+    <table border="1" >
+      <tr>
+        <th>Berlin</th>
+        <th>Hamburg</th>
+        <th> M&#252;nchen</th>
+      </tr>
+      <tr>
+        <td>Milj&#252;h</td>
+        <td>Kiez</td>
+        <td>Bierdampf</td>
+      </tr>
+      <tr>
+        <td>Buletten</td>
+        <td>Frikadellen</td>
+        <td>Fleischpflanzerl</td>
+      </tr>
+    </table>
+    <p><img src="http://www.spirofrog.de/blog/wp-content/uploads/2009/12/Wasser.jpg" alt="image"></img></p>
+    <hr id="hr"></hr>
+    <div class="fontbox"
+    style="font-family:sans-serif; font-size:11pt;">DIV Test</div>
+    <p><b>Fett (bold)</b></p>
+    <p><i>Kursiv (italic)</i></p>
+    <p><ins>Unterstrichen (inserted)</ins></p>
+    <p><tt>Schreibmaschine</tt></p>
+    <p><big>Gro&#223;er Font</big></p>
+    <p><small>Kleiner Font</small></p>
+    <p><del>Durchgestrichen (deleted)</del></p>
+    <p><sub>Tiefgestellt</sub></p>
+    <p><sup>Hochgestellt</sup></p>
+    <dl>
+      <dt>dt</dt>
+      <dd>dd</dd>
+      <dt>dt</dt>
+      <dd>dd</dd>
+    </dl>
+    <h1>h1</h1>
+    <h2>h2</h2>
+    <h3>h3</h3>
+    <ul>
+      <li>erstes Listenelement (square)</li>
+      <li>zweites Listenelement (circle)</li>
+    </ul>
+    <p><input type="text" name="text" value="text" ></input></p>
+    <p><input type="password" name="password" ></input></p>
+    <p><input type="checkbox" name="checkbox" value="checkbox"></input></p>
+    <p><input type="radio" name="radio" value="radio"></input></p>
+    <p><input type="submit" value="submit"></input></p>     
+    <p><input type="button" value="button"></input></p>
+     <kml:kml xmlns:kml="http://www.opengis.net/kml/2.2">
+      <kml:Document>
+        <kml:name>KML Document 1</kml:name>
+        <kml:Placemark>
+          <kml:name>KML Point 1_1</kml:name>
+          <kml:description>KML Description 1_1</kml:description>
+          <kml:Point>
+            <kml:coordinates>45.256 -110.45</kml:coordinates>
+          </kml:Point>
+        </kml:Placemark>
+        <kml:Placemark>
+          <kml:name>KML Point 1_2</kml:name>
+          <kml:description>KML Description 1_2</kml:description>
+          <kml:Point>
+            <kml:coordinates>46.256 -110.45</kml:coordinates>
+          </kml:Point>
+        </kml:Placemark>
+      </kml:Document>
+     </kml:kml>
+     <p>
+     <strong>Geographical reference:</strong>
+     <kml:kml xmlns:kml="http://www.opengis.net/kml/2.2">
+      <kml:Document>
+        <kml:name>KML Document 2</kml:name>
+        <kml:Placemark>
+          <kml:name>KML Point 2_1</kml:name>
+          <kml:description>KML Description 2_1</kml:description>
+          <kml:Point>
+            <kml:coordinates>45.256 -110.45</kml:coordinates>
+          </kml:Point>
+        </kml:Placemark>
+        <kml:Placemark>
+          <kml:name>KML Point 2_2</kml:name>
+          <kml:description>KML Description 2_2</kml:description>
+          <kml:Point>
+            <kml:coordinates>46.256 -110.45</kml:coordinates>
+          </kml:Point>
+        </kml:Placemark>
+      </kml:Document>
+     </kml:kml>
+     </p>
+  </body>
+</html>

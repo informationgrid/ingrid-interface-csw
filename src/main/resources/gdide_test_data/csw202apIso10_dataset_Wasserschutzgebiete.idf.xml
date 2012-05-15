@@ -9,283 +9,283 @@
 <idf:html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd" xmlns:idf="http://www.portalu.de/IDF/1.0">
   <idf:head/>
   <idf:body>
-<idf:idfMdMetadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="http://www.isotc211.org/2005/gmd ../../apiso.xsd">
-	<fileIdentifier>
+<idf:idfMdMetadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="http://www.isotc211.org/2005/gmd ../../apiso.xsd">
+	<gmd:fileIdentifier>
 		<gco:CharacterString>0C12204F-5626-4A2E-94F4-514424F093A1</gco:CharacterString>
-	</fileIdentifier>
-	<language>
-		<LanguageCode codeList="http://www.w3.org/WAI/ER/IG/ert/iso639.htm" codeListValue="ger"/>
-	</language>
-	<characterSet>
-		<MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="utf8"/>
-	</characterSet>
-	<hierarchyLevel>
-		<MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset"/>
-	</hierarchyLevel>
-	<contact>
-		<CI_ResponsibleParty>
-			<organisationName>
+	</gmd:fileIdentifier>
+	<gmd:language>
+		<gmd:LanguageCode codeList="http://www.w3.org/WAI/ER/IG/ert/iso639.htm" codeListValue="ger"/>
+	</gmd:language>
+	<gmd:characterSet>
+		<gmd:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_CharacterSetCode" codeListValue="utf8"/>
+	</gmd:characterSet>
+	<gmd:hierarchyLevel>
+		<gmd:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset"/>
+	</gmd:hierarchyLevel>
+	<gmd:contact>
+		<gmd:CI_ResponsibleParty>
+			<gmd:organisationName>
 				<gco:CharacterString>Landesamt für Wasserschutz</gco:CharacterString>
-			</organisationName>
-			<contactInfo>
-				<CI_Contact>
-					<phone>
-						<CI_Telephone>
-							<voice>
+			</gmd:organisationName>
+			<gmd:contactInfo>
+				<gmd:CI_Contact>
+					<gmd:phone>
+						<gmd:CI_Telephone>
+							<gmd:voice>
 								<gco:CharacterString>++49 0611-1219</gco:CharacterString>
-							</voice>
-							<facsimile>
+							</gmd:voice>
+							<gmd:facsimile>
 								<gco:CharacterString>++49 0611-1384</gco:CharacterString>
-							</facsimile>
-						</CI_Telephone>
-					</phone>
-					<address>
-						<CI_Address>
-							<deliveryPoint>
+							</gmd:facsimile>
+						</gmd:CI_Telephone>
+					</gmd:phone>
+					<gmd:address>
+						<gmd:CI_Address>
+							<gmd:deliveryPoint>
 								<gco:CharacterString>Heinemannstr 1</gco:CharacterString>
-							</deliveryPoint>
-							<city>
+							</gmd:deliveryPoint>
+							<gmd:city>
 								<gco:CharacterString>Wiesbaden</gco:CharacterString>
-							</city>
-							<postalCode>
+							</gmd:city>
+							<gmd:postalCode>
 								<gco:CharacterString>65203</gco:CharacterString>
-							</postalCode>
-							<country>
+							</gmd:postalCode>
+							<gmd:country>
 								<gco:CharacterString>Germany</gco:CharacterString>
-							</country>
-							<electronicMailAddress>
+							</gmd:country>
+							<gmd:electronicMailAddress>
 								<gco:CharacterString>lfw@lfw.hessen.de</gco:CharacterString>
-							</electronicMailAddress>
-						</CI_Address>
-					</address>
-					<onlineResource>
-						<CI_OnlineResource>
-							<linkage>
-								<URL>http://www.lfw.hessen.de</URL>
-							</linkage>
-						</CI_OnlineResource>
-					</onlineResource>
-				</CI_Contact>
-			</contactInfo>
-			<role>
-				<CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="publisher"/>
-			</role>
-		</CI_ResponsibleParty>
-	</contact>
-	<dateStamp>
+							</gmd:electronicMailAddress>
+						</gmd:CI_Address>
+					</gmd:address>
+					<gmd:onlineResource>
+						<gmd:CI_OnlineResource>
+							<gmd:linkage>
+								<gmd:URL>http://www.lfw.hessen.de</gmd:URL>
+							</gmd:linkage>
+						</gmd:CI_OnlineResource>
+					</gmd:onlineResource>
+				</gmd:CI_Contact>
+			</gmd:contactInfo>
+			<gmd:role>
+				<gmd:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="publisher"/>
+			</gmd:role>
+		</gmd:CI_ResponsibleParty>
+	</gmd:contact>
+	<gmd:dateStamp>
 		<gco:Date>2009-12-22</gco:Date>
-	</dateStamp>
-	<metadataStandardName>
+	</gmd:dateStamp>
+	<gmd:metadataStandardName>
 		<gco:CharacterString>ISO 19115</gco:CharacterString>
-	</metadataStandardName>
-	<metadataStandardVersion>
+	</gmd:metadataStandardName>
+	<gmd:metadataStandardVersion>
 		<gco:CharacterString>2003/Cor.1:2006</gco:CharacterString>
-	</metadataStandardVersion>
-	<spatialRepresentationInfo>
-		<MD_VectorSpatialRepresentation>
-			<topologyLevel>
-				<MD_TopologyLevelCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_TopologyLevelCode" codeListValue="geometryOnly">
-				</MD_TopologyLevelCode>
-			</topologyLevel>
-			<geometricObjects>
-				<MD_GeometricObjects>
-					<geometricObjectType>
-						<MD_GeometricObjectTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_GeometricObjectTypeCode" codeListValue="surface"/>
-					</geometricObjectType>
-					<geometricObjectCount>
+	</gmd:metadataStandardVersion>
+	<gmd:spatialRepresentationInfo>
+		<gmd:MD_VectorSpatialRepresentation>
+			<gmd:topologyLevel>
+				<gmd:MD_TopologyLevelCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_TopologyLevelCode" codeListValue="geometryOnly">
+				</gmd:MD_TopologyLevelCode>
+			</gmd:topologyLevel>
+			<gmd:geometricObjects>
+				<gmd:MD_GeometricObjects>
+					<gmd:geometricObjectType>
+						<gmd:MD_GeometricObjectTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_GeometricObjectTypeCode" codeListValue="surface"/>
+					</gmd:geometricObjectType>
+					<gmd:geometricObjectCount>
 						<gco:Integer>280</gco:Integer>
-					</geometricObjectCount>
-				</MD_GeometricObjects>
-			</geometricObjects>
-		</MD_VectorSpatialRepresentation>
-	</spatialRepresentationInfo>
-	<identificationInfo>
-		<MD_DataIdentification uuid="_3E06228D-0676-1C4F-33B4-722163F876C3" id="_3E06228D-0676-1C4F-33B4-722163F876C3">
-			<citation>
-				<CI_Citation>
-					<title>
+					</gmd:geometricObjectCount>
+				</gmd:MD_GeometricObjects>
+			</gmd:geometricObjects>
+		</gmd:MD_VectorSpatialRepresentation>
+	</gmd:spatialRepresentationInfo>
+	<gmd:identificationInfo>
+		<gmd:MD_DataIdentification uuid="_3E06228D-0676-1C4F-33B4-722163F876C3" id="_3E06228D-0676-1C4F-33B4-722163F876C3">
+			<gmd:citation>
+				<gmd:CI_Citation>
+					<gmd:title>
 						<gco:CharacterString>Bestandskarte hessischer Wasserschutzgebiete</gco:CharacterString>
-					</title>
-					<alternateTitle>
+					</gmd:title>
+					<gmd:alternateTitle>
 						<gco:CharacterString>wsgfest</gco:CharacterString>
-					</alternateTitle>
-					<date>
-						<CI_Date>
-							<date>
+					</gmd:alternateTitle>
+					<gmd:date>
+						<gmd:CI_Date>
+							<gmd:date>
 								<gco:Date>2005-01-01</gco:Date>
-							</date>
-							<dateType>
-								<CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="publication"/>
-							</dateType>
-						</CI_Date>
-					</date>
-					<date>
-						<CI_Date>
-							<date>
+							</gmd:date>
+							<gmd:dateType>
+								<gmd:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="publication"/>
+							</gmd:dateType>
+						</gmd:CI_Date>
+					</gmd:date>
+					<gmd:date>
+						<gmd:CI_Date>
+							<gmd:date>
 								<gco:Date>2007-01-01</gco:Date>
-							</date>
-							<dateType>
-								<CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
-							</dateType>
-						</CI_Date>
-					</date>
-					<identifier>
-						<RS_Identifier>
-							<code>
+							</gmd:date>
+							<gmd:dateType>
+								<gmd:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="revision"/>
+							</gmd:dateType>
+						</gmd:CI_Date>
+					</gmd:date>
+					<gmd:identifier>
+						<gmd:RS_Identifier>
+							<gmd:code>
 								<gco:CharacterString>_3E06228D-0676-1C4F-33B4-722163F876C3</gco:CharacterString>
-							</code>
-							<codeSpace>
+							</gmd:code>
+							<gmd:codeSpace>
 								<gco:CharacterString>http://www.bkg.de</gco:CharacterString>
-							</codeSpace>
-						</RS_Identifier>
-					</identifier>
-				</CI_Citation>
-			</citation>
-			<abstract>
+							</gmd:codeSpace>
+						</gmd:RS_Identifier>
+					</gmd:identifier>
+				</gmd:CI_Citation>
+			</gmd:citation>
+			<gmd:abstract>
 				<gco:CharacterString>Die Karte der Wasserschutzgebiete im Maßstab 1:25.000 stellt den Bestand an ausgewiesenen Wasserschutzgebieten in der aktuell gültigen Fassung dar. Unterschieden wird nach Zone I bis III. Die angehängten Attributinformationen sind: Name des Wasserschutzgebietes, Nummer, Schutzzone, Verordnungsdatum, Amtsblattstelle und Erfasser. </gco:CharacterString>
-			</abstract>
-			<purpose>
+			</gmd:abstract>
+			<gmd:purpose>
 				<gco:CharacterString>Hessisches Wassergesetz (HWG)</gco:CharacterString>
-			</purpose>
-			<status>
-				<MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="onGoing"/>
-			</status>
-			<pointOfContact>
-				<CI_ResponsibleParty>
-					<organisationName>
+			</gmd:purpose>
+			<gmd:status>
+				<gmd:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="onGoing"/>
+			</gmd:status>
+			<gmd:pointOfContact>
+				<gmd:CI_ResponsibleParty>
+					<gmd:organisationName>
 						<gco:CharacterString>Landesamt für Wasserschutz</gco:CharacterString>
-					</organisationName>
-					<contactInfo>
-						<CI_Contact>
-							<address>
-								<CI_Address>
-									<electronicMailAddress>
+					</gmd:organisationName>
+					<gmd:contactInfo>
+						<gmd:CI_Contact>
+							<gmd:address>
+								<gmd:CI_Address>
+									<gmd:electronicMailAddress>
 										<gco:CharacterString>lfw@lfw.hessen.de</gco:CharacterString>
-									</electronicMailAddress>
-								</CI_Address>
-							</address>
-						</CI_Contact>
-					</contactInfo>
-					<role>
-						<CI_RoleCode codeList="http://wis.wmo.int/2008/catalogues/draft_version_1-1/WMO_Codelists_ver1_1.xml#CI_RoleCode" codeListValue="originator"/>
-					</role>
-				</CI_ResponsibleParty>
-			</pointOfContact>
-			<resourceMaintenance>
-				<MD_MaintenanceInformation>
-					<maintenanceAndUpdateFrequency>
-						<MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
-					</maintenanceAndUpdateFrequency>
-					<userDefinedMaintenanceFrequency>
+									</gmd:electronicMailAddress>
+								</gmd:CI_Address>
+							</gmd:address>
+						</gmd:CI_Contact>
+					</gmd:contactInfo>
+					<gmd:role>
+						<gmd:CI_RoleCode codeList="http://wis.wmo.int/2008/catalogues/draft_version_1-1/WMO_Codelists_ver1_1.xml#CI_RoleCode" codeListValue="originator"/>
+					</gmd:role>
+				</gmd:CI_ResponsibleParty>
+			</gmd:pointOfContact>
+			<gmd:resourceMaintenance>
+				<gmd:MD_MaintenanceInformation>
+					<gmd:maintenanceAndUpdateFrequency>
+						<gmd:MD_MaintenanceFrequencyCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_MaintenanceFrequencyCode" codeListValue="continual"/>
+					</gmd:maintenanceAndUpdateFrequency>
+					<gmd:userDefinedMaintenanceFrequency>
 						<gts:TM_PeriodDuration>P2Y</gts:TM_PeriodDuration>
-					</userDefinedMaintenanceFrequency>
-				</MD_MaintenanceInformation>
-			</resourceMaintenance>
-			<descriptiveKeywords>
-				<MD_Keywords>
-					<keyword>
+					</gmd:userDefinedMaintenanceFrequency>
+				</gmd:MD_MaintenanceInformation>
+			</gmd:resourceMaintenance>
+			<gmd:descriptiveKeywords>
+				<gmd:MD_Keywords>
+					<gmd:keyword>
 						<gco:CharacterString>Grundwasser</gco:CharacterString>
-					</keyword>
-					<keyword>
+					</gmd:keyword>
+					<gmd:keyword>
 						<gco:CharacterString>Trinkwasserversorgung</gco:CharacterString>
-					</keyword>
-					<keyword>
+					</gmd:keyword>
+					<gmd:keyword>
 						<gco:CharacterString>Verwaltungsverfahren</gco:CharacterString>
-					</keyword>
-					<keyword>
+					</gmd:keyword>
+					<gmd:keyword>
 						<gco:CharacterString>Wasserversorgung</gco:CharacterString>
-					</keyword>
-					<keyword>
+					</gmd:keyword>
+					<gmd:keyword>
 						<gco:CharacterString>Wasserschutzgebiet</gco:CharacterString>
-					</keyword>
-					<keyword>
+					</gmd:keyword>
+					<gmd:keyword>
 						<gco:CharacterString>Wassergefährdung</gco:CharacterString>
-					</keyword>
-					<keyword>
+					</gmd:keyword>
+					<gmd:keyword>
 						<gco:CharacterString>Hydrography</gco:CharacterString>
-					</keyword>
-					<type>
-						<MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="theme"/>
-					</type>
-				</MD_Keywords>
-			</descriptiveKeywords>
-			<descriptiveKeywords>
-				<MD_Keywords>
-					<keyword>
+					</gmd:keyword>
+					<gmd:type>
+						<gmd:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_KeywordTypeCode" codeListValue="theme"/>
+					</gmd:type>
+				</gmd:MD_Keywords>
+			</gmd:descriptiveKeywords>
+			<gmd:descriptiveKeywords>
+				<gmd:MD_Keywords>
+					<gmd:keyword>
 						<gco:CharacterString>Schutzzone</gco:CharacterString>
-					</keyword>
-				</MD_Keywords>
-			</descriptiveKeywords>
-			<resourceSpecificUsage>
-				<MD_Usage>
-					<specificUsage>
+					</gmd:keyword>
+				</gmd:MD_Keywords>
+			</gmd:descriptiveKeywords>
+			<gmd:resourceSpecificUsage>
+				<gmd:MD_Usage>
+					<gmd:specificUsage>
 						<gco:CharacterString>keine katasterscharfen Aussagen möglich. Aussagemaßstab 1:25.000</gco:CharacterString>
-					</specificUsage>
-					<userContactInfo/>
-				</MD_Usage>
-			</resourceSpecificUsage>
-			<resourceConstraints>
-				<MD_Constraints>
-					<useLimitation>
+					</gmd:specificUsage>
+					<gmd:userContactInfo/>
+				</gmd:MD_Usage>
+			</gmd:resourceSpecificUsage>
+			<gmd:resourceConstraints>
+				<gmd:MD_Constraints>
+					<gmd:useLimitation>
 						<gco:CharacterString>keine</gco:CharacterString>
-					</useLimitation>
-				</MD_Constraints>
-			</resourceConstraints>
-			<spatialRepresentationType>
-				<MD_SpatialRepresentationTypeCode codeList="http://www.tc211.org/ISO19115/resources/codeList.xml?MD_SpatialRepresentationTypeCode" codeListValue="vector"/>
-			</spatialRepresentationType>
-			<language>
-				<LanguageCode codeList="http://www.w3.org/WAI/ER/IG/ert/iso639.htm" codeListValue="ger"/>
-			</language>
-			<topicCategory>
-				<MD_TopicCategoryCode>environment</MD_TopicCategoryCode>
-			</topicCategory>
-			<topicCategory>
-				<MD_TopicCategoryCode>inlandWaters</MD_TopicCategoryCode>
-			</topicCategory>
-			<extent>
-				<EX_Extent>
-					<description>
+					</gmd:useLimitation>
+				</gmd:MD_Constraints>
+			</gmd:resourceConstraints>
+			<gmd:spatialRepresentationType>
+				<gmd:MD_SpatialRepresentationTypeCode codeList="http://www.tc211.org/ISO19115/resources/codeList.xml?MD_SpatialRepresentationTypeCode" codeListValue="vector"/>
+			</gmd:spatialRepresentationType>
+			<gmd:language>
+				<gmd:LanguageCode codeList="http://www.w3.org/WAI/ER/IG/ert/iso639.htm" codeListValue="ger"/>
+			</gmd:language>
+			<gmd:topicCategory>
+				<gmd:MD_TopicCategoryCode>environment</gmd:MD_TopicCategoryCode>
+			</gmd:topicCategory>
+			<gmd:topicCategory>
+				<gmd:MD_TopicCategoryCode>inlandWaters</gmd:MD_TopicCategoryCode>
+			</gmd:topicCategory>
+			<gmd:extent>
+				<gmd:EX_Extent>
+					<gmd:description>
 						<gco:CharacterString/>
-					</description>
-					<geographicElement>
-						<EX_GeographicBoundingBox>
-							<extentTypeCode>
+					</gmd:description>
+					<gmd:geographicElement>
+						<gmd:EX_GeographicBoundingBox>
+							<gmd:extentTypeCode>
 								<gco:Boolean>1</gco:Boolean>
-							</extentTypeCode>
-							<westBoundLongitude>
+							</gmd:extentTypeCode>
+							<gmd:westBoundLongitude>
 								<gco:Decimal>7.36</gco:Decimal>
-							</westBoundLongitude>
-							<eastBoundLongitude>
+							</gmd:westBoundLongitude>
+							<gmd:eastBoundLongitude>
 								<gco:Decimal>10.67</gco:Decimal>
-							</eastBoundLongitude>
-							<southBoundLatitude>
+							</gmd:eastBoundLongitude>
+							<gmd:southBoundLatitude>
 								<gco:Decimal>49.34</gco:Decimal>
-							</southBoundLatitude>
-							<northBoundLatitude>
+							</gmd:southBoundLatitude>
+							<gmd:northBoundLatitude>
 								<gco:Decimal>51.64</gco:Decimal>
-							</northBoundLatitude>
-						</EX_GeographicBoundingBox>
-					</geographicElement>
-					<temporalElement>
-						<EX_TemporalExtent>
-							<extent>
+							</gmd:northBoundLatitude>
+						</gmd:EX_GeographicBoundingBox>
+					</gmd:geographicElement>
+					<gmd:temporalElement>
+						<gmd:EX_TemporalExtent>
+							<gmd:extent>
 								<gml:TimePeriod gml:id="ID_002">
 									<gml:beginPosition>2005-01-01</gml:beginPosition>
 									<gml:endPosition>2001-01-01</gml:endPosition>
 								</gml:TimePeriod>
-							</extent>
-						</EX_TemporalExtent>
-					</temporalElement>
-					<verticalElement>
-						<EX_VerticalExtent>
-							<minimumValue>
+							</gmd:extent>
+						</gmd:EX_TemporalExtent>
+					</gmd:temporalElement>
+					<gmd:verticalElement>
+						<gmd:EX_VerticalExtent>
+							<gmd:minimumValue>
 								<gco:Real>81.0</gco:Real>
-							</minimumValue>
-							<maximumValue>
+							</gmd:minimumValue>
+							<gmd:maximumValue>
 								<gco:Real>950.2</gco:Real>
-							</maximumValue>
-							<verticalCRS>
+							</gmd:maximumValue>
+							<gmd:verticalCRS>
 								<gml:VerticalCRS gml:id="ID_1">
 									<gml:identifier codeSpace="http://www.altova.com">String</gml:identifier>
 									<gml:scope>String</gml:scope>
@@ -297,140 +297,140 @@
 										</gml:VerticalDatum>
 									</gml:verticalDatum>
 								</gml:VerticalCRS>
-							</verticalCRS>
-						</EX_VerticalExtent>
-					</verticalElement>
-				</EX_Extent>
-			</extent>
-		</MD_DataIdentification>
-	</identificationInfo>
-	<contentInfo>
-		<MD_FeatureCatalogueDescription>
-			<includedWithDataset>
+							</gmd:verticalCRS>
+						</gmd:EX_VerticalExtent>
+					</gmd:verticalElement>
+				</gmd:EX_Extent>
+			</gmd:extent>
+		</gmd:MD_DataIdentification>
+	</gmd:identificationInfo>
+	<gmd:contentInfo>
+		<gmd:MD_FeatureCatalogueDescription>
+			<gmd:includedWithDataset>
 				<gco:Boolean>false</gco:Boolean>
-			</includedWithDataset>
-			<featureCatalogueCitation>
-				<CI_Citation>
-					<title>
+			</gmd:includedWithDataset>
+			<gmd:featureCatalogueCitation>
+				<gmd:CI_Citation>
+					<gmd:title>
 						<gco:CharacterString>wsgfest.dbf</gco:CharacterString>
-					</title>
-					<date>
-						<CI_Date>
-							<date>
+					</gmd:title>
+					<gmd:date>
+						<gmd:CI_Date>
+							<gmd:date>
 								<gco:Date>2006-07-14</gco:Date>
-							</date>
-							<dateType>
-								<CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
-							</dateType>
-						</CI_Date>
-					</date>
-					<edition>
+							</gmd:date>
+							<gmd:dateType>
+								<gmd:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+							</gmd:dateType>
+						</gmd:CI_Date>
+					</gmd:date>
+					<gmd:edition>
 						<gco:CharacterString>in Bearbeitung</gco:CharacterString>
-					</edition>
-				</CI_Citation>
-			</featureCatalogueCitation>
-		</MD_FeatureCatalogueDescription>
-	</contentInfo>
-	<distributionInfo>
-		<MD_Distribution>
-			<distributor>
-				<MD_Distributor>
-					<distributorContact>
-						<CI_ResponsibleParty>
-							<organisationName>
+					</gmd:edition>
+				</gmd:CI_Citation>
+			</gmd:featureCatalogueCitation>
+		</gmd:MD_FeatureCatalogueDescription>
+	</gmd:contentInfo>
+	<gmd:distributionInfo>
+		<gmd:MD_Distribution>
+			<gmd:distributor>
+				<gmd:MD_Distributor>
+					<gmd:distributorContact>
+						<gmd:CI_ResponsibleParty>
+							<gmd:organisationName>
 								<gco:CharacterString>Landesamt für Wasserschutz</gco:CharacterString>
-							</organisationName>
-							<role>
-								<CI_RoleCode codeList="CI_RoleCode" codeListValue="distributor"/>
-							</role>
-						</CI_ResponsibleParty>
-					</distributorContact>
-					<distributionOrderProcess>
-						<MD_StandardOrderProcess>
-							<fees>
+							</gmd:organisationName>
+							<gmd:role>
+								<gmd:CI_RoleCode codeList="CI_RoleCode" codeListValue="distributor"/>
+							</gmd:role>
+						</gmd:CI_ResponsibleParty>
+					</gmd:distributorContact>
+					<gmd:distributionOrderProcess>
+						<gmd:MD_StandardOrderProcess>
+							<gmd:fees>
 								<gco:CharacterString>keine</gco:CharacterString>
-							</fees>
-							<orderingInstructions>
+							</gmd:fees>
+							<gmd:orderingInstructions>
 								<gco:CharacterString>download möglich</gco:CharacterString>
-							</orderingInstructions>
-						</MD_StandardOrderProcess>
-					</distributionOrderProcess>
-					<distributorFormat>
-						<MD_Format>
-							<name>
+							</gmd:orderingInstructions>
+						</gmd:MD_StandardOrderProcess>
+					</gmd:distributionOrderProcess>
+					<gmd:distributorFormat>
+						<gmd:MD_Format>
+							<gmd:name>
 								<gco:CharacterString>shapefile</gco:CharacterString>
-							</name>
-							<version>
+							</gmd:name>
+							<gmd:version>
 								<gco:CharacterString>ArcView3.2</gco:CharacterString>
-							</version>
-							<specification>
+							</gmd:version>
+							<gmd:specification>
 								<gco:CharacterString/>
-							</specification>
-						</MD_Format>
-					</distributorFormat>
-				</MD_Distributor>
-			</distributor>
-			<transferOptions>
-				<MD_DigitalTransferOptions/>
-			</transferOptions>
-		</MD_Distribution>
-	</distributionInfo>
-	<dataQualityInfo>
-		<DQ_DataQuality>
-			<scope>
-				<DQ_Scope>
-					<level>
-						<MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode" codeListValue="dataset"/>
-					</level>
-				</DQ_Scope>
-			</scope>
-			<lineage>
-				<LI_Lineage>
-					<statement>
+							</gmd:specification>
+						</gmd:MD_Format>
+					</gmd:distributorFormat>
+				</gmd:MD_Distributor>
+			</gmd:distributor>
+			<gmd:transferOptions>
+				<gmd:MD_DigitalTransferOptions/>
+			</gmd:transferOptions>
+		</gmd:MD_Distribution>
+	</gmd:distributionInfo>
+	<gmd:dataQualityInfo>
+		<gmd:DQ_DataQuality>
+			<gmd:scope>
+				<gmd:DQ_Scope>
+					<gmd:level>
+						<gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode" codeListValue="dataset"/>
+					</gmd:level>
+				</gmd:DQ_Scope>
+			</gmd:scope>
+			<gmd:lineage>
+				<gmd:LI_Lineage>
+					<gmd:statement>
 						<gco:CharacterString>Typisierung der Gewässer auf der Basis einer DLM25 Karte...</gco:CharacterString>
-					</statement>
-					<source>
-						<LI_Source>
-							<description>
+					</gmd:statement>
+					<gmd:source>
+						<gmd:LI_Source>
+							<gmd:description>
 								<gco:CharacterString>Verordnungen im Amtsblatt von Hessen</gco:CharacterString>
-							</description>
-							<sourceStep>
-								<LI_ProcessStep>
-									<description>
+							</gmd:description>
+							<gmd:sourceStep>
+								<gmd:LI_ProcessStep>
+									<gmd:description>
 										<gco:CharacterString>die Historie der dieses digitalen Datenbestandes wird in einem Dokument: wsg_Historie.txt dokumentiert</gco:CharacterString>
-									</description>
-								</LI_ProcessStep>
-							</sourceStep>
-						</LI_Source>
-					</source>
-				</LI_Lineage>
-			</lineage>
-		</DQ_DataQuality>
-	</dataQualityInfo>
-	<portrayalCatalogueInfo>
-		<MD_PortrayalCatalogueReference>
-			<portrayalCatalogueCitation>
-				<CI_Citation>
-					<title>
+									</gmd:description>
+								</gmd:LI_ProcessStep>
+							</gmd:sourceStep>
+						</gmd:LI_Source>
+					</gmd:source>
+				</gmd:LI_Lineage>
+			</gmd:lineage>
+		</gmd:DQ_DataQuality>
+	</gmd:dataQualityInfo>
+	<gmd:portrayalCatalogueInfo>
+		<gmd:MD_PortrayalCatalogueReference>
+			<gmd:portrayalCatalogueCitation>
+				<gmd:CI_Citation>
+					<gmd:title>
 						<gco:CharacterString>wsgfest.avl</gco:CharacterString>
-					</title>
-					<date>
-						<CI_Date>
-							<date>
+					</gmd:title>
+					<gmd:date>
+						<gmd:CI_Date>
+							<gmd:date>
 								<gco:Date>2005-07-15</gco:Date>
-							</date>
-							<dateType>
-								<CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
-							</dateType>
-						</CI_Date>
-					</date>
-					<edition>
+							</gmd:date>
+							<gmd:dateType>
+								<gmd:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_DateTypeCode" codeListValue="creation"/>
+							</gmd:dateType>
+						</gmd:CI_Date>
+					</gmd:date>
+					<gmd:edition>
 						<gco:CharacterString>1.1</gco:CharacterString>
-					</edition>
-				</CI_Citation>
-			</portrayalCatalogueCitation>
-		</MD_PortrayalCatalogueReference>
-	</portrayalCatalogueInfo>
+					</gmd:edition>
+				</gmd:CI_Citation>
+			</gmd:portrayalCatalogueCitation>
+		</gmd:MD_PortrayalCatalogueReference>
+	</gmd:portrayalCatalogueInfo>
 </idf:idfMdMetadata>
 </idf:body>
 </idf:html>

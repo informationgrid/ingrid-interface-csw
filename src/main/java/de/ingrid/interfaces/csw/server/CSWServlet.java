@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,13 +69,13 @@ public class CSWServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		try {
-			if (request.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
+		    if (request.getContentType() == null) {
+		        Log.info("Unsupported Content-Type in POST request: "+request.getContentType());
+		    } else if (request.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				this.serverFacade.handleSoapRequest(request, response);
-			}
-			else if (request.getContentType().toLowerCase().indexOf("application/xml") != -1) {
+			} else if (request.getContentType().toLowerCase().indexOf("application/xml") != -1) {
 				this.serverFacade.handlePostRequest(request, response);
-			}
-			else {
+			} else {
 				throw new ServletException("Unsupported Content-Type in POST request: "+request.getContentType());
 			}
 		} catch (Exception ex) {

@@ -133,7 +133,7 @@ public class GenericServer implements CSWServer {
             searchResults.setAttribute("elementSet", request.getQuery().getElementSetName().name());
             searchResults.setAttribute("numberOfRecordsMatched", String.valueOf(result.getTotalHits()));
             searchResults.setAttribute("numberOfRecordsReturned", String.valueOf(result.getResults().size()));
-            doc.appendChild(searchResults);
+            doc.getDocumentElement().appendChild(searchResults);
 
             for (CSWRecord record : result.getResults()) {
                 Node recordNode = record.getDocument().getFirstChild();

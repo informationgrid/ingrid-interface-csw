@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.isotc211.org/2005/gmd based instance document -->
+<!--  Info   :  Dieses Instanz-Dokument wurde von der con terra GmbH entsprechend den Vorgaben der ISO19139 (wie in CSW 2.0.2 AP ISO 1.0 erstellt -->
+<!--             Es handelt sich im wesentlichen um fiktive(!) Metadaten, die frei erfunden wurden (z.B. fiktivie Organisationen) -->
+<!--             Z.T. beruhen die Metadaten aber auf realen Metadaten, so wie sie vom Bundesamt für Kartographie geliefert wurden. -->
+<!--             Autor : Dr. Uwe Voges -->
+<!--             Stand: 26.02.2010 -->
+<!--             Firma: con terra GmbH (www.conterra.de) -->
+<idf:html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd" xmlns:idf="http://www.portalu.de/IDF/1.0">
+  <idf:head/>
+  <idf:body>
+<idf:idfMdMetadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="http://www.isotc211.org/2005/gmd ../../apiso.xsd">
+	<fileIdentifier>
+		<gco:CharacterString>0C12204F-5626-4A2E-94F4-514424F093A1</gco:CharacterString>
+	</fileIdentifier>
+	<language>
+		<LanguageCode codeList="http://www.w3.org/WAI/ER/IG/ert/iso639.htm" codeListValue="ger"/>
+	</language>
+</idf:idfMdMetadata>
+</idf:body>
+</idf:html>
