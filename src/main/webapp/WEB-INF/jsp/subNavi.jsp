@@ -5,7 +5,7 @@
 		<h2>Configuration</h2>
 	</div>
 	<ul>
-		<li <c:if test="${active == 'harvester'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/list_harvester.html">Manage Harvester</a></li>
+		<li <c:if test="${active == 'harvester'}">class="active"</c:if>><a href="<%= request.getContextPath()%>list_harvester.html">Manage Harvester</a></li>
         <li <c:if test="${active == 'scheduling'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/scheduling.html">Control Scheduler</a></li>
         <li <c:if test="${active == 'indexing'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/indexing.html">Manually issue harvesting</a></li>
         <li <c:if test="${active == 'search'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/search.html">Test Search</a></li>

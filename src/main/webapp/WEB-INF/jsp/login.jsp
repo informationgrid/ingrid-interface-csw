@@ -10,17 +10,17 @@
 <meta name="keywords" content="" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
-<link rel="StyleSheet" href="/css/ingrid.css" type="text/css" media="all" />
+<link rel="StyleSheet" href="../css/ingrid.css" type="text/css" media="all" />
 </head>
 <body>
 	<div id="header">
-		<img src="/images/logo.gif" width="168" height="60" alt="Portal U" />
+		<img src="../images/logo.gif" width="168" height="60" alt="Portal U" />
 		<h1>Konfiguration</h1>
 		<%
 		java.security.Principal  principal = request.getUserPrincipal();
 		if(principal != null && !(principal instanceof IngridPrincipal.SuperAdmin)) {
 		%>
-			<div id="language"><a href="/auth/logout.html">Logout</a></div>
+			<div id="language"><a href="../auth/logout.html">Logout</a></div>
 		<%
 		}
 		%>

@@ -39,7 +39,7 @@ function getState(){
 		java.security.Principal  principal = request.getUserPrincipal();
 		if(principal != null && !(principal instanceof IngridPrincipal.SuperAdmin)) {
 		%>
-			<div id="language"><a href="auth/logout.html">Logout</a></div>
+			<div id="language"><a href="logout.html">Logout</a></div>
 		<%
 		}
 		%>

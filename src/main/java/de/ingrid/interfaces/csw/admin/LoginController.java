@@ -19,22 +19,22 @@ public class LoginController {
         return true;
     }
 
-    @RequestMapping(value = "/auth/login.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/login.html", method = RequestMethod.GET)
     public String login(final Model model, final HttpSession session) {
         return "/login";
     }
 
-    @RequestMapping(value = "/auth/loginFailure.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/loginFailure.html", method = RequestMethod.GET)
     public String loginFailure() {
         return "/loginFailure";
     }
 
-    @RequestMapping(value = "/auth/roleFailure.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/roleFailure.html", method = RequestMethod.GET)
     public String roleFailure() {
         return "/roleFailure";
     }
 
-    @RequestMapping(value = "/auth/logout.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout.html", method = RequestMethod.GET)
     public String logout(final HttpSession session) {
         session.invalidate();
         return "redirect:/welcome.html";

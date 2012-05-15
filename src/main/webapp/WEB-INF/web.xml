@@ -32,7 +32,8 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 			<url-pattern>/css/*</url-pattern>
 			<url-pattern>/images/*</url-pattern>
 			<url-pattern>/js/*</url-pattern>
-			<url-pattern>/auth/*</url-pattern>
+			<url-pattern>/login.jsp</url-pattern>
+            <url-pattern>/loginFailure.html</url-pattern>
 			<url-pattern>/index.jsp</url-pattern>
             <url-pattern>/csw</url-pattern>
 		</web-resource-collection>
@@ -41,14 +42,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<form-login-config>
-			<form-login-page>/auth/login.html</form-login-page>
-			<form-error-page>/auth/loginFailure.html</form-error-page>
+			<form-login-page>/login.html</form-login-page>
+			<form-error-page>/loginFailure.html</form-error-page>
 		</form-login-config>
 	</login-config>
 
 	<error-page>
 		<error-code>403</error-code>
-		<location>/auth/roleFailure.html</location>
+		<location>/roleFailure.html</location>
 	</error-page>
 	
 	<error-page>
