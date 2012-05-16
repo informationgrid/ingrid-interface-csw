@@ -5,7 +5,6 @@ package de.ingrid.interfaces.csw.domain.request.impl;
 
 import java.util.List;
 
-import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWVersionNegotiationFailedException;

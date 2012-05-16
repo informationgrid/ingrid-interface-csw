@@ -13,6 +13,7 @@ public class ConfigurationKeys {
 	public static final String SERVER_PORT = "server.port";
 	public static final String SERVER_INTERFACE_HOST = "server.interface.host";
 	public static final String SERVER_INTERFACE_PORT = "server.interface.port";
+    public static final String SERVER_INTERFACE_PATH = "server.interface.path";
 	public static final String MAX_RETURNED_HITS = "max.returned.hits";
 	public static final String CAPABILITIES_DOC = "capabilities";
 	public static final String RECORDDESC_DOC = "describerecord";
@@ -21,6 +22,7 @@ public class ConfigurationKeys {
 	/** variables in documents **/
 	public static final String VARIABLE_INTERFACE_HOST = "INTERFACE_HOST";
 	public static final String VARIABLE_INTERFACE_PORT = "INTERFACE_PORT";
+    public static final String VARIABLE_INTERFACE_PATH = "INTERFACE_PATH";
 	
 	/** static configuration keys **/
     public static final String CSW_VERSION_2_0_2 = "2.0.2";
