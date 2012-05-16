@@ -64,7 +64,7 @@ public class LuceneFilterParser implements FilterParser {
 
 	protected final static Log log = LogFactory.getLog(AbstractFileCache.class);
 
-	private static final String QUERY_CONSTRAINT_LOCATOR = "Query/Contraint";
+	private static final String QUERY_CONSTRAINT_LOCATOR = "Query/Constraint";
 	private static final String INVALID_PARAMETER_CODE = "InvalidParameter";
 
 	protected static final String PARSE_ERROR_MSG = "The service was unable to parse the Date: ";
@@ -86,6 +86,11 @@ public class LuceneFilterParser implements FilterParser {
 			MarshallerPool marshallerPool = new MarshallerPool("org.geotoolkit.ogc.xml.v110:org.geotoolkit.gml.xml.v311:org.geotoolkit.gml.xml.v321");
 			this.filterUnmarshaller = marshallerPool.acquireUnmarshaller();
 		}
+		
+		if (filterDoc == null) {
+		    return new SpatialQuery("");
+		}
+		
 		JAXBElement<FilterType> filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
 		FilterType filter = filterEl.getValue();
 

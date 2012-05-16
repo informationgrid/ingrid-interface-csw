@@ -24,6 +24,7 @@ import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
+import de.ingrid.interfaces.csw.domain.constants.TypeName;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWInvalidParameterValueException;
@@ -52,6 +53,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
     /** Parameter xpath (namespace agnostic) **/
     private static String SERVICE_PARAM_XPATH = "/*/@service";
+    private static String VERSION_PARAM_XPATH = "/*/@version";
     private static String DESCREC_VERSION_PARAM_XPATH = "/csw:DescribeRecord/@version";
     private static String GETCAP_VERSION_PARAM_XPATH = "/csw:GetCapabilities/csw:AcceptVersions/csw:Version";
 
@@ -76,7 +78,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
         this.setRequestBody(this.extractRequestBody(request));
         
         if (log.isDebugEnabled()) {
-            log.debug("Request initialized with: " + StringUtils.nodeToString(this.extractRequestBody(request)));
+            log.debug("Request initialized with: " + StringUtils.nodeToString(this.requestBody));
         }
         
     }
@@ -123,9 +125,21 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                 StringBuffer errorMsg = new StringBuffer();
                 errorMsg.append("Parameter 'service' has an unsupported value.\n");
                 errorMsg.append("Supported values: CSW\n");
+                throw new CSWInvalidParameterValueException(errorMsg.toString(), "service");
+            }
+        }
+
+        // check the version parameter
+        String version = this.xpath.getString(this.getRequestBody(), VERSION_PARAM_XPATH);
+        if (version != null && version.length() > 0) {
+            if (!version.equals(ConfigurationKeys.CSW_VERSION_2_0_2)) {
+                StringBuffer errorMsg = new StringBuffer();
+                errorMsg.append("Parameter 'version' has an unsupported value.\n");
+                errorMsg.append("Supported values: 2.0.2\n");
                 throw new CSWInvalidParameterValueException(errorMsg.toString(), "version");
             }
         }
+    
     }
 
     @Override
@@ -231,6 +245,20 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                             "/csw:GetRecords/csw:Query/csw:ElementSetName");
                     if (elementSetNameStr != null) {
                         this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
+                    }
+
+                    // extract the typeNames
+                    String typeNamesStr = this.xpath.getString(requestNode,
+                            "/csw:GetRecords/csw:Query/@typeNames");
+                    if (typeNamesStr != null) {
+                        String[] typeNameStrings = typeNamesStr.split(",");
+                        TypeName[] typeNames = new TypeName[typeNameStrings.length];
+                        for (int i=0; i< typeNameStrings.length; i++) {
+                            typeNames[i] = TypeName.getFromQualifiedString(typeNameStrings[i].trim());
+                        }
+                        this.query.setTypeNames(typeNames);
+                    } else  {
+                        this.query.setTypeNames(null);
                     }
 
                     // extract the maxRecords

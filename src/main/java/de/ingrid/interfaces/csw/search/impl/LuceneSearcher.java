@@ -129,7 +129,7 @@ public class LuceneSearcher implements Searcher {
             // use the query constraints to search for records in the Lucene
             // index
             if (log.isDebugEnabled()) {
-                log.debug("Incoming constraint:" + StringUtils.nodeToString(query.getConstraint().getDocumentElement()));
+                log.debug("Incoming constraint:" + (query.getConstraint() != null ? StringUtils.nodeToString(query.getConstraint().getDocumentElement()): "no filter set"));
             }
             SpatialQuery spatialQuery = this.filterParser.parse(query.getConstraint());
             if (log.isDebugEnabled()) {
