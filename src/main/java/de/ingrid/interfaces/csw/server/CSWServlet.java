@@ -69,14 +69,12 @@ public class CSWServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		try {
-		    if (request.getContentType() == null) {
-		        Log.info("Unsupported Content-Type in POST request: "+request.getContentType());
+		    if (request.getHeader("Connection") != null && request.getHeader("Connection").equalsIgnoreCase("keep-alive")) {
+		        Log.debug("Ignore keep-alive request.");
 		    } else if (request.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				this.serverFacade.handleSoapRequest(request, response);
-			} else if (request.getContentType().toLowerCase().indexOf("application/xml") != -1) {
-				this.serverFacade.handlePostRequest(request, response);
 			} else {
-				throw new ServletException("Unsupported Content-Type in POST request: "+request.getContentType());
+				this.serverFacade.handlePostRequest(request, response);
 			}
 		} catch (Exception ex) {
 			throw new ServletException("POST failed: "+ex.getMessage(), ex);
