@@ -69,7 +69,7 @@ public class CSWServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		try {
-		    if (request.getHeader("Connection") != null && request.getHeader("Connection").equalsIgnoreCase("keep-alive")) {
+		    if (request.getHeader("Keep-Alive") != null && request.getContentLength() == -1) {
 		        Log.debug("Ignore keep-alive request.");
 		    } else if (request.getContentType().toLowerCase().indexOf("application/soap+xml") != -1) {
 				this.serverFacade.handleSoapRequest(request, response);
