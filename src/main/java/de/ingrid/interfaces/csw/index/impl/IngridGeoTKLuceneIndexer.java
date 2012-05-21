@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,6 +21,7 @@ import org.geotoolkit.lucene.index.AbstractIndexer;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
 import de.ingrid.utils.dsc.Record;
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 /**
  * @author joachim@wemove.com
@@ -29,11 +32,15 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
     private List<RecordCache> recordCacheList = null;
 
     private RecordLuceneMapper mapper;
+    
+    private Map<String, Object> mapperUtils = null;
 
     final protected static Log log = LogFactory.getLog(IngridGeoTKLuceneIndexer.class);
 
     public IngridGeoTKLuceneIndexer(String serviceID, File configDirectory, Analyzer analyzer) {
         super(serviceID, configDirectory, analyzer);
+        mapperUtils = new HashMap<String, Object>();
+        mapperUtils.put("geometryMapper", this);
     }
 
     @Override
@@ -42,7 +49,8 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
             throw new RuntimeException("Indexer not initialized. Mapper is not set.");
         }
         try {
-            return mapper.map(record);
+            mapperUtils.put("docid", docId);
+            return  mapper.map(record, mapperUtils);
         } catch (Exception e) {
             log.error("Error mapping record to lucene document: " + record, e);
             throw new IndexingException("Error mapping record to lucene document: " + record);
@@ -98,6 +106,21 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
         log.warn("Record not found in record caches: " + record);
         return null;
     }
+    
+    /**
+     * Make protected method public.
+     * 
+     * @param doc
+     * @param minx
+     * @param maxx
+     * @param miny
+     * @param maxy
+     * @param srid
+     */
+    public void addBoundingBox(final Document doc, final Double minx[], final Double maxx[], final Double miny[], final Double maxy[], final Integer srid) {
+        super.addBoundingBox(doc, java.util.Arrays.asList(minx), java.util.Arrays.asList(maxx), java.util.Arrays.asList(miny), java.util.Arrays.asList(maxy), srid);
+    }
+
 
     public void setRecordCacheList(List<RecordCache> recordCacheList) {
         this.recordCacheList = recordCacheList;

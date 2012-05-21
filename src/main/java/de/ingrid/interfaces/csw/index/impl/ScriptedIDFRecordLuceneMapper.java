@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.script.Bindings;
 import javax.script.Compilable;
@@ -17,6 +19,7 @@ import javax.script.ScriptEngineManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,8 @@ import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 
 /**
  * @author joachim@wemove.com
@@ -61,7 +66,7 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
      * .dsc.Record)
      */
     @Override
-    public Document map(Record record) throws Exception {
+    public Document map(Record record, Map<String, Object> utils) throws Exception {
         Document document = new Document();
 
         // overwrite indexer path with configuration
@@ -92,7 +97,13 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
             bindings.put("recordId", IdfUtils.getRecordId(idfDoc));
             bindings.put("recordNode", idfDoc);
             bindings.put("document", document);
+            document.add(new Field("docid", ((Integer)utils.get("docid")).toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             bindings.put("log", log);
+            XPathUtils xpathUtils = new XPathUtils(new IDFNamespaceContext());
+            bindings.put("XPATH", xpathUtils);
+            for (Entry<String, Object> entry : utils.entrySet()) {
+                bindings.put(entry.getKey(), entry.getValue());
+            }
             if (this.compiledScript != null) {
                 this.compiledScript.eval(bindings);
             } else {
@@ -130,6 +141,5 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
     public void setConfigurationProvider(ConfigurationProvider configurationProvider) {
         this.configurationProvider = configurationProvider;
     }
-    
     
 }

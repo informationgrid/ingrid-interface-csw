@@ -4,16 +4,22 @@
  *
  * The following global variable are passed from the application:
  *
- * @param cswRecord A CSWRecord instance, that defines the input
+ * @param recordNode A IDF record instance, that defines the input
  * @param document A lucene Document instance, that defines the output
  * @param log A Log instance
+ * @param geometryMapper A de.ingrid.interfaces.csw.index.impl.IngridGeoTKLuceneIndexer instance
+ * @param XPATH A de.ingrid.utils.xpath.XPathUtils instance
+ * 
+ * The document already has a field "docid" with the current lucene document id.
  *
  */
 importPackage(Packages.org.apache.lucene.document);
 importPackage(Packages.de.ingrid.interfaces.csw.tools);
 importPackage(Packages.de.ingrid.utils.udk);
-importPackage(Packages.de.ingrid.utils.xml);
+importPackage(Packages.de.ingrid.utils.xpath);
 importPackage(Packages.org.w3c.dom);
+importPackage(Packages.de.ingrid.interfaces.csw.index.impl);
+
 
 
 
@@ -62,15 +68,28 @@ var transformationDescriptions = [
 			"tokenized":false,
 			"xpath":"//gmd:fileIdentifier/gco:CharacterString"
 		},
+		{	"indexField":"parentidentifier",
+			"tokenized":false,
+			"xpath":"//gmd:parentIdentifier/gco:CharacterString"
+		},
 		{	"indexField":"modified",
 			"xpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]",
 			"transform":{
 				"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
 			}
 		},
+		{	"indexField":"revisiondate",
+			"tokenized":false,
+			"xpath":"//gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/gco:DateTime | //gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/gco:Date[not(../gco:DateTime)]"
+		},
 		{	"indexField":"type",
 			"xpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
 			"defaultValue":"dataset"
+		},
+		{	"execute":{
+				"funct":mapGeographicElements,
+				"params":[recordNode]
+			}
 		},
 		{	"indexField":"metafile",
 			"defaultValue":"doc"
@@ -94,7 +113,7 @@ for (var i in transformationDescriptions) {
 		}
 		var tokenized = true;
 		// iterate over all xpath results
-		var nodeList = XPathUtils.getNodeList(recordNode, t.xpath);
+		var nodeList = XPATH.getNodeList(recordNode, t.xpath);
 		if (nodeList && nodeList.getLength() > 0) {
 			for (j=0; j<nodeList.getLength(); j++ ) {
 				value = nodeList.item(j).getTextContent()
@@ -158,6 +177,25 @@ function transformGeneric(val, mappings, caseSensitive) {
 		}
 	}
 	return null;
+}
+
+function mapGeographicElements(recordNode) {
+	var boundingBoxes = XPATH.getNodeList(recordNode, "//gmd:identificationInfo//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox");
+	if (hasValue(boundingBoxes)) {
+		var westList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+		var eastList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+		var southList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+		var northList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+		for (i=0; i<boundingBoxes.getLength(); i++ ) {
+			if (hasValue(boundingBoxes.item(i)) && hasValue(XPATH.getString(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"))) {
+				westList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal");
+				eastList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:eastBoundLongitude/gco:Decimal");
+				southList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:southBoundLatitude/gco:Decimal");
+				northList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:northBoundLatitude/gco:Decimal");
+			}
+		}
+		geometryMapper.addBoundingBox(document, westList, eastList, southList, northList, new java.lang.Integer(4326));
+	}
 }
 
 

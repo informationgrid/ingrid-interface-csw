@@ -107,7 +107,7 @@ public class CSWException extends Exception {
 		languageAttribute.setNodeValue("en");
 		rootElement.setAttributeNode(languageAttribute);
 
-		Element exceptionElement = reportDoc.createElement("Exception");
+		Element exceptionElement = reportDoc.createElementNS("http://www.opengis.net/ows", "Exception");
 		rootElement.appendChild(exceptionElement);
 
 		Attr exceptionCodeAttribute = reportDoc.createAttribute("exceptionCode");
@@ -137,14 +137,14 @@ public class CSWException extends Exception {
 		Element faultElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Fault");
 		reportDoc.appendChild(faultElement);
 
-		Element codeElement = reportDoc.createElement("Code");
+		Element codeElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Code");
 		faultElement.appendChild(codeElement);
-		Element codeValueElement = reportDoc.createElement("Value");
+		Element codeValueElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Value");
 		// this is not a valid code (see http://www.w3.org/TR/soap12-part1/#faultcodes)
 		codeValueElement.setTextContent("unknown");
 		codeElement.appendChild(codeValueElement);
 
-		Element reasonElement = reportDoc.createElement("Reason");
+		Element reasonElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Reason");
 		faultElement.appendChild(reasonElement);
 		Element reasonTextElement = reportDoc.createElement("Text");
 		reasonTextElement.setTextContent("exceptionText: "+this.getMessage()+
@@ -152,10 +152,10 @@ public class CSWException extends Exception {
 		Attr langAttribute = reportDoc.createAttribute("xml:lang");
 		langAttribute.setNodeValue("en-US");
 		reasonTextElement.setAttributeNode(langAttribute);
-		reasonElement.appendChild(codeValueElement);
+		reasonElement.appendChild(reasonTextElement);
 
 		// add the xml report as Detail
-		Element detailElement = reportDoc.createElement("Detail");
+		Element detailElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Detail");
 		detailElement.appendChild(reportDoc.adoptNode(this.toXmlExceptionReport().getLastChild()));
 		faultElement.appendChild(detailElement);
 

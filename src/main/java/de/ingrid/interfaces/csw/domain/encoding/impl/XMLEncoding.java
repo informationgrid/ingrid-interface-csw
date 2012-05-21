@@ -264,7 +264,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     // extract the maxRecords
                     Integer maxRecords = this.xpath.getInt(requestNode, "/csw:GetRecords/@maxRecords");
                     if (maxRecords == null) {
-                        maxRecords = 0;
+                        maxRecords = Integer.MAX_VALUE;
                     }
                     maxRecords = Math.min(maxRecords, ApplicationProperties.getInteger(
                             ConfigurationKeys.MAX_RETURNED_HITS, 10));

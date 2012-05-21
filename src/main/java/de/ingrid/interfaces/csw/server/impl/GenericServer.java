@@ -135,13 +135,15 @@ public class GenericServer implements CSWServer {
             Element searchResults = doc.createElementNS("http://www.opengis.net/cat/csw/2.0.2", "csw:SearchResults");
             searchResults.setAttribute("elementSet", request.getQuery().getElementSetName().name());
             searchResults.setAttribute("numberOfRecordsMatched", String.valueOf(result.getTotalHits()));
-            searchResults.setAttribute("numberOfRecordsReturned", String.valueOf(result.getResults().size()));
+            searchResults.setAttribute("numberOfRecordsReturned", String.valueOf((result.getResults() == null) ? 0 : result.getResults().size()));
             doc.getDocumentElement().appendChild(searchResults);
 
-            for (CSWRecord record : result.getResults()) {
-                Node recordNode = record.getDocument().getFirstChild();
-                doc.adoptNode(recordNode);
-                searchResults.appendChild(recordNode);
+            if (result.getResults() != null)  {
+                for (CSWRecord record : result.getResults()) {
+                    Node recordNode = record.getDocument().getFirstChild();
+                    doc.adoptNode(recordNode);
+                    searchResults.appendChild(recordNode);
+                }
             }
             return doc;
         } catch (Exception ex) {
@@ -184,7 +186,7 @@ public class GenericServer implements CSWServer {
      * @return The Document instance
      */
     protected Document getDocument(String key) {
-        if (!this.documentCache.containsKey(key) && !ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false)) {
+        if (!this.documentCache.containsKey(key) || !ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false)) {
 
             // fetch the document from the file system if it is not cached
             String filename = ApplicationProperties.getMandatory(key);

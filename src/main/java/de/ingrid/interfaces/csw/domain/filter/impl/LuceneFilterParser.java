@@ -88,7 +88,7 @@ public class LuceneFilterParser implements FilterParser {
 		}
 		
 		if (filterDoc == null) {
-		    return new SpatialQuery("");
+		    return new SpatialQuery(defaultField);
 		}
 		
 		JAXBElement<FilterType> filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
@@ -261,9 +261,9 @@ public class LuceneFilterParser implements FilterParser {
 			}
 
 			// get the queryable represented by the field
-			Queryable queryableProperty = Queryable.Unknown;
+			Queryable queryableProperty = Queryable.UNKNOWN;
 			try {
-				queryableProperty = Queryable.valueOf(propertyNameLocal);
+				queryableProperty = Queryable.valueOf(propertyNameLocal.toUpperCase());
 			}
 			catch (IllegalArgumentException ex) {
 				throw new CSWFilterException("Unknown queryable: "+propertyName);
@@ -316,9 +316,9 @@ public class LuceneFilterParser implements FilterParser {
 			}
 			else {
 				// get the queryable represented by the field
-				Queryable queryableProperty = Queryable.Unknown;
+				Queryable queryableProperty = Queryable.UNKNOWN;
 				try {
-					queryableProperty = Queryable.valueOf(propertyNameLocal);
+					queryableProperty = Queryable.valueOf(propertyNameLocal.toUpperCase());
 				}
 				catch (IllegalArgumentException ex) {
 					throw new CSWFilterException("Unknown queryable: "+propertyName);

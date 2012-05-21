@@ -10,31 +10,31 @@ package de.ingrid.interfaces.csw.domain.filter.queryable;
  */
 public enum Queryable {
 
-	Subject                (new CharacterString()),
-	Title                  (new CharacterString()),
-	Abstract               (new CharacterString()),
-	AnyText                (new CharacterString()),
-	Format                 (new CharacterString()),
-	Identifier             (new Identifier()),
-	Modified               (new Date()),
-	Type                   (new Codelist()),
-	BoundingBox            (new BoundingBox()),
+	SUBJECT                (new CharacterString()),
+	TITLE                  (new CharacterString()),
+	ABSTRACT               (new CharacterString()),
+	ANYTEXT                (new CharacterString()),
+	FORMAT                 (new CharacterString()),
+	IDENTIFIER             (new Identifier()),
+	MODIFIED               (new Date()),
+	TYPE                   (new Codelist()),
+	BOUNDINGBOX            (new BoundingBox()),
 	CRS                    (new Identifier()),
 
-	RevisionDate           (new Date()),
-	AlternateTitle         (new CharacterString()),
-	CreationDate           (new Date()),
-	PublicationDate        (new Date()),
-	OrganisationName       (new CharacterString()),
-	HasSecurityConstraints (new Boolean()),
-	Language               (new CharacterString()),
-	ResourceIdentifier     (new Identifier()),
-	ParentIdentifier       (new Identifier()),
-	KeywordType            (new Codelist()),
+	REVISIONDATE           (new Date()),
+	ALTERNATETITLE         (new CharacterString()),
+	CREATIONDATE           (new Date()),
+	PUBLICATIONDATE        (new Date()),
+	ORGANISATIONNAME       (new CharacterString()),
+	HASSECURITYCONSTRAINTS (new Boolean()),
+	LANGUAGE               (new CharacterString()),
+	RESOURCEIDENTIFIER     (new Identifier()),
+	PARENTIDENTIFIER       (new Identifier()),
+	KEYWORDTYPE            (new Codelist()),
 
-	Author                 (new CharacterString()),
+	AUTHOR                 (new CharacterString()),
 
-	Unknown                (new CharacterString());
+	UNKNOWN                (new CharacterString());
 
 	/**
 	 * The type of the queryable
