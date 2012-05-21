@@ -184,7 +184,7 @@ public class GenericServer implements CSWServer {
      * @return The Document instance
      */
     protected Document getDocument(String key) {
-        if (!this.documentCache.containsKey(key)) {
+        if (!this.documentCache.containsKey(key) && !ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false)) {
 
             // fetch the document from the file system if it is not cached
             String filename = ApplicationProperties.getMandatory(key);

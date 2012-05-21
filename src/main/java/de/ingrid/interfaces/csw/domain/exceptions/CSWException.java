@@ -7,8 +7,6 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.ingrid.interfaces.csw.tools.StringUtils;
-
 /**
  * Von dieser Klasse werden alle moeglichen Ausnahmen des Catalog Service abgeleitet
  *
@@ -158,8 +156,7 @@ public class CSWException extends Exception {
 
 		// add the xml report as Detail
 		Element detailElement = reportDoc.createElement("Detail");
-		String report = StringUtils.nodeToString(this.toXmlExceptionReport().getLastChild());
-		detailElement.setTextContent(report);
+		detailElement.appendChild(reportDoc.adoptNode(this.toXmlExceptionReport().getLastChild()));
 		faultElement.appendChild(detailElement);
 
 		return reportDoc;
