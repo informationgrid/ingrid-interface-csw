@@ -146,6 +146,9 @@ public class GenericServer implements CSWServer {
                 }
             }
             return doc;
+        } catch (CSWException ex) {
+            log.error("An error occured processing GetRecordsRequest", ex);
+            throw ex;
         } catch (Exception ex) {
             log.error("An error occured processing GetRecordsRequest", ex);
             throw new CSWException("An error occured processing GetRecordsRequest");

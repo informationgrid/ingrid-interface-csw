@@ -31,6 +31,12 @@ public enum Queryable {
 	RESOURCEIDENTIFIER     (new Identifier()),
 	PARENTIDENTIFIER       (new Identifier()),
 	KEYWORDTYPE            (new Codelist()),
+	
+	SERVICETYPE            (new CharacterString()),
+    OPERATESON             (new CharacterString()),
+    OPERATESONIDENTIFIER   (new CharacterString()),
+    OPERATESONNAME          (new CharacterString()),
+    COUPLINGTYPE            (new CharacterString()),
 
 	AUTHOR                 (new CharacterString()),
 

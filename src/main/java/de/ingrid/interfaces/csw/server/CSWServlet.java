@@ -3,6 +3,8 @@
  */
 package de.ingrid.interfaces.csw.server;
 
+import java.util.Properties;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +37,12 @@ public class CSWServlet extends HttpServlet {
 
 	public CSWServlet() {
 	    super();
+	    // prevent warnings WARNING: Couldn't flush system prefs: 
+	    // java.util.prefs.BackingStoreException: /etc/.java/.systemPrefs/org 
+	    // create failed. 
+	    Properties p = new Properties();
+	    p.setProperty( "platform", "server" );
+	    org.geotoolkit.lang.Setup.initialize( p);
 	}
 	
 	

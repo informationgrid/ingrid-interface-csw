@@ -46,14 +46,16 @@ if (log.isDebugEnabled()) {
 */
 var transformationDescriptions = [
 		{	"indexField":"subject",
-			"tokenized":true,
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword/gco:CharacterString"
 		}, 
+		{	"indexField":"subject",
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
+		}, 
 		{	"indexField":"title",
-			"tokenized":true,
 			"xpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"
 		},
 		{	"indexField":"abstract",
+			"tokenized":true,
 			"xpath":"//gmd:identificationInfo//gmd:abstract/gco:CharacterString"
 		},
 		{	"indexField":"format",
@@ -61,15 +63,12 @@ var transformationDescriptions = [
 			"xpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString"
 		},
 		{	"indexField":"identifier",
-			"tokenized":false,
 			"xpath":"//gmd:fileIdentifier/gco:CharacterString"
 		},
 		{	"indexField":"id",
-			"tokenized":false,
 			"xpath":"//gmd:fileIdentifier/gco:CharacterString"
 		},
 		{	"indexField":"parentidentifier",
-			"tokenized":false,
 			"xpath":"//gmd:parentIdentifier/gco:CharacterString"
 		},
 		{	"indexField":"modified",
@@ -85,6 +84,24 @@ var transformationDescriptions = [
 		{	"indexField":"type",
 			"xpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
 			"defaultValue":"dataset"
+		},
+		{	"indexField":"servicetype",
+			"xpath":"//srv:serviceType/gco:LocalName"
+		},
+		{	"indexField":"operateson",
+			"xpath":"//srv:operatesOn/@uuidref"
+		},
+		{	"indexField":"operatesonidentifier",
+			"xpath":"//srv:coupledResource//srv:identifier/gco:CharacterString"
+		},
+		{	"indexField":"operatesonname",
+			"xpath":"//srv:coupledResource//srv:operationName/gco:CharacterString"
+		},
+		{	"indexField":"couplingtype",
+			"xpath":"//srv:couplingType/srv:SV_CouplingType/@codeListValue"
+		},
+		{	"indexField":"resourceidentifier",
+			"xpath":"//gmd:identificationInfo//gmd:identifier/gmd:RS_Identifier/gmd:code/gco:CharacterString"
 		},
 		{	"execute":{
 				"funct":mapGeographicElements,
@@ -180,7 +197,7 @@ function transformGeneric(val, mappings, caseSensitive) {
 }
 
 function mapGeographicElements(recordNode) {
-	var boundingBoxes = XPATH.getNodeList(recordNode, "//gmd:identificationInfo//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox");
+	var boundingBoxes = XPATH.getNodeList(recordNode, "//gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox");
 	if (hasValue(boundingBoxes)) {
 		var westList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
 		var eastList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());

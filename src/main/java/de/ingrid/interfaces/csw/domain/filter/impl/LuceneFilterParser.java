@@ -281,7 +281,7 @@ public class LuceneFilterParser implements FilterParser {
 				if (queryableProperty.getType() instanceof Date) {
 					value = value.replace("Z", "");
 				}
-				response.append(value);
+				response.append(maskPhrase(value));
 			}
 			else {
 				throw new CSWFilterException("Missing literal parameter for propertyIsLike operator.",
@@ -388,6 +388,12 @@ public class LuceneFilterParser implements FilterParser {
 			BBOXType bbox = (BBOXType)spatialOps;
 			String propertyName = bbox.getPropertyName();
 			String crsName = bbox.getSRS();
+			
+			// make sure we DO have a valid srs
+			// joachim@wemove.com at 21.05.2012
+			if (crsName == null || crsName.length() == 0) {
+			    crsName="EPSG:4326";
+			}
 
 			// verify that all the parameters are specified
 			if (propertyName == null) {
@@ -402,8 +408,10 @@ public class LuceneFilterParser implements FilterParser {
 				throw new CSWFilterException("Missing envelope parameter for BBOX operator.",
 						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
 			}
+			
 			if (crsName == null) {
-				throw new CSWFilterException("Missing SRS parameter BBOX operator.",
+				crsName = "urn:ogc:def:crs:EPSG::4326";
+			    throw new CSWFilterException("Missing SRS parameter BBOX operator.",
 						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
 			}
 
