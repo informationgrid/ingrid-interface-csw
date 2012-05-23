@@ -33,6 +33,9 @@ public final class TestRequests {
 	public static final String GETRECORDS_5_SOAP = "src/test/resources/requests/get_records_5_soap.xml";
 	public static final String GETRECORDS_6_SOAP = "src/test/resources/requests/get_records_6_soap.xml";
 	public static final String GETRECORDS_7_SOAP = "src/test/resources/requests/get_records_7_soap.xml";
+    public static final String GETRECORDS_8_SOAP = "src/test/resources/requests/get_records_8_soap.xml";
+    public static final String GETRECORDS_9_SOAP = "src/test/resources/requests/get_records_9_soap.xml";
+    public static final String GETRECORDS_10_SOAP = "src/test/resources/requests/get_records_10_soap.xml";
 
 	public static final String GETRECORDS_HITS_SOAP = "get_records_hits_soap.xml";
 

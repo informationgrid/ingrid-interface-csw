@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2012 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.interfaces.csw.harvest.impl;
+package de.ingrid.interfaces.csw.harvest.ibus;
 
 import java.io.File;
 import java.io.Serializable;
@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
+import de.ingrid.interfaces.csw.harvest.impl.AbstractHarvester;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
@@ -29,6 +30,8 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  * @author ingo@wemove.com
  */
 public class IBusHarvester extends AbstractHarvester {
+    
+    public static final String PLUGDESCRIPTION = "PLUGDESCRIPTION";
 
     public enum IBusClosableLock {
 
@@ -89,6 +92,9 @@ public class IBusHarvester extends AbstractHarvester {
             throw new RuntimeException(
                     "IBusHarvesterConfiguration is not configured properly: requestDefinitions not set or empty.");
         }
+        
+        // this is responsible for adding partner, provoder and proxy id to the idf record
+        this.cache.setProcessor(new DefaultIdfRecordPreProcessor());
 
         // record ids
         List<Serializable> allCacheIds = new ArrayList<Serializable>();
@@ -175,6 +181,8 @@ public class IBusHarvester extends AbstractHarvester {
         List<Serializable> cacheIds = new ArrayList<Serializable>();
         for (IngridHit hit : hits.getHits()) {
             Record record = bus.getRecord(hit);
+            PlugDescription pd = bus.getIPlug(hit.getPlugId());
+            record.put(PLUGDESCRIPTION, pd);
             Serializable cacheId = this.cache.put(record);
             if (log.isDebugEnabled()) {
                 log.debug("Fetched record " + hit.getDocumentId() + ". Cache id: " + cacheId);

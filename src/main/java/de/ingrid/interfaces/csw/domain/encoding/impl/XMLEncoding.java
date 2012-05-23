@@ -32,6 +32,7 @@ import de.ingrid.interfaces.csw.domain.exceptions.CSWMissingParameterValueExcept
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
+import de.ingrid.interfaces.csw.tools.OGCFilterTools;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
@@ -58,7 +59,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
     private static String GETCAP_VERSION_PARAM_XPATH = "/csw:GetCapabilities/csw:AcceptVersions/csw:Version";
 
     private static Log log = LogFactory.getLog(XMLEncoding.class);
-    
+
     /** Supported operations **/
     private static List<Operation> SUPPORTED_OPERATIONS = Collections
             .unmodifiableList(Arrays.asList(new Operation[] { Operation.GET_CAPABILITIES, Operation.DESCRIBE_RECORD,
@@ -76,11 +77,11 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
         this.query = null;
 
         this.setRequestBody(this.extractRequestBody(request));
-        
+
         if (log.isDebugEnabled()) {
             log.debug("Request initialized with: " + StringUtils.nodeToString(this.requestBody));
         }
-        
+
     }
 
     protected static Document extractFromDocument(Node node) throws Exception {
@@ -139,7 +140,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                 throw new CSWInvalidParameterValueException(errorMsg.toString(), "version");
             }
         }
-    
+
     }
 
     @Override
@@ -228,9 +229,26 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         this.query.setOutputSchema(Namespace.getByUri(schemaUri));
                     }
                 } else if (operation == Operation.GET_RECORDS) {
+
+                    // ADD request parameter to filter Query
+                    // extract the filter constraint
+                    Node query = this.xpath.getNode(requestNode, "/csw:GetRecords/csw:Query");
+                    String[] queryConstraints = ApplicationProperties.get(
+                            ConfigurationKeys.QUERY_PARAMETER_2_CONSTRAINTS, "").split(",");
+                    for (String queryConstraint : queryConstraints) {
+                        if (queryConstraint.trim().length() > 0) {
+                            String param = this.getRequest().getParameter(queryConstraint);
+                            if (param != null && param.length() >= 0) {
+                                OGCFilterTools.addPropertyIsEqual(query, queryConstraint, param);
+                            }
+
+                        }
+                    }
+
                     // extract the filter constraint
                     Node filter = this.xpath
                             .getNode(requestNode, "/csw:GetRecords/csw:Query/csw:Constraint/ogc:Filter");
+
                     if (filter != null) {
                         this.query.setConstraint(extractFromDocument(filter));
                     }
@@ -248,16 +266,15 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     }
 
                     // extract the typeNames
-                    String typeNamesStr = this.xpath.getString(requestNode,
-                            "/csw:GetRecords/csw:Query/@typeNames");
+                    String typeNamesStr = this.xpath.getString(requestNode, "/csw:GetRecords/csw:Query/@typeNames");
                     if (typeNamesStr != null) {
                         String[] typeNameStrings = typeNamesStr.split(",");
                         TypeName[] typeNames = new TypeName[typeNameStrings.length];
-                        for (int i=0; i< typeNameStrings.length; i++) {
+                        for (int i = 0; i < typeNameStrings.length; i++) {
                             typeNames[i] = TypeName.getFromQualifiedString(typeNameStrings[i].trim());
                         }
                         this.query.setTypeNames(typeNames);
-                    } else  {
+                    } else {
                         this.query.setTypeNames(null);
                     }
 

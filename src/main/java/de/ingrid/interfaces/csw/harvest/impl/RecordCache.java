@@ -6,6 +6,7 @@ package de.ingrid.interfaces.csw.harvest.impl;
 import java.io.Serializable;
 
 import de.ingrid.interfaces.csw.cache.AbstractFileCache;
+import de.ingrid.interfaces.csw.harvest.ibus.IdfRecordPreProcessor;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.idf.IdfTool;
@@ -17,27 +18,37 @@ import de.ingrid.utils.idf.IdfTool;
  */
 public class RecordCache extends AbstractFileCache<Record> implements Serializable {
 
-	private static final long serialVersionUID = RecordCache.class.getName().hashCode();
+    private static final long serialVersionUID = RecordCache.class.getName().hashCode();
 
-	@Override
-	public Serializable getCacheId(Record document) throws Exception {
-		// TODO might be optimized by caching the id
-		Serializable id = IdfUtils.getRecordId(document);
-		return id;
-	}
+    private IdfRecordPreProcessor processor;
 
-	@Override
-	public String serializeDocument(Serializable id, Record document) {
-		return IdfTool.getIdfDataFromRecord(document);
-	}
+    @Override
+    public Serializable getCacheId(Record document) throws Exception {
+        // TODO might be optimized by caching the id
+        Serializable id = IdfUtils.getRecordId(document);
+        return id;
+    }
 
-	@Override
-	public Record unserializeDocument(Serializable id, String str) {
-		return IdfTool.createIdfRecord(str, true);
-	}
+    @Override
+    public String serializeDocument(Serializable id, Record document) {
+        if (processor != null) {
+            processor.process(document);
+        }
+        return IdfTool.getIdfDataFromRecord(document);
+    }
 
-	@Override
-	public AbstractFileCache<Record> newInstance() {
-		return new RecordCache();
-	}
+    @Override
+    public Record unserializeDocument(Serializable id, String str) {
+        return IdfTool.createIdfRecord(str, true);
+    }
+
+    @Override
+    public AbstractFileCache<Record> newInstance() {
+        return new RecordCache();
+    }
+
+    public void setProcessor(IdfRecordPreProcessor processor) {
+        this.processor = processor;
+    }
+
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
-import de.ingrid.interfaces.csw.harvest.impl.IBusHarvester;
+import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 
 /**

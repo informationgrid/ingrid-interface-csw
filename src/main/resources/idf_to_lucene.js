@@ -51,6 +51,15 @@ var transformationDescriptions = [
 		{	"indexField":"subject",
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
 		}, 
+		{	"indexField":"partner",
+			"xpath":"//idf:html/@partner"
+		}, 
+		{	"indexField":"provider",
+			"xpath":"//idf:html/@provider"
+		}, 
+		{	"indexField":"iplug",
+			"xpath":"//idf:html/@iplug"
+		}, 
 		{	"indexField":"title",
 			"xpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"
 		},

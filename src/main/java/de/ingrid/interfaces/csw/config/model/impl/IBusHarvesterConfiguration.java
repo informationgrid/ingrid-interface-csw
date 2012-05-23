@@ -64,7 +64,7 @@ public class IBusHarvesterConfiguration extends ClassConfigurationBase implement
 
 	@Override
 	public String getClassName() {
-		return de.ingrid.interfaces.csw.harvest.impl.IBusHarvester.class.getName();
+		return de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester.class.getName();
 	}
 
     public void setWorkingDirectory(String workingDirectory) {

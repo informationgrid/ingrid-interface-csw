@@ -37,8 +37,8 @@ import de.ingrid.interfaces.csw.config.model.communication.CommunicationMessages
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServer;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServerSocket;
 import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
-import de.ingrid.interfaces.csw.harvest.impl.IBusHarvester;
-import de.ingrid.interfaces.csw.harvest.impl.IBusHarvester.IBusClosableLock;
+import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
+import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester.IBusClosableLock;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.PlugDescription;
 import edu.emory.mathcs.backport.java.util.Arrays;

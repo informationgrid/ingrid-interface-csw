@@ -39,6 +39,9 @@ public enum Queryable {
     COUPLINGTYPE            (new CharacterString()),
 
 	AUTHOR                 (new CharacterString()),
+    PARTNER                 (new CharacterString()),
+    PROVIDER                 (new CharacterString()),
+    IPLUG                 (new CharacterString()),
 
 	UNKNOWN                (new CharacterString());
 

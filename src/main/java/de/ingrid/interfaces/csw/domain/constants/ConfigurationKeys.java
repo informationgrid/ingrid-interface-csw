@@ -19,6 +19,7 @@ public class ConfigurationKeys {
 	public static final String RECORDDESC_DOC = "describerecord";
     public static final String INGRID_ADMIN_PASSWORD = "ingrid.admin.password";
     public static final String CACHE_ENABLE = "cache.enable";
+    public static final String QUERY_PARAMETER_2_CONSTRAINTS = "query.parameter.to.constraints";
     
 	/** variables in documents **/
 	public static final String VARIABLE_INTERFACE_HOST = "INTERFACE_HOST";

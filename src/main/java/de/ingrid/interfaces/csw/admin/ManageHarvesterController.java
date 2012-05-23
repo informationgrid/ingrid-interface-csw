@@ -22,7 +22,7 @@ import de.ingrid.interfaces.csw.config.model.Configuration;
 import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.IBusHarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.TestSuiteHarvesterConfiguration;
-import de.ingrid.interfaces.csw.harvest.impl.IBusHarvester;
+import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
 import de.ingrid.interfaces.csw.harvest.impl.TestSuiteHarvester;
 
 @Controller
