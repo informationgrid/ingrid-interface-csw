@@ -24,9 +24,10 @@ public interface CSWServer {
 	/**
 	 * Do the OGC_Service.GetCapabilities request
 	 * @param request A GetCapabilitiesRequest instance
+     * @param variant A variant of the capabilities. Used to provide partner specific capabilities.
 	 * @return A Document instance
 	 */
-	Document process(GetCapabilitiesRequest request) throws CSWException;
+	Document process(GetCapabilitiesRequest request, String variant) throws CSWException;
 
 	/**
 	 * Do the CSW-Discovery.DescribeRecord request

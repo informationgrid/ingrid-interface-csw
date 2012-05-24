@@ -20,6 +20,8 @@ public class ConfigurationKeys {
     public static final String INGRID_ADMIN_PASSWORD = "ingrid.admin.password";
     public static final String CACHE_ENABLE = "cache.enable";
     public static final String QUERY_PARAMETER_2_CONSTRAINTS = "query.parameter.to.constraints";
+    public static final String QUERY_PARAMETER_2_CAPABILITIES_VARIANT = "query.parameter.to.capabilities.variant";
+    
     
 	/** variables in documents **/
 	public static final String VARIABLE_INTERFACE_HOST = "INTERFACE_HOST";

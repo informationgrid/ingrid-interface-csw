@@ -1,7 +1,7 @@
 <configuration>
   <harvesterConfigs>
     <de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject>
-      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
+      <className>de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester</className>
       <name>a harvester test</name>
       <communicationXml>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/./test2/conf/communication.xml</communicationXml>
       <workingDirectory>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/./test2</workingDirectory>
@@ -25,7 +25,7 @@
       <id>0</id>
     </de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject>
     <de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject>
-      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
+      <className>de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester</className>
       <name>asdsadsad</name>
       <communicationXml>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/test/conf/communication.xml</communicationXml>
       <workingDirectory>/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-3.x.x/test</workingDirectory>

@@ -15,7 +15,7 @@ import org.w3c.dom.Node;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
-public class GetCapabilitiesTestLocal extends OperationTestBase {
+public class GetCapabilitiesTest extends OperationTestBase {
 
 	/**
 	 * Test GetCapabilities with GET method using KVP encoding
@@ -41,7 +41,9 @@ public class GetCapabilitiesTestLocal extends OperationTestBase {
 		// expect capabilities document
 		assertTrue("The response length is > 0.", result.length() > 0);
 		Document responseDoc = StringUtils.stringToDocument(result.toString());
-		Node payload = responseDoc.getLastChild();
+        assertTrue(xpath.nodeExists(responseDoc, "//ows:Title[text()='PortalU Catalog Server']"));
+
+        Node payload = responseDoc.getLastChild();
 
 		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
 		assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
@@ -113,7 +115,7 @@ public class GetCapabilitiesTestLocal extends OperationTestBase {
 	 */
 	public void testSoapPostCapabilitiesRequestInvalid1() throws Exception {
 		Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID1);
-		Assert.assertThat(xpath.getString(responseDoc, "//Detail"),
+		Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
 				Matchers.containsString("The operation 'GetCap' is unknown"));
 	}
 
@@ -123,7 +125,7 @@ public class GetCapabilitiesTestLocal extends OperationTestBase {
 	 */
 	public void testSoapPostCapabilitiesRequestInvalid2() throws Exception {
 		Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID2);
-		Assert.assertThat(xpath.getString(responseDoc, "//Detail"),
+		Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
 				Matchers.containsString("Attribute 'service' is not specified or has no value"));
 	}
 
@@ -133,7 +135,7 @@ public class GetCapabilitiesTestLocal extends OperationTestBase {
 	 */
 	public void testSoapPostCapabilitiesRequestInvalid3() throws Exception {
 		Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID3);
-		Assert.assertThat(xpath.getString(responseDoc, "//Detail"),
+		Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
 				Matchers.containsString("Parameter 'service' has an unsupported value"));
 	}
 
@@ -167,4 +169,37 @@ public class GetCapabilitiesTestLocal extends OperationTestBase {
 		assertTrue("The response is an ExceptionReport.", payload.getLocalName().equals("Fault"));
 		return payload;
 	}
+
+    /**
+     * Test GetCapabilities with GET method using KVP encoding and a variant
+     * @throws Exception
+     */
+    public void testKVPGetCapabilitiesVariantRequest() throws Exception {
+
+        StringBuffer result = new StringBuffer();
+        Mockery context = new Mockery();
+        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+        final HttpServletResponse response = context.mock(HttpServletResponse.class);
+        String requestStr = "GetCapabilities";
+
+        // expectations
+        this.setupPartnerPatrameterGetExpectations(context, request, response, result, requestStr);
+
+        // make request
+        CSWServlet servlet = this.createServlet();
+        servlet.doGet(request, response);
+
+        context.assertIsSatisfied();
+
+        // expect capabilities document
+        assertTrue("The response length is > 0.", result.length() > 0);
+        Document responseDoc = StringUtils.stringToDocument(result.toString());
+        assertTrue(xpath.nodeExists(responseDoc, "//ows:Title[text()='PortalU Catalog Server TEST']"));
+        Node payload = responseDoc.getLastChild();
+
+        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+        assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
+    }
+
+
 }

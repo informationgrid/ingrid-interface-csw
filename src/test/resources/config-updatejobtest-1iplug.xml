@@ -14,7 +14,7 @@
         <cachePath>tmp/cache/csw-dsc-be</cachePath>
         <className>de.ingrid.interfaces.csw.harvest.impl.RecordCache</className>
       </cache>
-      <className>de.ingrid.interfaces.csw.harvest.impl.IBusHarvester</className>
+      <className>de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester</className>
     </iBusHarvester>
   </harvesterConfigs>
 </configuration>

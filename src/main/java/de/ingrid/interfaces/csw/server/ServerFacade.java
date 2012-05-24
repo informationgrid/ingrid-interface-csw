@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.constants.RequestType;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
@@ -189,11 +191,13 @@ public class ServerFacade {
             if (this.cswServerImpl == null) {
                 throw new RuntimeException("ServerFacade is not configured properly: cswServerImpl is not set.");
             }
+            
 
             // perform the requested operation
             Document result = null;
             if (operation == Operation.GET_CAPABILITIES) {
-                result = this.cswServerImpl.process((GetCapabilitiesRequest) requestImpl);
+                String variant = request.getParameter(ApplicationProperties.get(ConfigurationKeys.QUERY_PARAMETER_2_CAPABILITIES_VARIANT, "")); 
+                result = this.cswServerImpl.process((GetCapabilitiesRequest) requestImpl, variant);
             } else if (operation == Operation.DESCRIBE_RECORD) {
                 result = this.cswServerImpl.process((DescribeRecordRequest) requestImpl);
             } else if (operation == Operation.GET_DOMAIN) {

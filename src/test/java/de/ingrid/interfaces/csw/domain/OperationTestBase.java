@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.io.FileUtils;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 
@@ -97,6 +98,9 @@ public abstract class OperationTestBase extends TestCase {
 	 */
 	protected CSWServlet createServlet() throws Exception {
 
+	    FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
+	    FileUtils.copyDirectory(new File("src/test/resources/index"), new File(LIVE_INDEX_PATH));
+	    
 		Map<RequestType, CSWMessageEncoding> messageEncodingMap = new Hashtable<RequestType, CSWMessageEncoding>();
 		messageEncodingMap.put(RequestType.GET, new KVPEncoding());
 		messageEncodingMap.put(RequestType.POST, new XMLEncoding());
@@ -145,18 +149,46 @@ public abstract class OperationTestBase extends TestCase {
 	protected void setupDefaultGetExpectations(Mockery context, final HttpServletRequest request,
 			final HttpServletResponse response, StringBuffer result, final String requestStr) throws IOException {
 		final ServletOutputStream sos = new TestServletOutputStream(result);
-		final List<String> parameters = Arrays.asList(new String[]{"SERVICE", "REQUEST", "version"});
+		final List<String> parameters = Arrays.asList(new String[]{"SERVICE", "REQUEST", "version", "partner"});
 		context.checking(new Expectations() {{
 			this.allowing(request).getParameterNames(); this.will(returnEnumeration(parameters));
 			this.allowing(request).getParameter("SERVICE"); this.will(returnValue("CSW"));
 			this.allowing(request).getParameter("REQUEST"); this.will(returnValue(requestStr));
 			this.allowing(request).getParameter("version"); this.will(returnValue("2.0.2"));
+            this.allowing(request).getParameter("partner"); this.will(returnValue(""));
 			this.allowing(response).setContentType("application/xml");
 			this.allowing(response).setCharacterEncoding("UTF-8");
 			this.allowing(response).getOutputStream(); this.will(returnValue(sos));
 		}});
 	}
 
+    /**
+     * Set up default expectations for get requests with partner parameter set.
+     * @param context
+     * @param request
+     * @param response
+     * @param result
+     * @param requestStr
+     * @throws IOException
+     */
+    protected void setupPartnerPatrameterGetExpectations(Mockery context, final HttpServletRequest request,
+            final HttpServletResponse response, StringBuffer result, final String requestStr) throws IOException {
+        final ServletOutputStream sos = new TestServletOutputStream(result);
+        final List<String> parameters = Arrays.asList(new String[]{"SERVICE", "REQUEST", "version", "partner"});
+        context.checking(new Expectations() {{
+            this.allowing(request).getParameterNames(); this.will(returnEnumeration(parameters));
+            this.allowing(request).getParameter("SERVICE"); this.will(returnValue("CSW"));
+            this.allowing(request).getParameter("REQUEST"); this.will(returnValue(requestStr));
+            this.allowing(request).getParameter("version"); this.will(returnValue("2.0.2"));
+            this.allowing(request).getParameter("partner"); this.will(returnValue("test"));
+            this.allowing(response).setContentType("application/xml");
+            this.allowing(response).setCharacterEncoding("UTF-8");
+            this.allowing(response).getOutputStream(); this.will(returnValue(sos));
+        }});
+    }
+
+	
+	
 	/**
 	 * Set up default expectations for post requests.
 	 * @param context
@@ -174,6 +206,10 @@ public abstract class OperationTestBase extends TestCase {
 			this.allowing(request).getHeaderNames();
 			this.allowing(request).getContentType(); this.will(returnValue("application/xml"));
 			this.allowing(request).getInputStream(); this.will(returnValue(sis));
+            this.allowing(request).getHeader("Keep-Alive"); this.will(returnValue(null));
+            this.allowing(request).getParameter("partner"); this.will(returnValue(""));
+            this.allowing(request).getParameter("provider"); this.will(returnValue(""));
+            this.allowing(request).getParameter("iplug"); this.will(returnValue(""));
 			this.allowing(response).setStatus(HttpServletResponse.SC_OK);
 			this.allowing(response).setHeader("Content-Type", "application/xml; charset=utf-8");
 			this.allowing(response).setHeader(this.with(any(String.class)), this.with(any(String.class)));
@@ -200,6 +236,10 @@ public abstract class OperationTestBase extends TestCase {
 			this.allowing(request).getHeaderNames();
 			this.allowing(request).getContentType(); this.will(returnValue("application/soap+xml"));
 			this.allowing(request).getInputStream(); this.will(returnValue(sis));
+            this.allowing(request).getHeader("Keep-Alive"); this.will(returnValue(null));
+            this.allowing(request).getParameter("partner"); this.will(returnValue(""));
+            this.allowing(request).getParameter("provider"); this.will(returnValue(""));
+            this.allowing(request).getParameter("iplug"); this.will(returnValue(""));
 			this.allowing(response).setStatus(HttpServletResponse.SC_OK);
 			this.allowing(response).setHeader("Content-Type", "application/soap+xml; charset=utf-8");
 			this.allowing(response).setHeader(this.with(any(String.class)), this.with(any(String.class)));

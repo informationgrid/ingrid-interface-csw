@@ -13,6 +13,7 @@ import java.util.Scanner;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,11 +71,11 @@ public class GenericServer implements CSWServer {
     }
 
     @Override
-    public Document process(GetCapabilitiesRequest request) throws CSWException {
+    public Document process(GetCapabilitiesRequest request, String variant) throws CSWException {
 
         final String documentKey = ConfigurationKeys.CAPABILITIES_DOC;
-
-        Document doc = this.getDocument(documentKey);
+        
+        Document doc = this.getDocument(documentKey, variant);
 
         // try to replace the interface URLs
         NodeList nodes = this.xpath.getNodeList(doc, "//ows:Operation/*/ows:HTTP/*/@xlink:href");
@@ -135,10 +136,11 @@ public class GenericServer implements CSWServer {
             Element searchResults = doc.createElementNS("http://www.opengis.net/cat/csw/2.0.2", "csw:SearchResults");
             searchResults.setAttribute("elementSet", request.getQuery().getElementSetName().name());
             searchResults.setAttribute("numberOfRecordsMatched", String.valueOf(result.getTotalHits()));
-            searchResults.setAttribute("numberOfRecordsReturned", String.valueOf((result.getResults() == null) ? 0 : result.getResults().size()));
+            searchResults.setAttribute("numberOfRecordsReturned", String.valueOf((result.getResults() == null) ? 0
+                    : result.getResults().size()));
             doc.getDocumentElement().appendChild(searchResults);
 
-            if (result.getResults() != null)  {
+            if (result.getResults() != null) {
                 for (CSWRecord record : result.getResults()) {
                     Node recordNode = record.getDocument().getFirstChild();
                     doc.adoptNode(recordNode);
@@ -189,23 +191,66 @@ public class GenericServer implements CSWServer {
      * @return The Document instance
      */
     protected Document getDocument(String key) {
-        if (!this.documentCache.containsKey(key) || !ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false)) {
+        return this.getDocument(key, null);
+    }
+
+    /**
+     * Get a Document from a class path location. The actual name of the file is
+     * retrieved from the config.properties file.
+     * 
+     * With variant a specific variant (like a localization) can be retrieved.
+     * The file name is extended by the variant in the form
+     * [name]_[variant].[extension].
+     * 
+     * If the variant could not be retrieved, the base file is returned as a
+     * fall back.
+     * 
+     * The content is cached. The cache can be controlled by the
+     * config.properties entry 'cache.enable'.
+     * 
+     * @param key
+     *            One of the keys config.properties, defining the actual
+     *            filename to be retrieved.
+     * @param variant
+     *            The variant of the file.
+     * @return The Document instance
+     */
+    protected Document getDocument(String key, String variant) {
+        String cacheKey = key;
+        if (variant != null) {
+            cacheKey = cacheKey + variant;
+        }
+        
+        if (!this.documentCache.containsKey(cacheKey)
+                || !ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false)) {
 
             // fetch the document from the file system if it is not cached
             String filename = ApplicationProperties.getMandatory(key);
+            String filenameVariant = filename;
+            if (variant != null && variant.length() > 0) {
+                if (filename.contains(FilenameUtils.EXTENSION_SEPARATOR_STR)) {
+                    filenameVariant = FilenameUtils.getBaseName(filename) + "_"+ variant + FilenameUtils.EXTENSION_SEPARATOR_STR + FilenameUtils.getExtension(filename);
+                } else {
+                    filenameVariant = FilenameUtils.getBaseName(filename) + "_"+ variant;
+                }
+            }
             try {
-                String path = this.getClass().getClassLoader().getResource(filename).getPath().replaceAll("%20", " ");
+                String path = this.getClass().getClassLoader().getResource(filenameVariant).getPath().replaceAll("%20", " ");
                 File file = new File(path);
+                if (!file.exists()) {
+                    path = this.getClass().getClassLoader().getResource(filename).getPath().replaceAll("%20", " ");
+                    file = new File(path);
+                }
                 String content = new Scanner(file).useDelimiter("\\A").next();
                 Document doc = StringUtils.stringToDocument(content);
 
                 // cache the document
-                this.documentCache.put(key, doc);
+                this.documentCache.put(cacheKey, doc);
             } catch (Exception e) {
-                throw new RuntimeException("Error reading document configured in configuration key '" + key + "': "
+                throw new RuntimeException("Error reading document configured in configuration key '" + cacheKey + "': "
                         + filename, e);
             }
         }
-        return this.documentCache.get(key);
+        return this.documentCache.get(cacheKey);
     }
 }
