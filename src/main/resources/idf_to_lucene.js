@@ -45,12 +45,12 @@ if (log.isDebugEnabled()) {
 	 tokenized: If set to false no tokenizing will take place before the value is put into the index.
 */
 var transformationDescriptions = [
-		{	"indexField":"subject",
-			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword/gco:CharacterString"
-		}, 
-		{	"indexField":"subject",
-			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
-		}, 
+		
+
+        // IngGrid specific index fields
+        {	"indexField":"id",
+        	"xpath":"//gmd:fileIdentifier/gco:CharacterString"
+        },
 		{	"indexField":"partner",
 			"xpath":"//idf:html/@partner"
 		}, 
@@ -60,9 +60,17 @@ var transformationDescriptions = [
 		{	"indexField":"iplug",
 			"xpath":"//idf:html/@iplug"
 		}, 
+        
+        // Core Queriables, OGC 07-045, Table 6
+		{	"indexField":"subject",
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword/gco:CharacterString"
+		}, 
+		{	"indexField":"subject",
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
+		}, 
 		{	"indexField":"title",
 			"xpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"
-		},
+		}, 
 		{	"indexField":"abstract",
 			"tokenized":true,
 			"xpath":"//gmd:identificationInfo//gmd:abstract/gco:CharacterString"
@@ -74,28 +82,99 @@ var transformationDescriptions = [
 		{	"indexField":"identifier",
 			"xpath":"//gmd:fileIdentifier/gco:CharacterString"
 		},
-		{	"indexField":"id",
-			"xpath":"//gmd:fileIdentifier/gco:CharacterString"
-		},
-		{	"indexField":"parentidentifier",
-			"xpath":"//gmd:parentIdentifier/gco:CharacterString"
-		},
 		{	"indexField":"modified",
-			"xpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]",
-			"transform":{
-				"funct":UtilsCSWDate.mapDateFromIso8601ToIndex
-			}
-		},
-		{	"indexField":"revisiondate",
-			"tokenized":false,
-			"xpath":"//gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/gco:DateTime | //gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/gco:Date[not(../gco:DateTime)]"
+			"xpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]"
 		},
 		{	"indexField":"type",
 			"xpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
 			"defaultValue":"dataset"
 		},
+		{	"execute":{
+				"funct":mapGeographicElements,
+				"params":[recordNode]
+			}
+		},
+		{	"execute":{
+				"funct":mapReferenceSystem,
+				"params":[recordNode]
+			}
+		},
+	    // Additional queryables, OGC 07-045, Table 10
+		{	"indexField":"revisiondate",
+			"tokenized":false,
+			"xpath":"//gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/gco:DateTime | //gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/gco:Date[not(../gco:DateTime)]"
+		},
+		{	"indexField":"alternatetitle",
+			"xpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString"
+		}, 
+		{	"indexField":"creationdate",
+			"tokenized":false,
+			"xpath":"//gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date/gco:DateTime | //gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date/gco:Date[not(../gco:DateTime)]"
+		},
+		{	"indexField":"publicationdate",
+			"tokenized":false,
+			"xpath":"//gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:DateTime | //gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date[not(../gco:DateTime)]"
+		},
+		{	"indexField":"organisationname",
+			"xpath":"//gmd:identificationInfo//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"
+		},
+		{	"execute":{
+				"funct":mapHasSecurityConstraints,
+				"params":[recordNode]
+			}
+		},
+		{	"indexField":"language",
+			"xpath":"//idf:idfMdMetadata/gmd:language/gco:CharacterString"
+		},
+		{	"indexField":"resourceidentifier",
+			"xpath":"//gmd:identificationInfo//gmd:identifier/gmd:RS_Identifier/gmd:code/gco:CharacterString"
+		},
+		{	"indexField":"parentidentifier",
+			"xpath":"//gmd:parentIdentifier/gco:CharacterString"
+		},
+		{	"indexField":"keywordtype",
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:type/gmd:MD_KeywordTypeCode/@codeListValue"
+		}, 
+		// Additional queryable properties (dataset, datasetcollection, application), OGC 07-045, Table 11, 12, 13
+		{	"indexField":"topiccategory",
+			"xpath":"//gmd:identificationInfo//gmd:topicCategory//gmd:MD_TopicCategoryCode"
+		},
+		{	"indexField":"resourcelanguage",
+			"xpath":"//gmd:identificationInfo//gmd:language/gco:CharacterString"
+		},
+		{	"indexField":"geographicdescriptioncode",
+			"tokenized":false,
+			"xpath":"//gmd:identificationInfo//gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"
+		},
+		{	"indexField":"denominator",
+			"tokenized":false,
+			"xpath":"//gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer"
+		},
+		{	"indexField":"distancevalue",
+			"tokenized":false,
+			"xpath":"//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance"
+		},
+		{	"indexField":"distanceuom",
+			"tokenized":false,
+			"xpath":"//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance/@uom"
+		},
+		{	"indexField":"tempextent_begin",
+			"tokenized":false,
+			"xpath":"//gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition"
+		},
+		{	"indexField":"tempextent_end",
+			"tokenized":false,
+			"xpath":"//gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"
+		},
+		// Additional queryable properties (service), OGC 07-045, Table 14
 		{	"indexField":"servicetype",
 			"xpath":"//srv:serviceType/gco:LocalName"
+		},
+		{	"indexField":"servicetypeversion",
+			"xpath":"//srv:serviceTypeVersion/gco:CharacterString"
+		},
+		{	"indexField":"operation",
+			"xpath":"//srv:SV_OperationMetadata/srv:operationName/gco:CharacterString"
 		},
 		{	"indexField":"operateson",
 			"xpath":"//srv:operatesOn/@uuidref"
@@ -109,14 +188,11 @@ var transformationDescriptions = [
 		{	"indexField":"couplingtype",
 			"xpath":"//srv:couplingType/srv:SV_CouplingType/@codeListValue"
 		},
-		{	"indexField":"resourceidentifier",
-			"xpath":"//gmd:identificationInfo//gmd:identifier/gmd:RS_Identifier/gmd:code/gco:CharacterString"
+		// InGrid specific ISO additional ISO based queryables
+		{	"indexField":"hierarchylevelname",
+			"xpath":"//gmd:hierarchyLevelName/gco:CharacterString"
 		},
-		{	"execute":{
-				"funct":mapGeographicElements,
-				"params":[recordNode]
-			}
-		},
+		// default value, used to select all records
 		{	"indexField":"metafile",
 			"defaultValue":"doc"
 		}
@@ -224,7 +300,29 @@ function mapGeographicElements(recordNode) {
 	}
 }
 
+function mapReferenceSystem(recordNode) {
+	var referenceSystemIdentifiers = XPATH.getNodeList(recordNode, "//gmd:referenceSystemInfo//gmd:RS_Identifier");
+	if (hasValue(referenceSystemIdentifiers)) {
+		for (i=0; i<referenceSystemIdentifiers.getLength(); i++ ) {
+			var authority = XPATH.getString(referenceSystemIdentifiers.item(i), "gmd:codeSpace/gco:CharacterString");
+			var id = XPATH.getString(referenceSystemIdentifiers.item(i), "gmd:code/gco:CharacterString");
+			var version = XPATH.getString(referenceSystemIdentifiers.item(i), "gmd:version/gco:CharacterString");
+			if (hasValue(authority) || hasValue(id) || hasValue(version)) {
+				var crsString = "urn:ogc:def:objectType:" + authority + ":" + version + ":" + id;
+				addToDoc("crs", crsString, false);
+			}
+		}
+	}
+}
 
+
+function mapHasSecurityConstraints(recordNode) {
+	if (XPATH.nodeExists(recordNode, "//gmd:identificationInfo//gmd:MD_SecurityConstraints")) {
+		addToDoc("hassecurityconstraints", "true", false);
+	} else {
+		addToDoc("hassecurityconstraints", "false", false);
+	}
+}
 
 
 function addToDoc(field, content, tokenized) {
