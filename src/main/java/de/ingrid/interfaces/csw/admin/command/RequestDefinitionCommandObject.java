@@ -21,6 +21,8 @@ public class RequestDefinitionCommandObject extends RequestDefinition {
     private String dataSourceName;
 
     private Boolean isCurrentlyRegistered;
+    
+    private Integer indexedRecords;
 
     public String getDataSourceName() {
         return dataSourceName;
@@ -36,6 +38,14 @@ public class RequestDefinitionCommandObject extends RequestDefinition {
 
     public void setIsCurrentlyRegistered(Boolean isCurrentlyRegistered) {
         this.isCurrentlyRegistered = isCurrentlyRegistered;
+    }
+
+    public void setIndexedRecords(Integer indexedRecords) {
+        this.indexedRecords = indexedRecords;
+    }
+
+    public Integer getIndexedRecords() {
+        return indexedRecords;
     }
 
 }

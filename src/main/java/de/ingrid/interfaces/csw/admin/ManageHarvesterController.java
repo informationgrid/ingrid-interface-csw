@@ -1,6 +1,8 @@
 package de.ingrid.interfaces.csw.admin;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,8 +31,12 @@ import de.ingrid.interfaces.csw.harvest.impl.TestSuiteHarvester;
 public class ManageHarvesterController {
 
     public static final String TEMPLATE_LIST_HARVESTER = "/list_harvester.html";
-    public static final String[] HARVESTER_TYPES = { IBusHarvesterConfiguration.class.getName(),
-            TestSuiteHarvesterConfiguration.class.getName() };
+    public static final Map<String, String> HARVESTER_TYPES = new LinkedHashMap<String, String>();
+
+    static {
+        HARVESTER_TYPES.put(IBusHarvester.class.getName(), "iBus harvester");
+        HARVESTER_TYPES.put(TestSuiteHarvester.class.getName(), "GDI-DE test data harvester");
+    }
 
     @Autowired
     ConfigurationProvider cProvider = null;
@@ -63,18 +69,16 @@ public class ManageHarvesterController {
 
         if (WebUtils.hasSubmitParameter(request, "new")) {
             if (!_validator.validate(errors).hasErrors()) {
-                if (harvester.getType().equals(IBusHarvesterConfiguration.class.getName())) {
+                if (harvester.getType().equals(IBusHarvester.class.getName())) {
                     IBusHarvesterConfiguration newHarvesterConfig = new IBusHarvesterConfiguration();
                     newHarvesterConfig.setName(harvester.getName());
-                    newHarvesterConfig.setWorkingDirectory(".");
                     hConfigs.add(newHarvesterConfig);
                     cProvider.write(conf);
                     harvester.setName("");
                     harvester.setType("");
-                } else if (harvester.getType().equals(TestSuiteHarvesterConfiguration.class.getName())) {
+                } else if (harvester.getType().equals(TestSuiteHarvester.class.getName())) {
                     TestSuiteHarvesterConfiguration newHarvesterConfig = new TestSuiteHarvesterConfiguration();
                     newHarvesterConfig.setName(harvester.getName());
-                    newHarvesterConfig.setWorkingDirectory(".");
                     hConfigs.add(newHarvesterConfig);
                     cProvider.write(conf);
                     harvester.setName("");

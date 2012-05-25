@@ -4,7 +4,7 @@
 
 <%@page import="de.ingrid.interfaces.csw.admin.IngridPrincipal"%><html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-<title>Portal U Administration</title>
+<title>InGrid Administration</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -45,7 +45,7 @@ function getState(){
 		%>
 	</div>
 	
-	<div id="help"><a href="#">[?]</a></div>
+	<div id="help"></div>
 	
 	<c:set var="active" value="indexing" scope="request"/>
 	<c:import url="subNavi.jsp"></c:import>

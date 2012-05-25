@@ -15,7 +15,7 @@
 <body>
 	<div id="header">
 		<img src="images/logo.gif" width="168" height="60" alt="InGrid" />
-		<h1>Konfiguration</h1>
+		<h1>CSW interface configuration</h1>
 		<%
 		java.security.Principal  principal = request.getUserPrincipal();
 		if(principal != null && !(principal instanceof IngridPrincipal.SuperAdmin)) {
@@ -26,7 +26,7 @@
 		%>
 	</div>
 	
-	<div id="help"><a href="#">[?]</a></div>
+	<div id="help"></div>
 	
 	<c:set var="active" value="search" scope="request"/>
 	<c:import url="subNavi.jsp"></c:import>
@@ -55,7 +55,7 @@
 				<c:forEach items="${hits}" var="hit">
 					<div class="searchResult">
 					   <h3>
-    					   <a href="#">${hit['title']}</a>
+    					   <a href="${hit['link']}" target="_new">${hit['title']}</a>
 					   </h3>
 					   <span>${hit['abstract']}</span>
 					</div>

@@ -164,17 +164,28 @@ public class UpdateJob {
                 // fetch all records
                 for (Harvester harvester : harvesterInstanceList) {
                     log.info("Run harvester " + harvester.getId());
-                    harvester.run(lastExecutionDate);
+                    try {
+                        harvester.run(lastExecutionDate);
+                    } catch (Exception e) {
+                        log.error("Error harvesting records from harvester: " + harvester.getId(), e);
+                    }
                 }
 
                 // index all records into a temporary directory and switch to
                 // live later
+                
+                log.info("Indexing " + recordCacheList.size() + " idf documents.");
+                
                 this.indexer.run(recordCacheList);
 
+                log.info("Transforming " + recordCacheList.size() + " idf documents into ISO element sets full, summary, brief.");
                 // map ingrid records to csw records
                 this.cswRecordMapper.run(recordCacheList);
 
                 CSWRecordRepository cswRecordRepo = this.cswRecordMapper.getRecordRepository();
+
+                log.info("Stop the searcher instance.");
+                
                 // stop the searcher instance to access index in filesystem
                 this.searcher.stop();
 
@@ -196,6 +207,8 @@ public class UpdateJob {
 
                 // set the updated record repository on the searcher
                 this.searcher.setRecordRepository(cswRecordRepo);
+
+                log.info("Start the searcher instance.");
 
                 // restart the searcher
                 this.searcher.start();

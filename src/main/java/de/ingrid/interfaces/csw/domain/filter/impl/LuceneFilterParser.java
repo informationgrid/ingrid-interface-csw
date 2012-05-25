@@ -671,7 +671,7 @@ public class LuceneFilterParser implements FilterParser {
 	}
 	
 	private String maskPhrase(String str) {
-	    if (str.contains(" ")) {
+	    if (str.contains(" ") || str.contains(":")) {
 	        return "\""+str+"\"";
 	    } else {
 	        return str;

@@ -21,6 +21,6 @@ public class WelcomeController {
         if (session.getAttribute("postCommandObject") == null) {
             session.setAttribute("postCommandObject", new Command());
         }
-        return "/welcome";
+        return "redirect:" + ManageHarvesterController.TEMPLATE_LIST_HARVESTER;
     }
 }

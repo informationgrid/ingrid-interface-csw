@@ -1,11 +1,13 @@
 package de.ingrid.interfaces.csw.admin;
 
 import java.io.File;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.util.WebUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.BusClientFactory;
@@ -37,8 +41,12 @@ import de.ingrid.interfaces.csw.config.model.communication.CommunicationMessages
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServer;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServerSocket;
 import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
+import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
 import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
 import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester.IBusClosableLock;
+import de.ingrid.interfaces.csw.search.CSWRecordResults;
+import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
+import de.ingrid.interfaces.csw.tools.FileUtils;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.PlugDescription;
 import edu.emory.mathcs.backport.java.util.Arrays;
@@ -56,6 +64,28 @@ public class EditIBusHarvesterController {
     ConfigurationProvider cProvider = null;
 
     @Autowired
+    LuceneSearcher searcher;
+    
+    DocumentBuilderFactory df = null;
+    
+    XMLEncoding encoding = null;
+    
+    public static final String IPLUG_QUERY = "<GetRecords maxRecords=\"1\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+                                    + "            requestId=\"csw:1\" resultType=\"results\" startPosition=\"1\"\n"
+                                    + "            xmlns=\"http://www.opengis.net/cat/csw/2.0.2\" service=\"CSW\" version=\"2.0.2\">\n"
+                                    + "            <Query typeNames=\"csw:service,csw:dataset\">\n"
+                                    + "                <ElementSetName typeNames=\"\">full</ElementSetName>\n"
+                                    + "                <Constraint version=\"1.1.0\"> \n"
+                                    + "                    <Filter xmlns=\"http://www.opengis.net/ogc\">\n"
+                                    + "                        <PropertyIsEqualTo>\n"
+                                    + "                            <PropertyName>iplug</PropertyName>\n"
+                                    + "                            <Literal>PATTERN_PLUG_ID</Literal>\n"
+                                    + "                        </PropertyIsEqualTo>\n"
+                                    + "                    </Filter>\n"
+                                    + "                </Constraint></Query>\n"
+                                    + "        </GetRecords>";
+    
+    @Autowired
     private final IBusHarvesterValidator.IBusHarvesterValidatorStep1 _validatorStep1 = null;
 
     @Autowired
@@ -65,6 +95,14 @@ public class EditIBusHarvesterController {
     private final IBusHarvesterValidator.IBusHarvesterValidatorStep4 _validatorStep4 = null;
     
     final private static Log log = LogFactory.getLog(EditIBusHarvesterController.class);
+    
+    public EditIBusHarvesterController() {
+        df = DocumentBuilderFactory.newInstance();
+        df.setNamespaceAware(true);
+        encoding = new XMLEncoding();
+    }
+
+    
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.GET)
     public String step1Get(final HttpSession session, final ModelMap modelMap, @RequestParam(value = "id", required = false) final Integer id)
@@ -73,6 +111,9 @@ public class EditIBusHarvesterController {
         if (id != null && id >= 0) {
             List<HarvesterConfiguration> hConfigs = cProvider.getConfiguration().getHarvesterConfigurations();
             HarvesterConfiguration hConfig = hConfigs.get(id);
+            if (hConfig.getWorkingDirectory() == null) {
+                hConfig.setWorkingDirectory(new File(FileUtils.encodeFileName(hConfig.getName())).getAbsolutePath());
+            }
             modelMap.addAttribute("id", id);
             if (hConfig.getClassName().equals(IBusHarvester.class.getName())) {
                 IBusHarvesterCommandObject commandObject = new IBusHarvesterCommandObject(hConfig);
@@ -192,6 +233,10 @@ public class EditIBusHarvesterController {
                             RequestDefinitionCommandObject rdco = new RequestDefinitionCommandObject(rd);
                             rdco.setDataSourceName(pd.getDataSourceName());
                             rdco.setIsCurrentlyRegistered(true);
+                            String q = IPLUG_QUERY.replaceAll("PATTERN_PLUG_ID", rdco.getPlugId());
+                            Document queryDocument = df.newDocumentBuilder().parse(new InputSource(new StringReader(q)));
+                            CSWRecordResults results = searcher.search((new XMLEncoding()).getQuery(queryDocument.getDocumentElement()));
+                            rdco.setIndexedRecords(results.getTotalHits());
                             enabledIPlugs.add(rdco);
                             break;
                         }
@@ -211,6 +256,10 @@ public class EditIBusHarvesterController {
                     if (!isCurrentlyRegistered) {
                         RequestDefinitionCommandObject rdco = new RequestDefinitionCommandObject(rd);
                         rdco.setIsCurrentlyRegistered(false);
+                        String q = IPLUG_QUERY.replaceAll("PATTERN_PLUG_ID", rdco.getPlugId());
+                        Document queryDocument = df.newDocumentBuilder().parse(new InputSource(new StringReader(q)));
+                        CSWRecordResults results = searcher.search((new XMLEncoding()).getQuery(queryDocument.getDocumentElement()));
+                        rdco.setIndexedRecords(results.getTotalHits());
                         enabledIPlugs.add(rdco);
                     }
                 }
@@ -243,7 +292,7 @@ public class EditIBusHarvesterController {
         if (enable != null && enable.length() > 0) {
             RequestDefinition rd = new RequestDefinition();
             rd.setPlugId(enable);
-            rd.setQueryString("iplugs:\"" + enable + "\"");
+            rd.setQueryString("iplugs:\"" + enable + "\" ranking:score");
             if (harvester.getRequestDefinitions() == null) {
                 harvester.setRequestDefinitions(new ArrayList<RequestDefinition>());
             }

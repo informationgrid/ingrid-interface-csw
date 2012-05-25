@@ -6,18 +6,31 @@
 <%@page import="de.ingrid.utils.PlugDescription"%>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-<title>Portal U Administration</title>
+<title>InGrid Administration</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <link rel="StyleSheet" href="css/ingrid.css" type="text/css" media="all" />
+<script language="JavaScript">
+<!--
+function confirmSubmit(val)
+{
+var agree=confirm(val);
+if (agree)
+	return true ;
+else
+	return false ;
+}
+// -->
+</script>
+
 </head>
 <body>
 	<div id="header">
 		<img src="images/logo.gif" width="168" height="60" alt="Portal U" />
-		<h1>Konfiguration</h1>
+		<h1>CSW interface configuration</h1>
 		<%
 		java.security.Principal  principal = request.getUserPrincipal();
 		if(principal != null && !(principal instanceof IngridPrincipal.SuperAdmin)) {
@@ -28,16 +41,15 @@
 		%>
 	</div>
 	
-	<div id="help"><a href="#">[?]</a></div>
+	<div id="help"></div>
 	<c:set var="active" value="harvester" scope="request"/>
 	<c:import url="subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">iPlug Konfiguration</h1>
+		<h1 id="head">Harvester configuration</h1>
 		
 		<div id="content">
 		<br/>
-		<h2>Edit Harvester!</h2>
 		
         <form:form method="post" action="edit_ibus_harvester_3.html" modelAttribute="harvester">
 
@@ -76,12 +88,12 @@
 		<c:set var="i" value="0" />
         <c:forEach items="${enabledIPlugs}" var="enabledIPlug">
         <tr>
-	    	<td>${enabledIPlug.plugId}</td>
+	    	<td>${enabledIPlug.plugId} (harvested: ${enabledIPlug.indexedRecords})</td>
 	    	<td>${enabledIPlug.dataSourceName}</td>
 	    	<td>${enabledIPlug.queryString}</td>
 	        <td>
 	        	<button type="submit" name="edit" value="${enabledIPlug.plugId}" id="${enabledIPlug.plugId}">Edit</button>
-	        	<button type="submit" name="disable" value="${enabledIPlug.plugId}" id="${enabledIPlug.plugId}">Disable</button>
+	        	<button type="submit" name="disable" value="${enabledIPlug.plugId}" id="${enabledIPlug.plugId}" onClick="return confirmSubmit('Really disable this configuration?')">Disable</button>
 	        </td>
 	    </tr>
         <c:set var="i" value="${i + 1}" />

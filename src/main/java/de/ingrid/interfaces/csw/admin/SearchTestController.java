@@ -1,6 +1,7 @@
 package de.ingrid.interfaces.csw.admin;
 
 import java.io.StringReader;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.search.CSWRecordResults;
@@ -34,10 +37,16 @@ public class SearchTestController {
 
     public static final String TEMPLATE_SEARCH_URI = "/search.html";
     public static final String TEMPLATE_SEARCH_VIEW = "/search";
+    
+    private final String baseLink;
 
     @Autowired
     public SearchTestController(final LuceneSearcher searcher) {
         this.searcher = searcher;
+        String host = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_HOST, "localhost");
+        String port = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PORT, "80");
+        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "");
+        baseLink = "http://" + host + ":" + port + "/" + path + "?REQUEST=GetRecordById&SERVICE=CSW&ID=RECORD_ID";
     }
 
     @RequestMapping(value = TEMPLATE_SEARCH_URI, method = RequestMethod.GET)
@@ -98,6 +107,7 @@ public class SearchTestController {
                 for (CSWRecord record : results.getResults()) {
                     map = new HashMap<String, String>();
                     map.put("title", xpath.getString(record.getDocument(), "//gmd:title/gco:CharacterString"));
+                    map.put("link", baseLink.replaceAll("RECORD_ID", URLEncoder.encode(xpath.getString(record.getDocument(), "//gmd:fileIdentifier/gco:CharacterString"), "UTF-8")));
                     map.put("abstract", xpath.getString(record.getDocument(), "//gmd:abstract/gco:CharacterString"));
                     resultDisplayList.add(map);
                 }

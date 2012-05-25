@@ -232,16 +232,18 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
                     // ADD request parameter to filter Query
                     // extract the filter constraint
-                    Node query = this.xpath.getNode(requestNode, "/csw:GetRecords/csw:Query");
-                    String[] queryConstraints = ApplicationProperties.get(
-                            ConfigurationKeys.QUERY_PARAMETER_2_CONSTRAINTS, "").split(",");
-                    for (String queryConstraint : queryConstraints) {
-                        if (queryConstraint.trim().length() > 0) {
-                            String param = this.getRequest().getParameter(queryConstraint);
-                            if (param != null && param.length() >= 0) {
-                                OGCFilterTools.addPropertyIsEqual(query, queryConstraint, param);
+                    if (this.getRequest() != null) {
+                        Node query = this.xpath.getNode(requestNode, "/csw:GetRecords/csw:Query");
+                        String[] queryConstraints = ApplicationProperties.get(
+                                ConfigurationKeys.QUERY_PARAMETER_2_CONSTRAINTS, "").split(",");
+                        for (String queryConstraint : queryConstraints) {
+                            if (queryConstraint.trim().length() > 0) {
+                                String param = this.getRequest().getParameter(queryConstraint);
+                                if (param != null && param.length() >= 0) {
+                                    OGCFilterTools.addPropertyIsEqual(query, queryConstraint, param);
+                                }
+    
                             }
-
                         }
                     }
 

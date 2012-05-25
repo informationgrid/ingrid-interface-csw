@@ -18,5 +18,6 @@ public interface HarvesterConfiguration extends ClassConfiguration {
 
     String getWorkingDirectory();
     
+    void setWorkingDirectory(String workingDirectory);
 	
 }

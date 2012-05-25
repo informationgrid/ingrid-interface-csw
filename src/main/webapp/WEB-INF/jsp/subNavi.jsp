@@ -10,12 +10,4 @@
         <li <c:if test="${active == 'indexing'}">class="active"</c:if>><a href="<%=request.getContextPath()%>indexing.html">Manually issue harvesting</a></li>
         <li <c:if test="${active == 'search'}">class="active"</c:if>><a href="<%=request.getContextPath()%>search.html">Test Search</a></li>
 	</ul>
-	<div class="konf">
-		<p class="no">2</p>
-		<h2>Statistics</h2>
-	</div>
-    <ul>
-        <li><a href="<%=request.getContextPath()%>">See Interface Stats</a></li>
-        <li><a href="<%=request.getContextPath()%>">See Harvester Stats</a></li>
-    </ul>
 </div>

@@ -67,4 +67,10 @@ public class HarvesterCommandObject extends ClassConfigurationBase implements Ha
         return de.ingrid.interfaces.csw.admin.command.HarvesterCommandObject.class.getName();
     }
 
+    @Override
+    public void setWorkingDirectory(String workingDirectory) {
+        this.workingDirectory = workingDirectory;
+        
+    }
+
 }

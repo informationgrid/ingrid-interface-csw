@@ -4,18 +4,32 @@
 
 <%@page import="de.ingrid.interfaces.csw.admin.IngridPrincipal"%><html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-<title>Portal U Administration</title>
+<title>InGrid Administration</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <link rel="StyleSheet" href="css/ingrid.css" type="text/css" media="all" />
+
+<script language="JavaScript">
+<!--
+function confirmSubmit(val)
+{
+var agree=confirm(val);
+if (agree)
+	return true ;
+else
+	return false ;
+}
+// -->
+</script>
+
 </head>
 <body>
 	<div id="header">
 		<img src="images/logo.gif" width="168" height="60" alt="Portal U" />
-		<h1>Konfiguration</h1>
+		<h1>CSW interface configuration</h1>
 		<%
 		java.security.Principal  principal = request.getUserPrincipal();
 		if(principal != null && !(principal instanceof IngridPrincipal.SuperAdmin)) {
@@ -26,12 +40,12 @@
 		%>
 	</div>
 	
-	<div id="help"><a href="#">[?]</a></div>
+	<div id="help"></div>
 	<c:set var="active" value="harvester" scope="request"/>
 	<c:import url="subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">iPlug Konfiguration</h1>
+		<h1 id="head">Harvester configuration</h1>
 		
 		<div id="content">
 		<c:if test="${not empty errorKey}">
@@ -45,15 +59,17 @@
         <table class="data">
         <tr>
             	<th class="leftCol">Harvester</th>
+            	<th>Harvester Type</th>
             	<th>&nbsp;</th>
         </tr>
         <c:set var="i" value="0" />
         <c:forEach items="${harvesterConfigs}" var="harvesterConfig">
         <tr>
         	<td class="leftCol">${harvesterConfig.name}</td>
+        	<td><spring:message code="${harvesterConfig.className}"/></td>
             <td>
             	<button type="submit" name="edit" value="${i}" id="${i}">Edit</button>
-                <button type="submit" name="delete" value="${i}" id="${i}">Delete</button>                	
+                <button type="submit" name="delete" value="${i}" id="${i}" onClick="return confirmSubmit('Really delete this harvester?')">Delete</button>                	
             </td>
         </tr>
         <c:set var="i" value="${i + 1}" />
@@ -95,8 +111,22 @@
         	<button type="submit" name="new" value="new">New</button>
         </td>
         </tr>
+        <tr>
+        <td class="leftCol">&nbsp;</td>
+        <td>
+    		<p></p>
+    		<p>
+    		<strong>Harvester Types:</strong>
+    		<p>iBus harvester<br/>
+    		Harvests iPlugs connected to an InGrid iBus.
+    		</p>
+    		<p>GDI-DE test data harvester<br/>
+    		Harvests test data for the GDI-DE Testsuite (for test purpose only).
+    		</p>
+    		</p>
+        </td>
+        </tr>
         </table>
-            
         </form:form>
 			
 		</div>

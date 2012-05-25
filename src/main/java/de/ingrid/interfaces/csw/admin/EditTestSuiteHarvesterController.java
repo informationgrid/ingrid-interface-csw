@@ -26,6 +26,7 @@ import de.ingrid.interfaces.csw.config.model.Configuration;
 import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 import de.ingrid.interfaces.csw.harvest.impl.TestSuiteHarvester;
+import de.ingrid.interfaces.csw.tools.FileUtils;
 
 @Controller
 @SessionAttributes("harvester")
@@ -50,6 +51,9 @@ public class EditTestSuiteHarvesterController {
             HarvesterConfiguration hConfig = hConfigs.get(id);
             modelMap.addAttribute("id", id);
             if (hConfig.getClassName().equals(TestSuiteHarvester.class.getName())) {
+                if (hConfig.getWorkingDirectory() == null) {
+                    hConfig.setWorkingDirectory(new File(FileUtils.encodeFileName(hConfig.getName())).getAbsolutePath());
+                }
                 TestSuiteHarvesterCommandObject commandObject = new TestSuiteHarvesterCommandObject(hConfig);
                 commandObject.setId(id);
                 // put into session

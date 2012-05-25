@@ -21,7 +21,6 @@ import org.geotoolkit.lucene.index.AbstractIndexer;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
 import de.ingrid.utils.dsc.Record;
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 /**
  * @author joachim@wemove.com
@@ -32,7 +31,7 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
     private List<RecordCache> recordCacheList = null;
 
     private RecordLuceneMapper mapper;
-    
+
     private Map<String, Object> mapperUtils = null;
 
     final protected static Log log = LogFactory.getLog(IngridGeoTKLuceneIndexer.class);
@@ -50,7 +49,7 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
         }
         try {
             mapperUtils.put("docid", docId);
-            return  mapper.map(record, mapperUtils);
+            return mapper.map(record, mapperUtils);
         } catch (Exception e) {
             log.error("Error mapping record to lucene document: " + record, e);
             throw new IndexingException("Error mapping record to lucene document: " + record);
@@ -72,6 +71,8 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
                 allIdentifiers.add(cache.getCachePath().getAbsolutePath() + "::" + recordId);
             }
         }
+        
+        log.info("Returning " + allIdentifiers.size() + " records for indexing.");
         return allIdentifiers;
     }
 
@@ -106,7 +107,7 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
         log.warn("Record not found in record caches: " + record);
         return null;
     }
-    
+
     /**
      * Make protected method public.
      * 
@@ -117,10 +118,15 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
      * @param maxy
      * @param srid
      */
-    public void addBoundingBox(final Document doc, final Double minx[], final Double maxx[], final Double miny[], final Double maxy[], final Integer srid) {
-        super.addBoundingBox(doc, java.util.Arrays.asList(minx), java.util.Arrays.asList(maxx), java.util.Arrays.asList(miny), java.util.Arrays.asList(maxy), srid);
+    public void addBoundingBox(final Document doc, final Double minx[], final Double maxx[], final Double miny[],
+            final Double maxy[], final Integer srid) {
+        try {
+            super.addBoundingBox(doc, java.util.Arrays.asList(minx), java.util.Arrays.asList(maxx), java.util.Arrays
+                    .asList(miny), java.util.Arrays.asList(maxy), srid);
+        } catch (Exception e) {
+            log.warn("Error adding bounding box to lucene document.");
+        }
     }
-
 
     public void setRecordCacheList(List<RecordCache> recordCacheList) {
         this.recordCacheList = recordCacheList;

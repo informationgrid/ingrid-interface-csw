@@ -19,7 +19,7 @@ public class RequestDefinition {
 	/**
 	 * The time in msec to pause between requests to harvesting source.
 	 */
-	private int pause = 1000;
+	private int pause = 10;
 
 	/**
 	 * The number of records to request at once during fetching of records.

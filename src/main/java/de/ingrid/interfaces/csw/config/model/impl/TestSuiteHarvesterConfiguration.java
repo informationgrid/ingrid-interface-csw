@@ -37,6 +37,7 @@ public class TestSuiteHarvesterConfiguration extends ClassConfigurationBase impl
         return de.ingrid.interfaces.csw.harvest.impl.TestSuiteHarvester.class.getName();
     }
 
+    @Override
     public void setWorkingDirectory(String workingDirectory) {
         this.workingDirectory = workingDirectory;
     }

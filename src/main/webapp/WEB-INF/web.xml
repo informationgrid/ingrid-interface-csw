@@ -36,6 +36,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
             <url-pattern>/loginFailure.html</url-pattern>
 			<url-pattern>/index.jsp</url-pattern>
             <url-pattern>/csw</url-pattern>
+            <url-pattern>/favicon.ico</url-pattern>
 		</web-resource-collection>
 	</security-constraint>
 
