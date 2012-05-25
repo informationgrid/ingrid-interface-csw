@@ -193,7 +193,7 @@ public class FilterParserTest extends TestCase {
 				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"     +
 				"        </ogc:PropertyIsEqualTo>"                                  +
 				"        <ogc:PropertyIsEqualTo>"                                   +
-				"            <ogc:PropertyName>apiso:Author</ogc:PropertyName>"     +
+				"            <ogc:PropertyName>apiso:OrganisationName</ogc:PropertyName>"     +
 				"            <ogc:Literal>Georg Buechner</ogc:Literal>"             +
 				"        </ogc:PropertyIsEqualTo>"                                  +
 				"    </ogc:And>"                                                    +
@@ -202,7 +202,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" AND author:\"Georg Buechner\")");
+		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" AND organisationname:\"Georg Buechner\")");
 
 		/**
 		 * Test 2: a simple Filter OR between two propertyIsEqualTo
@@ -214,7 +214,7 @@ public class FilterParserTest extends TestCase {
 				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>" +
 				"        </ogc:PropertyIsEqualTo>"                              +
 				"        <ogc:PropertyIsEqualTo>"                               +
-				"            <ogc:PropertyName>apiso:Author</ogc:PropertyName>" +
+				"            <ogc:PropertyName>apiso:OrganisationName</ogc:PropertyName>" +
 				"            <ogc:Literal>Georg Buechner</ogc:Literal>"         +
 				"        </ogc:PropertyIsEqualTo>"                              +
 				"    </ogc:Or>"                                                 +
@@ -223,7 +223,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" OR author:\"Georg Buechner\")");
+		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" OR organisationname:\"Georg Buechner\")");
 
 
 		/**
@@ -236,7 +236,7 @@ public class FilterParserTest extends TestCase {
 				"            <ogc:Literal>Der Hessische Landbote</ogc:Literal>"     +
 				"        </ogc:PropertyIsEqualTo>"                                  +
 				"        <ogc:PropertyIsEqualTo>"                                   +
-				"            <ogc:PropertyName>apiso:Author</ogc:PropertyName>"     +
+				"            <ogc:PropertyName>apiso:OrganisationName</ogc:PropertyName>"     +
 				"            <ogc:Literal>Georg Buechner</ogc:Literal>"             +
 				"        </ogc:PropertyIsEqualTo>"                                  +
 				"        <ogc:PropertyIsEqualTo>"                                   +
@@ -249,7 +249,7 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
-		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" OR author:\"Georg Buechner\" OR identifier:268)");
+		assertEquals(spaQuery.getQuery(), "(title:\"Der Hessische Landbote\" OR organisationname:\"Georg Buechner\" OR identifier:268)");
 
 
 		/**
