@@ -49,7 +49,8 @@ var transformationDescriptions = [
 
         // IngGrid specific index fields
         {	"indexField":"id",
-        	"xpath":"//gmd:fileIdentifier/gco:CharacterString"
+        	"xpath":"//gmd:fileIdentifier/gco:CharacterString",
+        	"tokenized":false,
         },
 		{	"indexField":"partner",
 			"xpath":"//idf:html/@partner"
@@ -218,7 +219,7 @@ for (var i in transformationDescriptions) {
 		var nodeList = XPATH.getNodeList(recordNode, t.xpath);
 		if (nodeList && nodeList.getLength() > 0) {
 			for (j=0; j<nodeList.getLength(); j++ ) {
-				value = nodeList.item(j).getTextContent()
+				value = nodeList.item(j).getTextContent().trim();
 				// check for transformation
 				if (hasValue(t.transform)) {
 					var args = new Array(value);

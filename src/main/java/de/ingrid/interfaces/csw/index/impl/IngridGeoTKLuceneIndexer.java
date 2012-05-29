@@ -4,18 +4,32 @@
 package de.ingrid.interfaces.csw.index.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.util.Version;
 import org.geotoolkit.lucene.IndexingException;
+import org.geotoolkit.lucene.LuceneUtils;
 import org.geotoolkit.lucene.index.AbstractIndexer;
 
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
@@ -71,7 +85,7 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
                 allIdentifiers.add(cache.getCachePath().getAbsolutePath() + "::" + recordId);
             }
         }
-        
+
         log.info("Returning " + allIdentifiers.size() + " records for indexing.");
         return allIdentifiers;
     }
@@ -142,6 +156,45 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
 
     public void setMapper(RecordLuceneMapper mapper) {
         this.mapper = mapper;
+    }
+
+    /**
+     * This method remove documents identified by query from the index.
+     * 
+     * @param query
+     * @throws ParseException
+     */
+    public List<String> removeDocumentByQuery(final String queryString) throws ParseException {
+        List<String> deletedRecords = new ArrayList<String>();
+        try {
+            final QueryParser parser = new QueryParser(Version.LUCENE_36, "anytext", analyzer);
+
+            Query query = parser.parse(queryString);
+
+            final IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+            final IndexWriter writer = new IndexWriter(LuceneUtils.getAppropriateDirectory(getFileDirectory()), config);
+
+            LOGGER.log(logLevel, "Query:{0}", query);
+
+            IndexReader reader = IndexReader.open(writer, false);
+            IndexSearcher searcher = new IndexSearcher(reader);
+            TopDocs docs = searcher.search(query, Integer.MAX_VALUE);
+            for (ScoreDoc doc : docs.scoreDocs) {
+                deletedRecords.add(reader.document(doc.doc).get("id"));
+            }
+            writer.deleteDocuments(query);
+
+            writer.commit();
+            searcher.close();
+            reader.close();
+            writer.close();
+
+        } catch (CorruptIndexException ex) {
+            LOGGER.log(Level.WARNING, "CorruptIndexException while indexing document: " + ex.getMessage(), ex);
+        } catch (IOException ex) {
+            LOGGER.log(Level.WARNING, "IOException while indexing document: " + ex.getMessage(), ex);
+        }
+        return deletedRecords;
     }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import de.ingrid.interfaces.csw.cache.DocumentCache;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
@@ -65,18 +66,29 @@ public class XsltMapper implements CSWRecordMapper {
             this.cache = new CSWRecordCache();
             this.cache.setCachePath(configurationProvider.getRecordCachePath());
         }
-        // iterate over all caches and records
-        for (RecordCache recordCache : recordCacheList) {
-            for (Serializable cacheId : recordCache.getCachedIds()) {
-                for (ElementSetName elementSetName : ElementSetName.values()) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Mapping record " + cacheId + " to csw " + elementSetName);
+        
+        DocumentCache<CSWRecord> tmpCache = this.cache.startTransaction(false);
+        try {
+            // iterate over all caches and records
+            for (RecordCache recordCache : recordCacheList) {
+                for (Serializable cacheId : recordCache.getCachedIds()) {
+                    for (ElementSetName elementSetName : ElementSetName.values()) {
+                        if (log.isDebugEnabled()) {
+                            log.debug("Mapping record " + cacheId + " to csw " + elementSetName);
+                        }
+                        Node mappedRecord = this.map(recordCache.get(cacheId), elementSetName);
+                        CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
+                        tmpCache.put(cswRecord);
                     }
-                    Node mappedRecord = this.map(recordCache.get(cacheId), elementSetName);
-                    CSWRecord cswRecord = new CSWRecord(elementSetName, mappedRecord);
-                    this.cache.put(cswRecord);
                 }
             }
+            tmpCache.commitTransaction();
+        } catch (Exception e) {
+            log.error("Error mapping ISO data. Rolling back mapping transaction.", e);
+            if (tmpCache.isInTransaction()) {
+                tmpCache.rollbackTransaction();
+            }
+            throw e;
         }
     }
 

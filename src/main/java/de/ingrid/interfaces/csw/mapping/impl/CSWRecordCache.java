@@ -119,4 +119,10 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
         return this.cachePath;
     }
 
+    @Override
+    public void removeRecord(Serializable id, ElementSetName elementSetName) {
+        Serializable cacheId = this.getCacheId(id, elementSetName);
+        this.remove(cacheId);
+    }
+
 }

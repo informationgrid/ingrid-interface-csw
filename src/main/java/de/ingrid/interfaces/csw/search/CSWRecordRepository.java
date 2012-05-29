@@ -29,4 +29,12 @@ public interface CSWRecordRepository {
 	 * @param id
 	 */
 	public boolean containsRecord(String id);
+	
+	/**
+	 * Remove the record from cache.
+	 * 
+     * @param id
+     * @param elementSetName
+	 */
+	public void removeRecord(Serializable id, ElementSetName elementSetName);
 }

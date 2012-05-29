@@ -126,7 +126,6 @@ else
     	<td class="leftCol">&nbsp;</td>
         <td>
         	<button type="submit" name="back" value="back">Back</button>
-        	<button type="submit" name="save" value="save">Save</button>
         </td>
         </tr>
         </tbody>

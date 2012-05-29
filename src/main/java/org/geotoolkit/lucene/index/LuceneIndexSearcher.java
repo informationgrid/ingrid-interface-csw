@@ -80,7 +80,7 @@ public class LuceneIndexSearcher extends IndexLucene {
     /**
      * A flag indicating if the cache system for query is enabled.
      */
-    private final boolean isCacheEnabled;
+    private boolean isCacheEnabled;
 
     /**
      * A list of metadata ID ordered by DocID.
@@ -508,4 +508,14 @@ public class LuceneIndexSearcher extends IndexLucene {
             LOGGER.warning("IOException while closing the index searcher");
         }
     }
+
+    public boolean isCacheEnabled() {
+        return isCacheEnabled;
+    }
+
+    public void setCacheEnabled(boolean isCacheEnabled) {
+        this.isCacheEnabled = isCacheEnabled;
+    }
+
+
 }

@@ -390,6 +390,24 @@ public abstract class AbstractIndexer<E> extends IndexLucene {
         }
     }
 
+    /**
+     * This method optimizes the index.
+     *
+     * @param identifier
+     */
+    public void optimize() {
+        try {
+            final IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+            final IndexWriter writer = new IndexWriter(LuceneUtils.getAppropriateDirectory(getFileDirectory()), config);
+
+            writer.optimize();
+            writer.close();
+        } catch (CorruptIndexException ex) {
+            LOGGER.log(Level.WARNING, "CorruptIndexException while indexing document: " + ex.getMessage(), ex);
+        } catch (IOException ex) {
+            LOGGER.log(Level.WARNING, "IOException while indexing document: " + ex.getMessage(), ex);
+        }
+    }    
 
     /**
     * Makes a document from the specified object.

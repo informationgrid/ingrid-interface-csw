@@ -1,8 +1,11 @@
 package de.ingrid.interfaces.csw.admin;
 
+import java.io.File;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,9 +26,14 @@ import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
 import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.IBusHarvesterConfiguration;
+import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.TestSuiteHarvesterConfiguration;
 import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
+import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.harvest.impl.TestSuiteHarvester;
+import de.ingrid.interfaces.csw.index.IsoIndexManager;
+import de.ingrid.interfaces.csw.jobs.UpdateJob;
+import de.ingrid.interfaces.csw.tools.FileUtils;
 
 @Controller
 public class ManageHarvesterController {
@@ -40,6 +48,13 @@ public class ManageHarvesterController {
 
     @Autowired
     ConfigurationProvider cProvider = null;
+    
+    @Autowired
+    UpdateJob updateJob;
+    
+    @Autowired
+    private IsoIndexManager indexManager;
+
 
     private final HarvesterValidator _validator;
 
@@ -79,6 +94,13 @@ public class ManageHarvesterController {
                 } else if (harvester.getType().equals(TestSuiteHarvester.class.getName())) {
                     TestSuiteHarvesterConfiguration newHarvesterConfig = new TestSuiteHarvesterConfiguration();
                     newHarvesterConfig.setName(harvester.getName());
+                    if (newHarvesterConfig.getWorkingDirectory() == null) {
+                        newHarvesterConfig.setWorkingDirectory(new File(FileUtils.encodeFileName(newHarvesterConfig.getName())).getAbsolutePath());
+                    }
+                    RecordCacheConfiguration rcc = new RecordCacheConfiguration();
+                    rcc.setCachePath(new File(newHarvesterConfig.getWorkingDirectory(), "records").getAbsoluteFile());
+                    newHarvesterConfig.setCacheConfiguration(rcc);
+
                     hConfigs.add(newHarvesterConfig);
                     cProvider.write(conf);
                     harvester.setName("");
@@ -91,6 +113,11 @@ public class ManageHarvesterController {
                 return "/list_harvester";
             }
         } else if (delete != null && delete >= 0 && delete < hConfigs.size()) {
+            HarvesterConfiguration hcnf = hConfigs.get(delete.intValue());
+            RecordCache cacheInstance = conf.createInstance(hcnf.getCacheConfiguration());
+            Set<Serializable> ids = cacheInstance.getCachedIds();
+            indexManager.removeDocuments(ids);
+            
             hConfigs.remove(delete.intValue());
             cProvider.write(conf);
         } else if (edit != null && edit >= 0 && edit < hConfigs.size()) {

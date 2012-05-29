@@ -32,9 +32,10 @@ public class FileUtils {
 			for (File file : files) {
 				if (file.isDirectory()) {
 					deleteRecursive(file);
-				}
-				if (!file.delete()) {
-				    log.warn("Could not delete file: " + file);
+				} else {
+    				if (!file.delete()) {
+    				    log.warn("Could not delete file: " + file);
+    				}
 				}
 			}
 		}

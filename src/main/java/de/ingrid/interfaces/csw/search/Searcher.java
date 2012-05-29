@@ -26,6 +26,13 @@ public interface Searcher {
 	 */
 	public void stop() throws Exception;
 
+    /**
+     * Refresh the searcher.
+     * @throws Exception
+     */
+    public void refresh() throws Exception;
+	
+	
 	/**
 	 * Search for CSW records using the given query.
 	 * 

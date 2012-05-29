@@ -40,7 +40,11 @@
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Filter query:</td>
-						<td><textarea id="query" name="query" rows="5" cols="30">${query}</textarea></td>
+						<td>
+						<textarea id="query" name="query" rows="5" cols="30">${query}</textarea>
+                        <br>
+                        <span>Add your search here. Single word queries or complete GetRecords XML Request.</span>
+						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">&nbsp;</td>
@@ -62,6 +66,9 @@
 				</c:forEach>
 				<br /><br />
 			</c:if>
+            <c:if test="${empty hits}">
+                <div class="hitCount">Ergebnisse ${hitCount} von ${totalHitCount}</div>
+            </c:if>
 		</div>
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>

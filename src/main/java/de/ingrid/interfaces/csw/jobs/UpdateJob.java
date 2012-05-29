@@ -27,11 +27,7 @@ import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 import de.ingrid.interfaces.csw.harvest.Harvester;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
-import de.ingrid.interfaces.csw.index.Indexer;
-import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
-import de.ingrid.interfaces.csw.search.CSWRecordRepository;
-import de.ingrid.interfaces.csw.search.Searcher;
-import de.ingrid.interfaces.csw.tools.FileUtils;
+import de.ingrid.interfaces.csw.index.IsoIndexManager;
 
 /**
  * The update job.
@@ -52,28 +48,13 @@ public class UpdateJob {
     @Autowired
     private ConfigurationProvider configurationProvider;
 
-    /**
-     * The Indexer instance
-     */
     @Autowired
-    private Indexer indexer;
-
-    /**
-     * The CSWRecordMapper instance
-     */
-    @Autowired
-    private CSWRecordMapper cswRecordMapper;
-
-    /**
-     * The Searcher instance
-     */
-    @Autowired
-    private Searcher searcher;
+    private IsoIndexManager indexManager;
 
     /**
      * The lock assuring that there is only one execution at a time
      */
-    private static ReentrantLock executeLock = new ReentrantLock();
+    public static ReentrantLock executeLock = new ReentrantLock();
 
     /**
      * Constructor
@@ -88,33 +69,6 @@ public class UpdateJob {
      */
     public void setConfigurationProvider(ConfigurationProvider configurationProvider) {
         this.configurationProvider = configurationProvider;
-    }
-
-    /**
-     * Set the indexer.
-     * 
-     * @param indexer
-     */
-    public void setIndexer(Indexer indexer) {
-        this.indexer = indexer;
-    }
-
-    /**
-     * Set the record mapper.
-     * 
-     * @param cswRecordMapper
-     */
-    public void setCswRecordMapper(CSWRecordMapper cswRecordMapper) {
-        this.cswRecordMapper = cswRecordMapper;
-    }
-
-    /**
-     * Set the searcher.
-     * 
-     * @param searcher
-     */
-    public void setSearcher(Searcher searcher) {
-        this.searcher = searcher;
     }
 
     /**
@@ -146,15 +100,22 @@ public class UpdateJob {
                 List<RecordCache> recordCacheList = new ArrayList<RecordCache>();
                 List<Harvester> harvesterInstanceList = new ArrayList<Harvester>();
                 List<HarvesterConfiguration> harvesterConfigs = configuration.getHarvesterConfigurations();
+                RecordCache cacheInstance = null;
+                Harvester harvesterInstance = null;
                 for (HarvesterConfiguration harvesterConfig : harvesterConfigs) {
 
-                    // set up the cache
-                    RecordCacheConfiguration cacheConfig = harvesterConfig.getCacheConfiguration();
-                    RecordCache cacheInstance = configuration.createInstance(cacheConfig);
+                    try {
+                        // set up the cache
+                        RecordCacheConfiguration cacheConfig = harvesterConfig.getCacheConfiguration();
+                        cacheInstance = configuration.createInstance(cacheConfig);
 
-                    // set up the harvester
-                    Harvester harvesterInstance = configuration.createInstance(harvesterConfig);
-                    harvesterInstance.setCache(cacheInstance);
+                        // set up the harvester
+                        harvesterInstance = configuration.createInstance(harvesterConfig);
+                        harvesterInstance.setCache(cacheInstance);
+                    } catch (Exception e) {
+                        log.error("Error setting up harvester: " + harvesterConfig.getName(), e);
+                        continue;
+                    }
 
                     // add instances to lists
                     recordCacheList.add(cacheInstance);
@@ -171,47 +132,8 @@ public class UpdateJob {
                     }
                 }
 
-                // index all records into a temporary directory and switch to
-                // live later
-                
-                log.info("Indexing " + recordCacheList.size() + " idf documents.");
-                
-                this.indexer.run(recordCacheList);
-
-                log.info("Transforming " + recordCacheList.size() + " idf documents into ISO element sets full, summary, brief.");
-                // map ingrid records to csw records
-                this.cswRecordMapper.run(recordCacheList);
-
-                CSWRecordRepository cswRecordRepo = this.cswRecordMapper.getRecordRepository();
-
-                log.info("Stop the searcher instance.");
-                
-                // stop the searcher instance to access index in filesystem
-                this.searcher.stop();
-
-                // move temporary index to live location
-                if (log.isDebugEnabled()) {
-                    log.debug("Remove old index: " + this.searcher.getIndexPath().getAbsolutePath());
-                }
-                if (this.searcher.getIndexPath().exists()) {
-                    FileUtils.deleteRecursive(this.searcher.getIndexPath());
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("Rename new index: " + this.indexer.getIndexConfigPath().getAbsolutePath() + " to "
-                            + this.searcher.getIndexPath().getAbsolutePath());
-                }
-                if (!this.indexer.getIndexConfigPath().renameTo(this.searcher.getIndexPath())) {
-                    log.warn("Could not renam old index: " + this.indexer.getIndexConfigPath().getAbsolutePath() + " to "
-                            + this.searcher.getIndexPath().getAbsolutePath());
-                }
-
-                // set the updated record repository on the searcher
-                this.searcher.setRecordRepository(cswRecordRepo);
-
-                log.info("Start the searcher instance.");
-
-                // restart the searcher
-                this.searcher.start();
+                // index, transform all records
+                this.indexManager.index(recordCacheList);
 
                 // write the execution date as last operation
                 // this is the start date, to make sure that the next execution
@@ -232,6 +154,10 @@ public class UpdateJob {
             log.info("Can't execute update job, because it is already running.");
             return false;
         }
+    }
+
+    public void setIndexManager(IsoIndexManager indexManager) {
+        this.indexManager = indexManager;
     }
 
     /**
@@ -276,25 +202,6 @@ public class UpdateJob {
             if (dateFile.exists())
                 dateFile.delete();
             log.warn("Could not write to " + DATE_FILENAME + ". " + "The update job fetches all records next time.");
-        }
-    }
-
-    private void delete(File folder) {
-        File[] files = folder.listFiles();
-        if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-                File file = files[i];
-                if (file.isDirectory()) {
-                    delete(file);
-                }
-                if (!file.delete()) {
-                    log.warn("Unable to delete file: " + file.getAbsolutePath());
-                }
-            }
-        }
-        if (folder.exists() && !folder.delete()) {
-            log.warn("Unable to delete folder: " + folder.getAbsolutePath());
-
         }
     }
 }

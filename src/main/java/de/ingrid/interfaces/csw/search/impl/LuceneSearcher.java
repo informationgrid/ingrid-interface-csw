@@ -14,8 +14,10 @@ import org.geotoolkit.lucene.index.LuceneIndexSearcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.domain.filter.FilterParser;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
@@ -72,17 +74,19 @@ public class LuceneSearcher implements Searcher {
         if (this.isStarted) {
             this.stop();
         }
-        
+
         // overwrite indexer path with configuration
         if (configurationProvider != null) {
             this.indexPath = configurationProvider.getIndexPath();
         }
-        
+
         log.info("Start search index: " + this.indexPath);
 
         lis = new LuceneIndexSearcher(this.indexPath, "");
-        lis.setLogLevel(log.isDebugEnabled() ? Level.FINEST : (log.isInfoEnabled() ? Level.INFO : (log.isWarnEnabled() ? Level.WARNING : Level.SEVERE)));
-        
+        lis.setCacheEnabled(ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false));
+        lis.setLogLevel(log.isDebugEnabled() ? Level.FINEST : (log.isInfoEnabled() ? Level.INFO
+                : (log.isWarnEnabled() ? Level.WARNING : Level.SEVERE)));
+
         this.isStarted = true;
     }
 
@@ -129,7 +133,9 @@ public class LuceneSearcher implements Searcher {
             // use the query constraints to search for records in the Lucene
             // index
             if (log.isDebugEnabled()) {
-                log.debug("Incoming constraint:" + (query.getConstraint() != null ? StringUtils.nodeToString(query.getConstraint().getDocumentElement()): "no filter set"));
+                log.debug("Incoming constraint:"
+                        + (query.getConstraint() != null ? StringUtils.nodeToString(query.getConstraint()
+                                .getDocumentElement()) : "no filter set"));
             }
             SpatialQuery spatialQuery = this.filterParser.parse(query.getConstraint());
             if (log.isDebugEnabled()) {
@@ -139,14 +145,15 @@ public class LuceneSearcher implements Searcher {
                 throw new RuntimeException("Error parsing query constraint: Lucene query is null");
             }
             Set<String> resultIds = lis.doSearch(spatialQuery);
-            
+
             if (log.isDebugEnabled()) {
-                log.debug("Found " + resultIds.size() + " hits, returning " + Math.min((query.getStartPosition() + query.getMaxRecords() -1), resultIds.size()) + ".");
+                log.debug("Found " + resultIds.size() + " hits, returning "
+                        + Math.min((query.getStartPosition() + query.getMaxRecords() - 1), resultIds.size()) + ".");
             }
 
             // get the CSWRecord for each document found in the index
-            int cnt=1;
-            int endIdx = Math.min((query.getStartPosition() + query.getMaxRecords() -1), resultIds.size());
+            int cnt = 1;
+            int endIdx = Math.min((query.getStartPosition() + query.getMaxRecords() - 1), resultIds.size());
             for (String resultId : resultIds) {
                 if (cnt >= query.getStartPosition() && cnt <= endIdx) {
                     CSWRecord record = this.recordRepository.getRecord(resultId, elementSetName);
@@ -194,6 +201,13 @@ public class LuceneSearcher implements Searcher {
 
     public boolean isStarted() {
         return isStarted;
+    }
+
+    @Override
+    public void refresh() throws Exception {
+        if (lis != null) {
+            this.lis.refresh();
+        }
     }
 
 }

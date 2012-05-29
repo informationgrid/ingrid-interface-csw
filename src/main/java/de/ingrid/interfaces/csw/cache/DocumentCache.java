@@ -81,13 +81,14 @@ public interface DocumentCache<T> {
 	public boolean isInTransaction();
 
 	/**
-	 * Start the transaction. The content of the returned cache is the same as
+	 * Start the transaction. If initialize is true the content of the returned cache is the same as
 	 * the content of this cache initially.
 	 * 
-	 * @param Returns
-	 *            a new cache instance in transaction mode.
+	 * @param initialize
+	 * @return
+	 * @throws IOException
 	 */
-	public DocumentCache<T> startTransaction() throws IOException;
+	public DocumentCache<T> startTransaction(Boolean initialize) throws IOException;
 
 	/**
 	 * Commit the transaction. Transfer all changes, that are done since the
