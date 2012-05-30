@@ -147,9 +147,16 @@ startIplug()
   IFS=
   # add libs to CLASSPATH
   CLASSPATH=${CLASSPATH}:${INGRID_CONF_DIR:=$INGRID_HOME/conf}
+  CLASSPATH_POSTFIX=""
   for f in $INGRID_HOME/lib/*.jar; do
-    CLASSPATH=${CLASSPATH}:$f;
+    # make sure ingrid libraries appear first in classpath
+    # this enables overwriting of 3-rd party library code
+    case "$f" in
+       *lib/ingrid*) CLASSPATH=${CLASSPATH}:$f;;
+       *) CLASSPATH_POSTFIX=${CLASSPATH_POSTFIX}:$f;;
+    esac
   done
+  CLASSPATH=${CLASSPATH}:$CLASSPATH_POSTFIX;
   # restore ordinary behaviour
   unset IFS
   
