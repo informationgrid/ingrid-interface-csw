@@ -19,6 +19,7 @@ import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
+import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
@@ -41,6 +42,9 @@ public class XsltMapper implements CSWRecordMapper {
      */
     @Autowired
     private ConfigurationProvider configurationProvider;
+    
+    @Autowired
+    private StatusProvider statusProvider;
 
     /**
      * Used for xslt
@@ -70,8 +74,17 @@ public class XsltMapper implements CSWRecordMapper {
         DocumentCache<CSWRecord> tmpCache = this.cache.startTransaction(false);
         try {
             // iterate over all caches and records
+            Integer idx = 1;
+            Integer total = 0;
+            for (RecordCache recordCache : recordCacheList) {
+                total += recordCache.getCachedIds().size();
+            }
+            
+            
             for (RecordCache recordCache : recordCacheList) {
                 for (Serializable cacheId : recordCache.getCachedIds()) {
+                    statusProvider.addState("iso-mapper", "Mapping records to ISO ... [" +idx + "/" + total + "].");
+                    idx++;
                     for (ElementSetName elementSetName : ElementSetName.values()) {
                         if (log.isDebugEnabled()) {
                             log.debug("Mapping record " + cacheId + " to csw " + elementSetName);

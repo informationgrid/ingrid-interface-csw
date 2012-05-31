@@ -34,6 +34,7 @@ import org.geotoolkit.lucene.index.AbstractIndexer;
 
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
+import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.utils.dsc.Record;
 
 /**
@@ -48,12 +49,18 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
 
     private Map<String, Object> mapperUtils = null;
 
+    private List<String> allIdentifiers = new ArrayList<String>();
+
+    private StatusProvider statusProvider;
+
     final protected static Log log = LogFactory.getLog(IngridGeoTKLuceneIndexer.class);
 
-    public IngridGeoTKLuceneIndexer(String serviceID, File configDirectory, Analyzer analyzer) {
+    public IngridGeoTKLuceneIndexer(String serviceID, File configDirectory, Analyzer analyzer,
+            StatusProvider statusProvider) {
         super(serviceID, configDirectory, analyzer);
         mapperUtils = new HashMap<String, Object>();
         mapperUtils.put("geometryMapper", this);
+        this.statusProvider = statusProvider;
     }
 
     @Override
@@ -76,7 +83,6 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
             throw new RuntimeException("Indexer not initialized. Record cache list is not set.");
         }
 
-        Collection<String> allIdentifiers = new ArrayList<String>();
         for (RecordCache cache : recordCacheList) {
             for (Serializable recordId : cache.getCachedIds()) {
                 if (log.isDebugEnabled()) {
@@ -93,6 +99,8 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
     @Override
     protected Record getEntry(String identifier) throws IndexingException {
         String[] cacheRecordId = identifier.split("::");
+
+        statusProvider.addState("create-index", "Indexing records ... [" + (allIdentifiers.indexOf(identifier)+1) + "/" + allIdentifiers.size() + "].");
 
         for (RecordCache cache : recordCacheList) {
             if (cache.getCachePath().getAbsolutePath().equals(cacheRecordId[0])) {

@@ -112,8 +112,8 @@ ul.tabs li.active {background: #D1E4F1; border:1px solid #68A5D2;}
 ul.tabs li.active a {color:#000}
 
 /* --Popup Dialog -- */
-.dialog { border:1px solid #68A5D2; position:absolute; z-index:2; left:300px; top:200px; text-align:center}
-.dialog .content {width:300px; padding:20px; background:#F5F8EB;}
+.dialog { border:1px solid #68A5D2; position:absolute; z-index:2; margin-left:19px; top:150px;}
+.dialog .content {width:600px; padding:20px; background:#F5F8EB;}
 
 /* -- Search Result -- */
 .hitCount {text-align:right; margin-right:40px}

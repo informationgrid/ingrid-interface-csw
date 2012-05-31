@@ -32,6 +32,7 @@ public class TestSuiteHarvester extends AbstractHarvester {
         // get list of test datasets
         Resource[] resources = FileUtils.getPackageContent("classpath*:gdide_test_data/*xml");
         List<Serializable> cacheIds = new ArrayList<Serializable>();
+        statusProvider.addState(this.getId() + "harvesting", "Fetch records... [" + resources.length + "]");
         for (Resource resource : resources) {
             String iso = FileUtils.convertStreamToString(resource.getInputStream());
             Record record = IdfTool.createIdfRecord(iso, true);
@@ -42,6 +43,12 @@ public class TestSuiteHarvester extends AbstractHarvester {
             cacheIds.add(cacheId);
         }
         return cacheIds;
+    }
+
+    @Override
+    public void run(Date lastExecutionDate) throws Exception {
+        statusProvider.addState(this.getId(), "Harvesting '" + this.getName() + "'...");
+        super.run(lastExecutionDate);
     }
 
 }

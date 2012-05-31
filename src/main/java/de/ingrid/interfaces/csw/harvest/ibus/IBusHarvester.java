@@ -110,6 +110,13 @@ public class IBusHarvester extends AbstractHarvester {
     }
 
     @Override
+    public void run(Date lastExecutionDate) throws Exception {
+        statusProvider.addState(this.getId(), "Harvesting '" + this.getName() + "'... [iPlugs: " + requestDefinitions.size()
+                + "]");
+        super.run(lastExecutionDate);
+    }
+
+    @Override
     public List<Serializable> fetchRecords(Date lastExecutionDate) throws Exception {
 
         if (this.requestDefinitions == null || this.requestDefinitions.size() == 0) {
@@ -173,7 +180,8 @@ public class IBusHarvester extends AbstractHarvester {
                     startHit = ++currentPage * pageSize;
 
                     cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
-                    // do not use null elements. null elements can occur in case of
+                    // do not use null elements. null elements can occur in case
+                    // of
                     // an exception in the cacheRecords method.
                     for (Serializable element : cacheIds) {
                         if (element != null) {
@@ -222,6 +230,11 @@ public class IBusHarvester extends AbstractHarvester {
         if (log.isInfoEnabled()) {
             int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
             log.info("Fetched records " + startHit + " to " + endHit + " of " + hits.length());
+            if (hits.getHits().length > 0) {
+                String plugId = hits.getHits()[0].getPlugId();
+                statusProvider.addState(hits.getHits()[0].getPlugId() + "fetch", "Fetch records for iPlug '" + plugId
+                        + "'... [" + (endHit + 1) + "/" + hits.length() + "]");
+            }
         }
         return cacheIds;
     }

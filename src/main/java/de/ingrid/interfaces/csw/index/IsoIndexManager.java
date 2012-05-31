@@ -47,6 +47,9 @@ public class IsoIndexManager {
     @Autowired
     private Searcher searcher;
 
+    @Autowired
+    private StatusProvider statusProvider;
+
     /**
      * The CSWRecordMapper instance
      */
@@ -57,32 +60,38 @@ public class IsoIndexManager {
     private List<String> toBeDeletedQueries = null;
 
     public void index(List<RecordCache> recordCacheList) throws Exception {
-            int recordCount = 0;
-            for (RecordCache cache : recordCacheList) {
-                recordCount += cache.getCachedIds().size();
-            }
+        int recordCount = 0;
+        for (RecordCache cache : recordCacheList) {
+            recordCount += cache.getCachedIds().size();
+        }
 
-            this.indexer.run(recordCacheList);
-            log.info("Transforming " + recordCount + " idf documents into ISO element sets full, summary, brief.");
-            // map ingrid records to csw records
-            this.cswRecordMapper.run(recordCacheList);
-            CSWRecordRepository cswRecordRepo = this.cswRecordMapper.getRecordRepository();
-            log.info("Stop the searcher instance.");
-            stopSearcher();
-            activateNewIndex();
-            this.searcher.setRecordRepository(cswRecordRepo);
-            log.info("Start the searcher instance.");
-            startSearcher();
+        this.indexer.run(recordCacheList);
+        log.info("Transforming " + recordCount + " idf documents into ISO element sets full, summary, brief.");
+        // map ingrid records to csw records
+        this.cswRecordMapper.run(recordCacheList);
+        CSWRecordRepository cswRecordRepo = this.cswRecordMapper.getRecordRepository();
+        log.info("Stop the searcher instance.");
+        statusProvider.addState("reload-index", "Reload index...");
+        stopSearcher();
+        activateNewIndex();
+        this.searcher.setRecordRepository(cswRecordRepo);
+        log.info("Start the searcher instance.");
+        startSearcher();
+        statusProvider.addState("reload-index", "Reload index.");
 
         // remove records marked for removal
         if (toBeDeleted != null && toBeDeleted.size() > 0) {
+            statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting...");
             wipe(toBeDeleted);
+            statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting.");
         }
         if (toBeDeletedQueries != null && toBeDeletedQueries.size() > 0) {
+            statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting...");
             wipeByQuery(toBeDeletedQueries);
             synchronized (this) {
                 toBeDeletedQueries.clear();
             }
+            statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting.");
         }
 
     }
@@ -159,7 +168,7 @@ public class IsoIndexManager {
             log.error("Error removing documents.", e);
         }
     }
-    
+
     private void wipe(Set<Serializable> ids) throws Exception {
         this.indexer.removeDocs(ids);
         this.searcher.refresh();
@@ -204,15 +213,14 @@ public class IsoIndexManager {
             ids.addAll(indexer.removeDocsByQuery(query));
         }
         this.searcher.refresh();
-        
+
         for (Serializable id : ids) {
             cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL);
             cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF);
             cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY);
         }
     }
-   
-    
+
     public void setIndexer(Indexer indexer) {
         this.indexer = indexer;
     }
@@ -224,6 +232,5 @@ public class IsoIndexManager {
     public void setCswRecordMapper(CSWRecordMapper cswRecordMapper) {
         this.cswRecordMapper = cswRecordMapper;
     }
-    
 
 }

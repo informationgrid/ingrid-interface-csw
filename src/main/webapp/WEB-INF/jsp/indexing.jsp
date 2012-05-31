@@ -14,14 +14,15 @@
 <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
 <script>
 function getState(){
-	$.get("indexState.html", function(data){
-		  if(data == 'false'){
+	$.getJSON("indexState.html", {}, function(statusResponse){
+		  if(statusResponse.isRunning == 'false'){
             document.getElementById('dialog').style.display = 'none';
             document.getElementById('dialog_done').style.display = '';
             document.getElementById('harvest').style.display = '';
-		  }else{
+		  } else {
             document.getElementById('dialog').style.display = '';
             document.getElementById('harvest').style.display = 'none';
+            $("#dialog .content").html(statusResponse.status.replace(/\n/g,"<br />"));
 			setTimeout(getState, 1000);
 		  }
 	}, "text");
@@ -53,7 +54,8 @@ function getState(){
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Start harvesting manually.</h1>
 		<div id="content">
-			<h2>You can start the harvesting process manually.</h2>
+			<c:if test="${isScheduled == 'true'}"><h2>Harvesting in progress...</h2></c:if>
+            <c:if test="${isScheduled != 'true'}"><h2>You can start the harvesting process manually.</h2></c:if>
 			
             <c:if test="${triggerResult == 'error'}">
                 <div class="error">Could not start harvesting.</div>
@@ -77,9 +79,10 @@ function getState(){
 				
 		</div>
 		
-		<div class="dialog" id="dialog" <c:if test="${isScheduled != 'true'}">style="display:none"</c:if>>
-			<div class="content">Harvesting in progress, please be patient.</div>
-		</div>	
+        <div class="dialog" id="dialog" <c:if test="${isScheduled != 'true'}">style="display:none"</c:if>>
+            <div class="content">Harvesting in progress, please be patient.</div>
+        </div>  
+
         <div class="dialog" id="dialog_done" style="display:none">
             <div class="content">All data has been harvested.</div>
         </div>  

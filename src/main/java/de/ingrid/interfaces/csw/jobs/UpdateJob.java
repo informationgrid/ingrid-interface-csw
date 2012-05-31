@@ -28,6 +28,7 @@ import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
 import de.ingrid.interfaces.csw.harvest.Harvester;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.IsoIndexManager;
+import de.ingrid.interfaces.csw.index.StatusProvider;
 
 /**
  * The update job.
@@ -50,6 +51,9 @@ public class UpdateJob {
 
     @Autowired
     private IsoIndexManager indexManager;
+
+    @Autowired
+    private StatusProvider statusProvider;
 
     /**
      * The lock assuring that there is only one execution at a time
@@ -82,6 +86,8 @@ public class UpdateJob {
         // try to acquire the lock
         if (executeLock.tryLock(0, TimeUnit.SECONDS)) {
             try {
+                statusProvider.clear();
+                statusProvider.addState("start_harvesting", "Start harvesting.");
                 Date start = new Date();
 
                 Date lastExecutionDate = this.getLastExecutionDate();
@@ -112,6 +118,7 @@ public class UpdateJob {
                         // set up the harvester
                         harvesterInstance = configuration.createInstance(harvesterConfig);
                         harvesterInstance.setCache(cacheInstance);
+                        harvesterInstance.setStatusProvider(statusProvider);
                     } catch (Exception e) {
                         log.error("Error setting up harvester: " + harvesterConfig.getName(), e);
                         continue;
@@ -145,6 +152,7 @@ public class UpdateJob {
                 Date end = new Date();
                 long diff = end.getTime() - start.getTime();
                 log.info("Job executed within " + diff + " ms.");
+                statusProvider.addState("stop_harvesting", "Harvesting finished.");
                 return true;
             } finally {
                 // release the lock

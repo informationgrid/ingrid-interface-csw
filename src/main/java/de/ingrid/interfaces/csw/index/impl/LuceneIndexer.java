@@ -17,6 +17,7 @@ import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.Indexer;
 import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
+import de.ingrid.interfaces.csw.index.StatusProvider;
 
 /**
  * LuceneIndexer is used to put InGrid records into a Lucene index.
@@ -42,6 +43,10 @@ public class LuceneIndexer implements Indexer {
 
     @Autowired
     private RecordLuceneMapper mapper;
+    
+    @Autowired
+    private StatusProvider statusProvider;
+
 
     @Override
     public void run(List<RecordCache> recordCacheList) throws Exception {
@@ -60,7 +65,7 @@ public class LuceneIndexer implements Indexer {
             this.indexConfigPath.delete();
         }
 
-        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, null);
+        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, null, statusProvider);
         // TODO: set log level
         geoTKIndexer.setRecordCacheList(recordCacheList);
         geoTKIndexer.setMapper(mapper);
@@ -72,7 +77,7 @@ public class LuceneIndexer implements Indexer {
     public void removeDocs(Set<Serializable> records) throws Exception {
         if (configurationProvider != null) {
             File indexPath = configurationProvider.getIndexPath();
-            IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null);
+            IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null, statusProvider);
             for (Serializable record : records) {
                 geoTKIndexer.removeDocument(record.toString());
             }
@@ -84,7 +89,7 @@ public class LuceneIndexer implements Indexer {
     @Override
     public List<String> removeDocsByQuery(String queryString) throws Exception {
         File indexPath = configurationProvider.getIndexPath();
-        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null);
+        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null, statusProvider);
         List<String> ids = geoTKIndexer.removeDocumentByQuery(queryString);
         geoTKIndexer.optimize();
         geoTKIndexer.destroy();

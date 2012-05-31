@@ -17,8 +17,10 @@
 		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-3.x.x</developerConnection>
 	</scm>
 	<repositories>
-		<!-- Repo of parent pom needed, parent pom may not be installed locally 
-			yet -->
+		<!--
+			Repo of parent pom needed, parent pom may not be installed locally
+			yet
+		-->
 		<repository>
 			<id>de.ingrid.all</id>
 			<name>Maven Repo InGrid</name>
@@ -38,7 +40,18 @@
 				<artifactId>xstream</artifactId>
 				<version>1.4.2</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>3.0.7.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>3.0.7.RELEASE</version>
+			</dependency>
 		</dependencies>
+
 	</dependencyManagement>
 
 	<dependencies>
@@ -200,13 +213,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-			<version>2.5.6</version>
+			<artifactId>spring-core</artifactId>
+			<version>3.0.7.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>2.5.6</version>
+			<version>3.0.7.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
@@ -252,15 +265,20 @@
 			<artifactId>geotk-xml-gml</artifactId>
 			<version>3.x-SNAPSHOT</version>
 		</dependency>
-        <dependency>
-            <groupId>it.sauronsoftware.cron4j</groupId>
-            <artifactId>cron4j</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-      </dependency>
+		<dependency>
+			<groupId>it.sauronsoftware.cron4j</groupId>
+			<artifactId>cron4j</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.6.4</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -286,7 +304,9 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<!-- Add Type of Component to Manifest of Installer for Upgrade Server -->
+				<!--
+					Add Type of Component to Manifest of Installer for Upgrade Server
+				-->
 				<configuration>
 					<archive>
 						<manifestEntries>

@@ -7,6 +7,7 @@ import java.util.Date;
 
 import de.ingrid.interfaces.csw.Monitorable;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
+import de.ingrid.interfaces.csw.index.StatusProvider;
 
 /**
  * Harvester defines the interface for document harvesting implementations.
@@ -23,6 +24,12 @@ public interface Harvester extends Monitorable {
 	 */
 	public String getId();
 
+	
+    /**
+     * Get the name of the harvester.
+     */
+    public String getName();
+	
 	/**
 	 * Execute the harvesting job.
 	 * 
@@ -44,4 +51,11 @@ public interface Harvester extends Monitorable {
 	 * @return RecordCache
 	 */
 	public RecordCache getCache();
+	
+	/**
+	 * Set the {@link StatusProvider} to be used.
+	 * 
+	 * @param statusProvider
+	 */
+	public void setStatusProvider(StatusProvider statusProvider);
 }
