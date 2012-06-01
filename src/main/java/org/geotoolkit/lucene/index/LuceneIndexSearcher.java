@@ -342,6 +342,7 @@ public class LuceneIndexSearcher extends IndexLucene {
             } else {
                 query = SIMPLE_QUERY;
             }
+            
             LOGGER.log(Level.FINER, "QueryType:{0}", query.getClass().getName());
             final Filter filter = spatialQuery.getSpatialFilter();
             final int operator  = spatialQuery.getLogicalOperator();

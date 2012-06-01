@@ -136,8 +136,11 @@ public class LuceneSearcher implements Searcher {
                 log.debug("Incoming constraint:"
                         + (query.getConstraint() != null ? StringUtils.nodeToString(query.getConstraint()
                                 .getDocumentElement()) : "no filter set"));
+                log.debug("Incoming SortBy:"
+                        + (query.getSort() != null ? StringUtils.nodeToString(query.getSort()
+                                .getDocumentElement()) : "no SortBy set"));
             }
-            SpatialQuery spatialQuery = this.filterParser.parse(query.getConstraint());
+            SpatialQuery spatialQuery = this.filterParser.parse(query);
             if (log.isDebugEnabled()) {
                 log.debug("Incoming spatial query:" + spatialQuery);
             }

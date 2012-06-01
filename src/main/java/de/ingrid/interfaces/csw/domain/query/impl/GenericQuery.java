@@ -36,6 +36,7 @@ public class GenericQuery implements Serializable, CSWQuery {
     protected ConstraintLanguage constraintLanguage = null;
     protected String constraintLanguageVersion = null;
     protected Document constraint = null;
+    protected Document sort = null;
     protected int startPosition = 1;
     protected int maxRecords = 0;
 
@@ -207,5 +208,15 @@ public class GenericQuery implements Serializable, CSWQuery {
                 this.ids.add(id);
             }
         }
+    }
+
+    @Override
+    public Document getSort() {
+        return sort;
+    }
+
+    @Override
+    public void setSortBy(Document sort) {
+        this.sort = sort;
     }
 }

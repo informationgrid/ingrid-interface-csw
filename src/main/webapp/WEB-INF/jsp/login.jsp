@@ -44,7 +44,8 @@
 									<tr>
 										<td class="leftCol">Name:</td>
 										<td>
-										     <input value="admin" style="width: 200px;" type="text" name="j_username"/>
+										     <input value="admin" disabled="true" style="width: 200px;" type="text" name="j_username"/>
+										     <input value="admin" type="hidden" name="j_username"/>
 										</td>
 									</tr>
 									<tr>

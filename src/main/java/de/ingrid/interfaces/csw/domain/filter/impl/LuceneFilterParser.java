@@ -12,6 +12,8 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.search.Filter;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.geotoolkit.factory.FactoryFinder;
 import org.geotoolkit.factory.Hints;
 import org.geotoolkit.filter.SpatialFilterType;
@@ -46,6 +48,8 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.util.FactoryException;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -55,6 +59,9 @@ import de.ingrid.interfaces.csw.domain.filter.FilterParser;
 import de.ingrid.interfaces.csw.domain.filter.queryable.Date;
 import de.ingrid.interfaces.csw.domain.filter.queryable.Queryable;
 import de.ingrid.interfaces.csw.domain.filter.queryable.QueryableType;
+import de.ingrid.interfaces.csw.domain.query.CSWQuery;
+import de.ingrid.utils.xml.Csw202NamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 
 /**
  * A FilterParser that creates a Lucene query from an ogc filter document.
@@ -62,620 +69,641 @@ import de.ingrid.interfaces.csw.domain.filter.queryable.QueryableType;
 @Service
 public class LuceneFilterParser implements FilterParser {
 
-	protected final static Log log = LogFactory.getLog(AbstractFileCache.class);
+    protected final static Log log = LogFactory.getLog(AbstractFileCache.class);
 
-	private static final String QUERY_CONSTRAINT_LOCATOR = "Query/Constraint";
-	private static final String INVALID_PARAMETER_CODE = "InvalidParameter";
+    private static final String QUERY_CONSTRAINT_LOCATOR = "Query/Constraint";
+    private static final String INVALID_PARAMETER_CODE = "InvalidParameter";
 
-	protected static final String PARSE_ERROR_MSG = "The service was unable to parse the Date: ";
-	protected static final String UNKNOW_CRS_ERROR_MSG = "Unknow Coordinate Reference System: ";
-	protected static final String INCORRECT_BBOX_DIM_ERROR_MSG = "The dimensions of the bounding box are incorrect: ";
-	protected static final String FACTORY_BBOX_ERROR_MSG = "Factory exception while parsing spatial filter BBox: ";
+    protected static final String PARSE_ERROR_MSG = "The service was unable to parse the Date: ";
+    protected static final String UNKNOW_CRS_ERROR_MSG = "Unknow Coordinate Reference System: ";
+    protected static final String INCORRECT_BBOX_DIM_ERROR_MSG = "The dimensions of the bounding box are incorrect: ";
+    protected static final String FACTORY_BBOX_ERROR_MSG = "Factory exception while parsing spatial filter BBox: ";
 
-	protected static final FilterFactory2 FF = (FilterFactory2)
-			FactoryFinder.getFilterFactory(new Hints(Hints.FILTER_FACTORY, FilterFactory2.class));
+    protected static final FilterFactory2 FF = (FilterFactory2) FactoryFinder.getFilterFactory(new Hints(
+            Hints.FILTER_FACTORY, FilterFactory2.class));
 
-	private Unmarshaller filterUnmarshaller;
+    /** Tool for evaluating xpath **/
+    private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
-	private static final String defaultField = "metafile:doc";
+    private Unmarshaller filterUnmarshaller;
 
-	@Override
-	public SpatialQuery parse(Document filterDoc) throws Exception {
+    private static final String defaultField = "metafile:doc";
 
-		if (this.filterUnmarshaller == null) {
-			MarshallerPool marshallerPool = new MarshallerPool("org.geotoolkit.ogc.xml.v110:org.geotoolkit.gml.xml.v311:org.geotoolkit.gml.xml.v321");
-			this.filterUnmarshaller = marshallerPool.acquireUnmarshaller();
-		}
-		
-		if (filterDoc == null) {
-		    return new SpatialQuery(defaultField);
-		}
-		
-		JAXBElement<FilterType> filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
-		FilterType filter = filterEl.getValue();
+    @Override
+    public SpatialQuery parse(CSWQuery cswQuery) throws Exception {
 
-		SpatialQuery query = null;
-		if (filter != null) {
-			Filter nullFilter = null;
-			// process logical operators like AND, OR, ...
-			if (filter.getLogicOps() != null) {
-				query = this.processLogicalOperator(filter.getLogicOps());
-			}
-			// process comparison operators: PropertyIsLike, IsNull, IsBetween, ...
-			else if (filter.getComparisonOps() != null) {
-				query = new SpatialQuery(this.processComparisonOperator(filter.getComparisonOps()), nullFilter, SerialChainFilter.AND);
-			}
-			// process spatial constraint : BBOX, Beyond, Overlaps, ...
-			else if (filter.getSpatialOps() != null) {
-				query = new SpatialQuery("", this.processSpatialOperator(filter.getSpatialOps()), SerialChainFilter.AND);
-			}
-			// process id
-			else if (filter.getId() != null) {
-				query = new SpatialQuery(this.processIDOperator(filter.getId()), nullFilter, SerialChainFilter.AND);
-			}
-		}
-		return query;
-	}
+        Document filterDoc = cswQuery.getConstraint();
 
-	/**
-	 * Build a piece of Lucene query with the specified Logical filter.
-	 * 
-	 * @param logicOpsEl
-	 * @return SpatialQuery
-	 * @throws CSWFilterException
-	 */
-	private SpatialQuery processLogicalOperator(JAXBElement<? extends LogicOpsType> logicOpsEl) throws CSWFilterException {
-		List<SpatialQuery> subQueries = new ArrayList<SpatialQuery>();
-		StringBuilder queryBuilder = new StringBuilder();
-		List<Filter> filters = new ArrayList<Filter>();
+        if (this.filterUnmarshaller == null) {
+            MarshallerPool marshallerPool = new MarshallerPool(
+                    "org.geotoolkit.ogc.xml.v110:org.geotoolkit.gml.xml.v311:org.geotoolkit.gml.xml.v321");
+            this.filterUnmarshaller = marshallerPool.acquireUnmarshaller();
+        }
 
-		String operator = logicOpsEl.getName().getLocalPart();
-		LogicOpsType logicOps = logicOpsEl.getValue();
-		if (logicOps instanceof BinaryLogicOpType) {
-			BinaryLogicOpType binary = (BinaryLogicOpType) logicOps;
-			queryBuilder.append('(');
+        if (filterDoc == null) {
+            return new SpatialQuery(defaultField);
+        }
 
-			// process comparison operators: PropertyIsLike, IsNull, IsBetween, ...
-			for (JAXBElement<? extends ComparisonOpsType> el: binary.getComparisonOps()) {
-				queryBuilder.append(this.processComparisonOperator(el));
-				queryBuilder.append(" ").append(operator.toUpperCase()).append(" ");
-			}
+        JAXBElement<FilterType> filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
+        FilterType filter = filterEl.getValue();
 
-			// process logical operators like AND, OR, ...
-			for (JAXBElement<? extends LogicOpsType> el: binary.getLogicOps()) {
-				boolean writeOperator = true;
+        SpatialQuery query = null;
+        if (filter != null) {
+            Filter nullFilter = null;
+            // process logical operators like AND, OR, ...
+            if (filter.getLogicOps() != null) {
+                query = this.processLogicalOperator(filter.getLogicOps());
+            }
+            // process comparison operators: PropertyIsLike, IsNull, IsBetween,
+            // ...
+            else if (filter.getComparisonOps() != null) {
+                query = new SpatialQuery(this.processComparisonOperator(filter.getComparisonOps()), nullFilter,
+                        SerialChainFilter.AND);
+            }
+            // process spatial constraint : BBOX, Beyond, Overlaps, ...
+            else if (filter.getSpatialOps() != null) {
+                query = new SpatialQuery("", this.processSpatialOperator(filter.getSpatialOps()), SerialChainFilter.AND);
+            }
+            // process id
+            else if (filter.getId() != null) {
+                query = new SpatialQuery(this.processIDOperator(filter.getId()), nullFilter, SerialChainFilter.AND);
+            }
+        }
 
-				SpatialQuery sq = this.processLogicalOperator(el);
-				String subQuery = sq.getQuery();
-				Filter subFilter = sq.getSpatialFilter();
+        Document sortBy = cswQuery.getSort();
+        if (sortBy != null) {
+            NodeList sortProperties = xpath.getNodeList(sortBy, "//csw:SortProperty");
+            if (sortProperties != null && sortProperties.getLength() > 0) {
+                List<SortField> sortFields = new ArrayList<SortField>();
+                for (int i = 0; i < sortProperties.getLength(); i++) {
+                    Node sortProperty = sortProperties.item(i);
+                    String propertyName = xpath.getString(sortProperty, "//csw:PropertyName");
+                    String sortOrder = xpath.getString(sortProperty, "//csw:SortOrder");
+                    // TODO determine type of sort field by queryable type
+                    sortFields.add(new SortField(propertyName, SortField.STRING,
+                            sortOrder.equalsIgnoreCase("DESC") ? true : false));
+                }
+                SortField[] a = sortFields.toArray(new SortField[0]);
+                query.setSort(new Sort(a));
+            }
+        }
 
-				//if the sub spatial query contains both term search and spatial search we create a subQuery
-				if ((subFilter != null && !subQuery.equals(defaultField))
-						|| sq.getSubQueries().size() != 0
-						|| (sq.getLogicalOperator() == SerialChainFilter.NOT && sq.getSpatialFilter() == null)) {
-					subQueries.add(sq);
-					writeOperator = false;
-				}
-				else {
-					if (subQuery.equals("")) {
-						writeOperator = false;
-					}
-					else {
-						queryBuilder.append(subQuery);
-					}
-					if (subFilter != null) {
-						filters.add(subFilter);
-					}
-				}
+        return query;
+    }
 
-				if (writeOperator) {
-					queryBuilder.append(" ").append(operator.toUpperCase()).append(" ");
-				}
-				else {
-					writeOperator = true;
-				}
-			}
+    /**
+     * Build a piece of Lucene query with the specified Logical filter.
+     * 
+     * @param logicOpsEl
+     * @return SpatialQuery
+     * @throws CSWFilterException
+     */
+    private SpatialQuery processLogicalOperator(JAXBElement<? extends LogicOpsType> logicOpsEl)
+            throws CSWFilterException {
+        List<SpatialQuery> subQueries = new ArrayList<SpatialQuery>();
+        StringBuilder queryBuilder = new StringBuilder();
+        List<Filter> filters = new ArrayList<Filter>();
 
-			// process spatial constraint : BBOX, Beyond, Overlaps, ...
-			for (JAXBElement<? extends SpatialOpsType> el: binary.getSpatialOps()) {
-				// for the spatial filter we don't need to write into the Lucene query
-				filters.add(this.processSpatialOperator(el));
-			}
+        String operator = logicOpsEl.getName().getLocalPart();
+        LogicOpsType logicOps = logicOpsEl.getValue();
+        if (logicOps instanceof BinaryLogicOpType) {
+            BinaryLogicOpType binary = (BinaryLogicOpType) logicOps;
+            queryBuilder.append('(');
 
-			// remove the last Operator and add a ') '
-			int pos = queryBuilder.length() - (operator.length() + 2);
-			if (pos > 0) {
-				queryBuilder.delete(queryBuilder.length() - (operator.length() + 2), queryBuilder.length());
-			}
-			queryBuilder.append(')');
-		}
-		else if (logicOps instanceof UnaryLogicOpType) {
-			UnaryLogicOpType unary = (UnaryLogicOpType)logicOps;
+            // process comparison operators: PropertyIsLike, IsNull, IsBetween,
+            // ...
+            for (JAXBElement<? extends ComparisonOpsType> el : binary.getComparisonOps()) {
+                queryBuilder.append(this.processComparisonOperator(el));
+                queryBuilder.append(" ").append(operator.toUpperCase()).append(" ");
+            }
 
-			// process comparison operator: PropertyIsLike, IsNull, IsBetween, ...
-			if (unary.getComparisonOps() != null) {
-				queryBuilder.append(this.processComparisonOperator(unary.getComparisonOps()));
-			}
-			// process spatial constraint : BBOX, Beyond, Overlaps, ...
-			else if (unary.getSpatialOps() != null) {
-				filters.add(this.processSpatialOperator(unary.getSpatialOps()));
-			}
-			// process logical Operators like AND, OR, ...
-			else if (unary.getLogicOps() != null) {
-				SpatialQuery sq = this.processLogicalOperator(unary.getLogicOps());
-				String subQuery = sq.getQuery();
-				Filter subFilter = sq.getSpatialFilter();
+            // process logical operators like AND, OR, ...
+            for (JAXBElement<? extends LogicOpsType> el : binary.getLogicOps()) {
+                boolean writeOperator = true;
 
-				if ((sq.getLogicalOperator() == SerialChainFilter.OR && subFilter != null && !subQuery.equals(defaultField)) ||
-						(sq.getLogicalOperator() == SerialChainFilter.NOT)) {
-					subQueries.add(sq);
-				}
-				else {
-					if (!subQuery.equals("")) {
-						queryBuilder.append(subQuery);
-					}
-					if (subFilter != null) {
-						filters.add(sq.getSpatialFilter());
-					}
-				}
-			}
-		}
+                SpatialQuery sq = this.processLogicalOperator(el);
+                String subQuery = sq.getQuery();
+                Filter subFilter = sq.getSpatialFilter();
 
-		String query = queryBuilder.toString();
-		if (query.equals("()")) {
-			query = "";
-		}
+                // if the sub spatial query contains both term search and
+                // spatial search we create a subQuery
+                if ((subFilter != null && !subQuery.equals(defaultField)) || sq.getSubQueries().size() != 0
+                        || (sq.getLogicalOperator() == SerialChainFilter.NOT && sq.getSpatialFilter() == null)) {
+                    subQueries.add(sq);
+                    writeOperator = false;
+                } else {
+                    if (subQuery.equals("")) {
+                        writeOperator = false;
+                    } else {
+                        queryBuilder.append(subQuery);
+                    }
+                    if (subFilter != null) {
+                        filters.add(subFilter);
+                    }
+                }
 
-		int logicalOperand = SerialChainFilter.valueOf(operator);
-		Filter spatialFilter = this.getSpatialFilterFromList(logicalOperand, filters, query);
-		SpatialQuery response = new SpatialQuery(query, spatialFilter, logicalOperand);
-		response.setSubQueries(subQueries);
-		return response;
-	}
+                if (writeOperator) {
+                    queryBuilder.append(" ").append(operator.toUpperCase()).append(" ");
+                } else {
+                    writeOperator = true;
+                }
+            }
 
-	/**
-	 * Build a piece of Lucene query with the specified Comparison filter.
-	 * 
-	 * @param comparisonOpsEl
-	 * @return String
-	 * @throws CSWFilterException
-	 */
-	protected String processComparisonOperator(JAXBElement<? extends ComparisonOpsType> comparisonOpsEl) throws CSWFilterException {
-		StringBuilder response = new StringBuilder();
+            // process spatial constraint : BBOX, Beyond, Overlaps, ...
+            for (JAXBElement<? extends SpatialOpsType> el : binary.getSpatialOps()) {
+                // for the spatial filter we don't need to write into the Lucene
+                // query
+                filters.add(this.processSpatialOperator(el));
+            }
 
-		ComparisonOpsType comparisonOps = comparisonOpsEl.getValue();
-		if (comparisonOps instanceof PropertyIsLikeType) {
-			PropertyIsLikeType pil = (PropertyIsLikeType)comparisonOps;
+            // remove the last Operator and add a ') '
+            int pos = queryBuilder.length() - (operator.length() + 2);
+            if (pos > 0) {
+                queryBuilder.delete(queryBuilder.length() - (operator.length() + 2), queryBuilder.length());
+            }
+            queryBuilder.append(')');
+        } else if (logicOps instanceof UnaryLogicOpType) {
+            UnaryLogicOpType unary = (UnaryLogicOpType) logicOps;
 
-			// get the field
-			String propertyName = "";
-			String propertyNameLocal = "";
-			if (pil.getPropertyName() != null) {
-				propertyName = pil.getPropertyName().getContent();
-				propertyNameLocal = this.removePrefix(propertyName);
-				response.append(propertyNameLocal.toLowerCase()).append(':');
-			}
-			else {
-				throw new CSWFilterException("Missing propertyName parameter for propertyIsLike operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
+            // process comparison operator: PropertyIsLike, IsNull, IsBetween,
+            // ...
+            if (unary.getComparisonOps() != null) {
+                queryBuilder.append(this.processComparisonOperator(unary.getComparisonOps()));
+            }
+            // process spatial constraint : BBOX, Beyond, Overlaps, ...
+            else if (unary.getSpatialOps() != null) {
+                filters.add(this.processSpatialOperator(unary.getSpatialOps()));
+            }
+            // process logical Operators like AND, OR, ...
+            else if (unary.getLogicOps() != null) {
+                SpatialQuery sq = this.processLogicalOperator(unary.getLogicOps());
+                String subQuery = sq.getQuery();
+                Filter subFilter = sq.getSpatialFilter();
 
-			// get the queryable represented by the field
-			Queryable queryableProperty = Queryable.UNKNOWN;
-			try {
-				queryableProperty = Queryable.valueOf(propertyNameLocal.toUpperCase());
-			}
-			catch (IllegalArgumentException ex) {
-				throw new CSWFilterException("Unknown queryable: "+propertyName);
-			}
+                if ((sq.getLogicalOperator() == SerialChainFilter.OR && subFilter != null && !subQuery
+                        .equals(defaultField))
+                        || (sq.getLogicalOperator() == SerialChainFilter.NOT)) {
+                    subQueries.add(sq);
+                } else {
+                    if (!subQuery.equals("")) {
+                        queryBuilder.append(subQuery);
+                    }
+                    if (subFilter != null) {
+                        filters.add(sq.getSpatialFilter());
+                    }
+                }
+            }
+        }
 
-			// get the value of the field
-			if (pil.getLiteral() != null && pil.getLiteral() != null) {
-				// format the value by replacing the specified special char by the Lucene special char
-				String value = pil.getLiteral();
-				value = value.replace(pil.getWildCard(), "*");
-				value = value.replace(pil.getSingleChar(), "?");
-				value = value.replace(pil.getEscapeChar(), "\\");
+        String query = queryBuilder.toString();
+        if (query.equals("()")) {
+            query = "";
+        }
 
-				// for a date remove the time zone
-				if (queryableProperty.getType() instanceof Date) {
-					value = value.replace("Z", "");
-				}
-				response.append(maskPhrase(value));
-			}
-			else {
-				throw new CSWFilterException("Missing literal parameter for propertyIsLike operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-		}
-		else if (comparisonOps instanceof PropertyIsNullType) {
-			PropertyIsNullType pin = (PropertyIsNullType)comparisonOps;
+        int logicalOperand = SerialChainFilter.valueOf(operator);
+        Filter spatialFilter = this.getSpatialFilterFromList(logicalOperand, filters, query);
+        SpatialQuery response = new SpatialQuery(query, spatialFilter, logicalOperand);
+        response.setSubQueries(subQueries);
+        return response;
+    }
 
-			// get the field
-			if (pin.getPropertyName() != null) {
-				response.append(this.removePrefix(pin.getPropertyName().getContent().toLowerCase())).append(':').append("null");
-			} else {
-				throw new CSWFilterException("Missing propertyName parameter for propertyIsNull operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-		}
-		else if (comparisonOps instanceof PropertyIsBetweenType) {
-			// TODO PropertyIsBetweenType
-			throw new UnsupportedOperationException("Not supported yet.");
-		}
-		else if (comparisonOps instanceof BinaryComparisonOpType) {
-			BinaryComparisonOpType bc = (BinaryComparisonOpType)comparisonOps;
-			String propertyName = bc.getPropertyName();
-			String propertyNameLocal = this.removePrefix(propertyName);
-			String literal = bc.getLiteral().getStringValue();
-			String operator = comparisonOpsEl.getName().getLocalPart();
+    /**
+     * Build a piece of Lucene query with the specified Comparison filter.
+     * 
+     * @param comparisonOpsEl
+     * @return String
+     * @throws CSWFilterException
+     */
+    protected String processComparisonOperator(JAXBElement<? extends ComparisonOpsType> comparisonOpsEl)
+            throws CSWFilterException {
+        StringBuilder response = new StringBuilder();
 
-			if (propertyName == null || literal == null) {
-				throw new CSWFilterException("Missing propertyName or literal parameter for binary comparison operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			else {
-				// get the queryable represented by the field
-				Queryable queryableProperty = Queryable.UNKNOWN;
-				try {
-					queryableProperty = Queryable.valueOf(propertyNameLocal.toUpperCase());
-				}
-				catch (IllegalArgumentException ex) {
-					throw new CSWFilterException("Unknown queryable: "+propertyName);
-				}
-				QueryableType queryableType = queryableProperty.getType();
+        ComparisonOpsType comparisonOps = comparisonOpsEl.getValue();
+        if (comparisonOps instanceof PropertyIsLikeType) {
+            PropertyIsLikeType pil = (PropertyIsLikeType) comparisonOps;
 
-				propertyNameLocal = propertyNameLocal.toLowerCase();
-				
-				// property == value -> property:"value"
-				if (operator.equals("PropertyIsEqualTo")) {
-			        response.append(propertyNameLocal).append(":").append(maskPhrase(literal));
-				}
-				// property != value -> metafile:doc NOT property:"value"
-				else if (operator.equals("PropertyIsNotEqualTo")) {
-					response.append(defaultField).append(" NOT ");
+            // get the field
+            String propertyName = "";
+            String propertyNameLocal = "";
+            if (pil.getPropertyName() != null) {
+                propertyName = pil.getPropertyName().getContent();
+                propertyNameLocal = this.removePrefix(propertyName);
+                response.append(propertyNameLocal.toLowerCase()).append(':');
+            } else {
+                throw new CSWFilterException("Missing propertyName parameter for propertyIsLike operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            }
+
+            // get the queryable represented by the field
+            Queryable queryableProperty = Queryable.UNKNOWN;
+            try {
+                queryableProperty = Queryable.valueOf(propertyNameLocal.toUpperCase());
+            } catch (IllegalArgumentException ex) {
+                throw new CSWFilterException("Unknown queryable: " + propertyName);
+            }
+
+            // get the value of the field
+            if (pil.getLiteral() != null && pil.getLiteral() != null) {
+                // format the value by replacing the specified special char by
+                // the Lucene special char
+                String value = pil.getLiteral();
+                value = value.replace(pil.getWildCard(), "*");
+                value = value.replace(pil.getSingleChar(), "?");
+                value = value.replace(pil.getEscapeChar(), "\\");
+
+                // for a date remove the time zone
+                if (queryableProperty.getType() instanceof Date) {
+                    value = value.replace("Z", "");
+                }
+                response.append(maskPhrase(value));
+            } else {
+                throw new CSWFilterException("Missing literal parameter for propertyIsLike operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            }
+        } else if (comparisonOps instanceof PropertyIsNullType) {
+            PropertyIsNullType pin = (PropertyIsNullType) comparisonOps;
+
+            // get the field
+            if (pin.getPropertyName() != null) {
+                response.append(this.removePrefix(pin.getPropertyName().getContent().toLowerCase())).append(':')
+                        .append("null");
+            } else {
+                throw new CSWFilterException("Missing propertyName parameter for propertyIsNull operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            }
+        } else if (comparisonOps instanceof PropertyIsBetweenType) {
+            // TODO PropertyIsBetweenType
+            throw new UnsupportedOperationException("Not supported yet.");
+        } else if (comparisonOps instanceof BinaryComparisonOpType) {
+            BinaryComparisonOpType bc = (BinaryComparisonOpType) comparisonOps;
+            String propertyName = bc.getPropertyName();
+            String propertyNameLocal = this.removePrefix(propertyName);
+            String literal = bc.getLiteral().getStringValue();
+            String operator = comparisonOpsEl.getName().getLocalPart();
+
+            if (propertyName == null || literal == null) {
+                throw new CSWFilterException(
+                        "Missing propertyName or literal parameter for binary comparison operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            } else {
+                // get the queryable represented by the field
+                Queryable queryableProperty = Queryable.UNKNOWN;
+                try {
+                    queryableProperty = Queryable.valueOf(propertyNameLocal.toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    throw new CSWFilterException("Unknown queryable: " + propertyName);
+                }
+                QueryableType queryableType = queryableProperty.getType();
+
+                propertyNameLocal = propertyNameLocal.toLowerCase();
+
+                // property == value -> property:"value"
+                if (operator.equals("PropertyIsEqualTo")) {
                     response.append(propertyNameLocal).append(":").append(maskPhrase(literal));
-				}
-				// property >= value -> property:[value UPPER_BOUND]
-				else if (operator.equals("PropertyIsGreaterThanOrEqualTo")) {
-					if (queryableType instanceof Date) {
-						literal = literal.replace("Z", "");
-					}
-					response.append(propertyNameLocal).append(":[").append(literal).append(' ').append(queryableType.getUpperBound()).append("]");
-				}
-				// property > value -> property:{value UPPER_BOUND}
-				else if (operator.equals("PropertyIsGreaterThan")) {
-					if (queryableType instanceof Date) {
-						literal = literal.replace("Z", "");
-					}
-					response.append(propertyNameLocal).append(":{").append(literal).append(' ').append(queryableType.getUpperBound()).append("}");
-				}
-				// property < value -> property:{LOWER_BOUND value}
-				else if (operator.equals("PropertyIsLessThan") ) {
-					if (queryableType instanceof Date) {
-						literal = literal.replace("Z", "");
-					}
-					response.append(propertyNameLocal).append(":{").append(queryableType.getLowerBound()).append(' ').append(literal).append("}");
-				}
-				// property <= value -> property:[LOWER_BOUND value]
-				else if (operator.equals("PropertyIsLessThanOrEqualTo")) {
-					if (queryableType instanceof Date) {
-						literal = literal.replace("Z", "");
-					}
-					response.append(propertyNameLocal).append(":[").append(queryableType.getLowerBound()).append(' ').append(literal).append("]");
-				}
-				else {
-					throw new CSWFilterException("Unkwnow comparison operator: " + operator,
-							INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-				}
-			}
-		}
-		return response.toString();
-	}
+                }
+                // property != value -> metafile:doc NOT property:"value"
+                else if (operator.equals("PropertyIsNotEqualTo")) {
+                    response.append(defaultField).append(" NOT ");
+                    response.append(propertyNameLocal).append(":").append(maskPhrase(literal));
+                }
+                // property >= value -> property:[value UPPER_BOUND]
+                else if (operator.equals("PropertyIsGreaterThanOrEqualTo")) {
+                    if (queryableType instanceof Date) {
+                        literal = literal.replace("Z", "");
+                    }
+                    response.append(propertyNameLocal).append(":[").append(literal).append(' ').append(
+                            queryableType.getUpperBound()).append("]");
+                }
+                // property > value -> property:{value UPPER_BOUND}
+                else if (operator.equals("PropertyIsGreaterThan")) {
+                    if (queryableType instanceof Date) {
+                        literal = literal.replace("Z", "");
+                    }
+                    response.append(propertyNameLocal).append(":{").append(literal).append(' ').append(
+                            queryableType.getUpperBound()).append("}");
+                }
+                // property < value -> property:{LOWER_BOUND value}
+                else if (operator.equals("PropertyIsLessThan")) {
+                    if (queryableType instanceof Date) {
+                        literal = literal.replace("Z", "");
+                    }
+                    response.append(propertyNameLocal).append(":{").append(queryableType.getLowerBound()).append(' ')
+                            .append(literal).append("}");
+                }
+                // property <= value -> property:[LOWER_BOUND value]
+                else if (operator.equals("PropertyIsLessThanOrEqualTo")) {
+                    if (queryableType instanceof Date) {
+                        literal = literal.replace("Z", "");
+                    }
+                    response.append(propertyNameLocal).append(":[").append(queryableType.getLowerBound()).append(' ')
+                            .append(literal).append("]");
+                } else {
+                    throw new CSWFilterException("Unkwnow comparison operator: " + operator, INVALID_PARAMETER_CODE,
+                            QUERY_CONSTRAINT_LOCATOR);
+                }
+            }
+        }
+        return response.toString();
+    }
 
-	/**
-	 * Build a piece of Lucene query with the specified Spatial filter.
-	 *
-	 * @param spatialOpsEl
-	 * @return Filter
-	 * @throws CSWFilterException
-	 */
-	protected Filter processSpatialOperator(JAXBElement<? extends SpatialOpsType> spatialOpsEl) throws CSWFilterException {
-		LuceneOGCFilter spatialfilter = null;
+    /**
+     * Build a piece of Lucene query with the specified Spatial filter.
+     * 
+     * @param spatialOpsEl
+     * @return Filter
+     * @throws CSWFilterException
+     */
+    protected Filter processSpatialOperator(JAXBElement<? extends SpatialOpsType> spatialOpsEl)
+            throws CSWFilterException {
+        LuceneOGCFilter spatialfilter = null;
 
-		SpatialOpsType spatialOps = spatialOpsEl.getValue();
-		if (spatialOps instanceof BBOXType) {
-			BBOXType bbox = (BBOXType)spatialOps;
-			String propertyName = bbox.getPropertyName();
-			String crsName = bbox.getSRS();
-			
-			// make sure we DO have a valid srs
-			// joachim@wemove.com at 21.05.2012
-			if (crsName == null || crsName.length() == 0) {
-			    crsName="EPSG:4326";
-			}
+        SpatialOpsType spatialOps = spatialOpsEl.getValue();
+        if (spatialOps instanceof BBOXType) {
+            BBOXType bbox = (BBOXType) spatialOps;
+            String propertyName = bbox.getPropertyName();
+            String crsName = bbox.getSRS();
 
-			// verify that all the parameters are specified
-			if (propertyName == null) {
-				throw new CSWFilterException("Missing propertyName parameter for BBOX operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			else if (!propertyName.contains("BoundingBox")) {
-				throw new CSWFilterException("The propertyName parameter for BBOX operator is not a BoundingBox.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			if (bbox.getEnvelope() == null && bbox.getEnvelopeWithTimePeriod() == null) {
-				throw new CSWFilterException("Missing envelope parameter for BBOX operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			
-			if (crsName == null) {
-				crsName = "urn:ogc:def:crs:EPSG::4326";
-			    throw new CSWFilterException("Missing SRS parameter BBOX operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
+            // make sure we DO have a valid srs
+            // joachim@wemove.com at 21.05.2012
+            if (crsName == null || crsName.length() == 0) {
+                crsName = "EPSG:4326";
+            }
 
-			// transform the EnvelopeEntry in GeneralEnvelope
-			spatialfilter = LuceneOGCFilter.wrap(FF.bbox(LuceneOGCFilter.GEOMETRY_PROPERTY, bbox.getMinX(), bbox.getMinY(),bbox.getMaxX(),bbox.getMaxY(),crsName));
-		}
-		else if (spatialOps instanceof DistanceBufferType) {
-			DistanceBufferType dist = (DistanceBufferType) spatialOps;
-			double distance = dist.getDistance();
-			String units = dist.getDistanceUnits();
-			JAXBElement<?> geomEl = dist.getAbstractGeometry();
-			String operator = spatialOpsEl.getName().getLocalPart();
+            // verify that all the parameters are specified
+            if (propertyName == null) {
+                throw new CSWFilterException("Missing propertyName parameter for BBOX operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            } else if (!propertyName.contains("BoundingBox")) {
+                throw new CSWFilterException("The propertyName parameter for BBOX operator is not a BoundingBox.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            }
+            if (bbox.getEnvelope() == null && bbox.getEnvelopeWithTimePeriod() == null) {
+                throw new CSWFilterException("Missing envelope parameter for BBOX operator.", INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            }
 
-			// verify that all the parameters are specified
-			if (dist.getPropertyName() == null) {
-				throw new CSWFilterException("Missing propertyName parameter for distanceBuffer operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			if (units == null) {
-				throw new CSWFilterException("Missing units parameter for distanceBuffer operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			if (geomEl == null || geomEl.getValue() == null) {
-				throw new CSWFilterException("Missing geometry object for distanceBuffer operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
+            if (crsName == null) {
+                crsName = "urn:ogc:def:crs:EPSG::4326";
+                throw new CSWFilterException("Missing SRS parameter BBOX operator.", INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            }
 
-			Object gml = geomEl.getValue();
-			Geometry geometry = null;
-			String crsName = null;
+            // transform the EnvelopeEntry in GeneralEnvelope
+            spatialfilter = LuceneOGCFilter.wrap(FF.bbox(LuceneOGCFilter.GEOMETRY_PROPERTY, bbox.getMinX(), bbox
+                    .getMinY(), bbox.getMaxX(), bbox.getMaxY(), crsName));
+        } else if (spatialOps instanceof DistanceBufferType) {
+            DistanceBufferType dist = (DistanceBufferType) spatialOps;
+            double distance = dist.getDistance();
+            String units = dist.getDistanceUnits();
+            JAXBElement<?> geomEl = dist.getAbstractGeometry();
+            String operator = spatialOpsEl.getName().getLocalPart();
 
-			// transform the GML envelope into JTS polygon
-			try {
-				if (gml instanceof PointType) {
-					PointType gmlPoint = (PointType) gml;
-					crsName = gmlPoint.getSrsName();
-					geometry = GeometrytoJTS.toJTS(gmlPoint);
-				}
-				else if (gml instanceof LineStringType) {
-					LineStringType gmlLine = (LineStringType) gml;
-					crsName = gmlLine.getSrsName();
-					geometry = GeometrytoJTS.toJTS(gmlLine);
-				}
-				else if (gml instanceof EnvelopeType) {
-					EnvelopeType gmlEnvelope = (EnvelopeType) gml;
-					crsName = gmlEnvelope.getSrsName();
-					geometry = GeometrytoJTS.toJTS(gmlEnvelope);
-				}
+            // verify that all the parameters are specified
+            if (dist.getPropertyName() == null) {
+                throw new CSWFilterException("Missing propertyName parameter for distanceBuffer operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            }
+            if (units == null) {
+                throw new CSWFilterException("Missing units parameter for distanceBuffer operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            }
+            if (geomEl == null || geomEl.getValue() == null) {
+                throw new CSWFilterException("Missing geometry object for distanceBuffer operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            }
 
-				if (operator.equals("DWithin")) {
-					spatialfilter = LuceneOGCFilter.wrap(FF.dwithin(LuceneOGCFilter.GEOMETRY_PROPERTY,FF.literal(geometry),distance, units));
-				}
-				else if (operator.equals("Beyond")) {
-					spatialfilter = LuceneOGCFilter.wrap(FF.beyond(LuceneOGCFilter.GEOMETRY_PROPERTY,FF.literal(geometry),distance, units));
-				}
-				else {
-					throw new CSWFilterException("Unknow DistanceBuffer operator: " + operator,
-							INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-				}
-			}
-			catch (NoSuchAuthorityCodeException e) {
-				throw new CSWFilterException(UNKNOW_CRS_ERROR_MSG + crsName,
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			catch (FactoryException e) {
-				throw new CSWFilterException(FACTORY_BBOX_ERROR_MSG + e.getMessage(),
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			catch (IllegalArgumentException e) {
-				throw new CSWFilterException(INCORRECT_BBOX_DIM_ERROR_MSG+ e.getMessage(),
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-		}
-		else if (spatialOps instanceof BinarySpatialOpType) {
-			BinarySpatialOpType binSpatial = (BinarySpatialOpType) spatialOps;
+            Object gml = geomEl.getValue();
+            Geometry geometry = null;
+            String crsName = null;
 
-			String propertyName = null;
-			String operator = spatialOpsEl.getName().getLocalPart();
-			operator = operator.toUpperCase();
-			Object gmlGeometry = null;
+            // transform the GML envelope into JTS polygon
+            try {
+                if (gml instanceof PointType) {
+                    PointType gmlPoint = (PointType) gml;
+                    crsName = gmlPoint.getSrsName();
+                    geometry = GeometrytoJTS.toJTS(gmlPoint);
+                } else if (gml instanceof LineStringType) {
+                    LineStringType gmlLine = (LineStringType) gml;
+                    crsName = gmlLine.getSrsName();
+                    geometry = GeometrytoJTS.toJTS(gmlLine);
+                } else if (gml instanceof EnvelopeType) {
+                    EnvelopeType gmlEnvelope = (EnvelopeType) gml;
+                    crsName = gmlEnvelope.getSrsName();
+                    geometry = GeometrytoJTS.toJTS(gmlEnvelope);
+                }
 
-			// the propertyName
-			if (binSpatial.getPropertyName() != null && binSpatial.getPropertyName().getValue() != null) {
-				PropertyNameType p = binSpatial.getPropertyName().getValue();
-				propertyName = p.getContent();
-			}
+                if (operator.equals("DWithin")) {
+                    spatialfilter = LuceneOGCFilter.wrap(FF.dwithin(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(geometry), distance, units));
+                } else if (operator.equals("Beyond")) {
+                    spatialfilter = LuceneOGCFilter.wrap(FF.beyond(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(geometry), distance, units));
+                } else {
+                    throw new CSWFilterException("Unknow DistanceBuffer operator: " + operator, INVALID_PARAMETER_CODE,
+                            QUERY_CONSTRAINT_LOCATOR);
+                }
+            } catch (NoSuchAuthorityCodeException e) {
+                throw new CSWFilterException(UNKNOW_CRS_ERROR_MSG + crsName, INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            } catch (FactoryException e) {
+                throw new CSWFilterException(FACTORY_BBOX_ERROR_MSG + e.getMessage(), INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            } catch (IllegalArgumentException e) {
+                throw new CSWFilterException(INCORRECT_BBOX_DIM_ERROR_MSG + e.getMessage(), INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            }
+        } else if (spatialOps instanceof BinarySpatialOpType) {
+            BinarySpatialOpType binSpatial = (BinarySpatialOpType) spatialOps;
 
-			// geometric object: envelope
-			if (binSpatial.getEnvelope() != null && binSpatial.getEnvelope().getValue() != null) {
-				gmlGeometry = binSpatial.getEnvelope().getValue();
-			}
+            String propertyName = null;
+            String operator = spatialOpsEl.getName().getLocalPart();
+            operator = operator.toUpperCase();
+            Object gmlGeometry = null;
 
-			if (binSpatial.getAbstractGeometry() != null && binSpatial.getAbstractGeometry().getValue() != null) {
-				AbstractGeometryType ab = binSpatial.getAbstractGeometry().getValue();
+            // the propertyName
+            if (binSpatial.getPropertyName() != null && binSpatial.getPropertyName().getValue() != null) {
+                PropertyNameType p = binSpatial.getPropertyName().getValue();
+                propertyName = p.getContent();
+            }
 
-				// geometric object: point
-				if (ab instanceof PointType) {
-					gmlGeometry = ab;
-				}
-				// geometric object: Line
-				else if (ab instanceof LineStringType) {
-					gmlGeometry = ab;
-				}
-				else if (ab == null) {
-					throw new IllegalArgumentException("null value in BinarySpatialOp type");
-				}
-				else {
-					throw new IllegalArgumentException("unknow BinarySpatialOp type: " + ab.getClass().getSimpleName());
-				}
-			}
+            // geometric object: envelope
+            if (binSpatial.getEnvelope() != null && binSpatial.getEnvelope().getValue() != null) {
+                gmlGeometry = binSpatial.getEnvelope().getValue();
+            }
 
-			if (propertyName == null && gmlGeometry == null) {
-				throw new CSWFilterException("Missing propertyName or geometry parameter for binary spatial operator.",
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			SpatialFilterType filterType = null;
-			try {
-				filterType = SpatialFilterType.valueOf(operator);
-			}
-			catch (IllegalArgumentException ex) {
-				log.error("Unknow spatial filter type");
-			}
-			if (filterType == null) {
-				throw new CSWFilterException("Unknow FilterType: " + operator,
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
+            if (binSpatial.getAbstractGeometry() != null && binSpatial.getAbstractGeometry().getValue() != null) {
+                AbstractGeometryType ab = binSpatial.getAbstractGeometry().getValue();
 
-			String crsName = "undefined CRS";
-			try {
-				Geometry filterGeometry = null;
-				if (gmlGeometry instanceof EnvelopeType) {
-					// transform the EnvelopeEntry in GeneralEnvelope
-					EnvelopeType gmlEnvelope = (EnvelopeType)gmlGeometry;
-					crsName = gmlEnvelope.getSrsName();
-					filterGeometry = GeometrytoJTS.toJTS(gmlEnvelope);
-				}
-				else if (gmlGeometry instanceof PointType) {
-					PointType gmlPoint = (PointType)gmlGeometry;
-					crsName = gmlPoint.getSrsName();
-					filterGeometry = GeometrytoJTS.toJTS(gmlPoint);
-				}
-				else if (gmlGeometry instanceof LineStringType) {
-					LineStringType gmlLine = (LineStringType)gmlGeometry;
-					crsName = gmlLine.getSrsName();
-					filterGeometry = GeometrytoJTS.toJTS(gmlLine);
-				}
+                // geometric object: point
+                if (ab instanceof PointType) {
+                    gmlGeometry = ab;
+                }
+                // geometric object: Line
+                else if (ab instanceof LineStringType) {
+                    gmlGeometry = ab;
+                } else if (ab == null) {
+                    throw new IllegalArgumentException("null value in BinarySpatialOp type");
+                } else {
+                    throw new IllegalArgumentException("unknow BinarySpatialOp type: " + ab.getClass().getSimpleName());
+                }
+            }
 
-				int srid = SRIDGenerator.toSRID(crsName, Version.V1);
-				filterGeometry.setSRID(srid);
+            if (propertyName == null && gmlGeometry == null) {
+                throw new CSWFilterException("Missing propertyName or geometry parameter for binary spatial operator.",
+                        INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
+            }
+            SpatialFilterType filterType = null;
+            try {
+                filterType = SpatialFilterType.valueOf(operator);
+            } catch (IllegalArgumentException ex) {
+                log.error("Unknow spatial filter type");
+            }
+            if (filterType == null) {
+                throw new CSWFilterException("Unknow FilterType: " + operator, INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            }
 
-				switch (filterType) {
-				case CONTAINS:
-					spatialfilter = LuceneOGCFilter.wrap(FF.contains(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				case CROSSES:
-					spatialfilter = LuceneOGCFilter.wrap(FF.crosses(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				case DISJOINT:
-					spatialfilter = LuceneOGCFilter.wrap(FF.disjoint(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				case EQUALS:
-					spatialfilter = LuceneOGCFilter.wrap(FF.equal(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				case INTERSECTS:
-					spatialfilter = LuceneOGCFilter.wrap(FF.intersects(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				case OVERLAPS:
-					spatialfilter = LuceneOGCFilter.wrap(FF.overlaps(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				case TOUCHES:
-					spatialfilter = LuceneOGCFilter.wrap(FF.touches(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				case WITHIN:
-					spatialfilter = LuceneOGCFilter.wrap(FF.within(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				default:
-					log.info("using default filter within");
-					spatialfilter = LuceneOGCFilter.wrap(FF.within(LuceneOGCFilter.GEOMETRY_PROPERTY, FF.literal(filterGeometry)));
-					break;
-				}
-			}
-			catch (NoSuchAuthorityCodeException e) {
-				throw new CSWFilterException(UNKNOW_CRS_ERROR_MSG + crsName,
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			catch (FactoryException e) {
-				throw new CSWFilterException(FACTORY_BBOX_ERROR_MSG + e.getMessage(),
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-			catch (IllegalArgumentException e) {
-				throw new CSWFilterException(INCORRECT_BBOX_DIM_ERROR_MSG + e.getMessage(),
-						INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
-			}
-		}
-		return spatialfilter;
-	}
+            String crsName = "undefined CRS";
+            try {
+                Geometry filterGeometry = null;
+                if (gmlGeometry instanceof EnvelopeType) {
+                    // transform the EnvelopeEntry in GeneralEnvelope
+                    EnvelopeType gmlEnvelope = (EnvelopeType) gmlGeometry;
+                    crsName = gmlEnvelope.getSrsName();
+                    filterGeometry = GeometrytoJTS.toJTS(gmlEnvelope);
+                } else if (gmlGeometry instanceof PointType) {
+                    PointType gmlPoint = (PointType) gmlGeometry;
+                    crsName = gmlPoint.getSrsName();
+                    filterGeometry = GeometrytoJTS.toJTS(gmlPoint);
+                } else if (gmlGeometry instanceof LineStringType) {
+                    LineStringType gmlLine = (LineStringType) gmlGeometry;
+                    crsName = gmlLine.getSrsName();
+                    filterGeometry = GeometrytoJTS.toJTS(gmlLine);
+                }
 
-	/**
-	 * Build a piece of Lucene query with the specified id filter.
-	 *
-	 * @param idsOpsEl
-	 * @return String
-	 * @throws CSWFilterException
-	 */
-	private String processIDOperator(List<JAXBElement<? extends AbstractIdType>> idsOpsEl) {
-		StringBuilder response = new StringBuilder();
+                int srid = SRIDGenerator.toSRID(crsName, Version.V1);
+                filterGeometry.setSRID(srid);
 
-		// TODO processIDOperator
-		if (true) {
-			throw new UnsupportedOperationException("Not supported yet.");
-		}
-		return response.toString();
-	}
+                switch (filterType) {
+                case CONTAINS:
+                    spatialfilter = LuceneOGCFilter.wrap(FF.contains(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                case CROSSES:
+                    spatialfilter = LuceneOGCFilter.wrap(FF.crosses(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                case DISJOINT:
+                    spatialfilter = LuceneOGCFilter.wrap(FF.disjoint(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                case EQUALS:
+                    spatialfilter = LuceneOGCFilter.wrap(FF.equal(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                case INTERSECTS:
+                    spatialfilter = LuceneOGCFilter.wrap(FF.intersects(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                case OVERLAPS:
+                    spatialfilter = LuceneOGCFilter.wrap(FF.overlaps(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                case TOUCHES:
+                    spatialfilter = LuceneOGCFilter.wrap(FF.touches(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                case WITHIN:
+                    spatialfilter = LuceneOGCFilter.wrap(FF.within(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                default:
+                    log.info("using default filter within");
+                    spatialfilter = LuceneOGCFilter.wrap(FF.within(LuceneOGCFilter.GEOMETRY_PROPERTY, FF
+                            .literal(filterGeometry)));
+                    break;
+                }
+            } catch (NoSuchAuthorityCodeException e) {
+                throw new CSWFilterException(UNKNOW_CRS_ERROR_MSG + crsName, INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            } catch (FactoryException e) {
+                throw new CSWFilterException(FACTORY_BBOX_ERROR_MSG + e.getMessage(), INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            } catch (IllegalArgumentException e) {
+                throw new CSWFilterException(INCORRECT_BBOX_DIM_ERROR_MSG + e.getMessage(), INVALID_PARAMETER_CODE,
+                        QUERY_CONSTRAINT_LOCATOR);
+            }
+        }
+        return spatialfilter;
+    }
 
-	/**
-	 * Remove the prefix from a propertyName.
-	 * @param propertyName
-	 * @return String
-	 */
-	private String removePrefix(String propertyName) {
-		int i = propertyName.indexOf(':');
-		if (i != -1) {
-			propertyName = propertyName.substring(i + 1, propertyName.length());
-		}
-		return propertyName;
-	}
+    /**
+     * Build a piece of Lucene query with the specified id filter.
+     * 
+     * @param idsOpsEl
+     * @return String
+     * @throws CSWFilterException
+     */
+    private String processIDOperator(List<JAXBElement<? extends AbstractIdType>> idsOpsEl) {
+        StringBuilder response = new StringBuilder();
 
-	/**
-	 * Create a spatial filter for the given filter list.
-	 * @param operator
-	 * @param filters
-	 * @param query
-	 * @return Filter
-	 */
-	protected Filter getSpatialFilterFromList(int logicalOperand, List<Filter> filters, String query) {
-		Filter spatialFilter = null;
-		if (filters.size() == 1) {
-			if (logicalOperand == SerialChainFilter.NOT) {
-				int[] filterType = {SerialChainFilter.NOT};
-				spatialFilter = new SerialChainFilter(filters, filterType);
-				if (query.equals("")) {
-					logicalOperand = SerialChainFilter.AND;
-				}
-			}
-			else {
-				spatialFilter = filters.get(0);
-			}
-		}
-		else if (filters.size() > 1) {
-			int[] filterType = new int[filters.size() - 1];
-			for (int i = 0; i < filterType.length; i++) {
-				filterType[i] = logicalOperand;
-			}
-			spatialFilter = new SerialChainFilter(filters, filterType);
-		}
-		return spatialFilter;
-	}
-	
-	private String maskPhrase(String str) {
-	    if (str.contains(" ") || str.contains(":")) {
-	        return "\""+str+"\"";
-	    } else {
-	        return str;
-	    }
-	}
-	
+        // TODO processIDOperator
+        if (true) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        return response.toString();
+    }
+
+    /**
+     * Remove the prefix from a propertyName.
+     * 
+     * @param propertyName
+     * @return String
+     */
+    private String removePrefix(String propertyName) {
+        int i = propertyName.indexOf(':');
+        if (i != -1) {
+            propertyName = propertyName.substring(i + 1, propertyName.length());
+        }
+        return propertyName;
+    }
+
+    /**
+     * Create a spatial filter for the given filter list.
+     * 
+     * @param operator
+     * @param filters
+     * @param query
+     * @return Filter
+     */
+    protected Filter getSpatialFilterFromList(int logicalOperand, List<Filter> filters, String query) {
+        Filter spatialFilter = null;
+        if (filters.size() == 1) {
+            if (logicalOperand == SerialChainFilter.NOT) {
+                int[] filterType = { SerialChainFilter.NOT };
+                spatialFilter = new SerialChainFilter(filters, filterType);
+                if (query.equals("")) {
+                    logicalOperand = SerialChainFilter.AND;
+                }
+            } else {
+                spatialFilter = filters.get(0);
+            }
+        } else if (filters.size() > 1) {
+            int[] filterType = new int[filters.size() - 1];
+            for (int i = 0; i < filterType.length; i++) {
+                filterType[i] = logicalOperand;
+            }
+            spatialFilter = new SerialChainFilter(filters, filterType);
+        }
+        return spatialFilter;
+    }
+
+    private String maskPhrase(String str) {
+        if (str.contains(" ") || str.contains(":")) {
+            return "\"" + str + "\"";
+        } else {
+            return str;
+        }
+    }
+
 }

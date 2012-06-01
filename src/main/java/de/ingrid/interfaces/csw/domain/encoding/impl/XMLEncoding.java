@@ -242,7 +242,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                                 if (param != null && param.length() >= 0) {
                                     OGCFilterTools.addPropertyIsEqual(query, queryConstraint, param);
                                 }
-    
+
                             }
                         }
                     }
@@ -295,6 +295,13 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         startPosition = 1;
                     }
                     this.query.setStartPosition(startPosition);
+
+                    // extract the sort part
+                    Node sort = this.xpath.getNode(requestNode, "/csw:GetRecords/csw:Query/csw:SortBy");
+
+                    if (sort != null) {
+                        this.query.setSortBy(extractFromDocument(sort));
+                    }
 
                 }
             } catch (Exception ex) {

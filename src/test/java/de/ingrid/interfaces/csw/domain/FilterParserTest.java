@@ -19,6 +19,8 @@ import org.opengis.filter.spatial.DWithin;
 import org.opengis.filter.spatial.Intersects;
 
 import de.ingrid.interfaces.csw.domain.filter.impl.LuceneFilterParser;
+import de.ingrid.interfaces.csw.domain.query.CSWQuery;
+import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
 public class FilterParserTest extends TestCase {
@@ -61,7 +63,10 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Literal>*VM*</ogc:Literal>"                                    +
 				"    </ogc:PropertyIsLike>"                                                  +
 				"</ogc:Filter>";
-		SpatialQuery spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+		
+		CSWQuery q = new GenericQuery();
+		q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+		SpatialQuery spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -77,7 +82,8 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Literal>VM</ogc:Literal>"                    +
 				"    </ogc:PropertyIsEqualTo>"                             +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+		spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -92,7 +98,8 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Literal>VM</ogc:Literal>"                    +
 				"    </ogc:PropertyIsNotEqualTo>"                          +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -107,7 +114,8 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:PropertyName>apiso:Title</ogc:PropertyName>" +
 				"    </ogc:PropertyIsNull>"                                +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -122,7 +130,8 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Literal>2007-06-02</ogc:Literal>"                   +
 				"    </ogc:PropertyIsGreaterThanOrEqualTo>"                       +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -137,7 +146,8 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Literal>2007-06-02</ogc:Literal>"                   +
 				"    </ogc:PropertyIsGreaterThan>"                                +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -152,7 +162,8 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Literal>2007-06-02</ogc:Literal>"                   +
 				"    </ogc:PropertyIsLessThan>"                                   +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -168,7 +179,8 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Literal>2007-06-02</ogc:Literal>"                   +
 				"    </ogc:PropertyIsLessThanOrEqualTo>"                          +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -198,7 +210,9 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:PropertyIsEqualTo>"                                  +
 				"    </ogc:And>"                                                    +
 				"</ogc:Filter>";
-		SpatialQuery spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        CSWQuery q = new GenericQuery();
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        SpatialQuery spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -219,7 +233,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:PropertyIsEqualTo>"                              +
 				"    </ogc:Or>"                                                 +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -245,7 +260,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:PropertyIsEqualTo>"                                  +
 				"    </ogc:Or> "                                                    +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -263,7 +279,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:PropertyIsEqualTo>"                               +
 				"    </ogc:Not>"                                                 +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getSubQueries().size(), 0);
@@ -293,7 +310,9 @@ public class FilterParserTest extends TestCase {
 				"        </gml:Envelope>                                       "  +
 				"    </ogc:Intersects>                                         "  +
 				"</ogc:Filter>";
-		SpatialQuery spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        CSWQuery q = new GenericQuery();
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+		SpatialQuery spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "metafile:doc");
@@ -317,7 +336,8 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Distance units='m'>1000</ogc:Distance>           " +
 				"    </ogc:DWithin>                                            " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "metafile:doc");
@@ -340,7 +360,8 @@ public class FilterParserTest extends TestCase {
 				"           </gml:LineString>                                  "  +
 				"    </ogc:Intersects>                                         "  +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "metafile:doc");
@@ -382,7 +403,9 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:Intersects>                                           "  +
 				"    </ogc:And>                                                      "  +
 				"</ogc:Filter>";
-		SpatialQuery spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        CSWQuery q = new GenericQuery();
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        SpatialQuery spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "metafile:doc");
@@ -423,7 +446,8 @@ public class FilterParserTest extends TestCase {
 				"       </ogc:BBOX>                                                  "  +
 				"    </ogc:Or>                                                       "  +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "metafile:doc");
@@ -477,7 +501,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:Or>                                                      "  +
 				"    </ogc:And>                                                         "  +
 				"</ogc:Filter>                                                          ";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(metafile:doc)");
@@ -536,7 +561,8 @@ public class FilterParserTest extends TestCase {
 				"       </ogc:BBOX>                                                     "  +
 				"    </ogc:And>                                                         "  +
 				"</ogc:Filter>                                                          ";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(metafile:doc)");
@@ -598,7 +624,8 @@ public class FilterParserTest extends TestCase {
 				"       </ogc:BBOX>                                                        "  +
 				"    </ogc:And>                                                            "  +
 				"</ogc:Filter>                                                             ";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(metafile:doc)");
@@ -662,7 +689,9 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:Intersects>                                                     " +
 				"    </ogc:And>                                                                " +
 				"</ogc:Filter>";
-		SpatialQuery spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        CSWQuery q = new GenericQuery();
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        SpatialQuery spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(title:*VM*)");
@@ -696,7 +725,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:PropertyIsEqualTo>                                              " +
 				"    </ogc:And>                                                                " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(title:*VM* AND title:VM)");
@@ -733,7 +763,8 @@ public class FilterParserTest extends TestCase {
 				"       </ogc:BBOX>                                                            " +
 				"    </ogc:And>                                                                " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(title:VM)");
@@ -775,7 +806,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:PropertyIsEqualTo>                                              " +
 				"    </ogc:Or>                                                                 " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(title:*VM* OR title:VM)");
@@ -813,7 +845,8 @@ public class FilterParserTest extends TestCase {
 				"       </ogc:BBOX>                                                            " +
 				"    </ogc:Or>                                                                 " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(title:VM)");
@@ -861,7 +894,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:Or>                                                             " +
 				"    </ogc:And>                                                                " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "metafile:doc");
@@ -909,7 +943,8 @@ public class FilterParserTest extends TestCase {
 				"            </ogc:And>                                                                " +
 				"        </ogc:Or>                                                                     " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() == null);
 		assertEquals(spaQuery.getQuery(), "(metafile:doc NOT title:VMAI)");
@@ -979,7 +1014,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:Or>                                                                     " +
 				"    </ogc:And>                                                                        " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(title:*VM*)");
@@ -1077,7 +1113,8 @@ public class FilterParserTest extends TestCase {
 				"        </ogc:Or>                                                                     " +
 				"    </ogc:And>                                                                        " +
 				"</ogc:Filter>";
-		spaQuery = this.filterParser.parse(StringUtils.stringToDocument(XMLrequest));
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        spaQuery = this.filterParser.parse(q);
 
 		assertTrue(spaQuery.getSpatialFilter() != null);
 		assertEquals(spaQuery.getQuery(), "(metafile:doc)");
