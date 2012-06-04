@@ -5,6 +5,7 @@ package de.ingrid.interfaces.csw.server.impl;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Hashtable;
 import java.util.Map;
@@ -74,7 +75,7 @@ public class GenericServer implements CSWServer {
     public Document process(GetCapabilitiesRequest request, String variant) throws CSWException {
 
         final String documentKey = ConfigurationKeys.CAPABILITIES_DOC;
-        
+
         Document doc = this.getDocument(documentKey, variant);
 
         // try to replace the interface URLs
@@ -220,7 +221,7 @@ public class GenericServer implements CSWServer {
         if (variant != null) {
             cacheKey = cacheKey + variant;
         }
-        
+
         if (!this.documentCache.containsKey(cacheKey)
                 || !ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false)) {
 
@@ -229,26 +230,28 @@ public class GenericServer implements CSWServer {
             String filenameVariant = filename;
             if (variant != null && variant.length() > 0) {
                 if (filename.contains(FilenameUtils.EXTENSION_SEPARATOR_STR)) {
-                    filenameVariant = FilenameUtils.getBaseName(filename) + "_"+ variant + FilenameUtils.EXTENSION_SEPARATOR_STR + FilenameUtils.getExtension(filename);
+                    filenameVariant = FilenameUtils.getBaseName(filename) + "_" + variant
+                            + FilenameUtils.EXTENSION_SEPARATOR_STR + FilenameUtils.getExtension(filename);
                 } else {
-                    filenameVariant = FilenameUtils.getBaseName(filename) + "_"+ variant;
+                    filenameVariant = FilenameUtils.getBaseName(filename) + "_" + variant;
                 }
             }
             try {
-                String path = this.getClass().getClassLoader().getResource(filenameVariant).getPath().replaceAll("%20", " ");
-                File file = new File(path);
-                if (!file.exists()) {
-                    path = this.getClass().getClassLoader().getResource(filename).getPath().replaceAll("%20", " ");
-                    file = new File(path);
+                URL resource = this.getClass().getClassLoader().getResource(filenameVariant);
+                if (resource == null) {
+                    log.warn("Document '" + filenameVariant + "' could not be found in class path.");
+                    resource = this.getClass().getClassLoader().getResource(filename);
                 }
+                String path = resource.getPath().replaceAll("%20", " ");
+                File file = new File(path);
                 String content = new Scanner(file).useDelimiter("\\A").next();
                 Document doc = StringUtils.stringToDocument(content);
 
                 // cache the document
                 this.documentCache.put(cacheKey, doc);
             } catch (Exception e) {
-                throw new RuntimeException("Error reading document configured in configuration key '" + cacheKey + "': "
-                        + filename, e);
+                throw new RuntimeException("Error reading document configured in configuration key '" + cacheKey
+                        + "': " + filename + ", " + variant, e);
             }
         }
         return this.documentCache.get(cacheKey);
