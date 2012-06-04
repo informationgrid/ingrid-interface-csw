@@ -128,7 +128,7 @@ public class LuceneSearcher implements Searcher {
                 }
             }
             // add number of results as total hits
-            results.setTotalHits(results.getResults().size());
+            results.setTotalHits((results.getResults() != null) ? results.getResults().size(): 0);
         } else {
             // use the query constraints to search for records in the Lucene
             // index

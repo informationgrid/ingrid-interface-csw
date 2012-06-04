@@ -170,11 +170,13 @@ public class GenericServer implements CSWServer {
             DOMImplementation domImpl = docBuilder.getDOMImplementation();
             Document doc = domImpl.createDocument("http://www.opengis.net/cat/csw/2.0.2", "csw:GetRecordByIdResponse",
                     null);
-            Element rootElement = doc.getDocumentElement();
-            for (CSWRecord record : result.getResults()) {
-                Node recordNode = record.getDocument().getFirstChild();
-                doc.adoptNode(recordNode);
-                rootElement.appendChild(recordNode);
+            if (result.getResults() != null) {
+                Element rootElement = doc.getDocumentElement();
+                for (CSWRecord record : result.getResults()) {
+                    Node recordNode = record.getDocument().getFirstChild();
+                    doc.adoptNode(recordNode);
+                    rootElement.appendChild(recordNode);
+                }
             }
             return doc;
         } catch (Exception ex) {
