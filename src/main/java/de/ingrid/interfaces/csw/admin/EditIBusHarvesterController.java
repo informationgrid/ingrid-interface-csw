@@ -32,6 +32,7 @@ import de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject;
 import de.ingrid.interfaces.csw.admin.command.Identificable;
 import de.ingrid.interfaces.csw.admin.command.RequestDefinitionCommandObject;
 import de.ingrid.interfaces.csw.admin.validation.IBusHarvesterValidator;
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.config.CommunicationProvider;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
@@ -43,6 +44,7 @@ import de.ingrid.interfaces.csw.config.model.communication.CommunicationMessages
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServer;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServerSocket;
 import de.ingrid.interfaces.csw.config.model.impl.RecordCacheConfiguration;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
 import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
 import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester.IBusClosableLock;
@@ -52,7 +54,6 @@ import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 import de.ingrid.interfaces.csw.tools.FileUtils;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.PlugDescription;
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
 @SessionAttributes("harvester")
@@ -200,7 +201,6 @@ public class EditIBusHarvesterController {
         return "redirect:" + TEMPLATE_EDIT_HARVESTER_3;
     }
 
-    @SuppressWarnings("unchecked")
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER_3, method = RequestMethod.GET)
     public String step3Get(final HttpSession session, final ModelMap modelMap,
             @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors)
@@ -218,16 +218,50 @@ public class EditIBusHarvesterController {
             }
             IBus bus = client.getNonCacheableIBus();
             PlugDescription[] allPlugDescriptions = bus.getAllIPlugs();
-            session.setAttribute("allPlugDescriptions", allPlugDescriptions);
+
+            String[] allowedDatatypes = ApplicationProperties.get(ConfigurationKeys.HARVESTER_IBUS_DATATYPES_ALLOW, "")
+                    .split(",");
+            String[] deniedDatatypes = ApplicationProperties.get(ConfigurationKeys.HARVESTER_IBUS_DATATYPES_DENY, "")
+                    .split(",");
+
+            List<PlugDescription> filteredDatatypesList = new ArrayList<PlugDescription>();
+
+            for (PlugDescription pd : allPlugDescriptions) {
+                if (filteredDatatypesList.contains(pd)) {
+                    continue;
+                }
+                boolean deny = false;
+                for (String deniedDatatype : deniedDatatypes) {
+                    if (deniedDatatype.length() > 0 && pd.containsDataType(deniedDatatype)) {
+                        deny = true;
+                        break;
+                    }
+                }
+                if (deny) {
+                    continue;
+                }
+                if (allowedDatatypes.length > 0) {
+                    for (String allowedDatatype : allowedDatatypes) {
+                        if (allowedDatatype.length() > 0 && pd.containsDataType(allowedDatatype)) {
+                            filteredDatatypesList.add(pd);
+                            break;
+                        }
+                    }
+                } else {
+                    filteredDatatypesList.add(pd);
+                }
+            }
+
+            session.setAttribute("allPlugDescriptions", filteredDatatypesList);
 
             List<PlugDescription> availableIPlugs = new ArrayList<PlugDescription>();
             List<RequestDefinitionCommandObject> enabledIPlugs = new ArrayList<RequestDefinitionCommandObject>();
 
             if (harvester.getRequestDefinitions() == null) {
                 // just copy all plugs
-                availableIPlugs = Arrays.asList(allPlugDescriptions);
+                availableIPlugs = filteredDatatypesList;
             } else {
-                for (PlugDescription pd : allPlugDescriptions) {
+                for (PlugDescription pd : filteredDatatypesList) {
                     boolean isEnabled = false;
                     for (RequestDefinition rd : harvester.getRequestDefinitions()) {
                         if (rd.getPlugId() != null && rd.getPlugId().equalsIgnoreCase(pd.getPlugId())) {

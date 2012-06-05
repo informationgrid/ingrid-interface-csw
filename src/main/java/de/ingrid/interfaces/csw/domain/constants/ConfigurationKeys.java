@@ -21,9 +21,10 @@ public class ConfigurationKeys {
     public static final String CACHE_ENABLE = "cache.enable";
     public static final String QUERY_PARAMETER_2_CONSTRAINTS = "query.parameter.to.constraints";
     public static final String QUERY_PARAMETER_2_CAPABILITIES_VARIANT = "query.parameter.to.capabilities.variant";
-    
-    
-	/** variables in documents **/
+    public static final String HARVESTER_IBUS_DATATYPES_ALLOW = "harvester.ibus.datatypes.allow";
+    public static final String HARVESTER_IBUS_DATATYPES_DENY = "harvester.ibus.datatypes.deny";
+
+    /** variables in documents **/
 	public static final String VARIABLE_INTERFACE_HOST = "INTERFACE_HOST";
 	public static final String VARIABLE_INTERFACE_PORT = "INTERFACE_PORT";
     public static final String VARIABLE_INTERFACE_PATH = "INTERFACE_PATH";
