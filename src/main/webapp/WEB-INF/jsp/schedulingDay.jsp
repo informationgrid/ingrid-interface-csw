@@ -1,8 +1,8 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 <tr>
-	<td class="leftCol">Uhrzeit:</td>
+	<td class="leftCol">Time:</td>
 	<td>
-		<label>um&nbsp;</label>
+		<label>at&nbsp;</label>
 		<select class="auto" name="hour">
 			<c:forEach var="i" begin="0" end="23">
 				<option value="${i}">${i}</option>
@@ -15,6 +15,6 @@
 				<option value="${i}">${i}</option>
 			</c:forEach>
 		</select>
-		<label>&nbsp;Uhr</label>
+		<label>&nbsp;</label>
 	</td>
 </tr>

@@ -75,21 +75,19 @@ else
 		
         <table class="data">
         <tr>
-            	<th class="leftCol">iPlug</th>
-            	<th>Name</th>
+            	<th class="leftCol">iPlug (Name)</th>
             	<th>Query</th>
             	<th>&nbsp;</th>
         </tr>
 		<tr>
-			<td colspan="4">
+			<td colspan="3">
 				<h3>Enabled iPlugs:</h3>
 			</td>
 		</tr>		
 		<c:set var="i" value="0" />
         <c:forEach items="${enabledIPlugs}" var="enabledIPlug">
         <tr>
-	    	<td>${enabledIPlug.plugId} (harvested: ${enabledIPlug.indexedRecords})</td>
-	    	<td>${enabledIPlug.dataSourceName}</td>
+	    	<td class="leftCol">${enabledIPlug.dataSourceName}<br/><small>${enabledIPlug.plugId} (harvested: ${enabledIPlug.indexedRecords})</small></td>
 	    	<td>${enabledIPlug.queryString}</td>
 	        <td>
 	        	<button type="submit" name="edit" value="${enabledIPlug.plugId}" id="${enabledIPlug.plugId}">Edit</button>
@@ -100,7 +98,7 @@ else
         </c:forEach>
         
 		<tr>
-			<td colspan="4">
+			<td colspan="3">
 				<h3>Available iPlugs:</h3>
 			</td>
 		</tr>		
@@ -108,8 +106,7 @@ else
 		<c:set var="i" value="0" />
         <c:forEach items="${availableIPlugs}" var="plugDescription">
         <tr>
-	    	<td><%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %></td>
-	    	<td><%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getDataSourceName() %></td>
+	    	<td class="leftCol"><%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getDataSourceName() %><br/><small><%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %></small></td>
 	    	<td>&nbsp;</td>
 	        <td>
 	        	<button type="submit" name="enable" value="<%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %>" id="<%= ((PlugDescription)pageContext.findAttribute("plugDescription")).getPlugId() %>">Enable</button>
@@ -120,17 +117,10 @@ else
         
         </table>
 
-		<table id="konfigForm">
-		<tbody>
-        <tr>
-    	<td class="leftCol">&nbsp;</td>
-        <td>
-        	<button type="submit" name="back" value="back">Back</button>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-            
+    	<br />
+        <button type="submit" name="back" value="back">Back</button>
+        <br />    
+        <br />
         </form:form>
 			
 		</div>

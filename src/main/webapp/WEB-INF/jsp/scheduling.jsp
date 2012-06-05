@@ -65,7 +65,7 @@
 		    <c:if test="${!empty pattern}">
 			    <form method="post" action="deletePattern.html">
 			        <label>Pattern:</label>
-	                <span><b>${pattern}</b></span> <input type="submit" value="löschen" />
+	                <span><b>${pattern}</b></span> <input type="submit" value="delete" />
 	            </form><br />
             </c:if>
             
@@ -73,15 +73,15 @@
                 <div class="error" ><fmt:message key="Scheduling.pattern.invalid" /></div>
             </c:if>
             
-			<h2>Geben Sie an, in welchem Zeitabstand Ihre Daten automatisch neu indexiert werden sollen</h2>
+			<h2>Please state the index frequency.</h2>
 			<form id="submitform" method="post" action="scheduling.html" id="scheduling">
 				<c:set var="freq" value="${paramValues['freq'][0]}"/>
 
 				<ul class="tabs">
-					<li <c:if test="${empty freq}">class="active"</c:if>><a href="scheduling.html">Täglich</a></li>
-					<li <c:if test="${freq == 'weekly'}">class="active"</c:if>><a href="scheduling.html?freq=weekly">Wöchentlich</a></li>
-					<li <c:if test="${freq == 'monthly'}">class="active"</c:if>><a href="scheduling.html?freq=monthly">Monatlich</a></li>
-					<li <c:if test="${freq == 'advanced'}">class="active"</c:if>><a href="scheduling.html?freq=advanced">Erweitert</a></li>
+					<li <c:if test="${empty freq}">class="active"</c:if>><a href="scheduling.html">Daily</a></li>
+					<li <c:if test="${freq == 'weekly'}">class="active"</c:if>><a href="scheduling.html?freq=weekly">Weekly</a></li>
+					<li <c:if test="${freq == 'monthly'}">class="active"</c:if>><a href="scheduling.html?freq=monthly">Monthly</a></li>
+					<li <c:if test="${freq == 'advanced'}">class="active"</c:if>><a href="scheduling.html?freq=advanced">Extended</a></li>
 				</ul>
 				
 				<table id="konfigForm" style="clear:both">
@@ -101,7 +101,7 @@
 					</c:choose>
 					<tr>
 			            <td class="leftCol">&nbsp;</td>
-			            <td><input type="submit" value="speichern" /></td>
+			            <td><input type="submit" value="Save" /></td>
 				    </tr>
 			    </table>
 			</form>

@@ -203,9 +203,12 @@ public class EditIBusHarvesterController {
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER_3, method = RequestMethod.GET)
     public String step3Get(final HttpSession session, final ModelMap modelMap,
-            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors)
+            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvesterParam, final Errors errors,
+            @RequestParam(value = "id", required = false) final Integer id)
             throws Exception {
 
+        IBusHarvesterCommandObject harvester = harvesterParam; 
+        
         // setup the IBus client
         File file = new File(harvester.getCommunicationXml());
         BusClient client = null;

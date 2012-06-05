@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
 import de.ingrid.interfaces.csw.admin.command.HarvesterCommandObject;
+import de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject;
 import de.ingrid.interfaces.csw.admin.validation.HarvesterValidator;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
@@ -48,13 +49,12 @@ public class ManageHarvesterController {
 
     @Autowired
     ConfigurationProvider cProvider = null;
-    
+
     @Autowired
     UpdateJob updateJob;
-    
+
     @Autowired
     private IsoIndexManager indexManager;
-
 
     private final HarvesterValidator _validator;
 
@@ -77,7 +77,8 @@ public class ManageHarvesterController {
     public String post(final HttpServletRequest request, final HttpSession session, final ModelMap modelMap,
             @ModelAttribute("harvester") final HarvesterCommandObject harvester, final Errors errors,
             @RequestParam(value = "delete", required = false) final Integer delete,
-            @RequestParam(value = "edit", required = false) final Integer edit) throws Exception {
+            @RequestParam(value = "edit", required = false) final Integer edit,
+            @RequestParam(value = "iPlugList", required = false) final Integer iPlugList) throws Exception {
 
         Configuration conf = cProvider.getConfiguration();
         List<HarvesterConfiguration> hConfigs = conf.getHarvesterConfigurations();
@@ -92,13 +93,15 @@ public class ManageHarvesterController {
                     // clear harvester model for new entries
                     harvester.setName("");
                     harvester.setType("");
-                    return "redirect:" + EditIBusHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id=" + (hConfigs.size() -1);
-                    
+                    return "redirect:" + EditIBusHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id="
+                            + (hConfigs.size() - 1);
+
                 } else if (harvester.getType().equals(TestSuiteHarvester.class.getName())) {
                     TestSuiteHarvesterConfiguration newHarvesterConfig = new TestSuiteHarvesterConfiguration();
                     newHarvesterConfig.setName(harvester.getName());
                     if (newHarvesterConfig.getWorkingDirectory() == null) {
-                        newHarvesterConfig.setWorkingDirectory(new File(FileUtils.encodeFileName(newHarvesterConfig.getName())).getAbsolutePath());
+                        newHarvesterConfig.setWorkingDirectory(new File(FileUtils.encodeFileName(newHarvesterConfig
+                                .getName())).getAbsolutePath());
                     }
                     RecordCacheConfiguration rcc = new RecordCacheConfiguration();
                     rcc.setCachePath(new File(newHarvesterConfig.getWorkingDirectory(), "records").getAbsoluteFile());
@@ -109,7 +112,8 @@ public class ManageHarvesterController {
                     // clear harvester model for new entries
                     harvester.setName("");
                     harvester.setType("");
-                    return "redirect:" + EditTestSuiteHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id=" + (hConfigs.size() -1);
+                    return "redirect:" + EditTestSuiteHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id="
+                            + (hConfigs.size() - 1);
                 }
 
             } else {
@@ -138,6 +142,21 @@ public class ManageHarvesterController {
                 modelMap.addAttribute("harvesterTypes", HARVESTER_TYPES);
                 return "/list_harvester";
             }
+
+        } else if (iPlugList != null && iPlugList >= 0 && iPlugList < hConfigs.size()) {
+            // enable shortcut via idx of harvester in harvesters list
+            // used to jump directly to the iplug list from the harvester list
+            // bypassing admin pages.
+            // Assumes the config is fully specified
+            HarvesterConfiguration hConfig = hConfigs.get(iPlugList);
+            if (hConfig.getClassName().equals(IBusHarvester.class.getName())) {
+                IBusHarvesterCommandObject commandObject = new IBusHarvesterCommandObject(hConfig);
+                commandObject.setId(iPlugList);
+                // put into session
+                session.setAttribute("harvester", commandObject);
+                modelMap.addAttribute("harvester", commandObject);
+            }
+            return "redirect:" + EditIBusHarvesterController.TEMPLATE_EDIT_HARVESTER_3 + "?id=" + iPlugList;
         }
 
         return "redirect:" + TEMPLATE_LIST_HARVESTER;

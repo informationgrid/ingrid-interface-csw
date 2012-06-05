@@ -48,13 +48,13 @@
 					</tr>
 					<tr>
 						<td class="leftCol">&nbsp;</td>
-						<td><input type="submit" value="Suchen"/></td>
+						<td><input type="submit" value="Search"/></td>
 					</tr>
 				</table>
 			</form>
 			
 			<c:if test="${!empty hits}">
-				<div class="hitCount">Ergebnisse 1-${hitCount} von ${totalHitCount}</div>
+				<div class="hitCount">Hits 1-${hitCount} of ${totalHitCount}</div>
 				
 				<c:forEach items="${hits}" var="hit">
 					<div class="searchResult">
@@ -67,7 +67,7 @@
 				<br /><br />
 			</c:if>
             <c:if test="${empty hits}">
-                <div class="hitCount">Ergebnisse ${hitCount} von ${totalHitCount}</div>
+                <div class="hitCount">Hits ${hitCount} of ${totalHitCount}</div>
             </c:if>
 		</div>
 	</div>

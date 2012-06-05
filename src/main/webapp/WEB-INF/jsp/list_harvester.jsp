@@ -70,6 +70,9 @@ else
             <td>
             	<button type="submit" name="edit" value="${i}" id="${i}">Edit</button>
                 <button type="submit" name="delete" value="${i}" id="${i}" onClick="return confirmSubmit('Really delete this harvester?')">Delete</button>                	
+                <c:if test="${harvesterConfig.className == 'de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester' and not empty harvesterConfig.communicationXml}">
+                <button type="submit" name="iPlugList" value="${i}" id="${i}">Go To iPlug List</button>
+                </c:if>
             </td>
         </tr>
         <c:set var="i" value="${i + 1}" />

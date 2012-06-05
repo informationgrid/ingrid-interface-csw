@@ -1,14 +1,14 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 <tr>
-	<td class="leftCol">Tag und Uhrzeit:</td>
+	<td class="leftCol">Day and time:</td>
 	<td>
-		<label>am&nbsp;</label>
+		<label>at&nbsp;</label>
 		<select class="auto" name="dayOfMonth">
             <c:forEach var="i" begin="1" end="31">
                 <option value="${i}">${i}.</option>
             </c:forEach>
         </select>
-        <label>&nbsp;Tag des Monats um&nbsp;</label>
+        <label>&nbsp;Day of month at&nbsp;</label>
 	
 		<select class="auto" name="hour">
 			<c:forEach var="i" begin="0" end="23">
@@ -22,11 +22,11 @@
 				<option value="${i}">${i}</option>
 			</c:forEach>
 		</select>
-		<label>&nbsp;Uhr</label>
+		<label>&nbsp;</label>
 	</td>
 </tr>
 <tr>
-	<td class="leftCol">An mehreren Tagen:</td>
+	<td class="leftCol">At multiple days:</td>
 	<td>
 		<input type="hidden" name="_dayOfMonth" value=""/>
 		<table id="multiple">
