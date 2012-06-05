@@ -26,6 +26,10 @@ public class RecordCache extends AbstractFileCache<Record> implements Serializab
     public Serializable getCacheId(Record document) throws Exception {
         // TODO might be optimized by caching the id
         Serializable id = IdfUtils.getRecordId(document);
+        if (id == null) {
+            // make sure the record has a appropriate uuid, if the IDF document has no gmd:fileIdentifier element.
+            log.warn("IDF has no gmd:fileIdentifier Element set.");
+        }
         return id;
     }
 

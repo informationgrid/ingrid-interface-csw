@@ -89,8 +89,11 @@ public class ManageHarvesterController {
                     newHarvesterConfig.setName(harvester.getName());
                     hConfigs.add(newHarvesterConfig);
                     cProvider.write(conf);
+                    // clear harvester model for new entries
                     harvester.setName("");
                     harvester.setType("");
+                    return "redirect:" + EditIBusHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id=" + (hConfigs.size() -1);
+                    
                 } else if (harvester.getType().equals(TestSuiteHarvester.class.getName())) {
                     TestSuiteHarvesterConfiguration newHarvesterConfig = new TestSuiteHarvesterConfiguration();
                     newHarvesterConfig.setName(harvester.getName());
@@ -103,8 +106,10 @@ public class ManageHarvesterController {
 
                     hConfigs.add(newHarvesterConfig);
                     cProvider.write(conf);
+                    // clear harvester model for new entries
                     harvester.setName("");
                     harvester.setType("");
+                    return "redirect:" + EditTestSuiteHarvesterController.TEMPLATE_EDIT_HARVESTER + "?id=" + (hConfigs.size() -1);
                 }
 
             } else {
@@ -114,10 +119,11 @@ public class ManageHarvesterController {
             }
         } else if (delete != null && delete >= 0 && delete < hConfigs.size()) {
             HarvesterConfiguration hcnf = hConfigs.get(delete.intValue());
-            RecordCache cacheInstance = conf.createInstance(hcnf.getCacheConfiguration());
-            Set<Serializable> ids = cacheInstance.getCachedIds();
-            indexManager.removeDocuments(ids);
-            
+            if (hcnf.getCacheConfiguration() != null) {
+                RecordCache cacheInstance = conf.createInstance(hcnf.getCacheConfiguration());
+                Set<Serializable> ids = cacheInstance.getCachedIds();
+                indexManager.removeDocuments(ids);
+            }
             hConfigs.remove(delete.intValue());
             cProvider.write(conf);
         } else if (edit != null && edit >= 0 && edit < hConfigs.size()) {

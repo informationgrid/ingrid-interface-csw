@@ -323,6 +323,10 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
         }
         Serializable id = this.getCacheId(document);
 
+        if (id == null) {
+            throw new IllegalArgumentException("ID of the document is null!!");
+        }
+        
         // ensure that the directory exists
         String path = this.getAbsolutePath(id);
         File pathFile = new File(path);
