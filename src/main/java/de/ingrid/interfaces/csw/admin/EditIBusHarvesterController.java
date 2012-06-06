@@ -27,7 +27,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import de.ingrid.ibus.client.BusClient;
-import de.ingrid.ibus.client.BusClientFactory;
+import de.ingrid.ibus.client.MultipleBusClientFactory;
 import de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject;
 import de.ingrid.interfaces.csw.admin.command.Identificable;
 import de.ingrid.interfaces.csw.admin.command.RequestDefinitionCommandObject;
@@ -204,16 +204,15 @@ public class EditIBusHarvesterController {
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER_3, method = RequestMethod.GET)
     public String step3Get(final HttpSession session, final ModelMap modelMap,
             @ModelAttribute("harvester") final IBusHarvesterCommandObject harvesterParam, final Errors errors,
-            @RequestParam(value = "id", required = false) final Integer id)
-            throws Exception {
+            @RequestParam(value = "id", required = false) final Integer id) throws Exception {
 
-        IBusHarvesterCommandObject harvester = harvesterParam; 
-        
+        IBusHarvesterCommandObject harvester = harvesterParam;
+
         // setup the IBus client
         File file = new File(harvester.getCommunicationXml());
         BusClient client = null;
         try {
-            client = BusClientFactory.createBusClient(file);
+            client = MultipleBusClientFactory.getBusClient(file);
             // lock iBus client so it is not closed by accident
             IBusClosableLock.INSTANCE.lock(this.getClass().getName());
             if (!client.allConnected()) {

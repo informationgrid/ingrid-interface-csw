@@ -18,7 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.ibus.client.BusClient;
-import de.ingrid.ibus.client.BusClientFactory;
+import de.ingrid.ibus.client.MultipleBusClientFactory;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
 import de.ingrid.interfaces.csw.harvest.impl.AbstractHarvester;
 import de.ingrid.utils.IBus;
@@ -135,7 +135,7 @@ public class IBusHarvester extends AbstractHarvester {
         File file = new File(this.communicationXml);
         BusClient client = null;
         try {
-            client = BusClientFactory.createBusClient(file);
+            client = MultipleBusClientFactory.getBusClient(file);
             // lock iBus client so it is not closed by accident
             IBusClosableLock.INSTANCE.lock(this.getClass().getName());
             if (!client.allConnected()) {
