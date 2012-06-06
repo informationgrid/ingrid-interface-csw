@@ -192,6 +192,7 @@ public class EditIBusHarvesterController {
             communicationProvider.setWorkingDirectory(new File(harvester.getWorkingDirectory()));
             communicationProvider.write(communication);
             harvester.setCommunicationXml(communicationProvider.getConfigurationFile().getAbsolutePath());
+            updateAndSaveConfiguration((HarvesterConfiguration) harvester);
         } catch (Exception e) {
             log.error("Error creating communication configuration.", e);
             errors.reject("harvester.ibus.communication.couldnotcreate");
