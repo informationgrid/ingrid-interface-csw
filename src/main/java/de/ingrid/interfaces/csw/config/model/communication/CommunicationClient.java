@@ -3,10 +3,12 @@ package de.ingrid.interfaces.csw.config.model.communication;
 import java.util.List;
 
 public class CommunicationClient {
-    
+
     private List<CommunicationServer> connections;
-    
-    private String name;
+
+    private String name = DEFAULT_CLIENT_NAME;
+
+    private static String DEFAULT_CLIENT_NAME = "interface-csw-" + System.currentTimeMillis();
 
     public void setConnections(List<CommunicationServer> connections) {
         this.connections = connections;
@@ -17,12 +19,15 @@ public class CommunicationClient {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name== null) {
+            this.name = DEFAULT_CLIENT_NAME;
+        } else {
+            this.name = name;
+        }
     }
 
     public String getName() {
         return name;
     }
-    
 
 }

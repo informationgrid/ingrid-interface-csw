@@ -45,7 +45,6 @@ public class IBusHarvesterValidator {
             rejectIfEmptyOrWhitespace(errors, "iBusIp");
             rejectIfEmptyOrWhitespace(errors, "iBusPort");
             rejectIfEmptyOrWhitespace(errors, "iBusProxyId");
-            rejectIfEmptyOrWhitespace(errors, "clientProxyId");
 
             return errors;
         }
