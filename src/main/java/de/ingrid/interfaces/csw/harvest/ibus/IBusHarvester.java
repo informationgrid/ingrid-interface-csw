@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -80,6 +82,8 @@ public class IBusHarvester extends AbstractHarvester {
      */
     private List<RequestDefinition> requestDefinitions;
 
+    private Map<String, Integer> errorCounts = new HashMap<String, Integer>();
+
     public IBusHarvester() {
         super();
         CacheManager singletonManager = CacheManager.create();
@@ -111,8 +115,8 @@ public class IBusHarvester extends AbstractHarvester {
 
     @Override
     public void run(Date lastExecutionDate) throws Exception {
-        statusProvider.addState(this.getId(), "Harvesting '" + this.getName() + "'... [iPlugs: " + requestDefinitions.size()
-                + "]");
+        statusProvider.addState(this.getId(), "Harvesting '" + this.getName() + "'... [iPlugs: "
+                + requestDefinitions.size() + "]");
         super.run(lastExecutionDate);
     }
 
@@ -154,9 +158,7 @@ public class IBusHarvester extends AbstractHarvester {
 
                 int currentPage = 0;
                 int startHit = 0;
-                int pageSize = request.getRecordsPerCall();
                 int pause = request.getPause();
-                int timeout = request.getTimeout();
                 String queryStr = request.getQueryString();
 
                 log.info("Running harvesting request: [" + request.toString() + "]");
@@ -164,7 +166,7 @@ public class IBusHarvester extends AbstractHarvester {
                 IngridQuery query = QueryStringParser.parse(queryStr);
 
                 // first request
-                List<Serializable> cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
+                List<Serializable> cacheIds = this.makeRequest(bus, request, query, currentPage, startHit);
 
                 // do not use null elements. null elements can occur in case of
                 // an exception in the cacheRecords method.
@@ -177,9 +179,9 @@ public class IBusHarvester extends AbstractHarvester {
                 // continue fetching as long as we get a full page
                 while (cacheIds.size() == request.getRecordsPerCall()) {
                     Thread.sleep(pause);
-                    startHit = ++currentPage * pageSize;
+                    startHit = ++currentPage * request.getRecordsPerCall();
 
-                    cacheIds = this.makeRequest(bus, query, pageSize, currentPage, startHit, timeout);
+                    cacheIds = this.makeRequest(bus, request, query, currentPage, startHit);
                     // do not use null elements. null elements can occur in case
                     // of
                     // an exception in the cacheRecords method.
@@ -201,8 +203,11 @@ public class IBusHarvester extends AbstractHarvester {
         return allCacheIds;
     }
 
-    private List<Serializable> makeRequest(IBus bus, IngridQuery query, int pageSize, int currentPage, int startHit,
-            int timeout) throws Exception {
+    private List<Serializable> makeRequest(IBus bus, final RequestDefinition request, final IngridQuery query,
+            final int currentPage, final int startHit) throws Exception {
+        int pageSize = request.getRecordsPerCall();
+        int timeout = request.getTimeout();
+
         // TODO make sure that document ids in hits are the same as in the
         // finally fetched records
         IngridHits hits = null;
@@ -227,14 +232,13 @@ public class IBusHarvester extends AbstractHarvester {
 
         List<Serializable> cacheIds = this.cacheRecords(hits, bus);
         int numHits = hits.getHits().length;
+        int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
+        statusProvider.addState(request.getPlugId() + "fetch", "Fetch records for iPlug '"
+                + request.getPlugId() + "'... [" + (hits.length() == 0 ? 0 : (endHit + 1)) + "/" + hits.length() + "] with "
+                + (errorCounts.get(request.getPlugId()) == null ? 0 : errorCounts.get(request.getPlugId()))
+                + " errors.");
         if (log.isInfoEnabled()) {
-            int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
             log.info("Fetched records " + startHit + " to " + endHit + " of " + hits.length());
-            if (hits.getHits().length > 0) {
-                String plugId = hits.getHits()[0].getPlugId();
-                statusProvider.addState(hits.getHits()[0].getPlugId() + "fetch", "Fetch records for iPlug '" + plugId
-                        + "'... [" + (endHit + 1) + "/" + hits.length() + "]");
-            }
         }
         return cacheIds;
     }
@@ -266,6 +270,7 @@ public class IBusHarvester extends AbstractHarvester {
                 log.error("Skip record from ibus with communication setting in '" + this.communicationXml
                         + "'from iPlug '" + hit.getPlugId() + "' in attempt " + requestAttempt
                         + "  with index record: " + hit.getDocumentId());
+                addError(hit.getPlugId());
                 cacheIds.add(null);
                 continue;
             }
@@ -310,13 +315,23 @@ public class IBusHarvester extends AbstractHarvester {
                     log.debug("Fetched record " + hit.getDocumentId() + ". Cache id: " + cacheId);
                 }
             } catch (IOException e) {
+                addError(hit.getPlugId());
                 log.warn("Error putting record " + hit.getDocumentId() + " to cache. Does the iPlug '"
                         + hit.getPlugId() + "' deliver IDF records?");
             } catch (Exception e) {
+                addError(hit.getPlugId());
                 log.error("Error putting record " + hit.getDocumentId() + " from iPlug '" + hit.getPlugId()
                         + "'to cache.", e);
             }
         }
         return cacheIds;
+    }
+
+    private void addError(String plugId) {
+        if (!errorCounts.containsKey(plugId)) {
+            errorCounts.put(plugId, 1);
+        } else {
+            errorCounts.put(plugId, errorCounts.get(plugId) + 1);
+        }
     }
 }

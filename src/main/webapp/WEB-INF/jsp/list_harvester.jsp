@@ -40,19 +40,21 @@ else
 		%>
 	</div>
 	
-	<div id="help"></div>
+	
 	<c:set var="active" value="harvester" scope="request"/>
 	<c:import url="subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Harvester configuration</h1>
-		
 		<div id="content">
+		
+		<p><strong>Last execution:</strong> <fmt:formatDate value="${lastExecution}" type="date" pattern="yyyy-MM-dd hh:mm:ss"/></p>
+		
+		<br/>
+		<h2>Manage Harvester:</h2>
 		<c:if test="${not empty errorKey}">
 		<div class="error"><spring:message code="${errorKey}"/></div>
 		</c:if>
-		<br/>
-		<h2>Manage Harvester!</h2>
 		
         <form:form method="post" action="list_harvester.html" modelAttribute="harvester">
 
@@ -79,6 +81,7 @@ else
         </c:forEach>
         </table>
 		
+        <br/>
         
 		<table id="konfigForm">
 		<tbody>
@@ -118,15 +121,19 @@ else
         <td class="leftCol">&nbsp;</td>
         <td>
     		<p></p>
+    		<div id="help">
     		<p>
-    		<strong>Harvester Types:</strong>
-    		<p>iBus harvester<br/>
+    		<strong>Available Harvester Types:</strong>
+    		<ul>
+    		<li><strong>iBus harvester</strong><br/>
     		Harvests iPlugs connected to an InGrid iBus.
-    		</p>
-    		<p>GDI-DE test data harvester<br/>
+    		</li>
+    		<li><strong>GDI-DE test data harvester</strong><br/>
     		Harvests test data for the GDI-DE Testsuite (for test purpose only).
+    		</li>
+    		</ul>
     		</p>
-    		</p>
+    		</div>
         </td>
         </tr>
         </table>

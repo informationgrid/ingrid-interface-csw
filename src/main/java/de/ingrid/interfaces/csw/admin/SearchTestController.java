@@ -58,6 +58,10 @@ public class SearchTestController {
     @RequestMapping(value = TEMPLATE_SEARCH_URI, method = RequestMethod.POST)
     public String postScheduling(final ModelMap modelMap, @RequestParam(value = "query", required = false) String query) {
 
+        if (query == null || query.trim().length() == 0) {
+            return TEMPLATE_SEARCH_VIEW;
+        }
+        
         modelMap.addAttribute("query", query);
 
         DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();

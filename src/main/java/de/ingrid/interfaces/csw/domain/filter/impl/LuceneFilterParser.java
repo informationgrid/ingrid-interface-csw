@@ -139,9 +139,12 @@ public class LuceneFilterParser implements FilterParser {
                     Node sortProperty = sortProperties.item(i);
                     String propertyName = xpath.getString(sortProperty, "//csw:PropertyName");
                     String sortOrder = xpath.getString(sortProperty, "//csw:SortOrder");
+                    if (sortOrder == null) {
+                        sortOrder = "ASC";
+                    }
                     // TODO determine type of sort field by queryable type
-                    sortFields.add(new SortField(propertyName, SortField.STRING,
-                            sortOrder.equalsIgnoreCase("DESC") ? true : false));
+                    sortFields.add(new SortField(propertyName + "_sort", SortField.STRING, sortOrder
+                            .equalsIgnoreCase("DESC") ? true : false));
                 }
                 SortField[] a = sortFields.toArray(new SortField[0]);
                 query.setSort(new Sort(a));

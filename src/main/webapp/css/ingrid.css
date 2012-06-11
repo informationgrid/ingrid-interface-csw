@@ -6,8 +6,8 @@ body { margin:0; padding:0; font:normal 11px/16px Verdana, Arial, Helvetica, san
 div, img { margin:0; padding:0; }
 p { padding:0; margin:0 0 16px 0; }
 a { color:#176798; text-decoration:none; }
-ul { margin:0; padding:0; list-style:none; }
-li { list-style:none; margin:0; padding:0; }
+ul.menu { margin:0; padding:0; list-style:none; }
+li.menu { list-style:none; margin:0; padding:0; }
 :focus { outline:none; }
 .clear { clear:both; height:0px; line-height:0px; font-size:0px; margin:0; padding:0; }
 img { border:0; behavior:url(css/iepngfix.htc) }
@@ -33,7 +33,7 @@ h3 { font:bold 12px/15px Verdana, Arial, Helvetica, sans-serif; padding:0; margi
 #navi_horizontal { position:absolute; top:95px; left:240px; height:21px; }
 #navi_horizontal a { color:#1B78B1; font:normal 10px/12px Verdana, Arial, Helvetica, sans-serif;}
 #navi_horizontal a.active { font-weight:bold; }
-#help { position:absolute; top:95px; right:30px; height:21px; }
+#help {  background:#F5F8EB; padding: 5px }
 
 
 /* --- Seit-Navigation --- */

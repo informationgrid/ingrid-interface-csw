@@ -69,6 +69,9 @@ public abstract class AbstractHarvester implements Harvester {
         // no need for action here
         int duplicates = allRecordIds.size() - new HashSet<Serializable>(allRecordIds).size();
         log.info("Fetched " + allRecordIds.size() + " records. Duplicates: " + duplicates);
+        if (duplicates > 0)  {
+            statusProvider.addState(this.getId() + "_duplicates", "Remove " + duplicates + " duplicates.");
+        }
     }
 
     @Override

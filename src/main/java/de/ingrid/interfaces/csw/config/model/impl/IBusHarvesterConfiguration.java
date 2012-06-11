@@ -31,7 +31,6 @@ public class IBusHarvesterConfiguration extends ClassConfigurationBase implement
 	 */
 	private List<RequestDefinition> requestDefinitions;
 	
-	
 	/**
 	 * The record cache configuration
 	 */

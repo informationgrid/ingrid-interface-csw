@@ -70,6 +70,10 @@ var transformationDescriptions = [
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
 		}, 
 		{	"indexField":"title",
+			"tokenized":true,
+			"xpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"
+		}, 
+		{	"indexField":"title_sort",
 			"tokenized":false,
 			"xpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"
 		}, 

@@ -74,15 +74,6 @@
 			</td>
 		</tr>
         <tr>
-			<td class="leftCol">client proxy Id</td>
-			<td>
-	    	<form:input path="clientProxyId" />
-	    	<br>
-	    	<span>The proxy id of the harvester-client (i.e. /ingrid-group:csw-harvester).</span>
-	    	<form:errors path="clientProxyId" cssClass="error" element="div" />
-			</td>
-		</tr>
-        <tr>
     	<td class="leftCol">&nbsp;</td>
         <td>
         	<button type="submit" name="back" value="back">Back</button>

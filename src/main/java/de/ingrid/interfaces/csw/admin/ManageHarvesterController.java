@@ -2,6 +2,7 @@ package de.ingrid.interfaces.csw.admin;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,7 @@ public class ManageHarvesterController {
 
         modelMap.addAttribute("harvesterConfigs", cProvider.reloadConfiguration().getHarvesterConfigurations());
         modelMap.addAttribute("harvesterTypes", HARVESTER_TYPES);
+        modelMap.addAttribute("lastExecution", updateJob.getLastExecutionDate().compareTo(new Date(0)) == 0 ? null : updateJob.getLastExecutionDate());
 
         return "/list_harvester";
     }
@@ -119,6 +121,8 @@ public class ManageHarvesterController {
             } else {
                 modelMap.addAttribute("harvesterConfigs", cProvider.getConfiguration().getHarvesterConfigurations());
                 modelMap.addAttribute("harvesterTypes", HARVESTER_TYPES);
+                modelMap.addAttribute("lastExecution", updateJob.getLastExecutionDate().compareTo(new Date(0)) == 0 ? null : updateJob.getLastExecutionDate());
+
                 return "/list_harvester";
             }
         } else if (delete != null && delete >= 0 && delete < hConfigs.size()) {
