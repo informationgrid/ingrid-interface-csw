@@ -48,7 +48,7 @@ else
 		<h1 id="head">Harvester configuration</h1>
 		<div id="content">
 		
-		<p><strong>Last execution:</strong> <fmt:formatDate value="${lastExecution}" type="date" pattern="yyyy-MM-dd hh:mm:ss"/></p>
+		<p><strong>Last execution:</strong> <fmt:formatDate value="${lastExecution}" type="date" pattern="yyyy-MM-dd HH:mm:ss"/></p>
 		
 		<br/>
 		<h2>Manage Harvester:</h2>
