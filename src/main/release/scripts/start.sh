@@ -9,7 +9,7 @@
 #
 #   INGRID_OPTS      addtional java runtime options
 #
-#   INGRID_USER      starting user, default ist "ingrid"
+#	INGRID_USER 	 starting user, default ist "ingrid"
 #
 
 THIS="$0"
@@ -18,6 +18,12 @@ THIS="$0"
 THIS_DIR=`dirname "$THIS"`
 INGRID_HOME=`cd "$THIS_DIR" ; pwd`
 PID=$INGRID_HOME/ingrid.pid
+
+# include a debug script, if available, i.e. to specify debug port, etc.
+# caution: the debug script must echo the actual command to be able to work in the current environment
+if [ -f $INGRID_HOME/debug.sh ]; then
+  eval `sh $INGRID_HOME/debug.sh`
+fi
 
 # functions
 stopIplug()
@@ -66,7 +72,7 @@ stopIplug()
 
 stopNoExitIplug()
 {
-  echo "Try stopping ingrid component ($INGRID_HOME)..."
+  echo "Try stopping jetty ($INGRID_HOME)..."
   if [ -f $PID ]; then
 		procid=`cat $PID`
 		idcount=`ps -p $procid | wc -l`
@@ -107,7 +113,7 @@ stopNoExitIplug()
 
 startIplug()
 {
-  echo "Try starting ingrid component ($INGRID_HOME)..."
+  echo "Try starting jetty ($INGRID_HOME)..."
   if [ -f $PID ]; then
       procid=`cat $PID`
       idcount=`ps -p $procid | wc -l`
@@ -129,7 +135,7 @@ startIplug()
   fi
   
   JAVA=$JAVA_HOME/bin/java
-  JAVA_HEAP_MAX=-Xmx512m
+  JAVA_HEAP_MAX=-Xmx128m
   
   # check envvars which might override default args
   if [ "$INGRID_HEAPSIZE" != "" ]; then
@@ -137,17 +143,20 @@ startIplug()
     echo "run with heapsize $JAVA_HEAP_MAX"
   fi
 
-  # CLASSPATH initially contains $INGRID_CONF_DIR, or defaults to $INGRID_HOME/conf
-  CLASSPATH=${INGRID_CONF_DIR:=$INGRID_HOME/conf}
-  CLASSPATH=${CLASSPATH}:$INGRID_HOME/xml
-  CLASSPATH=${CLASSPATH}:$JAVA_HOME/lib/tools.jar
-  
   # so that filenames w/ spaces are handled correctly in loops below
   IFS=
   # add libs to CLASSPATH
+  CLASSPATH=${CLASSPATH}:${INGRID_CONF_DIR:=$INGRID_HOME/conf}
+  CLASSPATH_POSTFIX=""
   for f in $INGRID_HOME/lib/*.jar; do
-    CLASSPATH=${CLASSPATH}:$f;
+    # make sure ingrid libraries appear first in classpath
+    # this enables overwriting of 3-rd party library code
+    case "$f" in
+       *lib/ingrid*) CLASSPATH=${CLASSPATH}:$f;;
+       *) CLASSPATH_POSTFIX=${CLASSPATH_POSTFIX}:$f;;
+    esac
   done
+  CLASSPATH=${CLASSPATH}:$CLASSPATH_POSTFIX;
   # restore ordinary behaviour
   unset IFS
   
@@ -156,18 +165,14 @@ startIplug()
     CLASSPATH=`cygpath -p -w "$CLASSPATH"`
   fi
 
-  CLASS=de.ingrid.interfaces.csw.Server
-  
-  DM=`date +"%Y%m%d_%H%M%S"`
-  if [ -f "$INGRID_HOME/console.log" ]
-  then
-    mv "$INGRID_HOME/console.log" "$INGRID_HOME/console.log.${DM}"
-  fi  
-
   # run it
-  exec "$JAVA" $JAVA_HEAP_MAX $INGRID_OPTS -classpath "$CLASSPATH" $CLASS > console.log &
+  export CLASSPATH="$CLASSPATH"
+  INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME"
+  CLASS=de.ingrid.interfaces.csw.admin.JettyStarter
+	
+  exec nohup "$JAVA" $JAVA_HEAPSIZE $INGRID_OPTS $CLASS > console.log & 
   
-  echo "ingrid component ($INGRID_HOME) started."
+  echo "jetty ($INGRID_HOME) started."
   echo $! > $PID
 }
 
@@ -180,8 +185,7 @@ STARTING_USER=`whoami`
 if [ "$STARTING_USER" != "$INGRID_USER" ]; then
   echo "You must be user '$INGRID_USER' to start that script! Set INGRID_USER in environment to overwrite this."
   exit 1
-fi
-
+fi 
 
 case "$1" in
   start)

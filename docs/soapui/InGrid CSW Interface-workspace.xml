@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-workspace name="InGrid CSW Interface" soapui-version="3.6.1" projectRoot="" xmlns:con="http://eviware.com/soapui/config">
-  <con:settings/>
-  <con:project name="localhost">/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-1.2/docs/soapui/localhost-soapui-project.xml</con:project>
-  <con:project name="portalu.de/csw202">/home/joachim/ingrid/eclipse.workspace/ingrid-interface-csw-1.2/docs/soapui/portalu-de-csw202-soapui-project.xml</con:project>
-</con:soapui-workspace>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv">
+	<gmd:fileIdentifier>
+		<gco:CharacterString>05F9A598-D866-11D2-AB09-00E0292DC06B
+		</gco:CharacterString>
+	</gmd:fileIdentifier>
+	<gmd:language>
+		<gmd:LanguageCode
+			codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode"
+			codeListValue="ger">ger</gmd:LanguageCode>
+	</gmd:language>
+	<gmd:characterSet>
+		<gmd:MD_CharacterSetCode
+			codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CharacterSetCode"
+			codeListValue="8859part1" />
+	</gmd:characterSet>
+	<gmd:parentIdentifier>
+		<gco:CharacterString>49C4A52D-E312-4DCA-9D10-5B87DDC2F527
+		</gco:CharacterString>
+	</gmd:parentIdentifier>
+	<gmd:hierarchyLevel>
+		<gmd:MD_ScopeCode
+			codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_ScopeCode"
+			codeListValue="nonGeographicDataset">nonGeographicDataset</gmd:MD_ScopeCode>
+	</gmd:hierarchyLevel>
+	<gmd:hierarchyLevelName>
+		<gco:CharacterString>database</gco:CharacterString>
+	</gmd:hierarchyLevelName>
+	<gmd:dateStamp>
+		<gco:Date>2010-04-28</gco:Date>
+	</gmd:dateStamp>
+	<gmd:metadataStandardName>
+		<gco:CharacterString>ISO 19115</gco:CharacterString>
+	</gmd:metadataStandardName>
+	<gmd:metadataStandardVersion>
+		<gco:CharacterString>1.0</gco:CharacterString>
+	</gmd:metadataStandardVersion>
+	<gmd:identificationInfo>
+		<gmd:MD_DataIdentification>
+			<gmd:citation>
+				<gmd:CI_Citation>
+					<gmd:title>
+						<gco:CharacterString>Moosmonitoring (I) - Monitoring der
+							Schwermetallbelastung in der Bundesrepublik Deutschland mit Hilfe
+							von Moosanalysen (Moss Survey I)</gco:CharacterString>
+					</gmd:title>
+					<gmd:date>
+						<gmd:CI_Date>
+							<gmd:date>
+								<gco:DateTime>2009-04-30T00:00:00</gco:DateTime>
+							</gmd:date>
+							<gmd:dateType>
+								<gmd:CI_DateTypeCode
+									codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode"
+									codeListValue="revision" />
+							</gmd:dateType>
+						</gmd:CI_Date>
+					</gmd:date>
+					<gmd:identifier>
+						<gmd:RS_Identifier>
+							<gmd:code>
+								<gco:CharacterString>ddffa20d-280c-3954-b920-8bbe8ccdf0d3
+								</gco:CharacterString>
+							</gmd:code>
+							<gmd:codeSpace>
+								<gco:CharacterString>ingrid</gco:CharacterString>
+							</gmd:codeSpace>
+						</gmd:RS_Identifier>
+					</gmd:identifier>
+				</gmd:CI_Citation>
+			</gmd:citation>
+			<gmd:abstract>
+				<gco:CharacterString>Das Moosmonitoring (I) bildet einen Beitrag zum
+					europÃ¤ischen Projekt "Atmospheric Heavy Metal Deposition in Europe
+					- estimations based on moss analysis", welches Teil des "European
+					Monitoring and Evaluation Program (EMEP)" ist. Mit dem
+					Moosmonitoring (I) wurde 1991/92 erstmalig fÃ¼r die gesamte BRD
+					flÃ¤chendeckend die Schwermetallbelastung an dem Bioindikator Moos
+					untersucht und die MeÃŸwerte in ihrem Raumbezug dargestellt. Die an
+					den 593 Probenahmestellen genommenen Moosproben wurden auf die
+					Elemente As, Cd, Cr, Cu, Fe, Ni, Pb, Ti, V und Zn analysiert. In
+					der Moosdatenbank werden die empirisch gewonnenen Analysedaten
+					verwaltet und fÃ¼r Auswertungen aufbereitet. Hierbei wird zwischen
+					einer Standort-DB (rÃ¤umliche Merkmale der Probenentnahmestelle wie
+					Ã–kosystemtyp, Exposition) und einer Ergebnis-DB
+					(Schwermetallgehalte der Moose) unterschieden. Die Strukturierung
+					der Daten erfolgt in einer PC-Datenbank unter ACCESS 7.0. Die
+					Analyseergebnisse kÃ¶nnen problemlos mit den Standortdaten
+					verknÃ¼pft werden, um Belastungskarten der Bundesrepublik
+					Deutschland zu erstellen. Beteiligt sind die UniversitÃ¤t
+					OsnabrÃ¼ck; die AG Systemforschung sowie die Bundesanstalt fÃ¼r
+					Geowissenschaften und Rohstoffe in Hannover.</gco:CharacterString>
+			</gmd:abstract>
+			<gmd:pointOfContact>
+				<gmd:CI_ResponsibleParty uuid="E794DB7E-09AA-40FC-A90B-A6B99E1CDFFF">
+					<gmd:organisationName>
+						<gco:CharacterString>UBA Adressen, UBA - Umweltbundesamt
+							Deutschland (Dessau-RoÃŸlau), FG II 4.3 - Wirkungen von
+							Luftverunreinigungen auf terrestrische Ã–kosysteme
+						</gco:CharacterString>
+					</gmd:organisationName>
+					<gmd:contactInfo>
+						<gmd:CI_Contact>
+							<gmd:phone>
+								<gmd:CI_Telephone>
+									<gmd:voice>
+										<gco:CharacterString>+49-(0)340-2103-3155
+										</gco:CharacterString>
+									</gmd:voice>
+									<gmd:facsimile>
+										<gco:CharacterString>+49-(0)340-2104-3155
+										</gco:CharacterString>
+									</gmd:facsimile>
+								</gmd:CI_Telephone>
+							</gmd:phone>
+							<gmd:address>
+								<gmd:CI_Address>
+									<gmd:deliveryPoint>
+										<gco:CharacterString>Postbox 1406,06813 Dessau-RoÃŸlau
+										</gco:CharacterString>
+									</gmd:deliveryPoint>
+									<gmd:deliveryPoint>
+										<gco:CharacterString>WÃ¶rlitzer Platz 1</gco:CharacterString>
+									</gmd:deliveryPoint>
+									<gmd:city>
+										<gco:CharacterString>Dessau-RoÃŸlau</gco:CharacterString>
+									</gmd:city>
+									<gmd:postalCode>
+										<gco:CharacterString>06844</gco:CharacterString>
+									</gmd:postalCode>
+									<gmd:country>
+										<gco:CharacterString>DEU</gco:CharacterString>
+									</gmd:country>
+									<gmd:electronicMailAddress>
+										<gco:CharacterString>till.spranger@uba.de
+										</gco:CharacterString>
+									</gmd:electronicMailAddress>
+								</gmd:CI_Address>
+							</gmd:address>
+							<gmd:onlineResource>
+								<gmd:CI_OnlineResource>
+									<gmd:linkage>
+										<gmd:URL>http://www.umweltbundesamt.de/uba-info/d-adress.htm
+										</gmd:URL>
+									</gmd:linkage>
+								</gmd:CI_OnlineResource>
+							</gmd:onlineResource>
+						</gmd:CI_Contact>
+					</gmd:contactInfo>
+					<gmd:role>
+						<gmd:CI_RoleCode
+							codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode"
+							codeListValue="owner" />
+					</gmd:role>
+				</gmd:CI_ResponsibleParty>
+			</gmd:pointOfContact>
+			<gmd:resourceConstraints>
+				<gmd:MD_LegalConstraints />
+			</gmd:resourceConstraints>
+			<gmd:resourceConstraints>
+				<gmd:MD_LegalConstraints>
+					<gmd:accessConstraints>
+						<gmd:MD_RestrictionCode
+							codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode"
+							codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+					</gmd:accessConstraints>
+				</gmd:MD_LegalConstraints>
+			</gmd:resourceConstraints>
+			<gmd:resourceConstraints>
+				<gmd:MD_LegalConstraints>
+					<gmd:accessConstraints>
+						<gmd:MD_RestrictionCode
+							codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode"
+							codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+					</gmd:accessConstraints>
+				</gmd:MD_LegalConstraints>
+			</gmd:resourceConstraints>
+			<gmd:resourceConstraints>
+				<gmd:MD_SecurityConstraints>
+					<gmd:classification>
+						<gmd:MD_ClassificationCode
+							codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#gmd:MD_ClassificationCode"
+							codeListValue="unclassified">unclassified</gmd:MD_ClassificationCode>
+					</gmd:classification>
+				</gmd:MD_SecurityConstraints>
+			</gmd:resourceConstraints>
+			<gmd:language>
+				<gmd:LanguageCode
+					codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode"
+					codeListValue="ger" />
+			</gmd:language>
+			<gmd:characterSet>
+				<gmd:MD_CharacterSetCode
+					codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CharacterSetCode"
+					codeListValue="8859part1" />
+			</gmd:characterSet>
+			<gmd:topicCategory>
+				<gmd:MD_TopicCategoryCode>environment</gmd:MD_TopicCategoryCode>
+			</gmd:topicCategory>
+			<gmd:topicCategory>
+				<gmd:MD_TopicCategoryCode>climatologyMeteorologyAtmosphere
+				</gmd:MD_TopicCategoryCode>
+			</gmd:topicCategory>
+			<gmd:topicCategory>
+				<gmd:MD_TopicCategoryCode>climatologyMeteorologyAtmosphere
+				</gmd:MD_TopicCategoryCode>
+			</gmd:topicCategory>
+			<gmd:extent>
+				<gmd:EX_Extent>
+					<gmd:geographicElement>
+						<gmd:EX_GeographicBoundingBox>
+							<gmd:westBoundLongitude>
+								<gco:Decimal>-4.49673753180581</gco:Decimal>
+							</gmd:westBoundLongitude>
+							<gmd:southBoundLatitude>
+								<gco:Decimal>0.0</gco:Decimal>
+							</gmd:southBoundLatitude>
+							<gmd:eastBoundLongitude>
+								<gco:Decimal>-4.49673753180581</gco:Decimal>
+							</gmd:eastBoundLongitude>
+							<gmd:northBoundLatitude>
+								<gco:Decimal>0.0</gco:Decimal>
+							</gmd:northBoundLatitude>
+						</gmd:EX_GeographicBoundingBox>
+					</gmd:geographicElement>
+					<gmd:geographicElement>
+						<gmd:EX_GeographicBoundingBox>
+							<gmd:westBoundLongitude>
+								<gco:Decimal>5.8665085</gco:Decimal>
+							</gmd:westBoundLongitude>
+							<gmd:southBoundLatitude>
+								<gco:Decimal>47.27011</gco:Decimal>
+							</gmd:southBoundLatitude>
+							<gmd:eastBoundLongitude>
+								<gco:Decimal>15.041823</gco:Decimal>
+							</gmd:eastBoundLongitude>
+							<gmd:northBoundLatitude>
+								<gco:Decimal>55.057526</gco:Decimal>
+							</gmd:northBoundLatitude>
+						</gmd:EX_GeographicBoundingBox>
+					</gmd:geographicElement>
+				</gmd:EX_Extent>
+			</gmd:extent>
+		</gmd:MD_DataIdentification>
+	</gmd:identificationInfo>
+	<gmd:distributionInfo>
+		<gmd:MD_Distribution>
+			<gmd:distributionFormat>
+				<gmd:MD_Format>
+					<gmd:name>
+						<gco:CharacterString>ACCESS</gco:CharacterString>
+					</gmd:name>
+					<gmd:version>
+						<gco:CharacterString>7.0</gco:CharacterString>
+					</gmd:version>
+				</gmd:MD_Format>
+			</gmd:distributionFormat>
+			<gmd:distributionFormat>
+				<gmd:MD_Format>
+					<gmd:name>
+						<gco:CharacterString>Excel</gco:CharacterString>
+					</gmd:name>
+					<gmd:version>
+						<gco:CharacterString>7.0</gco:CharacterString>
+					</gmd:version>
+				</gmd:MD_Format>
+			</gmd:distributionFormat>
+			<gmd:transferOptions>
+				<gmd:MD_DigitalTransferOptions>
+					<gmd:onLine>
+						<gmd:CI_OnlineResource>
+							<gmd:linkage>
+								<gmd:URL>http://gis.uba.de/website/web/moos/karten/index.htm
+								</gmd:URL>
+							</gmd:linkage>
+						</gmd:CI_OnlineResource>
+					</gmd:onLine>
+				</gmd:MD_DigitalTransferOptions>
+			</gmd:transferOptions>
+			<gmd:transferOptions>
+				<gmd:MD_DigitalTransferOptions>
+					<gmd:onLine>
+						<gmd:CI_OnlineResource>
+							<gmd:linkage>
+								<gmd:URL>http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&amp;ADISDB=VH&amp;SATZNR=00039030
+								</gmd:URL>
+							</gmd:linkage>
+						</gmd:CI_OnlineResource>
+					</gmd:onLine>
+				</gmd:MD_DigitalTransferOptions>
+			</gmd:transferOptions>
+			<gmd:transferOptions>
+				<gmd:MD_DigitalTransferOptions />
+			</gmd:transferOptions>
+			<gmd:transferOptions>
+				<gmd:MD_DigitalTransferOptions />
+			</gmd:transferOptions>
+		</gmd:MD_Distribution>
+	</gmd:distributionInfo>
+	<gmd:dataQualityInfo>
+		<gmd:DQ_DataQuality>
+			<gmd:lineage>
+				<gmd:LI_Lineage>
+					<gmd:source>
+						<gmd:LI_Source>
+							<gmd:description>
+								<gco:CharacterString>25x25 kmÂ² Raster/Probenahmestellen, 50x50
+									mÂ² FlÃ¤che.</gco:CharacterString>
+							</gmd:description>
+						</gmd:LI_Source>
+					</gmd:source>
+				</gmd:LI_Lineage>
+			</gmd:lineage>
+		</gmd:DQ_DataQuality>
+	</gmd:dataQualityInfo>
+</gmd:MD_Metadata>

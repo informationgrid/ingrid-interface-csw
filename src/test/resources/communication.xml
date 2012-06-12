@@ -2,19 +2,19 @@
 
 <!-- LIVE - extern -->
 <!--
-<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="communication.xsd">
-        <client name="/kug-group:csw-interface-jm-test">
-                <connections>
-                        <server name="/kug-group:kug-ibus">
-                                <socket port="80" timeout="10" ip="213.144.28.236" />
-                                <messages maximumSize="1048576" threadCount="100" />
-                        </server>
-                </connections>
-        </client>
-        <messages queueSize="2000" handleTimeout="120"/>
-</communication>
 -->
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="communication.xsd">
+    <client name="/kug-group:csw-interface-jm-test">
+         <connections>
+             <server name="/kug-group:kug-ibus">
+                 <socket port="80" timeout="10" ip="213.144.28.236" />
+                 <messages maximumSize="1048576" threadCount="100" />
+             </server>
+         </connections>
+    </client>
+    <messages queueSize="2000" handleTimeout="120"/>
+</communication>
 
 <!-- Harrison - extern -->
 <!--
@@ -34,7 +34,6 @@
 
 <!-- Summers - extern -->
 <!--
--->
 <communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="communication.xsd">
     <client name="/ingrid-group:csw-interface-jm-test">
@@ -47,7 +46,7 @@
     </client>
     <messages queueSize="2000" handleTimeout="10"/>
 </communication>
-
+-->
 
 <!-- joachim dev -->
 <!--

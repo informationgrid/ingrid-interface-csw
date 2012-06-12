@@ -1,0 +1,131 @@
+body { margin:0; padding:0; font:normal 11px/16px Verdana, Arial, Helvetica, sans-serif; color:#464646; background:#FFF; }
+
+
+/* --- Allgemeine Styles --- */
+
+div, img { margin:0; padding:0; }
+p { padding:0; margin:0 0 16px 0; }
+a { color:#176798; text-decoration:none; }
+ul.menu { margin:0; padding:0; list-style:none; }
+li.menu { list-style:none; margin:0; padding:0; }
+:focus { outline:none; }
+.clear { clear:both; height:0px; line-height:0px; font-size:0px; margin:0; padding:0; }
+img { border:0; behavior:url(css/iepngfix.htc) }
+form { margin:0; padding:0; }
+
+
+/* --- Headlines --- */
+
+h1 { font-size:16px; line-height:18px; font-weight:bold; font-family: Arial, Helvetica, sans-serif; padding:0; margin:0 0 18px; }
+h2 { font:bold 12px/15px Verdana, Arial, Helvetica, sans-serif; padding:0; margin:0 0 18px; }
+h3 { font:bold 12px/15px Verdana, Arial, Helvetica, sans-serif; padding:0; margin:6px 0; }
+
+
+/* --- Header --- */
+
+#header { position:absolute; left:0; top:0; height:80px; width:100%; background:#68A5D2; }
+#header h1 { position:absolute; top:22px; left:197px; color:#FFF; }
+#language { position:absolute; top:0; right:0; background-color:#FFFFFF; padding:3px 14px; }
+
+
+/* --- Horizontale Navigation --- */
+
+#navi_horizontal { position:absolute; top:95px; left:240px; height:21px; }
+#navi_horizontal a { color:#1B78B1; font:normal 10px/12px Verdana, Arial, Helvetica, sans-serif;}
+#navi_horizontal a.active { font-weight:bold; }
+#help {  background:#F5F8EB; padding: 5px }
+
+
+/* --- Seit-Navigation --- */
+
+#navi_vertical { position:absolute; top:116px; left:0; width:240px; }
+#navi_vertical .konf { font-weight:bold; padding:12px 0; vertical-align:center; width:230px; background:transparent url(../images/konf_1hg.gif) repeat-y; margin-bottom:10px;}
+#navi_vertical .konf p.no { padding-left:10px; float:left; width:40px; color:#FFF; font-size:20px}
+#navi_vertical h2 { margin:0; }
+#navi_vertical .freitext { background:#F5F8EB; padding:5px 15px; margin-bottom:1px; }
+#navi_vertical ul { background:#F5F8EB; margin-bottom:10px; padding:20px 0; }
+#navi_vertical ul li { padding:0 20px 0 50px; margin-bottom:8px; line-height:14px; }
+#navi_vertical ul li a { color:#464646; }
+#navi_vertical ul li.active { background:transparent url(../images/list_active.gif) repeat-y; font-weight:bold;}
+
+
+/* --- Inhaltsbereich --- */
+
+div#contentBox { position:relative; top:116px; border:1px solid #DDE9BD; min-height:650px; margin-left:40px; margin-bottom:100px; }
+.contentLeft { left:0; }
+.contentMiddle { left:200px; width:75% !important; }
+
+div#contentBox h1#head { height:28px; padding:12px 19px 0; background:#F5F8EB; margin-bottom:0; }
+div#contentBox div#tabNavi { height:31px; padding:8px 19px 0; background:#DDE9BD; }
+div#contentBox div#tabNavi a { display:block; background:#F5F8EB; padding:6px 10px; font-weight:bold; float:left; margin-left:5px; color:#464646; }
+div#contentBox div#tabNavi a.active { background:#FFF; padding-bottom:10px; }
+
+div#contentBox div.controls { text-align:right; margin-right:20px; height:21px; }
+div#contentBox div.cBottom { position:absolute; bottom:0; right:0; }
+div#contentBox div.controls a { position:relative; top:2px; padding:4px 10px; margin-right:5px; background:#68A5D2; color:#FFF; font-weight:bold; }
+div#contentBox div.controls a:hover { background:#1B78B1; }
+
+
+/* --- Tabelle �ber ganze Breite (wie bei Administration) --- */
+
+div#contentBox div#content { margin-left:19px; margin-top:19px;}
+div#contentBox table.fullSize { width:95%; border:1px solid #DDE9BD; border-spacing:1px; }
+div#contentBox table.fullSize th, td { text-align:left; margin:0; padding:0; }
+div#contentBox table.fullSize th { background:#DDE9BD; padding:4px 10px; margin-right:10px; font-weight:bold; height:16px; vertical-align:center; }
+div#contentBox table.fullSize th a { color:#464646; }
+div#contentBox table.fullSize th.link { background:#DDE9BD url(../../images/base/arrow_top.gif) right center no-repeat; }
+div#contentBox table.fullSize th.link:hover { background:#1B78B1 url(../../images/base/arrow_top_ov.gif) right center no-repeat; color:#FFF; }
+div#contentBox table.fullSize th.link:hover a { color:#FFF; }
+div#contentBox table.fullSize tr.odd td { background:#F5F8EB; }
+div#contentBox table.fullSize tr.even td { background:#FFF; }
+div#contentBox table.fullSize td:hover { background:#D1E4F1 !important; }
+div#contentBox table.fullSize td a { display:block; padding:4px 10px; margin:0; }
+
+/* --- Tabelle bei Seite mit Seitnavigation und Formular --- */
+
+table#konfigForm { margin-bottom:80px; width:100%; }
+table#konfigForm td { vertical-align:top; padding:0 10px 6px 0; }
+table#konfigForm td.leftCol { width:180px; }
+table#konfigForm td.rightCol { width:123px; }
+
+
+/* --- Formular Styles --- */
+
+input[type='text'], select, textarea { color:#464646; border:solid #1B78B1 1px; font:normal 11px Verdana, Arial, Helvetica, sans-serif; background-color:#FFF; width:95%; margin:0; padding:3px 0 4px 3px; }
+.check { margin-top:20px; }
+.check input { border:0; width:20px; text-align:left; }
+.long { width:395px; margin-top:-18px; }
+.error { color: #ED171F; }
+.success { color: #18AF23; }
+input[type='button'], input[type='submit'], button { min-width: 90px; top:2px; padding:4px 10px; margin-right:5px; background:#68A5D2; color:#FFF; font-weight:bold; border:none}
+input[type='button']:hover, input[type='submit']:hover, button:hover { background:#1B78B1; }
+
+/* -- Listings --*/
+table.data {width:100%}
+table.data th {background-color:#DDE9BD; padding:5px}
+table.data td {background-color:#F5F8EB; padding:5px}
+
+/* --Tabs -- */
+ul.tabs {clear:both; margin-left:200px; }
+ul.tabs li {float:left; display: block; padding: 5px 15px 5px 15px; background: #F5F8EB; margin-right:5px; border:1px solid #DDE9BD; margin-bottom:10px;}
+ul.tabs li.active {background: #D1E4F1; border:1px solid #68A5D2;}
+ul.tabs li.active a {color:#000}
+
+/* --Popup Dialog -- */
+.dialog { border:1px solid #68A5D2; position:absolute; z-index:2; margin-left:19px; top:150px;}
+.dialog .content {width:600px; padding:20px; background:#F5F8EB;}
+
+/* -- Search Result -- */
+.hitCount {text-align:right; margin-right:40px}
+.searchResult {clear:both; margin:0px 40px 20px 190px;}
+
+.auto { width: auto; }
+.value {
+	width: 20px;
+	height: 15px;
+	border: 1px solid #68A5D2;
+	padding: 2px;
+	cursor: pointer;
+}
+.value:hover { font-weight: bold; }
+.value.marked { color: #fff; background-color: #68A5D2; }

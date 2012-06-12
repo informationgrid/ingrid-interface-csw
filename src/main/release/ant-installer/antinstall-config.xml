@@ -25,34 +25,15 @@
 
 	<page
 			type		="input"
-			name		="communicationClientOptions"
-			displayText	="Einstellungen fuer den iBus"
-			>
-			
-			<text property="clientName" displayText="Client ID:" explanatoryText="Die Client-ID muss eindeutig sein, da es sonst zu Kommunikationsproblemen zum iBus führen kann." defaultValue="/ingrid-group:csw-interface-'Ihr-Name'"/>
-	</page>
-	
-	<page
-			type		="input"
-			name		="iBusOptions"
-			displayText	="Einstellungen fuer den iBus"
-			target		="ibus">
-			
-			<text property="serverName" displayText="Server ID:" defaultValue="/ingrid-group:ibus-'Ihr-Name'"/>
-			<text property="serverIp"   displayText="Server IP:"   defaultValue="127.0.0.1" explanatoryText="Die Server-IP ist die Adresse des Rechners, auf dem der iBus ueber dem Server-Port angesprochen werden kann."/>
-			<text property="serverPort" displayText="Server Port:" defaultValue="9900"/>
-			
-	</page>
-
-	<page
-			type		="input"
 			name		="componentOptions"
 			displayText	="Einstellungen fuer die CSW Kommunikation"
 			>
 			
-			<text property="localServerPort" displayText="Lokaler Port für die Schnittstelle:" defaultValue="8084" explanatoryText="Lokaler Port, unter dem der CSW Server laufen soll. Lokal kann der CSW Server dann per http://localhost:PORT/csw aufgerufen werden."/>
+            <text property="ingridAdminPassword" displayText="Password:" defaultValue="admin" explanatoryText="Passwort für den Zugang zum Administrations-Interface."/>
+            <comment displayText="" />
+			<text property="localServerPort" displayText="Lokaler Port:" defaultValue="8084" explanatoryText="Lokaler Port, unter dem der CSW Server laufen soll. Lokal kann der CSW Server dann per http://localhost:PORT/csw aufgerufen werden."/>
 			<comment displayText="" />
-			<text property="maxRecords" displayText="max. zurückzuliefernde Ergebnisse pro Anfrage:" defaultValue="10" explanatoryText="Anzahl der Ergebnisse, die pro CSW Anfrage zurückgegeben werden. Diese Eigenschaft dient der Performance Sicherung."/>
+			<text property="maxRecords" displayText="max. Ergebnisse:" defaultValue="100" explanatoryText="Anzahl der Ergebnisse, die pro CSW Anfrage zurückgegeben werden. Diese Eigenschaft dient der Performance Sicherung."/>
 	</page>
 
 	<page
