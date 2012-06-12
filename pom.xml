@@ -13,8 +13,8 @@
 	<packaging>jar</packaging>
 	<name>ingrid-interface-csw</name>
 	<scm>
-		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-3.x.x</connection>
-		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/ingrid-interface-csw-3.x.x</developerConnection>
+		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/trunk</connection>
+		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/trunk</developerConnection>
 	</scm>
 	<repositories>
 		<!--
