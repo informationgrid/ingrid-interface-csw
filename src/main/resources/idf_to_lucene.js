@@ -50,12 +50,20 @@ var transformationDescriptions = [
         // IngGrid specific index fields
         {	"indexField":"id",
         	"xpath":"//gmd:fileIdentifier/gco:CharacterString",
-        	"tokenized":false,
+        	"tokenized":false
         },
 		{	"indexField":"partner",
 			"xpath":"//idf:html/@partner"
 		}, 
+		{	"indexField":"partner_sort",
+        	"tokenized":false,
+			"xpath":"//idf:html/@partner"
+		}, 
 		{	"indexField":"provider",
+			"xpath":"//idf:html/@provider"
+		}, 
+		{	"indexField":"provider_sort",
+        	"tokenized":false,
 			"xpath":"//idf:html/@provider"
 		}, 
 		{	"indexField":"iplug",
@@ -67,6 +75,14 @@ var transformationDescriptions = [
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword/gco:CharacterString"
 		}, 
 		{	"indexField":"subject",
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
+		}, 
+		{	"indexField":"subject_sort",
+			"tokenized":false,
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword/gco:CharacterString"
+		}, 
+		{	"indexField":"subject_sort",
+			"tokenized":false,
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
 		}, 
 		{	"indexField":"title",
@@ -93,6 +109,11 @@ var transformationDescriptions = [
 		},
 		{	"indexField":"type",
 			"xpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
+			"defaultValue":"dataset"
+		},
+		{	"indexField":"type_sort",
+			"xpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
+			"tokenized":false,
 			"defaultValue":"dataset"
 		},
 		{	"execute":{
@@ -122,6 +143,10 @@ var transformationDescriptions = [
 			"xpath":"//gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:DateTime | //gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date[not(../gco:DateTime)]"
 		},
 		{	"indexField":"organisationname",
+			"xpath":"//gmd:identificationInfo//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"
+		},
+		{	"indexField":"organisationname_sort",
+			"tokenized":false,
 			"xpath":"//gmd:identificationInfo//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"
 		},
 		{	"execute":{
