@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<%@page import="de.ingrid.interfaces.csw.admin.IngridPrincipal"%><html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<%@page import="de.ingrid.interfaces.csw.admin.IngridPrincipal"%>
+<%@page import="de.ingrid.interfaces.csw.index.StatusProvider"%>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>InGrid Administration</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -11,8 +13,8 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <link rel="StyleSheet" href="css/ingrid.css" type="text/css" media="all" />
-
-<script language="JavaScript">
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript">
 <!--
 function confirmSubmit(val)
 {
@@ -22,6 +24,37 @@ if (agree)
 else
 	return false ;
 }
+
+jQuery.fn.toggleText = function (value1, value2) {
+    return this.each(function () {
+        var $this = $(this),
+            text = $this.text();
+
+        if (text.indexOf(value1) > -1)
+            $this.text(text.replace(value1, value2));
+        else
+            $this.text(text.replace(value2, value1));
+    });
+};
+
+$(function(){
+	$("#status a").click(function(){
+		$(this).toggleText("Show", "Hide").next().toggle();
+		return false;
+	});
+});
+
+function getState(){
+	$.getJSON("indexState.html", {}, function(statusResponse){
+        $("#status div").html(statusResponse.status.replace(/\n/g,"<br />"));
+		if (statusResponse.isRunning){
+			setTimeout(getState, 1000);
+		}
+	}, "text");
+}
+
+getState();
+
 // -->
 </script>
 
@@ -48,8 +81,16 @@ else
 		<h1 id="head">Harvester configuration</h1>
 		<div id="content">
 		
-		<p><strong>Last execution:</strong> <fmt:formatDate value="${lastExecution}" type="date" pattern="yyyy-MM-dd HH:mm:ss"/></p>
-		
+		<div id="status">
+		<c:if test="${isHarvesting}">
+			<strong>Harvesting running:</strong>
+		</c:if>
+		<c:if test="${not isHarvesting}">
+			<strong>Last execution:</strong> <fmt:formatDate value="${lastExecution}" type="date" pattern="yyyy-MM-dd HH:mm:ss"/> [${statusLevel}]
+		</c:if>
+			<a href="#">Show Details</a>
+			<div class="status hidden">details.</div>
+		</div>
 		<br/>
 		<h2>Manage Harvester:</h2>
 		<c:if test="${not empty errorKey}">

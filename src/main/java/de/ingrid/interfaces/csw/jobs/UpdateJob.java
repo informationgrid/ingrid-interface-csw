@@ -153,6 +153,7 @@ public class UpdateJob {
                 long diff = end.getTime() - start.getTime();
                 log.info("Job executed within " + diff + " ms.");
                 statusProvider.addState("stop_harvesting", "Harvesting finished.");
+                statusProvider.write();
                 return true;
             } finally {
                 // release the lock

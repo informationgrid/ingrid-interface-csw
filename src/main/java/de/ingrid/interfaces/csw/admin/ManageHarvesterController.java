@@ -34,6 +34,7 @@ import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.harvest.impl.TestSuiteHarvester;
 import de.ingrid.interfaces.csw.index.IsoIndexManager;
+import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.interfaces.csw.jobs.UpdateJob;
 import de.ingrid.interfaces.csw.tools.FileUtils;
 
@@ -55,8 +56,14 @@ public class ManageHarvesterController {
     UpdateJob updateJob;
 
     @Autowired
+    StatusProvider statusProvider;
+    
+    @Autowired
     private IsoIndexManager indexManager;
 
+    @Autowired
+    private IndexScheduler _scheduler;
+    
     private final HarvesterValidator _validator;
 
     @Autowired
@@ -71,6 +78,8 @@ public class ManageHarvesterController {
         modelMap.addAttribute("harvesterConfigs", cProvider.reloadConfiguration().getHarvesterConfigurations());
         modelMap.addAttribute("harvesterTypes", HARVESTER_TYPES);
         modelMap.addAttribute("lastExecution", updateJob.getLastExecutionDate().compareTo(new Date(0)) == 0 ? null : updateJob.getLastExecutionDate());
+        modelMap.addAttribute("statusLevel", statusProvider.getMaxClassificationLevel());
+        modelMap.addAttribute("isHarvesting", _scheduler.isRunning());
 
         return "/list_harvester";
     }

@@ -62,30 +62,21 @@ function getState(){
             </c:if>
 			
 			<form action="indexing.html" method="post" id="indexing">
-				<table id="konfigForm">
-					<tr>
-						<td>
-							Depending on your data sources this step can consume some time (minutes or hours).
-							
-							<br/><br/>
-							
-							<button type="submit" name="harvest" id="harvest" value="harvest" <c:if test="${isScheduled == 'true'}">style="display:none"</c:if>>Harvest now!</button>
-							
-						</td>
-					</tr>
-							
-				</table>
+            Depending on your data sources this step can consume some time (minutes or hours).
+			<br/><br/>
+			<button type="submit" name="harvest" id="harvest" value="harvest" <c:if test="${isScheduled == 'true'}">style="display:none"</c:if>>Harvest now!</button>
 			</form> 
 				
-		</div>
-		
-        <div class="dialog" id="dialog" <c:if test="${isScheduled != 'true'}">style="display:none"</c:if>>
+        <div class="status" id="dialog" <c:if test="${isScheduled != 'true'}">style="display:none"</c:if>>
             <div class="content">Harvesting in progress, please be patient.</div>
         </div>  
 
-        <div class="dialog" id="dialog_done" style="display:none">
+        <div class="status" id="dialog_done" style="display:none">
             <div class="content">All data has been harvested.</div>
         </div>  
+
+		</div>
+		
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>
 </body>

@@ -23,6 +23,7 @@ import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.MultipleBusClientFactory;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
 import de.ingrid.interfaces.csw.harvest.impl.AbstractHarvester;
+import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHits;
@@ -192,6 +193,10 @@ public class IBusHarvester extends AbstractHarvester {
                     }
                 }
             }
+        } catch (Exception e) {
+            log.error("Error harvesting '" + this.getName() + "'", e);
+            statusProvider.addState(this.getId() + "Error", "Error harvesting '" + this.getName() + "' ("
+                    + e.getMessage() + ")", StatusProvider.Classification.ERROR);
         } finally {
             if (client != null && IBusClosableLock.INSTANCE.isLockedBy(this.getClass().getName())) {
                 client.shutdown();
@@ -233,10 +238,11 @@ public class IBusHarvester extends AbstractHarvester {
         List<Serializable> cacheIds = this.cacheRecords(hits, bus);
         int numHits = hits.getHits().length;
         int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
-        statusProvider.addState(request.getPlugId() + "fetch", "Fetch records for iPlug '"
-                + request.getPlugId() + "'... [" + (hits.length() == 0 ? 0 : (endHit + 1)) + "/" + hits.length() + "] with "
-                + (errorCounts.get(request.getPlugId()) == null ? 0 : errorCounts.get(request.getPlugId()))
-                + " errors.");
+        int errorCount = (errorCounts.get(request.getPlugId()) == null ? 0 : errorCounts.get(request.getPlugId()));
+        statusProvider.addState(request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId()
+                + "'... [" + (hits.length() == 0 ? 0 : (endHit + 1)) + "/" + hits.length() + "] with "
+                + errorCount
+                + " errors.", errorCount > 0 ? StatusProvider.Classification.WARN : StatusProvider.Classification.INFO);
         if (log.isInfoEnabled()) {
             log.info("Fetched records " + startHit + " to " + endHit + " of " + hits.length());
         }

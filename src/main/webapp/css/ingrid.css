@@ -129,3 +129,5 @@ ul.tabs li.active a {color:#000}
 }
 .value:hover { font-weight: bold; }
 .value.marked { color: #fff; background-color: #68A5D2; }
+.hidden { display: none;}
+.status { border:1px solid #68A5D2; padding:10px; background:#F5F8EB;}
