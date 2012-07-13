@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>de.ingrid</groupId>
 		<artifactId>ingrid-releases-pom</artifactId>
-		<version>3.2.0-SNAPSHOT</version>
+		<version>3.2.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
@@ -261,17 +261,17 @@
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-spatial-lucene</artifactId>
-			<version>3.x-SNAPSHOT</version>
+			<version>3.x-20120621.233519-445</version>
 		</dependency>
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-xml-ogc</artifactId>
-			<version>3.x-SNAPSHOT</version>
+			<version>3.x-20120621.233924-451</version>
 		</dependency>
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-xml-gml</artifactId>
-			<version>3.x-SNAPSHOT</version>
+			<version>3.x-20120621.233542-452</version>
 		</dependency>
 		<dependency>
 			<groupId>it.sauronsoftware.cron4j</groupId>
