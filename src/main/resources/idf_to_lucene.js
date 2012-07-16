@@ -155,7 +155,7 @@ var transformationDescriptions = [
 			}
 		},
 		{	"indexField":"language",
-			"xpath":"//idf:idfMdMetadata/gmd:language/gco:CharacterString"
+			"xpath":" //idf:idfMdMetadata/gmd:language/gmd:LanguageCode/@codeListValue | //idf:idfMdMetadata/gmd:language/gco:CharacterString"
 		},
 		{	"indexField":"resourceidentifier",
 			"xpath":"//gmd:identificationInfo//gmd:identifier/gmd:RS_Identifier/gmd:code/gco:CharacterString"
