@@ -20,7 +20,7 @@
 		<!--
 			Repo of parent pom needed, parent pom may not be installed locally
 			yet
-		-->
+        -->
 		<repository>
 			<id>de.ingrid.all</id>
 			<name>Maven Repo InGrid</name>
@@ -31,6 +31,11 @@
 			<name>Geotoolkit repository</name>
 			<url>http://maven.geotoolkit.org/</url>
 		</repository>
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/repo</url>
+        </repository>
 	</repositories>
 
 	<dependencyManagement>
@@ -261,17 +266,17 @@
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-spatial-lucene</artifactId>
-			<version>3.x-20120621.233519-445</version>
+			<version>3.x-20120717-INGRID</version>
 		</dependency>
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-xml-ogc</artifactId>
-			<version>3.x-20120621.233924-451</version>
+			<version>3.x-20120717-INGRID</version>
 		</dependency>
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-xml-gml</artifactId>
-			<version>3.x-20120621.233542-452</version>
+			<version>3.x-20120717-INGRID</version>
 		</dependency>
 		<dependency>
 			<groupId>it.sauronsoftware.cron4j</groupId>

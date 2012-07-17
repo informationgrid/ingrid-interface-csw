@@ -331,7 +331,7 @@ public class FilterParserTest extends TestCase {
 				"    <ogc:DWithin>                                             " +
 				"      <ogc:PropertyName>apiso:BoundingBox</ogc:PropertyName>  " +
 				"        <gml:Point srsName=\"EPSG:4326\">                     " +
-				"           <gml:coordinates>3.4 2.5</gml:coordinates>         " +
+				"           <gml:coordinates>3.4, 2.5</gml:coordinates>         " +
 				"        </gml:Point>                                          " +
 				"        <ogc:Distance units='m'>1000</ogc:Distance>           " +
 				"    </ogc:DWithin>                                            " +
@@ -434,7 +434,7 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Contains>                                              "  +
 				"             <ogc:PropertyName>apiso:BoundingBox</ogc:PropertyName> "  +
 				"             <gml:Point srsName=\"EPSG:4326\">                      "  +
-				"                 <gml:coordinates>3.4 2.5</gml:coordinates>         "  +
+				"                 <gml:coordinates>3.4, 2.5</gml:coordinates>         "  +
 				"            </gml:Point>                                            "  +
 				"        </ogc:Contains>                                             "  +
 				"         <ogc:BBOX>                                                 "  +
@@ -488,7 +488,7 @@ public class FilterParserTest extends TestCase {
 				"            <ogc:Contains>                                             "  +
 				"                <ogc:PropertyName>apiso:BoundingBox</ogc:PropertyName> "  +
 				"                <gml:Point srsName=\"EPSG:4326\">                      "  +
-				"                    <gml:coordinates>3.4 2.5</gml:coordinates>         "  +
+				"                    <gml:coordinates>3.4, 2.5</gml:coordinates>         "  +
 				"                </gml:Point>                                           "  +
 				"            </ogc:Contains>                                            "  +
 				"            <ogc:BBOX>                                                 "  +
@@ -549,7 +549,7 @@ public class FilterParserTest extends TestCase {
 				"        <ogc:Contains>                                                 "  +
 				"             <ogc:PropertyName>apiso:BoundingBox</ogc:PropertyName>    "  +
 				"             <gml:Point srsName=\"EPSG:4326\">                         "  +
-				"                 <gml:coordinates>3.4 2.5</gml:coordinates>            "  +
+				"                 <gml:coordinates>3.4, 2.5</gml:coordinates>            "  +
 				"            </gml:Point>                                               "  +
 				"        </ogc:Contains>                                                "  +
 				"         <ogc:BBOX>                                                    "  +
@@ -610,7 +610,7 @@ public class FilterParserTest extends TestCase {
 				"                <ogc:Contains>                                            "  +
 				"                    <ogc:PropertyName>apiso:BoundingBox</ogc:PropertyName>"  +
 				"                    <gml:Point srsName=\"EPSG:4326\">                     "  +
-				"                        <gml:coordinates>3.4 2.5</gml:coordinates>        "  +
+				"                        <gml:coordinates>3.4, 2.5</gml:coordinates>        "  +
 				"                    </gml:Point>                                          "  +
 				"                </ogc:Contains>                                           "  +
 				"           </ogc:Or>                                                      "  +
@@ -936,7 +936,7 @@ public class FilterParserTest extends TestCase {
 				"                <ogc:DWithin>                                                         " +
 				"                    <ogc:PropertyName>apiso:BoundingBox</ogc:PropertyName>            " +
 				"                    <gml:Point srsName=\"EPSG:4326\">                                 " +
-				"                        <gml:coordinates>3.4 2.5</gml:coordinates>                    " +
+				"                        <gml:coordinates>3.4, 2.5</gml:coordinates>                    " +
 				"                    </gml:Point>                                                      " +
 				"                    <ogc:Distance units='m'>1000</ogc:Distance>                       " +
 				"                </ogc:DWithin>                                                        " +
@@ -1006,7 +1006,7 @@ public class FilterParserTest extends TestCase {
 				"                <ogc:DWithin>                                                         " +
 				"                    <ogc:PropertyName>apiso:BoundingBox</ogc:PropertyName>            " +
 				"                    <gml:Point srsName=\"EPSG:4326\">                                 " +
-				"                        <gml:coordinates>3.4 2.5</gml:coordinates>                    " +
+				"                        <gml:coordinates>3.4, 2.5</gml:coordinates>                    " +
 				"                    </gml:Point>                                                      " +
 				"                    <ogc:Distance units='m'>1000</ogc:Distance>                       " +
 				"                </ogc:DWithin>                                                        " +
@@ -1105,7 +1105,7 @@ public class FilterParserTest extends TestCase {
 				"                <ogc:DWithin>                                                         " +
 				"                    <ogc:PropertyName>apiso:BoundingBox</ogc:PropertyName>            " +
 				"                    <gml:Point srsName=\"EPSG:4326\">                                 " +
-				"                        <gml:coordinates>3.4 2.5</gml:coordinates>                    " +
+				"                        <gml:coordinates>3.4, 2.5</gml:coordinates>                    " +
 				"                    </gml:Point>                                                      " +
 				"                    <ogc:Distance units='m'>1000</ogc:Distance>                       " +
 				"                </ogc:DWithin>                                                        " +
