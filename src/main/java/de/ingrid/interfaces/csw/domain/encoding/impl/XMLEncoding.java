@@ -153,7 +153,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
         this.checkInitialized();
 
         if (this.operation == null) {
-            String operationName = this.getRequestBody().getNodeName();
+            String operationName = this.getRequestBody().getLocalName();
             this.operation = Operation.getByName(operationName);
         }
         return this.operation;

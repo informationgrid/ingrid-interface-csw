@@ -3,9 +3,9 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<soapenv:Body>
-		<GetRecordById xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
-			<Id>04068592-709f-3c7a-85de-f2d68e585fca</Id>
-			<ElementSetName>full</ElementSetName>
-		</GetRecordById>
+		<csw:GetRecordById xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
+			<csw:Id>04068592-709f-3c7a-85de-f2d68e585fca</csw:Id>
+			<csw:ElementSetName>full</csw:ElementSetName>
+		</csw:GetRecordById>
 	</soapenv:Body>
 </soapenv:Envelope>
