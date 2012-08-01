@@ -170,7 +170,7 @@ startIplug()
   INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME"
   CLASS=de.ingrid.interfaces.csw.admin.JettyStarter
 	
-  exec nohup "$JAVA" $JAVA_HEAPSIZE $INGRID_OPTS $CLASS > console.log & 
+  exec nohup "$JAVA" $JAVA_HEAP_MAX $INGRID_OPTS $CLASS > console.log & 
   
   echo "jetty ($INGRID_HOME) started."
   echo $! > $PID
