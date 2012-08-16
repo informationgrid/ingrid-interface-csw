@@ -88,4 +88,16 @@ public class CSWServlet extends HttpServlet {
 			throw new ServletException("POST failed: "+ex.getMessage(), ex);
 		}
 	}
+
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.GenericServlet#destroy()
+	 */
+	@Override
+	public void destroy() {
+		super.destroy();
+		serverFacade.destroy();
+	}
+	
+	
 }

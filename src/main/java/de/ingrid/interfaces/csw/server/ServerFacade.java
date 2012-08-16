@@ -143,6 +143,14 @@ public class ServerFacade {
     public void handleSoapRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         this.handleRequest(RequestType.SOAP, request, response);
     }
+    
+    /**
+     * Free all resources.
+     */
+    public void destroy() {
+    	cswServerImpl.destroy();
+    }
+
 
     /**
      * Generic request method

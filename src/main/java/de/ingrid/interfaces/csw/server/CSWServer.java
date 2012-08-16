@@ -56,4 +56,9 @@ public interface CSWServer {
 	 * @return A Document instance
 	 */
 	Document process(GetRecordByIdRequest request) throws CSWException;
+	
+	/**
+	 * Free all resources. (important: close the index readers file handles on windows)
+	 */
+	void destroy();
 }

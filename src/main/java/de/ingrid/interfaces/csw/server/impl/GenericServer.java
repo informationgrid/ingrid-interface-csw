@@ -185,6 +185,16 @@ public class GenericServer implements CSWServer {
         }
     }
 
+	@Override
+	public void destroy() {
+		try {
+			searcher.stop();
+		} catch (Exception e) {
+			log.error("Error closing searcher.", e);
+		}
+	}
+
+    
     /**
      * Get a Document from the configured resources in beans.xml
      * 
@@ -258,4 +268,5 @@ public class GenericServer implements CSWServer {
         }
         return this.documentCache.get(cacheKey);
     }
+
 }

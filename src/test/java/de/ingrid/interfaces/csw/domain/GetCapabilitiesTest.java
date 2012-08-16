@@ -35,6 +35,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 		// make request
 		CSWServlet servlet = this.createServlet();
 		servlet.doGet(request, response);
+		servlet.destroy();
 
 		context.assertIsSatisfied();
 
@@ -47,6 +48,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 
 		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
 		assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
+		
 	}
 
 	/**
@@ -67,6 +69,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 		// make request
 		CSWServlet servlet = this.createServlet();
 		servlet.doPost(request, response);
+		servlet.destroy();
 
 		context.assertIsSatisfied();
 
@@ -97,6 +100,8 @@ public class GetCapabilitiesTest extends OperationTestBase {
 		// make request
 		CSWServlet servlet = this.createServlet();
 		servlet.doPost(request, response);
+		servlet.destroy();
+		
 
 		context.assertIsSatisfied();
 
@@ -158,6 +163,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 		// make request
 		CSWServlet servlet = this.createServlet();
 		servlet.doPost(request, response);
+		servlet.destroy();
 
 		context.assertIsSatisfied();
 
@@ -188,6 +194,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
         // make request
         CSWServlet servlet = this.createServlet();
         servlet.doGet(request, response);
+		servlet.destroy();
 
         context.assertIsSatisfied();
 
