@@ -63,6 +63,11 @@ public class LuceneIndexSearcher extends IndexLucene {
     protected IndexSearcher searcher;
 
     /**
+     * This is the index reader of Lucene.
+     */
+    protected IndexReader reader;
+    
+    /**
      * A default Query requesting all the document
      */
     private final static Query SIMPLE_QUERY = new TermQuery(new Term("metafile", "doc"));
@@ -192,8 +197,9 @@ public class LuceneIndexSearcher extends IndexLucene {
     private void initSearcher() throws CorruptIndexException, IOException {
         final File indexDirectory = getFileDirectory();
         readTree();
-        final IndexReader reader  = new TreeIndexReaderWrapper(IndexReader.open(LuceneUtils.getAppropriateDirectory(indexDirectory)), rTree, envelopeOnly);
-        searcher                  = new IndexSearcher(reader);
+        reader = IndexReader.open(LuceneUtils.getAppropriateDirectory(indexDirectory));
+        final IndexReader indexReader  = new TreeIndexReaderWrapper(reader, rTree, envelopeOnly);
+        searcher                  = new IndexSearcher(indexReader);
         LOGGER.log(Level.INFO, "Creating new Index Searcher with index directory:{0}", indexDirectory.getPath());
        
     }
@@ -502,11 +508,16 @@ public class LuceneIndexSearcher extends IndexLucene {
         LOGGER.info("shutting down index searcher");
         try {
             if (searcher != null) {
-                searcher.close();
+            	if (reader != null) {
+            		reader.close();
+            	}
+            	searcher.close();
             }
             cachedQueries.clear();
         } catch (IOException ex) {
             LOGGER.warning("IOException while closing the index searcher");
+        } catch (Exception ex) {
+            LOGGER.log(Level.WARNING, "Exception while closing the index searcher", ex);
         }
     }
 

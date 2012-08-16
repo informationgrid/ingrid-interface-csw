@@ -407,7 +407,10 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
             // move content of this instance to the original cache
             File originalDir = this.getCachePath();
             File tmpDir = new File(this.getTempPath().getAbsolutePath() + "_tmp");
+            // make sure all parent paths are created
             tmpDir.mkdirs();
+            // then remove the last directory
+            tmpDir.delete();
             File workDir = this.getWorkPath();
             originalDir.renameTo(tmpDir);
             workDir.renameTo(originalDir);
