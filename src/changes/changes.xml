@@ -9,8 +9,10 @@
       <action type="fix" dev="wemove">
         Fix paths in start script when started via cygwin on windows.
       </action>
+      <action type="fix" dev="wemove">
+        Remove open file handles that prevent deletion/renaming of folders under windows.
+      </action>
     </release>
-
     <release version="3.2.0" date="2012-07-13" description="Release InGrid 3.2">
       <action type="add" dev="wemove">
         Initial Release. Harvesters can be configured to collect data, which is stored in an index file.
