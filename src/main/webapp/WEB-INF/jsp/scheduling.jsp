@@ -12,7 +12,7 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <link rel="StyleSheet" href="css/ingrid.css" type="text/css" media="all" />
 
-<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript"><!--
 	$(document).ready(function() {
 		var divs = $("table#multiple div[value]").each(function() {

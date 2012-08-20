@@ -13,7 +13,7 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <link rel="StyleSheet" href="css/ingrid.css" type="text/css" media="all" />
-<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 <!--
 function confirmSubmit(val)
@@ -45,12 +45,14 @@ $(function(){
 });
 
 function getState(){
+	$.ajaxSetup({ cache: false });
 	$.getJSON("indexState.html", {}, function(statusResponse){
         $("#status div").html(statusResponse.status.replace(/\n/g,"<br />"));
 		if (statusResponse.isRunning){
 			setTimeout(getState, 1000);
 		}
 	}, "text");
+	$.ajaxSetup({ cache: true });
 }
 
 getState();

@@ -7,6 +7,9 @@
   <body>
     <release version="3.2.?" date="??" description="Bugfix Release for InGrid 3.2">
       <action type="fix" dev="wemove">
+        Upgrade jquery to Version 1.8.0. Add workaround for ajax caching IE behaviour.
+      </action>
+      <action type="fix" dev="wemove">
         Fix paths in start script when started via cygwin on windows.
       </action>
       <action type="fix" dev="wemove">

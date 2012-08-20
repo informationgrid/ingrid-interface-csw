@@ -11,9 +11,10 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <link rel="StyleSheet" href="css/ingrid.css" type="text/css" media="all" />
-<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 <script>
 function getState(){
+	$.ajaxSetup({ cache: false });
 	$.getJSON("indexState.html", {}, function(statusResponse){
 		  if(statusResponse.isRunning == 'false'){
             document.getElementById('dialog').style.display = 'none';
@@ -26,10 +27,15 @@ function getState(){
 			setTimeout(getState, 1000);
 		  }
 	}, "text");
+	$.ajaxSetup({ cache: true });
 }
 </script>
 <c:if test="${triggerResult == 'success'}">
-	<script>getState();</script>
+<script>
+$(function() {
+ getState();
+});	
+</script>
 </c:if>
 </head>
 <body>
