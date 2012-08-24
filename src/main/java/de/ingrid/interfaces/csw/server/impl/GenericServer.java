@@ -233,7 +233,7 @@ public class GenericServer implements CSWServer {
         if (variant != null) {
             cacheKey = cacheKey + variant;
         }
-
+        
         if (!this.documentCache.containsKey(cacheKey)
                 || !ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false)) {
 
@@ -259,14 +259,22 @@ public class GenericServer implements CSWServer {
                 String content = new Scanner(file).useDelimiter("\\A").next();
                 Document doc = StringUtils.stringToDocument(content);
 
+                if (log.isDebugEnabled()) {
+                    log.debug("Put document into cache with cache-key '"+cacheKey+"': " + StringUtils.nodeToString(doc.getDocumentElement()));
+                }
+
                 // cache the document
                 this.documentCache.put(cacheKey, doc);
             } catch (Exception e) {
+                log.error("Error reading document configured in configuration key '" + cacheKey
+                        + "': " + filename + ", " + variant, e);
                 throw new RuntimeException("Error reading document configured in configuration key '" + cacheKey
                         + "': " + filename + ", " + variant, e);
             }
         }
+        if (log.isDebugEnabled()) {
+            log.debug("Retrieve document from cache with cache-key '"+cacheKey+"': " + StringUtils.nodeToString(this.documentCache.get(cacheKey).getDocumentElement()));
+        }
         return this.documentCache.get(cacheKey);
     }
-
 }

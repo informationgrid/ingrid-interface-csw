@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
@@ -23,19 +21,7 @@ import org.apache.commons.io.FileUtils;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 
-import de.ingrid.interfaces.csw.domain.constants.Operation;
-import de.ingrid.interfaces.csw.domain.constants.RequestType;
-import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
-import de.ingrid.interfaces.csw.domain.encoding.impl.KVPEncoding;
-import de.ingrid.interfaces.csw.domain.encoding.impl.Soap12Encoding;
-import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
 import de.ingrid.interfaces.csw.domain.filter.impl.LuceneFilterParser;
-import de.ingrid.interfaces.csw.domain.request.CSWRequest;
-import de.ingrid.interfaces.csw.domain.request.impl.DescribeRecordRequestImpl;
-import de.ingrid.interfaces.csw.domain.request.impl.GetCapabilitiesRequestImpl;
-import de.ingrid.interfaces.csw.domain.request.impl.GetDomainRequestImpl;
-import de.ingrid.interfaces.csw.domain.request.impl.GetRecordByIdRequestImpl;
-import de.ingrid.interfaces.csw.domain.request.impl.GetRecordsRequestImpl;
 import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
 import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 import de.ingrid.interfaces.csw.server.CSWServlet;
@@ -101,18 +87,6 @@ public abstract class OperationTestBase extends TestCase {
 	    FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
 	    FileUtils.copyDirectory(new File("src/test/resources/index"), new File(LIVE_INDEX_PATH));
 	    
-		Map<RequestType, CSWMessageEncoding> messageEncodingMap = new Hashtable<RequestType, CSWMessageEncoding>();
-		messageEncodingMap.put(RequestType.GET, new KVPEncoding());
-		messageEncodingMap.put(RequestType.POST, new XMLEncoding());
-		messageEncodingMap.put(RequestType.SOAP, new Soap12Encoding());
-
-		Map<Operation, CSWRequest> requestMap = new Hashtable<Operation, CSWRequest>();
-		requestMap.put(Operation.GET_CAPABILITIES, new GetCapabilitiesRequestImpl());
-		requestMap.put(Operation.DESCRIBE_RECORD, new DescribeRecordRequestImpl());
-		requestMap.put(Operation.GET_DOMAIN, new GetDomainRequestImpl());
-		requestMap.put(Operation.GET_RECORDS, new GetRecordsRequestImpl());
-		requestMap.put(Operation.GET_RECORD_BY_ID, new GetRecordByIdRequestImpl());
-
 		CSWRecordCache cache = new CSWRecordCache();
 		cache.setCachePath(new File(CSW_CACHE_PATH));
 
@@ -126,8 +100,6 @@ public abstract class OperationTestBase extends TestCase {
 
 		ServerFacade serverFacade = new ServerFacade();
 		serverFacade.setCswServerImpl(server);
-		serverFacade.setCswMessageEncodingImplMap(messageEncodingMap);
-		serverFacade.setCswRequestImplMap(requestMap);
 
 		CSWServlet servlet = new CSWServlet();
 		servlet.setServerFacade(serverFacade);

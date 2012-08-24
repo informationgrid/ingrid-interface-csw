@@ -4,9 +4,7 @@
 package de.ingrid.interfaces.csw.server;
 
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,29 +57,9 @@ public class ServerFacade {
     @Autowired
     private CSWServer cswServerImpl;
 
-    /**
-     * A map of csw message encoding implementations
-     */
-    private Map<RequestType, CSWMessageEncoding> cswMessageEncodingImplMap;
-
-    /**
-     * A map of csw request implementations
-     */
-    private Map<Operation, CSWRequest> cswRequestImplMap;
-
+    
     public ServerFacade() {
         super();
-        cswMessageEncodingImplMap = new Hashtable<RequestType, CSWMessageEncoding>();
-        cswMessageEncodingImplMap.put(RequestType.GET, new KVPEncoding());
-        cswMessageEncodingImplMap.put(RequestType.POST, new XMLEncoding());
-        cswMessageEncodingImplMap.put(RequestType.SOAP, new Soap12Encoding());
-
-        cswRequestImplMap = new Hashtable<Operation, CSWRequest>();
-        cswRequestImplMap.put(Operation.GET_CAPABILITIES, new GetCapabilitiesRequestImpl());
-        cswRequestImplMap.put(Operation.DESCRIBE_RECORD, new DescribeRecordRequestImpl());
-        cswRequestImplMap.put(Operation.GET_DOMAIN, new GetDomainRequestImpl());
-        cswRequestImplMap.put(Operation.GET_RECORDS, new GetRecordsRequestImpl());
-        cswRequestImplMap.put(Operation.GET_RECORD_BY_ID, new GetRecordByIdRequestImpl());
     }
 
     /**
@@ -91,24 +69,6 @@ public class ServerFacade {
      */
     public void setCswServerImpl(CSWServer cswServerImpl) {
         this.cswServerImpl = cswServerImpl;
-    }
-
-    /**
-     * Set the map of csw message encoding implementations
-     * 
-     * @param cswMessageEncodingImplMap
-     */
-    public void setCswMessageEncodingImplMap(Map<RequestType, CSWMessageEncoding> cswMessageEncodingImplMap) {
-        this.cswMessageEncodingImplMap = cswMessageEncodingImplMap;
-    }
-
-    /**
-     * Set the map of csw request implementations
-     * 
-     * @param cswRequestImplMap
-     */
-    public void setCswRequestImplMap(Map<Operation, CSWRequest> cswRequestImplMap) {
-        this.cswRequestImplMap = cswRequestImplMap;
     }
 
     /**
@@ -243,13 +203,20 @@ public class ServerFacade {
      * @return The CSWMesageEncoding instance
      */
     private CSWMessageEncoding getMessageEncodingInstance(RequestType type) {
-        if (this.cswMessageEncodingImplMap == null) {
-            throw new RuntimeException("ServerFacade is not configured properly: cswMessageEncodingImplMap is not set.");
-        }
-        if (!this.cswMessageEncodingImplMap.containsKey(type)) {
+
+        CSWMessageEncoding encoding = null;
+        
+        if (type.equals(RequestType.GET)) {
+            encoding = new KVPEncoding();
+        } else if (type.equals(RequestType.POST)) {
+            encoding = new XMLEncoding();
+        } else if (type.equals(RequestType.SOAP)) {
+            encoding = new Soap12Encoding();
+        } else {
+            log.error("Unknown encoding type requested: " + type);
             throw new RuntimeException("Unknown encoding type requested: " + type);
         }
-        CSWMessageEncoding encoding = this.cswMessageEncodingImplMap.get(type);
+
         return encoding;
     }
 
@@ -262,13 +229,23 @@ public class ServerFacade {
      * @return The CSWRequest instance
      */
     private CSWRequest getRequestInstance(Operation operation) {
-        if (this.cswRequestImplMap == null) {
-            throw new RuntimeException("ServerFacade is not configured properly: cswRequestImplMap is not set.");
-        }
-        if (!this.cswRequestImplMap.containsKey(operation)) {
+        CSWRequest request = null;
+        
+        if (operation.equals(Operation.GET_CAPABILITIES)) {
+            request = new GetCapabilitiesRequestImpl();
+        } else if (operation.equals(Operation.DESCRIBE_RECORD)) {
+            request = new DescribeRecordRequestImpl();
+        } else if (operation.equals(Operation.GET_DOMAIN)) {
+            request = new GetDomainRequestImpl();
+        } else if (operation.equals(Operation.GET_RECORDS)) {
+            request = new GetRecordsRequestImpl();
+        } else if (operation.equals(Operation.GET_RECORD_BY_ID)) {
+            request = new GetRecordByIdRequestImpl();
+        } else {
+            log.error("No request implementation found for operation: " + operation);
             throw new RuntimeException("No request implementation found for operation: " + operation);
         }
-        CSWRequest request = this.cswRequestImplMap.get(operation);
+        
         return request;
     }
 }
