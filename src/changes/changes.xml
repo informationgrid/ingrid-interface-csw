@@ -18,6 +18,9 @@
       <action type="fix" dev="wemove">
         Remove open file handles that prevent deletion/renaming of folders under windows.
       </action>
+      <action type="add" dev="wemove" issue="INGRID33-4">
+        Added local working directory, so that temp-dir is not deleted accidentally when cleaning up global temp dir.
+      </action>
     </release>
     <release version="3.2.0" date="2012-07-13" description="Release InGrid 3.2">
       <action type="add" dev="wemove">

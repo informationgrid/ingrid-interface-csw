@@ -16,6 +16,8 @@
 		<move toDir="${installDir}">
 			<fileset dir="${installDir}/${componentName}"/>
 		</move>
+        
+        <mkdir dir="${installDir}/webapp/WEB-INF/work"/>
 	</target>
 	
 	<target name="csw" description="Set csw properties.">
