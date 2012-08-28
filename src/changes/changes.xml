@@ -6,6 +6,9 @@
   </properties>
   <body>
     <release version="3.2.0.1-SNAPSHOT" date="2012-xx-ss" description="Bugfix Release InGrid 3.2">
+      <action type="fix" dev="wemove" issue="INGRID32-175">
+        CRITICAL: Remove document cache for Capability and DescribeRecord documents, since those cached documents may be invalidated by the SOAP Framework.
+      </action>
       <action type="fix" dev="wemove">
         Fix problem with concurrent access of the interface.
       </action>

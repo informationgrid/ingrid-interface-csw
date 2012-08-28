@@ -7,8 +7,6 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -49,9 +47,6 @@ public class GenericServer implements CSWServer {
 
     /** The logging object **/
     private static Log log = LogFactory.getLog(GenericServer.class);
-
-    /** A cache for static documents returned for special requests **/
-    protected Map<String, Document> documentCache = new Hashtable<String, Document>();
 
     /** Tool for evaluating xpath **/
     private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
@@ -185,16 +180,15 @@ public class GenericServer implements CSWServer {
         }
     }
 
-	@Override
-	public void destroy() {
-		try {
-			searcher.stop();
-		} catch (Exception e) {
-			log.error("Error closing searcher.", e);
-		}
-	}
+    @Override
+    public void destroy() {
+        try {
+            searcher.stop();
+        } catch (Exception e) {
+            log.error("Error closing searcher.", e);
+        }
+    }
 
-    
     /**
      * Get a Document from the configured resources in beans.xml
      * 
@@ -229,52 +223,36 @@ public class GenericServer implements CSWServer {
      * @return The Document instance
      */
     protected Document getDocument(String key, String variant) {
-        String cacheKey = key;
-        if (variant != null) {
-            cacheKey = cacheKey + variant;
-        }
-        
-        if (!this.documentCache.containsKey(cacheKey)
-                || !ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false)) {
 
-            // fetch the document from the file system if it is not cached
-            String filename = ApplicationProperties.getMandatory(key);
-            String filenameVariant = filename;
-            if (variant != null && variant.length() > 0) {
-                if (filename.contains(FilenameUtils.EXTENSION_SEPARATOR_STR)) {
-                    filenameVariant = FilenameUtils.getBaseName(filename) + "_" + variant
-                            + FilenameUtils.EXTENSION_SEPARATOR_STR + FilenameUtils.getExtension(filename);
-                } else {
-                    filenameVariant = FilenameUtils.getBaseName(filename) + "_" + variant;
-                }
-            }
-            try {
-                URL resource = this.getClass().getClassLoader().getResource(filenameVariant);
-                if (resource == null) {
-                    log.warn("Document '" + filenameVariant + "' could not be found in class path.");
-                    resource = this.getClass().getClassLoader().getResource(filename);
-                }
-                String path = resource.getPath().replaceAll("%20", " ");
-                File file = new File(path);
-                String content = new Scanner(file).useDelimiter("\\A").next();
-                Document doc = StringUtils.stringToDocument(content);
-
-                if (log.isDebugEnabled()) {
-                    log.debug("Put document into cache with cache-key '"+cacheKey+"': " + StringUtils.nodeToString(doc.getDocumentElement()));
-                }
-
-                // cache the document
-                this.documentCache.put(cacheKey, doc);
-            } catch (Exception e) {
-                log.error("Error reading document configured in configuration key '" + cacheKey
-                        + "': " + filename + ", " + variant, e);
-                throw new RuntimeException("Error reading document configured in configuration key '" + cacheKey
-                        + "': " + filename + ", " + variant, e);
+        // fetch the document from the file system if it is not cached
+        String filename = ApplicationProperties.getMandatory(key);
+        String filenameVariant = filename;
+        if (variant != null && variant.length() > 0) {
+            if (filename.contains(FilenameUtils.EXTENSION_SEPARATOR_STR)) {
+                filenameVariant = FilenameUtils.getBaseName(filename) + "_" + variant
+                        + FilenameUtils.EXTENSION_SEPARATOR_STR + FilenameUtils.getExtension(filename);
+            } else {
+                filenameVariant = FilenameUtils.getBaseName(filename) + "_" + variant;
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Retrieve document from cache with cache-key '"+cacheKey+"': " + StringUtils.nodeToString(this.documentCache.get(cacheKey).getDocumentElement()));
+        Document doc = null;
+        try {
+            URL resource = this.getClass().getClassLoader().getResource(filenameVariant);
+            if (resource == null) {
+                log.warn("Document '" + filenameVariant + "' could not be found in class path.");
+                resource = this.getClass().getClassLoader().getResource(filename);
+            }
+            String path = resource.getPath().replaceAll("%20", " ");
+            File file = new File(path);
+            String content = new Scanner(file).useDelimiter("\\A").next();
+            doc = StringUtils.stringToDocument(content);
+
+        } catch (Exception e) {
+            log.error("Error reading document configured in configuration key '" + key + "': " + filename + ", "
+                    + variant, e);
+            throw new RuntimeException("Error reading document configured in configuration key '" + key + "': "
+                    + filename + ", " + variant, e);
         }
-        return this.documentCache.get(cacheKey);
+        return doc;
     }
 }
