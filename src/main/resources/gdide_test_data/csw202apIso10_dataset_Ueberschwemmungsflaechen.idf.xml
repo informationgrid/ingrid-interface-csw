@@ -23,7 +23,7 @@
 		<gmd:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ScopeCode" codeListValue="dataset"/>
 	</gmd:hierarchyLevel>
 	<gmd:contact>
-		<gmd:CI_ResponsibleParty>
+		<idf:idfResponsibleParty>
 			<gmd:organisationName>
 				<gco:CharacterString>Landesamt für Wasserschutz</gco:CharacterString>
 			</gmd:organisationName>
@@ -70,7 +70,7 @@
 			<gmd:role>
 				<gmd:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="publisher"/>
 			</gmd:role>
-		</gmd:CI_ResponsibleParty>
+		</idf:idfResponsibleParty>
 	</gmd:contact>
 	<gmd:dateStamp>
 		<gco:Date>2009-12-22</gco:Date>
@@ -151,7 +151,7 @@
 				<gmd:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="onGoing"/>
 			</gmd:status>
 			<gmd:pointOfContact>
-				<gmd:CI_ResponsibleParty>
+				<idf:idfResponsibleParty>
 					<gmd:organisationName>
 						<gco:CharacterString>Landesamt für Wasserschutz</gco:CharacterString>
 					</gmd:organisationName>
@@ -169,7 +169,7 @@
 					<gmd:role>
 						<gmd:CI_RoleCode codeList="http://wis.wmo.int/2008/catalogues/draft_version_1-1/WMO_Codelists_ver1_1.xml#CI_RoleCode" codeListValue="originator"/>
 					</gmd:role>
-				</gmd:CI_ResponsibleParty>
+				</idf:idfResponsibleParty>
 			</gmd:pointOfContact>
 			<gmd:resourceMaintenance>
 				<gmd:MD_MaintenanceInformation>
@@ -310,14 +310,14 @@
 			<gmd:distributor>
 				<gmd:MD_Distributor>
 					<gmd:distributorContact>
-						<gmd:CI_ResponsibleParty>
+						<idf:idfResponsibleParty>
 							<gmd:organisationName>
 								<gco:CharacterString>Landesamt für Wasserschutz</gco:CharacterString>
 							</gmd:organisationName>
 							<gmd:role>
 								<gmd:CI_RoleCode codeList="CI_RoleCode" codeListValue="distributor"/>
 							</gmd:role>
-						</gmd:CI_ResponsibleParty>
+						</idf:idfResponsibleParty>
 					</gmd:distributorContact>
 					<gmd:distributionOrderProcess>
 						<gmd:MD_StandardOrderProcess>

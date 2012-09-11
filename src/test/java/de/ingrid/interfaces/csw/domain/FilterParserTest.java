@@ -1177,4 +1177,28 @@ public class FilterParserTest extends TestCase {
 
 		assertTrue (spaFilter.getOGCFilter() instanceof  DWithin);
 	}
+	
+	   /**
+     * Test filter with queriables.
+     * 
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testQueriablesFilter() throws Exception {
+
+        String XMLrequest ="<ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\">\n" + 
+        		"                  <ogc:PropertyIsLike escapeChar=\"\\\" singleChar=\"?\" wildCard=\"*\">\n" + 
+        		"                     <ogc:PropertyName>apiso:OrganisationName</ogc:PropertyName>\n" + 
+        		"                     <ogc:Literal>Landesamt*</ogc:Literal>\n" + 
+        		"                  </ogc:PropertyIsLike>\n" + 
+        		"               </ogc:Filter>";
+        
+        CSWQuery q = new GenericQuery();
+        q.setConstraint(StringUtils.stringToDocument(XMLrequest));
+        SpatialQuery spaQuery = this.filterParser.parse(q);
+
+        assertTrue(spaQuery.getSpatialFilter() == null);
+        assertEquals(spaQuery.getSubQueries().size(), 0);
+        assertEquals(spaQuery.getQuery(), "organisationname:Landesamt*");
+    }
 }

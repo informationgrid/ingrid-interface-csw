@@ -26,7 +26,7 @@
 		<gmd:MD_ScopeCode codeList="MD_ScopeCode" codeListValue="dataset"/>
 	</gmd:hierarchyLevel>
 	<gmd:contact>
-		<gmd:CI_ResponsibleParty>
+		<idf:idfResponsibleParty>
 			<gmd:individualName>
 				<gco:CharacterString>Michael Burscheid</gco:CharacterString>
 			</gmd:individualName>
@@ -76,7 +76,7 @@
 			<gmd:role>
 				<gmd:CI_RoleCode codeList="CI_RoleCode" codeListValue="resourceProvider"/>
 			</gmd:role>
-		</gmd:CI_ResponsibleParty>
+		</idf:idfResponsibleParty>
 	</gmd:contact>
 	<gmd:dateStamp>
 		<gco:Date>2009-12-22</gco:Date>
@@ -149,7 +149,7 @@
 				<gmd:MD_ProgressCode codeList="MD_ProgressCode" codeListValue="completed"/>
 			</gmd:status>
 			<gmd:pointOfContact>
-				<gmd:CI_ResponsibleParty>
+				<idf:idfResponsibleParty>
 					<gmd:individualName>
 						<gco:CharacterString>Der Kartenverkäufer</gco:CharacterString>
 					</gmd:individualName>
@@ -199,7 +199,7 @@
 					<gmd:role>
 						<gmd:CI_RoleCode codeList="CI_RoleCode" codeListValue="processor"/>
 					</gmd:role>
-				</gmd:CI_ResponsibleParty>
+				</idf:idfResponsibleParty>
 			</gmd:pointOfContact>
 			<gmd:resourceMaintenance>
 				<gmd:MD_MaintenanceInformation>

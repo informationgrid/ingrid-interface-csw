@@ -22,7 +22,7 @@
 		<gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MX_ScopeCode" codeListValue="service"/>
 	</gmd:hierarchyLevel>
 	<gmd:contact>
-		<gmd:CI_ResponsibleParty>
+		<idf:idfResponsibleParty>
 			<gmd:individualName>
 				<gco:CharacterString>Dr. Uwe Voges</gco:CharacterString>
 			</gmd:individualName>
@@ -72,7 +72,7 @@
 			<gmd:role>
 				<gmd:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?CI_RoleCode" codeListValue="pointOfContact"/>
 			</gmd:role>
-		</gmd:CI_ResponsibleParty>
+		</idf:idfResponsibleParty>
 	</gmd:contact>
 	<gmd:dateStamp>
 		<gco:Date>2009-12-22</gco:Date>
@@ -125,7 +125,7 @@
 				<gmd:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml?MD_ProgressCode" codeListValue="underDevelopment"/>
 			</gmd:status>
 			<gmd:pointOfContact>
-				<gmd:CI_ResponsibleParty>
+				<idf:idfResponsibleParty>
 					<gmd:organisationName>
 						<gco:CharacterString>Landesamt für Wasserschutz</gco:CharacterString>
 					</gmd:organisationName>
@@ -143,7 +143,7 @@
 					<gmd:role>
 						<gmd:CI_RoleCode codeList="http://wis.wmo.int/2008/catalogues/draft_version_1-1/WMO_Codelists_ver1_1.xml#CI_RoleCode" codeListValue="originator"/>
 					</gmd:role>
-				</gmd:CI_ResponsibleParty>
+				</idf:idfResponsibleParty>
 			</gmd:pointOfContact>
 			<gmd:resourceMaintenance>
 				<gmd:MD_MaintenanceInformation>

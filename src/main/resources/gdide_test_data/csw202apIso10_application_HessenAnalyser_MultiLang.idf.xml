@@ -23,7 +23,7 @@
 		<gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MX_ScopeCode" codeListValue="application"/>
 	</gmd:hierarchyLevel>
 	<gmd:contact>
-		<gmd:CI_ResponsibleParty>
+		<idf:idfResponsibleParty>
 			<gmd:individualName>
 				<gco:CharacterString>Michael Burscheid</gco:CharacterString>
 			</gmd:individualName>
@@ -73,7 +73,7 @@
 			<gmd:role>
 				<gmd:CI_RoleCode codeList="CI_RoleCode" codeListValue="pointOfContact"/>
 			</gmd:role>
-		</gmd:CI_ResponsibleParty>
+		</idf:idfResponsibleParty>
 	</gmd:contact>
 	<gmd:dateStamp>
 		<gco:Date>2009-12-22</gco:Date>
@@ -152,7 +152,7 @@
 				<gmd:MD_ProgressCode codeList="MD_ProgressCode" codeListValue="completed"/>
 			</gmd:status>
 			<gmd:pointOfContact>
-				<gmd:CI_ResponsibleParty>
+				<idf:idfResponsibleParty>
 					<gmd:individualName>
 						<gco:CharacterString>Der Kartenverkäufer</gco:CharacterString>
 					</gmd:individualName>
@@ -202,7 +202,7 @@
 					<gmd:role>
 						<gmd:CI_RoleCode codeList="CI_RoleCode" codeListValue="processor"/>
 					</gmd:role>
-				</gmd:CI_ResponsibleParty>
+				</idf:idfResponsibleParty>
 			</gmd:pointOfContact>
 			<gmd:resourceMaintenance>
 				<gmd:MD_MaintenanceInformation>
@@ -409,7 +409,7 @@
 			<gmd:distributor>
 				<gmd:MD_Distributor>
 					<gmd:distributorContact>
-						<gmd:CI_ResponsibleParty>
+						<idf:idfResponsibleParty>
 							<gmd:organisationName>
 								<gco:CharacterString>Hessisches Landesamt für Karten</gco:CharacterString>
 							</gmd:organisationName>
@@ -456,7 +456,7 @@
 							<gmd:role>
 								<gmd:CI_RoleCode codeList="CI_RoleCode" codeListValue="distributor"/>
 							</gmd:role>
-						</gmd:CI_ResponsibleParty>
+						</idf:idfResponsibleParty>
 					</gmd:distributorContact>
 				</gmd:MD_Distributor>
 			</gmd:distributor>

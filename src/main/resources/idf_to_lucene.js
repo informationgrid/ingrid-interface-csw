@@ -143,11 +143,11 @@ var transformationDescriptions = [
 			"xpath":"//gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:DateTime | //gmd:identificationInfo//gmd:CI_Citation/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date[not(../gco:DateTime)]"
 		},
 		{	"indexField":"organisationname",
-			"xpath":"//gmd:identificationInfo//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"
+			"xpath":"//gmd:identificationInfo//gmd:pointOfContact//gmd:organisationName/gco:CharacterString"
 		},
 		{	"indexField":"organisationname_sort",
 			"tokenized":false,
-			"xpath":"//gmd:identificationInfo//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"
+			"xpath":"//gmd:identificationInfo//gmd:pointOfContact//gmd:organisationName/gco:CharacterString"
 		},
 		{	"execute":{
 				"funct":mapHasSecurityConstraints,
@@ -246,10 +246,22 @@ for (var i in transformationDescriptions) {
 		}
 		var tokenized = true;
 		// iterate over all xpath results
+		if (log.isDebugEnabled()) {
+			log.debug("Executing XPATH: " + t.xpath)
+		}
 		var nodeList = XPATH.getNodeList(recordNode, t.xpath);
+		if (log.isDebugEnabled()) {
+			log.debug("Found: " + nodeList.getLength() + " nodes.")
+		}
 		if (nodeList && nodeList.getLength() > 0) {
 			for (j=0; j<nodeList.getLength(); j++ ) {
+				if (log.isDebugEnabled()) {
+					log.debug("Working on node: " + j + "/" + nodeList.getLength() + ".")
+				}
 				value = nodeList.item(j).getTextContent().trim();
+				if (log.isDebugEnabled()) {
+					log.debug("Found value: " + value)
+				}
 				// check for transformation
 				if (hasValue(t.transform)) {
 					var args = new Array(value);
