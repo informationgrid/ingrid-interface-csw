@@ -9,6 +9,9 @@
       <action type="fix" dev="wemove" issue="INGRID32-175">
         CRITICAL: Remove document cache for Capability and DescribeRecord documents, since those cached documents may be invalidated by the SOAP Framework.
       </action>
+      <action type="fix" dev="wemove" issue="INGRID32-179">
+        Add missing ows:role Element to all capabilities.
+      </action>
       <action type="fix" dev="wemove" issue="INGRID32-180">
         Add missing configuration value to remove restriction of returned records.
       </action>

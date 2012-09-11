@@ -40,6 +40,7 @@
 				</ows:Address>
 				<ows:OnlineResource xlink:href="mailto:kst@portalu.de" />
 			</ows:ContactInfo>
+			<ows:Role>resourceProvider</ows:Role>
 		</ows:ServiceContact>
 	</ows:ServiceProvider>
 	<ows:OperationsMetadata>
