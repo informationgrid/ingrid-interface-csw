@@ -286,7 +286,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         maxRecords = Integer.MAX_VALUE;
                     }
                     maxRecords = Math.min(maxRecords, ApplicationProperties.getInteger(
-                            ConfigurationKeys.MAX_RETURNED_HITS, 10));
+                            ConfigurationKeys.MAX_RETURNED_HITS, Integer.MAX_VALUE));
                     this.query.setMaxRecords(maxRecords);
 
                     // extract the startPosition
