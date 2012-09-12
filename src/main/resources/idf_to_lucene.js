@@ -50,7 +50,8 @@ var transformationDescriptions = [
         // IngGrid specific index fields
         {	"indexField":"id",
         	"xpath":"//gmd:fileIdentifier/gco:CharacterString",
-        	"tokenized":false
+        	"tokenized":false,
+			"toLowerCase":false
         },
 		{	"indexField":"partner",
 			"xpath":"//idf:html/@partner"
@@ -174,7 +175,6 @@ var transformationDescriptions = [
 			"xpath":"//gmd:identificationInfo//gmd:language/gco:CharacterString"
 		},
 		{	"indexField":"geographicdescriptioncode",
-			"tokenized":false,
 			"xpath":"//gmd:identificationInfo//gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"
 		},
 		{	"indexField":"denominator",
@@ -245,6 +245,7 @@ for (var i in transformationDescriptions) {
 			log.debug("Working on " + t.indexField)
 		}
 		var tokenized = true;
+		var toLowerCase = true;
 		// iterate over all xpath results
 		if (log.isDebugEnabled()) {
 			log.debug("Executing XPATH: " + t.xpath)
@@ -256,7 +257,7 @@ for (var i in transformationDescriptions) {
 		if (nodeList && nodeList.getLength() > 0) {
 			for (j=0; j<nodeList.getLength(); j++ ) {
 				if (log.isDebugEnabled()) {
-					log.debug("Working on node: " + j + "/" + nodeList.getLength() + ".")
+					log.debug("Working on node: " + (j+1) + "/" + nodeList.getLength() + ".")
 				}
 				value = nodeList.item(j).getTextContent().trim();
 				if (log.isDebugEnabled()) {
@@ -270,13 +271,20 @@ for (var i in transformationDescriptions) {
 					}
 					value = call_f(t.transform.funct,args);
 				}
-				// check for NOT tokenized
-				if (hasValue(t.tokenized)) {
-					if (!t.tokenized) {
-						tokenized = false;
-					}
-				}
 				if (hasValue(value)) {
+					// check for NOT tokenized
+					if (hasValue(t.tokenized)) {
+						if (!t.tokenized) {
+							tokenized = false;
+						}
+					}
+					// check for NOT lowerCase
+					if (hasValue(t.toLowerCase)) {
+						if (!t.toLowerCase) {
+							toLowerCase = false;
+						}
+					}
+					if (toLowerCase) value = value.toLowerCase(); 
 					addToDoc(t.indexField, value, tokenized);
 				}
 			}
@@ -292,13 +300,20 @@ for (var i in transformationDescriptions) {
 					}
 					value = call_f(t.transform.funct,args);
 				}
-				// check for NOT tokenized
-				if (hasValue(t.tokenized)) {
-					if (!t.tokenized) {
-						tokenized = false;
-					}
-				}
 				if (hasValue(value)) {
+					// check for NOT tokenized
+					if (hasValue(t.tokenized)) {
+						if (!t.tokenized) {
+							tokenized = false;
+						}
+					}
+					// check for NOT lowerCase
+					if (hasValue(t.toLowerCase)) {
+						if (!t.toLowerCase) {
+							toLowerCase = false;
+						}
+					}
+					if (toLowerCase) value = value.toLowerCase(); 
 					addToDoc(t.indexField, value, tokenized);
 				}
 			}
