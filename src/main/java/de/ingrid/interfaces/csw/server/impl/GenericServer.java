@@ -134,6 +134,10 @@ public class GenericServer implements CSWServer {
             searchResults.setAttribute("numberOfRecordsMatched", String.valueOf(result.getTotalHits()));
             searchResults.setAttribute("numberOfRecordsReturned", String.valueOf((result.getResults() == null) ? 0
                     : result.getResults().size()));
+            int nextRecord = query.getStartPosition() + ((result.getResults() == null) ? 0 : result.getResults().size());
+            if (nextRecord <= result.getTotalHits()) { 
+                searchResults.setAttribute("nextRecord", String.valueOf(nextRecord));
+            }
             doc.getDocumentElement().appendChild(searchResults);
 
             if (result.getResults() != null) {

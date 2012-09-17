@@ -33,7 +33,7 @@
             <comment displayText="" />
 			<text property="localServerPort" displayText="Lokaler Port:" defaultValue="8084" explanatoryText="Lokaler Port, unter dem der CSW Server laufen soll. Lokal kann der CSW Server dann per http://localhost:PORT/csw aufgerufen werden."/>
 			<comment displayText="" />
-			<text property="maxRecords" displayText="max. Ergebnisse:" defaultValue="100" explanatoryText="Anzahl der Ergebnisse, die pro CSW Anfrage zurückgegeben werden. Diese Eigenschaft dient der Performance Sicherung."/>
+			<text property="maxRecords" displayText="max. Ergebnisse:" defaultValue="2147483647" explanatoryText="Anzahl der Ergebnisse, die pro CSW Anfrage zurückgegeben werden. Diese Eigenschaft dient der Performance Sicherung."/>
 	</page>
 
 	<page
