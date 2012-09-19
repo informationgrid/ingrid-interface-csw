@@ -287,12 +287,25 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     }
                     maxRecords = Math.min(maxRecords, ApplicationProperties.getInteger(
                             ConfigurationKeys.MAX_RETURNED_HITS, Integer.MAX_VALUE));
+                    if (maxRecords <=0) {
+                        StringBuffer errorMsg = new StringBuffer();
+                        errorMsg.append("Parameter 'maxRecords' has an unsupported value.\n");
+                        errorMsg.append("Supported values: positive integer\n");
+                        throw new CSWInvalidParameterValueException(errorMsg.toString(), "maxRecords");
+                    }
+                    
                     this.query.setMaxRecords(maxRecords);
 
                     // extract the startPosition
                     Integer startPosition = this.xpath.getInt(requestNode, "/csw:GetRecords/@startPosition");
                     if (startPosition == null) {
                         startPosition = 1;
+                    }
+                    if (startPosition <=0) {
+                        StringBuffer errorMsg = new StringBuffer();
+                        errorMsg.append("Parameter 'startPosition' has an unsupported value.\n");
+                        errorMsg.append("Supported values: positive integer\n");
+                        throw new CSWInvalidParameterValueException(errorMsg.toString(), "startPosition");
                     }
                     this.query.setStartPosition(startPosition);
 
@@ -304,6 +317,9 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     }
 
                 }
+            } catch (CSWInvalidParameterValueException ex) {
+                // re-throw CSW Exception
+                throw ex;
             } catch (Exception ex) {
                 throw new CSWException("An error occured while extracting the query: ", ex);
             }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<GetRecords maxRecords="1" outputFormat="text/xml" outputSchema="csw:profile"
+			requestId="csw:1" resultType="results" startPosition="0"
+			xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<Query typeNames="csw:service,csw:dataset">
+				<ElementSetName typeNames="">brief</ElementSetName>
+				<Constraint version="1.1.0"> 
+					<Filter xmlns="http://www.opengis.net/ogc">
+						<PropertyIsEqualTo>
+							<PropertyName>Title</PropertyName>
+							<Literal>Wasser</Literal>
+						</PropertyIsEqualTo>
+					</Filter>
+				</Constraint>
+				<SortBy>
+					<SortProperty>
+						<PropertyName>title</PropertyName>
+						<SortOrder>ASC</SortOrder>
+					</SortProperty>
+				</SortBy>
+			</Query>
+		</GetRecords>

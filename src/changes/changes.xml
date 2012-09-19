@@ -37,7 +37,7 @@
         Remove open file handles that prevent deletion/renaming of folders under windows.
       </action>
       <action type="add" dev="wemove" issue="INGRID32-194">
-        Add support for Parameter nextRecord for GetRecord results.
+        Add support for Parameter nextRecord for GetRecord results. Throw Exceptions for invalid parameter startPosition and maxRecords.
       </action>
       <action type="add" dev="wemove" issue="INGRID33-4">
         Added local working directory, so that temp-dir is not deleted accidentally when cleaning up global temp dir.

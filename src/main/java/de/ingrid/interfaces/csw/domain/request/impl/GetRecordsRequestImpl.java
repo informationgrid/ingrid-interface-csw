@@ -11,18 +11,12 @@ import de.ingrid.interfaces.csw.domain.request.GetRecordsRequest;
 public class GetRecordsRequestImpl extends AbstractRequestImpl implements GetRecordsRequest {
 
     @Override
-    public void validate() throws CSWMissingParameterValueException {
+    public void validate() throws CSWException {
 
-        try {
-            if (this.getQuery().getTypeNames() == null) {
-                throw new CSWMissingParameterValueException(
-                        "Attribute 'typeNames' is not specified or has no value in Query", "typeNames");
-            }
-        } catch (CSWException e) {
+        if (this.getQuery().getTypeNames() == null) {
             throw new CSWMissingParameterValueException(
                     "Attribute 'typeNames' is not specified or has no value in Query", "typeNames");
         }
-
     }
 
     @Override

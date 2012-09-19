@@ -22,6 +22,8 @@ public final class TestRequests {
 	public static final String GETRECORDBYID_MULTIPLE_SOAP = "src/test/resources/requests/get_record_by_id_multiple_soap.xml";
 
 	public static final String GETRECBYIDINVALID_SOAP = "src/test/resources/requests/get_record_by_id_invalid_soap.xml";
+    public static final String GETRECORDS_INVALID_MAXRECORDS = "src/test/resources/requests/get_records_invalid_maxrecords.xml";
+    public static final String GETRECORDS_INVALID_STARTPOSITION = "src/test/resources/requests/get_records_invalid_startposition.xml";
 
 	public static final String GETRECORDS_1_BRIEF_SOAP = "src/test/resources/requests/get_records_1_brief_soap.xml";
 	public static final String GETRECORDS_1_SUMMARY_SOAP = "src/test/resources/requests/get_records_1_summary_soap.xml";
