@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-		<GetRecords maxRecords="0" outputFormat="text/xml" outputSchema="csw:profile"
+		<GetRecords maxRecords="-1" outputFormat="text/xml" outputSchema="csw:profile"
 			requestId="csw:1" resultType="results" startPosition="1"
 			xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">

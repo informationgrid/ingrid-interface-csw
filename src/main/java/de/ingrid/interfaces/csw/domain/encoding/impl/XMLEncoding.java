@@ -287,7 +287,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     }
                     maxRecords = Math.min(maxRecords, ApplicationProperties.getInteger(
                             ConfigurationKeys.MAX_RETURNED_HITS, Integer.MAX_VALUE));
-                    if (maxRecords <=0) {
+                    if (maxRecords <0) {
                         StringBuffer errorMsg = new StringBuffer();
                         errorMsg.append("Parameter 'maxRecords' has an unsupported value.\n");
                         errorMsg.append("Supported values: positive integer\n");
