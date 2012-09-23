@@ -5,7 +5,7 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="3.2.0.1-SNAPSHOT" date="2012-xx-ss" description="Bugfix Release InGrid 3.2">
+    <release version="3.3.0-SNAPSHOT" date="2012-xx-ss" description="Release InGrid 3.3">
       <action type="fix" dev="wemove" issue="INGRID32-175">
         CRITICAL: Remove document cache for Capability and DescribeRecord documents, since those cached documents may be invalidated by the SOAP Framework.
       </action>
