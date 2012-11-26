@@ -64,6 +64,21 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>3.0.7.RELEASE</version>
 			</dependency>
+            <dependency>
+                <groupId>org.geotoolkit.pending</groupId>
+                <artifactId>geotk-spatial-lucene</artifactId>
+                <version>3.x-20120621.233519-445</version>
+            </dependency>
+            <dependency>
+                <groupId>org.geotoolkit.pending</groupId>
+                <artifactId>geotk-xml-ogc</artifactId>
+                <version>3.x-20120621.233924-451</version>
+            </dependency>
+            <dependency>
+                <groupId>org.geotoolkit.pending</groupId>
+                <artifactId>geotk-xml-gml</artifactId>
+                <version>3.x-20120621.233542-452</version>
+            </dependency>
 		</dependencies>
 
 	</dependencyManagement>

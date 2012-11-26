@@ -9,6 +9,12 @@
         <action type="add" dev="wemove" issue="INGRID-2150">
             Add java parameter "-Dfile.encoding=UTF8" to start script.
         </action>
+        <action type="fix" dev="wemove">
+            Fix numbers in log messages. Start from 1 instead of 0. Fix problem with numbers if results can be divided by 10.
+        </action>
+        <action type="fix" dev="wemove">
+            Fix dependencies to geotk libraries.
+        </action>
 	</release>
     <release version="3.2.1" date="2012-09-26" description="Bugfix Release InGrid 3.2.1">
       <action type="fix" dev="wemove" issue="INGRID32-175">

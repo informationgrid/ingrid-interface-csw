@@ -236,15 +236,21 @@ public class IBusHarvester extends AbstractHarvester {
         }
 
         List<Serializable> cacheIds = this.cacheRecords(hits, bus);
-        int numHits = hits.getHits().length;
-        int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
-        int errorCount = (errorCounts.get(request.getPlugId()) == null ? 0 : errorCounts.get(request.getPlugId()));
-        statusProvider.addState(request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId()
-                + "'... [" + (hits.length() == 0 ? 0 : (endHit + 1)) + "/" + hits.length() + "] with "
-                + errorCount
-                + " errors.", errorCount > 0 ? StatusProvider.Classification.WARN : StatusProvider.Classification.INFO);
-        if (log.isInfoEnabled()) {
-            log.info("Fetched records " + startHit + " to " + endHit + " of " + hits.length());
+        if (cacheIds != null && cacheIds.size() > 0) {
+            int numHits = hits.getHits().length;
+            int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
+            int errorCount = (errorCounts.get(request.getPlugId()) == null ? 0 : errorCounts.get(request.getPlugId()));
+            statusProvider.addState(request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId()
+                    + "'... [" + (hits.length() == 0 ? 0 : (endHit + 1)) + "/" + hits.length() + "] with "
+                    + errorCount
+                    + " errors.", errorCount > 0 ? StatusProvider.Classification.WARN : StatusProvider.Classification.INFO);
+            if (log.isInfoEnabled()) {
+                log.info("Fetched records " + (startHit + 1) + " to " + (endHit + 1) + " of " + hits.length() + " with " + errorCount + " errors.");
+            }
+        } else {
+            if (log.isInfoEnabled()) {
+                log.info("No further hits to be retrieved.");
+            }
         }
         return cacheIds;
     }
