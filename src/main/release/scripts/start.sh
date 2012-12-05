@@ -25,6 +25,12 @@ if [ -f $INGRID_HOME/debug.sh ]; then
   eval `sh $INGRID_HOME/debug.sh`
 fi
 
+# include a jmx script, if available, i.e. to specify jmx port, etc.
+# caution: the jmx script must echo the actual command to be able to work in the current environment
+if [ -f $INGRID_HOME/jmx.sh ]; then
+  eval `sh $INGRID_HOME/jmx.sh`
+fi
+
 # functions
 stopIplug()
 {
