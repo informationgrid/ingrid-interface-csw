@@ -1,0 +1,1561 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><idf:html xmlns:idf="http://www.portalu.de/IDF/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" idf-version="3.2.0" iplug="/kug-group:kug-iplug-udk-db_st" partner="st" provider="st_mlu" xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd">
+  <idf:head/>
+  <idf:body>
+    <idf:idfMdMetadata xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+      <gmd:fileIdentifier>
+        <gco:CharacterString>81A36D07-BD83-495A-8A94-30416165C86D</gco:CharacterString>
+      </gmd:fileIdentifier>
+      <gmd:language>
+        <gmd:LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="ger">ger</gmd:LanguageCode>
+      </gmd:language>
+      <gmd:parentIdentifier>
+        <gco:CharacterString>CCA2B707-6D56-423E-B523-7C3B61208AB6</gco:CharacterString>
+      </gmd:parentIdentifier>
+      <gmd:hierarchyLevel>
+        <gmd:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_ScopeCode" codeListValue="service">service</gmd:MD_ScopeCode>
+      </gmd:hierarchyLevel>
+      <gmd:hierarchyLevelName>
+        <gco:CharacterString>service</gco:CharacterString>
+      </gmd:hierarchyLevelName>
+      <gmd:contact>
+        <idf:idfResponsibleParty type="100" uuid="B52FCD42-9DA7-4B7D-90E6-3F3D45E98448">
+          <gmd:individualName>
+            <gco:CharacterString>Nagel, Heiner</gco:CharacterString>
+          </gmd:individualName>
+          <gmd:organisationName>
+            <gco:CharacterString>Landesamt für Umweltschutz (LAU) Sachsen-Anhalt / Fachbereich 4: Naturschutz / Fachgebiet 41: Naturschutzinformation, Landschaftsentwicklung</gco:CharacterString>
+          </gmd:organisationName>
+          <gmd:contactInfo>
+            <gmd:CI_Contact>
+              <gmd:address>
+                <gmd:CI_Address>
+                  <gmd:deliveryPoint>
+                    <gco:CharacterString>Reideburger Str. 47</gco:CharacterString>
+                  </gmd:deliveryPoint>
+                  <gmd:city>
+                    <gco:CharacterString>Halle (Saale)</gco:CharacterString>
+                  </gmd:city>
+                  <gmd:postalCode>
+                    <gco:CharacterString>D-06116</gco:CharacterString>
+                  </gmd:postalCode>
+                  <gmd:electronicMailAddress>
+                    <gco:CharacterString>heiner.nagel@lau.mlu.sachsen-anhalt.de</gco:CharacterString>
+                  </gmd:electronicMailAddress>
+                </gmd:CI_Address>
+              </gmd:address>
+            </gmd:CI_Contact>
+          </gmd:contactInfo>
+          <gmd:role>
+            <gmd:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+          </gmd:role>
+          <idf:hierarchyParty uuid="B52FCD42-9DA7-4B7D-90E6-3F3D45E98448">
+            <idf:addressIndividualName>Nagel, Heiner [Nutzer]</idf:addressIndividualName>
+            <idf:addressOrganisationName>Landesamt für Umweltschutz (LAU) Sachsen-Anhalt / Fachbereich 4: Naturschutz / Fachgebiet 41: Naturschutzinformation, Landschaftsentwicklung</idf:addressOrganisationName>
+            <idf:addressType>100</idf:addressType>
+          </idf:hierarchyParty>
+        </idf:idfResponsibleParty>
+      </gmd:contact>
+      <gmd:dateStamp>
+        <gco:Date>2012-09-13</gco:Date>
+      </gmd:dateStamp>
+      <gmd:metadataStandardName>
+        <gco:CharacterString>ISO19119</gco:CharacterString>
+      </gmd:metadataStandardName>
+      <gmd:metadataStandardVersion>
+        <gco:CharacterString>2005/PDAM 1</gco:CharacterString>
+      </gmd:metadataStandardVersion>
+      <gmd:referenceSystemInfo>
+        <gmd:MD_ReferenceSystem>
+          <gmd:referenceSystemIdentifier>
+            <gmd:RS_Identifier>
+              <gmd:code>
+                <gco:CharacterString>EPSG 31468: DHDN / Gauss-Krüger Zone 4</gco:CharacterString>
+              </gmd:code>
+              <gmd:codeSpace>
+                <gco:CharacterString>EPSG</gco:CharacterString>
+              </gmd:codeSpace>
+            </gmd:RS_Identifier>
+          </gmd:referenceSystemIdentifier>
+        </gmd:MD_ReferenceSystem>
+      </gmd:referenceSystemInfo>
+      <gmd:identificationInfo>
+        <srv:SV_ServiceIdentification uuid="http://portalu.de/igc_st#49add98c-2cb4-348c-994a-0d2c7be9f4b6">
+          <gmd:citation>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>Schutzgebiete</gco:CharacterString>
+              </gmd:title>
+              <gmd:alternateTitle>
+                <gco:CharacterString>Schutzgebiete</gco:CharacterString>
+              </gmd:alternateTitle>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:DateTime>2000-12-31T00:00:00</gco:DateTime>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode" codeListValue="creation"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:DateTime>2010-12-31T00:00:00</gco:DateTime>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode" codeListValue="revision"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+            </gmd:CI_Citation>
+          </gmd:citation>
+          <gmd:abstract>
+            <gco:CharacterString>Schutzgebiete gem. NatSchG LSA</gco:CharacterString>
+          </gmd:abstract>
+          <gmd:pointOfContact>
+            <idf:idfResponsibleParty type="2" uuid="00F954F0-C8E9-392D-8A48-9FDB307349F8">
+              <gmd:individualName>
+                <gco:CharacterString>Nagel, Heiner, Herr</gco:CharacterString>
+              </gmd:individualName>
+              <gmd:organisationName>
+                <gco:CharacterString>Landesamt für Umweltschutz (LAU) Sachsen-Anhalt, Fachbereich 4: Naturschutz, Fachgebiet 41: Naturschutzinformation, Landschaftsentwicklung</gco:CharacterString>
+              </gmd:organisationName>
+              <gmd:positionName>
+                <gco:CharacterString>Dezernent</gco:CharacterString>
+              </gmd:positionName>
+              <gmd:contactInfo>
+                <gmd:CI_Contact>
+                  <gmd:address>
+                    <gmd:CI_Address>
+                      <gmd:deliveryPoint>
+                        <gco:CharacterString>Reideburger Str. 47</gco:CharacterString>
+                      </gmd:deliveryPoint>
+                      <gmd:city>
+                        <gco:CharacterString>Halle (Saale)</gco:CharacterString>
+                      </gmd:city>
+                      <gmd:postalCode>
+                        <gco:CharacterString>D-06116</gco:CharacterString>
+                      </gmd:postalCode>
+                      <gmd:country>
+                        <gco:CharacterString>DEU</gco:CharacterString>
+                      </gmd:country>
+                      <gmd:electronicMailAddress>
+                        <gco:CharacterString>heiner.nagel@lau.mlu.sachsen-anhalt.de</gco:CharacterString>
+                      </gmd:electronicMailAddress>
+                    </gmd:CI_Address>
+                  </gmd:address>
+                  <gmd:onlineResource>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>http://www.lau.sachsen-anhalt.de</gmd:URL>
+                      </gmd:linkage>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onlineResource>
+                </gmd:CI_Contact>
+              </gmd:contactInfo>
+              <gmd:role>
+                <gmd:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+              </gmd:role>
+              <idf:hierarchyParty uuid="00F954F0-C8E9-392D-8A48-9FDB307349F8">
+                <idf:addressIndividualName>Nagel, Heiner, Herr</idf:addressIndividualName>
+                <idf:addressType>2</idf:addressType>
+              </idf:hierarchyParty>
+              <idf:hierarchyParty uuid="62B5B8E6-DC4B-11D2-9A86-080000507261">
+                <idf:addressOrganisationName>Fachgebiet 41: Naturschutzinformation, Landschaftsentwicklung</idf:addressOrganisationName>
+                <idf:addressType>1</idf:addressType>
+              </idf:hierarchyParty>
+              <idf:hierarchyParty uuid="62B5B8E5-DC4B-11D2-9A86-080000507261">
+                <idf:addressOrganisationName>Fachbereich 4: Naturschutz</idf:addressOrganisationName>
+                <idf:addressType>1</idf:addressType>
+              </idf:hierarchyParty>
+              <idf:hierarchyParty uuid="62B5B8A0-DC4B-11D2-9A86-080000507261">
+                <idf:addressOrganisationName>Landesamt für Umweltschutz (LAU) Sachsen-Anhalt</idf:addressOrganisationName>
+                <idf:addressType>0</idf:addressType>
+              </idf:hierarchyParty>
+            </idf:idfResponsibleParty>
+          </gmd:pointOfContact>
+          <gmd:pointOfContact>
+            <idf:idfResponsibleParty type="2" uuid="00F954F0-C8E9-392D-8A48-9FDB307349F8">
+              <gmd:individualName>
+                <gco:CharacterString>Nagel, Heiner, Herr</gco:CharacterString>
+              </gmd:individualName>
+              <gmd:organisationName>
+                <gco:CharacterString>Landesamt für Umweltschutz (LAU) Sachsen-Anhalt, Fachbereich 4: Naturschutz, Fachgebiet 41: Naturschutzinformation, Landschaftsentwicklung</gco:CharacterString>
+              </gmd:organisationName>
+              <gmd:positionName>
+                <gco:CharacterString>Dezernent</gco:CharacterString>
+              </gmd:positionName>
+              <gmd:contactInfo>
+                <gmd:CI_Contact>
+                  <gmd:address>
+                    <gmd:CI_Address>
+                      <gmd:deliveryPoint>
+                        <gco:CharacterString>Reideburger Str. 47</gco:CharacterString>
+                      </gmd:deliveryPoint>
+                      <gmd:city>
+                        <gco:CharacterString>Halle (Saale)</gco:CharacterString>
+                      </gmd:city>
+                      <gmd:postalCode>
+                        <gco:CharacterString>D-06116</gco:CharacterString>
+                      </gmd:postalCode>
+                      <gmd:country>
+                        <gco:CharacterString>DEU</gco:CharacterString>
+                      </gmd:country>
+                      <gmd:electronicMailAddress>
+                        <gco:CharacterString>heiner.nagel@lau.mlu.sachsen-anhalt.de</gco:CharacterString>
+                      </gmd:electronicMailAddress>
+                    </gmd:CI_Address>
+                  </gmd:address>
+                  <gmd:onlineResource>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>http://www.lau.sachsen-anhalt.de</gmd:URL>
+                      </gmd:linkage>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onlineResource>
+                </gmd:CI_Contact>
+              </gmd:contactInfo>
+              <gmd:role>
+                <gmd:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode" codeListValue="custodian"/>
+              </gmd:role>
+              <idf:hierarchyParty uuid="00F954F0-C8E9-392D-8A48-9FDB307349F8">
+                <idf:addressIndividualName>Nagel, Heiner, Herr</idf:addressIndividualName>
+                <idf:addressType>2</idf:addressType>
+              </idf:hierarchyParty>
+              <idf:hierarchyParty uuid="62B5B8E6-DC4B-11D2-9A86-080000507261">
+                <idf:addressOrganisationName>Fachgebiet 41: Naturschutzinformation, Landschaftsentwicklung</idf:addressOrganisationName>
+                <idf:addressType>1</idf:addressType>
+              </idf:hierarchyParty>
+              <idf:hierarchyParty uuid="62B5B8E5-DC4B-11D2-9A86-080000507261">
+                <idf:addressOrganisationName>Fachbereich 4: Naturschutz</idf:addressOrganisationName>
+                <idf:addressType>1</idf:addressType>
+              </idf:hierarchyParty>
+              <idf:hierarchyParty uuid="62B5B8A0-DC4B-11D2-9A86-080000507261">
+                <idf:addressOrganisationName>Landesamt für Umweltschutz (LAU) Sachsen-Anhalt</idf:addressOrganisationName>
+                <idf:addressType>0</idf:addressType>
+              </idf:hierarchyParty>
+            </idf:idfResponsibleParty>
+          </gmd:pointOfContact>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>Protected sites</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme"/>
+              </gmd:type>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2008-06-01</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode" codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>Naturschutz</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Schutzgebiet</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Fachinformationssystem</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme"/>
+              </gmd:type>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>UMTHES Thesaurus</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2009-01-15</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode" codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>infoMapAccessService</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme"/>
+              </gmd:type>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>Service Classification, version 1.0</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2008-06-01</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode" codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>inspireidentifiziert</gco:CharacterString>
+              </gmd:keyword>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:resourceConstraints>
+            <gmd:MD_Constraints>
+              <gmd:useLimitation>
+                <gco:CharacterString>Keine</gco:CharacterString>
+              </gmd:useLimitation>
+            </gmd:MD_Constraints>
+          </gmd:resourceConstraints>
+          <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+              <gmd:accessConstraints>
+                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+              </gmd:accessConstraints>
+              <gmd:otherConstraints>
+                <gco:CharacterString>no conditions apply</gco:CharacterString>
+              </gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+          </gmd:resourceConstraints>
+          <srv:serviceType>
+            <gco:LocalName>view</gco:LocalName>
+          </srv:serviceType>
+          <srv:serviceTypeVersion>
+            <gco:CharacterString>1.3.0</gco:CharacterString>
+          </srv:serviceTypeVersion>
+          <srv:extent>
+            <gmd:EX_Extent>
+              <gmd:geographicElement>
+                <gmd:EX_GeographicDescription>
+                  <gmd:extentTypeCode>
+                    <gco:Boolean>true</gco:Boolean>
+                  </gmd:extentTypeCode>
+                  <gmd:geographicIdentifier>
+                    <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gco:CharacterString>Sachsen-Anhalt</gco:CharacterString>
+                      </gmd:code>
+                    </gmd:MD_Identifier>
+                  </gmd:geographicIdentifier>
+                </gmd:EX_GeographicDescription>
+              </gmd:geographicElement>
+              <gmd:geographicElement>
+                <gmd:EX_GeographicBoundingBox>
+                  <gmd:extentTypeCode>
+                    <gco:Boolean>true</gco:Boolean>
+                  </gmd:extentTypeCode>
+                  <gmd:westBoundLongitude>
+                    <gco:Decimal>10.07</gco:Decimal>
+                  </gmd:westBoundLongitude>
+                  <gmd:eastBoundLongitude>
+                    <gco:Decimal>13.54</gco:Decimal>
+                  </gmd:eastBoundLongitude>
+                  <gmd:southBoundLatitude>
+                    <gco:Decimal>50.59</gco:Decimal>
+                  </gmd:southBoundLatitude>
+                  <gmd:northBoundLatitude>
+                    <gco:Decimal>53.13</gco:Decimal>
+                  </gmd:northBoundLatitude>
+                </gmd:EX_GeographicBoundingBox>
+              </gmd:geographicElement>
+            </gmd:EX_Extent>
+          </srv:extent>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#44628542-fa7d-4ef7-9bfb-bf401fb059b2</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#523a506b-a212-470d-a7c9-82fe31d3c9ac</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#65629dc5-875f-4ad8-aae8-2d70cb1ccb8d</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#81b06a1c-ed0c-485b-8966-6f4f6c144bdb</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#c6f5c35a-85e5-427e-b6f6-79fa21ee9b6f</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#c1caea88-1094-4f69-ba20-1c87d339362f</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#cd2070ae-2678-4345-8792-713679ec28ad</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#8ba0a5d2-aa6b-4fea-9f4d-0d5cd0dd23f0</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#8b0661ff-cb33-48dd-9ea7-8e8d0359a67f</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#68a82def-84bb-4482-8f6b-f817c277af42</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#2ed0f592-f586-4e78-9df0-1c21047a4757</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#eebea342-0a9b-4262-92c0-910c82423c16</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#af9eab68-0d9f-40d9-b23c-8fb105416100</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:coupledResource>
+            <srv:SV_CoupledResource>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:identifier>
+                <gco:CharacterString>http://portalu.de/igc_st#011a1332-569f-42ae-86ee-dd196c946419</gco:CharacterString>
+              </srv:identifier>
+            </srv:SV_CoupledResource>
+          </srv:coupledResource>
+          <srv:couplingType>
+            <srv:SV_CouplingType codeList="http://opengis.org/codelistRegistry?SV_CouplingType" codeListValue="loose"/>
+          </srv:couplingType>
+          <srv:containsOperations>
+            <srv:SV_OperationMetadata>
+              <srv:operationName>
+                <gco:CharacterString>GetCapabilities</gco:CharacterString>
+              </srv:operationName>
+              <srv:DCP>
+                <srv:DCPList codeList="http://opengis.org/codelistRegistry?CSW_DCPCodeType" codeListValue="HTTPGet"/>
+              </srv:DCP>
+              <srv:invocationName>
+                <gco:CharacterString>GetCapabilities</gco:CharacterString>
+              </srv:invocationName>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>SERVICE=WMS</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Service type</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>UPDATESEQUENCE=number</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Sequence number for cache control</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>VERSION=1.3.0</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Request version</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>REQUEST=GetCapabilities</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Request name</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:connectPoint>
+                <gmd:CI_OnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://www.gfds.sachsen-anhalt.de/ows/ws/wms/45787536-3a45-0121/GDI-LSA_LAU_Schutzgebiete/?SERVICE=WMS&amp;REQUEST=GetCapabilities&amp;version=1.3.0</gmd:URL>
+                  </gmd:linkage>
+                </gmd:CI_OnlineResource>
+              </srv:connectPoint>
+            </srv:SV_OperationMetadata>
+          </srv:containsOperations>
+          <srv:containsOperations>
+            <srv:SV_OperationMetadata>
+              <srv:operationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:operationName>
+              <srv:DCP>
+                <srv:DCPList codeList="http://opengis.org/codelistRegistry?CSW_DCPCodeType" codeListValue="HTTPGet"/>
+              </srv:DCP>
+              <srv:invocationName>
+                <gco:CharacterString>GetMap</gco:CharacterString>
+              </srv:invocationName>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>SLD=styled_layer_descriptor_URL</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>URL of Styled Layer Descriptor (as defined in SLD Specification)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>Vendor-specific parameters</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Optional experimental parameters</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>SRS=namespace:identifier</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Spatial Reference System</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>BBOX=minx,miny,maxx,maxy</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Bounding box corners (lower left, upper right) in SRS units</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>FORMAT=output_format</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Output format of map</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>EXCEPTIONS=exception_format</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>The format in which exceptions are to be reported by the WMS (default=SE_XML)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>WFS=web_feature_service_URL</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>URL of Web Feature Service providing features to be symbolized using SLD</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>REQUEST=GetMap</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Request name</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>STYLES=style_list</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Comma-separated list of one rendering style per requested layer. Optional if SLD parameter is present</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>VERSION=1.3.0</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Request version</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>LAYERS=layer_list</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Comma-separated list of one or more map layers. Optional if SLD parameter is present</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>Other sample dimension(s)</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Value of other dimensions as appropriate</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>BGCOLOR=color_value</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Hexadecimal red-green-blue color value for the background color (default=0xFFFFFF)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>HEIGHT=output_height</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Height in pixels of map picture</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>TRANSPARENT=TRUE|FALSE</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Background transparency of map (default=FALSE)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>TIME=time</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Time value of layer desired</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>ELEVATION=elevation</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Elevation of layer desired</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>WIDTH=output_width</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Width in pixels of map picture</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:connectPoint>
+                <gmd:CI_OnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://www.gfds.sachsen-anhalt.de/ows/ws/wms/45787536-3a45-0121/GDI-LSA_LAU_Schutzgebiete/?version=1.3.0</gmd:URL>
+                  </gmd:linkage>
+                </gmd:CI_OnlineResource>
+              </srv:connectPoint>
+            </srv:SV_OperationMetadata>
+          </srv:containsOperations>
+          <srv:containsOperations>
+            <srv:SV_OperationMetadata>
+              <srv:operationName>
+                <gco:CharacterString>GetFeatureInfo</gco:CharacterString>
+              </srv:operationName>
+              <srv:DCP>
+                <srv:DCPList codeList="http://opengis.org/codelistRegistry?CSW_DCPCodeType" codeListValue="HTTPGet"/>
+              </srv:DCP>
+              <srv:invocationName>
+                <gco:CharacterString>GetFeatureInfo</gco:CharacterString>
+              </srv:invocationName>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>X=pixel_column</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>X coordinate in pixels of feature (measured from upper left corner=0)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>QUERY_LAYERS=layer_list</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Comma-separated list of one or more layers to be queried</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>Y=pixel_row</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Y coordinate in pixels of feature (measured from upper left corner=0)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>EXCEPTIONS=exception_format</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>The format in which exceptions are to be reported by the WMS (default=application/vnd.ogc.se_xml)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>VERSION=1.3.0</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Request version</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>Vendor-specific parameters</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Optional experimental parameters</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>INFO_FORMAT=output_format</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Return format of feature information (MIME type)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>FEATURE_COUNT=number</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Number of features about which to return information (default=1)</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>(map_request_copy)</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Partial copy of the Map request parameters that generated the map for which information is desired</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:parameters>
+                <srv:SV_Parameter>
+                  <srv:name>
+                    <gco:aName>
+                      <gco:CharacterString>REQUEST=GetFeatureInfo</gco:CharacterString>
+                    </gco:aName>
+                    <gco:attributeType/>
+                  </srv:name>
+                  <srv:description>
+                    <gco:CharacterString>Request name</gco:CharacterString>
+                  </srv:description>
+                  <srv:optionality>
+                    <gco:CharacterString>0</gco:CharacterString>
+                  </srv:optionality>
+                  <srv:repeatability>
+                    <gco:Boolean>false</gco:Boolean>
+                  </srv:repeatability>
+                  <srv:valueType>
+                    <gco:TypeName>
+                      <gco:aName>
+                        <gco:CharacterString/>
+                      </gco:aName>
+                    </gco:TypeName>
+                  </srv:valueType>
+                </srv:SV_Parameter>
+              </srv:parameters>
+              <srv:connectPoint>
+                <gmd:CI_OnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://www.gfds.sachsen-anhalt.de/ows/ws/wms/45787536-3a45-0121/GDI-LSA_LAU_Schutzgebiete/?version=1.3.0</gmd:URL>
+                  </gmd:linkage>
+                </gmd:CI_OnlineResource>
+              </srv:connectPoint>
+            </srv:SV_OperationMetadata>
+          </srv:containsOperations>
+          <srv:operatesOn uuidref="3AD400FB-9AFA-4137-BBA3-2C877DD17100" xlink:href="http://portalu.de/igc_st#44628542-fa7d-4ef7-9bfb-bf401fb059b2"/>
+          <srv:operatesOn uuidref="D0299DB8-C5C8-46BD-8DE2-8E96F75090B0" xlink:href="http://portalu.de/igc_st#523a506b-a212-470d-a7c9-82fe31d3c9ac"/>
+          <srv:operatesOn uuidref="F96357AE-7F22-42B5-8DB5-89C3C29FC760" xlink:href="http://portalu.de/igc_st#65629dc5-875f-4ad8-aae8-2d70cb1ccb8d"/>
+          <srv:operatesOn uuidref="F59560A6-1E55-4972-B9C7-00E4FB5EAA30" xlink:href="http://portalu.de/igc_st#81b06a1c-ed0c-485b-8966-6f4f6c144bdb"/>
+          <srv:operatesOn uuidref="646B63FC-E43A-44E0-A47B-1CF10A9AC467" xlink:href="http://portalu.de/igc_st#c6f5c35a-85e5-427e-b6f6-79fa21ee9b6f"/>
+          <srv:operatesOn uuidref="0823AD52-9592-4B39-B91E-54F9131692E2" xlink:href="http://portalu.de/igc_st#c1caea88-1094-4f69-ba20-1c87d339362f"/>
+          <srv:operatesOn uuidref="BE8163A3-94DA-4131-98EB-D964C5A33673" xlink:href="http://portalu.de/igc_st#cd2070ae-2678-4345-8792-713679ec28ad"/>
+          <srv:operatesOn uuidref="E967E32B-4F09-4852-BA55-5CEAC3991788" xlink:href="http://portalu.de/igc_st#8ba0a5d2-aa6b-4fea-9f4d-0d5cd0dd23f0"/>
+          <srv:operatesOn uuidref="FFCABD2C-6015-4AAA-AAE6-E32A2C2F24D5" xlink:href="http://portalu.de/igc_st#8b0661ff-cb33-48dd-9ea7-8e8d0359a67f"/>
+          <srv:operatesOn uuidref="F93CD5B6-F137-47B5-9EAE-7BCE6549E5F6" xlink:href="http://portalu.de/igc_st#68a82def-84bb-4482-8f6b-f817c277af42"/>
+          <srv:operatesOn uuidref="4FC5AEDD-AD45-472D-B80B-06F6E6166D10" xlink:href="http://portalu.de/igc_st#2ed0f592-f586-4e78-9df0-1c21047a4757"/>
+          <srv:operatesOn uuidref="76EBA138-82CF-46C2-ABAE-7791C7FFD23F" xlink:href="http://portalu.de/igc_st#eebea342-0a9b-4262-92c0-910c82423c16"/>
+          <srv:operatesOn uuidref="A5E15602-15BE-451A-9877-7BF8A1068D62" xlink:href="http://portalu.de/igc_st#af9eab68-0d9f-40d9-b23c-8fb105416100"/>
+          <srv:operatesOn uuidref="A16D544B-6DB0-47EA-8285-C1BC2ED2F418" xlink:href="http://portalu.de/igc_st#011a1332-569f-42ae-86ee-dd196c946419"/>
+        </srv:SV_ServiceIdentification>
+      </gmd:identificationInfo>
+      <gmd:distributionInfo>
+        <gmd:MD_Distribution>
+          <gmd:distributionFormat>
+            <gmd:MD_Format>
+              <gmd:name gco:nilReason="unknown"/>
+              <gmd:version gco:nilReason="unknown"/>
+            </gmd:MD_Format>
+          </gmd:distributionFormat>
+          <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+              <gmd:onLine>
+                <idf:idfOnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://www.sachsen-anhalt.de/index.php?id=36252</gmd:URL>
+                  </gmd:linkage>
+                  <gmd:name>
+                    <gco:CharacterString>Datenangebot</gco:CharacterString>
+                  </gmd:name>
+                  <gmd:function>
+                    <gmd:CI_OnLineFunctionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_OnLineFunctionCode" codeListValue="Basic Data"/>
+                  </gmd:function>
+                  <idf:attachedToField entry-id="3210" list-id="2000">Basisdaten</idf:attachedToField>
+                </idf:idfOnlineResource>
+              </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+          </gmd:transferOptions>
+          <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+              <gmd:onLine>
+                <idf:idfOnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://www.gfds.sachsen-anhalt.de/ows/ws/wms/45787536-3a45-0121/GDI-LSA_LAU_Schutzgebiete/?SERVICE=WMS&amp;REQUEST=GetCapabilities&amp;version=1.3.0</gmd:URL>
+                  </gmd:linkage>
+                </idf:idfOnlineResource>
+              </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+          </gmd:transferOptions>
+        </gmd:MD_Distribution>
+      </gmd:distributionInfo>
+      <idf:superiorReference uuid="CCA2B707-6D56-423E-B523-7C3B61208AB6">
+        <idf:objectName>Naturschutz / Karten und Geodatendienste</idf:objectName>
+        <idf:objectType>0</idf:objectType>
+      </idf:superiorReference>
+      <idf:crossReference orig-uuid="EA9DE360-B56B-498D-AD7B-F419EFD8BBD6" uuid="3AD400FB-9AFA-4137-BBA3-2C877DD17100">
+        <idf:objectName>Biosphärenreservate</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="7BF94654-D24A-4C11-AA07-6A47B69EA685" uuid="D0299DB8-C5C8-46BD-8DE2-8E96F75090B0">
+        <idf:objectName>Europäische Vogelschutzgebiete</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="652C4CDB-E041-46E5-ABBE-DFAD24B4980E" uuid="F96357AE-7F22-42B5-8DB5-89C3C29FC760">
+        <idf:objectName>Feuchtgebiete von internationaler Bedeutung</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="97F62986-F1A6-4D87-9CBB-3A16D1E87505" uuid="F59560A6-1E55-4972-B9C7-00E4FB5EAA30">
+        <idf:objectName>Color-Infrarot-Luftbilder 2005</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="C78D8110-2C7D-4561-9799-22A89D8EDE2A" uuid="646B63FC-E43A-44E0-A47B-1CF10A9AC467">
+        <idf:objectName>Echtfarb-Luftbilder 2005</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="45C57651-DF8C-4C10-A8BB-9E3777F3054A" uuid="0823AD52-9592-4B39-B91E-54F9131692E2">
+        <idf:objectName>Flächenhafte Naturdenkmale</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="1FBE2085-B85A-4A55-9F55-CA086DA0D378" uuid="BE8163A3-94DA-4131-98EB-D964C5A33673">
+        <idf:objectName>Flächennaturdenkmale</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="D700BB3B-3D47-4586-9B81-1998547B4C2E" uuid="E967E32B-4F09-4852-BA55-5CEAC3991788">
+        <idf:objectName>Gebiete von gemeinschaftlicher Bedeutung</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="6628D53E-206B-4024-9851-781217EDC956" uuid="FFCABD2C-6015-4AAA-AAE6-E32A2C2F24D5">
+        <idf:objectName>Geschützte Landschaftsbestandteile</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="3E2C21DB-DB71-41A0-98BC-63A803B4D70C" uuid="F93CD5B6-F137-47B5-9EAE-7BCE6549E5F6">
+        <idf:objectName>Geschützte Parke</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="430D6C0D-FB79-46BA-AB30-9B248A31C798" uuid="4FC5AEDD-AD45-472D-B80B-06F6E6166D10">
+        <idf:objectName>Landschaftsschutzgebiete</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="5875B894-5A6B-478C-839C-136872EC9ED9" uuid="76EBA138-82CF-46C2-ABAE-7791C7FFD23F">
+        <idf:objectName>Nationalparke</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="1C471729-2EF2-4E02-8E24-DEE5FE46EADB" uuid="A5E15602-15BE-451A-9877-7BF8A1068D62">
+        <idf:objectName>Naturparke</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:crossReference orig-uuid="51E4921E-66D1-48CE-89FC-A204730DA32A" uuid="A16D544B-6DB0-47EA-8285-C1BC2ED2F418">
+        <idf:objectName>Naturschutzgebiete</idf:objectName>
+        <idf:objectType>1</idf:objectType>
+        <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Ressource</idf:attachedToField>
+      </idf:crossReference>
+      <idf:hasAccessConstraint>false</idf:hasAccessConstraint>
+    </idf:idfMdMetadata>
+  </idf:body>
+</idf:html>
