@@ -54,7 +54,16 @@
 	<!-- shared and common attributes -->
 	<xsl:template match="@orig-uuid" />
 	<xsl:template match="@xsi:schemaLocation" />
+    <!-- filter idf:abstract -->
+    <xsl:template match="idf:abstract" />
 
+    <!-- filter idf:keyword and transform them to gmd:keyword -->
+    <xsl:template match="idf:keyword">
+      <gmd:keyword>
+        <xsl:apply-templates select="node()" />
+      </gmd:keyword>
+    </xsl:template>
+    
 	<!--
 	Trim Text nodes 
 	-->

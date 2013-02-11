@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.portalu.de/IDF/1.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd">
+<html xmlns="http://www.portalu.de/IDF/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd">
   <head>
     <title>IDF Test XML</title>
   </head>
   <body>
     <p style="float:right">p 1</p>
-    <table border="1" >
+    <table border="1">
       <tr>
         <th>Berlin</th>
         <th>Hamburg</th>
@@ -27,39 +26,34 @@
     <p>p 1</p>
     <p>p 1</p>
     <idfMdMetadata orig-uuid="my original uuid" uuid="my-uuid" id="my-id" xmlns:gmd="http://www.isotc211.org/2005/gmd"
-    xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
-    xmlns:fn="http://www.w3.org/2005/xpath-functions"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format"
-    xmlns:gco="http://www.isotc211.org/2005/gco"
-    xmlns:gml="http://www.opengis.net/gml"
-    xmlns:ms="http://mapserver.gis.umn.edu/mapserver"
-    xmlns:wfs="http://www.opengis.net/wfs"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:idf="http://www.portalu.de/IDF/1.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+      xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:fo="http://www.w3.org/1999/XSL/Format"
+      xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml" xmlns:ms="http://mapserver.gis.umn.edu/mapserver"
+      xmlns:wfs="http://www.opengis.net/wfs" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:idf="http://www.portalu.de/IDF/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
       <gmd:fileIdentifier>
         <gco:CharacterString>
-        c301cc5c-614f-4e31-a619-92fd28be20af</gco:CharacterString>
+          c301cc5c-614f-4e31-a619-92fd28be20af
+        </gco:CharacterString>
       </gmd:fileIdentifier>
       <gmd:language>
         <gmd:LanguageCode xmlns="http://www.isotc211.org/2005/gmd"
-        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode"
-        codeListValue="ger" />
+          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode"
+          codeListValue="ger" />
       </gmd:language>
       <gmd:characterSet>
         <gmd:MD_CharacterSetCode xmlns="http://www.isotc211.org/2005/gmd"
-        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
-        codeListValue="utf8" />
+          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
+          codeListValue="utf8" />
       </gmd:characterSet>
       <gmd:parentIdentifier>
         <gco:CharacterString>
-        2d484845-7e20-4ef4-9210-36fd60704caf</gco:CharacterString>
+          2d484845-7e20-4ef4-9210-36fd60704caf
+        </gco:CharacterString>
       </gmd:parentIdentifier>
       <gmd:hierarchyLevel>
         <gmd:MD_ScopeCode xmlns="http://www.isotc211.org/2005/gmd"
-        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
-        codeListValue="dataset" />
+          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+          codeListValue="dataset" />
       </gmd:hierarchyLevel>
       <gmd:hierarchyLevelName>
         <gco:CharacterString />
@@ -123,8 +117,9 @@
             </gmd:CI_Contact>
           </gmd:contactInfo>
           <gmd:role>
-            <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
-            codeListValue="originator">originator</gmd:CI_RoleCode>
+            <gmd:CI_RoleCode
+              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+              codeListValue="originator">originator</gmd:CI_RoleCode>
           </gmd:role>
         </gmd:CI_ResponsibleParty>
       </gmd:contact>
@@ -168,8 +163,8 @@
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode xmlns="http://www.isotc211.org/2005/gmd"
-                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                    codeListValue="creation" />
+                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="creation" />
                   </gmd:dateType>
                 </gmd:CI_Date>
               </gmd:date>
@@ -272,8 +267,9 @@
                 </gmd:CI_Contact>
               </gmd:contactInfo>
               <gmd:role>
-                <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
-                codeListValue="owner">owner</gmd:CI_RoleCode>
+                <gmd:CI_RoleCode
+                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                  codeListValue="owner">owner</gmd:CI_RoleCode>
               </gmd:role>
             </gmd:CI_ResponsibleParty>
           </gmd:pointOfContact>
@@ -333,8 +329,8 @@
               </gmd:keyword>
               <gmd:type>
                 <gmd:MD_KeywordTypeCode xmlns="http://www.isotc211.org/2005/gmd"
-                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
-                codeListValue="temporal" />
+                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                  codeListValue="temporal" />
               </gmd:type>
             </gmd:MD_Keywords>
           </gmd:descriptiveKeywords>
@@ -361,8 +357,8 @@
               </gmd:keyword>
               <gmd:type>
                 <gmd:MD_KeywordTypeCode xmlns="http://www.isotc211.org/2005/gmd"
-                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
-                codeListValue="place" />
+                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                  codeListValue="place" />
               </gmd:type>
             </gmd:MD_Keywords>
           </gmd:descriptiveKeywords>
@@ -374,8 +370,8 @@
               </gmd:keyword>
               <gmd:type>
                 <gmd:MD_KeywordTypeCode xmlns="http://www.isotc211.org/2005/gmd"
-                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
-                codeListValue="theme" />
+                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                  codeListValue="theme" />
               </gmd:type>
             </gmd:MD_Keywords>
           </gmd:descriptiveKeywords>
@@ -398,9 +394,33 @@
                       </gmd:date>
                       <gmd:dateType>
                         <gmd:CI_DateTypeCode xmlns="http://www.isotc211.org/2005/gmd"
-                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                        codeListValue="creation" />
+                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                          codeListValue="creation" />
                       </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <idf:keyword href="http://data.uba.de/umt/_00002840">
+                <gco:CharacterString>Atmosphäre</gco:CharacterString>
+              </idf:keyword>
+              <idf:keyword href="http://data.uba.de/umt/_00653044">
+                <gco:CharacterString>Strahlungsantrieb</gco:CharacterString>
+              </idf:keyword>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>PortalBoden Parameter Names, Version 1.0</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2013-02-01</gco:Date>
+                      </gmd:date>
                     </gmd:CI_Date>
                   </gmd:date>
                 </gmd:CI_Citation>
@@ -419,10 +439,13 @@
           <gmd:resourceConstraints>
             <idf:IDF_LegalBasisConstraints>
               <gmd:accessConstraints>
-                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                <gmd:MD_RestrictionCode
+                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode"
+                  codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
               </gmd:accessConstraints>
               <gmd:otherConstraints>
-                <gco:CharacterString>Nieders&amp;#228;chsisches Gesetz &amp;#252;ber Raumordnung und Landesplanung (NROG) vom 18.5.2001</gco:CharacterString>
+                <gco:CharacterString>Nieders&amp;#228;chsisches Gesetz &amp;#252;ber Raumordnung und Landesplanung
+                  (NROG) vom 18.5.2001</gco:CharacterString>
               </gmd:otherConstraints>
             </idf:IDF_LegalBasisConstraints>
           </gmd:resourceConstraints>
@@ -439,8 +462,8 @@
           </gmd:spatialResolution>
           <gmd:language>
             <gmd:LanguageCode xmlns="http://www.isotc211.org/2005/gmd"
-            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode"
-            codeListValue="ger" />
+              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode"
+              codeListValue="ger" />
           </gmd:language>
           <gmd:topicCategory>
             <gmd:MD_TopicCategoryCode>structure</gmd:MD_TopicCategoryCode>
@@ -470,7 +493,8 @@
                   <gmd:extent>
                     <gml:TimePeriod gml:id="w27523aaa">
                       <gml:beginPosition>
-                      1921-01-01</gml:beginPosition>
+                        1921-01-01
+                      </gml:beginPosition>
                       <gml:endPosition>1921-12-31</gml:endPosition>
                     </gml:TimePeriod>
                   </gmd:extent>
@@ -563,11 +587,13 @@
                 <idfResponsibleParty type="2" uuid="my-special-uuid" id="my-party-id">
                   <gmd:individualName>
                     <gco:CharacterString>Georg
-                    Zimmermann</gco:CharacterString>
+                      Zimmermann
+                    </gco:CharacterString>
                   </gmd:individualName>
                   <gmd:organisationName>
                     <gco:CharacterString>Deutsche Fotothek,
-                    SLUB</gco:CharacterString>
+                      SLUB
+                    </gco:CharacterString>
                   </gmd:organisationName>
                   <gmd:contactInfo>
                     <gmd:CI_Contact>
@@ -616,13 +642,16 @@
                     </gmd:CI_Contact>
                   </gmd:contactInfo>
                   <gmd:role>
-                    <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
-                    codeListValue="resourceProvider">
+                    <gmd:CI_RoleCode
+                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                      codeListValue="resourceProvider">
                     resourceProvider</gmd:CI_RoleCode>
                   </gmd:role>
-                  <last-modified><gco:DateTime>2011-03-12T23:12:34</gco:DateTime></last-modified>
+                  <last-modified>
+                    <gco:DateTime>2011-03-12T23:12:34</gco:DateTime>
+                  </last-modified>
                   <!-- address itself again, NOT PARENT ! -->
-                  <hierarchyParty  uuid="55290A4C-D7AE-11D2-BB32-006097FE70B1">
+                  <hierarchyParty uuid="55290A4C-D7AE-11D2-BB32-006097FE70B1">
                     <addressIndividualName>Georg
                       Zimmermann</addressIndividualName>
                     <addressOrganisationName>Deutsche Fotothek,
@@ -634,7 +663,7 @@
                     <addressOrganisationName>Parent Organisation Einheit</addressOrganisationName>
                     <addressType>1</addressType>
                   </hierarchyParty>
-                  <!-- parent, last one = top  -->
+                  <!-- parent, last one = top -->
                   <hierarchyParty uuid="15C69BE2-FE15-11D2-AF34-0060084A4597">
                     <addressOrganisationName>Top</addressOrganisationName>
                     <addressType>0</addressType>
@@ -649,16 +678,17 @@
                 <idf:idfOnlineResource>
                   <gmd:linkage>
                     <gmd:URL>
-                    http://www.deutschefotothek.de/?df_dk_0000196&amp;dmode=zoom</gmd:URL>
+                      http://www.deutschefotothek.de/?df_dk_0000196&amp;dmode=zoom</gmd:URL>
                   </gmd:linkage>
                   <gmd:function>
                     <gmd:CI_OnLineFunctionCode xmlns="http://www.isotc211.org/2005/gmd"
-                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                    codeListValue="information" />
+                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                      codeListValue="information" />
                   </gmd:function>
-                  <idf:attachedToField entry-id="3520" list-id="2000">Fachliche Grundlage</idf:attachedToField>
-               </idf:idfOnlineResource>
-               </gmd:onLine>
+                  <idf:attachedToField entry-id="3520" list-id="2000">Fachliche Grundlage
+                  </idf:attachedToField>
+                </idf:idfOnlineResource>
+              </gmd:onLine>
             </gmd:MD_DigitalTransferOptions>
           </gmd:transferOptions>
           <gmd:transferOptions>
@@ -666,13 +696,13 @@
               <gmd:onLine>
                 <gmd:CI_OnlineResource>
                   <gmd:linkage>
-                    <gmd:URL>
-                    http://fotothek.slub-dresden.de/fotos/df/dk/0000000/df_dk_0000196.jpg</gmd:URL>
+                    <gmd:URL>http://fotothek.slub-dresden.de/fotos/df/dk/0000000/df_dk_0000196.jpg
+                    </gmd:URL>
                   </gmd:linkage>
                   <gmd:function>
                     <gmd:CI_OnLineFunctionCode xmlns="http://www.isotc211.org/2005/gmd"
-                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                    codeListValue="download" />
+                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                      codeListValue="download" />
                   </gmd:function>
                 </gmd:CI_OnlineResource>
               </gmd:onLine>
@@ -686,8 +716,8 @@
             <gmd:DQ_Scope>
               <gmd:level>
                 <gmd:MD_ScopeCode xmlns="http://www.isotc211.org/2005/gmd"
-                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
-                codeListValue="dataset" />
+                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                  codeListValue="dataset" />
               </gmd:level>
             </gmd:DQ_Scope>
           </gmd:scope>
@@ -720,6 +750,9 @@
         <objectName>object name 3</objectName>
         <objectType>3</objectType>
       </crossReference>
+      <idf:abstract>
+        <gco:CharacterString>Für das Terraforming von Planeten in fremden Sternensystemen sind besondere Regeln zu berücksichtigen. Diese werden in der Terraformingdirektive detailiert beschrieben. Die Terraforminginformationsdienste bieten den Zugang zu den Direktiven. AAA</gco:CharacterString>
+      </idf:abstract>
       <additionalDataSection isLegacy="false" id="ad1">
         <title lang="de">ein titel</title>
         <title lang="en">a title</title>
@@ -735,19 +768,21 @@
     <p>
       <strong>Geographical reference 1</strong>
       <a type="application/vnd.ogc.wms_xml"
-      href="http://gateway.hamburg.de/OGCFassade/HH_WMS_Geobasisdaten.aspx?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetCapabilities">
-      Test</a>
+        href="http://gateway.hamburg.de/OGCFassade/HH_WMS_Geobasisdaten.aspx?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetCapabilities">
+        Test</a>
     </p>
     <p>
       <strong>Geographical reference 2</strong>
       <a type="application/vnd.ogc.wms_xml"
-      href="http://gdzims.lkvk.saarland.de/wmsconnector/com.esri.wms.Esrimap/GDI_Natur?SERVICE=WMS&amp;VERSION=1.1.1&amp;Request=GetCapabilities">
-      Saarland LKVK Natur (Schutzgebiet)</a>
+        href="http://gdzims.lkvk.saarland.de/wmsconnector/com.esri.wms.Esrimap/GDI_Natur?SERVICE=WMS&amp;VERSION=1.1.1&amp;Request=GetCapabilities">
+        Saarland LKVK Natur (Schutzgebiet)</a>
     </p>
-    <p><a href="http://www.google.de">Test</a></p>
+    <p>
+      <a href="http://www.google.de">Test</a>
+    </p>
     <p>p 1</p>
     <p>p 1</p>
-    <table border="1" >
+    <table border="1">
       <tr>
         <th>Berlin</th>
         <th>Hamburg</th>
@@ -764,19 +799,38 @@
         <td>Fleischpflanzerl</td>
       </tr>
     </table>
-    <p><img src="http://www.spirofrog.de/blog/wp-content/uploads/2009/12/Wasser.jpg" alt="image"></img></p>
+    <p>
+      <img src="http://www.spirofrog.de/blog/wp-content/uploads/2009/12/Wasser.jpg" alt="image"></img>
+    </p>
     <hr id="hr"></hr>
-    <div class="fontbox"
-    style="font-family:sans-serif; font-size:11pt;">DIV Test</div>
-    <p><b>Fett (bold)</b></p>
-    <p><i>Kursiv (italic)</i></p>
-    <p><ins>Unterstrichen (inserted)</ins></p>
-    <p><tt>Schreibmaschine</tt></p>
-    <p><big>Gro&#223;er Font</big></p>
-    <p><small>Kleiner Font</small></p>
-    <p><del>Durchgestrichen (deleted)</del></p>
-    <p><sub>Tiefgestellt</sub></p>
-    <p><sup>Hochgestellt</sup></p>
+    <div class="fontbox" style="font-family:sans-serif; font-size:11pt;">DIV Test</div>
+    <p>
+      <b>Fett (bold)</b>
+    </p>
+    <p>
+      <i>Kursiv (italic)</i>
+    </p>
+    <p>
+      <ins>Unterstrichen (inserted)</ins>
+    </p>
+    <p>
+      <tt>Schreibmaschine</tt>
+    </p>
+    <p>
+      <big>Gro&#223;er Font</big>
+    </p>
+    <p>
+      <small>Kleiner Font</small>
+    </p>
+    <p>
+      <del>Durchgestrichen (deleted)</del>
+    </p>
+    <p>
+      <sub>Tiefgestellt</sub>
+    </p>
+    <p>
+      <sup>Hochgestellt</sup>
+    </p>
     <dl>
       <dt>dt</dt>
       <dd>dd</dd>
@@ -790,13 +844,25 @@
       <li>erstes Listenelement (square)</li>
       <li>zweites Listenelement (circle)</li>
     </ul>
-    <p><input type="text" name="text" value="text" ></input></p>
-    <p><input type="password" name="password" ></input></p>
-    <p><input type="checkbox" name="checkbox" value="checkbox"></input></p>
-    <p><input type="radio" name="radio" value="radio"></input></p>
-    <p><input type="submit" value="submit"></input></p>     
-    <p><input type="button" value="button"></input></p>
-     <kml:kml xmlns:kml="http://www.opengis.net/kml/2.2">
+    <p>
+      <input type="text" name="text" value="text"></input>
+    </p>
+    <p>
+      <input type="password" name="password"></input>
+    </p>
+    <p>
+      <input type="checkbox" name="checkbox" value="checkbox"></input>
+    </p>
+    <p>
+      <input type="radio" name="radio" value="radio"></input>
+    </p>
+    <p>
+      <input type="submit" value="submit"></input>
+    </p>
+    <p>
+      <input type="button" value="button"></input>
+    </p>
+    <kml:kml xmlns:kml="http://www.opengis.net/kml/2.2">
       <kml:Document>
         <kml:name>KML Document 1</kml:name>
         <kml:Placemark>
@@ -814,28 +880,28 @@
           </kml:Point>
         </kml:Placemark>
       </kml:Document>
-     </kml:kml>
-     <p>
-     <strong>Geographical reference:</strong>
-     <kml:kml xmlns:kml="http://www.opengis.net/kml/2.2">
-      <kml:Document>
-        <kml:name>KML Document 2</kml:name>
-        <kml:Placemark>
-          <kml:name>KML Point 2_1</kml:name>
-          <kml:description>KML Description 2_1</kml:description>
-          <kml:Point>
-            <kml:coordinates>45.256 -110.45</kml:coordinates>
-          </kml:Point>
-        </kml:Placemark>
-        <kml:Placemark>
-          <kml:name>KML Point 2_2</kml:name>
-          <kml:description>KML Description 2_2</kml:description>
-          <kml:Point>
-            <kml:coordinates>46.256 -110.45</kml:coordinates>
-          </kml:Point>
-        </kml:Placemark>
-      </kml:Document>
-     </kml:kml>
-     </p>
+    </kml:kml>
+    <p>
+      <strong>Geographical reference:</strong>
+      <kml:kml xmlns:kml="http://www.opengis.net/kml/2.2">
+        <kml:Document>
+          <kml:name>KML Document 2</kml:name>
+          <kml:Placemark>
+            <kml:name>KML Point 2_1</kml:name>
+            <kml:description>KML Description 2_1</kml:description>
+            <kml:Point>
+              <kml:coordinates>45.256 -110.45</kml:coordinates>
+            </kml:Point>
+          </kml:Placemark>
+          <kml:Placemark>
+            <kml:name>KML Point 2_2</kml:name>
+            <kml:description>KML Description 2_2</kml:description>
+            <kml:Point>
+              <kml:coordinates>46.256 -110.45</kml:coordinates>
+            </kml:Point>
+          </kml:Placemark>
+        </kml:Document>
+      </kml:kml>
+    </p>
   </body>
 </html>
