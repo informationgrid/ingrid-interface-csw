@@ -36,13 +36,13 @@
 		<div id="content">
 			<br />
 			<h2>Test the search capabilities! Please form your request.</h2>
-			<form method="POST" action="search.html">
+			<form method="post" action="search.html">
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Filter query:</td>
 						<td>
 						<textarea id="query" name="query" rows="5" cols="30">${query}</textarea>
-                        <br>
+                        <br />
                         <span>Add your search here. Single word queries or complete GetRecords XML Request.</span>
 						</td>
 					</tr>
