@@ -59,9 +59,9 @@
 
     <!-- filter idf:keyword and transform them to gmd:keyword -->
     <xsl:template match="idf:keyword">
-      <gmd:keyword>
+      <gco:CharacterString>
         <xsl:apply-templates select="node()" />
-      </gmd:keyword>
+      </gco:CharacterString>
     </xsl:template>
     
 	<!--
