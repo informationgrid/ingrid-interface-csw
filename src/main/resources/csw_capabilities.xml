@@ -17,6 +17,8 @@
 		</ows:Keywords>
 		<ows:ServiceType>CSW</ows:ServiceType>
 		<ows:ServiceTypeVersion>2.0.2</ows:ServiceTypeVersion>
+		<ows:Fees>unbeschraenkt</ows:Fees>
+		<ows:AccessConstraints>unbeschraenkt</ows:AccessConstraints>
 	</ows:ServiceIdentification>
 	<ows:ServiceProvider>
 		<ows:ProviderName>Coordination Center PortalU</ows:ProviderName>
@@ -209,6 +211,17 @@
 		<ows:Constraint name="IsoProfiles">
 			<ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
 		</ows:Constraint>
+        <inspire_common:SupportedLanguages>
+          <inspire_common:DefaultLanguage>
+            <inspire_common:Language>eng</inspire_common:Language>
+          </inspire_common:DefaultLanguage>
+          <inspire_common:SupportedLanguage>
+            <inspire_common:Language>eng</inspire_common:Language>
+          </inspire_common:SupportedLanguage>
+        </inspire_common:SupportedLanguages>
+        <inspire_common:ResponseLanguage>
+          <inspire_common:Language>eng</inspire_common:Language>
+        </inspire_common:ResponseLanguage>
 	</ows:OperationsMetadata>
 	<ogc:Filter_Capabilities>
 		<ogc:Spatial_Capabilities>

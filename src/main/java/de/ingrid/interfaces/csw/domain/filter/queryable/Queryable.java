@@ -50,6 +50,9 @@ public enum Queryable {
     OPERATESONIDENTIFIER   (new CharacterString()),
     OPERATESONNAME          (new CharacterString()),
     COUPLINGTYPE            (new CharacterString()),
+    
+    // Additional queryable properties (service), OGC 07-045, Table 16
+    LINEAGE					(new CharacterString()),
 
     // InGrid specific ISO additional ISO based queryables
     HIERARCHYLEVELNAME      (new CharacterString()),

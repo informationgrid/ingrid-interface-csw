@@ -226,6 +226,10 @@ var transformationDescriptions = [
 		// default value, used to select all records
 		{	"indexField":"metafile",
 			"defaultValue":"doc"
+		},
+		// lineage as AdditionalQueryables
+		{	"indexField":"lineage",
+			"xpath":"//idf:idfMdMetadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString"
 		}
 	];
 
