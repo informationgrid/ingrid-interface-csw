@@ -5,6 +5,7 @@ package de.ingrid.interfaces.csw.index.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
@@ -15,6 +16,7 @@ import javax.script.Compilable;
 import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,11 +71,6 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
     public Document map(Record record, Map<String, Object> utils) throws Exception {
         Document document = new Document();
 
-        // overwrite indexer path with configuration
-        if (configurationProvider != null) {
-            this.mappingScript = configurationProvider.getMappingScript();
-        }
-
         if (this.mappingScript == null) {
             log.error("Mapping script is not set!");
             throw new IllegalArgumentException("Mapping script is not set!");
@@ -81,17 +78,7 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
 
         InputStream input = null;
         try {
-            input = new FileInputStream(this.mappingScript);
-            if (this.engine == null) {
-                String scriptName = this.mappingScript.getName();
-                String extension = scriptName.substring(scriptName.lastIndexOf('.') + 1, scriptName.length());
-                ScriptEngineManager mgr = new ScriptEngineManager();
-                this.engine = mgr.getEngineByExtension(extension);
-                if (this.engine instanceof Compilable) {
-                    Compilable compilable = (Compilable) this.engine;
-                    this.compiledScript = compilable.compile(new InputStreamReader(input));
-                }
-            }
+
             org.w3c.dom.Document idfDoc = IdfUtils.getIdfDocument(record);
             Bindings bindings = this.engine.createBindings();
             bindings.put("recordId", IdfUtils.getRecordId(idfDoc));
@@ -107,6 +94,7 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
             if (this.compiledScript != null) {
                 this.compiledScript.eval(bindings);
             } else {
+            	input = new FileInputStream(this.mappingScript);
                 this.engine.eval(new InputStreamReader(input), bindings);
             }
         } catch (Exception ex) {
@@ -141,5 +129,31 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
     public void setConfigurationProvider(ConfigurationProvider configurationProvider) {
         this.configurationProvider = configurationProvider;
     }
+
+    /**
+     * Load mapping script from filesystem and compile it if needed. This is
+     * only done once when data is being indexed.
+     */
+	@Override
+	public void init() {
+        // read mapping file from disk
+        if (configurationProvider != null) {
+            this.mappingScript = configurationProvider.getMappingScript();
+        }
+        
+        // also compile it again (just once per index generation)
+        String scriptName = this.mappingScript.getName();
+        String extension = scriptName.substring(scriptName.lastIndexOf('.') + 1, scriptName.length());
+        ScriptEngineManager mgr = new ScriptEngineManager();
+        this.engine = mgr.getEngineByExtension(extension);
+        if (this.engine instanceof Compilable) {
+            Compilable compilable = (Compilable) this.engine;
+            try {
+				this.compiledScript = compilable.compile(new InputStreamReader(new FileInputStream(this.mappingScript)));
+			} catch (FileNotFoundException | ScriptException ex) {
+				log.error("Error compiling mapping script!", ex);
+			}
+        }
+	}
     
 }

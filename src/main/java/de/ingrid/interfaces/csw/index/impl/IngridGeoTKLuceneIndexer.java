@@ -164,6 +164,7 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
 
     public void setMapper(RecordLuceneMapper mapper) {
         this.mapper = mapper;
+        mapper.init();
     }
 
     /**
