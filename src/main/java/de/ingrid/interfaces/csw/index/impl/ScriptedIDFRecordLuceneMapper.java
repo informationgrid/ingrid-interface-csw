@@ -150,7 +150,9 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
             Compilable compilable = (Compilable) this.engine;
             try {
 				this.compiledScript = compilable.compile(new InputStreamReader(new FileInputStream(this.mappingScript)));
-			} catch (FileNotFoundException | ScriptException ex) {
+			} catch (FileNotFoundException ex) {
+				log.error("Mapping script was not found!", ex);
+			} catch (ScriptException ex) {
 				log.error("Error compiling mapping script!", ex);
 			}
         }
