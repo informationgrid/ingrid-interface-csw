@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
@@ -101,8 +102,16 @@ public class ConfigurationProvider {
     }
     
     public File getMappingScript() {
+    	File mappingScript = null;
+    	
         try {
-            File mappingScript = new File(new File(this.configurationFile.getParentFile(), "conf"), this.getConfiguration().getMappingScript());
+        	// look for mapping script in the classpath first, which is good for developing
+        	// since the src/main/resources path can be used
+        	URL mapUrl = this.getClass().getResource("/" + this.getConfiguration().getMappingScript());
+        	if (mapUrl == null)
+        		mappingScript = new File(new File(this.configurationFile.getParentFile(), "conf"), this.getConfiguration().getMappingScript());
+        	else
+        		mappingScript = new File(mapUrl.getPath());
             if (!mappingScript.exists()) {
                 throw new IOException("Mapping script does not exists: " + mappingScript.getAbsolutePath());
             }

@@ -33,4 +33,10 @@ public interface RecordLuceneMapper {
      */
     Document map(Record record, Map<String, Object> utils) throws Exception;
 
+    /**
+     * Do some initialization if any needed. This will be called every time the mapper
+     * is set, which means once per indexing.
+     */
+	void init();
+
 }
