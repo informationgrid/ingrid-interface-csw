@@ -4,6 +4,8 @@
 	xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc"
 	xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:inspire_ds="http://inspire.ec.europa.eu/schemas/inspire_ds/1.0/inspire_ds.xsd"
+    xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
 	xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd">
 	<ows:ServiceIdentification>
 		<ows:Title>PortalU Catalog Server</ows:Title>
@@ -147,6 +149,16 @@
                 <ows:Value>partner</ows:Value>
                 <ows:Value>provider</ows:Value>
                 <ows:Value>iplug</ows:Value>
+                <ows:Value>AccessConstraints</ows:Value>
+                <ows:Value>OtherConstraints</ows:Value>
+                <ows:Value>Classification</ows:Value>
+                <ows:Value>SpecificationTitle</ows:Value>
+                <ows:Value>SpecificationDate</ows:Value>
+                <ows:Value>SpecificationDateType</ows:Value>
+                <ows:Value>ConditionApplyingToAccessAndUse</ows:Value>
+                <ows:Value>Lineage</ows:Value>
+                <ows:Value>Degree</ows:Value>
+                <ows:Value>ResponsiblePartyRole</ows:Value>
 			</ows:Constraint>
 		</ows:Operation>
 		<ows:Operation name="GetRecordById">
@@ -211,17 +223,46 @@
 		<ows:Constraint name="IsoProfiles">
 			<ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
 		</ows:Constraint>
-        <inspire_common:SupportedLanguages>
-          <inspire_common:DefaultLanguage>
-            <inspire_common:Language>eng</inspire_common:Language>
-          </inspire_common:DefaultLanguage>
-          <inspire_common:SupportedLanguage>
-            <inspire_common:Language>eng</inspire_common:Language>
-          </inspire_common:SupportedLanguage>
-        </inspire_common:SupportedLanguages>
-        <inspire_common:ResponseLanguage>
-          <inspire_common:Language>eng</inspire_common:Language>
-        </inspire_common:ResponseLanguage>
+        <inspire_ds:ExtendedCapabilities>
+			<inspire_common:ResourceType>service</inspire_common:ResourceType>
+			<inspire_common:SpatialDataServiceType>discovery</inspire_common:SpatialDataServiceType>
+			<inspire_common:MandatoryKeyword>
+				<inspire_common:KeywordValue>humanCatalogueViewer</inspire_common:KeywordValue>
+			</inspire_common:MandatoryKeyword>
+			<inspire_common:Conformity>
+				<inspire_common:Specification xsi:type="inspire_common:citationInspireInteroperabilityRegulation_eng">
+					<inspire_common:Title>COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</inspire_common:Title>
+					<inspire_common:DateOfPublication>2010-12-08</inspire_common:DateOfPublication>
+					<inspire_common:URI>OJ:L:2010:323:0011:0102:EN:PDF</inspire_common:URI>
+					<inspire_common:ResourceLocator>
+						<inspire_common:URL>http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2010:323:0011:0102:EN:PDF</inspire_common:URL>
+						<inspire_common:MediaType>application/pdf</inspire_common:MediaType>
+					</inspire_common:ResourceLocator>
+				</inspire_common:Specification>
+				<inspire_common:Degree>conformant</inspire_common:Degree>
+			</inspire_common:Conformity>
+			<inspire_common:MetadataPointOfContact>
+				<inspire_common:OrganisationName>Coordination Center PortalU</inspire_common:OrganisationName>
+				<inspire_common:EmailAddress>kist@portalu.de</inspire_common:EmailAddress>
+			</inspire_common:MetadataPointOfContact>
+			<inspire_common:MetadataDate>2013-04-03</inspire_common:MetadataDate>
+			<inspire_common:TemporalReference>
+				<inspire_common:DateOfPublication>2013-04-03</inspire_common:DateOfPublication>
+				<inspire_common:DateOfLastRevision>2013-04-03</inspire_common:DateOfLastRevision>
+				<inspire_common:DateOfCreation>2013-04-03</inspire_common:DateOfCreation>
+			</inspire_common:TemporalReference>
+			<inspire_common:SupportedLanguages>
+				<inspire_common:DefaultLanguage>
+					<inspire_common:Language>eng</inspire_common:Language>
+				</inspire_common:DefaultLanguage>
+				<inspire_common:SupportedLanguage>
+					<inspire_common:Language>eng</inspire_common:Language>
+				</inspire_common:SupportedLanguage>
+			</inspire_common:SupportedLanguages>
+			<inspire_common:ResponseLanguage>
+				<inspire_common:Language>eng</inspire_common:Language>
+			</inspire_common:ResponseLanguage>
+		</inspire_ds:ExtendedCapabilities>
 	</ows:OperationsMetadata>
 	<ogc:Filter_Capabilities>
 		<ogc:Spatial_Capabilities>

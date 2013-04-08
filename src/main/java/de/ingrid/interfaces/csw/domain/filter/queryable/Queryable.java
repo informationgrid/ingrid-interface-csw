@@ -51,8 +51,17 @@ public enum Queryable {
     OPERATESONNAME          (new CharacterString()),
     COUPLINGTYPE            (new CharacterString()),
     
-    // Additional queryable properties (service), OGC 07-045, Table 16
+    // Additional queryable properties (service), TG 3.1, Table 5-7
     LINEAGE					(new CharacterString()),
+    RESPONSIBLEPARTYROLE	(new CharacterString()),
+    DEGREE					(new Boolean()),
+    CONDITIONAPPLYINGTOACCESSANDUSE (new CharacterString()),
+    ACCESSCONSTRAINTS		(new CharacterString()),
+    OTHERCONSTRAINTS		(new CharacterString()),
+    CLASSIFICATION			(new CharacterString()),
+    SPECIFICATIONTITLE		(new CharacterString()),
+    SPECIFICATIONDATE		(new Date()),
+    SPECIFICATIONDATETYPE	(new CharacterString()),
 
     // InGrid specific ISO additional ISO based queryables
     HIERARCHYLEVELNAME      (new CharacterString()),

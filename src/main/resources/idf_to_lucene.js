@@ -229,8 +229,45 @@ var transformationDescriptions = [
 		},
 		// lineage as AdditionalQueryables
 		{	"indexField":"lineage",
-			"xpath":"//idf:idfMdMetadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString"
+			"xpath":"//idf:idfMdMetadata/gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/gco:CharacterString"
+		},
+		// TODO: degree as AdditionalQueryables
+		{	"indexField":"degree",
+			"xpath":"//idf:idfMdMetadata/gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:pass/gco:Boolean"
+		},
+		// ResponsiblePartyRole as AdditionalQueryables
+		{	"indexField":"responsiblepartyrole",
+			"xpath":"//gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:role/*/@codeListValue"
+		},
+		// TODO: ConditionApplyingToAccessAndUse as AdditionalQueryables
+		{	"indexField":"conditionapplyingtoaccessanduse",
+			"xpath":"//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString"
+		},
+		// TODO: AccessConstraints as AdditionalQueryables
+		{	"indexField":"accessconstraints",
+			"xpath":"//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"
+		},
+		// TODO: OtherConstraints as AdditionalQueryables
+		{	"indexField":"otherconstraints",
+			"xpath":"//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString"
+		},
+		// TODO: Classification as AdditionalQueryables
+		{	"indexField":"classification",
+			"xpath":"//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:classification/*/@codeListValue"
+		},
+		// TODO: SpecificationTitle as AdditionalQueryables
+		{	"indexField":"specificationtitle",
+			"xpath":"//gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString"
+		},
+		// TODO: SpecificationDate as AdditionalQueryables
+		{	"indexField":"specificationdate",
+			"xpath":"//gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"
+		},
+		// TODO: SpecificationDateType as AdditionalQueryables
+		{	"indexField":"specificationdatetype",
+			"xpath":"//gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/*/gmd:date/*/gmd:dateType/*/@codeListValue"
 		}
+		
 	];
 
 // iterate over all transformation descriptions
