@@ -30,11 +30,6 @@
 			<name>Geotoolkit repository</name>
 			<url>http://maven.geotoolkit.org/</url>
 		</repository>
-        <repository>
-            <id>project.local</id>
-            <name>project</name>
-            <url>file:${project.basedir}/repo</url>
-        </repository>
 	</repositories>
 
 	<dependencyManagement>
@@ -265,17 +260,17 @@
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-spatial-lucene</artifactId>
-			<version>3.x-20120717-INGRID</version>
+			<version>3.20</version>
 		</dependency>
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-xml-ogc</artifactId>
-			<version>3.x-20120717-INGRID</version>
+			<version>3.20</version>
 		</dependency>
 		<dependency>
 			<groupId>org.geotoolkit.pending</groupId>
 			<artifactId>geotk-xml-gml</artifactId>
-			<version>3.x-20120717-INGRID</version>
+			<version>3.20</version>
 		</dependency>
 		<dependency>
 			<groupId>it.sauronsoftware.cron4j</groupId>
