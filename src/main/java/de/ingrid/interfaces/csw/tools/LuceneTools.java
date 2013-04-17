@@ -5,14 +5,15 @@ package de.ingrid.interfaces.csw.tools;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.HashSet;
 
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.standard.ClassicAnalyzer;
+import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 
 /**
- * Filters a string with the {@link ClassicAnalyzer}. This class is used in
+ * Filters a string with the {@link GermanAnalyzer}. This class is used in
  * javascript based mapping of a IDF record to a lucene document.
  * 
  * 
@@ -21,7 +22,9 @@ import org.apache.lucene.util.Version;
  */
 public class LuceneTools {
 
-    private static ClassicAnalyzer fAnalyzer = new ClassicAnalyzer(Version.LUCENE_36);
+	// use German Analyzer, see INGRID-2246
+	private static GermanAnalyzer fAnalyzer = new GermanAnalyzer(Version.LUCENE_36, new HashSet());
+//    private static ClassicAnalyzer fAnalyzer = new ClassicAnalyzer(Version.LUCENE_36);
 
     /**
      * @param term

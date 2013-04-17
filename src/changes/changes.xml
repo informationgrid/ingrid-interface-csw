@@ -5,6 +5,12 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.4.0-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4.0-SNAPSHOT">
+      <action type="update" dev="wemove" issue="INGRID-2246">
+          Use german analyzer when creating/searching lucene index (instead of ClassicAnalyzer).
+      </action>
+    </release>
+
   	<release version="3.3.0" date="2013-03-05" description="Release InGrid 3.3">
         <action type="add" dev="wemove" issue="INGRID-2150">
             Add java parameter "-Dfile.encoding=UTF8" to start script.

@@ -19,11 +19,19 @@ package org.geotoolkit.lucene.index;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
@@ -188,7 +196,9 @@ public class LuceneIndexSearcher extends IndexLucene {
      * @throws IndexingException
      */
     public LuceneIndexSearcher(final File configDir, final String serviceID) throws IndexingException {
-        this(configDir, serviceID, null);
+    	// use German Analyzer, see INGRID-2246
+//      this(configDir, serviceID, null);
+        this(configDir, serviceID, new GermanAnalyzer(Version.LUCENE_36, new HashSet()));
     }
 
     /**

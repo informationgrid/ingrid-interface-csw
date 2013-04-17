@@ -5,11 +5,15 @@ package de.ingrid.interfaces.csw.index.impl;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.de.GermanAnalyzer;
+import org.apache.lucene.util.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,7 +69,10 @@ public class LuceneIndexer implements Indexer {
             this.indexConfigPath.delete();
         }
 
-        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, null, statusProvider);
+    	// use German Analyzer, see INGRID-2246
+//    	Analyzer myAnalyzer = null;
+    	Analyzer myAnalyzer = new GermanAnalyzer(Version.LUCENE_36, new HashSet());
+        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, myAnalyzer, statusProvider);
         // TODO: set log level
         geoTKIndexer.setRecordCacheList(recordCacheList);
         geoTKIndexer.setMapper(mapper);
