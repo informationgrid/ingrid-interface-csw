@@ -10,7 +10,7 @@
           Fix dependencies to geotk libraries. Java7 compatibility fix.
       </action>
       <action type="update" dev="wemove" issue="INGRID-2246">
-          Use german analyzer when creating/searching lucene index (instead of ClassicAnalyzer).
+          Use german analyzer when creating/searching lucene index, now configured via XML.
       </action>
     </release>
 

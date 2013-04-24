@@ -9,6 +9,7 @@ import java.util.logging.Level;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.lucene.analysis.Analyzer;
 import org.geotoolkit.lucene.filter.SpatialQuery;
 import org.geotoolkit.lucene.index.LuceneIndexSearcher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,10 @@ public class LuceneSearcher implements Searcher {
     @Autowired
     private FilterParser filterParser;
 
+    /** The analyzer used in index searcher */
+    @Autowired
+    private Analyzer fAnalyzer;
+
     /**
      * The Lucene index searcher
      */
@@ -82,7 +87,7 @@ public class LuceneSearcher implements Searcher {
 
         log.info("Start search index: " + this.indexPath);
 
-        lis = new LuceneIndexSearcher(this.indexPath, "");
+        lis = new LuceneIndexSearcher(this.indexPath, "", fAnalyzer);
         lis.setCacheEnabled(ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false));
         lis.setLogLevel(log.isDebugEnabled() ? Level.FINEST : (log.isInfoEnabled() ? Level.INFO
                 : (log.isWarnEnabled() ? Level.WARNING : Level.SEVERE)));

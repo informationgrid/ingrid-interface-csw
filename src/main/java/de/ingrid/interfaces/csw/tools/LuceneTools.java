@@ -5,26 +5,25 @@ package de.ingrid.interfaces.csw.tools;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashSet;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.util.Version;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
- * Filters a string with the {@link GermanAnalyzer}. This class is used in
+ * Filters a string with the injected analyzer. This class is used in
  * javascript based mapping of a IDF record to a lucene document.
  * 
  * 
  * @author joachim@wemove.com
  * 
  */
+@Service
 public class LuceneTools {
 
-	// use German Analyzer, see INGRID-2246
-	private static GermanAnalyzer fAnalyzer = new GermanAnalyzer(Version.LUCENE_36, new HashSet());
-//    private static ClassicAnalyzer fAnalyzer = new ClassicAnalyzer(Version.LUCENE_36);
+    private static Analyzer fAnalyzer;
 
     /**
      * @param term
@@ -44,4 +43,9 @@ public class LuceneTools {
         return result.trim();
     }
 
+    /** Injects default analyzer via autowiring ! */
+    @Autowired
+    public void setAnalyzer(Analyzer analyzer) {
+    	fAnalyzer = analyzer;
+	}
 }

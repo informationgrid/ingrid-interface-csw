@@ -36,6 +36,14 @@
 		</property>
 	</bean>
 
+    <!-- Analyzer used for indexing and searching ! Create separate instances for indexer and searcher to avoid close Exception ! -->
+    <bean id="analyzerGERMAN" class="org.apache.lucene.analysis.de.GermanAnalyzer" scope="prototype">
+        <constructor-arg index="0" value="LUCENE_36" />
+        <constructor-arg index="1">
+        	<set/>
+        </constructor-arg>
+    </bean>
+
 	<!--
 		enable Auto-detecting of components (annotation based configuration
 		including autowire ...)

@@ -31,7 +31,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
@@ -185,20 +184,6 @@ public class LuceneIndexSearcher extends IndexLucene {
             throw new IndexingException("Searching Exception during index searcher creation", ex);
         }
         
-    }
-
-    /**
-     * Build a new index searcher.
-     *
-     * @param configDir The configuration directory where to build the index directory.
-     * @param serviceID the "ID" of the service (allow multiple index in the same directory). The value "" is allowed.
-     * 
-     * @throws IndexingException
-     */
-    public LuceneIndexSearcher(final File configDir, final String serviceID) throws IndexingException {
-    	// use German Analyzer, see INGRID-2246
-//      this(configDir, serviceID, null);
-        this(configDir, serviceID, new GermanAnalyzer(Version.LUCENE_36, new HashSet()));
     }
 
     /**
