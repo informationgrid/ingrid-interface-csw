@@ -47,7 +47,7 @@
 
     <!-- Inject getAnalyzer method to LuceneTools to return our analyzer defined above ! -->
     <bean id="myLuceneTools" class="de.ingrid.interfaces.csw.tools.LuceneTools">
-    	<lookup-method name="getAnalyzer" bean="myAnalyzer"/>
+    	<lookup-method name="createAnalyzer" bean="myAnalyzer"/>
     </bean>
 
 	<!--

@@ -22,6 +22,8 @@ import org.apache.lucene.util.Version;
  * 
  */
 public class LuceneTools {
+	
+	private Analyzer fAnalyzer = null;
 
     /**
      * @param term
@@ -31,6 +33,7 @@ public class LuceneTools {
     public String filterTerm(String term) throws IOException {
         String result = "";
 
+        // always use same analyzer, NOT new instance ! Is called in mapping process !
         Analyzer myAnalyzer = getAnalyzer();
         TokenStream ts = myAnalyzer.tokenStream(null, new StringReader(term));
         CharTermAttribute charTermAttribute = ts.addAttribute(CharTermAttribute.class);
@@ -42,10 +45,19 @@ public class LuceneTools {
         return result.trim();
     }
 
-	/** METHOD WILL BE INJECTED BY SPRING TO RETURN NEW INSTANCE OF INJECTED ANALYZER !
+	/** METHOD WILL BE INJECTED BY SPRING TO RETURN NEW INSTANCE OF ANALYZER !
 	 * In non spring environment we return new default analyzer (German).
 	 */
-	public Analyzer getAnalyzer() {
+	public Analyzer createAnalyzer() {
 		return new GermanAnalyzer(Version.LUCENE_36, new HashSet());
+	}
+
+	/** Return existing analyzer. If not created yet, then create one ! */
+	public Analyzer getAnalyzer() {
+		if (fAnalyzer == null) {
+			fAnalyzer = createAnalyzer();
+		}
+		
+		return fAnalyzer;
 	}
 }

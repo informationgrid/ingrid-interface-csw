@@ -69,7 +69,8 @@ public class LuceneIndexer implements Indexer {
             this.indexConfigPath.delete();
         }
 
-        Analyzer myAnalyzer = luceneTools.getAnalyzer();
+        // CREATE new analyzer ! This one will be closed by geotoolkit indexer when indexing finished !
+        Analyzer myAnalyzer = luceneTools.createAnalyzer();
         IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, myAnalyzer, statusProvider);
         // TODO: set log level
         geoTKIndexer.setRecordCacheList(recordCacheList);
