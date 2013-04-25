@@ -4,7 +4,8 @@
 	xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc"
 	xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:inspire_ds="http://inspire.ec.europa.eu/schemas/inspire_ds/1.0/inspire_ds.xsd"
+    xmlns:inspire_ds="http://inspire.ec.europa.eu/schemas/inspire_ds/1.0"
+    xmlns:inspire_com="http://inspire.ec.europa.eu/schemas/common/1.0"
     xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
 	xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd">
 	<ows:ServiceIdentification>
@@ -251,17 +252,17 @@
 				<inspire_common:DateOfLastRevision>2013-04-03</inspire_common:DateOfLastRevision>
 				<inspire_common:DateOfCreation>2013-04-03</inspire_common:DateOfCreation>
 			</inspire_common:TemporalReference>
-			<inspire_common:SupportedLanguages>
-				<inspire_common:DefaultLanguage>
-					<inspire_common:Language>eng</inspire_common:Language>
-				</inspire_common:DefaultLanguage>
-				<inspire_common:SupportedLanguage>
-					<inspire_common:Language>eng</inspire_common:Language>
-				</inspire_common:SupportedLanguage>
-			</inspire_common:SupportedLanguages>
-			<inspire_common:ResponseLanguage>
-				<inspire_common:Language>eng</inspire_common:Language>
-			</inspire_common:ResponseLanguage>
+			<inspire_com:SupportedLanguages>
+				<inspire_com:DefaultLanguage>
+					<inspire_com:Language>eng</inspire_com:Language>
+				</inspire_com:DefaultLanguage>
+				<inspire_com:SupportedLanguage>
+					<inspire_com:Language>eng</inspire_com:Language>
+				</inspire_com:SupportedLanguage>
+			</inspire_com:SupportedLanguages>
+			<inspire_com:ResponseLanguage>
+				<inspire_com:Language>eng</inspire_com:Language>
+			</inspire_com:ResponseLanguage>
 		</inspire_ds:ExtendedCapabilities>
 	</ows:OperationsMetadata>
 	<ogc:Filter_Capabilities>

@@ -231,7 +231,7 @@ var transformationDescriptions = [
 		{	"indexField":"lineage",
 			"xpath":"//idf:idfMdMetadata/gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/gco:CharacterString"
 		},
-		// degree as AdditionalQueryables
+		// TODO: degree as AdditionalQueryables
 		{	"indexField":"degree",
 			"xpath":"//idf:idfMdMetadata/gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:pass/gco:Boolean"
 		},
@@ -239,31 +239,31 @@ var transformationDescriptions = [
 		{	"indexField":"responsiblepartyrole",
 			"xpath":"//gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:role/*/@codeListValue"
 		},
-		// ConditionApplyingToAccessAndUse as AdditionalQueryables
+		// TODO: ConditionApplyingToAccessAndUse as AdditionalQueryables
 		{	"indexField":"conditionapplyingtoaccessanduse",
 			"xpath":"//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString"
 		},
-		// AccessConstraints as AdditionalQueryables
+		// TODO: AccessConstraints as AdditionalQueryables
 		{	"indexField":"accessconstraints",
 			"xpath":"//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"
 		},
-		// OtherConstraints as AdditionalQueryables
+		// TODO: OtherConstraints as AdditionalQueryables
 		{	"indexField":"otherconstraints",
 			"xpath":"//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString"
 		},
-		// Classification as AdditionalQueryables
+		// TODO: Classification as AdditionalQueryables
 		{	"indexField":"classification",
 			"xpath":"//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:classification/*/@codeListValue"
 		},
-		// SpecificationTitle as AdditionalQueryables
+		// TODO: SpecificationTitle as AdditionalQueryables
 		{	"indexField":"specificationtitle",
 			"xpath":"//gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString"
 		},
-		// SpecificationDate as AdditionalQueryables
+		// TODO: SpecificationDate as AdditionalQueryables
 		{	"indexField":"specificationdate",
 			"xpath":"//gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/*/gmd:date/*/gmd:date/gco:Date"
 		},
-		// SpecificationDateType as AdditionalQueryables
+		// TODO: SpecificationDateType as AdditionalQueryables
 		{	"indexField":"specificationdatetype",
 			"xpath":"//gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/*/gmd:date/*/gmd:dateType/*/@codeListValue"
 		}
