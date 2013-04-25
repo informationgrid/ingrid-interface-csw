@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
+import de.ingrid.interfaces.csw.tools.LuceneTools;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
@@ -46,6 +47,9 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
      */
     @Autowired
     private ConfigurationProvider configurationProvider;
+
+    @Autowired
+    private LuceneTools luceneTools;
 
     /**
      * The script engine that runs the mapping script
@@ -88,6 +92,7 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
             bindings.put("log", log);
             XPathUtils xpathUtils = new XPathUtils(new IDFNamespaceContext());
             bindings.put("XPATH", xpathUtils);
+            bindings.put("luceneTools", luceneTools);
             for (Entry<String, Object> entry : utils.entrySet()) {
                 bindings.put(entry.getKey(), entry.getValue());
             }

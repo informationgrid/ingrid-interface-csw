@@ -19,6 +19,7 @@ import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.Indexer;
 import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
 import de.ingrid.interfaces.csw.index.StatusProvider;
+import de.ingrid.interfaces.csw.tools.LuceneTools;
 
 /**
  * LuceneIndexer is used to put InGrid records into a Lucene index.
@@ -36,10 +37,6 @@ public class LuceneIndexer implements Indexer {
      */
     private File indexConfigPath = null;
 
-    /** The analyzer used when indexing. */
-    @Autowired
-    private Analyzer fAnalyzer;
-
     /**
      * The update job configuration provider
      */
@@ -52,6 +49,8 @@ public class LuceneIndexer implements Indexer {
     @Autowired
     private StatusProvider statusProvider;
 
+    @Autowired
+    private LuceneTools luceneTools;
 
     @Override
     public void run(List<RecordCache> recordCacheList) throws Exception {
@@ -70,7 +69,8 @@ public class LuceneIndexer implements Indexer {
             this.indexConfigPath.delete();
         }
 
-        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, fAnalyzer, statusProvider);
+        Analyzer myAnalyzer = luceneTools.getAnalyzer();
+        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, myAnalyzer, statusProvider);
         // TODO: set log level
         geoTKIndexer.setRecordCacheList(recordCacheList);
         geoTKIndexer.setMapper(mapper);

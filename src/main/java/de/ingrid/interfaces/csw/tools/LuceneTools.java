@@ -5,12 +5,13 @@ package de.ingrid.interfaces.csw.tools;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.HashSet;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.apache.lucene.util.Version;
 
 /**
  * Filters a string with the injected analyzer. This class is used in
@@ -20,20 +21,18 @@ import org.springframework.stereotype.Service;
  * @author joachim@wemove.com
  * 
  */
-@Service
 public class LuceneTools {
-
-    private static Analyzer fAnalyzer;
 
     /**
      * @param term
      * @return filtered term
      * @throws IOException
      */
-    public static String filterTerm(String term) throws IOException {
+    public String filterTerm(String term) throws IOException {
         String result = "";
 
-        TokenStream ts = fAnalyzer.tokenStream(null, new StringReader(term));
+        Analyzer myAnalyzer = getAnalyzer();
+        TokenStream ts = myAnalyzer.tokenStream(null, new StringReader(term));
         CharTermAttribute charTermAttribute = ts.addAttribute(CharTermAttribute.class);
 
         while (ts.incrementToken()) {
@@ -43,9 +42,10 @@ public class LuceneTools {
         return result.trim();
     }
 
-    /** Injects default analyzer via autowiring ! */
-    @Autowired
-    public void setAnalyzer(Analyzer analyzer) {
-    	fAnalyzer = analyzer;
+	/** METHOD WILL BE INJECTED BY SPRING TO RETURN NEW INSTANCE OF INJECTED ANALYZER !
+	 * In non spring environment we return new default analyzer (German).
+	 */
+	public Analyzer getAnalyzer() {
+		return new GermanAnalyzer(Version.LUCENE_36, new HashSet());
 	}
 }

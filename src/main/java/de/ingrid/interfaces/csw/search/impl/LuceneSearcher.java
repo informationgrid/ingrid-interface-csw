@@ -25,6 +25,7 @@ import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.search.CSWRecordResults;
 import de.ingrid.interfaces.csw.search.Searcher;
+import de.ingrid.interfaces.csw.tools.LuceneTools;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
 /**
@@ -54,10 +55,6 @@ public class LuceneSearcher implements Searcher {
     @Autowired
     private FilterParser filterParser;
 
-    /** The analyzer used in index searcher */
-    @Autowired
-    private Analyzer fAnalyzer;
-
     /**
      * The Lucene index searcher
      */
@@ -74,6 +71,9 @@ public class LuceneSearcher implements Searcher {
     @Autowired
     private CSWRecordRepository recordRepository;
 
+    @Autowired
+    private LuceneTools luceneTools;
+
     @Override
     public void start() throws Exception {
         if (this.isStarted) {
@@ -87,7 +87,8 @@ public class LuceneSearcher implements Searcher {
 
         log.info("Start search index: " + this.indexPath);
 
-        lis = new LuceneIndexSearcher(this.indexPath, "", fAnalyzer);
+        Analyzer myAnalyzer = luceneTools.getAnalyzer();
+        lis = new LuceneIndexSearcher(this.indexPath, "", myAnalyzer);
         lis.setCacheEnabled(ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false));
         lis.setLogLevel(log.isDebugEnabled() ? Level.FINEST : (log.isInfoEnabled() ? Level.INFO
                 : (log.isWarnEnabled() ? Level.WARNING : Level.SEVERE)));
@@ -218,4 +219,7 @@ public class LuceneSearcher implements Searcher {
         }
     }
 
+    public void setLuceneTools(LuceneTools myLuceneTools) {
+        this.luceneTools = myLuceneTools;
+    }
 }

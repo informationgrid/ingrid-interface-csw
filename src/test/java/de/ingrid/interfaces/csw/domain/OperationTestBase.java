@@ -27,6 +27,7 @@ import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.server.ServerFacade;
 import de.ingrid.interfaces.csw.server.impl.GenericServer;
+import de.ingrid.interfaces.csw.tools.LuceneTools;
 import de.ingrid.interfaces.csw.tools.SoapNamespaceContext;
 import de.ingrid.utils.xml.ConfigurableNamespaceContext;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
@@ -94,6 +95,7 @@ public abstract class OperationTestBase extends TestCase {
 		searcher.setIndexPath(new File(LIVE_INDEX_PATH));
 		searcher.setFilterParser(new LuceneFilterParser());
 		searcher.setRecordRepository(cache);
+		searcher.setLuceneTools(new LuceneTools());
 
 		GenericServer server = new GenericServer();
 		server.setSearcher(searcher);

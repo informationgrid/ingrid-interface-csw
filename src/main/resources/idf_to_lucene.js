@@ -433,7 +433,7 @@ function addToDoc(field, content, tokenized) {
 		if (!tokenized) analyzed = Field.Index.NOT_ANALYZED;
 		document.add(new Field(field, content, Field.Store.YES, analyzed));
 		document.add(new Field("anytext", content, Field.Store.NO, analyzed));
-		document.add(new Field("anytext", LuceneTools.filterTerm(content), Field.Store.NO, Field.Index.ANALYZED));
+		document.add(new Field("anytext", luceneTools.filterTerm(content), Field.Store.NO, Field.Index.ANALYZED));
 	}
 }
 
