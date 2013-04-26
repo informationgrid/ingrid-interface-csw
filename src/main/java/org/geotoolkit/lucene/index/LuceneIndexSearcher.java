@@ -331,6 +331,8 @@ public class LuceneIndexSearcher extends IndexLucene {
                 LOGGER.log(Level.FINER, "Allowing leading wildChar");
                 BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);
             }
+            
+            // search terms beginning with a '-' are not allowed and lead to parse exception
             if (stringQuery.indexOf(":-") != -1)
             	stringQuery = stringQuery.replaceAll(":-", ":\\\\-");
 
