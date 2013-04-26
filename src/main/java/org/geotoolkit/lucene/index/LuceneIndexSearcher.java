@@ -331,6 +331,8 @@ public class LuceneIndexSearcher extends IndexLucene {
                 LOGGER.log(Level.FINER, "Allowing leading wildChar");
                 BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);
             }
+            if (stringQuery.indexOf(":-") != -1)
+            	stringQuery = stringQuery.replaceAll(":-", ":\\\\-");
 
             //we set off the mecanism setting all the character to lower case
             // we do that for range queries only for now. TODO see if we need to set it every time
