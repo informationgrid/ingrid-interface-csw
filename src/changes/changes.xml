@@ -6,12 +6,15 @@
   </properties>
   <body>
     <release version="3.4.0-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4.0-SNAPSHOT">
-      <action type="update" dev="wemove">
-          Fix dependencies to geotk libraries. Java7 compatibility fix.
-      </action>
-      <action type="update" dev="wemove" issue="INGRID-2246">
-          Use german analyzer when creating/searching lucene index, now configured via XML.
-      </action>
+        <action type="add" dev="wemove" issue="INGRID-2239">
+            Added element SearchStatus to result document and add language parameter to getCapabilities document, which also can be queried.
+        </action>
+        <action type="update" dev="wemove">
+            Fix dependencies to geotk libraries. Java7 compatibility fix.
+        </action>
+        <action type="update" dev="wemove" issue="INGRID-2246">
+            Use german analyzer when creating/searching lucene index, now configured via XML.
+        </action>
     </release>
 
   	<release version="3.3.0" date="2013-03-05" description="Release InGrid 3.3">
