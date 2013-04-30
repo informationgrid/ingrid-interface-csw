@@ -119,7 +119,10 @@ public class CSWException extends Exception {
 			locatorAttribute.setNodeValue(this.locator);
 			exceptionElement.setAttributeNode(locatorAttribute);
 		}
-		exceptionElement.setTextContent(this.getMessage());
+		
+		Element exceptionTextElement = reportDoc.createElementNS("http://www.opengis.net/ows", "ExceptionText");
+		exceptionTextElement.setTextContent(this.getMessage());
+		exceptionElement.appendChild(exceptionTextElement);		
 
 		return reportDoc;
 	}
