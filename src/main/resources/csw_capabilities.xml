@@ -8,8 +8,8 @@
     xmlns:inspire_com="http://inspire.ec.europa.eu/schemas/common/1.0"
     xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd http://inspire.ec.europa.eu/schemas/inspire_ds/1.0 http://inspire.ec.europa.eu/schemas/inspire_ds/1.0/inspire_ds.xsd">
 	<ows:ServiceIdentification>
-		<ows:Title>PortalU Catalog Server</ows:Title>
-		<ows:Abstract>Metadata collected from several catalogs owned by the german environmental and surveying authorities. Look at http://www.portalu.de for more information.</ows:Abstract>
+		<ows:Title>PortalU Metadatenkatalogdienst</ows:Title>
+		<ows:Abstract>Zentraler Zugangspunkt zu den Metadaten deutscher Umweltverwaltungen. Mehr Informationen unter http://www.portalu.de.</ows:Abstract>
 		<ows:Keywords>
 			<ows:Keyword>CS-W</ows:Keyword>
 			<ows:Keyword>ISO19119</ows:Keyword>
@@ -257,14 +257,14 @@
             </inspire_com:MandatoryKeyword>
             <inspire_com:SupportedLanguages>
                 <inspire_com:DefaultLanguage>
-                    <inspire_com:Language>eng</inspire_com:Language>
+                    <inspire_com:Language>ger</inspire_com:Language>
                 </inspire_com:DefaultLanguage>
                 <inspire_com:SupportedLanguage>
-                    <inspire_com:Language>eng</inspire_com:Language>
+                    <inspire_com:Language>ger</inspire_com:Language>
                 </inspire_com:SupportedLanguage>
             </inspire_com:SupportedLanguages>
             <inspire_com:ResponseLanguage>
-                <inspire_com:Language>eng</inspire_com:Language>
+                <inspire_com:Language>ger</inspire_com:Language>
             </inspire_com:ResponseLanguage>
         </inspire_ds:ExtendedCapabilities>
 	</ows:OperationsMetadata>

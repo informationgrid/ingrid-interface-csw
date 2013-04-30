@@ -7,7 +7,11 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -129,8 +133,16 @@ public class GenericServer implements CSWServer {
             DOMImplementation domImpl = docBuilder.getDOMImplementation();
             Document doc = domImpl.createDocument("http://www.opengis.net/cat/csw/2.0.2", "csw:GetRecordsResponse",
                     null);
+            
+            Element searchStatus = doc.createElementNS("http://www.opengis.net/cat/csw/2.0.2", "csw:SearchStatus");
+            
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZ");
+            df.setTimeZone(TimeZone.getTimeZone("ThreeLetterISO8601TimeZone"));
+            searchStatus.setAttribute("timeStamp", df.format(new Date()));
+            doc.getDocumentElement().appendChild(searchStatus);
+            
             Element searchResults = doc.createElementNS("http://www.opengis.net/cat/csw/2.0.2", "csw:SearchResults");
-            searchResults.setAttribute("elementSet", request.getQuery().getElementSetName().name());
+            searchResults.setAttribute("elementSet", request.getQuery().getElementSetName().name().toLowerCase());
             searchResults.setAttribute("numberOfRecordsMatched", String.valueOf(result.getTotalHits()));
             searchResults.setAttribute("numberOfRecordsReturned", String.valueOf((result.getResults() == null) ? 0
                     : result.getResults().size()));
