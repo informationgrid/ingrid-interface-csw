@@ -138,7 +138,7 @@ public class GenericServer implements CSWServer {
             
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZ");
             df.setTimeZone(TimeZone.getTimeZone("ThreeLetterISO8601TimeZone"));
-            searchStatus.setAttribute("timeStamp", df.format(new Date()));
+            searchStatus.setAttribute("timestamp", df.format(new Date()));
             doc.getDocumentElement().appendChild(searchStatus);
             
             Element searchResults = doc.createElementNS("http://www.opengis.net/cat/csw/2.0.2", "csw:SearchResults");
