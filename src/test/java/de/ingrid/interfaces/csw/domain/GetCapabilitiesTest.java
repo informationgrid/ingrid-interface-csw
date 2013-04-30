@@ -42,7 +42,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 		// expect capabilities document
 		assertTrue("The response length is > 0.", result.length() > 0);
 		Document responseDoc = StringUtils.stringToDocument(result.toString());
-        assertTrue(xpath.nodeExists(responseDoc, "//ows:Title[text()='PortalU Catalog Server']"));
+        assertTrue(xpath.nodeExists(responseDoc, "//ows:Title[text()='PortalU Metadatenkatalogdienst']"));
 
         Node payload = responseDoc.getLastChild();
 
