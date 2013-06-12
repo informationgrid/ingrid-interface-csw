@@ -1,0 +1,5 @@
+<project name="CSW-Interface Patches">
+    <target name="patchFiles" depends="">
+        <!-- patch order determined through depends-order -->
+    </target>
+</project>

@@ -1,10 +1,29 @@
-<project name="PortalU Installation">
+<project name="PortalU Installation" basedir=".">
     <description>
         CSW Interface Installation Script
     </description>
 	<!-- set global properties for this build -->
-	<property name="componentName" 			value="${project.artifactId}-${project.version}"/>
-	<property name="csw-properties" 	value="${installDir}/conf/config.properties"/>
+	<property name="componentName" 	value="${project.artifactId}-${project.version}"/>
+	<property name="csw-properties" value="${installDir}/conf/config.properties"/>
+
+	<!-- THESE PORPERTIES ARE NECESSARY FOR UPDATES -->
+    <property name="libraryDir"         value="lib" />
+    <property name="libraryIdent"       value="ingrid-interface-csw-" />
+    <!-- <property name="libraryIdent"       value="MANIFEST.MF" /> -->
+    <property name="versionsWithConfigurations"  value="" />
+    <property name="minSupportedVersion" value="3.3.0" />
+
+    <import file="build-installer-utils.xml"  as="utils" />
+    <import file="build-patch.xml"            as="patch" />
+
+    <target name="setUpdateProperty" depends="checkPreconditionsForUpdate, extractUpdate">
+        <property name="installType" value="update" />
+        <property name="updateProcedure" value="true" />
+    </target>
+    
+    <target name="setInstallProperty" depends="extract">
+        <property name="installProcedure" value="true" />
+    </target>
 	
 	<target name="extract" description="Extract all files to the installation directory.">
 		<unzip src="${antinstaller.jar}" dest="${installDir}">
@@ -19,6 +38,23 @@
         
         <mkdir dir="${installDir}/webapp/WEB-INF/work"/>
 	</target>
+
+	<target name="extractUpdate">
+        <unzip src="${antinstaller.jar}" dest=".">
+            <patternset>
+                <include name="**/*.*"/>
+                <exclude name="${componentName}/conf/config.properties" />
+            </patternset>
+        </unzip>
+        
+        <delete>
+            <fileset dir="${installDir}/lib" includes="**/*"/>
+        </delete>
+        
+        <move toDir="${installDir}">
+            <fileset dir="./${componentName}"/>
+        </move>
+    </target>
 	
 	<target name="csw" description="Set csw properties.">
 		<echo>Schreibe CSW Konfiguration in ingrid-csw.properties</echo>
