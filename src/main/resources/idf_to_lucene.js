@@ -208,7 +208,7 @@ var transformationDescriptions = [
 			"xpath":"//srv:SV_OperationMetadata/srv:operationName/gco:CharacterString"
 		},
 		{	"indexField":"operateson",
-			"xpath":"//srv:operatesOn/@uuidref"
+			"xpath":"//srv:operatesOn/@xlink:href"
 		},
 		{	"indexField":"operatesonidentifier",
 			"xpath":"//srv:coupledResource//srv:identifier/gco:CharacterString"
