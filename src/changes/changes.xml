@@ -9,6 +9,9 @@
         <action type="add" dev="wemove" issue="INGRID-2239">
             Added element SearchStatus to result document and add language parameter to getCapabilities document, which also can be queried.
         </action>
+        <action type="update" dev="wemove" issue="">
+            Restrict max. records for CSW requests to 500, avoiding possible OOM Exception.
+        </action>
         <action type="update" dev="wemove" issue="INGRID-2279">
             CSW queryable operateson is now indexed with name space instead of the pure UUID (srv:operatesOn@xlink:href instead of srv:operatesOn@uuidref).
         </action>
