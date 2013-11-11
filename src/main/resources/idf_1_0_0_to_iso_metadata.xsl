@@ -51,9 +51,15 @@
 	<xsl:template match="idf:additionalDataSection" />
 	<!--  filter IDF_OnlineResource_Type specific elements -->
 	<xsl:template match="idf:attachedToField" />
-	<!-- shared and common attributes -->
+	<!-- filter shared and common attributes -->
 	<xsl:template match="@orig-uuid" />
 	<xsl:template match="@xsi:schemaLocation" />
+    <!-- BUT keep schema location in MD_Metadata, see INGRID-2306 -->
+    <xsl:template match="@xsi:schemaLocation[parent::idf:idfMdMetadata]">
+        <xsl:attribute name="xsi:schemaLocation">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
     <!-- filter idf:abstract -->
     <xsl:template match="idf:abstract" />
 

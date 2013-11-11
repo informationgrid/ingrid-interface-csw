@@ -5,6 +5,12 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.4.0-SNAPSHOT" date="????-??-??" description="Release InGrid 3.4.0-SNAPSHOT">
+        <action type="fix" dev="wemove" issue="INGRID-2306">
+            Include schemaLocation in CSW.
+        </action>
+    </release>
+    	
     <release version="3.3.1" date="2013-10-31" description="Release InGrid 3.3.1">
         <action type="add" dev="wemove" issue="INGRID-2239">
             Added element SearchStatus to result document and add language parameter to getCapabilities document, which also can be queried.
