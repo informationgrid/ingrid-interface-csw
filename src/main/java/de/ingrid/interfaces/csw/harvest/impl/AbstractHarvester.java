@@ -4,6 +4,7 @@
 package de.ingrid.interfaces.csw.harvest.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -57,7 +58,12 @@ public abstract class AbstractHarvester implements Harvester {
         Set<Serializable> cachedRecordIds = this.cache.getCachedIds();
 
         // delegate execution to specialized method
-        List<Serializable> allRecordIds = this.fetchRecords(lastExecutionDate);
+        List<Serializable> allRecordIds = new ArrayList<Serializable>();
+        try {
+            allRecordIds = this.fetchRecords(lastExecutionDate);
+        } catch (Exception e) {
+            log.error("Error fetching records from harvester: " + this.getId(), e);
+        }
 
         // remove deprecated records
         for (Serializable cachedRecordId : cachedRecordIds) {

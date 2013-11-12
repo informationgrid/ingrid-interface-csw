@@ -9,6 +9,9 @@
         <action type="fix" dev="wemove" issue="INGRID-2306">
             Include schemaLocation in CSW.
         </action>
+        <action type="fix" dev="wemove" issue="INGRID-2254">
+            No Indexing of old cached records if iBus is deactivated !
+        </action>
     </release>
     	
     <release version="3.3.1" date="2013-10-31" description="Release InGrid 3.3.1">
