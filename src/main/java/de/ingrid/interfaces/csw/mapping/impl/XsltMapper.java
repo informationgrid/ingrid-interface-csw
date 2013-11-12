@@ -26,6 +26,8 @@ import de.ingrid.interfaces.csw.tools.IdfUtils;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.interfaces.csw.tools.XsltUtils;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.idf.IdfTool;
+import de.ingrid.utils.xml.XMLUtils;
 
 /**
  * A CSWRecordMapper that maps records using XSLT.
@@ -133,6 +135,11 @@ public class XsltMapper implements CSWRecordMapper {
      */
     public Node map(Record record, ElementSetName elementSetName) throws Exception {
 
+        if (log.isDebugEnabled()) {
+            String idfData = IdfTool.getIdfDataFromRecord(record);
+            log.debug("Mapping (" + elementSetName + ") input record:\n" + idfData);
+        }
+
         Node cswNode = null;
 
         // use appropriate stylesheet for each element set name
@@ -148,7 +155,7 @@ public class XsltMapper implements CSWRecordMapper {
             break;
         }
         if (log.isDebugEnabled()) {
-            log.debug("Mapping result (" + elementSetName + "): " + StringUtils.nodeToString(cswNode));
+            log.debug("Mapping result (" + elementSetName + "):\n" + StringUtils.nodeToString(cswNode));
         }
         return cswNode;
     }
@@ -190,6 +197,11 @@ public class XsltMapper implements CSWRecordMapper {
         Document idfDoc = IdfUtils.getIdfDocument(record);
         // for brief we need to transform to full first
         Node full = this.xslt.transform(idfDoc, xslFull);
+
+        if (log.isDebugEnabled()) {
+        	log.debug("First map FULL, mapping result:\n" + XMLUtils.toString((Document)full));
+        }
+
         return this.xslt.transform(full, xslBrief);
     }
 }
