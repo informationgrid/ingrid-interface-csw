@@ -9,7 +9,8 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.mortbay.log.Log;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +33,8 @@ import de.ingrid.utils.xpath.XPathUtils;
 
 @Controller
 public class SearchTestController {
+
+    final protected static Log log = LogFactory.getLog(SearchTestController.class);
 
     final LuceneSearcher searcher;
 
@@ -71,6 +74,10 @@ public class SearchTestController {
             queryDocument = df.newDocumentBuilder().parse(new InputSource(new StringReader(query)));
         } catch (Exception e) {
             try {
+            	if (log.isDebugEnabled()) {
+                	log.debug("Exception building queryDocument via DocumentBuilderFactory (query '" + query + "'):" + e.getMessage());            		
+                	log.debug("We set up own queryDocument");            		
+            	}
                 queryDocument = df
                         .newDocumentBuilder()
                         .parse(
@@ -99,8 +106,8 @@ public class SearchTestController {
         }
         XMLEncoding encoding = new XMLEncoding();
         try {
-            if (Log.isDebugEnabled()) {
-                Log.debug("Incoming request: " + StringUtils.nodeToString(queryDocument.getDocumentElement()));
+            if (log.isDebugEnabled()) {
+            	log.debug("Incoming request: " + StringUtils.nodeToString(queryDocument.getDocumentElement()));
             }
             CSWQuery cswQuery = encoding.getQuery(queryDocument.getDocumentElement());
             CSWRecordResults results = searcher.search(cswQuery);
