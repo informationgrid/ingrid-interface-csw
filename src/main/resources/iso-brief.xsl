@@ -6,7 +6,8 @@
 										xmlns:gco="http://www.isotc211.org/2005/gco"
 										xmlns:srv="http://www.isotc211.org/2005/srv"
 										xmlns:ows="http://www.opengis.net/ows"
-										xmlns:geonet="http://www.fao.org/geonetwork">
+										xmlns:geonet="http://www.fao.org/geonetwork"
+                                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	
 	<xsl:param name="displayInfo"/>
 	
@@ -15,11 +16,21 @@
 	<xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']">
 		<xsl:variable name="info" select="geonet:info"/>
 		<xsl:copy>
+            <xsl:apply-templates select="@xsi:schemaLocation"/>  
 			<xsl:apply-templates select="gmd:fileIdentifier"/>
 			<xsl:apply-templates select="gmd:hierarchyLevel"/>
 			<xsl:apply-templates select="gmd:identificationInfo"/>
 		</xsl:copy>
 	</xsl:template>
+
+    <!-- =================================================================== -->
+
+    <!-- keep schema location in MD_Metadata, see INGRID-2306 -->
+    <xsl:template match="@xsi:schemaLocation">
+        <xsl:attribute name="xsi:schemaLocation">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
 
 	<!-- =================================================================== -->
 
@@ -75,9 +86,9 @@
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:copy>
-	</xsl:template>
+    </xsl:template>
 
-	<!-- =================================================================== -->
+    <!-- =================================================================== -->
 
 </xsl:stylesheet>
 

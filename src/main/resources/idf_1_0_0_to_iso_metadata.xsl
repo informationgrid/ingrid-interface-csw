@@ -23,6 +23,12 @@
 			<xsl:value-of select="."/>
 		</xsl:attribute>
 	</xsl:template>
+    <!-- keep schema location in MD_Metadata, see INGRID-2306 -->
+    <xsl:template match="@xsi:schemaLocation[parent::idf:idfMdMetadata]">
+        <xsl:attribute name="xsi:schemaLocation">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
 
 	<xsl:template
 		match="@*|*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml' or namespace-uri() = 'http://www.isotc211.org/2005/gts' or namespace-uri() = 'http://www.isotc211.org/2005/srv') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
@@ -53,13 +59,6 @@
 	<xsl:template match="idf:attachedToField" />
 	<!-- filter shared and common attributes -->
 	<xsl:template match="@orig-uuid" />
-	<xsl:template match="@xsi:schemaLocation" />
-    <!-- BUT keep schema location in MD_Metadata, see INGRID-2306 -->
-    <xsl:template match="@xsi:schemaLocation[parent::idf:idfMdMetadata]">
-        <xsl:attribute name="xsi:schemaLocation">
-            <xsl:value-of select="."/>
-        </xsl:attribute>
-    </xsl:template>
     <!-- filter idf:abstract -->
     <xsl:template match="idf:abstract" />
 
