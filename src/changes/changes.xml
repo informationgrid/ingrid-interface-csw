@@ -6,6 +6,9 @@
   </properties>
   <body>
     <release version="3.4.0-SNAPSHOT" date="????-??-??" description="Release InGrid 3.4.0-SNAPSHOT">
+        <action type="fix" dev="wemove" issue="INGRID-2345">
+            Add message if NO records could be obtained from a iPlug.
+        </action>
         <action type="fix" dev="wemove" issue="INGRID-2306">
             Include schemaLocation in CSW.
         </action>
