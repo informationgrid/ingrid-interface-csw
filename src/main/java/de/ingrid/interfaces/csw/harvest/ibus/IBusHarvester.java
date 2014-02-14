@@ -221,7 +221,11 @@ public class IBusHarvester extends AbstractHarvester {
             try {
                 hits = bus.search(query, pageSize, currentPage, startHit, timeout);
                 if (startHit == 0) {
-                    log.info("Fetching " + hits.length() + " records.");
+                    log.info("Fetching " + ((hits == null) ? 0 : hits.length()) + " records.");
+                    if (hits == null || hits.getHits().length == 0) {
+                        statusProvider.addState(request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId()
+                                + "'... no records found!" , StatusProvider.Classification.WARN);
+                    }
                 }
             } catch (Exception e) {
                 log.error("Error querying ibus with communication setting in '" + this.communicationXml
