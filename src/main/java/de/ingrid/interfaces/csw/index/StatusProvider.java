@@ -167,8 +167,7 @@ public class StatusProvider {
 
         // write the configuration to a temporary file first
         File tmpFile = File.createTempFile("config", null);
-        BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tmpFile
-                .getAbsolutePath()), "UTF8"));
+        BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tmpFile.getAbsolutePath()), "UTF8"));
         try {
             output.write(xml);
             output.close();
@@ -194,8 +193,7 @@ public class StatusProvider {
         // create empty configuration, if not existing yet
         if (!this.lastStatusFile.exists()) {
             log.warn("Status file " + this.lastStatusFile + " does not exist.");
-            if (this.lastStatusFile.getParentFile() != null && !this.lastStatusFile.getParentFile().exists()
-                    && !this.lastStatusFile.getParentFile().mkdirs()) {
+            if (this.lastStatusFile.getParentFile() != null && !this.lastStatusFile.getParentFile().exists() && !this.lastStatusFile.getParentFile().mkdirs()) {
                 log.error("Unable to create directories for '" + this.lastStatusFile.getParentFile() + "'");
             }
             log.info("Creating configuration file " + this.lastStatusFile);
@@ -250,7 +248,13 @@ public class StatusProvider {
         StringBuilder sb = new StringBuilder();
         synchronized (this) {
             for (State state : states.values()) {
-                sb.append(String.format(msgFormat, state.time, state.classification.name(), state.value));
+                if (state.classification.equals(Classification.ERROR)) {
+                    sb.append("<span class=\"error\">" + String.format(msgFormat, state.time, state.classification.name(), state.value) + "</span>");
+                } else if (state.classification.equals(Classification.WARN)) {
+                    sb.append("<span class=\"warn\">" + String.format(msgFormat, state.time, state.classification.name(), state.value) + "</span>");
+                } else {
+                    sb.append("<span class=\"info\">" + String.format(msgFormat, state.time, state.classification.name(), state.value) + "</span>");
+                }
             }
         }
         return sb.toString();

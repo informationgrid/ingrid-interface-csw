@@ -15,6 +15,9 @@
         <action type="fix" dev="wemove" issue="INGRID-2254">
             No Indexing of old cached records if iBus is deactivated !
         </action>
+        <action type="update" dev="wemove" issue="">
+            Add colored messages for WARN and ERROR log messages.
+        </action>
     </release>
     	
     <release version="3.3.1" date="2013-10-31" description="Release InGrid 3.3.1">
