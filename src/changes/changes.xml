@@ -5,6 +5,12 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.4.0.1" date="2014-xx-xx" description="Bugfix Release InGrid 3.4.0.1">
+        <action type="fix" dev="wemove" issue="INGRID-2347">
+            Fix wrong GeographicBoundingBox order for element sets summary and brief.
+        </action>
+    </release>
+
     <release version="3.4.0" date="2014-02-25" description="Release InGrid 3.4.0">
         <action type="fix" dev="wemove" issue="INGRID-2345">
             Add message if NO records could be obtained from a iPlug.
