@@ -92,6 +92,7 @@
 
 	<xsl:template match="gmd:DQ_DataQuality">
 		<xsl:copy>
+            <xsl:apply-templates select="gmd:scope"/>
 			<xsl:apply-templates select="gmd:lineage"/>
 		</xsl:copy>
 	</xsl:template>
