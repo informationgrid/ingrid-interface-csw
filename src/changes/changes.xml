@@ -7,7 +7,10 @@
   <body>
     <release version="3.4.0.1" date="2014-xx-xx" description="Bugfix Release InGrid 3.4.0.1">
         <action type="fix" dev="wemove" issue="INGRID-2347">
-            Fix wrong GeographicBoundingBox order for element sets summary and brief.
+            Add missing DQ_DataQuality/scope element in response for element set summary.
+        </action>
+        <action type="fix" dev="wemove" issue="INGRID-2347">
+            Fix wrong GeographicBoundingBox order in response for element sets summary and brief.
         </action>
     </release>
 
