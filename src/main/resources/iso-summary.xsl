@@ -23,6 +23,7 @@
 			<xsl:apply-templates select="gmd:parentIdentifier"/>
 			<xsl:apply-templates select="gmd:hierarchyLevel"/>
 			<xsl:apply-templates select="gmd:hierarchyLevelName"/>
+            <xsl:apply-templates select="gmd:contact"/>
 			<xsl:apply-templates select="gmd:dateStamp"/>
 			<xsl:apply-templates select="gmd:metadataStandardName"/>
 			<xsl:apply-templates select="gmd:metadataStandardVersion"/>
@@ -47,8 +48,7 @@
 	<xsl:template match="gmd:CI_Citation">
 		<xsl:copy>
 			<xsl:apply-templates select="gmd:title"/>
-			<xsl:apply-templates select="gmd:date[gmd:CI_Date/gmd:dateType/
-				gmd:CI_DateTypeCode/@codeListValue='revision']"/>
+			<xsl:apply-templates select="gmd:date"/>
 			<xsl:apply-templates select="gmd:identifier"/>
 			<xsl:apply-templates select="gmd:citedResponsibleParty"/>
 		</xsl:copy>
