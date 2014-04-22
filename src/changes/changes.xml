@@ -6,6 +6,9 @@
   </properties>
   <body>
     <release version="3.4.0.1" date="2014-xx-xx" description="Bugfix Release InGrid 3.4.0.1">
+        <action type="fix" dev="wemove" issue="INGRID-2348">
+            Add missing gmd:contact element and add all gmd:CI_Citation/gmd:date elements, not only revision dates to satisfy the GDI-DE test suite.
+        </action>
         <action type="fix" dev="wemove" issue="INGRID-2347">
             Add missing DQ_DataQuality/scope element in response for element set summary.
         </action>
