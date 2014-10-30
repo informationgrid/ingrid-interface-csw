@@ -13,6 +13,10 @@
  * The document already has a field "docid" with the current lucene document id.
  *
  */
+if (javaVersion.indexOf( "1.8" ) === 0) {
+	load("nashorn:mozilla_compat.js");
+}
+
 importPackage(Packages.org.apache.lucene.document);
 importPackage(Packages.de.ingrid.interfaces.csw.tools);
 importPackage(Packages.de.ingrid.utils.udk);

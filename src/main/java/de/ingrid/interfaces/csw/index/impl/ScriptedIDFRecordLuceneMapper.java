@@ -93,6 +93,8 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
             XPathUtils xpathUtils = new XPathUtils(new IDFNamespaceContext());
             bindings.put("XPATH", xpathUtils);
             bindings.put("luceneTools", luceneTools);
+            bindings.put("javaVersion", System.getProperty( "java.version" ));
+            
             for (Entry<String, Object> entry : utils.entrySet()) {
                 bindings.put(entry.getKey(), entry.getValue());
             }
