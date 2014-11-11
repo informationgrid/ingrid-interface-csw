@@ -114,7 +114,7 @@ public class GetRecordsTestLocal extends OperationTestBase {
 
         // check records
         NodeList recordNodes = payload.getChildNodes();
-        assertEquals(1, recordNodes.getLength());
+        assertEquals(2, recordNodes.getLength());
         Document record = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(0)));
         assertEquals("04068592-709f-3c7a-85de-f2d68e585fca", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
     }

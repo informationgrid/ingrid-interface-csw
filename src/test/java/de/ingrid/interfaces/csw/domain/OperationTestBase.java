@@ -112,6 +112,10 @@ public abstract class OperationTestBase extends TestCase {
         FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
         FileUtils.copyDirectory(new File("src/test/resources/index"), new File(LIVE_INDEX_PATH));
 
+        FileUtils.deleteDirectory(new File(CSW_CACHE_PATH));
+        FileUtils.copyDirectory(new File("src/test/resources/cache"), new File(CSW_CACHE_PATH));
+
+        
         CSWRecordCache cache = new CSWRecordCache();
         cache.setCachePath(new File(CSW_CACHE_PATH));
 
@@ -250,9 +254,9 @@ public abstract class OperationTestBase extends TestCase {
             this.allowing(request).getContentType(); this.will(returnValue("application/soap+xml"));
             this.allowing(request).getInputStream(); this.will(returnValue(sis));
             this.allowing(request).getHeader("Keep-Alive"); this.will(returnValue(null));
-            this.allowing(request).getParameter("partner"); this.will(returnValue("test"));
-            this.allowing(request).getParameter("provider"); this.will(returnValue("test"));
-            this.allowing(request).getParameter("iplug"); this.will(returnValue("test"));
+            this.allowing(request).getParameter("partner"); this.will(returnValue(null));
+            this.allowing(request).getParameter("provider"); this.will(returnValue(null));
+            this.allowing(request).getParameter("iplug"); this.will(returnValue(null));
             this.allowing(response).setStatus(HttpServletResponse.SC_OK);
             this.allowing(response).setHeader("Content-Type", "application/soap+xml; charset=utf-8");
             this.allowing(response).setHeader(this.with(any(String.class)), this.with(any(String.class)));
