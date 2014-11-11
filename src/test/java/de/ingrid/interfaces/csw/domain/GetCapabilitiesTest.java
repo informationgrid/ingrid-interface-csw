@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,164 +39,164 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
 
 public class GetCapabilitiesTest extends OperationTestBase {
 
-	/**
-	 * Test GetCapabilities with GET method using KVP encoding
-	 * @throws Exception
-	 */
-	public void testKVPGetCapabilitiesRequest() throws Exception {
+    /**
+     * Test GetCapabilities with GET method using KVP encoding
+     * @throws Exception
+     */
+    public void testKVPGetCapabilitiesRequest() throws Exception {
 
-		StringBuffer result = new StringBuffer();
-		Mockery context = new Mockery();
-		final HttpServletRequest request = context.mock(HttpServletRequest.class);
-		final HttpServletResponse response = context.mock(HttpServletResponse.class);
-		String requestStr = "GetCapabilities";
+        StringBuffer result = new StringBuffer();
+        Mockery context = new Mockery();
+        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+        final HttpServletResponse response = context.mock(HttpServletResponse.class);
+        String requestStr = "GetCapabilities";
 
-		// expectations
-		this.setupDefaultGetExpectations(context, request, response, result, requestStr);
+        // expectations
+        this.setupDefaultGetExpectations(context, request, response, result, requestStr, null);
 
-		// make request
-		CSWServlet servlet = this.createServlet();
-		servlet.doGet(request, response);
-		servlet.destroy();
+        // make request
+        CSWServlet servlet = this.createServlet();
+        servlet.doGet(request, response);
+        servlet.destroy();
 
-		context.assertIsSatisfied();
+        context.assertIsSatisfied();
 
-		// expect capabilities document
-		assertTrue("The response length is > 0.", result.length() > 0);
-		Document responseDoc = StringUtils.stringToDocument(result.toString());
-        assertTrue(xpath.nodeExists(responseDoc, "//ows:Title[text()='PortalU Metadatenkatalogdienst']"));
+        // expect capabilities document
+        assertTrue("The response length is > 0.", result.length() > 0);
+        Document responseDoc = StringUtils.stringToDocument(result.toString());
+        assertTrue(xpath.nodeExists(responseDoc, "//ows:Title[text()='PortalU Catalog Server TEST']"));
 
         Node payload = responseDoc.getLastChild();
 
-		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-		assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
-		
-	}
+        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+        assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
 
-	/**
-	 * Test GetCapabilities with POST method using XML encoding
-	 * @throws Exception
-	 */
-	public void testXMLPostCapabilitiesRequest() throws Exception {
+    }
 
-		StringBuffer result = new StringBuffer();
-		Mockery context = new Mockery();
-		final HttpServletRequest request = context.mock(HttpServletRequest.class);
-		final HttpServletResponse response = context.mock(HttpServletResponse.class);
-		String requestStr = TestRequests.getRequest(TestRequests.GETCAP_POST);
+    /**
+     * Test GetCapabilities with POST method using XML encoding
+     * @throws Exception
+     */
+    public void testXMLPostCapabilitiesRequest() throws Exception {
 
-		// expectations
-		this.setupDefaultPostExpectations(context, request, response, result, requestStr);
+        StringBuffer result = new StringBuffer();
+        Mockery context = new Mockery();
+        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+        final HttpServletResponse response = context.mock(HttpServletResponse.class);
+        String requestStr = TestRequests.getRequest(TestRequests.GETCAP_POST);
 
-		// make request
-		CSWServlet servlet = this.createServlet();
-		servlet.doPost(request, response);
-		servlet.destroy();
+        // expectations
+        this.setupDefaultPostExpectations(context, request, response, result, requestStr);
 
-		context.assertIsSatisfied();
+        // make request
+        CSWServlet servlet = this.createServlet();
+        servlet.doPost(request, response);
+        servlet.destroy();
 
-		// expect capabilities document
-		assertTrue("The response length is > 0.", result.length() > 0);
-		Document responseDoc = StringUtils.stringToDocument(result.toString());
-		Node payload = responseDoc.getLastChild();
+        context.assertIsSatisfied();
 
-		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-		assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
-	}
+        // expect capabilities document
+        assertTrue("The response length is > 0.", result.length() > 0);
+        Document responseDoc = StringUtils.stringToDocument(result.toString());
+        Node payload = responseDoc.getLastChild();
 
-	/**
-	 * Test GetCapabilities with POST method using Soap encoding
-	 * @throws Exception
-	 */
-	public void testSoapPostCapabilitiesRequest() throws Exception {
+        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+        assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
+    }
 
-		StringBuffer result = new StringBuffer();
-		Mockery context = new Mockery();
-		final HttpServletRequest request = context.mock(HttpServletRequest.class);
-		final HttpServletResponse response = context.mock(HttpServletResponse.class);
-		String requestStr = TestRequests.getRequest(TestRequests.GETCAP_SOAP);
+    /**
+     * Test GetCapabilities with POST method using Soap encoding
+     * @throws Exception
+     */
+    public void testSoapPostCapabilitiesRequest() throws Exception {
 
-		// expectations
-		this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
+        StringBuffer result = new StringBuffer();
+        Mockery context = new Mockery();
+        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+        final HttpServletResponse response = context.mock(HttpServletResponse.class);
+        String requestStr = TestRequests.getRequest(TestRequests.GETCAP_SOAP);
 
-		// make request
-		CSWServlet servlet = this.createServlet();
-		servlet.doPost(request, response);
-		servlet.destroy();
-		
+        // expectations
+        this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
 
-		context.assertIsSatisfied();
+        // make request
+        CSWServlet servlet = this.createServlet();
+        servlet.doPost(request, response);
+        servlet.destroy();
 
-		// expect capabilities document
-		assertTrue("The response length is > 0.", result.length() > 0);
-		Document responseDoc = StringUtils.stringToDocument(result.toString());
-		Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-		assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-		assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
-	}
+        context.assertIsSatisfied();
 
-	/**
-	 * Test GetCapabilities with POST method using Soap encoding and invalid request
-	 * @throws Exception
-	 */
-	public void testSoapPostCapabilitiesRequestInvalid1() throws Exception {
-		Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID1);
-		Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
-				Matchers.containsString("The operation 'GetCap' is unknown"));
-	}
+        // expect capabilities document
+        assertTrue("The response length is > 0.", result.length() > 0);
+        Document responseDoc = StringUtils.stringToDocument(result.toString());
+        Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-	/**
-	 * Test GetCapabilities with POST method using Soap encoding and invalid request
-	 * @throws Exception
-	 */
-	public void testSoapPostCapabilitiesRequestInvalid2() throws Exception {
-		Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID2);
-		Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
-				Matchers.containsString("Attribute 'service' is not specified or has no value"));
-	}
+        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+        assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
+    }
 
-	/**
-	 * Test GetCapabilities with POST method using Soap encoding and invalid request
-	 * @throws Exception
-	 */
-	public void testSoapPostCapabilitiesRequestInvalid3() throws Exception {
-		Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID3);
-		Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
-				Matchers.containsString("Parameter 'service' has an unsupported value"));
-	}
+    /**
+     * Test GetCapabilities with POST method using Soap encoding and invalid request
+     * @throws Exception
+     */
+    public void testSoapPostCapabilitiesRequestInvalid1() throws Exception {
+        Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID1);
+        Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
+                Matchers.containsString("The operation 'GetCap' is unknown"));
+    }
 
-	/**
-	 * Test GetCapabilities with POST method using Soap encoding and invalid request
-	 * @return Node
-	 * @throws Exception
-	 */
-	private Node testSoapPostCapabilitiesRequestInvalid(String requestName) throws Exception {
+    /**
+     * Test GetCapabilities with POST method using Soap encoding and invalid request
+     * @throws Exception
+     */
+    public void testSoapPostCapabilitiesRequestInvalid2() throws Exception {
+        Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID2);
+        Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
+                Matchers.containsString("Attribute 'service' is not specified or has no value"));
+    }
 
-		StringBuffer result = new StringBuffer();
-		Mockery context = new Mockery();
-		final HttpServletRequest request = context.mock(HttpServletRequest.class);
-		final HttpServletResponse response = context.mock(HttpServletResponse.class);
-		String requestStr = TestRequests.getRequest(requestName);
+    /**
+     * Test GetCapabilities with POST method using Soap encoding and invalid request
+     * @throws Exception
+     */
+    public void testSoapPostCapabilitiesRequestInvalid3() throws Exception {
+        Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID3);
+        Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
+                Matchers.containsString("Parameter 'service' has an unsupported value"));
+    }
 
-		// expectations
-		this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
+    /**
+     * Test GetCapabilities with POST method using Soap encoding and invalid request
+     * @return Node
+     * @throws Exception
+     */
+    private Node testSoapPostCapabilitiesRequestInvalid(String requestName) throws Exception {
 
-		// make request
-		CSWServlet servlet = this.createServlet();
-		servlet.doPost(request, response);
-		servlet.destroy();
+        StringBuffer result = new StringBuffer();
+        Mockery context = new Mockery();
+        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+        final HttpServletResponse response = context.mock(HttpServletResponse.class);
+        String requestStr = TestRequests.getRequest(requestName);
 
-		context.assertIsSatisfied();
+        // expectations
+        this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
 
-		// expect capabilities document
-		assertTrue("The response length is > 0.", result.length() > 0);
-		Document responseDoc = StringUtils.stringToDocument(result.toString());
-		Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
+        // make request
+        CSWServlet servlet = this.createServlet();
+        servlet.doPost(request, response);
+        servlet.destroy();
 
-		assertTrue("The response is an ExceptionReport.", payload.getLocalName().equals("Fault"));
-		return payload;
-	}
+        context.assertIsSatisfied();
+
+        // expect capabilities document
+        assertTrue("The response length is > 0.", result.length() > 0);
+        Document responseDoc = StringUtils.stringToDocument(result.toString());
+        Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
+
+        assertTrue("The response is an ExceptionReport.", payload.getLocalName().equals("Fault"));
+        return payload;
+    }
 
     /**
      * Test GetCapabilities with GET method using KVP encoding and a variant
@@ -211,12 +211,12 @@ public class GetCapabilitiesTest extends OperationTestBase {
         String requestStr = "GetCapabilities";
 
         // expectations
-        this.setupPartnerPatrameterGetExpectations(context, request, response, result, requestStr);
+        this.setupPartnerParameterGetExpectations(context, request, response, result, requestStr);
 
         // make request
         CSWServlet servlet = this.createServlet();
         servlet.doGet(request, response);
-		servlet.destroy();
+        servlet.destroy();
 
         context.assertIsSatisfied();
 
