@@ -35,7 +35,7 @@ import org.w3c.dom.Node;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
-public class DescribeRecordTestLocal extends OperationTestBase {
+public class DescribeRecordTest extends OperationTestBase {
 
     /**
      * Test DescribeRecord with GET method using KVP encoding
@@ -53,7 +53,7 @@ public class DescribeRecordTestLocal extends OperationTestBase {
         this.setupDefaultGetExpectations(context, request, response, result, requestStr, null);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doGet(request, response);
 
         context.assertIsSatisfied();
@@ -83,7 +83,7 @@ public class DescribeRecordTestLocal extends OperationTestBase {
         this.setupDefaultPostExpectations(context, request, response, result, requestStr);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doPost(request, response);
 
         context.assertIsSatisfied();
@@ -113,7 +113,7 @@ public class DescribeRecordTestLocal extends OperationTestBase {
         this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doPost(request, response);
 
         context.assertIsSatisfied();

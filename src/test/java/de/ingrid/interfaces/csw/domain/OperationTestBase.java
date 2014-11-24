@@ -44,6 +44,8 @@ import junit.framework.TestCase;
 import org.apache.commons.io.FileUtils;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.junit.After;
+import org.junit.Before;
 
 import de.ingrid.interfaces.csw.domain.filter.impl.LuceneFilterParser;
 import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
@@ -62,12 +64,53 @@ public abstract class OperationTestBase extends TestCase {
     private static final String LIVE_INDEX_PATH = "tmp/index/live";
     private static final String CSW_CACHE_PATH = "tmp/cache/csw";
 
+    private LuceneSearcher searcher = new LuceneSearcher();
+    private CSWServlet servlet = new CSWServlet();
+
     protected static XPathUtils xpath;
     static {
         ConfigurableNamespaceContext cnc = new ConfigurableNamespaceContext();
         cnc.addNamespaceContext(new Csw202NamespaceContext());
         cnc.addNamespaceContext(new SoapNamespaceContext());
         xpath = new XPathUtils(cnc);
+    }
+
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        // setup searcher
+        FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
+        FileUtils.copyDirectory(new File("src/test/resources/index"), new File(LIVE_INDEX_PATH));
+
+        FileUtils.deleteDirectory(new File(CSW_CACHE_PATH));
+        FileUtils.copyDirectory(new File("src/test/resources/cache"), new File(CSW_CACHE_PATH));
+
+        CSWRecordCache cache = new CSWRecordCache();
+        cache.setCachePath(new File(CSW_CACHE_PATH));
+
+        this.searcher = new LuceneSearcher();
+        this.searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+        this.searcher.setFilterParser(new LuceneFilterParser());
+        this.searcher.setRecordRepository(cache);
+        this.searcher.setLuceneTools(new LuceneTools());
+
+        this.searcher.start();
+
+        // create servlet
+        GenericServer server = new GenericServer();
+        server.setSearcher(this.searcher);
+
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.setCswServerImpl(server);
+
+        this.servlet = new CSWServlet();
+        this.servlet.setServerFacade(serverFacade);
+    }
+
+    @Override
+    @After
+    public void tearDown() throws Exception {
+        this.searcher.stop();
     }
 
     /**
@@ -103,40 +146,11 @@ public abstract class OperationTestBase extends TestCase {
     }
 
     /**
-     * Create and configure the servlet
+     * Get the csw servlet
      * @return CSWServlet
-     * @throws Exception
      */
-    protected CSWServlet createServlet() throws Exception {
-
-        FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
-        FileUtils.copyDirectory(new File("src/test/resources/index"), new File(LIVE_INDEX_PATH));
-
-        FileUtils.deleteDirectory(new File(CSW_CACHE_PATH));
-        FileUtils.copyDirectory(new File("src/test/resources/cache"), new File(CSW_CACHE_PATH));
-
-        
-        CSWRecordCache cache = new CSWRecordCache();
-        cache.setCachePath(new File(CSW_CACHE_PATH));
-
-        LuceneSearcher searcher = new LuceneSearcher();
-        searcher.setIndexPath(new File(LIVE_INDEX_PATH));
-        searcher.setFilterParser(new LuceneFilterParser());
-        searcher.setRecordRepository(cache);
-        searcher.setLuceneTools(new LuceneTools());
-
-        GenericServer server = new GenericServer();
-        server.setSearcher(searcher);
-
-        ServerFacade serverFacade = new ServerFacade();
-        serverFacade.setCswServerImpl(server);
-
-        CSWServlet servlet = new CSWServlet();
-        servlet.setServerFacade(serverFacade);
-
-        searcher.start();
-
-        return servlet;
+    protected CSWServlet getServlet() {
+        return this.servlet;
     }
 
     /**

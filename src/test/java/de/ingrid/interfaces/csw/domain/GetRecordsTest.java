@@ -39,7 +39,7 @@ import org.w3c.dom.NodeList;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
-public class GetRecordsTestLocal extends OperationTestBase {
+public class GetRecordsTest extends OperationTestBase {
 
     /**
      * Test GetRecords with with GET method using KVP encoding
@@ -63,7 +63,7 @@ public class GetRecordsTestLocal extends OperationTestBase {
         this.setupDefaultGetExpectations(context, request, response, result, requestStr, additionalParams);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doGet(request, response);
 
         context.assertIsSatisfied();
@@ -71,16 +71,17 @@ public class GetRecordsTestLocal extends OperationTestBase {
         // check csw payload
         assertTrue("The response length is > 0.", result.length() > 0);
         Document responseDoc = StringUtils.stringToDocument(result.toString());
-        Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
+        Node payload = xpath.getNode(responseDoc, "/").getLastChild();
 
         assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
         assertEquals("The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName());
 
         // check records
-        NodeList recordNodes = payload.getChildNodes();
+        Node searchResult = xpath.getNode(responseDoc, "/csw:GetRecordsResponse/csw:SearchResults");
+        NodeList recordNodes = searchResult.getChildNodes();
         assertEquals(1, recordNodes.getLength());
         Document record = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(0)));
-        assertEquals("04068592-709f-3c7a-85de-f2d68e585fca", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+        assertEquals("655e5998-a20e-66b5-c888-00005553421", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
     }
 
     /**
@@ -99,7 +100,7 @@ public class GetRecordsTestLocal extends OperationTestBase {
         this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doPost(request, response);
 
         context.assertIsSatisfied();
@@ -107,15 +108,16 @@ public class GetRecordsTestLocal extends OperationTestBase {
         // check csw payload
         assertTrue("The response length is > 0.", result.length() > 0);
         Document responseDoc = StringUtils.stringToDocument(result.toString());
-        Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
+        Node payload = xpath.getNode(responseDoc, "/soapenv:Envelope/soapenv:Body").getLastChild();
 
         assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
         assertEquals("The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName());
 
         // check records
-        NodeList recordNodes = payload.getChildNodes();
-        assertEquals(2, recordNodes.getLength());
+        Node searchResult = xpath.getNode(responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults");
+        NodeList recordNodes = searchResult.getChildNodes();
+        assertEquals(1, recordNodes.getLength());
         Document record = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(0)));
-        assertEquals("04068592-709f-3c7a-85de-f2d68e585fca", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+        assertEquals("655e5998-a20e-66b5-c888-00005553421", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
     }
 }

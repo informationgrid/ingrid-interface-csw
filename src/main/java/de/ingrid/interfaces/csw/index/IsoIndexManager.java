@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@
  * **************************************************#
  */
 /**
- * 
+ *
  */
 package de.ingrid.interfaces.csw.index;
 
@@ -47,10 +47,10 @@ import de.ingrid.interfaces.csw.tools.FileUtils;
 
 /**
  * Provides a single interface to all index / ISO cache related functionality.
- * 
- * 
+ *
+ *
  * @author joachim@wemove.com
- * 
+ *
  */
 @Service
 public class IsoIndexManager {
@@ -93,27 +93,27 @@ public class IsoIndexManager {
         this.cswRecordMapper.run(recordCacheList);
         CSWRecordRepository cswRecordRepo = this.cswRecordMapper.getRecordRepository();
         log.info("Stop the searcher instance.");
-        statusProvider.addState("reload-index", "Reload index...");
-        stopSearcher();
-        activateNewIndex();
+        this.statusProvider.addState("reload-index", "Reload index...");
+        this.stopSearcher();
+        this.activateNewIndex();
         this.searcher.setRecordRepository(cswRecordRepo);
         log.info("Start the searcher instance.");
-        startSearcher();
-        statusProvider.addState("reload-index", "Reload index.");
+        this.startSearcher();
+        this.statusProvider.addState("reload-index", "Reload index.");
 
         // remove records marked for removal
-        if (toBeDeleted != null && toBeDeleted.size() > 0) {
-            statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting...");
-            wipe(toBeDeleted);
-            statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting.");
+        if (this.toBeDeleted != null && this.toBeDeleted.size() > 0) {
+            this.statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting...");
+            this.wipe(this.toBeDeleted);
+            this.statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting.");
         }
-        if (toBeDeletedQueries != null && toBeDeletedQueries.size() > 0) {
-            statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting...");
-            wipeByQuery(toBeDeletedQueries);
+        if (this.toBeDeletedQueries != null && this.toBeDeletedQueries.size() > 0) {
+            this.statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting...");
+            this.wipeByQuery(this.toBeDeletedQueries);
             synchronized (this) {
-                toBeDeletedQueries.clear();
+                this.toBeDeletedQueries.clear();
             }
-            statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting.");
+            this.statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting.");
         }
 
     }
@@ -147,7 +147,7 @@ public class IsoIndexManager {
     /**
      * Remove a list of CSWRecords from index. The searcher instance is
      * refreshed after successful removal.
-     * 
+     *
      * @param records
      */
     public void removeDocumentsByCSWRecord(List<CSWRecord> records) {
@@ -168,7 +168,7 @@ public class IsoIndexManager {
     /**
      * Remove a Set of Serializables from index. The searcher instance is
      * refreshed after successful removal.
-     * 
+     *
      * @param ids
      */
     public void removeDocuments(Set<Serializable> ids) {
@@ -177,14 +177,14 @@ public class IsoIndexManager {
                 // if indexing is in progress, store records in list for later
                 // removal
                 synchronized (this) {
-                    if (toBeDeleted != null) {
-                        toBeDeleted.addAll(ids);
+                    if (this.toBeDeleted != null) {
+                        this.toBeDeleted.addAll(ids);
                     } else {
-                        toBeDeleted = ids;
+                        this.toBeDeleted = ids;
                     }
                 }
             } else {
-                wipe(ids);
+                this.wipe(ids);
             }
         } catch (Exception e) {
             log.error("Error removing documents.", e);
@@ -195,16 +195,16 @@ public class IsoIndexManager {
         this.indexer.removeDocs(ids);
         this.searcher.refresh();
         for (Serializable id : ids) {
-            cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL);
-            cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF);
-            cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY);
         }
     }
 
     /**
      * Removes all documents that match a certain query from the index. The
      * searcher instance is refreshed after successful removal.
-     * 
+     *
      * @param queryString
      */
     public void removeDocumentsByQuery(String queryString) {
@@ -213,15 +213,15 @@ public class IsoIndexManager {
                 // if indexing is in progress, store records in list for later
                 // removal
                 synchronized (this) {
-                    if (toBeDeletedQueries == null) {
-                        toBeDeletedQueries = new ArrayList<String>();
+                    if (this.toBeDeletedQueries == null) {
+                        this.toBeDeletedQueries = new ArrayList<String>();
                     }
-                    toBeDeletedQueries.add(queryString);
+                    this.toBeDeletedQueries.add(queryString);
                 }
             } else {
                 List<String> queries = new ArrayList<String>();
                 queries.add(queryString);
-                wipeByQuery(queries);
+                this.wipeByQuery(queries);
                 this.searcher.refresh();
             }
         } catch (Exception e) {
@@ -232,14 +232,14 @@ public class IsoIndexManager {
     private void wipeByQuery(List<String> queries) throws Exception {
         List<String> ids = new ArrayList<String>();
         for (String query : queries) {
-            ids.addAll(indexer.removeDocsByQuery(query));
+            ids.addAll(this.indexer.removeDocsByQuery(query));
         }
         this.searcher.refresh();
 
         for (Serializable id : ids) {
-            cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL);
-            cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF);
-            cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY);
         }
     }
 
@@ -251,8 +251,11 @@ public class IsoIndexManager {
         this.searcher = searcher;
     }
 
+    public void setStatusProvider(StatusProvider statusProvider) {
+        this.statusProvider = statusProvider;
+    }
+
     public void setCswRecordMapper(CSWRecordMapper cswRecordMapper) {
         this.cswRecordMapper = cswRecordMapper;
     }
-
 }

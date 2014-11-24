@@ -55,7 +55,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
         this.setupDefaultGetExpectations(context, request, response, result, requestStr, null);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doGet(request, response);
         servlet.destroy();
 
@@ -89,7 +89,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
         this.setupDefaultPostExpectations(context, request, response, result, requestStr);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doPost(request, response);
         servlet.destroy();
 
@@ -120,10 +120,9 @@ public class GetCapabilitiesTest extends OperationTestBase {
         this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doPost(request, response);
         servlet.destroy();
-
 
         context.assertIsSatisfied();
 
@@ -183,7 +182,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
         this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doPost(request, response);
         servlet.destroy();
 
@@ -214,7 +213,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
         this.setupPartnerParameterGetExpectations(context, request, response, result, requestStr);
 
         // make request
-        CSWServlet servlet = this.createServlet();
+        CSWServlet servlet = this.getServlet();
         servlet.doGet(request, response);
         servlet.destroy();
 

@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -53,7 +53,7 @@ import de.ingrid.utils.xml.XMLUtils;
 
 /**
  * A CSWRecordMapper that maps records using XSLT.
- * 
+ *
  * @author ingo herwig <ingo@wemove.com>
  */
 @Service
@@ -66,7 +66,7 @@ public class XsltMapper implements CSWRecordMapper {
      */
     @Autowired
     private ConfigurationProvider configurationProvider;
-    
+
     @Autowired
     private StatusProvider statusProvider;
 
@@ -87,14 +87,14 @@ public class XsltMapper implements CSWRecordMapper {
     private static final File xslSummary = new File("iso-summary.xsl");
     private static final File xslBrief = new File("iso-brief.xsl");
 
-    
+
     @Override
     public void run(List<RecordCache> recordCacheList) throws Exception {
-        if (configurationProvider != null) {
+        if (this.configurationProvider != null) {
             this.cache = new CSWRecordCache();
-            this.cache.setCachePath(configurationProvider.getRecordCachePath());
+            this.cache.setCachePath(this.configurationProvider.getRecordCachePath());
         }
-        
+
         DocumentCache<CSWRecord> tmpCache = this.cache.startTransaction(false);
         try {
             // iterate over all caches and records
@@ -103,11 +103,11 @@ public class XsltMapper implements CSWRecordMapper {
             for (RecordCache recordCache : recordCacheList) {
                 total += recordCache.getCachedIds().size();
             }
-            
-            
+
+
             for (RecordCache recordCache : recordCacheList) {
                 for (Serializable cacheId : recordCache.getCachedIds()) {
-                    statusProvider.addState("iso-mapper", "Mapping records to ISO ... [" +idx + "/" + total + "].");
+                    this.statusProvider.addState("iso-mapper", "Mapping records to ISO ... [" +idx + "/" + total + "].");
                     idx++;
                     for (ElementSetName elementSetName : ElementSetName.values()) {
                         if (log.isDebugEnabled()) {
@@ -131,16 +131,16 @@ public class XsltMapper implements CSWRecordMapper {
 
     @Override
     public CSWRecordRepository getRecordRepository() {
-        if (configurationProvider != null) {
+        if (this.configurationProvider != null) {
             this.cache = new CSWRecordCache();
-            this.cache.setCachePath(configurationProvider.getRecordCachePath());
+            this.cache.setCachePath(this.configurationProvider.getRecordCachePath());
         }
         return this.cache;
     }
 
     /**
      * Set the record cache.
-     * 
+     *
      * @param cache
      */
     public void setCache(CSWRecordCache cache) {
@@ -148,8 +148,16 @@ public class XsltMapper implements CSWRecordMapper {
     }
 
     /**
+     * Set the status provider.
+     * @param statusProvider
+     */
+    public void setStatusProvider(StatusProvider statusProvider) {
+        this.statusProvider = statusProvider;
+    }
+
+    /**
      * Map the given IDF record to the given CSW element set.
-     * 
+     *
      * @param record
      * @param elementSetName
      * @return Node
@@ -184,7 +192,7 @@ public class XsltMapper implements CSWRecordMapper {
 
     /**
      * Map the given record to iso19139 FULL
-     * 
+     *
      * @param record
      * @return Node
      * @throws Exception
@@ -196,7 +204,7 @@ public class XsltMapper implements CSWRecordMapper {
 
     /**
      * Map the given record to iso19139 SUMMARY
-     * 
+     *
      * @param record
      * @return Node
      * @throws Exception
@@ -210,7 +218,7 @@ public class XsltMapper implements CSWRecordMapper {
 
     /**
      * Map the given record to iso19139 BRIEF
-     * 
+     *
      * @param record
      * @return Node
      * @throws Exception
@@ -221,7 +229,7 @@ public class XsltMapper implements CSWRecordMapper {
         Node full = this.xslt.transform(idfDoc, xslFull);
 
         if (log.isDebugEnabled()) {
-        	log.debug("First map FULL, mapping result:\n" + XMLUtils.toString((Document)full));
+            log.debug("First map FULL, mapping result:\n" + XMLUtils.toString((Document)full));
         }
 
         return this.xslt.transform(full, xslBrief);

@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,7 +54,7 @@ import de.ingrid.interfaces.csw.index.StatusProvider;
 
 /**
  * The update job.
- * 
+ *
  * @author ingo herwig <ingo@wemove.com>
  */
 @Service
@@ -90,7 +90,7 @@ public class UpdateJob {
 
     /**
      * Set the configuration provider.
-     * 
+     *
      * @param configurationProvider
      */
     public void setConfigurationProvider(ConfigurationProvider configurationProvider) {
@@ -98,9 +98,18 @@ public class UpdateJob {
     }
 
     /**
+     * Set the status provider.
+     *
+     * @param statusProvider
+     */
+    public void setStatusProvider(StatusProvider statusProvider) {
+        this.statusProvider = statusProvider;
+    }
+
+    /**
      * Execute the update job. Returns true/false whether the job was executed
      * or not.
-     * 
+     *
      * @return Boolean
      * @throws Exception
      */
@@ -108,8 +117,8 @@ public class UpdateJob {
         // try to acquire the lock
         if (executeLock.tryLock(0, TimeUnit.SECONDS)) {
             try {
-                statusProvider.clear();
-                statusProvider.addState("start_harvesting", "Start harvesting.");
+                this.statusProvider.clear();
+                this.statusProvider.addState("start_harvesting", "Start harvesting.");
                 Date start = new Date();
 
                 Date lastExecutionDate = this.getLastExecutionDate();
@@ -140,7 +149,7 @@ public class UpdateJob {
                         // set up the harvester
                         harvesterInstance = configuration.createInstance(harvesterConfig);
                         harvesterInstance.setCache(cacheInstance);
-                        harvesterInstance.setStatusProvider(statusProvider);
+                        harvesterInstance.setStatusProvider(this.statusProvider);
                     } catch (Exception e) {
                         log.error("Error setting up harvester: " + harvesterConfig.getName(), e);
                         continue;
@@ -174,8 +183,8 @@ public class UpdateJob {
                 Date end = new Date();
                 long diff = end.getTime() - start.getTime();
                 log.info("Job executed within " + diff + " ms.");
-                statusProvider.addState("stop_harvesting", "Harvesting finished.");
-                statusProvider.write();
+                this.statusProvider.addState("stop_harvesting", "Harvesting finished.");
+                this.statusProvider.write();
                 return true;
             } finally {
                 // release the lock
@@ -194,7 +203,7 @@ public class UpdateJob {
     /**
      * Get the last execution date of this job. Returns 1970-01-01 00:00:00 if
      * an error occurs.
-     * 
+     *
      * @return Date
      */
     public Date getLastExecutionDate() {
@@ -217,7 +226,7 @@ public class UpdateJob {
 
     /**
      * Write the last execution date of this job.
-     * 
+     *
      * @param Date
      */
     public void writeLastExecutionDate(Date date) {

@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,16 +33,18 @@ import java.util.concurrent.FutureTask;
 import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.index.IsoIndexManager;
+import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.interfaces.csw.index.impl.LuceneIndexer;
 import de.ingrid.interfaces.csw.index.impl.ScriptedIDFRecordLuceneMapper;
 import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
 import de.ingrid.interfaces.csw.mapping.impl.XsltMapper;
 import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
+import de.ingrid.interfaces.csw.tools.LuceneTools;
 
 /**
  * @author ingo@wemove.com
  */
-public class UpdateJobTestLocal extends TestCase {
+public class UpdateJobTest extends TestCase {
 
     private static final File CONFIGURATION_FILE_1 = new File("src/test/resources/config-updatejobtest-1iplug.xml");
     private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
@@ -55,12 +57,11 @@ public class UpdateJobTestLocal extends TestCase {
 
     public void testSimple() throws Exception {
         UpdateJob job = this.createJob(CONFIGURATION_FILE_2);
-
         boolean result = job.execute();
         assertTrue(result);
     }
 
-    public void testConcurrentExecution() throws Exception {
+    public void te_stConcurrentExecution() throws Exception {
         ThreadPerTaskExecutor executor = new ThreadPerTaskExecutor();
 
         FutureTask<Boolean> execution1 = new FutureTask<Boolean>(new JobRunner(CONFIGURATION_FILE_1, "Job1"));
@@ -71,12 +72,13 @@ public class UpdateJobTestLocal extends TestCase {
 
         assertTrue(execution1.get());
         assertFalse(execution2.get()); // Job2 did not run, because execution
-                                       // was blocked by Job1
+        // was blocked by Job1
     }
 
-    public void testWithRunningSearcher() throws Exception {
+    public void te_stWithRunningSearcher() throws Exception {
         LuceneSearcher searcher = new LuceneSearcher();
         searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+        searcher.setLuceneTools(new LuceneTools());
         searcher.start();
 
         UpdateJob job = this.createJob(CONFIGURATION_FILE_1);
@@ -90,16 +92,20 @@ public class UpdateJobTestLocal extends TestCase {
 
     /**
      * Set up an update job with the given configuration
-     * 
+     *
      * @param configFile
      * @return UpdateJob
      */
     private UpdateJob createJob(File configFile) {
         ConfigurationProvider configProvider = new ConfigurationProvider();
+        StatusProvider statusProvider = new StatusProvider();
+        LuceneTools luceneTools = new LuceneTools();
+
         configProvider.setConfigurationFile(configFile);
 
         UpdateJob job = new UpdateJob();
         job.setConfigurationProvider(configProvider);
+        job.setStatusProvider(statusProvider);
 
         // set up indexer
         ScriptedIDFRecordLuceneMapper recordMapper = new ScriptedIDFRecordLuceneMapper();
@@ -108,24 +114,30 @@ public class UpdateJobTestLocal extends TestCase {
         LuceneIndexer indexer = new LuceneIndexer();
         indexer.setIndexConfigPath(new File(TMP_INDEX_PATH));
         indexer.setMapper(recordMapper);
+        indexer.setStatusProvider(statusProvider);
+        indexer.setLuceneTools(luceneTools);
 
         IsoIndexManager luceneManager = new IsoIndexManager();
+        luceneManager.setStatusProvider(statusProvider);
 
         // set up mapper
         CSWRecordCache cache = new CSWRecordCache();
         cache.setCachePath(new File(CSW_CACHE_PATH));
         XsltMapper mapper = new XsltMapper();
         mapper.setCache(cache);
+        mapper.setStatusProvider(statusProvider);
 
         // set up searcher
         LuceneSearcher searcher = new LuceneSearcher();
         searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+        searcher.setLuceneTools(luceneTools);
 
         luceneManager.setIndexer(indexer);
         luceneManager.setCswRecordMapper(mapper);
         luceneManager.setSearcher(searcher);
 
         job.setIndexManager(luceneManager);
+        job.setStatusProvider(statusProvider);
 
         return job;
     }
@@ -150,7 +162,7 @@ public class UpdateJobTestLocal extends TestCase {
         public Boolean call() {
             try {
                 System.out.println("Starting: " + this.name);
-                boolean result = UpdateJobTestLocal.this.createJob(this.configFile).execute();
+                boolean result = UpdateJobTest.this.createJob(this.configFile).execute();
                 System.out.println("Finished: " + this.name);
                 return result;
             } catch (Exception ex) {

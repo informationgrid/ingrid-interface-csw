@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@
  * **************************************************#
  */
 /**
- * 
+ *
  */
 package de.ingrid.interfaces.csw.index;
 
@@ -45,9 +45,9 @@ import com.thoughtworks.xstream.XStream;
 
 /**
  * Manages status messages. Messages added are sorted chronological.
- * 
+ *
  * @author joachim@wemove.com
- * 
+ *
  */
 @Service
 public class StatusProvider {
@@ -63,6 +63,11 @@ public class StatusProvider {
      * The name of the system property that defines the ingrid home directory
      */
     private static final String INGRID_HOME = "ingrid_home";
+
+    /**
+     * The default name of the status file
+     */
+    private static final String LAST_STATUS_XML = "last_status.xml";
 
     public static enum Classification {
         INFO(1), WARN(2), ERROR(3);
@@ -86,18 +91,16 @@ public class StatusProvider {
             // check if the ingrid home path is set and derive config file
             String ingridHome = System.getProperty(INGRID_HOME);
             if (ingridHome != null) {
-                File f = new File(ingridHome, "last_status.xml");
+                File f = new File(ingridHome, LAST_STATUS_XML);
                 lastStatusFilename = f.getAbsolutePath();
             }
         }
 
-        if (lastStatusFilename != null) {
-            this.lastStatusFile = new File(lastStatusFilename);
-            try {
-                this.load();
-            } catch (IOException e) {
-                log.error("Error loading last status file.", e);
-            }
+        this.lastStatusFile = new File(lastStatusFilename != null ? lastStatusFilename : LAST_STATUS_XML);
+        try {
+            this.load();
+        } catch (IOException e) {
+            log.error("Error loading last status file.", e);
         }
     }
 
@@ -124,18 +127,18 @@ public class StatusProvider {
     /**
      * Add a message to the message list. If the key already exists, the message
      * is updated.
-     * 
+     *
      * @param key
      * @param value
      * @param classification
      */
     public void addState(String key, String value, Classification classification) {
-        if (states.containsKey(key)) {
-            states.get(key).value = value;
-            states.get(key).classification = classification;
+        if (this.states.containsKey(key)) {
+            this.states.get(key).value = value;
+            this.states.get(key).classification = classification;
         } else {
             synchronized (this) {
-                states.put(key, new State(value, new Date(), classification));
+                this.states.put(key, new State(value, new Date(), classification));
             }
         }
     }
@@ -143,7 +146,7 @@ public class StatusProvider {
     /**
      * Add a message to the message list. If the key already exists, the message
      * is updated. THis message is tagged as INFO message.
-     * 
+     *
      * @param key
      * @param value
      */
@@ -153,17 +156,17 @@ public class StatusProvider {
 
     /**
      * Clear the message list.
-     * 
+     *
      */
     public void clear() {
         synchronized (this) {
-            states.clear();
+            this.states.clear();
         }
     }
 
     public Classification getMaxClassificationLevel() {
         Classification result = Classification.INFO;
-        for (State state : states.values()) {
+        for (State state : this.states.values()) {
             if (state.classification.level > result.level) {
                 result = state.classification;
             }
@@ -178,14 +181,14 @@ public class StatusProvider {
      * file name. Note: Since renaming a file is not atomic in Windows, if the
      * target file exists already (we need to delete and then rename), this
      * method is synchronized.
-     * 
+     *
      * @throws IOException
      */
     public synchronized void write() throws IOException {
 
         // serialize the Configuration instance to xml
         XStream xstream = new XStream();
-        String xml = xstream.toXML(states);
+        String xml = xstream.toXML(this.states);
 
         // write the configuration to a temporary file first
         File tmpFile = File.createTempFile("config", null);
@@ -263,19 +266,19 @@ public class StatusProvider {
     /**
      * Get the message list as String. Message entries are formated according to
      * the format. the default format is "%1$tF %1$tT - %2$s\n".
-     * 
+     *
      */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         synchronized (this) {
-            for (State state : states.values()) {
+            for (State state : this.states.values()) {
                 if (state.classification.equals(Classification.ERROR)) {
-                    sb.append("<span class=\"error\">" + String.format(msgFormat, state.time, state.classification.name(), state.value) + "</span>");
+                    sb.append("<span class=\"error\">" + String.format(this.msgFormat, state.time, state.classification.name(), state.value) + "</span>");
                 } else if (state.classification.equals(Classification.WARN)) {
-                    sb.append("<span class=\"warn\">" + String.format(msgFormat, state.time, state.classification.name(), state.value) + "</span>");
+                    sb.append("<span class=\"warn\">" + String.format(this.msgFormat, state.time, state.classification.name(), state.value) + "</span>");
                 } else {
-                    sb.append("<span class=\"info\">" + String.format(msgFormat, state.time, state.classification.name(), state.value) + "</span>");
+                    sb.append("<span class=\"info\">" + String.format(this.msgFormat, state.time, state.classification.name(), state.value) + "</span>");
                 }
             }
         }
@@ -283,12 +286,12 @@ public class StatusProvider {
     }
 
     public String getMsgFormat() {
-        return msgFormat;
+        return this.msgFormat;
     }
 
     /**
      * Set the message format.
-     * 
+     *
      * @param msgFormat
      */
     public void setMsgFormat(String msgFormat) {

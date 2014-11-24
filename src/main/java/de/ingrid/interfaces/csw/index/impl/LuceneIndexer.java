@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,7 +45,7 @@ import de.ingrid.interfaces.csw.tools.LuceneTools;
 
 /**
  * LuceneIndexer is used to put InGrid records into a Lucene index.
- * 
+ *
  * @author ingo@wemove.com
  * @author joachim@wemove.com
  */
@@ -67,7 +67,7 @@ public class LuceneIndexer implements Indexer {
 
     @Autowired
     private RecordLuceneMapper mapper;
-    
+
     @Autowired
     private StatusProvider statusProvider;
 
@@ -82,8 +82,8 @@ public class LuceneIndexer implements Indexer {
         }
 
         // overwrite indexer path with configuration
-        if (configurationProvider != null) {
-            this.indexConfigPath = configurationProvider.getNewIndexPath();
+        if (this.configurationProvider != null) {
+            this.indexConfigPath = this.configurationProvider.getNewIndexPath();
         }
 
         // delete older indexing destination
@@ -92,20 +92,20 @@ public class LuceneIndexer implements Indexer {
         }
 
         // CREATE new analyzer ! This one will be closed by geotoolkit indexer when indexing finished !
-        Analyzer myAnalyzer = luceneTools.createAnalyzer();
-        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, myAnalyzer, statusProvider);
+        Analyzer myAnalyzer = this.luceneTools.createAnalyzer();
+        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, myAnalyzer, this.statusProvider);
         // TODO: set log level
         geoTKIndexer.setRecordCacheList(recordCacheList);
-        geoTKIndexer.setMapper(mapper);
+        geoTKIndexer.setMapper(this.mapper);
         geoTKIndexer.createIndex();
         geoTKIndexer.destroy();
     }
 
     @Override
     public void removeDocs(Set<Serializable> records) throws Exception {
-        if (configurationProvider != null) {
-            File indexPath = configurationProvider.getIndexPath();
-            IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null, statusProvider);
+        if (this.configurationProvider != null) {
+            File indexPath = this.configurationProvider.getIndexPath();
+            IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null, this.statusProvider);
             for (Serializable record : records) {
                 geoTKIndexer.removeDocument(record.toString());
             }
@@ -116,8 +116,8 @@ public class LuceneIndexer implements Indexer {
 
     @Override
     public List<String> removeDocsByQuery(String queryString) throws Exception {
-        File indexPath = configurationProvider.getIndexPath();
-        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null, statusProvider);
+        File indexPath = this.configurationProvider.getIndexPath();
+        IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null, this.statusProvider);
         List<String> ids = geoTKIndexer.removeDocumentByQuery(queryString);
         geoTKIndexer.optimize();
         geoTKIndexer.destroy();
@@ -131,7 +131,7 @@ public class LuceneIndexer implements Indexer {
 
     /**
      * Set the path to the Lucene index
-     * 
+     *
      * @param indexPath
      */
     public void setIndexConfigPath(File indexPath) {
@@ -140,5 +140,13 @@ public class LuceneIndexer implements Indexer {
 
     public void setMapper(RecordLuceneMapper mapper) {
         this.mapper = mapper;
+    }
+
+    public void setStatusProvider(StatusProvider statusProvider) {
+        this.statusProvider = statusProvider;
+    }
+
+    public void setLuceneTools(LuceneTools luceneTools) {
+        this.luceneTools = luceneTools;
     }
 }
