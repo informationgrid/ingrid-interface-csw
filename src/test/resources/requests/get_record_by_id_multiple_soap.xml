@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<soapenv:Body>
 		<GetRecordById xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
-			<Id>04068592-709f-3c7a-85de-f2d68e585fca, 16f6d74b-f5b7-3efb-ae3c-0128549b8ac6</Id>
+			<Id>0C12204F-5626-4A2E-94F4-514424F093A1, 111c0076-b23f-76e5-c888-94327664111</Id>
 			<ElementSetName>full</ElementSetName>
 		</GetRecordById>
 	</soapenv:Body>

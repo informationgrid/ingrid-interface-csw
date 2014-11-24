@@ -71,7 +71,7 @@ public class GetRecordByIdTestLocal extends OperationTestBase {
 		NodeList recordNodes = payload.getChildNodes();
 		assertEquals(1, recordNodes.getLength());
 		Document record = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(0)));
-		assertEquals("04068592-709f-3c7a-85de-f2d68e585fca", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+		assertEquals("0C12204F-5626-4A2E-94F4-514424F093A1", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
 	}
 
 	/**
@@ -107,9 +107,9 @@ public class GetRecordByIdTestLocal extends OperationTestBase {
 		NodeList recordNodes = payload.getChildNodes();
 		assertEquals(2, recordNodes.getLength());
 		Document record1 = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(0)));
-		assertEquals("04068592-709f-3c7a-85de-f2d68e585fca", xpath.getString(record1, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+		assertEquals("0C12204F-5626-4A2E-94F4-514424F093A1", xpath.getString(record1, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
 		Document record2 = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(1)));
-		assertEquals("16f6d74b-f5b7-3efb-ae3c-0128549b8ac6", xpath.getString(record2, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+		assertEquals("111c0076-b23f-76e5-c888-94327664111", xpath.getString(record2, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
 	}
 
 	/**
