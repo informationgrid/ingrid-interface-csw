@@ -85,6 +85,48 @@ public class GetRecordsTest extends OperationTestBase {
     }
 
     /**
+     * Test GetRecords with with GET method using KVP encoding
+     * @throws Exception
+     */
+    public void testKVPGetRecordsRequestLike() throws Exception {
+
+        StringBuffer result = new StringBuffer();
+        Mockery context = new Mockery();
+        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+        final HttpServletResponse response = context.mock(HttpServletResponse.class);
+        String requestStr = "GetRecords";
+        final String constraint = "<Filter xmlns=\"http://www.opengis.net/ogc\"><PropertyIsLike><PropertyName>Title</PropertyName><Literal>Wasser</Literal></PropertyIsLike></Filter>";
+        final String sortBy = "<SortBy><SortProperty><PropertyName>title</PropertyName><SortOrder>ASC</SortOrder></SortProperty></SortBy>";
+
+        Map<String, String> additionalParams = new HashMap<String, String>() {{
+            this.put("CONSTRAINT", constraint);
+            this.put("SORTBY", sortBy);
+        }};
+        // expectations
+        this.setupDefaultGetExpectations(context, request, response, result, requestStr, additionalParams);
+
+        // make request
+        CSWServlet servlet = this.getServlet();
+        servlet.doGet(request, response);
+
+        context.assertIsSatisfied();
+
+        // check csw payload
+        assertTrue("The response length is > 0.", result.length() > 0);
+        Document responseDoc = StringUtils.stringToDocument(result.toString());
+        Node payload = xpath.getNode(responseDoc, "/").getLastChild();
+
+        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+        assertEquals("The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName());
+
+        // check records
+        Node searchResult = xpath.getNode(responseDoc, "/csw:GetRecordsResponse/csw:SearchResults");
+        NodeList recordNodes = searchResult.getChildNodes();
+        assertEquals(1, recordNodes.getLength());
+        Document record = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(0)));
+        assertEquals("655e5998-a20e-66b5-c888-00005553421", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+    }
+    /**
      * Test GetRecords with SOAP method using Soap encoding
      * @throws Exception
      */

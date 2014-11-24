@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -154,13 +154,13 @@ public class LuceneFilterParser implements FilterParser {
 
         Document sortBy = cswQuery.getSort();
         if (sortBy != null) {
-            NodeList sortProperties = xpath.getNodeList(sortBy, "//csw:SortProperty");
+            NodeList sortProperties = this.xpath.getNodeList(sortBy, "//csw:SortProperty");
             if (sortProperties != null && sortProperties.getLength() > 0) {
                 List<SortField> sortFields = new ArrayList<SortField>();
                 for (int i = 0; i < sortProperties.getLength(); i++) {
                     Node sortProperty = sortProperties.item(i);
-                    String propertyName = xpath.getString(sortProperty, "//csw:PropertyName");
-                    String sortOrder = xpath.getString(sortProperty, "//csw:SortOrder");
+                    String propertyName = this.xpath.getString(sortProperty, "//csw:PropertyName");
+                    String sortOrder = this.xpath.getString(sortProperty, "//csw:SortOrder");
                     if (sortOrder == null) {
                         sortOrder = "ASC";
                     }
@@ -178,7 +178,7 @@ public class LuceneFilterParser implements FilterParser {
 
     /**
      * Build a piece of Lucene query with the specified Logical filter.
-     * 
+     *
      * @param logicOpsEl
      * @return SpatialQuery
      * @throws CSWFilterException
@@ -294,7 +294,7 @@ public class LuceneFilterParser implements FilterParser {
 
     /**
      * Build a piece of Lucene query with the specified Comparison filter.
-     * 
+     *
      * @param comparisonOpsEl
      * @return String
      * @throws CSWFilterException
@@ -332,15 +332,21 @@ public class LuceneFilterParser implements FilterParser {
                 // format the value by replacing the specified special char by
                 // the Lucene special char
                 String value = pil.getLiteral();
-                value = value.replace(pil.getWildCard(), "*");
-                value = value.replace(pil.getSingleChar(), "?");
-                value = value.replace(pil.getEscapeChar(), "\\");
+                if (pil.getWildCard() != null) {
+                    value = value.replace(pil.getWildCard(), "*");
+                }
+                if (pil.getSingleChar() != null) {
+                    value = value.replace(pil.getSingleChar(), "?");
+                }
+                if (pil.getEscapeChar() != null) {
+                    value = value.replace(pil.getEscapeChar(), "\\");
+                }
 
                 // for a date remove the time zone
                 if (queryableProperty.getType() instanceof Date) {
                     value = value.replace("Z", "");
                 }
-                response.append(maskPhrase(value));
+                response.append(this.maskPhrase(value));
             } else {
                 throw new CSWFilterException("Missing literal parameter for propertyIsLike operator.",
                         INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
@@ -351,7 +357,7 @@ public class LuceneFilterParser implements FilterParser {
             // get the field
             if (pin.getPropertyName() != null) {
                 response.append(this.removePrefix(pin.getPropertyName().getContent().toLowerCase())).append(':')
-                        .append("null");
+                .append("null");
             } else {
                 throw new CSWFilterException("Missing propertyName parameter for propertyIsNull operator.",
                         INVALID_PARAMETER_CODE, QUERY_CONSTRAINT_LOCATOR);
@@ -384,12 +390,12 @@ public class LuceneFilterParser implements FilterParser {
 
                 // property == value -> property:"value"
                 if (operator.equals("PropertyIsEqualTo")) {
-                    response.append(propertyNameLocal).append(":").append(maskPhrase(literal));
+                    response.append(propertyNameLocal).append(":").append(this.maskPhrase(literal));
                 }
                 // property != value -> metafile:doc NOT property:"value"
                 else if (operator.equals("PropertyIsNotEqualTo")) {
                     response.append(defaultField).append(" NOT ");
-                    response.append(propertyNameLocal).append(":").append(maskPhrase(literal));
+                    response.append(propertyNameLocal).append(":").append(this.maskPhrase(literal));
                 }
                 // property >= value -> property:[value UPPER_BOUND]
                 else if (operator.equals("PropertyIsGreaterThanOrEqualTo")) {
@@ -413,7 +419,7 @@ public class LuceneFilterParser implements FilterParser {
                         literal = literal.replace("Z", "");
                     }
                     response.append(propertyNameLocal).append(":{").append(queryableType.getLowerBound()).append(' ')
-                            .append(literal).append("}");
+                    .append(literal).append("}");
                 }
                 // property <= value -> property:[LOWER_BOUND value]
                 else if (operator.equals("PropertyIsLessThanOrEqualTo")) {
@@ -421,7 +427,7 @@ public class LuceneFilterParser implements FilterParser {
                         literal = literal.replace("Z", "");
                     }
                     response.append(propertyNameLocal).append(":[").append(queryableType.getLowerBound()).append(' ')
-                            .append(literal).append("]");
+                    .append(literal).append("]");
                 } else {
                     throw new CSWFilterException("Unkwnow comparison operator: " + operator, INVALID_PARAMETER_CODE,
                             QUERY_CONSTRAINT_LOCATOR);
@@ -433,7 +439,7 @@ public class LuceneFilterParser implements FilterParser {
 
     /**
      * Build a piece of Lucene query with the specified Spatial filter.
-     * 
+     *
      * @param spatialOpsEl
      * @return Filter
      * @throws CSWFilterException
@@ -664,7 +670,7 @@ public class LuceneFilterParser implements FilterParser {
 
     /**
      * Build a piece of Lucene query with the specified id filter.
-     * 
+     *
      * @param idsOpsEl
      * @return String
      * @throws CSWFilterException
@@ -681,7 +687,7 @@ public class LuceneFilterParser implements FilterParser {
 
     /**
      * Remove the prefix from a propertyName.
-     * 
+     *
      * @param propertyName
      * @return String
      */
@@ -695,7 +701,7 @@ public class LuceneFilterParser implements FilterParser {
 
     /**
      * Create a spatial filter for the given filter list.
-     * 
+     *
      * @param operator
      * @param filters
      * @param query
