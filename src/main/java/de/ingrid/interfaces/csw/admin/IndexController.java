@@ -38,8 +38,7 @@ public class IndexController {
     public static final String TEMPLATE_INDEXING_URI = "/indexing.html";
     public static final String TEMPLATE_INDEXING_VIEW = "/indexing";
 
-    public static final String TEMPLATE_INDEX_STATE_URI = "/indexState.html";
-    public static final String TEMPLATE_INDEX_STATE_VIEW = "/indexState";
+    public static final String TEMPLATE_INDEX_STATE_URI = "/indexState.json";
 
     final IndexScheduler _scheduler;
 

@@ -38,6 +38,10 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 		<servlet-name>springapp</servlet-name>
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>springapp</servlet-name>
+        <url-pattern>*.json</url-pattern>
+    </servlet-mapping>
 
 	<security-constraint>
 		<web-resource-collection>

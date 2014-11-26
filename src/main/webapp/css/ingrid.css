@@ -90,7 +90,7 @@ div#contentBox div.controls a:hover { background:#1B78B1; }
 
 /* --- Tabelle �ber ganze Breite (wie bei Administration) --- */
 
-div#contentBox div#content { margin-left:19px; margin-top:19px;}
+div#contentBox div#content { margin: 19px 19px 0 19px}
 div#contentBox table.fullSize { width:95%; border:1px solid #DDE9BD; border-spacing:1px; }
 div#contentBox table.fullSize th, td { text-align:left; margin:0; padding:0; }
 div#contentBox table.fullSize th { background:#DDE9BD; padding:4px 10px; margin-right:10px; font-weight:bold; height:16px; vertical-align:center; }
@@ -152,7 +152,7 @@ ul.tabs li.active a {color:#000}
 .value:hover { font-weight: bold; }
 .value.marked { color: #fff; background-color: #68A5D2; }
 .hidden { display: none;}
-.status { border:1px solid #68A5D2; padding:10px; background:#F5F8EB;}
+.status { border:1px solid #68A5D2; padding:10px; background:#F5F8EB; margin-top: 19px;}
 
 .warn {color:#FF9900}
 .error {color:#FF0000}

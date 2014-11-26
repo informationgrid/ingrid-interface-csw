@@ -68,7 +68,7 @@ $(function(){
 
 function getState(){
 	$.ajaxSetup({ cache: false });
-	$.getJSON("indexState.html", {}, function(statusResponse){
+	$.getJSON("indexState.json", {}, function(statusResponse){
         $("#status div").html(statusResponse.status.replace(/\n/g,"<br />"));
 		if (statusResponse.isRunning){
 			setTimeout(getState, 1000);

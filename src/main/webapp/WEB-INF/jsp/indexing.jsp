@@ -37,11 +37,12 @@
 <script>
 function getState(){
 	$.ajaxSetup({ cache: false });
-	$.getJSON("indexState.html", {}, function(statusResponse){
-		  if(statusResponse.isRunning == 'false'){
-            document.getElementById('dialog').style.display = 'none';
+	$.getJSON("indexState.json", {}, function(statusResponse){
+		  if(!statusResponse.isRunning){
+            document.getElementById('dialog').style.display = '';
             document.getElementById('dialog_done').style.display = '';
             document.getElementById('harvest').style.display = '';
+            $("#dialog .content").html(statusResponse.status.replace(/\n/g,"<br />"));
 		  } else {
             document.getElementById('dialog').style.display = '';
             document.getElementById('harvest').style.display = 'none';
