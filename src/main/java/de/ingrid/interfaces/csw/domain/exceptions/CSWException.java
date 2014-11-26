@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,6 +29,8 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
+
 /**
  * Von dieser Klasse werden alle moeglichen Ausnahmen des Catalog Service abgeleitet
  *
@@ -37,165 +39,167 @@ import org.w3c.dom.Element;
  */
 public class CSWException extends Exception {
 
-	static final long serialVersionUID = 0;
+    static final long serialVersionUID = 0;
 
-	private String code = "NoApplicableCode";
-	private String locator = null;
+    private String code = "NoApplicableCode";
+    private String locator = null;
 
-	/**
-	 * Constructor
-	 * @param message String
-	 */
-	public CSWException(final String message) {
-		super(message);
-	}
+    private static final String OWS_NAMESPACE = Namespace.OWS.getQName().getNamespaceURI();
 
-	/**
-	 * Constructor
-	 * @param message String
-	 * @param cause Throwable
-	 */
-	public CSWException(final String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Constructor
+     * @param message String
+     */
+    public CSWException(final String message) {
+        super(message);
+    }
 
-	/**
-	 * Constructor
-	 * @param message
-	 * @param code
-	 * @param locator
-	 */
-	public CSWException(final String message, final String code, final String locator) {
-		super(message);
-		this.code = code;
-		this.locator = locator;
-	}
+    /**
+     * Constructor
+     * @param message String
+     * @param cause Throwable
+     */
+    public CSWException(final String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * Get the exception code
-	 * @return String
-	 */
-	public final String getCode() {
-		return this.code;
-	}
+    /**
+     * Constructor
+     * @param message
+     * @param code
+     * @param locator
+     */
+    public CSWException(final String message, final String code, final String locator) {
+        super(message);
+        this.code = code;
+        this.locator = locator;
+    }
 
-	/**
-	 * Set the exception code
-	 * @param code The code to set
-	 */
-	public final void setCode(final String code) {
-		this.code = code;
-	}
+    /**
+     * Get the exception code
+     * @return String
+     */
+    public final String getCode() {
+        return this.code;
+    }
 
-	/**
-	 * Get the exception locator
-	 * @return String
-	 */
-	public final String getLocator() {
-		return this.locator;
-	}
+    /**
+     * Set the exception code
+     * @param code The code to set
+     */
+    public final void setCode(final String code) {
+        this.code = code;
+    }
 
-	/**
-	 * Set the exception locator
-	 * @param loc The locator to set
-	 */
-	public final void setLocator(final String loc) {
-		this.locator = loc;
-	}
+    /**
+     * Get the exception locator
+     * @return String
+     */
+    public final String getLocator() {
+        return this.locator;
+    }
 
-	/**
-	 * Conversions to XML format
-	 */
+    /**
+     * Set the exception locator
+     * @param loc The locator to set
+     */
+    public final void setLocator(final String loc) {
+        this.locator = loc;
+    }
 
-	/**
-	 * Creates an error message in XML structure that complies to the schema which
-	 * is defined for OWS exception reports, version 0.3.1 (see also
-	 * http://schemas.opengis.net/ows/0.3.1/owsExceptionReport.xsd)
+    /**
+     * Conversions to XML format
+     */
 
-	 * @return The complete XML document containing the error report
-	 * @throws Exception
-	 */
-	public Document toXmlExceptionReport() throws Exception {
-		Document reportDoc = this.createDocument();
+    /**
+     * Creates an error message in XML structure that complies to the schema which
+     * is defined for OWS exception reports, version 0.3.1 (see also
+     * http://schemas.opengis.net/ows/0.3.1/owsExceptionReport.xsd)
 
-		Element rootElement = reportDoc.createElementNS("http://www.opengis.net/ows", "ExceptionReport");
-		reportDoc.appendChild(rootElement);
+     * @return The complete XML document containing the error report
+     * @throws Exception
+     */
+    public Document toXmlExceptionReport() throws Exception {
+        Document reportDoc = this.createDocument();
 
-		Attr versionAttribute = reportDoc.createAttribute("version");
-		versionAttribute.setNodeValue("1.0.0");
-		rootElement.setAttributeNode(versionAttribute);
+        Element rootElement = reportDoc.createElementNS(OWS_NAMESPACE, "ExceptionReport");
+        reportDoc.appendChild(rootElement);
 
-		Attr languageAttribute = reportDoc.createAttribute("language");
-		languageAttribute.setNodeValue("en");
-		rootElement.setAttributeNode(languageAttribute);
+        Attr versionAttribute = reportDoc.createAttribute("version");
+        versionAttribute.setNodeValue("1.0.0");
+        rootElement.setAttributeNode(versionAttribute);
 
-		Element exceptionElement = reportDoc.createElementNS("http://www.opengis.net/ows", "Exception");
-		rootElement.appendChild(exceptionElement);
+        Attr languageAttribute = reportDoc.createAttribute("language");
+        languageAttribute.setNodeValue("en");
+        rootElement.setAttributeNode(languageAttribute);
 
-		Attr exceptionCodeAttribute = reportDoc.createAttribute("exceptionCode");
-		exceptionCodeAttribute.setNodeValue(this.code);
-		exceptionElement.setAttributeNode(exceptionCodeAttribute);
+        Element exceptionElement = reportDoc.createElementNS(OWS_NAMESPACE, "Exception");
+        rootElement.appendChild(exceptionElement);
 
-		if (this.locator != null) {
-			Attr locatorAttribute = reportDoc.createAttribute("locator");
-			locatorAttribute.setNodeValue(this.locator);
-			exceptionElement.setAttributeNode(locatorAttribute);
-		}
-		
-		Element exceptionTextElement = reportDoc.createElementNS("http://www.opengis.net/ows", "ExceptionText");
-		exceptionTextElement.setTextContent(this.getMessage());
-		exceptionElement.appendChild(exceptionTextElement);		
+        Attr exceptionCodeAttribute = reportDoc.createAttribute("exceptionCode");
+        exceptionCodeAttribute.setNodeValue(this.code);
+        exceptionElement.setAttributeNode(exceptionCodeAttribute);
 
-		return reportDoc;
-	}
+        if (this.locator != null) {
+            Attr locatorAttribute = reportDoc.createAttribute("locator");
+            locatorAttribute.setNodeValue(this.locator);
+            exceptionElement.setAttributeNode(locatorAttribute);
+        }
 
-	/**
-	 * Creates an error message in SOAP Fault XML structure that complies to the schema which
-	 * is defined by the W3C (see also http://www.w3.org/TR/soap12-part1/#soapfault)
+        Element exceptionTextElement = reportDoc.createElementNS(OWS_NAMESPACE, "ExceptionText");
+        exceptionTextElement.setTextContent(this.getMessage());
+        exceptionElement.appendChild(exceptionTextElement);
 
-	 * @return The complete XML document containing the error report
-	 * @throws Exception
-	 */
-	public Document toSoapExceptionReport() throws Exception {
-		Document reportDoc = this.createDocument();
+        return reportDoc;
+    }
 
-		Element faultElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Fault");
-		reportDoc.appendChild(faultElement);
+    /**
+     * Creates an error message in SOAP Fault XML structure that complies to the schema which
+     * is defined by the W3C (see also http://www.w3.org/TR/soap12-part1/#soapfault)
 
-		Element codeElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Code");
-		faultElement.appendChild(codeElement);
-		Element codeValueElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Value");
-		// this is not a valid code (see http://www.w3.org/TR/soap12-part1/#faultcodes)
-		codeValueElement.setTextContent("unknown");
-		codeElement.appendChild(codeValueElement);
+     * @return The complete XML document containing the error report
+     * @throws Exception
+     */
+    public Document toSoapExceptionReport() throws Exception {
+        Document reportDoc = this.createDocument();
 
-		Element reasonElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Reason");
-		faultElement.appendChild(reasonElement);
-		Element reasonTextElement = reportDoc.createElement("Text");
-		reasonTextElement.setTextContent("exceptionText: "+this.getMessage()+
-				" exceptionCode: "+this.code+" locator: "+this.locator);
-		Attr langAttribute = reportDoc.createAttribute("xml:lang");
-		langAttribute.setNodeValue("en-US");
-		reasonTextElement.setAttributeNode(langAttribute);
-		reasonElement.appendChild(reasonTextElement);
+        Element faultElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Fault");
+        reportDoc.appendChild(faultElement);
 
-		// add the xml report as Detail
-		Element detailElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Detail");
-		detailElement.appendChild(reportDoc.adoptNode(this.toXmlExceptionReport().getLastChild()));
-		faultElement.appendChild(detailElement);
+        Element codeElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Code");
+        faultElement.appendChild(codeElement);
+        Element codeValueElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Value");
+        // this is not a valid code (see http://www.w3.org/TR/soap12-part1/#faultcodes)
+        codeValueElement.setTextContent("unknown");
+        codeElement.appendChild(codeValueElement);
 
-		return reportDoc;
-	}
+        Element reasonElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Reason");
+        faultElement.appendChild(reasonElement);
+        Element reasonTextElement = reportDoc.createElement("Text");
+        reasonTextElement.setTextContent("exceptionText: "+this.getMessage()+
+                " exceptionCode: "+this.code+" locator: "+this.locator);
+        Attr langAttribute = reportDoc.createAttribute("xml:lang");
+        langAttribute.setNodeValue("en-US");
+        reasonTextElement.setAttributeNode(langAttribute);
+        reasonElement.appendChild(reasonTextElement);
 
-	/**
-	 * Create an xml document
-	 * @return Document
-	 * @throws Exception
-	 */
-	protected Document createDocument() throws Exception {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = dbf.newDocumentBuilder();
-		Document document = docBuilder.newDocument();
-		return document;
-	}
+        // add the xml report as Detail
+        Element detailElement = reportDoc.createElementNS("http://www.w3.org/2003/05/soap-envelope", "Detail");
+        detailElement.appendChild(reportDoc.adoptNode(this.toXmlExceptionReport().getLastChild()));
+        faultElement.appendChild(detailElement);
+
+        return reportDoc;
+    }
+
+    /**
+     * Create an xml document
+     * @return Document
+     * @throws Exception
+     */
+    protected Document createDocument() throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+        Document document = docBuilder.newDocument();
+        return document;
+    }
 }

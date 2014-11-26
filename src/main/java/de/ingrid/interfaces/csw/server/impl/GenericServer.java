@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -52,6 +52,7 @@ import org.w3c.dom.NodeList;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
@@ -77,6 +78,8 @@ public class GenericServer implements CSWServer {
     /** Tool for evaluating xpath **/
     private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
+    private static final String RESPONSE_NAMESPACE = Namespace.CSW_2_0_2.getQName().getNamespaceURI();
+
     /**
      * The Searcher instance to use for searching records
      */
@@ -85,7 +88,7 @@ public class GenericServer implements CSWServer {
 
     /**
      * Set the Searcher instance
-     * 
+     *
      * @param searcher
      */
     public void setSearcher(Searcher searcher) {
@@ -153,23 +156,23 @@ public class GenericServer implements CSWServer {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             DOMImplementation domImpl = docBuilder.getDOMImplementation();
-            Document doc = domImpl.createDocument("http://www.opengis.net/cat/csw/2.0.2", "csw:GetRecordsResponse",
+            Document doc = domImpl.createDocument(RESPONSE_NAMESPACE, "csw:GetRecordsResponse",
                     null);
-            
-            Element searchStatus = doc.createElementNS("http://www.opengis.net/cat/csw/2.0.2", "csw:SearchStatus");
-            
+
+            Element searchStatus = doc.createElementNS(RESPONSE_NAMESPACE, "csw:SearchStatus");
+
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             df.setTimeZone(TimeZone.getTimeZone("ThreeLetterISO8601TimeZone"));
             searchStatus.setAttribute("timestamp", df.format(new Date()));
             doc.getDocumentElement().appendChild(searchStatus);
-            
-            Element searchResults = doc.createElementNS("http://www.opengis.net/cat/csw/2.0.2", "csw:SearchResults");
+
+            Element searchResults = doc.createElementNS(RESPONSE_NAMESPACE, "csw:SearchResults");
             searchResults.setAttribute("elementSet", request.getQuery().getElementSetName().name().toLowerCase());
             searchResults.setAttribute("numberOfRecordsMatched", String.valueOf(result.getTotalHits()));
             searchResults.setAttribute("numberOfRecordsReturned", String.valueOf((result.getResults() == null) ? 0
                     : result.getResults().size()));
             int nextRecord = query.getStartPosition() + ((result.getResults() == null) ? 0 : result.getResults().size());
-            if (nextRecord > result.getTotalHits()) { 
+            if (nextRecord > result.getTotalHits()) {
                 nextRecord = 0;
             }
             searchResults.setAttribute("nextRecord", String.valueOf(nextRecord));
@@ -202,7 +205,7 @@ public class GenericServer implements CSWServer {
             docFactory.setNamespaceAware(true);
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             DOMImplementation domImpl = docBuilder.getDOMImplementation();
-            Document doc = domImpl.createDocument("http://www.opengis.net/cat/csw/2.0.2", "csw:GetRecordByIdResponse",
+            Document doc = domImpl.createDocument(RESPONSE_NAMESPACE, "csw:GetRecordByIdResponse",
                     null);
             if (result.getResults() != null) {
                 Element rootElement = doc.getDocumentElement();
@@ -222,7 +225,7 @@ public class GenericServer implements CSWServer {
     @Override
     public void destroy() {
         try {
-            searcher.stop();
+            this.searcher.stop();
         } catch (Exception e) {
             log.error("Error closing searcher.", e);
         }
@@ -230,7 +233,7 @@ public class GenericServer implements CSWServer {
 
     /**
      * Get a Document from the configured resources in beans.xml
-     * 
+     *
      * @param key
      *            One of the keys of the map defined in
      *            ConfigurationKeys.CSW_RESOURCES
@@ -243,17 +246,17 @@ public class GenericServer implements CSWServer {
     /**
      * Get a Document from a class path location. The actual name of the file is
      * retrieved from the config.properties file.
-     * 
+     *
      * With variant a specific variant (like a localization) can be retrieved.
      * The file name is extended by the variant in the form
      * [name]_[variant].[extension].
-     * 
+     *
      * If the variant could not be retrieved, the base file is returned as a
      * fall back.
-     * 
+     *
      * The content is cached. The cache can be controlled by the
      * config.properties entry 'cache.enable'.
-     * 
+     *
      * @param key
      *            One of the keys config.properties, defining the actual
      *            filename to be retrieved.
