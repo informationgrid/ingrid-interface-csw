@@ -43,6 +43,7 @@ import de.ingrid.interfaces.csw.domain.constants.ConstraintLanguage;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
+import de.ingrid.interfaces.csw.domain.constants.ResultType;
 import de.ingrid.interfaces.csw.domain.constants.TypeName;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
@@ -78,6 +79,7 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
     private static final String OUTPUTSCHEMA_PARAM = "OUTPUTSCHEMA";
     private static final String CONSTRAINT_PARAM = "CONSTRAINT";
     private static final String TYPENAMES_PARAM = "TYPENAMES";
+    private static final String RESULTTYPE_PARAM = "RESULTTYPE";
     private static final String MAXRECORDS_PARAM = "MAXRECORDS";
     private static final String STARTPOSITION_PARAM = "STARTPOSITION";
     private static final String SORTBY_PARAM = "SORTBY";
@@ -247,6 +249,11 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         } else {
                             this.query.setTypeNames(null);
                         }
+                    }
+                    // extract the result type
+                    if (this.requestParams.containsKey(RESULTTYPE_PARAM)) {
+                        String resultTypeStr = this.requestParams.get(RESULTTYPE_PARAM);
+                        this.query.setResultType(ResultType.valueOf(resultTypeStr.toUpperCase()));
                     }
 
                     // extract the maxRecords

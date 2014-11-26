@@ -54,6 +54,7 @@ import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
+import de.ingrid.interfaces.csw.domain.constants.ResultType;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
@@ -178,7 +179,7 @@ public class GenericServer implements CSWServer {
             searchResults.setAttribute("nextRecord", String.valueOf(nextRecord));
             doc.getDocumentElement().appendChild(searchResults);
 
-            if (result.getResults() != null) {
+            if (query.getResultType() == ResultType.RESULTS && result.getResults() != null) {
                 for (CSWRecord record : result.getResults()) {
                     Node recordNode = record.getDocument().getFirstChild();
                     doc.adoptNode(recordNode);

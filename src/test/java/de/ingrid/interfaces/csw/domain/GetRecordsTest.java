@@ -58,6 +58,7 @@ public class GetRecordsTest extends OperationTestBase {
         Map<String, String> additionalParams = new HashMap<String, String>() {{
             this.put("CONSTRAINT", constraint);
             this.put("SORTBY", sortBy);
+            this.put("resultType", "results");
         }};
         // expectations
         this.setupDefaultGetExpectations(context, request, response, result, requestStr, additionalParams);
@@ -101,6 +102,7 @@ public class GetRecordsTest extends OperationTestBase {
         Map<String, String> additionalParams = new HashMap<String, String>() {{
             this.put("CONSTRAINT", constraint);
             this.put("SORTBY", sortBy);
+            this.put("resultType", "results");
         }};
         // expectations
         this.setupDefaultGetExpectations(context, request, response, result, requestStr, additionalParams);
@@ -126,6 +128,7 @@ public class GetRecordsTest extends OperationTestBase {
         Document record = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(0)));
         assertEquals("655e5998-a20e-66b5-c888-00005553421", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
     }
+
     /**
      * Test GetRecords with SOAP method using Soap encoding
      * @throws Exception
@@ -161,5 +164,40 @@ public class GetRecordsTest extends OperationTestBase {
         assertEquals(1, recordNodes.getLength());
         Document record = StringUtils.stringToDocument(StringUtils.nodeToString(recordNodes.item(0)));
         assertEquals("655e5998-a20e-66b5-c888-00005553421", xpath.getString(record, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+    }
+
+    /**
+     * Test GetRecords with SOAP method using Soap encoding with result type 'hits'
+     * @throws Exception
+     */
+    public void testSoapGetRecordsRequestHits() throws Exception {
+
+        StringBuffer result = new StringBuffer();
+        Mockery context = new Mockery();
+        HttpServletRequest request = context.mock(HttpServletRequest.class);
+        HttpServletResponse response = context.mock(HttpServletResponse.class);
+        String requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_HITS_SOAP);
+
+        // expectations
+        this.setupDefaultSoapExpectations(context, request, response, result, requestStr);
+
+        // make request
+        CSWServlet servlet = this.getServlet();
+        servlet.doPost(request, response);
+
+        context.assertIsSatisfied();
+
+        // check csw payload
+        assertTrue("The response length is > 0.", result.length() > 0);
+        Document responseDoc = StringUtils.stringToDocument(result.toString());
+        Node payload = xpath.getNode(responseDoc, "/soapenv:Envelope/soapenv:Body").getLastChild();
+
+        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+        assertEquals("The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName());
+
+        // check records (none expected for resultType HITS)
+        Node searchResult = xpath.getNode(responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults");
+        NodeList recordNodes = searchResult.getChildNodes();
+        assertEquals(0, recordNodes.getLength());
     }
 }

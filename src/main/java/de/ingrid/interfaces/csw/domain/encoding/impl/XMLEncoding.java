@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -46,6 +46,7 @@ import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
+import de.ingrid.interfaces.csw.domain.constants.ResultType;
 import de.ingrid.interfaces.csw.domain.constants.TypeName;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
@@ -61,7 +62,7 @@ import de.ingrid.utils.xpath.XPathUtils;
 
 /**
  * XMLEncoding deals with messages defined in the XML format.
- * 
+ *
  * @author ingo herwig <ingo@wemove.com>
  */
 public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
@@ -119,7 +120,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
     /**
      * Extract the request body from the request. Subclasses will override this.
-     * 
+     *
      * @param request
      * @return Element
      */
@@ -219,7 +220,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
     /**
      * Get a CSWQuery from a request node.
-     * 
+     *
      * @param requestNode
      * @return
      * @throws CSWException
@@ -288,7 +289,6 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     if (elementSetNameStr != null) {
                         this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
                     }
-
                     // extract the typeNames
                     String typeNamesStr = this.xpath.getString(requestNode, "/csw:GetRecords/csw:Query/@typeNames");
                     if (typeNamesStr != null) {
@@ -300,6 +300,11 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         this.query.setTypeNames(typeNames);
                     } else {
                         this.query.setTypeNames(null);
+                    }
+                    // extract the result type
+                    String resultTypeStr = this.xpath.getString(requestNode, "/csw:GetRecords/@resultType");
+                    if (resultTypeStr != null) {
+                        this.query.setResultType(ResultType.valueOf(resultTypeStr.toUpperCase()));
                     }
 
                     // extract the maxRecords
@@ -315,7 +320,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         errorMsg.append("Supported values: positive integer\n");
                         throw new CSWInvalidParameterValueException(errorMsg.toString(), "maxRecords");
                     }
-                    
+
                     this.query.setMaxRecords(maxRecords);
 
                     // extract the startPosition
@@ -365,7 +370,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
     /**
      * Get the request body
-     * 
+     *
      * @return Node
      */
     protected Node getRequestBody() {
@@ -374,7 +379,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
     /**
      * Set the request body
-     * 
+     *
      * @param requestBody
      *            The requestBody node to set
      */

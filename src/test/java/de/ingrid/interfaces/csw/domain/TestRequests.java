@@ -62,7 +62,7 @@ public final class TestRequests {
     public static final String GETRECORDS_9_SOAP = "src/test/resources/requests/get_records_9_soap.xml";
     public static final String GETRECORDS_10_SOAP = "src/test/resources/requests/get_records_10_soap.xml";
 
-    public static final String GETRECORDS_HITS_SOAP = "get_records_hits_soap.xml";
+    public static final String GETRECORDS_HITS_SOAP = "src/test/resources/requests/get_records_hits_soap.xml";
 
     public static final String GETRECORDSINVALID_1_SOAP = "src/test/resources/requests/get_records_invalid_1_soap.xml";
     public static final String GETRECORDSINVALID_2_SOAP = "src/test/resources/requests/get_records_invalid_2_soap.xml";
