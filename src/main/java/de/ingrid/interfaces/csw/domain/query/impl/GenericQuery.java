@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -78,7 +78,7 @@ public class GenericQuery implements Serializable, CSWQuery {
         this.outputSchema = Namespace.GMD;
         this.outputFormat = OutputFormat.APPLICATION_XML;
         this.version = ConfigurationKeys.CSW_VERSION_2_0_2;
-        this.elementSetName = ElementSetName.SUMMARY;
+        this.elementSetName = ElementSetName.FULL;
         this.typeNames = new TypeName[] { TypeName.RECORD };
         this.resultType = ResultType.HITS;
         this.constraintLanguage = ConstraintLanguage.FILTER;
@@ -234,7 +234,7 @@ public class GenericQuery implements Serializable, CSWQuery {
 
     @Override
     public Document getSort() {
-        return sort;
+        return this.sort;
     }
 
     @Override

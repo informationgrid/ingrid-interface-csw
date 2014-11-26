@@ -140,4 +140,43 @@ public class GetRecordByIdTest extends OperationTestBase {
 
         assertTrue("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
     }
+
+    /**
+     * Test GetRecordById with SOAP method using Soap encoding using the default elementSet
+     * @throws Exception
+     */
+    public void testSoapGetRecordByIdRequestDefaultElementSet() throws Exception {
+
+        // do request with elementSetName FULL first
+        StringBuffer result1 = new StringBuffer();
+        Mockery context1 = new Mockery();
+        HttpServletRequest request1 = context1.mock(HttpServletRequest.class);
+        HttpServletResponse response1 = context1.mock(HttpServletResponse.class);
+        String requestStr1 = TestRequests.getRequest(TestRequests.GETRECORDBYID_SOAP);
+
+        // expectations
+        this.setupDefaultSoapExpectations(context1, request1, response1, result1, requestStr1);
+
+        // make request
+        CSWServlet servlet = this.getServlet();
+        servlet.doPost(request1, response1);
+        context1.assertIsSatisfied();
+
+        // do request without elementSetParameter (should default to FULL)
+        StringBuffer result2 = new StringBuffer();
+        Mockery context2 = new Mockery();
+        HttpServletRequest request2 = context2.mock(HttpServletRequest.class);
+        HttpServletResponse response2 = context2.mock(HttpServletResponse.class);
+        String requestStr2 = TestRequests.getRequest(TestRequests.GETRECORDBYID_SOAP_DEFAULT_ELEMENTSET);
+
+        // expectations
+        this.setupDefaultSoapExpectations(context2, request2, response2, result2, requestStr2);
+
+        // make request
+        servlet.doPost(request2, response2);
+        context2.assertIsSatisfied();
+
+        // check result
+        assertEquals("The response is the same as elementSetName FULL response.", result1.toString(), result2.toString());
+    }
 }
