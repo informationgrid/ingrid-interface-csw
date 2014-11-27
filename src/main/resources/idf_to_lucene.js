@@ -132,6 +132,7 @@ var transformationDescriptions = [
 			"xpath":"//gmd:fileIdentifier/gco:CharacterString"
 		},
 		{	"indexField":"modified",
+			"tokenized":false,
 			"xpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]"
 		},
 		{	"indexField":"type",

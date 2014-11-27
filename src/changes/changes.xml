@@ -29,6 +29,9 @@
   </properties>
   <body>
     <release version="3.5-SNAPSHOT" date="2014-xx-xx" description="Release InGrid 3.5">
+        <action type="fix" dev="wemove" issue="INGRID-2364">
+            Fix date comparable queries, do not analyze field 'modified'.
+        </action>
         <action type="add" dev="wemove" issue="REDMINE-524">
             Added license header to all source files for Open Source migration.
         </action>

@@ -36,6 +36,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.interfaces.csw.domain.constants.ResultType;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
@@ -115,6 +116,7 @@ public class GetRecordsModifiedTest extends OperationTestBase {
 
         Map<String, String> additionalParams = new HashMap<String, String>() {{
             this.put("CONSTRAINT", constraint);
+            this.put("RESULTTYPE",ResultType.RESULTS.toString());
         }};
         // expectations
         this.setupDefaultGetExpectations(context, request, response, result, requestStr, additionalParams);
