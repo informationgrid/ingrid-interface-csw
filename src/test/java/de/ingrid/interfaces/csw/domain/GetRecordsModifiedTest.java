@@ -96,6 +96,9 @@ public class GetRecordsModifiedTest extends OperationTestBase {
 
         // <  2009-12-22: 0
         assertEquals(0, this.makeRequest("2009-12-22", "PropertyIsLessThan"));
+
+        // =  2010-01-22: 1
+        assertEquals(1, this.makeRequest("2010-01-22", "PropertyIsEqualTo"));
     }
 
     /**

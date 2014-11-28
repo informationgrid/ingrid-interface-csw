@@ -390,6 +390,10 @@ public class LuceneFilterParser implements FilterParser {
 
                 // property == value -> property:"value"
                 if (operator.equals("PropertyIsEqualTo")) {
+                    // add '*' to date fields to return also parts of the  Dates AND to disable analyzing of the date field
+                    if (queryableType instanceof Date && !literal.endsWith("*")) {
+                        literal = literal.concat("*");
+                    }
                     response.append(propertyNameLocal).append(":").append(this.maskPhrase(literal));
                 }
                 // property != value -> metafile:doc NOT property:"value"
