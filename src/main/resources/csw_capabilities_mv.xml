@@ -93,6 +93,7 @@
         <ows:Operation name="GetRecords">
             <ows:DCP>
                 <ows:HTTP>
+                    <ows:Get xlink:href="http://portalu.de/csw202/partner/mv" />
                     <ows:Post xlink:href="http://portalu.de/csw202/partner/mv">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>SOAP</ows:Value>

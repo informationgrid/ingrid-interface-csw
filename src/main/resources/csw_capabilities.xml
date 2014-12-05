@@ -91,6 +91,7 @@
 		<ows:Operation name="GetRecords">
 			<ows:DCP>
 				<ows:HTTP>
+                    <ows:Get xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH" />
 					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_PATH">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
@@ -211,7 +212,6 @@
 			</ows:Parameter>
 			<ows:Parameter name="version">
 				<ows:Value>2.0.2</ows:Value>
-				<ows:Value>2.0.0</ows:Value>
 			</ows:Parameter>
 		</ows:Operation>
 		<ows:Operation name="DescribeRecord">
