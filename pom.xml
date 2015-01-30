@@ -334,8 +334,10 @@
 				<configuration>
 					<excludes>
 						<exclude>**/js/jquery**</exclude>
-						<exclude>**/test/resources/**/*.xml</exclude>
-						<exclude>**/log4j.properties</exclude>
+						<exclude>**/*.properties</exclude>
+						<exclude>**/*.json</exclude>
+						<exclude>**/*.sql</exclude>
+						<exclude>**/*.xml</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
