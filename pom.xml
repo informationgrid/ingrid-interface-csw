@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>de.ingrid</groupId>
 		<artifactId>ingrid-releases-pom</artifactId>
@@ -9,13 +8,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-interface-csw</artifactId>
-	<version>3.5.0-SNAPSHOT</version>
+	<version>3.5.0</version>
 	<packaging>jar</packaging>
 	<name>ingrid-interface-csw</name>
 	<scm>
 		<connection>scm:git:git@github.com:informationgrid/ingrid-interface-csw.git</connection>
 		<developerConnection>scm:git:git@github.com:informationgrid/ingrid-interface-csw.git</developerConnection>
-	</scm>
+	  <tag>ingrid-interface-csw-3.5.0</tag>
+  </scm>
 	<repositories>
 		<!-- Repo of parent pom needed, parent pom may not be installed locally 
 			yet -->
