@@ -3,7 +3,7 @@
   **************************************************-
   ingrid-interface-csw
   ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2015 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -21,7 +21,6 @@
   limitations under the Licence.
   **************************************************#
   -->
-
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"

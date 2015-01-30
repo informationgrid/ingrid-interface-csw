@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-interface-csw
   ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2015 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -29,7 +29,7 @@
 	    </c:if>
 		<input type="text" name="pattern" value="${pattern}" />
 		<br/>
-		<label>Minute(0-59) Hour(0-23) Day(1-31) Month(0-11) Week day(1-7)</label>
+		<label>Minute(0-59)ï¿½Hour(0-23)ï¿½Day(1-31)ï¿½Month(0-11)ï¿½Week day(1-7)</label>
 		<br />
 		<span>A Cron Pattern. More information <a target="_blank" href="http://help.sap.com/saphelp_xmii120/helpdata/de/44/89a17188cc6fb5e10000000a155369/content.htm">here</a>.</span>
 	</td>
