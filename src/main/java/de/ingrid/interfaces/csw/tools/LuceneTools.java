@@ -34,6 +34,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
+import org.springframework.stereotype.Service;
 
 /**
  * Filters a string with the injected analyzer. This class is used in
@@ -43,6 +44,7 @@ import org.apache.lucene.util.Version;
  * @author joachim@wemove.com
  * 
  */
+@Service
 public class LuceneTools {
 	
 	private Analyzer fAnalyzer = null;

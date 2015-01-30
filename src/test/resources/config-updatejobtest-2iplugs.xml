@@ -7,7 +7,7 @@
           <timeout>1000</timeout>
           <pause>10</pause>
           <recordsPerCall>100</recordsPerCall>
-          <queryString>iplugs:&quot;/kug-group:kug-iplug-udk-db_uba&quot; ranking:score t01_object.obj_id:00*</queryString>
+          <queryString>iplugs:&quot;/ingrid-group:iplug-dsc-igc_test&quot; ranking:score t01_object.obj_id:00*</queryString>
         </request>
       </requestDefinitions>
       <cache>
@@ -23,7 +23,7 @@
           <timeout>2000</timeout>
           <pause>20</pause>
           <recordsPerCall>200</recordsPerCall>
-          <queryString>iplugs:&quot;/ingrid-group:iplug-csw-dsc-be&quot; ranking:score t01_object.obj_id:00*</queryString>
+          <queryString>iplugs:&quot;/ingrid-group:iplug-dsc-mapclient-test&quot; ranking:score t01_object.obj_id:00*</queryString>
         </request>
       </requestDefinitions>
       <cache>
