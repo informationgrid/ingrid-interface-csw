@@ -186,5 +186,10 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
 			}
         }
 	}
+	
+	// setter used for test!
+	public void setLuceneTools(LuceneTools luceneTools) {
+        this.luceneTools = luceneTools;
+    }
     
 }

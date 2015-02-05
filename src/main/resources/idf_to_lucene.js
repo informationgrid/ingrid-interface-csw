@@ -410,10 +410,19 @@ function transformGeneric(val, mappings, caseSensitive) {
 function mapGeographicElements(recordNode) {
 	var boundingBoxes = XPATH.getNodeList(recordNode, "//gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox");
 	if (hasValue(boundingBoxes)) {
-		var westList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
-		var eastList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
-		var southList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
-		var northList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+	    var westList, eastList, southList, northList;
+	    if (javaVersion.indexOf( "1.8" ) === 0) {
+    	    var DoubleArrayType = Java.type("java.lang.Double[]");
+            westList = new DoubleArrayType(boundingBoxes.getLength());
+            eastList = new DoubleArrayType(boundingBoxes.getLength());
+            southList = new DoubleArrayType(boundingBoxes.getLength());
+            northList = new DoubleArrayType(boundingBoxes.getLength());
+	    } else {
+	        westList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+	        eastList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+	        southList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+	        northList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
+	    }
 		for (i=0; i<boundingBoxes.getLength(); i++ ) {
 			if (hasValue(boundingBoxes.item(i)) && hasValue(XPATH.getString(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"))) {
 				westList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal");
