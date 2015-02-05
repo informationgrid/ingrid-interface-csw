@@ -70,7 +70,12 @@
 					</tr>
 					<tr>
 						<td class="leftCol">&nbsp;</td>
-						<td><input type="submit" value="Search"/></td>
+						<td>
+                            <input type="submit" value="Search"/>
+                            <c:if test="${error != null}">
+                                <span class="error">${error}</span>
+                            </c:if>
+                        </td>
 					</tr>
 				</table>
 			</form>

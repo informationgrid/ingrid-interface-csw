@@ -150,7 +150,8 @@ public class SearchTestController {
                     .getTotalHits() : cswQuery.getMaxRecords());
             modelMap.addAttribute("totalHitCount", results.getTotalHits());
         } catch (Exception e) {
-            throw new RuntimeException("Error performing query: ", e);
+            //throw new RuntimeException("Error performing query: ", e);
+            modelMap.addAttribute("error", e.getLocalizedMessage());
         }
 
         return TEMPLATE_SEARCH_VIEW;
