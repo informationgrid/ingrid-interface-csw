@@ -87,7 +87,12 @@ public class IsoIndexManager {
             recordCount += cache.getCachedIds().size();
         }
 
-        this.indexer.run(recordCacheList);
+        try {
+            this.indexer.run(recordCacheList);
+        } catch( Exception ex) {
+            this.statusProvider.addState( "error-index", "Could not index documents! Please check the logs. Old index will be used meanwhile.", StatusProvider.Classification.ERROR );
+            return;
+        }
         log.info("Transforming " + recordCount + " idf documents into ISO element sets full, summary, brief.");
         // map ingrid records to csw records
         this.cswRecordMapper.run(recordCacheList);

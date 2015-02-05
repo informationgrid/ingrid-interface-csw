@@ -41,12 +41,13 @@ package org.geotoolkit.lucene.index;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
-
-// JTS dependencies
-import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 
 // Apache Lucene dependencies
 import org.apache.lucene.analysis.Analyzer;
@@ -58,7 +59,6 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.Version;
-
 // Geotoolkit dependencies
 import org.geotoolkit.geometry.Envelopes;
 import org.geotoolkit.geometry.GeneralEnvelope;
@@ -71,11 +71,20 @@ import org.geotoolkit.lucene.filter.LuceneOGCFilter;
 import org.geotoolkit.lucene.tree.NamedEnvelope;
 import org.geotoolkit.referencing.CRS;
 import org.geotoolkit.util.FileUtilities;
-
 // GeoAPI dependencies
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.TransformException;
 import org.opengis.util.FactoryException;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.CoordinateSequence;
+import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.geom.Geometry;
+// JTS dependencies
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 
 /**
  * An abstract lucene Indexer used to create and writer lucene index.
@@ -102,7 +111,7 @@ public abstract class AbstractIndexer<E> extends IndexLucene {
      * A flag to stop the indexation going on
      */
     protected static boolean stopIndexing = false;
-
+    
     /**
      * A list of services id
      */
@@ -259,6 +268,7 @@ public abstract class AbstractIndexer<E> extends IndexLucene {
                         nbEntries++;
                     } catch (IndexingException ex) {
                         LOGGER.warning("Metadata IO exeption while indexing metadata: " + identifier + " " + ex.getMessage() + "\nmove to next metadata...");
+                        throw(ex);
                     }
                 } else {
                      LOGGER.info("Index creation stopped after " + (System.currentTimeMillis() - time) + " ms for service:" + serviceID);
@@ -291,8 +301,9 @@ public abstract class AbstractIndexer<E> extends IndexLucene {
      *
      * @param writer An Lucene index writer.
      * @param object The object to index.
+ * @throws IndexingException 
      */
-    public void indexDocument(final IndexWriter writer, final E meta) {
+    public void indexDocument(final IndexWriter writer, final E meta) throws IndexingException {
         try {
             final int docId = writer.maxDoc();
             //adding the document in a specific model. in this case we use a MDwebDocument.
@@ -301,6 +312,7 @@ public abstract class AbstractIndexer<E> extends IndexLucene {
 
         } catch (IndexingException ex) {
             LOGGER.log(Level.WARNING, "indexingException " +ex.getMessage(), ex);
+            throw(ex);
         } catch (IOException ex) {
             LOGGER.log(Level.WARNING, IO_SINGLE_MSG + ex.getMessage(), ex);
         }
