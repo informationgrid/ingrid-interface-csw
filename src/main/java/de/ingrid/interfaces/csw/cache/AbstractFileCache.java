@@ -434,7 +434,9 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
             // then remove the last directory
             tmpDir.delete();
             File workDir = this.getWorkPath();
-            originalDir.renameTo(tmpDir);
+            if (!originalDir.renameTo(tmpDir)) {
+                throw new IOException("Could not rename '"+originalDir+"' to '"+tmpDir+"'.");
+            }
             if (!workDir.renameTo(originalDir)) {
                 throw new IOException("Could not rename '"+workDir+"' to '"+originalDir+"'.");
             }
