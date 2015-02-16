@@ -435,7 +435,9 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
             tmpDir.delete();
             File workDir = this.getWorkPath();
             originalDir.renameTo(tmpDir);
-            workDir.renameTo(originalDir);
+            if (!workDir.renameTo(originalDir)) {
+                throw new IOException("Could not rename '"+workDir+"' to '"+originalDir+"'.");
+            }
             FileUtils.deleteRecursive(tmpDir);
 
             this.inTransaction = false;
