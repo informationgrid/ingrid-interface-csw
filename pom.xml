@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>de.ingrid</groupId>
 		<artifactId>ingrid-releases-pom</artifactId>
-		<version>3.4.0</version>
+		<version>3.5.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
@@ -12,24 +12,25 @@
 	<packaging>jar</packaging>
 	<name>ingrid-interface-csw</name>
 	<scm>
-		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/3.4.x</connection>
-		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-interface-csw/branches/3.4.x</developerConnection>
+        <connection>scm:git:git@github.com:informationgrid/ingrid-interface-csw.git</connection>
+        <developerConnection>scm:git:git@github.com:informationgrid/ingrid-interface-csw.git</developerConnection>
+        <tag>3.4.x</tag>
 	</scm>
 	<repositories>
 		<!--
 			Repo of parent pom needed, parent pom may not be installed locally
 			yet
         -->
-		<repository>
-			<id>de.ingrid.all</id>
-			<name>Maven Repo InGrid</name>
-			<url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
-		</repository>
-		<repository>
-			<id>geotoolkit</id>
-			<name>Geotoolkit repository</name>
-			<url>http://maven.geotoolkit.org/</url>
-		</repository>
+        <repository>
+            <id>de.ingrid.all</id>
+            <name>Maven Repo InGrid</name>
+            <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
+        </repository>
+        <repository>
+            <id>geotoolkit</id>
+            <name>Geotoolkit repository</name>
+            <url>http://maven.geotoolkit.org/</url>
+        </repository>
 	</repositories>
 
 	<dependencyManagement>
@@ -279,6 +280,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -288,6 +290,7 @@
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
+            <version>2.1_3</version>
         </dependency>
 	</dependencies>
 	<build>
