@@ -21,6 +21,7 @@ import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
+import de.ingrid.interfaces.csw.mapping.IPreCommitHandler;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
 import de.ingrid.interfaces.csw.tools.StringUtils;
@@ -44,7 +45,7 @@ public class XsltMapper implements CSWRecordMapper {
      */
     @Autowired
     private ConfigurationProvider configurationProvider;
-    
+
     @Autowired
     private StatusProvider statusProvider;
 
@@ -58,6 +59,8 @@ public class XsltMapper implements CSWRecordMapper {
      */
     protected CSWRecordCache cache;
 
+    private IPreCommitHandler preCommitHandler;
+
     /**
      * The xslt style sheet for csw iso19139
      */
@@ -65,14 +68,13 @@ public class XsltMapper implements CSWRecordMapper {
     private static final File xslSummary = new File("iso-summary.xsl");
     private static final File xslBrief = new File("iso-brief.xsl");
 
-    
     @Override
     public void run(List<RecordCache> recordCacheList) throws Exception {
         if (configurationProvider != null) {
             this.cache = new CSWRecordCache();
             this.cache.setCachePath(configurationProvider.getRecordCachePath());
         }
-        
+
         DocumentCache<CSWRecord> tmpCache = this.cache.startTransaction(false);
         try {
             // iterate over all caches and records
@@ -81,11 +83,10 @@ public class XsltMapper implements CSWRecordMapper {
             for (RecordCache recordCache : recordCacheList) {
                 total += recordCache.getCachedIds().size();
             }
-            
-            
+
             for (RecordCache recordCache : recordCacheList) {
                 for (Serializable cacheId : recordCache.getCachedIds()) {
-                    statusProvider.addState("iso-mapper", "Mapping records to ISO ... [" +idx + "/" + total + "].");
+                    statusProvider.addState("iso-mapper", "Mapping records to ISO ... [" + idx + "/" + total + "].");
                     idx++;
                     for (ElementSetName elementSetName : ElementSetName.values()) {
                         if (log.isDebugEnabled()) {
@@ -96,6 +97,9 @@ public class XsltMapper implements CSWRecordMapper {
                         tmpCache.put(cswRecord);
                     }
                 }
+            }
+            if (preCommitHandler != null) {
+                preCommitHandler.beforeCommit(tmpCache);
             }
             tmpCache.commitTransaction();
         } catch (Exception e) {
@@ -199,9 +203,14 @@ public class XsltMapper implements CSWRecordMapper {
         Node full = this.xslt.transform(idfDoc, xslFull);
 
         if (log.isDebugEnabled()) {
-        	log.debug("First map FULL, mapping result:\n" + XMLUtils.toString((Document)full));
+            log.debug("First map FULL, mapping result:\n" + XMLUtils.toString((Document) full));
         }
 
         return this.xslt.transform(full, xslBrief);
     }
+
+    public void setPreCommitHandler(IPreCommitHandler preCommitHandler) {
+        this.preCommitHandler = preCommitHandler;
+    }
+
 }

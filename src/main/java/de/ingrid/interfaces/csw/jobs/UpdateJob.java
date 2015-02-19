@@ -8,7 +8,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -208,8 +210,12 @@ public class UpdateJob {
         } catch (Exception e) {
             // delete the date file to make sure we do not use a corrupted
             // version
-            if (dateFile.exists())
-                dateFile.delete();
+            if (Files.exists(dateFile.toPath()))
+                try {
+                    Files.delete(dateFile.toPath());
+                } catch (IOException e1) {
+                    log.error("Could not remove " + dateFile + ".",  e1);
+                }
             log.warn("Could not write to " + DATE_FILENAME + ". " + "The update job fetches all records next time.");
         }
     }

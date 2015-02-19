@@ -15,17 +15,26 @@ import de.ingrid.interfaces.csw.search.CSWRecordRepository;
  */
 public interface CSWRecordMapper {
 
-	/**
-	 * Execute the mapping job.
-	 * @throws Exception
-	 */
-	void run(List<RecordCache> recordCacheList) throws Exception;
+    /**
+     * Execute the mapping job.
+     * 
+     * @throws Exception
+     */
+    void run(List<RecordCache> recordCacheList) throws Exception;
 
+    /**
+     * Get the repository containing the mapped records.
+     * 
+     * @return CSWRecordRepository
+     */
+    public CSWRecordRepository getRecordRepository();
 
-	/**
-	 * Get the repository containing the mapped records.
-	 * 
-	 * @return CSWRecordRepository
-	 */
-	public CSWRecordRepository getRecordRepository();
+    /**
+     * Sets the pre commit handler for this mapper. The hander is used to inject
+     * functionality right before the commit action of the mappers document
+     * cache.
+     * 
+     * @param preCommitHandler
+     */
+    public void setPreCommitHandler(IPreCommitHandler preCommitHandler);
 }
