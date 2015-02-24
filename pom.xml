@@ -8,7 +8,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-interface-csw</artifactId>
-	<version>3.4.0.1</version>
+	<version>3.4.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>ingrid-interface-csw</name>
 	<scm>
