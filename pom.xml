@@ -8,13 +8,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-interface-csw</artifactId>
-	<version>3.4.2-SNAPSHOT</version>
+	<version>3.4.0.1</version>
 	<packaging>jar</packaging>
 	<name>ingrid-interface-csw</name>
 	<scm>
         <connection>scm:git:git@github.com:informationgrid/ingrid-interface-csw.git</connection>
         <developerConnection>scm:git:git@github.com:informationgrid/ingrid-interface-csw.git</developerConnection>
-        <tag>3.4.x</tag>
+        <tag>ingrid-interface-csw-3.4.0.1</tag>
 	</scm>
 	<repositories>
 		<!--
