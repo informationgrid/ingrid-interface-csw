@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>de.ingrid</groupId>
 		<artifactId>ingrid-releases-pom</artifactId>
-		<version>3.5.0</version>
+		<version>3.4.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
@@ -26,6 +26,11 @@
             <name>Maven Repo InGrid</name>
             <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
         </repository>
+	    <repository>
+	      <id>de.ingrid.m2</id>
+	      <name>Maven2 Repo InGrid</name>
+	      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
+	    </repository>
         <repository>
             <id>geotoolkit</id>
             <name>Geotoolkit repository</name>
@@ -304,6 +309,11 @@
 					<useProjectReferences>false</useProjectReferences>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.3</version>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
