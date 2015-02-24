@@ -43,6 +43,7 @@ import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
+import de.ingrid.interfaces.csw.mapping.IPreCommitHandler;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
 import de.ingrid.interfaces.csw.tools.StringUtils;
@@ -79,6 +80,8 @@ public class XsltMapper implements CSWRecordMapper {
      * The cache used to store records.
      */
     protected CSWRecordCache cache;
+
+    private IPreCommitHandler preCommitHandler;
 
     /**
      * The xslt style sheet for csw iso19139
@@ -118,6 +121,9 @@ public class XsltMapper implements CSWRecordMapper {
                         tmpCache.put(cswRecord);
                     }
                 }
+            }
+            if (preCommitHandler != null) {
+                preCommitHandler.beforeCommit(tmpCache);
             }
             tmpCache.commitTransaction();
         } catch (Exception e) {
@@ -234,4 +240,9 @@ public class XsltMapper implements CSWRecordMapper {
 
         return this.xslt.transform(full, xslBrief);
     }
+
+    public void setPreCommitHandler(IPreCommitHandler preCommitHandler) {
+        this.preCommitHandler = preCommitHandler;
+    }
+
 }

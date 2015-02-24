@@ -521,5 +521,3 @@ function call_f(f, args) {
         return f();
     }
 }
-
-

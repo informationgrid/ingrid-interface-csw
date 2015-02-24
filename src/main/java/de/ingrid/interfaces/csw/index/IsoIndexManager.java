@@ -25,7 +25,9 @@
  */
 package de.ingrid.interfaces.csw.index;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,11 +38,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.ingrid.interfaces.csw.cache.DocumentCache;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.jobs.UpdateJob;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
+import de.ingrid.interfaces.csw.mapping.IPreCommitHandler;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.search.Searcher;
 import de.ingrid.interfaces.csw.tools.FileUtils;
@@ -53,7 +57,7 @@ import de.ingrid.interfaces.csw.tools.FileUtils;
  *
  */
 @Service
-public class IsoIndexManager {
+public class IsoIndexManager implements IPreCommitHandler {
 
     final protected static Log log = LogFactory.getLog(IsoIndexManager.class);
 
@@ -131,22 +135,29 @@ public class IsoIndexManager {
         this.searcher.start();
     }
 
-    public void activateNewIndex() {
+    /**
+     * Removes the old index directory, waits until the dir was removed and
+     * moves the temporary into 'index'.
+     * 
+     * @throws IOException
+     */
+    public void activateNewIndex() throws IOException {
+
+        Path indexPath = this.searcher.getIndexPath().toPath();
+        Path newIndexPath = this.indexer.getIndexConfigPath().toPath();
+
         // move temporary index to live location
-        if (log.isDebugEnabled()) {
-            log.debug("Remove old index: " + this.searcher.getIndexPath().getAbsolutePath());
+        if (log.isInfoEnabled()) {
+            log.info("Remove old index: " + indexPath);
         }
         if (this.searcher.getIndexPath().exists()) {
-            FileUtils.deleteRecursive(this.searcher.getIndexPath());
+            FileUtils.waitAndDelete(indexPath, 10000);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Rename new index: " + this.indexer.getIndexConfigPath().getAbsolutePath() + " to "
-                    + this.searcher.getIndexPath().getAbsolutePath());
+
+        if (log.isInfoEnabled()) {
+            log.info("Rename new index: " + newIndexPath + " to " + indexPath);
         }
-        if (!this.indexer.getIndexConfigPath().renameTo(this.searcher.getIndexPath())) {
-            log.warn("Could not renam old index: " + this.indexer.getIndexConfigPath().getAbsolutePath() + " to "
-                    + this.searcher.getIndexPath().getAbsolutePath());
-        }
+        FileUtils.waitAndMove(newIndexPath, indexPath, 10000);
     }
 
     /**
@@ -263,4 +274,11 @@ public class IsoIndexManager {
     public void setCswRecordMapper(CSWRecordMapper cswRecordMapper) {
         this.cswRecordMapper = cswRecordMapper;
     }
+    @Override
+    public void beforeCommit(DocumentCache<?> cache) throws Exception {
+        log.info("Stop the searcher instance.");
+        statusProvider.addState("reload-index", "Reload index...");
+        stopSearcher();
+    }
+
 }

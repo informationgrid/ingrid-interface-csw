@@ -32,11 +32,20 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import static java.nio.file.StandardCopyOption.*;
 
 public class FileUtils {
 
@@ -56,13 +65,146 @@ public class FileUtils {
 					deleteRecursive(file);
 				} else {
     				if (!file.delete()) {
-    				    log.warn("Could not delete file: " + file);
+                        log.error("Could not delete file: " + file);
     				}
 				}
 			}
 		}
         if (!src.delete()) {
-            log.warn("Could not delete file: " + src);
+            log.error("Could not delete file: " + src);
+        }
+    }
+
+    /**
+     * Delete a file or directory specified by a {@link Path}. This method uses
+     * the new {@link Files} API.
+     * 
+     * @param path
+     * @throws IOException
+     */
+    public static void deleteRecursive(Path path) throws IOException {
+        deleteRecursive(path, ".*");
+    }
+
+    /**
+     * Delete a file or directory specified by a {@link Path}. This method uses
+     * the new {@link Files} API and allows to specify a regular expression to
+     * remove only files that match that expression.
+     * 
+     * @param path
+     * @param pattern
+     * @throws IOException
+     */
+    public static void deleteRecursive(Path path, final String pattern) throws IOException {
+
+        final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:" + pattern);
+
+        if (!Files.exists(path))
+            return;
+
+        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                if (pattern != null && matcher.matches(file.getFileName())) {
+                    Files.delete(file);
+                }
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                // try to delete the file anyway, even if its attributes
+                // could not be read, since delete-only access is
+                // theoretically possible
+                if (pattern != null && matcher.matches(file.getFileName())) {
+                    Files.delete(file);
+                }
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                if (exc == null) {
+                    if (matcher.matches(dir.getFileName())) {
+                        if (dir.toFile().list().length > 0) {
+                            // remove even if not empty
+                            FileUtils.deleteRecursive(dir);
+                        } else {
+                            Files.delete(dir);
+                        }
+                    }
+                    return FileVisitResult.CONTINUE;
+                } else {
+                    // directory iteration failed; propagate exception
+                    throw exc;
+                }
+            }
+
+        });
+    }
+
+    /**
+     * Moves a path, retries for timeout ms if moving fails.
+     * 
+     * @param src
+     * @param dest
+     * @param timeout
+     * @throws IOException
+     */
+    public static void waitAndMove(Path src, Path dest, long timeout) throws IOException {
+        long time = 0;
+        boolean isMoved = false;
+        long pause = 200;
+        while (time < timeout && !isMoved) {
+            try {
+                Files.move(src, dest, ATOMIC_MOVE);
+                isMoved = true;
+            } catch (IOException e) {
+                log.warn("Move " + src + " to " + dest + " failed.", e);
+                log.warn("Sleep " + pause + "ms and retry.");
+                try {
+                    Thread.sleep(pause);
+                } catch (InterruptedException e1) {
+                    log.error("Waiting for moving " + src + " to " + dest + " failed. Got iterrupted", e1);
+                    throw new IOException(e1);
+                }
+                time += pause;
+                if (time >= timeout) {
+                    throw new IOException("Move " + src + " to " + dest + " failed after " + timeout + "ms.");
+                }
+            }
+        }
+    }
+    
+    /**
+     * Deleted a Path recursivly, retries for timeout if it fails.
+     * 
+     * @param path
+     * @param timeout
+     * @throws IOException
+     */
+    public static void waitAndDelete(Path path, long timeout) throws IOException {
+        long time = 0;
+        boolean isDeleted = false;
+        long pause = 200;
+        while (time < timeout && !isDeleted) {
+            try {
+                deleteRecursive(path);
+                isDeleted = true;
+            } catch (IOException e) {
+                log.warn("Deleting " + path + " failed.", e);
+                log.warn("Sleep " + pause + "ms and retry.");
+                try {
+                    Thread.sleep(pause);
+                } catch (InterruptedException e1) {
+                    log.error("Waiting for deleting " + path + " failed. Got iterrupted", e1);
+                    throw new IOException(e1);
+                }
+                time += pause;
+                if (time >= timeout) {
+                    throw new IOException("Deleting " + path + " failed after " + timeout + "ms.");
+                }
+            }
         }
 	}
 

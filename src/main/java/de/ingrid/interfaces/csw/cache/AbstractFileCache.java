@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -427,20 +429,25 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
         }
         if (this.isInTransaction()) {
             // move content of this instance to the original cache
-            File originalDir = this.getCachePath();
+            Path originalDirPath = this.getCachePath().toPath();
             File tmpDir = new File(this.getTempPath().getAbsolutePath() + "_tmp");
             // make sure all parent paths are created
             tmpDir.mkdirs();
             // then remove the last directory
-            tmpDir.delete();
-            File workDir = this.getWorkPath();
-            if (!originalDir.renameTo(tmpDir)) {
-                throw new IOException("Could not rename '"+originalDir+"' to '"+tmpDir+"'.");
+            Files.delete(tmpDir.toPath());
+            Path workDirPath = this.getWorkPath().toPath();
+            if (log.isInfoEnabled()) {
+                log.info("Rename old cache: " + originalDirPath + " to " + tmpDir.toPath());
             }
-            if (!workDir.renameTo(originalDir)) {
-                throw new IOException("Could not rename '"+workDir+"' to '"+originalDir+"'.");
+            FileUtils.waitAndMove(originalDirPath, tmpDir.toPath(), 10000);
+            if (log.isInfoEnabled()) {
+                log.info("Rename new cache: " + workDirPath + " to " + originalDirPath);
             }
-            FileUtils.deleteRecursive(tmpDir);
+            FileUtils.waitAndMove(workDirPath, originalDirPath, 10000);
+            if (log.isInfoEnabled()) {
+                log.info("Remove tmp path: " + tmpDir.toPath());
+            }
+            FileUtils.waitAndDelete(tmpDir.toPath(), 10000);
 
             this.inTransaction = false;
         } else {
