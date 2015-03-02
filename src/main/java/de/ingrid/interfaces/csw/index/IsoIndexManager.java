@@ -105,11 +105,13 @@ public class IsoIndexManager implements IPreCommitHandler {
     }
 
     public void stopSearcher() throws Exception {
+        this.searcher.setMaintenance(true);
         this.searcher.stop();
     }
 
     public void startSearcher() throws Exception {
         this.searcher.start();
+        this.searcher.setMaintenance(false);
     }
 
     /**

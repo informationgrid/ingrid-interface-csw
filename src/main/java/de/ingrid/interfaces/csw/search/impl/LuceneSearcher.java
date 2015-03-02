@@ -65,6 +65,12 @@ public class LuceneSearcher implements Searcher {
      */
     protected boolean isStarted = false;
 
+
+    /**
+     * The maintenance state
+     */
+    protected boolean isInMaintenance = false;
+    
     /**
      * The repository where the CSW records are retrieved from
      */
@@ -114,6 +120,11 @@ public class LuceneSearcher implements Searcher {
         if (this.recordRepository == null) {
             throw new RuntimeException("LuceneSearcher is not configured properly: recordRepository is not set.");
         }
+        if (isInMaintenance) {
+            log.info("Searcher is in maintenance mode. Skip this search query.");
+            throw new RuntimeException("Searcher is in maintenance state. Skip this search query.");
+        }
+        
         if (!this.isStarted) {
             start();
         }
@@ -223,4 +234,10 @@ public class LuceneSearcher implements Searcher {
     public void setLuceneTools(LuceneTools myLuceneTools) {
         this.luceneTools = myLuceneTools;
     }
+
+    public void setMaintenance(boolean maintenanceMode) {
+        this.isInMaintenance = maintenanceMode;
+    }
+    
+    
 }

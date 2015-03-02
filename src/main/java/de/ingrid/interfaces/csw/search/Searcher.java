@@ -53,4 +53,12 @@ public interface Searcher {
 	 * @param recordRepository
 	 */
 	public void setRecordRepository(CSWRecordRepository recordRepository);
+	
+    /**
+     * Set the maintenanceMode of the searcher. If in maintenance all queries will be rejected.
+     * @param maintenanceMode
+     */
+    public void setMaintenance(boolean maintenanceMode);
+	
+	
 }
