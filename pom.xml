@@ -134,6 +134,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>tomcat</groupId>
