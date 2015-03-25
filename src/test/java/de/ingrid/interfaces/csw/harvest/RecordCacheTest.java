@@ -32,6 +32,7 @@ import java.util.Scanner;
 import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.tools.FileUtils;
+import de.ingrid.interfaces.csw.tools.IdfUtils;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.idf.IdfTool;
 
@@ -62,4 +63,29 @@ public class RecordCacheTest extends TestCase {
             }
 		}
 	}
+	
+    public void testPutRecordWithSeparator() throws Exception {
+        try {
+            RecordCache cache = new RecordCache();
+            cache.setCachePath(new File(CACHE_PATH));
+    
+            Record record = new Record();
+            String idfContent = new Scanner(new File("src/test/resources/idf-example_id_with_separator.xml")).useDelimiter("\\A").next();
+            record.put(IdfTool.KEY_DATA, idfContent);
+            record.put(IdfTool.KEY_COMPRESSED, false);
+            Serializable cacheId = cache.put(record);
+            assertEquals("::urn:x-wmo:md:eu.baltrad.SE::baltrad.SE::", cacheId);
+            Record r = cache.get("::urn:x-wmo:md:eu.baltrad.SE::baltrad.SE::");
+            Serializable id = IdfUtils.getRecordId(r);
+            assertEquals(id, "::urn:x-wmo:md:eu.baltrad.SE::baltrad.SE::");
+            
+        } finally {
+            File tmp = new File("tmp");
+            if (tmp.exists()) {
+                FileUtils.deleteRecursive(tmp);
+            }
+        }
+    }
+	
+	
 }

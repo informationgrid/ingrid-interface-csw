@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idf:html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd" xmlns:idf="http://www.portalu.de/IDF/1.0">
+  <idf:head/>
+  <idf:body>
+    <idf:idfMdMetadata xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+      <gmd:fileIdentifier>
+        <gco:CharacterString>::urn:x-wmo:md:eu.baltrad.SE::baltrad.SE::</gco:CharacterString>
+      </gmd:fileIdentifier>
+      <gmd:language>
+        <gmd:LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="ger">ger</gmd:LanguageCode>
+      </gmd:language>
+      <gmd:characterSet>
+        <gmd:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CharacterSetCode" codeListValue="8859part1"/>
+      </gmd:characterSet>
+      <gmd:parentIdentifier>
+        <gco:CharacterString>49C4A52D-E312-4DCA-9D10-5B87DDC2F527</gco:CharacterString>
+      </gmd:parentIdentifier>
+      <gmd:hierarchyLevel>
+        <gmd:MD_ScopeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_ScopeCode" codeListValue="nonGeographicDataset">nonGeographicDataset</gmd:MD_ScopeCode>
+      </gmd:hierarchyLevel>
+      <gmd:hierarchyLevelName>
+        <gco:CharacterString>database</gco:CharacterString>
+      </gmd:hierarchyLevelName>
+      <gmd:contact>
+        <idf:idfResponsibleParty type="2" uuid="7AE8FD24-CC4E-487E-A17C-44B07610727A">
+          <gmd:individualName>
+            <gco:CharacterString>Dieffenbach-Fries, Helga, Frau Dr.</gco:CharacterString>
+          </gmd:individualName>
+          <gmd:organisationName>
+            <gco:CharacterString>UBA Adressen, UBA - Umweltbundesamt Deutschland (Dessau-Roßlau), FG II 4.3 - Wirkungen von Luftverunreinigungen auf terrestrische Ökosysteme</gco:CharacterString>
+          </gmd:organisationName>
+          <gmd:contactInfo>
+            <gmd:CI_Contact>
+              <gmd:phone>
+                <gmd:CI_Telephone>
+                  <gmd:voice>
+                    <gco:CharacterString>+49-(0)30-8903-5907</gco:CharacterString>
+                  </gmd:voice>
+                  <gmd:facsimile>
+                    <gco:CharacterString>+49-(0)6103-704147</gco:CharacterString>
+                  </gmd:facsimile>
+                </gmd:CI_Telephone>
+              </gmd:phone>
+              <gmd:address>
+                <gmd:CI_Address>
+                  <gmd:deliveryPoint>
+                    <gco:CharacterString>Paul-Ehrlich-Str. 29</gco:CharacterString>
+                  </gmd:deliveryPoint>
+                  <gmd:city>
+                    <gco:CharacterString>Langen</gco:CharacterString>
+                  </gmd:city>
+                  <gmd:postalCode>
+                    <gco:CharacterString>D-63225</gco:CharacterString>
+                  </gmd:postalCode>
+                  <gmd:country>
+                    <gco:CharacterString>DEU</gco:CharacterString>
+                  </gmd:country>
+                  <gmd:electronicMailAddress>
+                    <gco:CharacterString>joachim.fock@uba.de</gco:CharacterString>
+                  </gmd:electronicMailAddress>
+                </gmd:CI_Address>
+              </gmd:address>
+              <gmd:onlineResource>
+                <gmd:CI_OnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://www.umweltbundesamt.de</gmd:URL>
+                  </gmd:linkage>
+                </gmd:CI_OnlineResource>
+              </gmd:onlineResource>
+            </gmd:CI_Contact>
+          </gmd:contactInfo>
+          <gmd:role>
+            <gmd:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+          </gmd:role>
+          <idf:hierarchyParty uuid="7AE8FD24-CC4E-487E-A17C-44B07610727A">
+            <idf:addressIndividualName>Dieffenbach-Fries, Helga, Frau Dr.</idf:addressIndividualName>
+            <idf:addressType>2</idf:addressType>
+          </idf:hierarchyParty>
+          <idf:hierarchyParty uuid="E794DB7E-09AA-40FC-A90B-A6B99E1CDFFF">
+            <idf:addressOrganisationName>FG II 4.3 - Wirkungen von Luftverunreinigungen auf terrestrische Ökosysteme</idf:addressOrganisationName>
+            <idf:addressType>1</idf:addressType>
+          </idf:hierarchyParty>
+          <idf:hierarchyParty uuid="41774A73-C0B1-11D2-AAE2-00E0292DC06B">
+            <idf:addressOrganisationName>UBA - Umweltbundesamt Deutschland (Dessau-Roßlau)</idf:addressOrganisationName>
+            <idf:addressType>0</idf:addressType>
+          </idf:hierarchyParty>
+          <idf:hierarchyParty uuid="51FD871E-C978-4F75-80C2-5478D1D21584">
+            <idf:addressOrganisationName>UBA Adressen</idf:addressOrganisationName>
+            <idf:addressType>0</idf:addressType>
+          </idf:hierarchyParty>
+        </idf:idfResponsibleParty>
+      </gmd:contact>
+      <gmd:dateStamp>
+        <gco:Date>2010-04-28</gco:Date>
+      </gmd:dateStamp>
+      <gmd:metadataStandardName>
+        <gco:CharacterString>ISO 19115</gco:CharacterString>
+      </gmd:metadataStandardName>
+      <gmd:metadataStandardVersion>
+        <gco:CharacterString>1.0</gco:CharacterString>
+      </gmd:metadataStandardVersion>
+      <gmd:identificationInfo>
+        <gmd:MD_DataIdentification uuid="ingrid#ddffa20d-280c-3954-b920-8bbe8ccdf0d3">
+          <gmd:citation>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>Moosmonitoring (I) - Monitoring der Schwermetallbelastung in der Bundesrepublik Deutschland mit Hilfe von Moosanalysen (Moss Survey I)</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:DateTime>2009-04-30T00:00:00</gco:DateTime>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode" codeListValue="revision"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+              <gmd:identifier>
+                <gmd:RS_Identifier>
+                  <gmd:code>
+                    <gco:CharacterString>ddffa20d-280c-3954-b920-8bbe8ccdf0d3</gco:CharacterString>
+                  </gmd:code>
+                  <gmd:codeSpace>
+                    <gco:CharacterString>ingrid</gco:CharacterString>
+                  </gmd:codeSpace>
+                </gmd:RS_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:citation>
+          <gmd:abstract>
+            <gco:CharacterString>Das Moosmonitoring (I) bildet einen Beitrag zum europäischen Projekt "Atmospheric Heavy Metal Deposition in Europe - estimations based on moss analysis", welches Teil des "European Monitoring and Evaluation Program (EMEP)" ist. Mit dem Moosmonitoring (I) wurde 1991/92 erstmalig  für die gesamte BRD flächendeckend  die Schwermetallbelastung an dem Bioindikator Moos untersucht und die Meßwerte in ihrem Raumbezug dargestellt. Die an den 593 Probenahmestellen genommenen Moosproben wurden auf die Elemente As, Cd, Cr, Cu, Fe, Ni, Pb, Ti, V  und Zn analysiert. In der Moosdatenbank werden die empirisch gewonnenen Analysedaten verwaltet und für Auswertungen aufbereitet. Hierbei wird zwischen einer Standort-DB (räumliche Merkmale der Probenentnahmestelle wie Ökosystemtyp, Exposition) und einer Ergebnis-DB (Schwermetallgehalte der Moose) unterschieden. Die Strukturierung der Daten erfolgt  in einer PC-Datenbank unter ACCESS 7.0. Die Analyseergebnisse können problemlos mit den Standortdaten verknüpft werden, um Belastungskarten der Bundesrepublik Deutschland zu erstellen. Beteiligt sind die Universität Osnabrück; die AG Systemforschung sowie die Bundesanstalt für Geowissenschaften und Rohstoffe in Hannover.</gco:CharacterString>
+          </gmd:abstract>
+          <gmd:status>
+            <gmd:MD_ProgressCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_ProgressCode" codeListValue="completed"/>
+          </gmd:status>
+          <gmd:pointOfContact>
+            <idf:idfResponsibleParty type="1" uuid="E794DB7E-09AA-40FC-A90B-A6B99E1CDFFF">
+              <gmd:organisationName>
+                <gco:CharacterString>UBA Adressen, UBA - Umweltbundesamt Deutschland (Dessau-Roßlau), FG II 4.3 - Wirkungen von Luftverunreinigungen auf terrestrische Ökosysteme</gco:CharacterString>
+              </gmd:organisationName>
+              <gmd:contactInfo>
+                <gmd:CI_Contact>
+                  <gmd:phone>
+                    <gmd:CI_Telephone>
+                      <gmd:voice>
+                        <gco:CharacterString>+49-(0)340-2103-3155</gco:CharacterString>
+                      </gmd:voice>
+                      <gmd:facsimile>
+                        <gco:CharacterString>+49-(0)340-2104-3155</gco:CharacterString>
+                      </gmd:facsimile>
+                    </gmd:CI_Telephone>
+                  </gmd:phone>
+                  <gmd:address>
+                    <gmd:CI_Address>
+                      <gmd:deliveryPoint>
+                        <gco:CharacterString>Postbox 1406,06813 Dessau-Roßlau</gco:CharacterString>
+                      </gmd:deliveryPoint>
+                      <gmd:deliveryPoint>
+                        <gco:CharacterString>Wörlitzer Platz 1</gco:CharacterString>
+                      </gmd:deliveryPoint>
+                      <gmd:city>
+                        <gco:CharacterString>Dessau-Roßlau</gco:CharacterString>
+                      </gmd:city>
+                      <gmd:postalCode>
+                        <gco:CharacterString>06844</gco:CharacterString>
+                      </gmd:postalCode>
+                      <gmd:country>
+                        <gco:CharacterString>DEU</gco:CharacterString>
+                      </gmd:country>
+                      <gmd:electronicMailAddress>
+                        <gco:CharacterString>till.spranger@uba.de</gco:CharacterString>
+                      </gmd:electronicMailAddress>
+                    </gmd:CI_Address>
+                  </gmd:address>
+                  <gmd:onlineResource>
+                    <gmd:CI_OnlineResource>
+                      <gmd:linkage>
+                        <gmd:URL>http://www.umweltbundesamt.de/uba-info/d-adress.htm</gmd:URL>
+                      </gmd:linkage>
+                    </gmd:CI_OnlineResource>
+                  </gmd:onlineResource>
+                </gmd:CI_Contact>
+              </gmd:contactInfo>
+              <gmd:role>
+                <gmd:CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode" codeListValue="owner"/>
+              </gmd:role>
+              <idf:hierarchyParty uuid="E794DB7E-09AA-40FC-A90B-A6B99E1CDFFF">
+                <idf:addressOrganisationName>FG II 4.3 - Wirkungen von Luftverunreinigungen auf terrestrische Ökosysteme</idf:addressOrganisationName>
+                <idf:addressType>1</idf:addressType>
+              </idf:hierarchyParty>
+              <idf:hierarchyParty uuid="41774A73-C0B1-11D2-AAE2-00E0292DC06B">
+                <idf:addressOrganisationName>UBA - Umweltbundesamt Deutschland (Dessau-Roßlau)</idf:addressOrganisationName>
+                <idf:addressType>0</idf:addressType>
+              </idf:hierarchyParty>
+              <idf:hierarchyParty uuid="51FD871E-C978-4F75-80C2-5478D1D21584">
+                <idf:addressOrganisationName>UBA Adressen</idf:addressOrganisationName>
+                <idf:addressType>0</idf:addressType>
+              </idf:hierarchyParty>
+            </idf:idfResponsibleParty>
+          </gmd:pointOfContact>
+          <gmd:resourceMaintenance>
+            <gmd:MD_MaintenanceInformation>
+              <gmd:maintenanceNote>
+                <gco:CharacterString>1. Beprobung 1990, nachfolgende Beprobung 1995/96 und 2000.</gco:CharacterString>
+              </gmd:maintenanceNote>
+            </gmd:MD_MaintenanceInformation>
+          </gmd:resourceMaintenance>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>Soil</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Environmental monitoring facilities</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme"/>
+              </gmd:type>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2008-06-01</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode" codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>Umweltzustandsdaten</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Meßstellennetz</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Blei</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Arsen</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Cadmium</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Bioindikator</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Schwermetall</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Schwermetallgehalt</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Luftschadstoff</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Moos</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Biomonitoring</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Monitoring</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Chrom</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Kupfer</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Eisen</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Nickel</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Titan</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Vanadium</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Zink</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Moosmonitoring</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Ökosystem</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Schadstoffdeposition</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Probenahmestelle</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Schwermetallbelastung</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Feuchtigkeit</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>saurer Niederschlag</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Statistische Auswertung</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Wald</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Evaluation</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Grünland</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Industriegebiet</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Landwirtschaft</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Ödland</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Exposition</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme"/>
+              </gmd:type>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString>UMTHES Thesaurus</gco:CharacterString>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2009-01-15</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode" codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gco:CharacterString>EMEP</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Moosdatenbank</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Umweltbeobachtung</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Bioindikation</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Boden</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Daten über anthropogene Einwirkungen</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>Natur und Landschaft</gco:CharacterString>
+              </gmd:keyword>
+              <gmd:keyword>
+                <gco:CharacterString>moss survey</gco:CharacterString>
+              </gmd:keyword>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+          <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+              <gmd:useLimitation>
+                <gco:CharacterString>Bund und Länder</gco:CharacterString>
+              </gmd:useLimitation>
+            </gmd:MD_LegalConstraints>
+          </gmd:resourceConstraints>
+          <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+              <gmd:accessConstraints>
+                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+              </gmd:accessConstraints>
+              <gmd:otherConstraints>
+                <gco:CharacterString>intellectual property rights</gco:CharacterString>
+              </gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+          </gmd:resourceConstraints>
+          <gmd:resourceConstraints>
+            <idf:idfLegalBasisConstraints>
+              <gmd:accessConstraints>
+                <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+              </gmd:accessConstraints>
+              <gmd:otherConstraints>
+                <gco:CharacterString>Errichtungsgesetz des UBA</gco:CharacterString>
+              </gmd:otherConstraints>
+            </idf:idfLegalBasisConstraints>
+          </gmd:resourceConstraints>
+          <gmd:resourceConstraints>
+            <gmd:MD_SecurityConstraints>
+              <gmd:classification>
+                <gmd:MD_ClassificationCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#gmd:MD_ClassificationCode" codeListValue="unclassified">unclassified</gmd:MD_ClassificationCode>
+              </gmd:classification>
+            </gmd:MD_SecurityConstraints>
+          </gmd:resourceConstraints>
+          <gmd:language>
+            <gmd:LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="ger"/>
+          </gmd:language>
+          <gmd:characterSet>
+            <gmd:MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CharacterSetCode" codeListValue="8859part1"/>
+          </gmd:characterSet>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>environment</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>climatologyMeteorologyAtmosphere</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>climatologyMeteorologyAtmosphere</gmd:MD_TopicCategoryCode>
+          </gmd:topicCategory>
+          <gmd:extent>
+            <gmd:EX_Extent>
+              <gmd:description>
+                <gco:CharacterString>Ökosystemtyp: Waldgebiet, Moorgebiet, Grünland, Industriegebiet, Landwirtschaft, Ödland.</gco:CharacterString>
+              </gmd:description>
+              <gmd:geographicElement>
+                <gmd:EX_GeographicDescription>
+                  <gmd:extentTypeCode>
+                    <gco:Boolean>true</gco:Boolean>
+                  </gmd:extentTypeCode>
+                  <gmd:geographicIdentifier>
+                    <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gco:CharacterString>Bundesrepublik Deutschland</gco:CharacterString>
+                      </gmd:code>
+                    </gmd:MD_Identifier>
+                  </gmd:geographicIdentifier>
+                </gmd:EX_GeographicDescription>
+              </gmd:geographicElement>
+              <gmd:geographicElement>
+                <gmd:EX_GeographicBoundingBox>
+                  <gmd:extentTypeCode>
+                    <gco:Boolean>true</gco:Boolean>
+                  </gmd:extentTypeCode>
+                  <gmd:westBoundLongitude>
+                    <gco:Decimal>-4.49673753180581</gco:Decimal>
+                  </gmd:westBoundLongitude>
+                  <gmd:eastBoundLongitude>
+                    <gco:Decimal>-4.49673753180581</gco:Decimal>
+                  </gmd:eastBoundLongitude>
+                  <gmd:southBoundLatitude>
+                    <gco:Decimal>0.0</gco:Decimal>
+                  </gmd:southBoundLatitude>
+                  <gmd:northBoundLatitude>
+                    <gco:Decimal>0.0</gco:Decimal>
+                  </gmd:northBoundLatitude>
+                </gmd:EX_GeographicBoundingBox>
+              </gmd:geographicElement>
+              <gmd:geographicElement>
+                <gmd:EX_GeographicDescription>
+                  <gmd:extentTypeCode>
+                    <gco:Boolean>true</gco:Boolean>
+                  </gmd:extentTypeCode>
+                  <gmd:geographicIdentifier>
+                    <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gco:CharacterString>Bundesrepublik Deutschland (00000000)</gco:CharacterString>
+                      </gmd:code>
+                    </gmd:MD_Identifier>
+                  </gmd:geographicIdentifier>
+                </gmd:EX_GeographicDescription>
+              </gmd:geographicElement>
+              <gmd:geographicElement>
+                <gmd:EX_GeographicBoundingBox>
+                  <gmd:extentTypeCode>
+                    <gco:Boolean>true</gco:Boolean>
+                  </gmd:extentTypeCode>
+                  <gmd:westBoundLongitude>
+                    <gco:Decimal>5.8665085</gco:Decimal>
+                  </gmd:westBoundLongitude>
+                  <gmd:eastBoundLongitude>
+                    <gco:Decimal>15.041823</gco:Decimal>
+                  </gmd:eastBoundLongitude>
+                  <gmd:southBoundLatitude>
+                    <gco:Decimal>47.27011</gco:Decimal>
+                  </gmd:southBoundLatitude>
+                  <gmd:northBoundLatitude>
+                    <gco:Decimal>55.057526</gco:Decimal>
+                  </gmd:northBoundLatitude>
+                </gmd:EX_GeographicBoundingBox>
+              </gmd:geographicElement>
+              <gmd:temporalElement>
+                <gmd:EX_TemporalExtent>
+                  <gmd:extent>
+                    <gml:TimePeriod gml:id="timePeriod_ID_aebbdb9c-9eec-4ef4-9b8d-ed9672479ddd">
+                      <gml:beginPosition>1990-08-01</gml:beginPosition>
+                      <gml:endPosition>1994-07-21</gml:endPosition>
+                    </gml:TimePeriod>
+                  </gmd:extent>
+                </gmd:EX_TemporalExtent>
+              </gmd:temporalElement>
+            </gmd:EX_Extent>
+          </gmd:extent>
+          <gmd:supplementalInformation>
+            <gco:CharacterString>Im Unterschied zu anderen Beobachtungsprogrammen, wie z. B. dem Luftmeßnetz des UBA, das nur die nasse Deposition erfaßt, wird beim Moosmonitoring der gesamte stoffliche Eintrag für den Luftpfad erfaßt.</gco:CharacterString>
+          </gmd:supplementalInformation>
+        </gmd:MD_DataIdentification>
+      </gmd:identificationInfo>
+      <gmd:contentInfo>
+        <gmd:MD_FeatureCatalogueDescription>
+          <gmd:includedWithDataset>
+            <gco:Boolean>false</gco:Boolean>
+          </gmd:includedWithDataset>
+          <gmd:featureTypes>
+            <gco:LocalName>Cadmium in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Chrom in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Kupfer in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Eisen in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Nickel in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Blei in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Titan in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Vanadium in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Zink in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureTypes>
+            <gco:LocalName>Arsen in µg/g TS (Moos)</gco:LocalName>
+          </gmd:featureTypes>
+          <gmd:featureCatalogueCitation>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>German Environmental Catalog - parameters of object type 'database', version 1.0</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2006-05-01</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode" codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+            </gmd:CI_Citation>
+          </gmd:featureCatalogueCitation>
+        </gmd:MD_FeatureCatalogueDescription>
+      </gmd:contentInfo>
+      <gmd:distributionInfo>
+        <gmd:MD_Distribution>
+          <gmd:distributionFormat>
+            <gmd:MD_Format>
+              <gmd:name>
+                <gco:CharacterString>ACCESS</gco:CharacterString>
+              </gmd:name>
+              <gmd:version>
+                <gco:CharacterString>7.0</gco:CharacterString>
+              </gmd:version>
+            </gmd:MD_Format>
+          </gmd:distributionFormat>
+          <gmd:distributionFormat>
+            <gmd:MD_Format>
+              <gmd:name>
+                <gco:CharacterString>Excel</gco:CharacterString>
+              </gmd:name>
+              <gmd:version>
+                <gco:CharacterString>7.0</gco:CharacterString>
+              </gmd:version>
+            </gmd:MD_Format>
+          </gmd:distributionFormat>
+          <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+              <gmd:onLine>
+                <idf:idfOnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://gis.uba.de/website/web/moos/karten/index.htm</gmd:URL>
+                  </gmd:linkage>
+                  <gmd:name>
+                    <gco:CharacterString>Einzelkarten der Messergebnisse im Moosmonitoring</gco:CharacterString>
+                  </gmd:name>
+                  <idf:datatype entry-id="1" list-id="2240">HTML</idf:datatype>
+                </idf:idfOnlineResource>
+              </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+          </gmd:transferOptions>
+          <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+              <gmd:onLine>
+                <idf:idfOnlineResource>
+                  <gmd:linkage>
+                    <gmd:URL>http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&amp;ADISDB=VH&amp;SATZNR=00039030</gmd:URL>
+                  </gmd:linkage>
+                  <gmd:name>
+                    <gco:CharacterString>Forschungsvorhaben in UFORDAT</gco:CharacterString>
+                  </gmd:name>
+                  <gmd:description>
+                    <gco:CharacterString>Untersuchung der Schwermetallbelastung in Moosen, Harmonisierung des Verfahrens  und Anpassung der Messwerte der alten und neuen Laender (Study on the Heavy-Metal Contamination of Moss, Harmonization of the Procedure and Alignment of Measurements for the Old and New Laender)</gco:CharacterString>
+                  </gmd:description>
+                  <idf:datatype entry-id="1" list-id="2240">HTML</idf:datatype>
+                </idf:idfOnlineResource>
+              </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+          </gmd:transferOptions>
+          <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+              <gmd:offLine>
+                <gmd:MD_Medium>
+                  <gmd:name>
+                    <gmd:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_MediumNameCode" codeListValue="3halfInchFloppy"/>
+                  </gmd:name>
+                </gmd:MD_Medium>
+              </gmd:offLine>
+            </gmd:MD_DigitalTransferOptions>
+          </gmd:transferOptions>
+          <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+              <gmd:offLine>
+                <gmd:MD_Medium>
+                  <gmd:name>
+                    <gmd:MD_MediumNameCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_MediumNameCode" codeListValue="hardcopy"/>
+                  </gmd:name>
+                </gmd:MD_Medium>
+              </gmd:offLine>
+            </gmd:MD_DigitalTransferOptions>
+          </gmd:transferOptions>
+        </gmd:MD_Distribution>
+      </gmd:distributionInfo>
+      <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+          <gmd:scope>
+            <gmd:DQ_Scope>
+              <gmd:level>
+                <gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode" codeListValue="nonGeographicDataset"/>
+              </gmd:level>
+            </gmd:DQ_Scope>
+          </gmd:scope>
+          <gmd:lineage>
+            <gmd:LI_Lineage>
+              <gmd:source>
+                <gmd:LI_Source>
+                  <gmd:description>
+                    <gco:CharacterString>25x25 km² Raster/Probenahmestellen, 50x50 m² Fläche.</gco:CharacterString>
+                  </gmd:description>
+                </gmd:LI_Source>
+              </gmd:source>
+            </gmd:LI_Lineage>
+          </gmd:lineage>
+        </gmd:DQ_DataQuality>
+      </gmd:dataQualityInfo>
+      <idf:superiorReference uuid="49C4A52D-E312-4DCA-9D10-5B87DDC2F527">
+        <idf:objectName>BMU (Ress.): Umweltbundesamt (Objekte)</idf:objectName>
+        <idf:objectType>0</idf:objectType>
+      </idf:superiorReference>
+      <idf:crossReference uuid="05F9A599-D866-11D2-AB09-00E0292DC06B">
+        <idf:objectName>Moosmonitoring (II) - Monitoring der Schwermetallbelastung in der Bundesrepublik Deutschland mit Hilfe von Moosanalysen (Moss Survey II)</idf:objectName>
+        <idf:objectType>5</idf:objectType>
+      </idf:crossReference>
+      <idf:crossReference uuid="74F4A245-F563-11D5-AC82-0050DA769D0B">
+        <idf:objectName>Moosmonitoring (III) - Monitoring der Schwermetallbelastung in der Bundesrepublik Deutschland mit Hilfe von Moosanalysen (Moss Survey III)</idf:objectName>
+        <idf:objectType>5</idf:objectType>
+      </idf:crossReference>
+      <idf:crossReference uuid="BAE22AFC-29D6-4E2C-934E-B7CB32454149">
+        <idf:objectName>Moosmonitoring (IV) - Moosmonitoring 2005/2006: Schwermetalle IV und Gesamtstickstoff (Moss Survey IV)</idf:objectName>
+        <idf:objectType>5</idf:objectType>
+      </idf:crossReference>
+      <idf:exportCriteria>CDS</idf:exportCriteria>
+    </idf:idfMdMetadata>
+  </idf:body>
+</idf:html>

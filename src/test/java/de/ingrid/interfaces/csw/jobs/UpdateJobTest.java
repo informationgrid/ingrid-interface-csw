@@ -112,7 +112,9 @@ public class UpdateJobTest extends TestCase {
         recordMapper.setMappingScript(MAPPING_FILE);
 
         LuceneIndexer indexer = new LuceneIndexer();
-        indexer.setIndexConfigPath(new File(TMP_INDEX_PATH));
+        File tmpIndexPath = new File(TMP_INDEX_PATH);
+        tmpIndexPath.mkdirs();
+        indexer.setIndexConfigPath(tmpIndexPath);
         indexer.setMapper(recordMapper);
         indexer.setStatusProvider(statusProvider);
         indexer.setLuceneTools(luceneTools);
@@ -122,14 +124,18 @@ public class UpdateJobTest extends TestCase {
 
         // set up mapper
         CSWRecordCache cache = new CSWRecordCache();
-        cache.setCachePath(new File(CSW_CACHE_PATH));
+        File cswCachePath = new File(CSW_CACHE_PATH);
+        cswCachePath.mkdirs();
+        cache.setCachePath(cswCachePath);
         XsltMapper mapper = new XsltMapper();
         mapper.setCache(cache);
         mapper.setStatusProvider(statusProvider);
 
         // set up searcher
         LuceneSearcher searcher = new LuceneSearcher();
-        searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+        File liveIndexPath = new File(LIVE_INDEX_PATH);
+        liveIndexPath.mkdirs();
+        searcher.setIndexPath(liveIndexPath);
         searcher.setLuceneTools(luceneTools);
 
         luceneManager.setIndexer(indexer);

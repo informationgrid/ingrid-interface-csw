@@ -45,47 +45,66 @@ import org.xml.sax.InputSource;
 
 public class StringUtils {
 
-	public static String join(Object[] parts, String separator) {
-		StringBuilder str = new StringBuilder();
-		for (Object part : parts) {
-			str.append(part).append(separator);
-		}
-		if (str.length() > 0)
-			return str.substring(0, str.length() - separator.length());
+    public static String join(Object[] parts, String separator) {
+        StringBuilder str = new StringBuilder();
+        for (Object part : parts) {
+            str.append(part).append(separator);
+        }
+        if (str.length() > 0)
+            return str.substring(0, str.length() - separator.length());
 
-		return str.toString();
-	}
+        return str.toString();
+    }
 
-	public static String nodeToString(Node node) {
-		try {
-			Source source = new DOMSource(node);
-			StringWriter stringWriter = new StringWriter();
-			Result result = new StreamResult(stringWriter);
-			TransformerFactory factory = TransformerFactory.newInstance();
-			Transformer transformer = factory.newTransformer();
-			// just set this to get literally equal results
-			transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
-			transformer.transform(source, result);
-			return stringWriter.getBuffer().toString();
-		} catch (Exception e) {
-			return e.getMessage();
-		}
-	}
+    public static String nodeToString(Node node) {
+        try {
+            Source source = new DOMSource(node);
+            StringWriter stringWriter = new StringWriter();
+            Result result = new StreamResult(stringWriter);
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer();
+            // just set this to get literally equal results
+            transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
+            transformer.transform(source, result);
+            return stringWriter.getBuffer().toString();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
 
-	public static Document stringToDocument(String string) throws Exception {
-		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-		domFactory.setNamespaceAware(true);
-		DocumentBuilder builder = domFactory.newDocumentBuilder();
-		Document doc = builder.parse(new InputSource(new StringReader(string)));
-		return doc;
-	}
+    public static Document stringToDocument(String string) throws Exception {
+        DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+        domFactory.setNamespaceAware(true);
+        DocumentBuilder builder = domFactory.newDocumentBuilder();
+        Document doc = builder.parse(new InputSource(new StringReader(string)));
+        return doc;
+    }
 
-	public static String generateUuid() {
-		UUID uuid = UUID.randomUUID();
-		StringBuffer idcUuid = new StringBuffer(uuid.toString().toUpperCase());
-		while (idcUuid.length() < 36) {
-			idcUuid.append("0");
-		}
-		return idcUuid.toString();
-	}
+    public static String generateUuid() {
+        UUID uuid = UUID.randomUUID();
+        StringBuffer idcUuid = new StringBuffer(uuid.toString().toUpperCase());
+        while (idcUuid.length() < 36) {
+            idcUuid.append("0");
+        }
+        return idcUuid.toString();
+    }
+
+    /**
+     * Splits a String by a separator. Only the first separator is taken into
+     * account. Thus max. two String segments are returned.
+     * 
+     * @param src
+     * @param separator
+     * @return Max 2 String parts.
+     */
+    public static String[] splitByFirstOccurence(String src, String separator) {
+        int pos = src.indexOf(separator);
+        if (pos == -1) {
+            return new String[]{src};
+        } else {
+            String firstSegment = src.substring(0, pos);
+            String lastSegment = src.substring(pos+separator.length());
+            return new String[]{firstSegment, lastSegment};
+        }
+    }
 }
