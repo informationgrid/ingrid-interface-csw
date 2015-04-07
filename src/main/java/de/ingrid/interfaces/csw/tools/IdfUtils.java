@@ -42,6 +42,8 @@ public class IdfUtils {
 	private static final String ID_XPATH = "idf:html/idf:body/idf:idfMdMetadata/gmd:fileIdentifier/gco:CharacterString";
 
     final protected static Log log = LogFactory.getLog(IdfUtils.class);
+    
+    static final XPathUtils XPATH = new XPathUtils(new IDFNamespaceContext());
 	
 	/**
 	 * Extract the idf document from the given record. Throws an exception
@@ -72,8 +74,7 @@ public class IdfUtils {
 	 * @throws Exception
 	 */
 	public static Serializable getRecordId(Document document) throws Exception {
-		XPathUtils xpath = new XPathUtils(new IDFNamespaceContext());
-		Serializable id = xpath.getString(document, ID_XPATH);
+		Serializable id = XPATH.getString(document, ID_XPATH);
 		return id;
 	}
 
