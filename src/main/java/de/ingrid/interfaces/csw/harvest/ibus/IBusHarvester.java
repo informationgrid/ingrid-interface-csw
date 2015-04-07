@@ -177,12 +177,13 @@ public class IBusHarvester extends AbstractHarvester {
             }
 
             // process all request definitions
+            String queryStr = null;
             for (RequestDefinition request : this.requestDefinitions) {
 
                 int currentPage = 0;
                 int startHit = 0;
                 int pause = request.getPause();
-                String queryStr = request.getQueryString();
+                queryStr = request.getQueryString();
 
                 log.info("Running harvesting request: [" + request.toString() + "]");
 
