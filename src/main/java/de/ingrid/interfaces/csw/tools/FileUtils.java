@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -321,6 +322,46 @@ public class FileUtils {
 			return s;
 		}
 	}
+	
+	/**
+	 * Get the document id from a cache filename
+	 * 
+	 * @param filename
+	 *            The filename without the path
+	 * @return String
+	 */
+	public static String getIdFromFilename(String filename) {
+		String id = decodeId(filename.substring(0, filename.lastIndexOf(".")));
+		return id;
+	}
+	
+	/**
+	 * Encode an id to be used in a filename.
+	 * 
+	 * @return String
+	 */
+	public static  String encodeId(Serializable id) {
+		if (id != null) {
+			return encodeFileName(id.toString());
+		} else {
+			throw new IllegalArgumentException("Null is not allowed as id value.");
+		}
+	}
+
+	/**
+	 * Decode an id that was used in a filename.
+	 * 
+	 * @return String
+	 */
+	public static  String decodeId(Serializable id) {
+		if (id != null) {
+			return decodeFileName(id.toString());
+		} else {
+			throw new IllegalArgumentException("Null is not allowed as id value.");
+		}
+	}
+	
+
 	
     /**
      * Get all resources specified by pattern. For pattern syntax see (@link PathMatchingResourcePatternResolver).

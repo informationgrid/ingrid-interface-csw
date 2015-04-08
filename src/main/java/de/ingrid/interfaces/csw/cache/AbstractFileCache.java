@@ -26,7 +26,6 @@
 package de.ingrid.interfaces.csw.cache;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -35,9 +34,14 @@ import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,8 +53,7 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
 
 public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 
-	private static final String DOT = ".";
-	private static final String DOCUMENT_FILE_EXTENSION = DOT + "xml";
+	private static final String DOCUMENT_FILE_EXTENSION = ".xml";
 
 	final protected static Log log = LogFactory.getLog(AbstractFileCache.class);
 
@@ -73,16 +76,6 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 * The initial cache from which a transaction was started.
 	 */
 	protected DocumentCache<T> initialCache = null;
-
-	/**
-	 * File name filter for recognizing cached files
-	 */
-	protected class CacheFileFilter implements FileFilter {
-		@Override
-		public boolean accept(File file) {
-			return !file.isDirectory() && file.getName().endsWith(DOCUMENT_FILE_EXTENSION);
-		}
-	};
 
 	/**
 	 * Constructor
@@ -134,53 +127,13 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	}
 
 	/**
-	 * Encode an id to be used in a filename.
-	 * 
-	 * @return String
-	 */
-	protected String encodeId(Serializable id) {
-		if (id != null) {
-			return FileUtils.encodeFileName(id.toString());
-		} else {
-			throw new IllegalArgumentException("Null is not allowed as id value.");
-		}
-	}
-
-	/**
-	 * Decode an id that was used in a filename.
-	 * 
-	 * @return String
-	 */
-	protected String decodeId(Serializable id) {
-		if (id != null) {
-			return FileUtils.decodeFileName(id.toString());
-		} else {
-			throw new IllegalArgumentException("Null is not allowed as id value.");
-		}
-	}
-
-	/**
-	 * Get the document id from a cache filename
-	 * 
-	 * @param filename
-	 *            The filename without the path
-	 * @return String
-	 */
-	protected String getIdFromFilename(String filename) {
-		File file = new File(filename);
-		String basename = file.getName();
-		String id = this.decodeId(basename.substring(0, basename.lastIndexOf(DOT)));
-		return id;
-	}
-
-	/**
 	 * Get the filename for a document
 	 * 
 	 * @param id
 	 * @return String
 	 */
 	protected String getFilename(Serializable id) {
-		return this.encodeId(id) + DOCUMENT_FILE_EXTENSION;
+		return FileUtils.encodeId(id) + DOCUMENT_FILE_EXTENSION;
 	}
 
 	/**
@@ -190,11 +143,11 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 * @return String
 	 */
 	protected String getRelativePath(Serializable id) {
-		String encodedId = this.encodeId(id);
+		String encodedId = FileUtils.encodeId(id);
 		if (encodedId.length() >= 2) {
-			return this.encodeId(id).substring(0, 2);
+			return FileUtils.encodeId(id).substring(0, 2);
 		} else {
-			return this.encodeId(id).substring(0, 1);
+			return FileUtils.encodeId(id).substring(0, 1);
 		}
 	}
 
@@ -220,20 +173,42 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 */
 	protected Set<Serializable> getDocumentIds(File directory) {
 		Set<Serializable> documentIds = new HashSet<Serializable>();
-		FileFilter cacheFileFilter = new CacheFileFilter();
-		File[] files = directory.listFiles();
-		if (files != null) {
-			for (File file : files) {
-				if (cacheFileFilter.accept(file)) {
-					documentIds.add(this.getIdFromFilename(file.getName()));
-				}
-				if (file.isDirectory()) {
-					documentIds.addAll(this.getDocumentIds(file));
-				}
-			}
-		}
+		
+		EnumSet<FileVisitOption> opts = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
+		CacheFileLister cfl = new CacheFileLister(documentIds);
+        try {
+	        Files.walkFileTree(directory.toPath(), opts, Integer.MAX_VALUE, cfl);
+        } catch (IOException e) {
+	        log.error("Error getting document IDs from cache.");
+        }
+		
 		return documentIds;
 	}
+	
+	/**
+	 * FileVisitor that lists all ids inside a file cache.
+	 * 
+	 * @author jm
+	 *
+	 */
+	class CacheFileLister extends SimpleFileVisitor<Path> {
+		
+		Set<Serializable> documentIds = new HashSet<Serializable>();
+		
+		CacheFileLister(Set<Serializable> documentIds) {
+	        super();
+	        this.documentIds = documentIds;
+        }
+
+		@Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+			if (!Files.isDirectory(file) && file.toString().endsWith(DOCUMENT_FILE_EXTENSION)) {
+				documentIds.add(FileUtils.getIdFromFilename(file.getFileName().toString()));
+			}
+			return FileVisitResult.CONTINUE;
+        }
+	}
+	
 
 	/**
 	 * Set the original cache path (that is used if not in transaction mode)

@@ -56,6 +56,7 @@ public class RecordCacheTest extends TestCase {
     		record.put(IdfTool.KEY_COMPRESSED, false);
     		Serializable cacheId = cache.put(record);
     		assertEquals("05F9A598-D866-11D2-AB09-00E0292DC06B", cacheId);
+    		assertEquals(cache.getCachedIds().size(), 1);
 		} finally {
             File tmp = new File("tmp");
             if (tmp.exists()) {
