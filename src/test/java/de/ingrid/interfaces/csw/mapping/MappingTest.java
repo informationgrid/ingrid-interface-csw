@@ -53,7 +53,7 @@ public class MappingTest extends TestCase {
 
 		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();
 		Record record = IdfTool.createIdfRecord(idfContent, false);
-		Node result = mapper.map(record, ElementSetName.FULL);
+		Node result = mapper.mapFull(record);
 
         String xml = XMLUtils.toString((Document)result);
         System.out.println("\ntestFull\n");
@@ -69,7 +69,7 @@ public class MappingTest extends TestCase {
 
 		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();
 		Record record = IdfTool.createIdfRecord(idfContent, false);
-		Node result = mapper.map(record, ElementSetName.SUMMARY);
+		Node result = mapper.mapSummary(mapper.mapFull(record));
 
         String xml = XMLUtils.toString((Document)result);
         System.out.println("\ntestSummary\n");
@@ -85,7 +85,7 @@ public class MappingTest extends TestCase {
 
 		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();
 		Record record = IdfTool.createIdfRecord(idfContent, false);
-		Node result = mapper.map(record, ElementSetName.BRIEF);
+		Node result = mapper.mapBrief(mapper.mapFull(record));
 
         String xml = XMLUtils.toString((Document)result);
         System.out.println("\ntestBrief\n");
@@ -101,7 +101,7 @@ public class MappingTest extends TestCase {
 
 	        String idfContent = new Scanner(new File("src/test/resources/81A36D07-BD83-495A-8A94-30416165C86D.xml")).useDelimiter("\\A").next();
 	        Record record = IdfTool.createIdfRecord(idfContent, false);
-	        Node result = mapper.map(record, ElementSetName.FULL);
+	        Node result = mapper.mapFull(record);
 
 	        XPathUtils xpath = new XPathUtils(new IDFNamespaceContext());
 
