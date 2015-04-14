@@ -25,6 +25,8 @@
  */
 package de.ingrid.interfaces.csw.tools;
 
+import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,6 +35,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -45,8 +48,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
-import static java.nio.file.StandardCopyOption.*;
 
 public class FileUtils {
 
@@ -65,148 +66,148 @@ public class FileUtils {
 				if (file.isDirectory()) {
 					deleteRecursive(file);
 				} else {
-    				if (!file.delete()) {
-                        log.error("Could not delete file: " + file);
-    				}
+					if (!file.delete()) {
+						log.error("Could not delete file: " + file);
+					}
 				}
 			}
 		}
-        if (!src.delete()) {
-            log.error("Could not delete file: " + src);
-        }
-    }
+		if (!src.delete()) {
+			log.error("Could not delete file: " + src);
+		}
+	}
 
-    /**
-     * Delete a file or directory specified by a {@link Path}. This method uses
-     * the new {@link Files} API.
-     * 
-     * @param path
-     * @throws IOException
-     */
-    public static void deleteRecursive(Path path) throws IOException {
-        deleteRecursive(path, ".*");
-    }
+	/**
+	 * Delete a file or directory specified by a {@link Path}. This method uses
+	 * the new {@link Files} API.
+	 * 
+	 * @param path
+	 * @throws IOException
+	 */
+	public static void deleteRecursive(Path path) throws IOException {
+		deleteRecursive(path, ".*");
+	}
 
-    /**
-     * Delete a file or directory specified by a {@link Path}. This method uses
-     * the new {@link Files} API and allows to specify a regular expression to
-     * remove only files that match that expression.
-     * 
-     * @param path
-     * @param pattern
-     * @throws IOException
-     */
-    public static void deleteRecursive(Path path, final String pattern) throws IOException {
+	/**
+	 * Delete a file or directory specified by a {@link Path}. This method uses
+	 * the new {@link Files} API and allows to specify a regular expression to
+	 * remove only files that match that expression.
+	 * 
+	 * @param path
+	 * @param pattern
+	 * @throws IOException
+	 */
+	public static void deleteRecursive(Path path, final String pattern) throws IOException {
 
-        final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:" + pattern);
+		final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:" + pattern);
 
-        if (!Files.exists(path))
-            return;
+		if (!Files.exists(path))
+			return;
 
-        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (pattern != null && matcher.matches(file.getFileName())) {
-                    Files.delete(file);
-                }
-                return FileVisitResult.CONTINUE;
-            }
+		Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+			@Override
+			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+				if (pattern != null && matcher.matches(file.getFileName())) {
+					Files.delete(file);
+				}
+				return FileVisitResult.CONTINUE;
+			}
 
-            @Override
-            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                // try to delete the file anyway, even if its attributes
-                // could not be read, since delete-only access is
-                // theoretically possible
-                if (pattern != null && matcher.matches(file.getFileName())) {
-                    Files.delete(file);
-                }
-                return FileVisitResult.CONTINUE;
-            }
+			@Override
+			public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+				// try to delete the file anyway, even if its attributes
+				// could not be read, since delete-only access is
+				// theoretically possible
+				if (pattern != null && matcher.matches(file.getFileName())) {
+					Files.delete(file);
+				}
+				return FileVisitResult.CONTINUE;
+			}
 
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                if (exc == null) {
-                    if (matcher.matches(dir.getFileName())) {
-                        if (dir.toFile().list().length > 0) {
-                            // remove even if not empty
-                            FileUtils.deleteRecursive(dir);
-                        } else {
-                            Files.delete(dir);
-                        }
-                    }
-                    return FileVisitResult.CONTINUE;
-                } else {
-                    // directory iteration failed; propagate exception
-                    throw exc;
-                }
-            }
+			@Override
+			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+				if (exc == null) {
+					if (matcher.matches(dir.getFileName())) {
+						if (dir.toFile().list().length > 0) {
+							// remove even if not empty
+							FileUtils.deleteRecursive(dir);
+						} else {
+							Files.delete(dir);
+						}
+					}
+					return FileVisitResult.CONTINUE;
+				} else {
+					// directory iteration failed; propagate exception
+					throw exc;
+				}
+			}
 
-        });
-    }
+		});
+	}
 
-    /**
-     * Moves a path, retries for timeout ms if moving fails.
-     * 
-     * @param src
-     * @param dest
-     * @param timeout
-     * @throws IOException
-     */
-    public static void waitAndMove(Path src, Path dest, long timeout) throws IOException {
-        long time = 0;
-        boolean isMoved = false;
-        long pause = 200;
-        while (time < timeout && !isMoved) {
-            try {
-                Files.move(src, dest, ATOMIC_MOVE);
-                isMoved = true;
-            } catch (IOException e) {
-                log.warn("Move " + src + " to " + dest + " failed.", e);
-                log.warn("Sleep " + pause + "ms and retry.");
-                try {
-                    Thread.sleep(pause);
-                } catch (InterruptedException e1) {
-                    log.error("Waiting for moving " + src + " to " + dest + " failed. Got iterrupted", e1);
-                    throw new IOException(e1);
-                }
-                time += pause;
-                if (time >= timeout) {
-                    throw new IOException("Move " + src + " to " + dest + " failed after " + timeout + "ms.");
-                }
-            }
-        }
-    }
-    
-    /**
-     * Deleted a Path recursivly, retries for timeout if it fails.
-     * 
-     * @param path
-     * @param timeout
-     * @throws IOException
-     */
-    public static void waitAndDelete(Path path, long timeout) throws IOException {
-        long time = 0;
-        boolean isDeleted = false;
-        long pause = 200;
-        while (time < timeout && !isDeleted) {
-            try {
-                deleteRecursive(path);
-                isDeleted = true;
-            } catch (IOException e) {
-                log.warn("Deleting " + path + " failed.", e);
-                log.warn("Sleep " + pause + "ms and retry.");
-                try {
-                    Thread.sleep(pause);
-                } catch (InterruptedException e1) {
-                    log.error("Waiting for deleting " + path + " failed. Got iterrupted", e1);
-                    throw new IOException(e1);
-                }
-                time += pause;
-                if (time >= timeout) {
-                    throw new IOException("Deleting " + path + " failed after " + timeout + "ms.");
-                }
-            }
-        }
+	/**
+	 * Moves a path, retries for timeout ms if moving fails.
+	 * 
+	 * @param src
+	 * @param dest
+	 * @param timeout
+	 * @throws IOException
+	 */
+	public static void waitAndMove(Path src, Path dest, long timeout) throws IOException {
+		long time = 0;
+		boolean isMoved = false;
+		long pause = 200;
+		while (time < timeout && !isMoved) {
+			try {
+				Files.move(src, dest, ATOMIC_MOVE);
+				isMoved = true;
+			} catch (IOException e) {
+				log.warn("Move " + src + " to " + dest + " failed.", e);
+				log.warn("Sleep " + pause + "ms and retry.");
+				try {
+					Thread.sleep(pause);
+				} catch (InterruptedException e1) {
+					log.error("Waiting for moving " + src + " to " + dest + " failed. Got iterrupted", e1);
+					throw new IOException(e1);
+				}
+				time += pause;
+				if (time >= timeout) {
+					throw new IOException("Move " + src + " to " + dest + " failed after " + timeout + "ms.");
+				}
+			}
+		}
+	}
+
+	/**
+	 * Deleted a Path recursivly, retries for timeout if it fails.
+	 * 
+	 * @param path
+	 * @param timeout
+	 * @throws IOException
+	 */
+	public static void waitAndDelete(Path path, long timeout) throws IOException {
+		long time = 0;
+		boolean isDeleted = false;
+		long pause = 200;
+		while (time < timeout && !isDeleted) {
+			try {
+				deleteRecursive(path);
+				isDeleted = true;
+			} catch (IOException e) {
+				log.warn("Deleting " + path + " failed.", e);
+				log.warn("Sleep " + pause + "ms and retry.");
+				try {
+					Thread.sleep(pause);
+				} catch (InterruptedException e1) {
+					log.error("Waiting for deleting " + path + " failed. Got iterrupted", e1);
+					throw new IOException(e1);
+				}
+				time += pause;
+				if (time >= timeout) {
+					throw new IOException("Deleting " + path + " failed after " + timeout + "ms.");
+				}
+			}
+		}
 	}
 
 	/**
@@ -228,12 +229,10 @@ public class FileUtils {
 	public static void copyRecursive(File src, File dest) throws IOException {
 		// Check to ensure that the source is valid...
 		if (!src.exists()) {
-			throw new IOException("copyFiles: Can not find source: "
-					+ src.getAbsolutePath() + ".");
+			throw new IOException("copyFiles: Can not find source: " + src.getAbsolutePath() + ".");
 		} else if (!src.canRead()) { // check to ensure we have rights to the
 			// source...
-			throw new IOException("copyFiles: No right to source: "
-					+ src.getAbsolutePath() + ".");
+			throw new IOException("copyFiles: No right to source: " + src.getAbsolutePath() + ".");
 		}
 		// is this a directory copy?
 		if (src.isDirectory()) {
@@ -241,9 +240,7 @@ public class FileUtils {
 				// if not we need to make it exist if possible (note this is
 				// mkdirs not mkdir)
 				if (!dest.mkdirs()) {
-					throw new IOException(
-							"copyFiles: Could not create direcotry: "
-									+ dest.getAbsolutePath() + ".");
+					throw new IOException("copyFiles: Could not create direcotry: " + dest.getAbsolutePath() + ".");
 				}
 			}
 			// get a listing of files...
@@ -274,10 +271,8 @@ public class FileUtils {
 				fin = null;
 				fout = null;
 			} catch (IOException e) { // Error copying file...
-				IOException wrapper = new IOException(
-						"copyFiles: Unable to copy file: "
-								+ src.getAbsolutePath() + "to"
-								+ dest.getAbsolutePath() + ".");
+				IOException wrapper = new IOException("copyFiles: Unable to copy file: " + src.getAbsolutePath() + "to"
+				        + dest.getAbsolutePath() + ".");
 				wrapper.initCause(e);
 				wrapper.setStackTrace(e.getStackTrace());
 				throw wrapper;
@@ -322,7 +317,7 @@ public class FileUtils {
 			return s;
 		}
 	}
-	
+
 	/**
 	 * Get the document id from a cache filename
 	 * 
@@ -334,13 +329,13 @@ public class FileUtils {
 		String id = decodeId(filename.substring(0, filename.lastIndexOf(".")));
 		return id;
 	}
-	
+
 	/**
 	 * Encode an id to be used in a filename.
 	 * 
 	 * @return String
 	 */
-	public static  String encodeId(Serializable id) {
+	public static String encodeId(Serializable id) {
 		if (id != null) {
 			return encodeFileName(id.toString());
 		} else {
@@ -353,41 +348,67 @@ public class FileUtils {
 	 * 
 	 * @return String
 	 */
-	public static  String decodeId(Serializable id) {
+	public static String decodeId(Serializable id) {
 		if (id != null) {
 			return decodeFileName(id.toString());
 		} else {
 			throw new IllegalArgumentException("Null is not allowed as id value.");
 		}
 	}
-	
 
-	
-    /**
-     * Get all resources specified by pattern. For pattern syntax see (@link PathMatchingResourcePatternResolver).
-     * 
-     * @param packageName
-     * @return
-     * @throws IOException
-     */
-    public static Resource[] getPackageContent(String pattern) throws IOException{
-        PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
-        Resource[] resources = pmrpr.getResources(pattern);
-        return resources;
-    }
-    
-    /**
-     * Convert stream to string.
-     * 
-     * @param is
-     * @return
-     */
-    public static String convertStreamToString(java.io.InputStream is) {
-        try {
-            return new java.util.Scanner(is).useDelimiter("\\A").next();
-        } catch (java.util.NoSuchElementException e) {
-            return "";
-        }
-    }
+	/**
+	 * Get all resources specified by pattern. For pattern syntax see (@link
+	 * PathMatchingResourcePatternResolver).
+	 * 
+	 * @param packageName
+	 * @return
+	 * @throws IOException
+	 */
+	public static Resource[] getPackageContent(String pattern) throws IOException {
+		PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
+		Resource[] resources = pmrpr.getResources(pattern);
+		return resources;
+	}
+
+	/**
+	 * Convert stream to string.
+	 * 
+	 * @param is
+	 * @return
+	 */
+	public static String convertStreamToString(java.io.InputStream is) {
+		try {
+			return new java.util.Scanner(is).useDelimiter("\\A").next();
+		} catch (java.util.NoSuchElementException e) {
+			return "";
+		}
+	}
+
+	/**
+	 * Read a file into a string.
+	 * 
+	 * @param path
+	 * @param encoding
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readFile(Path path, Charset encoding) throws IOException {
+		byte[] encoded = Files.readAllBytes(path);
+		return new String(encoded, encoding);
+	}
+
+
+	/**
+	 * Write a string to a file.
+	 * 
+	 * @param path
+	 * @param content
+	 * @param encoding
+	 * @throws IOException
+	 */
+	public static void writeFile(Path path, String content, Charset encoding) throws IOException {
+		Files.write(path, content.getBytes(encoding));
+	}
+
 
 }

@@ -26,18 +26,14 @@
 package de.ingrid.interfaces.csw.cache;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.io.Serializable;
-import java.nio.ByteBuffer;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
@@ -173,18 +169,18 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 */
 	protected Set<Serializable> getDocumentIds(File directory) {
 		Set<Serializable> documentIds = new HashSet<Serializable>();
-		
+
 		EnumSet<FileVisitOption> opts = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
 		CacheFileLister cfl = new CacheFileLister(documentIds);
-        try {
-	        Files.walkFileTree(directory.toPath(), opts, Integer.MAX_VALUE, cfl);
-        } catch (IOException e) {
-	        log.error("Error getting document IDs from cache.");
-        }
-		
+		try {
+			Files.walkFileTree(directory.toPath(), opts, Integer.MAX_VALUE, cfl);
+		} catch (IOException e) {
+			log.error("Error getting document IDs from cache.");
+		}
+
 		return documentIds;
 	}
-	
+
 	/**
 	 * FileVisitor that lists all ids inside a file cache.
 	 * 
@@ -192,23 +188,22 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 *
 	 */
 	class CacheFileLister extends SimpleFileVisitor<Path> {
-		
+
 		Set<Serializable> documentIds = new HashSet<Serializable>();
-		
+
 		CacheFileLister(Set<Serializable> documentIds) {
-	        super();
-	        this.documentIds = documentIds;
-        }
+			super();
+			this.documentIds = documentIds;
+		}
 
 		@Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 			if (!Files.isDirectory(file) && file.toString().endsWith(DOCUMENT_FILE_EXTENSION)) {
 				documentIds.add(FileUtils.getIdFromFilename(file.getFileName().toString()));
 			}
 			return FileVisitResult.CONTINUE;
-        }
+		}
 	}
-	
 
 	/**
 	 * Set the original cache path (that is used if not in transaction mode)
@@ -291,25 +286,8 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		String filePath = this.getAbsoluteFilename(id);
 		File file = new File(filePath);
 		if (file.exists()) {
-
-			FileChannel ch = null;
-			FileInputStream f = null;
-			MappedByteBuffer mbb = null;
-			try {
-				f = new FileInputStream(file);
-				ch = f.getChannel();
-				mbb = ch.map(FileChannel.MapMode.READ_ONLY, 0L, ch.size());
-				String content = Charset.forName("UTF-8").decode(mbb).toString();
-				return this.unserializeDocument(id, content);
-			} finally {
-				if (ch != null)
-					ch.close();
-				if (f != null)
-					f.close();
-				if (mbb != null) {
-					mbb.clear();
-				}
-			}
+			String content = FileUtils.readFile(Paths.get(filePath), Charset.forName("UTF-8"));
+			return this.unserializeDocument(id, content);
 		} else
 			throw new IOException("No cache entry with id " + id + " found.");
 	}
@@ -336,28 +314,9 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 
 		String filePath = this.getAbsoluteFilename(id);
 		String content = this.serializeDocument(id, document);
-		byte[] buffer = content.getBytes("UTF-8");
 
-		FileChannel rwChannel = null;
-		RandomAccessFile file = null;
-		ByteBuffer bb = null;
-		try {
-			file = new RandomAccessFile(filePath, "rw");
-			rwChannel = file.getChannel();
-			bb = rwChannel.map(FileChannel.MapMode.READ_WRITE, 0, buffer.length);
-			bb.put(buffer);
-		} finally {
-			if (rwChannel != null) {
-				rwChannel.close();
-			}
-			if (file != null) {
-				file.close();
-			}
-			if (bb != null) {
-				bb.clear();
-			}
-			
-		}
+		FileUtils.writeFile(Paths.get(filePath), content, Charset.forName("UTF-8"));
+
 		return id;
 	}
 
