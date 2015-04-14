@@ -49,6 +49,7 @@ public class RecordCacheTest extends TestCase {
 		try {
     	    RecordCache cache = new RecordCache();
     		cache.setCachePath(new File(CACHE_PATH));
+    		cache.removeAll();
     
     		Record record = new Record();
     		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();
@@ -69,6 +70,7 @@ public class RecordCacheTest extends TestCase {
         try {
             RecordCache cache = new RecordCache();
             cache.setCachePath(new File(CACHE_PATH));
+    		cache.removeAll();
     
             Record record = new Record();
             String idfContent = new Scanner(new File("src/test/resources/idf-example_id_with_separator.xml")).useDelimiter("\\A").next();
