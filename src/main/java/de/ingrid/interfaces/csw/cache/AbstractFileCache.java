@@ -138,14 +138,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 * @param id
 	 * @return String
 	 */
-	protected String getRelativePath(Serializable id) {
-		String encodedId = FileUtils.encodeId(id);
-		if (encodedId.length() >= 2) {
-			return FileUtils.encodeId(id).substring(0, 2);
-		} else {
-			return FileUtils.encodeId(id).substring(0, 1);
-		}
-	}
+	protected abstract String getRelativePath(Serializable id);
 
 	/**
 	 * Get the relative path to a document starting from the cache root

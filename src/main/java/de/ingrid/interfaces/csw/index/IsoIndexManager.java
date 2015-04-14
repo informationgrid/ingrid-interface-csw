@@ -86,16 +86,16 @@ public class IsoIndexManager implements IPreCommitHandler {
     private List<String> toBeDeletedQueries = null;
 
     public void index(List<RecordCache> recordCacheList) throws Exception {
-        int recordCount = 0;
-        for (RecordCache cache : recordCacheList) {
-            recordCount += cache.getCachedIds().size();
-        }
 
         try {
             this.indexer.run(recordCacheList);
         } catch( Exception ex) {
             this.statusProvider.addState( "error-index", "Could not index documents! Please check the logs. Old index will be used meanwhile.", StatusProvider.Classification.ERROR );
             return;
+        }
+        int recordCount = 0;
+        for (RecordCache cache : recordCacheList) {
+            recordCount += cache.getCachedIds().size();
         }
         log.info("Transforming " + recordCount + " idf documents into ISO element sets full, summary, brief.");
         // map ingrid records to csw records
