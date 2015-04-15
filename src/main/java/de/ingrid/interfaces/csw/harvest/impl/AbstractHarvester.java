@@ -100,6 +100,8 @@ public abstract class AbstractHarvester implements Harvester {
         if (duplicates > 0)  {
             statusProvider.addState(this.getId() + "_duplicates", "Remove " + duplicates + " duplicates.");
         }
+        allRecordIds.clear();
+        cachedRecordIds.clear();
     }
 
     @Override

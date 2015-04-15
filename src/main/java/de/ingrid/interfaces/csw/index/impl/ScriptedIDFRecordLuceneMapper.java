@@ -85,6 +85,10 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
     private File mappingScript;
 
     private CompiledScript compiledScript;
+    
+    private XPathUtils xpathUtils = new XPathUtils(new IDFNamespaceContext());
+    
+    private static final String JAVA_VERSION = System.getProperty( "java.version" ) ;
 
     /*
      * (non-Javadoc)
@@ -112,10 +116,9 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
             bindings.put("document", document);
             document.add(new Field("docid", ((Integer)utils.get("docid")).toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             bindings.put("log", log);
-            XPathUtils xpathUtils = new XPathUtils(new IDFNamespaceContext());
             bindings.put("XPATH", xpathUtils);
             bindings.put("luceneTools", luceneTools);
-            bindings.put("javaVersion", System.getProperty( "java.version" ));
+            bindings.put("javaVersion", JAVA_VERSION);
 
             for (Entry<String, Object> entry : utils.entrySet()) {
                 bindings.put(entry.getKey(), entry.getValue());
