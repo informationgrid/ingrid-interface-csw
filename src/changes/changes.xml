@@ -28,6 +28,17 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.5.2" date="2015-xx-xx" description="Release InGrid 3.5.2">
+        <action type="update" dev="wemove">
+            Optimize relative file cache paths for big amounts of files (3 characters, equally distributed even with same prefixed record ids ).
+        </action>
+        <action type="update" dev="wemove">
+            Use nio based file access in file caches.
+        </action>
+        <action type="update" dev="wemove">
+            Speed up XML serialization/deserialization and XPATH performance.
+        </action>
+    </release>
     <release version="3.5.0" date="2015-01-30" description="Release InGrid 3.5">
         <action type="add" dev="wemove" issue="REDMINE-549">
             Add GetRecords per GET Request to the interface.
