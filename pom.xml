@@ -189,6 +189,10 @@
           <artifactId>ingrid-communication</artifactId>
         </exclusion>
         <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-iplug-dsc</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>de.ingrid.communication</groupId>
           <artifactId>ingrid-communication-authentication</artifactId>
         </exclusion>
