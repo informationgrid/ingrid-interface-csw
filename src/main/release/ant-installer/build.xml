@@ -20,7 +20,7 @@
   limitations under the Licence.
   **************************************************#
   -->
-<project name="PortalU Installation" basedir=".">
+<project name="InGrid-Portal Installation" basedir=".">
     <description>
         CSW Interface Installation Script
     </description>
@@ -104,7 +104,7 @@ und rufen sie von der Kommandozeile folgendes auf
 
 Weitere Informationen entnehmen Sie bitte dem
 Online-Handbuch unter 
-http://www.kst.portalu.de/wiki/index.php/CSW-Schnittstelle
+"http://www.ingrid-oss.eu"
 		</echo>
 	</target>
 	

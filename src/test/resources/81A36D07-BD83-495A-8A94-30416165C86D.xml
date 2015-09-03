@@ -79,7 +79,7 @@
         </gmd:MD_ReferenceSystem>
       </gmd:referenceSystemInfo>
       <gmd:identificationInfo>
-        <srv:SV_ServiceIdentification uuid="http://portalu.de/igc_st#49add98c-2cb4-348c-994a-0d2c7be9f4b6">
+        <srv:SV_ServiceIdentification uuid="http://www.informationgrid.eu/igc_st#49add98c-2cb4-348c-994a-0d2c7be9f4b6">
           <gmd:citation>
             <gmd:CI_Citation>
               <gmd:title>
@@ -397,7 +397,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#44628542-fa7d-4ef7-9bfb-bf401fb059b2</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#44628542-fa7d-4ef7-9bfb-bf401fb059b2</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -407,7 +407,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#523a506b-a212-470d-a7c9-82fe31d3c9ac</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#523a506b-a212-470d-a7c9-82fe31d3c9ac</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -417,7 +417,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#65629dc5-875f-4ad8-aae8-2d70cb1ccb8d</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#65629dc5-875f-4ad8-aae8-2d70cb1ccb8d</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -427,7 +427,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#81b06a1c-ed0c-485b-8966-6f4f6c144bdb</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#81b06a1c-ed0c-485b-8966-6f4f6c144bdb</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -437,7 +437,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#c6f5c35a-85e5-427e-b6f6-79fa21ee9b6f</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#c6f5c35a-85e5-427e-b6f6-79fa21ee9b6f</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -447,7 +447,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#c1caea88-1094-4f69-ba20-1c87d339362f</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#c1caea88-1094-4f69-ba20-1c87d339362f</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -457,7 +457,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#cd2070ae-2678-4345-8792-713679ec28ad</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#cd2070ae-2678-4345-8792-713679ec28ad</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -467,7 +467,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#8ba0a5d2-aa6b-4fea-9f4d-0d5cd0dd23f0</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#8ba0a5d2-aa6b-4fea-9f4d-0d5cd0dd23f0</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -477,7 +477,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#8b0661ff-cb33-48dd-9ea7-8e8d0359a67f</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#8b0661ff-cb33-48dd-9ea7-8e8d0359a67f</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -487,7 +487,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#68a82def-84bb-4482-8f6b-f817c277af42</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#68a82def-84bb-4482-8f6b-f817c277af42</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -497,7 +497,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#2ed0f592-f586-4e78-9df0-1c21047a4757</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#2ed0f592-f586-4e78-9df0-1c21047a4757</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -507,7 +507,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#eebea342-0a9b-4262-92c0-910c82423c16</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#eebea342-0a9b-4262-92c0-910c82423c16</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -517,7 +517,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#af9eab68-0d9f-40d9-b23c-8fb105416100</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#af9eab68-0d9f-40d9-b23c-8fb105416100</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -527,7 +527,7 @@
                 <gco:CharacterString>GetMap</gco:CharacterString>
               </srv:operationName>
               <srv:identifier>
-                <gco:CharacterString>http://portalu.de/igc_st#011a1332-569f-42ae-86ee-dd196c946419</gco:CharacterString>
+                <gco:CharacterString>http://www.informationgrid.eu/igc_st#011a1332-569f-42ae-86ee-dd196c946419</gco:CharacterString>
               </srv:identifier>
             </srv:SV_CoupledResource>
           </srv:coupledResource>
@@ -1426,20 +1426,20 @@
               </srv:connectPoint>
             </srv:SV_OperationMetadata>
           </srv:containsOperations>
-          <srv:operatesOn uuidref="3AD400FB-9AFA-4137-BBA3-2C877DD17100" xlink:href="http://portalu.de/igc_st#44628542-fa7d-4ef7-9bfb-bf401fb059b2"/>
-          <srv:operatesOn uuidref="D0299DB8-C5C8-46BD-8DE2-8E96F75090B0" xlink:href="http://portalu.de/igc_st#523a506b-a212-470d-a7c9-82fe31d3c9ac"/>
-          <srv:operatesOn uuidref="F96357AE-7F22-42B5-8DB5-89C3C29FC760" xlink:href="http://portalu.de/igc_st#65629dc5-875f-4ad8-aae8-2d70cb1ccb8d"/>
-          <srv:operatesOn uuidref="F59560A6-1E55-4972-B9C7-00E4FB5EAA30" xlink:href="http://portalu.de/igc_st#81b06a1c-ed0c-485b-8966-6f4f6c144bdb"/>
-          <srv:operatesOn uuidref="646B63FC-E43A-44E0-A47B-1CF10A9AC467" xlink:href="http://portalu.de/igc_st#c6f5c35a-85e5-427e-b6f6-79fa21ee9b6f"/>
-          <srv:operatesOn uuidref="0823AD52-9592-4B39-B91E-54F9131692E2" xlink:href="http://portalu.de/igc_st#c1caea88-1094-4f69-ba20-1c87d339362f"/>
-          <srv:operatesOn uuidref="BE8163A3-94DA-4131-98EB-D964C5A33673" xlink:href="http://portalu.de/igc_st#cd2070ae-2678-4345-8792-713679ec28ad"/>
-          <srv:operatesOn uuidref="E967E32B-4F09-4852-BA55-5CEAC3991788" xlink:href="http://portalu.de/igc_st#8ba0a5d2-aa6b-4fea-9f4d-0d5cd0dd23f0"/>
-          <srv:operatesOn uuidref="FFCABD2C-6015-4AAA-AAE6-E32A2C2F24D5" xlink:href="http://portalu.de/igc_st#8b0661ff-cb33-48dd-9ea7-8e8d0359a67f"/>
-          <srv:operatesOn uuidref="F93CD5B6-F137-47B5-9EAE-7BCE6549E5F6" xlink:href="http://portalu.de/igc_st#68a82def-84bb-4482-8f6b-f817c277af42"/>
-          <srv:operatesOn uuidref="4FC5AEDD-AD45-472D-B80B-06F6E6166D10" xlink:href="http://portalu.de/igc_st#2ed0f592-f586-4e78-9df0-1c21047a4757"/>
-          <srv:operatesOn uuidref="76EBA138-82CF-46C2-ABAE-7791C7FFD23F" xlink:href="http://portalu.de/igc_st#eebea342-0a9b-4262-92c0-910c82423c16"/>
-          <srv:operatesOn uuidref="A5E15602-15BE-451A-9877-7BF8A1068D62" xlink:href="http://portalu.de/igc_st#af9eab68-0d9f-40d9-b23c-8fb105416100"/>
-          <srv:operatesOn uuidref="A16D544B-6DB0-47EA-8285-C1BC2ED2F418" xlink:href="http://portalu.de/igc_st#011a1332-569f-42ae-86ee-dd196c946419"/>
+          <srv:operatesOn uuidref="3AD400FB-9AFA-4137-BBA3-2C877DD17100" xlink:href="http://www.informationgrid.eu/igc_st#44628542-fa7d-4ef7-9bfb-bf401fb059b2"/>
+          <srv:operatesOn uuidref="D0299DB8-C5C8-46BD-8DE2-8E96F75090B0" xlink:href="http://www.informationgrid.eu/igc_st#523a506b-a212-470d-a7c9-82fe31d3c9ac"/>
+          <srv:operatesOn uuidref="F96357AE-7F22-42B5-8DB5-89C3C29FC760" xlink:href="http://www.informationgrid.eu/igc_st#65629dc5-875f-4ad8-aae8-2d70cb1ccb8d"/>
+          <srv:operatesOn uuidref="F59560A6-1E55-4972-B9C7-00E4FB5EAA30" xlink:href="http://www.informationgrid.eu/igc_st#81b06a1c-ed0c-485b-8966-6f4f6c144bdb"/>
+          <srv:operatesOn uuidref="646B63FC-E43A-44E0-A47B-1CF10A9AC467" xlink:href="http://www.informationgrid.eu/igc_st#c6f5c35a-85e5-427e-b6f6-79fa21ee9b6f"/>
+          <srv:operatesOn uuidref="0823AD52-9592-4B39-B91E-54F9131692E2" xlink:href="http://www.informationgrid.eu/igc_st#c1caea88-1094-4f69-ba20-1c87d339362f"/>
+          <srv:operatesOn uuidref="BE8163A3-94DA-4131-98EB-D964C5A33673" xlink:href="http://www.informationgrid.eu/igc_st#cd2070ae-2678-4345-8792-713679ec28ad"/>
+          <srv:operatesOn uuidref="E967E32B-4F09-4852-BA55-5CEAC3991788" xlink:href="http://www.informationgrid.eu/igc_st#8ba0a5d2-aa6b-4fea-9f4d-0d5cd0dd23f0"/>
+          <srv:operatesOn uuidref="FFCABD2C-6015-4AAA-AAE6-E32A2C2F24D5" xlink:href="http://www.informationgrid.eu/igc_st#8b0661ff-cb33-48dd-9ea7-8e8d0359a67f"/>
+          <srv:operatesOn uuidref="F93CD5B6-F137-47B5-9EAE-7BCE6549E5F6" xlink:href="http://www.informationgrid.eu/igc_st#68a82def-84bb-4482-8f6b-f817c277af42"/>
+          <srv:operatesOn uuidref="4FC5AEDD-AD45-472D-B80B-06F6E6166D10" xlink:href="http://www.informationgrid.eu/igc_st#2ed0f592-f586-4e78-9df0-1c21047a4757"/>
+          <srv:operatesOn uuidref="76EBA138-82CF-46C2-ABAE-7791C7FFD23F" xlink:href="http://www.informationgrid.eu/igc_st#eebea342-0a9b-4262-92c0-910c82423c16"/>
+          <srv:operatesOn uuidref="A5E15602-15BE-451A-9877-7BF8A1068D62" xlink:href="http://www.informationgrid.eu/igc_st#af9eab68-0d9f-40d9-b23c-8fb105416100"/>
+          <srv:operatesOn uuidref="A16D544B-6DB0-47EA-8285-C1BC2ED2F418" xlink:href="http://www.informationgrid.eu/igc_st#011a1332-569f-42ae-86ee-dd196c946419"/>
         </srv:SV_ServiceIdentification>
       </gmd:identificationInfo>
       <gmd:distributionInfo>
