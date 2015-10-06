@@ -41,6 +41,7 @@ public class ConfigurationKeys {
 	public static final String RECORDDESC_DOC = "describerecord";
     public static final String INGRID_ADMIN_PASSWORD = "ingrid.admin.password";
     public static final String CACHE_ENABLE = "cache.enable";
+    public static final String CACHE_ENABLE_HARVEST = "cache.harvest.enable";
     public static final String QUERY_PARAMETER_2_CONSTRAINTS = "query.parameter.to.constraints";
     public static final String QUERY_PARAMETER_2_CAPABILITIES_VARIANT = "query.parameter.to.capabilities.variant";
     public static final String HARVESTER_IBUS_DATATYPES_ALLOW = "harvester.ibus.datatypes.allow";

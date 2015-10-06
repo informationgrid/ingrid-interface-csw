@@ -43,7 +43,9 @@ import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.MultipleBusClientFactory;
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.harvest.impl.AbstractHarvester;
 import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.utils.IBus;
@@ -107,6 +109,8 @@ public class IBusHarvester extends AbstractHarvester {
 
     private Map<String, Integer> errorCounts = new HashMap<String, Integer>();
 
+    private Boolean useCachedDocs;
+
     public IBusHarvester() {
         super();
         CacheManager singletonManager = CacheManager.create();
@@ -116,6 +120,7 @@ public class IBusHarvester extends AbstractHarvester {
             singletonManager.addCache(memoryOnlyCache);
         }
         plugDescriptionCache = singletonManager.getCache(PLUGDESCRIPTION_CACHE_NAME);
+        useCachedDocs = ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE_HARVEST, false);
     }
 
     /**
@@ -297,6 +302,10 @@ public class IBusHarvester extends AbstractHarvester {
             Record record = null;
             while (record == null && (requestAttempt++ <= MAX_IBUS_REQUESTS_ATTEMPTS)) {
                 try {
+                    // add caching information, which is identified in the communication layer of the iPlug
+                    if (!useCachedDocs) {
+                        hit.put( "cache", "cache: false");
+                    }
                     record = bus.getRecord(hit);
                 } catch (Throwable t) {
                     log.warn("Error getting record from ibus with communication setting in '" + this.communicationXml

@@ -32,6 +32,9 @@
       <action type="update" dev="wemove" issue="REDMINE-15">
         Remove all references to PortalU.
       </action>
+      <action type="fix" dev="wemove" issue="REDMINE-179">
+        Option to request documents directly and not from cache due to caching bug
+      </action>
     </release>
     
     <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">

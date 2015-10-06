@@ -206,6 +206,10 @@ case "$1" in
   start)
     startIplug
     ;;
+  debug)
+    INGRID_OPTS="$INGRID_OPTS -agentlib:jdwp=transport=dt_socket,address=7090,server=y,suspend=n"
+    startIplug
+    ;;
   stop)
     stopIplug
     ;;
