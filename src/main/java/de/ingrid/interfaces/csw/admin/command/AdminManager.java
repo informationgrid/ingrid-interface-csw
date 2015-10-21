@@ -22,7 +22,7 @@ public class AdminManager {
             String oldPassword = props.getProperty( "ingrid.admin.password" );
             is.close();
             
-            props.setProperty( "plugdescription.IPLUG_ADMIN_PASSWORD", BCrypt.hashpw(oldPassword, BCrypt.gensalt()) );
+            props.setProperty( "ingrid.admin.password", BCrypt.hashpw(oldPassword, BCrypt.gensalt()) );
             
             OutputStream os = new FileOutputStream( "conf/config.override.properties" );
             props.store( os, "Override configuration written by the application" );
