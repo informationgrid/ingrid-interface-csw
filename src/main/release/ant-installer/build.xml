@@ -82,7 +82,7 @@
 	<target name="csw" description="Set csw properties.">
 		<echo>Schreibe CSW Konfiguration in ingrid-csw.properties</echo>
 	    <touch file="${csw-properties}"/>
-	    <java classname="de.ingrid.admin.command.AdminManager" fork="true" dir="${installDir}">
+	    <java classname="de.ingrid.interfaces.csw.admin.command.AdminManager" fork="true" dir="${installDir}">
             <arg value="reset_password" />
             <arg value="${ingridAdminPassword}" />
             <classpath>
