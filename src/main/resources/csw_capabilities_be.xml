@@ -11,8 +11,8 @@
     xmlns:inspire_com="http://inspire.ec.europa.eu/schemas/common/1.0"
     xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd http://inspire.ec.europa.eu/schemas/inspire_ds/1.0 http://inspire.ec.europa.eu/schemas/inspire_ds/1.0/inspire_ds.xsd">
     <ows:ServiceIdentification>
-        <ows:Title>PortalU Catalog Server</ows:Title>
-        <ows:Abstract>Metadata collected from several catalogs owned by the german environmental and surveying authorities. Look at http://www.portalu.de for more information.</ows:Abstract>
+        <ows:Title>InGrid-Portal Catalog Server</ows:Title>
+        <ows:Abstract>Metadata collected from several catalogs owned by the german environmental and surveying authorities. Look at http://www.informationgrid.eu for more information.</ows:Abstract>
         <ows:Keywords>
             <ows:Keyword>CS-W</ows:Keyword>
             <ows:Keyword>ISO19119</ows:Keyword>
@@ -26,7 +26,7 @@
         <ows:AccessConstraints>unbeschraenkt</ows:AccessConstraints>
     </ows:ServiceIdentification>
     <ows:ServiceProvider>
-        <ows:ProviderName>Coordination Center PortalU</ows:ProviderName>
+        <ows:ProviderName>Coordination Center InGrid-Portal</ows:ProviderName>
         <ows:ProviderSite xlink:href="http://www.kst.portalu.de/" xlink:type="simple" />
         <ows:ServiceContact>
             <ows:IndividualName>Fred Kruse</ows:IndividualName>
@@ -53,13 +53,13 @@
         <ows:Operation name="GetCapabilities">
             <ows:DCP>
                 <ows:HTTP>
-                    <ows:Get xlink:href="http://portalu.de/csw_capabilities/partner/be" />
-                    <ows:Post xlink:href="http://portalu.de/csw_capabilities/partner/be">
+                    <ows:Get xlink:href="http://www.informationgrid.eu/csw_capabilities/partner/be" />
+                    <ows:Post xlink:href="http://www.informationgrid.eu/csw_capabilities/partner/be">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>SOAP</ows:Value>
                         </ows:Constraint>
                     </ows:Post>
-                    <ows:Post xlink:href="http://portalu.de/csw_capabilities/partner/be">
+                    <ows:Post xlink:href="http://www.informationgrid.eu/csw_capabilities/partner/be">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>XML</ows:Value>
                         </ows:Constraint>
@@ -70,13 +70,13 @@
         <ows:Operation name="GetRecords">
             <ows:DCP>
                 <ows:HTTP>
-                    <ows:Get xlink:href="http://portalu.de/csw202/partner/be" />
-                    <ows:Post xlink:href="http://portalu.de/csw202/partner/be">
+                    <ows:Get xlink:href="http://www.informationgrid.eu/csw202/partner/be" />
+                    <ows:Post xlink:href="http://www.informationgrid.eu/csw202/partner/be">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>SOAP</ows:Value>
                         </ows:Constraint>
                     </ows:Post>
-                    <ows:Post xlink:href="http://portalu.de/csw202/partner/be">
+                    <ows:Post xlink:href="http://www.informationgrid.eu/csw202/partner/be">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>XML</ows:Value>
                         </ows:Constraint>
@@ -166,13 +166,13 @@
         <ows:Operation name="GetRecordById">
             <ows:DCP>
                 <ows:HTTP>
-                    <ows:Get xlink:href="http://portalu.de/csw202/partner/be" />
-                    <ows:Post xlink:href="http://portalu.de/csw202/partner/be">
+                    <ows:Get xlink:href="http://www.informationgrid.eu/csw202/partner/be" />
+                    <ows:Post xlink:href="http://www.informationgrid.eu/csw202/partner/be">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>SOAP</ows:Value>
                         </ows:Constraint>
                     </ows:Post>
-                    <ows:Post xlink:href="http://portalu.de/csw202/partner/be">
+                    <ows:Post xlink:href="http://www.informationgrid.eu/csw202/partner/be">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>XML</ows:Value>
                         </ows:Constraint>
@@ -195,13 +195,13 @@
         <ows:Operation name="DescribeRecord">
             <ows:DCP>
                 <ows:HTTP>
-                    <ows:Get xlink:href="http://portalu.de/csw202/partner/be" />
-                    <ows:Post xlink:href="http://portalu.de/csw202/partner/be">
+                    <ows:Get xlink:href="http://www.informationgrid.eu/csw202/partner/be" />
+                    <ows:Post xlink:href="http://www.informationgrid.eu/csw202/partner/be">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>SOAP</ows:Value>
                         </ows:Constraint>
                     </ows:Post>
-                    <ows:Post xlink:href="http://portalu.de/csw202/partner/be">
+                    <ows:Post xlink:href="http://www.informationgrid.eu/csw202/partner/be">
                         <ows:Constraint name="PostEncoding">
                             <ows:Value>XML</ows:Value>
                         </ows:Constraint>

@@ -25,16 +25,19 @@
  */
 package de.ingrid.interfaces.csw.tools;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -42,29 +45,62 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class StringUtils {
 
-    public static String join(Object[] parts, String separator) {
-        StringBuilder str = new StringBuilder();
-        for (Object part : parts) {
-            str.append(part).append(separator);
-        }
-        if (str.length() > 0)
-            return str.substring(0, str.length() - separator.length());
+	private static ThreadLocal<Transformer> threadLocalTransformer = new ThreadLocal<Transformer>() {
+		@Override
+		public Transformer initialValue() {
+			TransformerFactory factory = TransformerFactory.newInstance();
+			Transformer transformer;
+			try {
+				transformer = factory.newTransformer();
+				transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
+				return transformer;
+			} catch (TransformerConfigurationException e) {
+				new RuntimeException("Error creating Transformer", e);
+			}
+			return null;
+		}
+	};
 
-        return str.toString();
-    }
+	private static ThreadLocal<DocumentBuilder> threadLocalDocumentBuilder = new ThreadLocal<DocumentBuilder>() {
+		@Override
+		public DocumentBuilder initialValue() {
+			DocumentBuilderFactory domFactory = DocumentBuilderFactory
+					.newInstance();
+			domFactory.setNamespaceAware(true);
+			DocumentBuilder builder;
+			try {
+				builder = domFactory.newDocumentBuilder();
+				return builder;
+			} catch (ParserConfigurationException e) {
+				new RuntimeException("Error creating DocumentBuilder", e);
+			}
+			return null;
+		}
+	};
+	
+	
+	public static String join(Object[] parts, String separator) {
+		StringBuilder str = new StringBuilder();
+		for (Object part : parts) {
+			str.append(part).append(separator);
+		}
+		if (str.length() > 0)
+			return str.substring(0, str.length() - separator.length());
 
-    public static String nodeToString(Node node) {
+		return str.toString();
+	}
+
+	public static String nodeToString(Node node) {
         try {
             Source source = new DOMSource(node);
             StringWriter stringWriter = new StringWriter();
             Result result = new StreamResult(stringWriter);
-            TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer transformer = factory.newTransformer();
-            // just set this to get literally equal results
-            transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
+            Transformer transformer = threadLocalTransformer.get();
+            transformer.reset();
             transformer.transform(source, result);
             return stringWriter.getBuffer().toString();
         } catch (Exception e) {
@@ -72,39 +108,39 @@ public class StringUtils {
         }
     }
 
-    public static Document stringToDocument(String string) throws Exception {
-        DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-        domFactory.setNamespaceAware(true);
-        DocumentBuilder builder = domFactory.newDocumentBuilder();
-        Document doc = builder.parse(new InputSource(new StringReader(string)));
-        return doc;
-    }
+	public static Document stringToDocument(String string) throws SAXException, IOException {
+		DocumentBuilder builder = threadLocalDocumentBuilder.get();
+		builder.reset();
+		Document doc = builder.parse(new InputSource(new StringReader(string)));
+		return doc;
+	}
 
-    public static String generateUuid() {
-        UUID uuid = UUID.randomUUID();
-        StringBuffer idcUuid = new StringBuffer(uuid.toString().toUpperCase());
-        while (idcUuid.length() < 36) {
-            idcUuid.append("0");
-        }
-        return idcUuid.toString();
-    }
+	public static String generateUuid() {
+		UUID uuid = UUID.randomUUID();
+		StringBuffer idcUuid = new StringBuffer(uuid.toString().toUpperCase());
+		while (idcUuid.length() < 36) {
+			idcUuid.append("0");
+		}
+		return idcUuid.toString();
+	}
 
-    /**
-     * Splits a String by a separator. Only the first separator is taken into
-     * account. Thus max. two String segments are returned.
-     * 
-     * @param src
-     * @param separator
-     * @return Max 2 String parts.
-     */
-    public static String[] splitByFirstOccurence(String src, String separator) {
-        int pos = src.indexOf(separator);
-        if (pos == -1) {
-            return new String[]{src};
-        } else {
-            String firstSegment = src.substring(0, pos);
-            String lastSegment = src.substring(pos+separator.length());
-            return new String[]{firstSegment, lastSegment};
-        }
-    }
+	/**
+	 * Splits a String by a separator. Only the first separator is taken into
+	 * account. Thus max. two String segments are returned.
+	 * 
+	 * @param src
+	 * @param separator
+	 * @return Max 2 String parts.
+	 */
+	public static String[] splitByFirstOccurence(String src, String separator) {
+		int pos = src.indexOf(separator);
+		if (pos == -1) {
+			return new String[] { src };
+		} else {
+			String firstSegment = src.substring(0, pos);
+			String lastSegment = src.substring(pos + separator.length());
+			return new String[] { firstSegment, lastSegment };
+		}
+	}
+	
 }

@@ -63,7 +63,7 @@ $(function() {
 </head>
 <body>
 	<div id="header">
-		<img src="images/logo.gif" width="168" height="60" alt="Portal U" />
+		<img src="images/logo.gif" alt="InGrid Portal" />
 		<h1>Configuration</h1>
 		<%
 		java.security.Principal  principal = request.getUserPrincipal();

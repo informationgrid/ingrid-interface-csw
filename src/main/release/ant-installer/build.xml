@@ -20,13 +20,13 @@
   limitations under the Licence.
   **************************************************#
   -->
-<project name="PortalU Installation" basedir=".">
+<project name="InGrid-Portal Installation" basedir=".">
     <description>
         CSW Interface Installation Script
     </description>
 	<!-- set global properties for this build -->
 	<property name="componentName" 	value="${project.artifactId}-${project.version}"/>
-	<property name="csw-properties" value="${installDir}/conf/config.properties"/>
+	<property name="csw-properties" value="${installDir}/conf/config.override.properties"/>
 
 	<!-- THESE PORPERTIES ARE NECESSARY FOR UPDATES -->
     <property name="libraryDir"         value="lib" />
@@ -81,12 +81,23 @@
 	
 	<target name="csw" description="Set csw properties.">
 		<echo>Schreibe CSW Konfiguration in ingrid-csw.properties</echo>
-        <replace file="${csw-properties}" token="@INGRID_ADMIN_PASSWORD@" value="${ingridAdminPassword}"/>
-		<replace file="${csw-properties}" token="@LOCAL_SERVER_PORT@" value="${localServerPort}"/>
-		<replace file="${csw-properties}" token="@MAX_RECORDS@" value="${maxRecords}"/>
-		<replace file="${csw-properties}" token="@SERVER_INTERFACE_HOST@" value="${externalInterfaceHost}"/>
-		<replace file="${csw-properties}" token="@SERVER_INTERFACE_PORT@" value="${externalInterfacePort}"/>
-		<replace file="${csw-properties}" token="@SERVER_INTERFACE_PATH@" value="${externalInterfacePath}"/>
+	    <touch file="${csw-properties}"/>
+	    <java classname="de.ingrid.interfaces.csw.admin.command.AdminManager" fork="true" dir="${installDir}">
+            <arg value="reset_password" />
+            <arg value="${ingridAdminPassword}" />
+            <classpath>
+                <fileset dir="${installDir}/lib">
+                   <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </java>
+	    <propertyfile file="${csw-properties}">
+          <entry key="server.port" value="${localServerPort}" />
+          <entry key="max.returned.hits" value="${maxRecords}" />
+          <entry key="server.interface.host" value="${externalInterfaceHost}" />
+          <entry key="server.interface.port" value="${externalInterfacePort}" />
+          <entry key="server.interface.path" value="${externalInterfacePath}" />
+        </propertyfile>
 	</target>
 	
 	<target name="startIPlug">
@@ -104,7 +115,7 @@ und rufen sie von der Kommandozeile folgendes auf
 
 Weitere Informationen entnehmen Sie bitte dem
 Online-Handbuch unter 
-http://www.kst.portalu.de/wiki/index.php/CSW-Schnittstelle
+"http://www.ingrid-oss.eu"
 		</echo>
 	</target>
 	

@@ -49,6 +49,7 @@ public class RecordCacheTest extends TestCase {
 		try {
     	    RecordCache cache = new RecordCache();
     		cache.setCachePath(new File(CACHE_PATH));
+    		cache.removeAll();
     
     		Record record = new Record();
     		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();
@@ -56,6 +57,7 @@ public class RecordCacheTest extends TestCase {
     		record.put(IdfTool.KEY_COMPRESSED, false);
     		Serializable cacheId = cache.put(record);
     		assertEquals("05F9A598-D866-11D2-AB09-00E0292DC06B", cacheId);
+    		assertEquals(cache.getCachedIds().size(), 1);
 		} finally {
             File tmp = new File("tmp");
             if (tmp.exists()) {
@@ -68,6 +70,7 @@ public class RecordCacheTest extends TestCase {
         try {
             RecordCache cache = new RecordCache();
             cache.setCachePath(new File(CACHE_PATH));
+    		cache.removeAll();
     
             Record record = new Record();
             String idfContent = new Scanner(new File("src/test/resources/idf-example_id_with_separator.xml")).useDelimiter("\\A").next();

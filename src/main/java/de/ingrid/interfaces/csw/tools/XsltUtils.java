@@ -25,7 +25,6 @@
  */
 package de.ingrid.interfaces.csw.tools;
 
-import java.io.File;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Scanner;
@@ -44,29 +43,31 @@ import org.w3c.dom.Node;
 
 public class XsltUtils {
 
-    final protected static Log log = LogFactory.getLog(XsltUtils.class);
+	final protected static Log log = LogFactory.getLog(XsltUtils.class);
 
-	private Map<File, Transformer> transformers = new Hashtable<File, Transformer>();
+	private Map<String, Transformer> transformers = new Hashtable<String, Transformer>();
 
 	/**
 	 * Transform the given document using the stylesheet
+	 * 
 	 * @param document
 	 * @param stylesheet
 	 * @return Node
 	 * @throws Exception
 	 */
-	public Node transform(Node document, File styleSheet) throws Exception {
+	public Node transform(Node document, String styleSheet) throws Exception {
 
 		if (!this.transformers.containsKey(styleSheet)) {
 			// create transformer for the stylesheet, if it does not exist yet
-			
+
 			if (log.isDebugEnabled()) {
-				String fisString = new Scanner(new ClassPathResource(styleSheet.getName()).getInputStream(),
-					"UTF-8").useDelimiter("\\A").next();
+				@SuppressWarnings("resource")
+                String fisString = new Scanner(new ClassPathResource(styleSheet).getInputStream(), "UTF-8")
+				        .useDelimiter("\\A").next();
 				log.debug("\n\nAdding styleSheet:\n\n" + fisString);
 			}
 
-			Source source = new StreamSource(new ClassPathResource(styleSheet.getName()).getInputStream());
+			Source source = new StreamSource(new ClassPathResource(styleSheet).getInputStream());
 			TransformerFactory factory = TransformerFactory.newInstance();
 			this.transformers.put(styleSheet, factory.newTransformer(source));
 		}

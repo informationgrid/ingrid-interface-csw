@@ -303,6 +303,7 @@ public class EditIBusHarvesterController {
                                 rdco.setIndexedRecords(results.getTotalHits());
                             } catch (Exception e) {
                                 log.error("Error, searching index. Rebuild Index!", e);
+                                rdco.setIndexedRecords( -1 );
                             }
                             enabledIPlugs.add(rdco);
                             break;
@@ -325,9 +326,15 @@ public class EditIBusHarvesterController {
                         rdco.setIsCurrentlyRegistered(false);
                         String q = IPLUG_QUERY.replaceAll("PATTERN_PLUG_ID", rdco.getPlugId());
                         Document queryDocument = df.newDocumentBuilder().parse(new InputSource(new StringReader(q)));
-                        CSWRecordResults results = searcher.search((new XMLEncoding()).getQuery(queryDocument
-                                .getDocumentElement()));
-                        rdco.setIndexedRecords(results.getTotalHits());
+                        // in case no index exists, we need to catch this error
+                        try {
+                            CSWRecordResults results = searcher.search((new XMLEncoding()).getQuery(queryDocument
+                                    .getDocumentElement()));
+                            rdco.setIndexedRecords(results.getTotalHits());
+                        } catch (Exception ex) {
+                            log.error("Error, searching index. Rebuild Index!", ex);
+                            rdco.setIndexedRecords( -1 );
+                        }
                         enabledIPlugs.add(rdco);
                     }
                 }

@@ -26,7 +26,9 @@ import java.security.Principal;
 
 import org.mortbay.jetty.Request;
 import org.mortbay.jetty.security.HashUserRealm;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import de.ingrid.interfaces.csw.admin.IngridPrincipal.KnownPrincipal;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 
@@ -38,10 +40,22 @@ public class IngridHashUserRealm extends HashUserRealm {
             Principal user = super.getPrincipal(username);
 
             if (user == null) {
-                this.put("admin", ApplicationProperties.get(ConfigurationKeys.INGRID_ADMIN_PASSWORD));
+                this.put("admin", new KnownPrincipal("admin", ApplicationProperties.get(ConfigurationKeys.INGRID_ADMIN_PASSWORD), null));
                 user = super.getPrincipal(username);
             }
         }
-        return super.authenticate(username, credentials, request);
+
+        KnownPrincipal principal = (KnownPrincipal) super.getPrincipal(username);
+        String pw = principal.getPassword();
+        if (BCrypt.checkpw(credentials.toString(), pw )) {
+            return principal;
+        }
+        
+        return null;
+    }
+    
+    @Override
+    public boolean reauthenticate(Principal user) {
+        return ((KnownPrincipal) user).isAuthenticated();
     }
 }

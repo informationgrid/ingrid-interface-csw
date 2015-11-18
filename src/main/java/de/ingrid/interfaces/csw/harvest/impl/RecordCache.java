@@ -27,6 +27,8 @@ package de.ingrid.interfaces.csw.harvest.impl;
 
 import java.io.Serializable;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import de.ingrid.interfaces.csw.cache.AbstractFileCache;
 import de.ingrid.interfaces.csw.harvest.ibus.IdfRecordPreProcessor;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
@@ -75,6 +77,11 @@ public class RecordCache extends AbstractFileCache<Record> implements Serializab
 
     public void setProcessor(IdfRecordPreProcessor processor) {
         this.processor = processor;
+    }
+
+	@Override
+    protected String getRelativePath(Serializable id) {
+		return DigestUtils.md5Hex(id.toString()).substring(0, 3);
     }
 
 }

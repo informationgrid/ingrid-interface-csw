@@ -21,7 +21,30 @@
   **************************************************#
   -->
 <project name="CSW-Interface Patches">
-    <target name="patchFiles" depends="">
+    <target name="patchFromVersion3.6.0.4">
+        <compareVersion value1="${oldVersion}" value2="3.6.0.4" prop="compResult"/>
+        <if>
+            <not>
+                <equals arg1="${compResult}" arg2="1" />
+            </not>
+            <then>
+                <echo>Migrating password</echo>
+                <java classname="de.ingrid.interfaces.csw.admin.command.AdminManager" fork="true" dir="${installDir}">
+                    <arg value="migrate_password" />
+                    <classpath>
+                        <fileset dir="${installDir}/lib">
+                           <include name="**/*.jar"/>
+                        </fileset>
+                    </classpath>
+                </java>
+            </then>
+            <else>
+              <echo>Nothing to do!</echo>
+            </else>
+        </if>
+    </target>
+
+    <target name="patchFiles" depends="patchFromVersion3.6.0.4">
         <!-- patch order determined through depends-order -->
     </target>
 </project>

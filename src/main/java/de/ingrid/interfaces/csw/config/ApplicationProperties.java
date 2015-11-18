@@ -26,6 +26,8 @@
 package de.ingrid.interfaces.csw.config;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.Properties;
 
 /**
@@ -36,6 +38,7 @@ import java.util.Properties;
 public class ApplicationProperties {
 
     private static final String CONFIG_PROPERTIES_FILE = "config.properties";
+    private static final String CONFIG_PROPERTIES_OVERRIDE_FILE = "config.override.properties";
 
     private static Properties properties = null;
 
@@ -48,6 +51,18 @@ public class ApplicationProperties {
                 properties = new Properties();
                 properties.load(ApplicationProperties.class.getClassLoader()
                         .getResourceAsStream(CONFIG_PROPERTIES_FILE));
+                
+                // apply override configuration
+                Properties overrideProps = new Properties();
+                InputStream overrideStream = ApplicationProperties.class.getClassLoader().getResourceAsStream(CONFIG_PROPERTIES_OVERRIDE_FILE);
+                if (overrideStream != null) {
+                    overrideProps.load( overrideStream );
+                    Enumeration<Object> keys = overrideProps.keys();
+                    while (keys.hasMoreElements()) {
+                        Object key = keys.nextElement();
+                        properties.put( key, overrideProps.get( key ) );
+                    }
+                }
             } catch (IOException e) {
                 throw new RuntimeException("Missing configuration '" + CONFIG_PROPERTIES_FILE + "'.");
             }

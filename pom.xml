@@ -3,12 +3,12 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>3.5.1</version>
+    <version>3.6.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid</groupId>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>3.6.0-SNAPSHOT</version>
+  <version>3.6.1</version>
   <packaging>jar</packaging>
   <name>ingrid-interface-csw</name>
   <scm>
@@ -35,7 +35,7 @@
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-version-management-pom</artifactId>
-        <version>3.6.0-SNAPSHOT</version>
+        <version>3.6.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -70,6 +70,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
+      <version>3.6.0</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -134,7 +135,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus</artifactId>
-      <version>3.5.0</version>
+      <version>3.6.0</version>
       <exclusions>
         <exclusion>
           <groupId>tomcat</groupId>
@@ -233,6 +234,13 @@
       <artifactId>spring-webmvc</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-crypto</artifactId>
+      <!-- The version differs from base springframework! -->
+      <version>4.0.2.RELEASE</version>
+    </dependency>
+    
+    <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analyzers</artifactId>
       <version>3.6.0</version>
@@ -309,6 +317,15 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -349,6 +366,15 @@
             <exclude>**/*.sql</exclude>
             <exclude>**/*.xml</exclude>
           </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>external.atlassian.jgitflow</groupId>
+        <artifactId>jgitflow-maven-plugin</artifactId>
+        <version>1.0-m5.1</version>
+        <configuration>
+          <defaultOriginUrl>https://github.com/informationgrid/ingrid-interface-csw</defaultOriginUrl>
+          <noDeploy>true</noDeploy>
         </configuration>
       </plugin>
     </plugins>
