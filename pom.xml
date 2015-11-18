@@ -374,7 +374,7 @@
         <version>1.0-m5.1</version>
         <configuration>
           <defaultOriginUrl>https://github.com/informationgrid/ingrid-interface-csw</defaultOriginUrl>
-          <noReleaseBuild>true</noReleaseBuild>
+          <noDeploy>true</noDeploy>
         </configuration>
       </plugin>
     </plugins>
