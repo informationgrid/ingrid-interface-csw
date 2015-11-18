@@ -28,7 +28,7 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="3.6.1-SNAPSHOT" date="2015-xx-xx" description="Release 3.6.1">
+    <release version="3.6.1" date="2015-11-18" description="Release 3.6.1">
       <action type="update" dev="wemove" issue="REDMINE-15">
         Remove all references to PortalU.
       </action>
