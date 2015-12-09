@@ -28,6 +28,8 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Node;
 
+import de.ingrid.utils.tool.XsltUtils;
+
 public class XsltUtilsTest {
 
 	@Test

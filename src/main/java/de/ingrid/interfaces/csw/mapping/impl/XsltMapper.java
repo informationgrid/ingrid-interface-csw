@@ -45,8 +45,8 @@ import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
 import de.ingrid.interfaces.csw.mapping.IPreCommitHandler;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
-import de.ingrid.interfaces.csw.tools.XsltUtils;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.tool.XsltUtils;
 
 /**
  * A CSWRecordMapper that maps records using XSLT.

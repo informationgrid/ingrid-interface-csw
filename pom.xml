@@ -70,7 +70,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>3.6.0</version>
+      <version>3.6.2-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
