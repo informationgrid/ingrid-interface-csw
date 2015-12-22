@@ -26,12 +26,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
@@ -120,6 +123,8 @@ public class EditIBusHarvesterController {
 
     @Autowired
     private IsoIndexManager indexManager;
+    
+    private Map<String, String[]> iplugDatatypesMap;
 
     final private static Log log = LogFactory.getLog(EditIBusHarvesterController.class);
 
@@ -127,6 +132,7 @@ public class EditIBusHarvesterController {
         df = DocumentBuilderFactory.newInstance();
         df.setNamespaceAware(true);
         encoding = new XMLEncoding();
+        iplugDatatypesMap = new HashMap<String, String[]>();
     }
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.GET)
@@ -243,6 +249,10 @@ public class EditIBusHarvesterController {
             }
             IBus bus = client.getNonCacheableIBus();
             PlugDescription[] allPlugDescriptions = bus.getAllIPlugs();
+            
+            for (PlugDescription pd : allPlugDescriptions) {
+                iplugDatatypesMap.put( pd.getProxyServiceURL(), pd.getDataTypes() );
+            }
 
             String[] allowedDatatypes = ApplicationProperties.get(ConfigurationKeys.HARVESTER_IBUS_DATATYPES_ALLOW, "")
                     .split(",");
@@ -367,7 +377,15 @@ public class EditIBusHarvesterController {
         if (enable != null && enable.length() > 0) {
             RequestDefinition rd = new RequestDefinition();
             rd.setPlugId(enable);
-            rd.setQueryString("iplugs:\"" + enable + "\" ranking:score");
+            
+            String query = "iplugs:\"" + enable + "\" ranking:score";
+            // if datatype metadata is supported, then also filter by that datatype
+            // since an iPlug can have multiple indices now, we do not want to fetch addresses for example
+            if (ArrayUtils.contains( iplugDatatypesMap.get( enable ), "metadata" )) {
+                query += " datatype:metadata";
+            }
+            rd.setQueryString(query);
+            
             if (harvester.getRequestDefinitions() == null) {
                 harvester.setRequestDefinitions(new ArrayList<RequestDefinition>());
             }
