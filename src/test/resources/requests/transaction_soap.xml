@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Body>
+  <csw:Transaction service="CSW" 
+    version="2.0.2" 
+    xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
+    xmlns:ogc="http://www.opengis.net/ogc"
+    requestId="test-transaction-request" 
+    verboseResponse="false" >
+    <csw:Insert handle="insert-1">
+      <csw:Record xmlns:dc="http://www.purl.org/dc/elements/1.1/" xmlns:dct="http://www.purl.org/dc/terms/" xmlns:ows="http://www.opengis.net/ows" >
+         <dc:contributor scheme="http://www.example.com">John</dc:contributor>
+         <dc:identifier >REC-2</dc:identifier>
+         <ows:WGS84BoundingBox crs="urn:opengis:crs:OGC:2:84" dimensions="2">
+                 <ows:LowerCorner>12 12</ows:LowerCorner>
+                 <ows:UpperCorner>102 102</ows:UpperCorner>
+         </ows:WGS84BoundingBox>
+      </csw:Record>
+    </csw:Insert>
+    
+    <csw:Update handle="update-1">
+      <csw:RecordProperty>
+        <csw:Name>/csw:Record/dc:contributor</csw:Name>
+        <csw:Value>Jane</csw:Value>
+      </csw:RecordProperty>
+      <csw:Constraint version="2.0.0">
+        <ogc:Filter>
+          <ogc:PropertyIsEqualTo>
+            <ogc:PropertyName>/csw:Record/dc:contributor</ogc:PropertyName>
+            <ogc:Literal>John</ogc:Literal>
+          </ogc:PropertyIsEqualTo>
+        </ogc:Filter>
+      </csw:Constraint>  
+    </csw:Update>
+    
+    <csw:Delete typeName="csw:Record" handle="delete-1">
+      <csw:Constraint version="2.0.0">
+        <ogc:Filter>
+          <ogc:PropertyIsEqualTo>
+              <ogc:PropertyName>/csw:Record/dc:contributor</ogc:PropertyName>
+              <ogc:Literal>Jane</ogc:Literal>
+          </ogc:PropertyIsEqualTo>
+        </ogc:Filter>
+      </csw:Constraint>
+    </csw:Delete>
+  </csw:Transaction>
+  </soapenv:Body>
+</soapenv:Envelope>

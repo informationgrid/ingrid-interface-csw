@@ -114,7 +114,7 @@ public class GenericServer implements CSWServer {
      *
      * @param manager
      */
-    public void setRepository(Manager manager) {
+    public void setManager(Manager manager) {
         this.manager = manager;
     }
 
@@ -267,20 +267,14 @@ public class GenericServer implements CSWServer {
             doc.getDocumentElement().appendChild(summary);
 
             int inserts = result.getNumberOfInserts();
-            if (inserts > 0) {
-                summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalInserted"))
-                    .appendChild(doc.createTextNode(String.valueOf(inserts)));
-            }
+            summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalInserted"))
+                .appendChild(doc.createTextNode(String.valueOf(inserts)));
             int updates = result.getNumberOfUpdates();
-            if (updates > 0) {
-                summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalUpdated"))
-                    .appendChild(doc.createTextNode(String.valueOf(updates)));
-            }
+            summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalUpdated"))
+                .appendChild(doc.createTextNode(String.valueOf(updates)));
             int deletes = result.getNumberOfDeletes();
-            if (deletes > 0) {
-                summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalDeleted"))
-                    .appendChild(doc.createTextNode(String.valueOf(deletes)));
-            }
+            summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalDeleted"))
+                .appendChild(doc.createTextNode(String.valueOf(deletes)));
 
             // add insert results
             if (inserts > 0) {
