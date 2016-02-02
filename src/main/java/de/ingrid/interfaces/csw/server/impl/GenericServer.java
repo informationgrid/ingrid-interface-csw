@@ -32,6 +32,7 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.TimeZone;
 
@@ -49,6 +50,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.interfaces.csw.catalog.Manager;
+import de.ingrid.interfaces.csw.catalog.action.Action;
+import de.ingrid.interfaces.csw.catalog.action.ActionResult;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
@@ -63,6 +67,9 @@ import de.ingrid.interfaces.csw.domain.request.GetCapabilitiesRequest;
 import de.ingrid.interfaces.csw.domain.request.GetDomainRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordByIdRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordsRequest;
+import de.ingrid.interfaces.csw.domain.request.TransactionRequest;
+import de.ingrid.interfaces.csw.domain.transaction.CSWTransaction;
+import de.ingrid.interfaces.csw.domain.transaction.CSWTransactionResult;
 import de.ingrid.interfaces.csw.search.CSWRecordResults;
 import de.ingrid.interfaces.csw.search.Searcher;
 import de.ingrid.interfaces.csw.server.CSWServer;
@@ -94,6 +101,21 @@ public class GenericServer implements CSWServer {
      */
     public void setSearcher(Searcher searcher) {
         this.searcher = searcher;
+    }
+
+    /**
+     * The Manager instance to use for processing transactions
+     */
+    @Autowired
+    private Manager manager;
+
+    /**
+     * Set the Manager instance
+     *
+     * @param manager
+     */
+    public void setRepository(Manager manager) {
+        this.manager = manager;
     }
 
     @Override
@@ -217,9 +239,74 @@ public class GenericServer implements CSWServer {
                 }
             }
             return doc;
+        } catch (CSWException ex) {
+            log.error("An error occured processing GetRecordByIdRequest", ex);
+            throw ex;
         } catch (Exception ex) {
             log.error("An error occured processing GetRecordByIdRequest", ex);
             throw new CSWException("An error occured processing GetRecordByIdRequest");
+        }
+    }
+
+    @Override
+    public Document process(TransactionRequest request) throws CSWException {
+        try {
+            CSWTransaction transaction = request.getTransaction();
+            CSWTransactionResult result = manager.process(transaction);
+
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            docFactory.setNamespaceAware(true);
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            DOMImplementation domImpl = docBuilder.getDOMImplementation();
+            Document doc = domImpl.createDocument(RESPONSE_NAMESPACE, "csw:TransactionResponse",
+                    null);
+
+            // create summary
+            Element summary = doc.createElementNS(RESPONSE_NAMESPACE, "csw:TransactionSummary");
+            summary.setAttribute("requestId", result.getRequestId());
+            doc.getDocumentElement().appendChild(summary);
+
+            int inserts = result.getNumberOfInserts();
+            if (inserts > 0) {
+                summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalInserted"))
+                    .appendChild(doc.createTextNode(String.valueOf(inserts)));
+            }
+            int updates = result.getNumberOfUpdates();
+            if (updates > 0) {
+                summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalUpdated"))
+                    .appendChild(doc.createTextNode(String.valueOf(updates)));
+            }
+            int deletes = result.getNumberOfDeletes();
+            if (deletes > 0) {
+                summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalDeleted"))
+                    .appendChild(doc.createTextNode(String.valueOf(deletes)));
+            }
+
+            // add insert results
+            if (inserts > 0) {
+                Element insertResult = doc.createElementNS(RESPONSE_NAMESPACE, "csw:InsertResult");
+                doc.getDocumentElement().appendChild(insertResult);
+                for (ActionResult curResult : result.getInsertResults()) {
+                    List<CSWRecord> records = curResult.getRecords();
+                    if (records.size() > 0) {
+                        Node recordNode = records.get(0).getDocument().getFirstChild();
+                        Action action = curResult.getAction();
+                        String handle = action.getHandle();
+                        if (handle != null && recordNode instanceof Element) {
+                            ((Element)recordNode).setAttribute("handle", handle);
+                        }
+                        doc.adoptNode(recordNode);
+                        insertResult.appendChild(recordNode);
+                    }
+                }
+            }
+            return doc;
+        } catch (CSWException ex) {
+            log.error("An error occured processing TransactionRequest", ex);
+            throw ex;
+        } catch (Exception ex) {
+            log.error("An error occured processing TransactionRequest", ex);
+            throw new CSWException("An error occured processing TransactionRequest", "TransactionUnspecifiedError", "");
         }
     }
 
@@ -279,6 +366,7 @@ public class GenericServer implements CSWServer {
             }
         }
         Document doc = null;
+        Scanner scanner = null;
         try {
             URL resource = this.getClass().getClassLoader().getResource(filenameVariant);
             if (resource == null) {
@@ -287,7 +375,10 @@ public class GenericServer implements CSWServer {
             }
             String path = resource.getPath().replaceAll("%20", " ");
             File file = new File(path);
-            String content = new Scanner(file).useDelimiter("\\A").next();
+            scanner = new Scanner(file);
+            scanner.useDelimiter("\\A");
+            String content = scanner.next();
+            scanner.close();
             doc = StringUtils.stringToDocument(content);
 
         } catch (Exception e) {
@@ -295,6 +386,11 @@ public class GenericServer implements CSWServer {
                     + variant, e);
             throw new RuntimeException("Error reading document configured in configuration key '" + key + "': "
                     + filename + ", " + variant, e);
+        }
+        finally {
+            if (scanner != null) {
+                scanner.close();
+            }
         }
         return doc;
     }

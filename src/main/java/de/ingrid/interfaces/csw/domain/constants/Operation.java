@@ -67,6 +67,15 @@ public enum Operation {
 		public String toString() {
 			return "GetRecordById";
 		}
+	},
+	/**
+	 * CSW-Publication interface
+	 */
+	TRANSACTION {
+		@Override
+		public String toString() {
+			return "Transaction";
+		}
 	};
 
 	/**
