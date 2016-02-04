@@ -477,12 +477,6 @@ public class LuceneFilterParser implements FilterParser {
                         QUERY_CONSTRAINT_LOCATOR);
             }
 
-            if (crsName == null) {
-                crsName = "urn:ogc:def:crs:EPSG::4326";
-                throw new CSWFilterException("Missing SRS parameter BBOX operator.", INVALID_PARAMETER_CODE,
-                        QUERY_CONSTRAINT_LOCATOR);
-            }
-
             // transform the EnvelopeEntry in GeneralEnvelope
             spatialfilter = LuceneOGCFilter.wrap(FF.bbox(LuceneOGCFilter.GEOMETRY_PROPERTY, bbox.getMinX(), bbox
                     .getMinY(), bbox.getMaxX(), bbox.getMaxY(), crsName));

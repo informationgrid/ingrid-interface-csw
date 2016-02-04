@@ -51,7 +51,7 @@ import de.ingrid.utils.xpath.XPathUtils;
 public class TestManager implements Manager {
 
     /** Verbose response xpath **/
-    private static String VERBOSE_RESPONSE_PARAM_XPATH = "/csw:Transaction/@verboseResponse";
+    //private static String VERBOSE_RESPONSE_PARAM_XPATH = "/csw:Transaction/@verboseResponse";
 
     /** Operations xpath **/
     private static String ACTIONS_XPATH = "/csw:Transaction/child::*";
@@ -77,8 +77,8 @@ public class TestManager implements Manager {
 
         // check if a verbose response is requested (defaults to true)
         // TODO verboseResponse is not used yet
-        String verboseResponseStr = xpath.getString(content, VERBOSE_RESPONSE_PARAM_XPATH);
-        boolean verboseResponse = verboseResponseStr == null || "true".equals(verboseResponseStr.toLowerCase());
+        //String verboseResponseStr = xpath.getString(content, VERBOSE_RESPONSE_PARAM_XPATH);
+        //boolean verboseResponse = verboseResponseStr == null || "true".equals(verboseResponseStr.toLowerCase());
 
         // execute actions
         // NOTE: this class does not execute the actions inside a transaction
