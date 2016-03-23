@@ -27,6 +27,7 @@
 		<h2>Configuration</h2>
 	</div>
 	<ul>
+		<li <c:if test="${active == 'cswtIbus'}">class="active"</c:if>><a href="<%=request.getContextPath()%>ibus_cswt.html">CSW-T Communication</a></li>
 		<li <c:if test="${active == 'harvester'}">class="active"</c:if>><a href="<%=request.getContextPath()%>list_harvester.html">Manage Harvester</a></li>
         <li <c:if test="${active == 'scheduling'}">class="active"</c:if>><a href="<%=request.getContextPath()%>scheduling.html">Control Scheduler</a></li>
         <li <c:if test="${active == 'indexing'}">class="active"</c:if>><a href="<%=request.getContextPath()%>indexing.html">Manually issue harvesting</a></li>

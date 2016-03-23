@@ -25,29 +25,30 @@
  */
 package de.ingrid.interfaces.csw.catalog.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
+import de.ingrid.ibus.client.BusClient;
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.catalog.Manager;
 import de.ingrid.interfaces.csw.catalog.action.Action;
-import de.ingrid.interfaces.csw.catalog.action.ActionResult;
 import de.ingrid.interfaces.csw.catalog.action.impl.DeleteAction;
 import de.ingrid.interfaces.csw.catalog.action.impl.InsertAction;
 import de.ingrid.interfaces.csw.catalog.action.impl.UpdateAction;
 import de.ingrid.interfaces.csw.domain.constants.ActionName;
-import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.transaction.CSWTransaction;
 import de.ingrid.interfaces.csw.domain.transaction.CSWTransactionResult;
+import de.ingrid.interfaces.csw.tools.StringUtils;
+import de.ingrid.utils.IBus;
+import de.ingrid.utils.IngridCall;
+import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
-//@Service
-public class TestManager implements Manager {
+@Service
+public class TransactionManager implements Manager {
 
     /** Verbose response xpath **/
     //private static String VERBOSE_RESPONSE_PARAM_XPATH = "/csw:Transaction/@verboseResponse";
@@ -55,14 +56,14 @@ public class TestManager implements Manager {
     /** Operations xpath **/
     private static String ACTIONS_XPATH = "/csw:Transaction/child::*";
 
-    final protected static Log log = LogFactory.getLog(TestManager.class);
+    final protected static Log log = LogFactory.getLog(TransactionManager.class);
 
     private XPathUtils xpath = null;
 
     /**
      * Constructor
      */
-    public TestManager() {
+    public TransactionManager() {
         this.xpath = new XPathUtils(new Csw202NamespaceContext());
     }
 
@@ -73,6 +74,7 @@ public class TestManager implements Manager {
         }
 
         Node content = transaction.getContent();
+        String contentString = StringUtils.nodeToString( content );
 
         // check if a verbose response is requested (defaults to true)
         // TODO verboseResponse is not used yet
@@ -80,42 +82,25 @@ public class TestManager implements Manager {
         //boolean verboseResponse = verboseResponseStr == null || "true".equals(verboseResponseStr.toLowerCase());
 
         // execute actions
-        // NOTE: this class does not execute the actions inside a transaction
-        int inserts = 0;
-        int updates = 0;
-        int deletes = 0;
-        List<ActionResult> insertResults = new ArrayList<ActionResult>();
-        NodeList actionNodes = xpath.getNodeList(content, ACTIONS_XPATH);
-        for (int i=0, count=actionNodes.getLength(); i<count; i++) {
-            Node actionNode = actionNodes.item(i);
-            Action action = null;
-            try {
-                action = this.getAction(actionNode);
-                ActionResult result = action.execute();
-                switch (action.getName()) {
-                    case INSERT:
-                        insertResults.add(result);
-                        inserts++;
-                        break;
-                    case UPDATE:
-                        updates++;
-                        break;
-                    case DELETE:
-                        deletes++;
-                        break;
-                }
-            } catch (Exception e) {
-                String code = "Transaction"+ (action != null ? action.getName() : "UnspecifiedError");
-                throw new CSWException(e.getMessage(), code, this.getLocator(transaction, action));
-            }
-        }
+        
+        BusClient busClient = BusClientFactory.getBusClient();
+        IBus bus = busClient.getNonCacheableIBus();
+        IngridCall targetInfo = new IngridCall();
+        targetInfo.setMethod( "importCSWDoc" );
+        targetInfo.setParameter( contentString );
+        targetInfo.setTarget( transaction.getCatalog() );
+        IngridDocument response = bus.call( targetInfo  );
+        IngridDocument responseResult = (IngridDocument) response.get( "result" );
 
         // construct result
         CSWTransactionResult result = new CSWTransactionResult(transaction.getRequestId());
-        result.setNumberOfInserts(inserts);
-        result.setNumberOfUpdates(updates);
-        result.setNumberOfDeletes(deletes);
-        result.setInsertResults(insertResults);
+        if (responseResult != null) {
+            result.setNumberOfInserts(responseResult.getInt( "inserts" ));
+            result.setNumberOfUpdates(responseResult.getInt( "updates" ));
+            result.setNumberOfDeletes(responseResult.getInt( "deletes" ));
+        }
+        result.setSuccessful( response.getBoolean( "success" ) );
+        result.setErrorMessage( response.getString( "error" ) );
         return result;
     }
 

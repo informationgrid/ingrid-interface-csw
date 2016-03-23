@@ -38,6 +38,7 @@ import java.util.TimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
@@ -253,48 +254,13 @@ public class GenericServer implements CSWServer {
         try {
             CSWTransaction transaction = request.getTransaction();
             CSWTransactionResult result = manager.process(transaction);
-
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            docFactory.setNamespaceAware(true);
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            DOMImplementation domImpl = docBuilder.getDOMImplementation();
-            Document doc = domImpl.createDocument(RESPONSE_NAMESPACE, "csw:TransactionResponse",
-                    null);
-
-            // create summary
-            Element summary = doc.createElementNS(RESPONSE_NAMESPACE, "csw:TransactionSummary");
-            summary.setAttribute("requestId", result.getRequestId());
-            doc.getDocumentElement().appendChild(summary);
-
-            int inserts = result.getNumberOfInserts();
-            summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalInserted"))
-                .appendChild(doc.createTextNode(String.valueOf(inserts)));
-            int updates = result.getNumberOfUpdates();
-            summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalUpdated"))
-                .appendChild(doc.createTextNode(String.valueOf(updates)));
-            int deletes = result.getNumberOfDeletes();
-            summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalDeleted"))
-                .appendChild(doc.createTextNode(String.valueOf(deletes)));
-
-            // add insert results
-            if (inserts > 0) {
-                Element insertResult = doc.createElementNS(RESPONSE_NAMESPACE, "csw:InsertResult");
-                doc.getDocumentElement().appendChild(insertResult);
-                for (ActionResult curResult : result.getInsertResults()) {
-                    List<CSWRecord> records = curResult.getRecords();
-                    if (records.size() > 0) {
-                        Node recordNode = records.get(0).getDocument().getFirstChild();
-                        Action action = curResult.getAction();
-                        String handle = action.getHandle();
-                        if (handle != null && recordNode instanceof Element) {
-                            ((Element)recordNode).setAttribute("handle", handle);
-                        }
-                        doc.adoptNode(recordNode);
-                        insertResult.appendChild(recordNode);
-                    }
-                }
+            
+            if (result.isSuccessful()) {
+                return createSummaryResponse(result);
+            } else {
+                return createErrorResponse(result);
             }
-            return doc;
+            
         } catch (CSWException ex) {
             log.error("An error occured processing TransactionRequest", ex);
             throw ex;
@@ -302,6 +268,69 @@ public class GenericServer implements CSWServer {
             log.error("An error occured processing TransactionRequest", ex);
             throw new CSWException("An error occured processing TransactionRequest", "TransactionUnspecifiedError", "");
         }
+    }
+
+    private Document createErrorResponse(CSWTransactionResult result) throws ParserConfigurationException {
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        docFactory.setNamespaceAware(true);
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        DOMImplementation domImpl = docBuilder.getDOMImplementation();
+        Document doc = domImpl.createDocument(RESPONSE_NAMESPACE, "ows:ExceptionReport", null);
+
+        // create summary
+        Element exception = doc.createElementNS(RESPONSE_NAMESPACE, "ows:Exception");
+        exception.setAttribute("exceptionCode", "NoApplicableCode");
+        doc.getDocumentElement().appendChild(exception);
+
+        exception.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "ows:ExceptionText"))
+            .appendChild(doc.createTextNode("Cannot process transaction: " + result.getErrorMessage()));
+
+        return doc;
+        
+    }
+
+    private Document createSummaryResponse(CSWTransactionResult result) throws ParserConfigurationException {
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        docFactory.setNamespaceAware(true);
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        DOMImplementation domImpl = docBuilder.getDOMImplementation();
+        Document doc = domImpl.createDocument(RESPONSE_NAMESPACE, "csw:TransactionResponse", null);
+
+        // create summary
+        Element summary = doc.createElementNS(RESPONSE_NAMESPACE, "csw:TransactionSummary");
+        summary.setAttribute("requestId", result.getRequestId());
+        doc.getDocumentElement().appendChild(summary);
+
+        int inserts = result.getNumberOfInserts();
+        summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalInserted"))
+            .appendChild(doc.createTextNode(String.valueOf(inserts)));
+        int updates = result.getNumberOfUpdates();
+        summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalUpdated"))
+            .appendChild(doc.createTextNode(String.valueOf(updates)));
+        int deletes = result.getNumberOfDeletes();
+        summary.appendChild(doc.createElementNS(RESPONSE_NAMESPACE, "totalDeleted"))
+            .appendChild(doc.createTextNode(String.valueOf(deletes)));
+
+        // add insert results
+//        if (inserts > 0) {
+//            Element insertResult = doc.createElementNS(RESPONSE_NAMESPACE, "csw:InsertResult");
+//            doc.getDocumentElement().appendChild(insertResult);
+//            for (ActionResult curResult : result.getInsertResults()) {
+//                List<CSWRecord> records = curResult.getRecords();
+//                if (records.size() > 0) {
+//                    Node recordNode = records.get(0).getDocument().getFirstChild();
+//                    Action action = curResult.getAction();
+//                    String handle = action.getHandle();
+//                    if (handle != null && recordNode instanceof Element) {
+//                        ((Element)recordNode).setAttribute("handle", handle);
+//                    }
+//                    doc.adoptNode(recordNode);
+//                    insertResult.appendChild(recordNode);
+//                }
+//            }
+//        }
+        return doc;
+        
     }
 
     @Override

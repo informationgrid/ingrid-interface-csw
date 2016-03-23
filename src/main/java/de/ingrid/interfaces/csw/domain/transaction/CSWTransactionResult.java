@@ -44,6 +44,8 @@ public class CSWTransactionResult {
     private int updates;
     private int deletes;
     private List<ActionResult> insertResults;
+    private boolean successful;
+    private String errorMessage;
 
     /**
      * Constructor
@@ -123,5 +125,21 @@ public class CSWTransactionResult {
      */
     public List<ActionResult> getInsertResults() {
         return this.insertResults;
+    }
+
+    public boolean isSuccessful() {
+        return successful;
+    }
+
+    public void setSuccessful(boolean successful) {
+        this.successful = successful;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
