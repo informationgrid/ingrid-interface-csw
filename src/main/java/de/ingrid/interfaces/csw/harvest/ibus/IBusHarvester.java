@@ -255,7 +255,15 @@ public class IBusHarvester extends AbstractHarvester {
                                 + "'... no records found!" , StatusProvider.Classification.WARN);
                     }
                 }
+                if (hits.getHits().length == 0) {
+                    log.error("No results querying ibus with communication setting in '" + this.communicationXml
+                            + "' in attempt " + requestAttempt + "  with query: " + query);
+                    log.error("Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms.");
+                    hits = null;
+                    Thread.sleep(WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS);
+                }
             } catch (Exception e) {
+                hits = null;
                 log.error("Error querying ibus with communication setting in '" + this.communicationXml
                         + "' in attempt " + requestAttempt + "  with query: " + query, e);
                 log.error("Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms.");
