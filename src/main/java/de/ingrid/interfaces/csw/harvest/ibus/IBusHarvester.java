@@ -90,12 +90,12 @@ public class IBusHarvester extends AbstractHarvester {
         }
 
         public boolean isLockedBy(String token) {
-            return lockToken.equals(token);
+            return lockToken.equals( token );
         }
 
     }
 
-    final protected static Log log = LogFactory.getLog(IBusHarvester.class);
+    final protected static Log log = LogFactory.getLog( IBusHarvester.class );
 
     /**
      * The path to the communication XML file.
@@ -115,12 +115,12 @@ public class IBusHarvester extends AbstractHarvester {
         super();
         CacheManager singletonManager = CacheManager.create();
         Cache memoryOnlyCache = null;
-        if (!singletonManager.cacheExists(PLUGDESCRIPTION_CACHE_NAME)) {
-            memoryOnlyCache = new Cache(PLUGDESCRIPTION_CACHE_NAME, 10, false, false, 60, 60);
-            singletonManager.addCache(memoryOnlyCache);
+        if (!singletonManager.cacheExists( PLUGDESCRIPTION_CACHE_NAME )) {
+            memoryOnlyCache = new Cache( PLUGDESCRIPTION_CACHE_NAME, 10, false, false, 60, 60 );
+            singletonManager.addCache( memoryOnlyCache );
         }
-        plugDescriptionCache = singletonManager.getCache(PLUGDESCRIPTION_CACHE_NAME);
-        useCachedDocs = ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE_HARVEST, false);
+        plugDescriptionCache = singletonManager.getCache( PLUGDESCRIPTION_CACHE_NAME );
+        useCachedDocs = ApplicationProperties.getBoolean( ConfigurationKeys.CACHE_ENABLE_HARVEST, false );
     }
 
     /**
@@ -143,41 +143,39 @@ public class IBusHarvester extends AbstractHarvester {
 
     @Override
     public void run(Date lastExecutionDate) throws Exception {
-        statusProvider.addState(this.getId(), "Harvesting '" + this.getName() + "'... [iPlugs: "
-                + requestDefinitions.size() + "]");
-        super.run(lastExecutionDate);
+        statusProvider.addState( this.getId(), "Harvesting '" + this.getName() + "'... [iPlugs: " + requestDefinitions.size() + "]" );
+        super.run( lastExecutionDate );
     }
 
     @Override
     public List<Serializable> fetchRecords(Date lastExecutionDate) throws Exception {
 
         if (this.requestDefinitions == null || this.requestDefinitions.size() == 0) {
-            throw new RuntimeException(
-                    "IBusHarvesterConfiguration is not configured properly: requestDefinitions not set or empty.");
+            throw new RuntimeException( "IBusHarvesterConfiguration is not configured properly: requestDefinitions not set or empty." );
         }
 
         // this is responsible for adding partner, provoder and proxy id to the
         // idf record
-        this.cache.setProcessor(new DefaultIdfRecordPreProcessor());
+        this.cache.setProcessor( new DefaultIdfRecordPreProcessor() );
 
         // record ids
         List<Serializable> allCacheIds = new ArrayList<Serializable>();
 
         // setup the IBus client
-        File file = new File(this.communicationXml);
+        File file = new File( this.communicationXml );
         BusClient client = null;
         try {
-            client = MultipleBusClientFactory.getBusClient(file);
+            client = MultipleBusClientFactory.getBusClient( file );
             // lock iBus client so it is not closed by accident
-            IBusClosableLock.INSTANCE.lock(this.getClass().getName());
+            IBusClosableLock.INSTANCE.lock( this.getClass().getName() );
             if (!client.allConnected()) {
                 client.start();
             }
             IBus bus = client.getNonCacheableIBus();
             if (log.isDebugEnabled()) {
-                log.debug("Available i-plugs:");
+                log.debug( "Available i-plugs:" );
                 for (PlugDescription desc : bus.getAllIPlugs()) {
-                    log.debug(desc.getPlugId());
+                    log.debug( desc.getPlugId() );
                 }
             }
 
@@ -190,43 +188,48 @@ public class IBusHarvester extends AbstractHarvester {
                 int pause = request.getPause();
                 queryStr = request.getQueryString();
 
-                log.info("Running harvesting request: [" + request.toString() + "]");
+                try {
 
-                IngridQuery query = QueryStringParser.parse(queryStr);
+                    log.info( "Running harvesting request: [" + request.toString() + "]" );
 
-                // first request
-                List<Serializable> cacheIds = this.makeRequest(bus, request, query, currentPage, startHit);
+                    IngridQuery query = QueryStringParser.parse( queryStr );
 
-                // do not use null elements. null elements can occur in case of
-                // an exception in the cacheRecords method.
-                for (Serializable element : cacheIds) {
-                    if (element != null) {
-                        allCacheIds.add(element);
-                    }
-                }
+                    // first request
+                    List<Serializable> cacheIds = this.makeRequest( bus, request, query, currentPage, startHit );
 
-                // continue fetching as long as we get a full page
-                while (cacheIds.size() == request.getRecordsPerCall()) {
-                    Thread.sleep(pause);
-                    startHit = ++currentPage * request.getRecordsPerCall();
-
-                    cacheIds = this.makeRequest(bus, request, query, currentPage, startHit);
                     // do not use null elements. null elements can occur in case
                     // of
                     // an exception in the cacheRecords method.
                     for (Serializable element : cacheIds) {
                         if (element != null) {
-                            allCacheIds.add(element);
+                            allCacheIds.add( element );
                         }
                     }
+
+                    // continue fetching as long as we get a full page
+                    while (cacheIds.size() == request.getRecordsPerCall()) {
+                        Thread.sleep( pause );
+                        startHit = ++currentPage * request.getRecordsPerCall();
+
+                        cacheIds = this.makeRequest( bus, request, query, currentPage, startHit );
+                        // do not use null elements. null elements can occur in
+                        // case
+                        // of
+                        // an exception in the cacheRecords method.
+                        for (Serializable element : cacheIds) {
+                            if (element != null) {
+                                allCacheIds.add( element );
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    log.error( "Error harvesting iPlug '" + request.getPlugId() + "'", e );
+                    statusProvider.addState( request.getPlugId() + "Error", "Error harvesting iPlug '" + request.getPlugId() + "' (" + e.getMessage() + ")",
+                            StatusProvider.Classification.ERROR );
                 }
             }
-        } catch (Exception e) {
-            log.error("Error harvesting '" + this.getName() + "'", e);
-            statusProvider.addState(this.getId() + "Error", "Error harvesting '" + this.getName() + "' ("
-                    + e.getMessage() + ")", StatusProvider.Classification.ERROR);
         } finally {
-            if (client != null && IBusClosableLock.INSTANCE.isLockedBy(this.getClass().getName())) {
+            if (client != null && IBusClosableLock.INSTANCE.isLockedBy( this.getClass().getName() )) {
                 client.shutdown();
                 // unlock iBus client for close
                 IBusClosableLock.INSTANCE.unlock();
@@ -236,8 +239,7 @@ public class IBusHarvester extends AbstractHarvester {
         return allCacheIds;
     }
 
-    private List<Serializable> makeRequest(IBus bus, final RequestDefinition request, final IngridQuery query,
-            final int currentPage, final int startHit) throws Exception {
+    private List<Serializable> makeRequest(IBus bus, final RequestDefinition request, final IngridQuery query, final int currentPage, final int startHit) throws Exception {
         int pageSize = request.getRecordsPerCall();
         int timeout = request.getTimeout();
 
@@ -247,49 +249,44 @@ public class IBusHarvester extends AbstractHarvester {
         int requestAttempt = 0;
         while (hits == null && (requestAttempt++ <= MAX_IBUS_REQUESTS_ATTEMPTS)) {
             try {
-                hits = bus.search(query, pageSize, currentPage, startHit, timeout);
+                hits = bus.search( query, pageSize, currentPage, startHit, timeout );
                 if (startHit == 0) {
-                    log.info("Fetching " + ((hits == null) ? 0 : hits.length()) + " records.");
+                    log.info( "Fetching " + ((hits == null) ? 0 : hits.length()) + " records." );
                     if (hits == null || hits.getHits().length == 0) {
-                        statusProvider.addState(request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId()
-                                + "'... no records found!" , StatusProvider.Classification.WARN);
+                        statusProvider.addState( request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId() + "'... no records found!",
+                                StatusProvider.Classification.WARN );
                     }
                 }
                 if (hits.getHits().length == 0) {
-                    log.error("No results querying ibus with communication setting in '" + this.communicationXml
-                            + "' in attempt " + requestAttempt + "  with query: " + query);
-                    log.error("Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms.");
+                    log.error( "No results querying ibus with communication setting in '" + this.communicationXml + "' in attempt " + requestAttempt + "  with query: " + query );
+                    log.error( "Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms." );
                     hits = null;
-                    Thread.sleep(WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS);
+                    Thread.sleep( WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS );
                 }
             } catch (Exception e) {
                 hits = null;
-                log.error("Error querying ibus with communication setting in '" + this.communicationXml
-                        + "' in attempt " + requestAttempt + "  with query: " + query, e);
-                log.error("Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms.");
-                Thread.sleep(WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS);
+                log.error( "Error querying ibus with communication setting in '" + this.communicationXml + "' in attempt " + requestAttempt + "  with query: " + query, e );
+                log.error( "Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms." );
+                Thread.sleep( WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS );
             }
         }
         if (hits == null) {
-            throw new Exception("Error querying ibus '" + bus + "' after " + MAX_IBUS_REQUESTS_ATTEMPTS
-                    + " attempts with query:" + query);
+            throw new Exception( "Error querying ibus '" + bus + "' after " + MAX_IBUS_REQUESTS_ATTEMPTS + " attempts with query:" + query );
         }
 
-        List<Serializable> cacheIds = this.cacheRecords(hits, bus);
+        List<Serializable> cacheIds = this.cacheRecords( hits, bus );
         if (cacheIds != null && cacheIds.size() > 0) {
             int numHits = hits.getHits().length;
             int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
-            int errorCount = (errorCounts.get(request.getPlugId()) == null ? 0 : errorCounts.get(request.getPlugId()));
-            statusProvider.addState(request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId()
-                    + "'... [" + (hits.length() == 0 ? 0 : (endHit + 1)) + "/" + hits.length() + "] with "
-                    + errorCount
-                    + " errors.", errorCount > 0 ? StatusProvider.Classification.WARN : StatusProvider.Classification.INFO);
+            int errorCount = (errorCounts.get( request.getPlugId() ) == null ? 0 : errorCounts.get( request.getPlugId() ));
+            statusProvider.addState( request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId() + "'... [" + (hits.length() == 0 ? 0 : (endHit + 1)) + "/"
+                    + hits.length() + "] with " + errorCount + " errors.", errorCount > 0 ? StatusProvider.Classification.WARN : StatusProvider.Classification.INFO );
             if (log.isInfoEnabled()) {
-                log.info("Fetched records " + (startHit + 1) + " to " + (endHit + 1) + " of " + hits.length() + " with " + errorCount + " errors.");
+                log.info( "Fetched records " + (startHit + 1) + " to " + (endHit + 1) + " of " + hits.length() + " with " + errorCount + " errors." );
             }
         } else {
             if (log.isInfoEnabled()) {
-                log.info("No further hits to be retrieved.");
+                log.info( "No further hits to be retrieved." );
             }
         }
         return cacheIds;
@@ -310,84 +307,79 @@ public class IBusHarvester extends AbstractHarvester {
             Record record = null;
             while (record == null && (requestAttempt++ <= MAX_IBUS_REQUESTS_ATTEMPTS)) {
                 try {
-                    // add caching information, which is identified in the communication layer of the iPlug
+                    // add caching information, which is identified in the
+                    // communication layer of the iPlug
                     if (!useCachedDocs) {
-                        hit.put( "cache", "cache: false");
+                        hit.put( "cache", "cache: false" );
                     }
-                    record = bus.getRecord(hit);
+                    record = bus.getRecord( hit );
                 } catch (Throwable t) {
-                    log.warn("Error getting record from ibus with communication setting in '" + this.communicationXml
-                            + "' in attempt " + requestAttempt + "  with index record: " + hit.getDocumentId(), t);
-                    log.info("Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms.");
-                    Thread.sleep(WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS);
+                    log.warn( "Error getting record from ibus with communication setting in '" + this.communicationXml + "' in attempt " + requestAttempt + "  with index record: "
+                            + hit.getDocumentId(), t );
+                    log.info( "Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms." );
+                    Thread.sleep( WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS );
                 }
             }
             if (record == null) {
-                log.error("Skip record from ibus with communication setting in '" + this.communicationXml
-                        + "'from iPlug '" + hit.getPlugId() + "' in attempt " + requestAttempt
-                        + "  with index record: " + hit.getDocumentId());
-                addError(hit.getPlugId());
-                cacheIds.add(null);
+                log.error( "Skip record from ibus with communication setting in '" + this.communicationXml + "'from iPlug '" + hit.getPlugId() + "' in attempt " + requestAttempt
+                        + "  with index record: " + hit.getDocumentId() );
+                addError( hit.getPlugId() );
+                cacheIds.add( null );
                 continue;
             }
 
             PlugDescription pd = null;
             Element element;
-            if ((element = plugDescriptionCache.get(hit.getPlugId())) != null) {
+            if ((element = plugDescriptionCache.get( hit.getPlugId() )) != null) {
                 pd = (PlugDescription) element.getValue();
             } else {
                 requestAttempt = 0;
                 while (pd == null && (requestAttempt++ <= MAX_IBUS_REQUESTS_ATTEMPTS)) {
                     try {
-                        pd = bus.getIPlug(hit.getPlugId());
+                        pd = bus.getIPlug( hit.getPlugId() );
                     } catch (Throwable t) {
-                        log.warn("Error getting plugdescription from ibus with communication setting in '"
-                                + this.communicationXml + "' in attempt " + requestAttempt + "  for plugid: "
-                                + hit.getPlugId(), t);
-                        log.info("Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms.");
-                        Thread.sleep(WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS);
+                        log.warn( "Error getting plugdescription from ibus with communication setting in '" + this.communicationXml + "' in attempt " + requestAttempt
+                                + "  for plugid: " + hit.getPlugId(), t );
+                        log.info( "Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms." );
+                        Thread.sleep( WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS );
                     }
                 }
                 if (pd != null) {
-                    plugDescriptionCache.put(new Element(hit.getPlugId(), pd));
+                    plugDescriptionCache.put( new Element( hit.getPlugId(), pd ) );
                 }
             }
 
             if (pd == null) {
-                log
-                        .error("Skip getting plugdescription from ibus with communication setting in '"
-                                + this.communicationXml + "' in attempt " + requestAttempt + "  for plugid: "
-                                + hit.getPlugId());
-                log.error("This results in incomplete ingrid specific data in the record.");
+                log.error( "Skip getting plugdescription from ibus with communication setting in '" + this.communicationXml + "' in attempt " + requestAttempt + "  for plugid: "
+                        + hit.getPlugId() );
+                log.error( "This results in incomplete ingrid specific data in the record." );
             } else {
-                record.put(PLUGDESCRIPTION, pd);
+                record.put( PLUGDESCRIPTION, pd );
             }
 
             Serializable cacheId = null;
             try {
-                cacheId = this.cache.put(record);
-                cacheIds.add(cacheId);
+                cacheId = this.cache.put( record );
+                cacheIds.add( cacheId );
                 if (log.isDebugEnabled()) {
-                    log.debug("Fetched record " + hit.getDocumentId() + ". Cache id: " + cacheId);
+                    log.debug( "Fetched record " + hit.getDocumentId() + ". Cache id: " + cacheId );
                 }
             } catch (IOException e) {
-                addError(hit.getPlugId());
-                log.warn("Error putting record " + hit.getDocumentId() + " to cache. Does the iPlug '"
-                        + hit.getPlugId() + "' deliver IDF records?");
+                addError( hit.getPlugId() );
+                log.warn( "Error putting record " + hit.getDocumentId() + " to cache. Does the iPlug '" + hit.getPlugId() + "' deliver IDF records?" );
             } catch (Exception e) {
-                addError(hit.getPlugId());
-                log.error("Error putting record " + hit.getDocumentId() + " from iPlug '" + hit.getPlugId()
-                        + "'to cache.", e);
+                addError( hit.getPlugId() );
+                log.error( "Error putting record " + hit.getDocumentId() + " from iPlug '" + hit.getPlugId() + "'to cache.", e );
             }
         }
         return cacheIds;
     }
 
     private void addError(String plugId) {
-        if (!errorCounts.containsKey(plugId)) {
-            errorCounts.put(plugId, 1);
+        if (!errorCounts.containsKey( plugId )) {
+            errorCounts.put( plugId, 1 );
         } else {
-            errorCounts.put(plugId, errorCounts.get(plugId) + 1);
+            errorCounts.put( plugId, errorCounts.get( plugId ) + 1 );
         }
     }
 }
