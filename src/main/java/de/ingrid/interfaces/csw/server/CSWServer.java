@@ -33,6 +33,7 @@ import de.ingrid.interfaces.csw.domain.request.GetCapabilitiesRequest;
 import de.ingrid.interfaces.csw.domain.request.GetDomainRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordByIdRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordsRequest;
+import de.ingrid.interfaces.csw.domain.request.TransactionRequest;
 
 /**
  * CSWServer defines the interface for request processing specific to
@@ -79,6 +80,13 @@ public interface CSWServer {
 	 */
 	Document process(GetRecordByIdRequest request) throws CSWException;
 	
+	/**
+	 * Do the CSW-Publication.Transaction request
+	 * @param request A Transaction instance
+	 * @return A Document instance
+	 */
+	Document process(TransactionRequest request) throws CSWException;
+
 	/**
 	 * Free all resources. (important: close the index readers file handles on windows)
 	 */

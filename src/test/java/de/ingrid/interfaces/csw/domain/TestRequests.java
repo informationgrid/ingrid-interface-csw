@@ -72,6 +72,8 @@ public final class TestRequests {
     public static final String GETRECORDSINVALID_6_SOAP = "src/test/resources/requests/get_records_invalid_6_soap.xml";
     public static final String GETRECORDSINVALID_7_SOAP = "src/test/resources/requests/get_records_invalid_7_soap.xml";
 
+    public static final String TRANSACTION_SOAP = "src/test/resources/requests/transaction_soap.xml";
+
     /**
      * Get the content of a request defined in the given file.
      * @param filePath
@@ -80,6 +82,19 @@ public final class TestRequests {
      */
     public static String getRequest(String filePath) throws Exception {
         File requestFile = new File(filePath);
-        return new Scanner(requestFile).useDelimiter("\\A").next();
+        Scanner scanner = null;
+        String content = null;
+        try {
+            scanner = new Scanner(requestFile);
+            scanner.useDelimiter("\\A");
+            content = scanner.next();
+            scanner.close();
+        }
+        finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+        }
+        return content;
     }
 }

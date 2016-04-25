@@ -210,9 +210,9 @@ public class UpdateJob {
      */
     public Date getLastExecutionDate() {
         File dateFile = new File(DATE_FILENAME);
-
+        BufferedReader input = null;
         try {
-            BufferedReader input = new BufferedReader(new FileReader(dateFile));
+            input = new BufferedReader(new FileReader(dateFile));
             // we expect only one line with the date string
             String line = input.readLine();
             if (line != null) {
@@ -221,6 +221,15 @@ public class UpdateJob {
             }
         } catch (Exception e) {
             log.warn("Could not read from " + DATE_FILENAME + ". " + "The update job fetches all records.");
+        }
+        finally {
+            if (input != null) {
+                try {
+                    input.close();
+              } catch (IOException e) {
+                    // ignore
+              }
+            }
         }
         // return the minimum date if no date could be found
         return new Date(0);

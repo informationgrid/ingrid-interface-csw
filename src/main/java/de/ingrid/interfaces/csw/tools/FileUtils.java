@@ -43,6 +43,7 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -377,10 +378,20 @@ public class FileUtils {
 	 * @return
 	 */
 	public static String convertStreamToString(java.io.InputStream is) {
+		Scanner scanner = null;
 		try {
-			return new java.util.Scanner(is).useDelimiter("\\A").next();
+			scanner = new Scanner(is);
+			scanner.useDelimiter("\\A");
+			String content = scanner.next();
+			scanner.close();
+			return content;
 		} catch (java.util.NoSuchElementException e) {
 			return "";
+		}
+		finally {
+			if (scanner != null) {
+				scanner.close();
+			}
 		}
 	}
 

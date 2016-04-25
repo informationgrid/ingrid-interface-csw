@@ -65,7 +65,9 @@ public abstract class DefaultEncoding extends AbstractEncoding {
 		if (e instanceof CSWException) {
 			errorXmlMsg = ((CSWException)e).toXmlExceptionReport();
 		} else {
-			errorXmlMsg = new CSWException(e.getMessage(), "NoApplicableCode", null).toXmlExceptionReport();
+		    String message = e.getMessage();
+		    if (e.getCause() != null) message += e.getCause().getMessage();
+			errorXmlMsg = new CSWException(message, "NoApplicableCode", null).toXmlExceptionReport();
 		}
 		this.writeResponse(errorXmlMsg);
 	}

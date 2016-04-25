@@ -30,6 +30,8 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
+import de.ingrid.interfaces.csw.config.model.communication.Communication;
+
 /**
  * Configuration holds the dynamic configuration of the update job that
  * is managed in the administration application.
@@ -41,6 +43,8 @@ public class Configuration {
 	private List<HarvesterConfiguration> harvesterConfigs = new ArrayList<HarvesterConfiguration>();
 	
 	private String mappingScript = "idf_to_lucene.js";
+	
+	private Communication cswtCommunication = null;
 
 	public List<HarvesterConfiguration> getHarvesterConfigurations() {
 		return this.harvesterConfigs;
@@ -70,5 +74,13 @@ public class Configuration {
 
     public String getMappingScript() {
         return mappingScript;
+    }
+
+    public Communication getCswtCommunication() {
+        return cswtCommunication;
+    }
+
+    public void setCswtCommunication(Communication cswtCommunication) {
+        this.cswtCommunication = cswtCommunication;
     }
 }
