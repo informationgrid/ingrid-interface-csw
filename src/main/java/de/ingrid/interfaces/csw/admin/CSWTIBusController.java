@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject;
 import de.ingrid.interfaces.csw.admin.validation.IBusHarvesterValidator;
 import de.ingrid.interfaces.csw.config.CommunicationProvider;
@@ -113,6 +114,9 @@ public class CSWTIBusController {
             communicationProvider.write(communication);
             harvester.setCommunicationXml(communicationProvider.getConfigurationFile().getAbsolutePath());
             updateAndSaveConfiguration(communication);
+            
+            BusClientFactory.getBusClient().restart();
+            
         } catch (Exception e) {
             log.error("Error creating communication configuration.", e);
             errors.reject("harvester.ibus.communication.couldnotcreate");
