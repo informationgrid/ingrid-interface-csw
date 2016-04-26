@@ -116,6 +116,7 @@ public class TestManager implements Manager {
         result.setNumberOfUpdates(updates);
         result.setNumberOfDeletes(deletes);
         result.setInsertResults(insertResults);
+        result.setSuccessful( true );
         return result;
     }
 
