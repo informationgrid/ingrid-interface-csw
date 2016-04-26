@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.admin.command.IBusHarvesterCommandObject;
 import de.ingrid.interfaces.csw.admin.validation.IBusHarvesterValidator;
@@ -55,6 +56,7 @@ import de.ingrid.interfaces.csw.config.model.communication.CommunicationServer;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationServerSocket;
 import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
 import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
+import de.ingrid.interfaces.csw.server.Heartbeat;
 
 @Controller
 @SessionAttributes("harvester")
@@ -67,6 +69,9 @@ public class CSWTIBusController {
 
     @Autowired
     LuceneSearcher searcher;
+    
+    @Autowired
+    Heartbeat hearbeat;
 
     DocumentBuilderFactory df = null;
 
@@ -115,7 +120,13 @@ public class CSWTIBusController {
             harvester.setCommunicationXml(communicationProvider.getConfigurationFile().getAbsolutePath());
             updateAndSaveConfiguration(communication);
             
-            BusClientFactory.getBusClient().restart();
+            
+            BusClient busClient = BusClientFactory.getBusClient();
+            if (busClient == null) {
+                this.hearbeat.setupCommunication();
+            } else {
+                busClient.restart();
+            }
             
         } catch (Exception e) {
             log.error("Error creating communication configuration.", e);
