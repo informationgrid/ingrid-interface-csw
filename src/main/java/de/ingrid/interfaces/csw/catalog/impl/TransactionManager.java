@@ -82,8 +82,15 @@ public class TransactionManager implements Manager {
         //boolean verboseResponse = verboseResponseStr == null || "true".equals(verboseResponseStr.toLowerCase());
 
         // execute actions
+        CSWTransactionResult result = new CSWTransactionResult(transaction.getRequestId());
         
         BusClient busClient = BusClientFactory.getBusClient();
+        if (busClient == null) {
+            result.setSuccessful( false );
+            result.setErrorMessage( "The connection to the iBus has not been configured." );
+            return result;
+        }
+        
         IBus bus = busClient.getNonCacheableIBus();
         IngridCall targetInfo = new IngridCall();
         targetInfo.setMethod( "importCSWDoc" );
@@ -93,7 +100,6 @@ public class TransactionManager implements Manager {
         IngridDocument responseResult = (IngridDocument) response.get( "result" );
 
         // construct result
-        CSWTransactionResult result = new CSWTransactionResult(transaction.getRequestId());
         if (responseResult != null) {
             result.setNumberOfInserts(responseResult.getInt( "inserts" ));
             result.setNumberOfUpdates(responseResult.getInt( "updates" ));
