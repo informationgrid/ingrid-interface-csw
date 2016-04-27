@@ -46,6 +46,7 @@ public class Heartbeat extends HeartBeatPlug {
         PlugDescription plugDescription = new PlugDescription();
         plugDescription.setProxyServiceURL( cswtCommunication.getClient().getName() );
         plugDescription.setIplugAdminGuiPort( ApplicationProperties.getInteger( ConfigurationKeys.SERVER_INTERFACE_PORT, 80 ) );
+        plugDescription.setRankinTypes( false, false, false );
         PlugdescriptionSerializer pdSerializer = new PlugdescriptionSerializer();
         pdSerializer.serialize(plugDescription, pdFile);
         BusClient busClient = BusClientFactory.createBusClient(new File("./conf/communication.xml"), this);
