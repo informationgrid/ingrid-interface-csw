@@ -50,6 +50,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
+
 public class FileUtils {
 
 	final protected static Log log = LogFactory.getLog(FileUtils.class);
@@ -157,7 +160,7 @@ public class FileUtils {
 	public static void waitAndMove(Path src, Path dest, long timeout) throws IOException {
 		long time = 0;
 		boolean isMoved = false;
-		long pause = 200;
+		long pause = ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_RETRY_TIMEOUT, 1000);
 		while (time < timeout && !isMoved) {
 			try {
 				Files.move(src, dest, ATOMIC_MOVE);
@@ -189,7 +192,7 @@ public class FileUtils {
 	public static void waitAndDelete(Path path, long timeout) throws IOException {
 		long time = 0;
 		boolean isDeleted = false;
-		long pause = 200;
+		long pause = ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_RETRY_TIMEOUT, 1000);
 		while (time < timeout && !isDeleted) {
 			try {
 				deleteRecursive(path);

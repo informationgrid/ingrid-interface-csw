@@ -39,7 +39,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.interfaces.csw.cache.DocumentCache;
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.jobs.UpdateJob;
@@ -151,13 +153,13 @@ public class IsoIndexManager implements IPreCommitHandler {
             log.info("Remove old index: " + indexPath);
         }
         if (this.searcher.getIndexPath().exists()) {
-            FileUtils.waitAndDelete(indexPath, 10000);
+            FileUtils.waitAndDelete(indexPath, ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_TIMEOUT, 10000));
         }
 
         if (log.isInfoEnabled()) {
             log.info("Rename new index: " + newIndexPath + " to " + indexPath);
         }
-        FileUtils.waitAndMove(newIndexPath, indexPath, 10000);
+        FileUtils.waitAndMove(newIndexPath, indexPath, ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_TIMEOUT, 10000));
     }
 
     /**
