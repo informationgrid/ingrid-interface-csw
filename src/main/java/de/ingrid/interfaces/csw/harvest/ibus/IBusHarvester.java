@@ -108,6 +108,7 @@ public class IBusHarvester extends AbstractHarvester {
     private List<RequestDefinition> requestDefinitions;
 
     private Map<String, Integer> errorCounts = new HashMap<String, Integer>();
+    private Map<String, Long> iPlugTotalResults = new HashMap<String, Long>();
 
     private Boolean useCachedDocs;
 
@@ -228,6 +229,10 @@ public class IBusHarvester extends AbstractHarvester {
                             StatusProvider.Classification.ERROR );
                 }
             }
+        } catch (Exception e) {
+            log.error( "Error in harvester '" + this.getName() + "'", e );
+            statusProvider.addState( this.getId() + "Error", "Error executing harvester '" + this.getName() + "' + (" + (e.getMessage() == null ? e.getCause().getMessage() : e.getMessage())  + ").",
+                    StatusProvider.Classification.ERROR );
         } finally {
             if (client != null && IBusClosableLock.INSTANCE.isLockedBy( this.getClass().getName() )) {
                 client.shutdown();
@@ -247,9 +252,17 @@ public class IBusHarvester extends AbstractHarvester {
         // finally fetched records
         IngridHits hits = null;
         int requestAttempt = 0;
+        int numHits = -1;
+        int endHit = -1;
         while (hits == null && (requestAttempt++ <= MAX_IBUS_REQUESTS_ATTEMPTS)) {
             try {
                 hits = bus.search( query, pageSize, currentPage, startHit, timeout );
+                // store max available hits of iPlug
+                if (!iPlugTotalResults.containsKey( request.getPlugId() ) || hits.length() > iPlugTotalResults.get( request.getPlugId() )) {
+                    iPlugTotalResults.put( request.getPlugId(), hits.length() );
+                }
+                numHits = hits.getHits().length;
+                endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
                 if (startHit == 0) {
                     log.info( "Fetching " + ((hits == null) ? 0 : hits.length()) + " records." );
                     if (hits == null || hits.getHits().length == 0) {
@@ -257,7 +270,8 @@ public class IBusHarvester extends AbstractHarvester {
                                 StatusProvider.Classification.WARN );
                     }
                 }
-                if (hits.getHits().length == 0) {
+                // treat empty results as failures if not all records have been fetched
+                if (hits.getHits().length == 0 && ((iPlugTotalResults.get( request.getPlugId() ) > startHit))) {
                     log.error( "No results querying ibus with communication setting in '" + this.communicationXml + "' in attempt " + requestAttempt + "  with query: " + query );
                     log.error( "Wait for " + WAIT_BETWEEN_IBUS_REQUESTS_ATTEMPTS + " ms." );
                     hits = null;
@@ -271,13 +285,16 @@ public class IBusHarvester extends AbstractHarvester {
             }
         }
         if (hits == null) {
+            int errorCount = (errorCounts.get( request.getPlugId() ) == null ? 0 : errorCounts.get( request.getPlugId() ));
+            int hitCount = iPlugTotalResults.get( request.getPlugId() ).intValue();
+            errorCount += hitCount - (endHit + 1);
+            statusProvider.addState( request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId() + "'... [" + (hitCount == 0 ? 0 : (endHit + 1)) + "/"
+                    + hitCount + "] with " + errorCount + " errors.", errorCount > 0 ? StatusProvider.Classification.WARN : StatusProvider.Classification.INFO );
             throw new Exception( "Error querying ibus '" + bus + "' after " + MAX_IBUS_REQUESTS_ATTEMPTS + " attempts with query:" + query );
         }
 
         List<Serializable> cacheIds = this.cacheRecords( hits, bus );
         if (cacheIds != null && cacheIds.size() > 0) {
-            int numHits = hits.getHits().length;
-            int endHit = startHit + numHits > 0 ? startHit + numHits - 1 : 0;
             int errorCount = (errorCounts.get( request.getPlugId() ) == null ? 0 : errorCounts.get( request.getPlugId() ));
             statusProvider.addState( request.getPlugId() + "fetch", "Fetch records for iPlug '" + request.getPlugId() + "'... [" + (hits.length() == 0 ? 0 : (endHit + 1)) + "/"
                     + hits.length() + "] with " + errorCount + " errors.", errorCount > 0 ? StatusProvider.Classification.WARN : StatusProvider.Classification.INFO );
