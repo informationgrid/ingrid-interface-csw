@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -47,6 +47,8 @@ import org.jmock.Mockery;
 import org.junit.After;
 import org.junit.Before;
 
+import de.ingrid.interfaces.csw.catalog.Manager;
+import de.ingrid.interfaces.csw.catalog.impl.TestManager;
 import de.ingrid.interfaces.csw.domain.filter.impl.LuceneFilterParser;
 import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
 import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
@@ -64,8 +66,9 @@ public abstract class OperationTestBase extends TestCase {
     private static final String LIVE_INDEX_PATH = "tmp/index/live";
     private static final String CSW_CACHE_PATH = "tmp/cache/csw";
 
-    private LuceneSearcher searcher = new LuceneSearcher();
-    private CSWServlet servlet = new CSWServlet();
+    private LuceneSearcher searcher = null;
+    private Manager manager = null;
+    private CSWServlet servlet = null;
 
     protected static XPathUtils xpath;
     static {
@@ -93,12 +96,14 @@ public abstract class OperationTestBase extends TestCase {
         this.searcher.setFilterParser(new LuceneFilterParser());
         this.searcher.setRecordRepository(cache);
         this.searcher.setLuceneTools(new LuceneTools());
-
         this.searcher.start();
+
+        this.manager = new TestManager();
 
         // create servlet
         GenericServer server = new GenericServer();
         server.setSearcher(this.searcher);
+        server.setManager(manager);
 
         ServerFacade serverFacade = new ServerFacade();
         serverFacade.setCswServerImpl(server);
@@ -261,6 +266,22 @@ public abstract class OperationTestBase extends TestCase {
      */
     protected void setupDefaultSoapExpectations(Mockery context, final HttpServletRequest request,
             final HttpServletResponse response, StringBuffer result, String requestStr) throws IOException {
+    	setupDefaultSoapExpectations(context, request, response, result, requestStr, null);
+    }
+    
+    /**
+     * Set up default expectations for soap requests.
+     * @param context
+     * @param request
+     * @param response
+     * @param result
+     * @param requestStr
+     * @param additionalParams (maybe null)
+     * @throws IOException
+     */
+    protected void setupDefaultSoapExpectations(Mockery context, final HttpServletRequest request,
+            final HttpServletResponse response, StringBuffer result, String requestStr,
+            final Map<String, String> additionalParams) throws IOException {
         final ServletInputStream sis = new TestServletInputStream(requestStr);
         final ServletOutputStream sos = new TestServletOutputStream(result);
         context.checking(new Expectations() {{
@@ -278,5 +299,12 @@ public abstract class OperationTestBase extends TestCase {
             this.allowing(response).setCharacterEncoding("UTF-8");
             this.allowing(response).getOutputStream(); this.will(returnValue(sos));
         }});
+        if (additionalParams != null) {
+            for (final Map.Entry<String, String> entry : additionalParams.entrySet()) {
+                context.checking(new Expectations() {{
+                    this.allowing(request).getParameter(entry.getKey()); this.will(returnValue(entry.getValue()));
+                }});
+            }
+        }
     }
 }

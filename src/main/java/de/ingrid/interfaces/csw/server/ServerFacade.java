@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -53,11 +53,13 @@ import de.ingrid.interfaces.csw.domain.request.GetCapabilitiesRequest;
 import de.ingrid.interfaces.csw.domain.request.GetDomainRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordByIdRequest;
 import de.ingrid.interfaces.csw.domain.request.GetRecordsRequest;
+import de.ingrid.interfaces.csw.domain.request.TransactionRequest;
 import de.ingrid.interfaces.csw.domain.request.impl.DescribeRecordRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetCapabilitiesRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetDomainRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetRecordByIdRequestImpl;
 import de.ingrid.interfaces.csw.domain.request.impl.GetRecordsRequestImpl;
+import de.ingrid.interfaces.csw.domain.request.impl.TransactionRequestImpl;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
 /**
@@ -196,6 +198,8 @@ public class ServerFacade {
                 result = this.cswServerImpl.process((GetRecordsRequest) requestImpl);
             } else if (operation == Operation.GET_RECORD_BY_ID) {
                 result = this.cswServerImpl.process((GetRecordByIdRequest) requestImpl);
+            } else if (operation == Operation.TRANSACTION) {
+                result = this.cswServerImpl.process((TransactionRequest) requestImpl);
             }
             if (log.isDebugEnabled()) {
                 log.debug("Result: " + StringUtils.nodeToString(result));
@@ -263,6 +267,8 @@ public class ServerFacade {
             request = new GetRecordsRequestImpl();
         } else if (operation.equals(Operation.GET_RECORD_BY_ID)) {
             request = new GetRecordByIdRequestImpl();
+        } else if (operation.equals(Operation.TRANSACTION)) {
+            request = new TransactionRequestImpl();
         } else {
             log.error("No request implementation found for operation: " + operation);
             throw new RuntimeException("No request implementation found for operation: " + operation);

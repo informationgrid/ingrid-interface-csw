@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -44,6 +44,8 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.tools.FileUtils;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
@@ -377,15 +379,15 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 			if (log.isInfoEnabled()) {
 				log.info("Rename old cache: " + originalDirPath + " to " + tmpDir.toPath());
 			}
-			FileUtils.waitAndMove(originalDirPath, tmpDir.toPath(), 10000);
+			FileUtils.waitAndMove(originalDirPath, tmpDir.toPath(), ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_TIMEOUT, 10000));
 			if (log.isInfoEnabled()) {
 				log.info("Rename new cache: " + workDirPath + " to " + originalDirPath);
 			}
-			FileUtils.waitAndMove(workDirPath, originalDirPath, 10000);
+			FileUtils.waitAndMove(workDirPath, originalDirPath, ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_TIMEOUT, 10000));
 			if (log.isInfoEnabled()) {
 				log.info("Remove tmp path: " + tmpDir.toPath());
 			}
-			FileUtils.waitAndDelete(tmpDir.toPath(), 10000);
+			FileUtils.waitAndDelete(tmpDir.toPath(), ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_TIMEOUT, 10000));
 
 			this.inTransaction = false;
 		} else {

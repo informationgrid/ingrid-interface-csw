@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -65,7 +65,9 @@ public abstract class DefaultEncoding extends AbstractEncoding {
 		if (e instanceof CSWException) {
 			errorXmlMsg = ((CSWException)e).toXmlExceptionReport();
 		} else {
-			errorXmlMsg = new CSWException(e.getMessage(), "NoApplicableCode", null).toXmlExceptionReport();
+		    String message = e.getMessage();
+		    if (e.getCause() != null) message += e.getCause().getMessage();
+			errorXmlMsg = new CSWException(message, "NoApplicableCode", null).toXmlExceptionReport();
 		}
 		this.writeResponse(errorXmlMsg);
 	}

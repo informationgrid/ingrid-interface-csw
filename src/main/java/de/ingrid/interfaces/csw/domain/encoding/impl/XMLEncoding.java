@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -84,9 +84,13 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
     private static Log log = LogFactory.getLog(XMLEncoding.class);
 
     /** Supported operations **/
-    private static List<Operation> SUPPORTED_OPERATIONS = Collections
-            .unmodifiableList(Arrays.asList(new Operation[] { Operation.GET_CAPABILITIES, Operation.DESCRIBE_RECORD,
-                    Operation.GET_RECORDS, Operation.GET_RECORD_BY_ID }));
+    private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
+            Operation.GET_CAPABILITIES,
+            Operation.DESCRIBE_RECORD,
+            Operation.GET_RECORDS,
+            Operation.GET_RECORD_BY_ID,
+            Operation.TRANSACTION
+    }));
 
     @Override
     public final void initialize(HttpServletRequest request, HttpServletResponse response) {
@@ -222,7 +226,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
      * Get a CSWQuery from a request node.
      *
      * @param requestNode
-     * @return
+     * @return CSWQuery
      * @throws CSWException
      */
     public CSWQuery getQuery(Node requestNode) throws CSWException {
@@ -373,7 +377,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
      *
      * @return Node
      */
-    protected Node getRequestBody() {
+    public Node getRequestBody() {
         return this.requestBody;
     }
 

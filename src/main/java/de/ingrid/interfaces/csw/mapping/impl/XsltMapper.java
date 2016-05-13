@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -45,8 +45,8 @@ import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
 import de.ingrid.interfaces.csw.mapping.IPreCommitHandler;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
-import de.ingrid.interfaces.csw.tools.XsltUtils;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.tool.XsltUtils;
 
 /**
  * A CSWRecordMapper that maps records using XSLT.

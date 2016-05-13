@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -474,12 +474,6 @@ public class LuceneFilterParser implements FilterParser {
             }
             if (bbox.getEnvelope() == null && bbox.getEnvelopeWithTimePeriod() == null) {
                 throw new CSWFilterException("Missing envelope parameter for BBOX operator.", INVALID_PARAMETER_CODE,
-                        QUERY_CONSTRAINT_LOCATOR);
-            }
-
-            if (crsName == null) {
-                crsName = "urn:ogc:def:crs:EPSG::4326";
-                throw new CSWFilterException("Missing SRS parameter BBOX operator.", INVALID_PARAMETER_CODE,
                         QUERY_CONSTRAINT_LOCATOR);
             }
 

@@ -3,12 +3,11 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>3.6.1</version>
+    <version>3.6.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.ingrid</groupId>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>3.6.1</version>
+  <version>3.6.2</version>
   <packaging>jar</packaging>
   <name>ingrid-interface-csw</name>
   <scm>
@@ -32,13 +31,6 @@
   </repositories>
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-version-management-pom</artifactId>
-        <version>3.6.0</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
@@ -70,7 +62,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>3.6.0</version>
+      <version>3.6.2</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -85,10 +77,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
+      <version>3.6.2</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug</artifactId>
+      <version>3.6.2</version>
       <exclusions>
         <exclusion>
           <groupId>commons-betwixt</groupId>
@@ -135,7 +129,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus</artifactId>
-      <version>3.6.0</version>
+      <version>3.6.2</version>
       <exclusions>
         <exclusion>
           <groupId>tomcat</groupId>

@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -43,11 +43,15 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 
 public class FileUtils {
 
@@ -156,7 +160,7 @@ public class FileUtils {
 	public static void waitAndMove(Path src, Path dest, long timeout) throws IOException {
 		long time = 0;
 		boolean isMoved = false;
-		long pause = 200;
+		long pause = ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_RETRY_TIMEOUT, 1000);
 		while (time < timeout && !isMoved) {
 			try {
 				Files.move(src, dest, ATOMIC_MOVE);
@@ -188,7 +192,7 @@ public class FileUtils {
 	public static void waitAndDelete(Path path, long timeout) throws IOException {
 		long time = 0;
 		boolean isDeleted = false;
-		long pause = 200;
+		long pause = ApplicationProperties.getInteger( ConfigurationKeys.FILE_OPERATION_RETRY_TIMEOUT, 1000);
 		while (time < timeout && !isDeleted) {
 			try {
 				deleteRecursive(path);
@@ -377,10 +381,20 @@ public class FileUtils {
 	 * @return
 	 */
 	public static String convertStreamToString(java.io.InputStream is) {
+		Scanner scanner = null;
 		try {
-			return new java.util.Scanner(is).useDelimiter("\\A").next();
+			scanner = new Scanner(is);
+			scanner.useDelimiter("\\A");
+			String content = scanner.next();
+			scanner.close();
+			return content;
 		} catch (java.util.NoSuchElementException e) {
 			return "";
+		}
+		finally {
+			if (scanner != null) {
+				scanner.close();
+			}
 		}
 	}
 
