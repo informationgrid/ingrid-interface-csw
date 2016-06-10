@@ -24,6 +24,8 @@ package de.ingrid.interfaces.csw.admin;
 
 import java.security.Principal;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mortbay.jetty.Request;
 import org.mortbay.jetty.security.HashUserRealm;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -33,6 +35,8 @@ import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 
 public class IngridHashUserRealm extends HashUserRealm {
+    
+    private static final Log log = LogFactory.getLog(IngridHashUserRealm.class);
 
     @Override
     public Principal authenticate(String username, Object credentials, Request request) {
@@ -47,8 +51,13 @@ public class IngridHashUserRealm extends HashUserRealm {
 
         KnownPrincipal principal = (KnownPrincipal) super.getPrincipal(username);
         String pw = principal.getPassword();
-        if (BCrypt.checkpw(credentials.toString(), pw )) {
-            return principal;
+        try {
+            if (BCrypt.checkpw(credentials.toString(), pw )) {
+                return principal;
+            }
+        } catch (Exception e) {
+            log.error( "Error during password check:", e );
+            return null;
         }
         
         return null;
