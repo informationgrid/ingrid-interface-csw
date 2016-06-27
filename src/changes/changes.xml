@@ -28,6 +28,12 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.6.2.1-SNAPSHOT" date="2016-xx-xx" description="Release 3.6.2.1">
+      <action type="add" dev="wemove" issue="REDMINE-337">
+        Add Basic Authentication to CSW-T-API, which can be configured via realm.properties.
+      </action>
+    </release>
+    
     <release version="3.6.2" date="2016-05-13" description="Release 3.6.2">
       <action type="update" dev="wemove" issue="REDMINE-279">
         Increase file operation timeouts and increase default value from 200ms to 1 sec.
