@@ -43,6 +43,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.server.CSWServlet;
+import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
 
 /**
  * This class starts a Jetty server where the webapp will be executed.
@@ -82,8 +83,10 @@ public class JettyStarter {
         WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(webAppContext
                 .getServletContext(), "org.springframework.web.servlet.FrameworkServlet.CONTEXT.springapp");
         CSWServlet cswServlet = (CSWServlet) wac.getBean("CSWServlet");
+        CSWTServlet cswtServlet = (CSWTServlet) wac.getBean("CSWTServlet");
         
         webAppContext.addServlet(new ServletHolder(cswServlet), "/csw");
+        webAppContext.addServlet(new ServletHolder(cswtServlet), "/csw-t");
         server.join();
         
     }
@@ -107,7 +110,7 @@ public class JettyStarter {
         ConstraintMapping[] cm = new ConstraintMapping[1];
         cm[0] = new ConstraintMapping();
         cm[0].setConstraint(constraint);
-        cm[0].setPathSpec("/csw");
+        cm[0].setPathSpec("/csw-t");
                 
         csh.setConstraintMappings( cm );
         return csh;

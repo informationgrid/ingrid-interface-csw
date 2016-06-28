@@ -88,7 +88,9 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
             Operation.GET_CAPABILITIES,
             Operation.DESCRIBE_RECORD,
             Operation.GET_RECORDS,
-            Operation.GET_RECORD_BY_ID,
+            Operation.GET_RECORD_BY_ID
+    }));
+    private static List<Operation> SUPPORTED_OPERATIONS_CSWT = Collections.unmodifiableList(Arrays.asList(new Operation[] {
             Operation.TRANSACTION
     }));
 
@@ -171,8 +173,12 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
     }
 
     @Override
-    public List<Operation> getSupportedOperations() {
-        return SUPPORTED_OPERATIONS;
+    public List<Operation> getSupportedOperations(Type type) {
+        if (type == Type.CSWT) {
+            return SUPPORTED_OPERATIONS_CSWT;
+        } else {
+            return SUPPORTED_OPERATIONS;
+        }
     }
 
     @Override
