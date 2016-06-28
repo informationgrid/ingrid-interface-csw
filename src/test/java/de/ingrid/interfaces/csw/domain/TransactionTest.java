@@ -37,6 +37,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.server.CSWServlet;
+import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
 public class TransactionTest extends OperationTestBase {
@@ -82,14 +83,17 @@ public class TransactionTest extends OperationTestBase {
         HttpServletResponse response = context.mock(HttpServletResponse.class);
         String requestStr = TestRequests.getRequest(TestRequests.TRANSACTION_SOAP);
 
-        Map<String, String> additionalParams = new HashMap<String, String>() {{
+        Map<String, String> additionalParams = new HashMap<String, String>() {
+            private static final long serialVersionUID = 1L;
+
+        {
             this.put("catalog", "test");
         }};
         // expectations
         this.setupDefaultSoapExpectations(context, request, response, result, requestStr, additionalParams);
 
         // make request
-        CSWServlet servlet = this.getServlet();
+        CSWTServlet servlet = this.getCSWTServlet();
         servlet.doPost(request, response);
 
         context.assertIsSatisfied();

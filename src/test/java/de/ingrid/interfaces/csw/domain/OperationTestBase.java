@@ -39,8 +39,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.io.FileUtils;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -54,12 +52,16 @@ import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
 import de.ingrid.interfaces.csw.search.impl.LuceneSearcher;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.server.ServerFacade;
+import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
+import de.ingrid.interfaces.csw.server.cswt.ServerFacadeCSWT;
+import de.ingrid.interfaces.csw.server.cswt.impl.GenericServerCSWT;
 import de.ingrid.interfaces.csw.server.impl.GenericServer;
 import de.ingrid.interfaces.csw.tools.LuceneTools;
 import de.ingrid.interfaces.csw.tools.SoapNamespaceContext;
 import de.ingrid.utils.xml.ConfigurableNamespaceContext;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
+import junit.framework.TestCase;
 
 public abstract class OperationTestBase extends TestCase {
 
@@ -69,6 +71,7 @@ public abstract class OperationTestBase extends TestCase {
     private LuceneSearcher searcher = null;
     private Manager manager = null;
     private CSWServlet servlet = null;
+    private CSWTServlet servletCSWT = null;
 
     protected static XPathUtils xpath;
     static {
@@ -110,6 +113,16 @@ public abstract class OperationTestBase extends TestCase {
 
         this.servlet = new CSWServlet();
         this.servlet.setServerFacade(serverFacade);
+        
+        // create cswt servlet
+        GenericServerCSWT serverCSWT = new GenericServerCSWT();
+        serverCSWT.setSearcher(this.searcher);
+        serverCSWT.setManager(manager);
+        
+        ServerFacadeCSWT serverFacadeCSWT = new ServerFacadeCSWT();
+        serverFacadeCSWT.setCswServerImpl(serverCSWT);
+        this.servletCSWT = new CSWTServlet();
+        this.servletCSWT.setServerFacade(serverFacadeCSWT);
     }
 
     @Override
@@ -156,6 +169,10 @@ public abstract class OperationTestBase extends TestCase {
      */
     protected CSWServlet getServlet() {
         return this.servlet;
+    }
+    
+    protected CSWTServlet getCSWTServlet() {
+        return this.servletCSWT;
     }
 
     /**
