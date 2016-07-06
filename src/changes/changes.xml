@@ -32,6 +32,9 @@
       <action type="add" dev="wemove" issue="REDMINE-337">
         Add Basic Authentication to CSW-T-API, which can be configured via realm.properties.
       </action>
+      <action type="fix" dev="wemove" issue="REDMINE-366">
+        Do not cache CSW-T-Requests.
+      </action>
     </release>
     
     <release version="3.6.2" date="2016-05-13" description="Release 3.6.2">

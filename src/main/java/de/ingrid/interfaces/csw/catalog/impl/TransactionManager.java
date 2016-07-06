@@ -25,6 +25,8 @@
  */
 package de.ingrid.interfaces.csw.catalog.impl;
 
+import java.util.HashMap;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -44,27 +46,27 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridCall;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.xml.Csw202NamespaceContext;
-import de.ingrid.utils.xpath.XPathUtils;
 
 @Service
 public class TransactionManager implements Manager {
+    
+    private static final String DATA_PARAMETER = "data";
 
     /** Verbose response xpath **/
     //private static String VERBOSE_RESPONSE_PARAM_XPATH = "/csw:Transaction/@verboseResponse";
 
     /** Operations xpath **/
-    private static String ACTIONS_XPATH = "/csw:Transaction/child::*";
+    // private static String ACTIONS_XPATH = "/csw:Transaction/child::*";
 
     final protected static Log log = LogFactory.getLog(TransactionManager.class);
 
-    private XPathUtils xpath = null;
+    // private XPathUtils xpath = null;
 
     /**
      * Constructor
      */
     public TransactionManager() {
-        this.xpath = new XPathUtils(new Csw202NamespaceContext());
+        // this.xpath = new XPathUtils(new Csw202NamespaceContext());
     }
 
     @Override
@@ -91,10 +93,15 @@ public class TransactionManager implements Manager {
             return result;
         }
         
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        // this information tells the iBus-client to not use the cache
+        map.put( "disableCache", "cache: false" );
+        map.put( DATA_PARAMETER, contentString );
+        
         IBus bus = busClient.getNonCacheableIBus();
         IngridCall targetInfo = new IngridCall();
         targetInfo.setMethod( "importCSWDoc" );
-        targetInfo.setParameter( contentString );
+        targetInfo.setParameter( map );
         targetInfo.setTarget( transaction.getCatalog() );
         IngridDocument response = bus.call( targetInfo  );
         IngridDocument responseResult = (IngridDocument) response.get( "result" );
