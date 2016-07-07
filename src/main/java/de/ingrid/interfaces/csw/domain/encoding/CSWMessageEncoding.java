@@ -49,6 +49,11 @@ import de.ingrid.interfaces.csw.domain.query.CSWQuery;
  * @author ingo herwig <ingo@wemove.com>
  */
 public interface CSWMessageEncoding {
+    
+    public static enum Type {
+        CSW,
+        CSWT
+    }
 
 	/**
 	 * Initialize the encoding with the content to encode
@@ -76,9 +81,10 @@ public interface CSWMessageEncoding {
 
 	/**
 	 * Get the supported operations
+	 * @param type TODO
 	 * @return A List
 	 */
-	List<Operation> getSupportedOperations();
+	List<Operation> getSupportedOperations(Type type);
 
 	/**
 	 * Get the requested operation

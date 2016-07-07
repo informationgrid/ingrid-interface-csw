@@ -23,7 +23,7 @@
 /*
  * Copyright (c) 2012 wemove digital solutions. All rights reserved.
  */
-package de.ingrid.interfaces.csw.server;
+package de.ingrid.interfaces.csw.server.cswt;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,8 +37,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
-import de.ingrid.interfaces.csw.config.ApplicationProperties;
-import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.Operation;
 import de.ingrid.interfaces.csw.domain.constants.RequestType;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
@@ -49,16 +47,8 @@ import de.ingrid.interfaces.csw.domain.encoding.impl.XMLEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedException;
 import de.ingrid.interfaces.csw.domain.request.CSWRequest;
-import de.ingrid.interfaces.csw.domain.request.DescribeRecordRequest;
-import de.ingrid.interfaces.csw.domain.request.GetCapabilitiesRequest;
-import de.ingrid.interfaces.csw.domain.request.GetDomainRequest;
-import de.ingrid.interfaces.csw.domain.request.GetRecordByIdRequest;
-import de.ingrid.interfaces.csw.domain.request.GetRecordsRequest;
-import de.ingrid.interfaces.csw.domain.request.impl.DescribeRecordRequestImpl;
-import de.ingrid.interfaces.csw.domain.request.impl.GetCapabilitiesRequestImpl;
-import de.ingrid.interfaces.csw.domain.request.impl.GetDomainRequestImpl;
-import de.ingrid.interfaces.csw.domain.request.impl.GetRecordByIdRequestImpl;
-import de.ingrid.interfaces.csw.domain.request.impl.GetRecordsRequestImpl;
+import de.ingrid.interfaces.csw.domain.request.TransactionRequest;
+import de.ingrid.interfaces.csw.domain.request.impl.TransactionRequestImpl;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 
 /**
@@ -70,18 +60,18 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
  * 
  */
 @Service
-public class ServerFacade {
+public class ServerFacadeCSWT {
 
-    private static Log log = LogFactory.getLog(ServerFacade.class);
+    private static Log log = LogFactory.getLog(ServerFacadeCSWT.class);
 
     /**
      * The csw server implementation
      */
     @Autowired
-    private CSWServer cswServerImpl;
+    private CSWTServer cswtServerImpl;
 
     
-    public ServerFacade() {
+    public ServerFacadeCSWT() {
         super();
     }
 
@@ -90,8 +80,8 @@ public class ServerFacade {
      * 
      * @param cswServerImpl
      */
-    public void setCswServerImpl(CSWServer cswServerImpl) {
-        this.cswServerImpl = cswServerImpl;
+    public void setCswServerImpl(CSWTServer cswServerImpl) {
+        this.cswtServerImpl = cswServerImpl;
     }
 
     /**
@@ -131,7 +121,7 @@ public class ServerFacade {
      * Free all resources.
      */
     public void destroy() {
-    	cswServerImpl.destroy();
+    	cswtServerImpl.destroy();
     }
 
 
@@ -159,7 +149,7 @@ public class ServerFacade {
 
             // check if the operation is supported
             Operation operation = encodingImpl.getOperation();
-            List<Operation> supportedOperations = encodingImpl.getSupportedOperations(Type.CSW);
+            List<Operation> supportedOperations = encodingImpl.getSupportedOperations(Type.CSWT);
             if (!supportedOperations.contains(operation)) {
                 StringBuffer errorMsg = new StringBuffer();
                 errorMsg.append("The operation '" + operation + "' is not supported in a " + type + " request.\n");
@@ -179,24 +169,15 @@ public class ServerFacade {
             requestImpl.validate();
 
             // check the CSWServer instance
-            if (this.cswServerImpl == null) {
+            if (this.cswtServerImpl == null) {
                 throw new RuntimeException("ServerFacade is not configured properly: cswServerImpl is not set.");
             }
             
 
             // perform the requested operation
             Document result = null;
-            if (operation == Operation.GET_CAPABILITIES) {
-                String variant = request.getParameter(ApplicationProperties.get(ConfigurationKeys.QUERY_PARAMETER_2_CAPABILITIES_VARIANT, "")); 
-                result = this.cswServerImpl.process((GetCapabilitiesRequest) requestImpl, variant);
-            } else if (operation == Operation.DESCRIBE_RECORD) {
-                result = this.cswServerImpl.process((DescribeRecordRequest) requestImpl);
-            } else if (operation == Operation.GET_DOMAIN) {
-                result = this.cswServerImpl.process((GetDomainRequest) requestImpl);
-            } else if (operation == Operation.GET_RECORDS) {
-                result = this.cswServerImpl.process((GetRecordsRequest) requestImpl);
-            } else if (operation == Operation.GET_RECORD_BY_ID) {
-                result = this.cswServerImpl.process((GetRecordByIdRequest) requestImpl);
+            if (operation == Operation.TRANSACTION) {
+                result = this.cswtServerImpl.process((TransactionRequest) requestImpl);
             }
             if (log.isDebugEnabled()) {
                 log.debug("Result: " + StringUtils.nodeToString(result));
@@ -254,16 +235,8 @@ public class ServerFacade {
     private CSWRequest getRequestInstance(Operation operation) {
         CSWRequest request = null;
         
-        if (operation.equals(Operation.GET_CAPABILITIES)) {
-            request = new GetCapabilitiesRequestImpl();
-        } else if (operation.equals(Operation.DESCRIBE_RECORD)) {
-            request = new DescribeRecordRequestImpl();
-        } else if (operation.equals(Operation.GET_DOMAIN)) {
-            request = new GetDomainRequestImpl();
-        } else if (operation.equals(Operation.GET_RECORDS)) {
-            request = new GetRecordsRequestImpl();
-        } else if (operation.equals(Operation.GET_RECORD_BY_ID)) {
-            request = new GetRecordByIdRequestImpl();
+        if (operation.equals(Operation.TRANSACTION)) {
+            request = new TransactionRequestImpl();
         } else {
             log.error("No request implementation found for operation: " + operation);
             throw new RuntimeException("No request implementation found for operation: " + operation);

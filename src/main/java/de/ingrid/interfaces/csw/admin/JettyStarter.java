@@ -22,11 +22,18 @@
  */
 package de.ingrid.interfaces.csw.admin;
 
+import java.io.IOException;
 import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
+import org.mortbay.jetty.security.BasicAuthenticator;
+import org.mortbay.jetty.security.Constraint;
+import org.mortbay.jetty.security.ConstraintMapping;
+import org.mortbay.jetty.security.HashUserRealm;
+import org.mortbay.jetty.security.SecurityHandler;
 import org.mortbay.jetty.servlet.HashSessionIdManager;
 import org.mortbay.jetty.servlet.ServletHolder;
 import org.mortbay.jetty.webapp.WebAppContext;
@@ -36,6 +43,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.server.CSWServlet;
+import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
 
 /**
  * This class starts a Jetty server where the webapp will be executed.
@@ -65,16 +73,47 @@ public class JettyStarter {
         HashSessionIdManager hsim = new HashSessionIdManager();
         hsim.setRandom(new Random());
         server.setSessionIdManager(hsim);
-        server.setHandler(webAppContext);
-
+        
+        Handler[] handlers = new Handler[2];
+        handlers[0] = basicSecurityHandler();
+        handlers[1] = webAppContext;
+        server.setHandlers(handlers);
         server.start();
-
+        
         WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(webAppContext
                 .getServletContext(), "org.springframework.web.servlet.FrameworkServlet.CONTEXT.springapp");
         CSWServlet cswServlet = (CSWServlet) wac.getBean("CSWServlet");
+        CSWTServlet cswtServlet = (CSWTServlet) wac.getBean("CSWTServlet");
         
         webAppContext.addServlet(new ServletHolder(cswServlet), "/csw");
+        webAppContext.addServlet(new ServletHolder(cswtServlet), "/csw-t");
+        server.join();
         
     }
-
+    
+    private static SecurityHandler basicSecurityHandler() {
+        SecurityHandler csh = new SecurityHandler();
+        csh.setAuthenticator( new BasicAuthenticator());
+        HashUserRealm userRealm = new BasicHashUserRealm("UserRealm");
+        try {
+            userRealm.setConfig( ApplicationProperties.get( "realm.properties.path" ) );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        csh.setUserRealm( userRealm  );
+        
+        Constraint constraint = new Constraint();
+        constraint.setName(Constraint.__BASIC_AUTH);
+        constraint.setRoles(new String[]{"user"});
+        constraint.setAuthenticate(true);
+        
+        ConstraintMapping[] cm = new ConstraintMapping[1];
+        cm[0] = new ConstraintMapping();
+        cm[0].setConstraint(constraint);
+        cm[0].setPathSpec("/csw-t");
+                
+        csh.setConstraintMappings( cm );
+        return csh;
+    }
+    
 }

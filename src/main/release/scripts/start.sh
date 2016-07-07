@@ -131,6 +131,48 @@ stopNoExitIplug()
     fi
 }
 
+prepareJavaStatement()
+{
+    # some Java parameters
+    if [ "$INGRID_JAVA_HOME" != "" ]; then
+      #echo "run java in $INGRID_JAVA_HOME"
+      JAVA_HOME=$INGRID_JAVA_HOME
+    fi
+
+    if [ "$JAVA_HOME" = "" ]; then
+      echo "Error: JAVA_HOME is not set."
+      exit 1
+    fi
+
+    JAVA=$JAVA_HOME/bin/java
+
+    # so that filenames w/ spaces are handled correctly in loops below
+    IFS=
+    # add libs to CLASSPATH
+    CLASSPATH=${CLASSPATH}:${INGRID_CONF_DIR:=$INGRID_HOME/conf}
+    CLASSPATH_POSTFIX=""
+    for f in $INGRID_HOME/lib/*.jar; do
+      # make sure ingrid libraries appear first in classpath
+      # this enables overwriting of 3-rd party library code
+      case "$f" in
+         *lib/ingrid*) CLASSPATH=${CLASSPATH}:$f;;
+         *) CLASSPATH_POSTFIX=${CLASSPATH_POSTFIX}:$f;;
+      esac
+    done
+    CLASSPATH=${CLASSPATH}:$CLASSPATH_POSTFIX;
+    # restore ordinary behaviour
+    unset IFS
+
+    # cygwin path translation
+    if expr `uname` : 'CYGWIN*' > /dev/null; then
+      CLASSPATH=`cygpath -p -w "$CLASSPATH"`
+    fi
+
+    # run it
+    export CLASSPATH="$CLASSPATH"
+    INGRID_OPTS="-Dingrid_home=$INGRID_HOME $INGRID_OPTS"
+}
+
 
 startIplug()
 {
@@ -144,45 +186,8 @@ startIplug()
       fi
   fi
   
-  # some Java parameters
-  if [ "$INGRID_JAVA_HOME" != "" ]; then
-    #echo "run java in $INGRID_JAVA_HOME"
-    JAVA_HOME=$INGRID_JAVA_HOME
-  fi
+  prepareJavaStatement
   
-  if [ "$JAVA_HOME" = "" ]; then
-    echo "Error: JAVA_HOME is not set."
-    exit 1
-  fi
-  
-  JAVA=$JAVA_HOME/bin/java
-
-  # so that filenames w/ spaces are handled correctly in loops below
-  IFS=
-  # add libs to CLASSPATH
-  CLASSPATH=${CLASSPATH}:${INGRID_CONF_DIR:=$INGRID_HOME/conf}
-  CLASSPATH_POSTFIX=""
-  for f in $INGRID_HOME/lib/*.jar; do
-    # make sure ingrid libraries appear first in classpath
-    # this enables overwriting of 3-rd party library code
-    case "$f" in
-       *lib/ingrid*) CLASSPATH=${CLASSPATH}:$f;;
-       *) CLASSPATH_POSTFIX=${CLASSPATH_POSTFIX}:$f;;
-    esac
-  done
-  CLASSPATH=${CLASSPATH}:$CLASSPATH_POSTFIX;
-  # restore ordinary behaviour
-  unset IFS
-  
-  # cygwin path translation
-  if expr `uname` : 'CYGWIN*' > /dev/null; then
-    CLASSPATH=`cygpath -p -w "$CLASSPATH"`
-    INGRID_HOME=`cygpath -w "$INGRID_HOME"`
-  fi
-
-  # run it
-  export CLASSPATH="$CLASSPATH"
-  INGRID_OPTS="-Dingrid_home=$INGRID_HOME $INGRID_OPTS"
   CLASS=de.ingrid.interfaces.csw.admin.JettyStarter
   
   exec nohup "$JAVA" $INGRID_OPTS $CLASS > console.log &
@@ -232,8 +237,14 @@ case "$1" in
       echo "process is not running. Exit."
     fi
     ;;
+  resetPassword)
+    prepareJavaStatement
+    CLASS=de.ingrid.interfaces.csw.admin.command.AdminManager
+    exec "$JAVA" $INGRID_OPTS $CLASS reset_password $2
+    echo "Please restart the iPlug to read updated configuration."
+    ;;
   *)
-    echo "Usage: $0 {start|stop|restart|status}"
+    echo "Usage: $0 {start|stop|restart|status|resetPassword <newPassword>}"
     exit 1
     ;;
 esac

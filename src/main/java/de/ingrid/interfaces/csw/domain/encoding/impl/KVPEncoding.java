@@ -144,7 +144,7 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
     }
 
     @Override
-    public List<Operation> getSupportedOperations() {
+    public List<Operation> getSupportedOperations(Type type) {
         return SUPPORTED_OPERATIONS;
     }
 

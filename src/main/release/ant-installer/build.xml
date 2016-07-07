@@ -65,8 +65,7 @@
         <unzip src="${antinstaller.jar}" dest=".">
             <patternset>
                 <include name="**/*.*"/>
-                <exclude name="${componentName}/conf/config.properties" />
-                <exclude name="${componentName}/start.sh" />
+                <exclude name="${componentName}/conf/csw-t.realm.properties" />
             </patternset>
         </unzip>
         
