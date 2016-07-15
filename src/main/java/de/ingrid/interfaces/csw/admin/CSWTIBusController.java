@@ -97,7 +97,11 @@ public class CSWTIBusController {
         IBusHarvesterCommandObject harvester = new IBusHarvesterCommandObject();
         if (communicationConfigFile.exists()) {
             Communication communication = communicationProvider.getConfiguration();
-            bindCommunication(harvester, communication);
+            try {
+            	bindCommunication(harvester, communication);
+            } catch (Exception ex) {
+            	log.error("Error during binding of Communication", ex);
+            }
         }
         modelMap.addAttribute("harvester", harvester);
 

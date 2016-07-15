@@ -24,6 +24,8 @@ package de.ingrid.interfaces.csw.server;
 
 import java.io.File;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,8 @@ import de.ingrid.utils.xml.PlugdescriptionSerializer;
 
 @Service
 public class Heartbeat extends HeartBeatPlug {
+	
+	private static Log log = LogFactory.getLog(Heartbeat.class);
     
     private ConfigurationProvider confProvider;
 
@@ -58,7 +62,11 @@ public class Heartbeat extends HeartBeatPlug {
         this.confProvider = cProvider;
         Communication cswtCommunication = cProvider.getConfiguration().getCswtCommunication();
         if (cswtCommunication == null) return;
-        setupCommunication();
+        try {
+        	setupCommunication();
+        } catch (Exception ex) {
+        	log.error("Communication could not be setup. Missing communication.xml?", ex);
+        }
         
     }
     
