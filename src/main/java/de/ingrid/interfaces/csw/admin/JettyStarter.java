@@ -84,14 +84,18 @@ public class JettyStarter {
                 .getServletContext(), "org.springframework.web.servlet.FrameworkServlet.CONTEXT.springapp");
         CSWServlet cswServlet = (CSWServlet) wac.getBean("CSWServlet");
         CSWTServlet cswtServlet = (CSWTServlet) wac.getBean("CSWTServlet");
+
+        String cswPath = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "csw" );
+        String cswtPath = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH_CSWT, "csw-t" );
         
-        webAppContext.addServlet(new ServletHolder(cswServlet), "/csw");
-        webAppContext.addServlet(new ServletHolder(cswtServlet), "/csw-t");
+        webAppContext.addServlet(new ServletHolder(cswServlet), "/" + cswPath);
+        webAppContext.addServlet(new ServletHolder(cswtServlet), "/" + cswtPath);
         server.join();
         
     }
     
     private static SecurityHandler basicSecurityHandler() {
+    	String cswtPath = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH_CSWT, "csw-t" );
         SecurityHandler csh = new SecurityHandler();
         csh.setAuthenticator( new BasicAuthenticator());
         HashUserRealm userRealm = new BasicHashUserRealm("UserRealm");
@@ -110,7 +114,7 @@ public class JettyStarter {
         ConstraintMapping[] cm = new ConstraintMapping[1];
         cm[0] = new ConstraintMapping();
         cm[0].setConstraint(constraint);
-        cm[0].setPathSpec("/csw-t");
+        cm[0].setPathSpec("/" + cswtPath);
                 
         csh.setConstraintMappings( cm );
         return csh;

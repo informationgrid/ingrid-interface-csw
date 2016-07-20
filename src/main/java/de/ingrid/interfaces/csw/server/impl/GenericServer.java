@@ -142,13 +142,16 @@ public class GenericServer implements CSWServer {
         }
         // get the port (defaults to 80)
         String port = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PORT, "80");
-        // get the port (defaults to 80)
-        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "80");
+        // get the path (defaults to csw)
+        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "csw");
+        // get the csw-t path (defaults to csw-t)
+        String pathCswT = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH_CSWT, "csw-t");
         // replace interface host and port
         for (int idx = 0; idx < nodes.getLength(); idx++) {
             String s = nodes.item(idx).getTextContent();
             s = s.replaceAll(ConfigurationKeys.VARIABLE_INTERFACE_HOST, host);
             s = s.replaceAll(ConfigurationKeys.VARIABLE_INTERFACE_PORT, port);
+            s = s.replaceAll(ConfigurationKeys.VARIABLE_INTERFACE_PATH_CSWT, pathCswT);
             s = s.replaceAll(ConfigurationKeys.VARIABLE_INTERFACE_PATH, path);
             nodes.item(idx).setTextContent(s);
         }
