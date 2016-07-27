@@ -70,7 +70,7 @@ public class SearchTestController {
         this.searcher = searcher;
         String host = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_HOST, "localhost");
         String port = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PORT, "80");
-        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "");
+        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "csw");
         baseLink = "http://" + host + ":" + port + "/" + path + "?REQUEST=GetRecordById&SERVICE=CSW&ID=RECORD_ID";
     }
 

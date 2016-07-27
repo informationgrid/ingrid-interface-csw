@@ -32,7 +32,6 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 import java.util.TimeZone;
 
@@ -52,8 +51,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.catalog.Manager;
-import de.ingrid.interfaces.csw.catalog.action.Action;
-import de.ingrid.interfaces.csw.catalog.action.ActionResult;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;

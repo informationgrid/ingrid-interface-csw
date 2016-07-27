@@ -85,17 +85,16 @@ public class JettyStarter {
         CSWServlet cswServlet = (CSWServlet) wac.getBean("CSWServlet");
         CSWTServlet cswtServlet = (CSWTServlet) wac.getBean("CSWTServlet");
 
-        String cswPath = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "csw" );
-        String cswtPath = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH_CSWT, "csw-t" );
-        
-        webAppContext.addServlet(new ServletHolder(cswServlet), "/" + cswPath);
-        webAppContext.addServlet(new ServletHolder(cswtServlet), "/" + cswtPath);
+        // the contexts are hardcoded here, but with apache proxies, a different access URL
+        // can be generated, to define the correct URL in the getCapabilities document
+        // the config file has to be edited (server.interface.path)
+        webAppContext.addServlet(new ServletHolder(cswServlet), "/csw");
+        webAppContext.addServlet(new ServletHolder(cswtServlet), "/csw-t");
         server.join();
         
     }
     
     private static SecurityHandler basicSecurityHandler() {
-    	String cswtPath = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH_CSWT, "csw-t" );
         SecurityHandler csh = new SecurityHandler();
         csh.setAuthenticator( new BasicAuthenticator());
         HashUserRealm userRealm = new BasicHashUserRealm("UserRealm");
@@ -114,7 +113,7 @@ public class JettyStarter {
         ConstraintMapping[] cm = new ConstraintMapping[1];
         cm[0] = new ConstraintMapping();
         cm[0].setConstraint(constraint);
-        cm[0].setPathSpec("/" + cswtPath);
+        cm[0].setPathSpec("/csw-t");
                 
         csh.setConstraintMappings( cm );
         return csh;
