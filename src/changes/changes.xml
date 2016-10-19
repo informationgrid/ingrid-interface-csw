@@ -28,6 +28,13 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+  
+    <release version="4.0.0.2-SNAPSHOT" date="2016-xx-xx" description="Release 4.0.0.2">
+      <action type="fix" dev="wemove" issue="REDMINE-465">
+        Fixed wrong path to save data when using cygwin.
+      </action>
+    </release>
+    
   	<release version="3.6.2.2" date="2016-07-15" description="Release 3.6.2.2">
       <action type="fix" dev="wemove" issue="REDMINE-376">
         Catch exception if communication for CSW-T could not be found.
