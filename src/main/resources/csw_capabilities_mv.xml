@@ -218,6 +218,17 @@
                 <ows:Value>http://www.w3.org/XML/Schema</ows:Value>
             </ows:Parameter>
         </ows:Operation>
+        <ows:Operation name="Transaction">
+			<ows:DCP>
+				<ows:HTTP>
+					<ows:Post xlink:href="http://INTERFACE_HOST:INTERFACE_PORT/INTERFACE_CSW-T_PATH">
+						<ows:Constraint name="PostEncoding">
+							<ows:Value>XML</ows:Value>
+						</ows:Constraint>
+					</ows:Post>
+				</ows:HTTP>
+			</ows:DCP>
+		</ows:Operation>
         <ows:Constraint name="PostEncoding">
             <ows:Value>SOAP</ows:Value>
         </ows:Constraint>

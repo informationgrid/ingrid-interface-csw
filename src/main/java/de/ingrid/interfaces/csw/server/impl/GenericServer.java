@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -32,7 +32,6 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 import java.util.TimeZone;
 
@@ -52,8 +51,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.interfaces.csw.catalog.Manager;
-import de.ingrid.interfaces.csw.catalog.action.Action;
-import de.ingrid.interfaces.csw.catalog.action.ActionResult;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
@@ -142,13 +139,16 @@ public class GenericServer implements CSWServer {
         }
         // get the port (defaults to 80)
         String port = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PORT, "80");
-        // get the port (defaults to 80)
-        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "80");
+        // get the path (defaults to csw)
+        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "csw");
+        // get the csw-t path (defaults to csw-t)
+        String pathCswT = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH_CSWT, "csw-t");
         // replace interface host and port
         for (int idx = 0; idx < nodes.getLength(); idx++) {
             String s = nodes.item(idx).getTextContent();
             s = s.replaceAll(ConfigurationKeys.VARIABLE_INTERFACE_HOST, host);
             s = s.replaceAll(ConfigurationKeys.VARIABLE_INTERFACE_PORT, port);
+            s = s.replaceAll(ConfigurationKeys.VARIABLE_INTERFACE_PATH_CSWT, pathCswT);
             s = s.replaceAll(ConfigurationKeys.VARIABLE_INTERFACE_PATH, path);
             nodes.item(idx).setTextContent(s);
         }

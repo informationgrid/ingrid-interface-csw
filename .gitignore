@@ -5,3 +5,6 @@ tmp/
 /.classpath
 last_status.xml
 updatejob.dat
+conf/
+config.xml
+index/

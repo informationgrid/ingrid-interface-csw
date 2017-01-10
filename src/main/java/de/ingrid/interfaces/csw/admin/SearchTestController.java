@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -70,7 +70,7 @@ public class SearchTestController {
         this.searcher = searcher;
         String host = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_HOST, "localhost");
         String port = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PORT, "80");
-        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "");
+        String path = ApplicationProperties.get(ConfigurationKeys.SERVER_INTERFACE_PATH, "csw");
         baseLink = "http://" + host + ":" + port + "/" + path + "?REQUEST=GetRecordById&SERVICE=CSW&ID=RECORD_ID";
     }
 

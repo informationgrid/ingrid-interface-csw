@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -36,6 +36,7 @@ public class ConfigurationKeys {
     public static final String SERVER_INTERFACE_HOST = "server.interface.host";
     public static final String SERVER_INTERFACE_PORT = "server.interface.port";
     public static final String SERVER_INTERFACE_PATH = "server.interface.path";
+    public static final String SERVER_INTERFACE_PATH_CSWT = "server.interface.cswt.path";
     public static final String MAX_RETURNED_HITS = "max.returned.hits";
     public static final String CAPABILITIES_DOC = "capabilities";
     public static final String RECORDDESC_DOC = "describerecord";
@@ -65,6 +66,7 @@ public class ConfigurationKeys {
     public static final String VARIABLE_INTERFACE_HOST = "INTERFACE_HOST";
     public static final String VARIABLE_INTERFACE_PORT = "INTERFACE_PORT";
     public static final String VARIABLE_INTERFACE_PATH = "INTERFACE_PATH";
+    public static final String VARIABLE_INTERFACE_PATH_CSWT = "INTERFACE_CSW-T_PATH";
 
     /** static configuration keys **/
     public static final String CSW_VERSION_2_0_2 = "2.0.2";

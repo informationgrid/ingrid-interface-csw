@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -84,7 +84,10 @@ public class JettyStarter {
                 .getServletContext(), "org.springframework.web.servlet.FrameworkServlet.CONTEXT.springapp");
         CSWServlet cswServlet = (CSWServlet) wac.getBean("CSWServlet");
         CSWTServlet cswtServlet = (CSWTServlet) wac.getBean("CSWTServlet");
-        
+
+        // the contexts are hardcoded here, but with apache proxies, a different access URL
+        // can be generated, to define the correct URL in the getCapabilities document
+        // the config file has to be edited (server.interface.path)
         webAppContext.addServlet(new ServletHolder(cswServlet), "/csw");
         webAppContext.addServlet(new ServletHolder(cswtServlet), "/csw-t");
         server.join();
