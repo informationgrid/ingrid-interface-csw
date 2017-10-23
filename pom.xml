@@ -62,7 +62,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>4.0.1-SNAPSHOT</version>
+      <version>4.1.0</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
