@@ -81,7 +81,7 @@
         <tr>
     		<td class="leftCol">Working directory</td>
     		<td>
-        	<form:input path="workingDirectory" />
+        	<form:input path="workingDirectory" disabled="true"/>
         	<br>
         	<span>The name of the workingDirectory.</span>
         	<form:errors path="workingDirectory" cssClass="error" element="div" />

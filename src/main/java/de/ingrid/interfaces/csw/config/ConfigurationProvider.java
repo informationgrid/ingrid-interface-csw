@@ -68,6 +68,9 @@ public class ConfigurationProvider {
      */
     private static final String INGRID_HOME = "ingrid_home";
 
+
+    public static final String INSTANCE_DIR = "instances";
+
     /**
      * The XML configuration file
      */
@@ -122,6 +125,11 @@ public class ConfigurationProvider {
     public File getNewIndexPath() {
         return new File(this.configurationFile.getParentFile(), "index_new");
     }
+
+    public File getInstancesPath() {
+        return new File(this.configurationFile.getParentFile(), INSTANCE_DIR);
+    }
+    
     
     public File getMappingScript() {
     	File mappingScript = null;

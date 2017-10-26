@@ -23,6 +23,7 @@
 package de.ingrid.interfaces.csw.admin;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +75,7 @@ public class EditTestSuiteHarvesterController {
             modelMap.addAttribute("id", id);
             if (hConfig.getClassName().equals(TestSuiteHarvester.class.getName())) {
                 if (hConfig.getWorkingDirectory() == null) {
-                    hConfig.setWorkingDirectory(new File(FileUtils.encodeFileName(hConfig.getName())).getAbsolutePath());
+                    hConfig.setWorkingDirectory(Paths.get( cProvider.getInstancesPath().getAbsolutePath(), FileUtils.encodeFileName(hConfig.getName()) ).toAbsolutePath().toString() );
                 }
                 TestSuiteHarvesterCommandObject commandObject = new TestSuiteHarvesterCommandObject(hConfig);
                 commandObject.setId(id);

@@ -191,7 +191,7 @@ startIplug()
   
   CLASS=de.ingrid.interfaces.csw.admin.JettyStarter
   
-  exec nohup "$JAVA" $INGRID_OPTS $CLASS > console.log &
+  exec nohup "$JAVA" $INGRID_OPTS $CLASS > logs/console.log &
   
   echo "jetty ($INGRID_HOME) started."
   echo $! > $PID

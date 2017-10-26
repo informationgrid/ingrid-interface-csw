@@ -24,6 +24,7 @@ package de.ingrid.interfaces.csw.admin;
 
 import java.io.File;
 import java.io.Serializable;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -133,8 +134,7 @@ public class ManageHarvesterController {
                     TestSuiteHarvesterConfiguration newHarvesterConfig = new TestSuiteHarvesterConfiguration();
                     newHarvesterConfig.setName(harvester.getName());
                     if (newHarvesterConfig.getWorkingDirectory() == null) {
-                        newHarvesterConfig.setWorkingDirectory(new File(FileUtils.encodeFileName(newHarvesterConfig
-                                .getName())).getAbsolutePath());
+                        newHarvesterConfig.setWorkingDirectory(Paths.get( cProvider.getInstancesPath().getAbsolutePath(), FileUtils.encodeFileName(newHarvesterConfig.getName()) ).toAbsolutePath().toString());
                     }
                     RecordCacheConfiguration rcc = new RecordCacheConfiguration();
                     rcc.setCachePath(new File(newHarvesterConfig.getWorkingDirectory(), "records").getAbsoluteFile());
@@ -165,6 +165,7 @@ public class ManageHarvesterController {
             }
             hConfigs.remove(delete.intValue());
             cProvider.write(conf);
+            FileUtils.deleteRecursive( Paths.get( hcnf.getWorkingDirectory()) );
         } else if (edit != null && edit >= 0 && edit < hConfigs.size()) {
             HarvesterConfiguration hConfig = hConfigs.get(edit);
             if (hConfig.getClassName().equals(IBusHarvester.class.getName())) {
