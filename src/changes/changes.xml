@@ -29,6 +29,12 @@
   </properties>
   <body>
   
+    <release version="4.2.0" date="2018-01-05" description="Release 4.2.0">
+      <action type="update" dev="wemove">
+        Improved docker integration.
+      </action>
+    </release>
+
     <release version="3.6.2.7" date="2017-01-10" description="Release 3.6.2.7">
       <action type="fix" dev="wemove" issue="REDMINE-465">
         Fixed wrong path to save data when using cygwin.
