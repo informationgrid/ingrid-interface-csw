@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -207,12 +207,12 @@ public class ServerFacade {
 
         } catch (Exception e) {
             try {
-                log.debug(e.getMessage(), e);
+                log.warn(e.getMessage(), e);
                 if (encodingImpl != null) {
                     encodingImpl.reportError(e);
                 }
             } catch (IOException ioe) {
-                log.error("Unable to send error message to client: " + ioe.getMessage());
+                log.error("Unable to send error message to client.", ioe);
             }
         }
     }

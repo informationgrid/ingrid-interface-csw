@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,6 +25,7 @@ package de.ingrid.interfaces.csw.admin;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -143,7 +144,7 @@ public class EditIBusHarvesterController {
             List<HarvesterConfiguration> hConfigs = cProvider.getConfiguration().getHarvesterConfigurations();
             HarvesterConfiguration hConfig = hConfigs.get(id);
             if (hConfig.getWorkingDirectory() == null) {
-                hConfig.setWorkingDirectory(new File(FileUtils.encodeFileName(hConfig.getName())).getAbsolutePath());
+                hConfig.setWorkingDirectory(Paths.get( cProvider.getInstancesPath().getAbsolutePath(), FileUtils.encodeFileName(hConfig.getName()) ).toAbsolutePath().toString() );
             }
             modelMap.addAttribute("id", id);
             if (hConfig.getClassName().equals(IBusHarvester.class.getName())) {

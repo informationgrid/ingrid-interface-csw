@@ -46,6 +46,16 @@
       <lineEnding>unix</lineEnding>
     </fileSet>
     <fileSet>
+      <directory>src/main/release/instances</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/instances</outputDirectory>
+      <lineEnding>unix</lineEnding>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/release/logs</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/logs</outputDirectory>
+      <lineEnding>unix</lineEnding>
+    </fileSet>
+    <fileSet>
       <directory>src/main/release/ant-installer</directory>
       <outputDirectory>/</outputDirectory>
       <filtered>true</filtered>

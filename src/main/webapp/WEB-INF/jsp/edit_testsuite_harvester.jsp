@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-interface-csw
   ==================================================
-  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -83,7 +83,7 @@
         <tr>
     		<td class="leftCol">Working directory</td>
     		<td>
-        	<form:input path="workingDirectory" />
+        	<form:input path="workingDirectory" disabled="true" />
         	<br>
         	<span>The name of the workingDirectory.</span>
         	<form:errors path="workingDirectory" cssClass="error" element="div" />

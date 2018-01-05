@@ -2,7 +2,7 @@
 # **************************************************-
 # ingrid-interface-csw
 # ==================================================
-# Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+# Copyright (C) 2014 - 2018 wemove digital solutions GmbH
 # ==================================================
 # Licensed under the EUPL, Version 1.1 or – as soon they will be
 # approved by the European Commission - subsequent versions of the
@@ -191,7 +191,11 @@ startIplug()
   
   CLASS=de.ingrid.interfaces.csw.admin.JettyStarter
   
-  exec nohup "$JAVA" $INGRID_OPTS $CLASS > console.log &
+  if [ "$RUN_DIRECTLY" ]; then
+    exec "$JAVA" $INGRID_OPTS $CLASS
+  else
+    exec nohup "$JAVA" $INGRID_OPTS $CLASS > console.log &
+  fi
   
   echo "jetty ($INGRID_HOME) started."
   echo $! > $PID
