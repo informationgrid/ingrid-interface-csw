@@ -19,9 +19,9 @@
     <!-- Repo of parent pom needed, parent pom may not be installed locally 
       yet -->
     <repository>
-      <id>de.ingrid.all</id>
-      <name>Maven Repo InGrid</name>
-      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
+      <id>nexus</id>
+      <name>Nexus Repo</name>
+      <url>https://nexus.informationgrid.eu/repository/maven-public</url>
     </repository>
     <repository>
       <id>geotoolkit</id>
