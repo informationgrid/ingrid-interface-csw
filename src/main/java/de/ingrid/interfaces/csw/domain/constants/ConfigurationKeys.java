@@ -33,6 +33,7 @@ public class ConfigurationKeys {
     /** ingrid-csw.properties **/
     public static final String RESPONSE_ENCODING = "responseEncoding";
     public static final String SERVER_PORT = "server.port";
+    public static final String SERVER_WEBAPP = "server.webapp";
     public static final String SERVER_INTERFACE_HOST = "server.interface.host";
     public static final String SERVER_INTERFACE_PORT = "server.interface.port";
     public static final String SERVER_INTERFACE_PATH = "server.interface.path";

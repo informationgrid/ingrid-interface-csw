@@ -52,23 +52,26 @@ import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
  */
 public class JettyStarter {
     private static final Log log = LogFactory.getLog(JettyStarter.class);
-    
+
     private static String DEFAULT_WEBAPP_DIR    = "webapp";
-    
+
     private static int    DEFAULT_JETTY_PORT    = 8082;
-    
+
 
     public static void main(String[] args) throws Exception {
-        if (!System.getProperties().containsKey("jetty.webapp"))
-            log.warn("Property 'jetty.webapp' not defined! Using default webapp directory, which is '"+DEFAULT_WEBAPP_DIR+"'.");
-        
         init();
     }
     
     private static void init() throws Exception {
-        WebAppContext webAppContext = new WebAppContext(System.getProperty("jetty.webapp", DEFAULT_WEBAPP_DIR), "/");
-        
-        Server server = new Server(Integer.getInteger("jetty.port", ApplicationProperties.getInteger(ConfigurationKeys.SERVER_PORT, DEFAULT_JETTY_PORT)));
+        String webappDir = ApplicationProperties.get(ConfigurationKeys.SERVER_WEBAPP, DEFAULT_WEBAPP_DIR);
+        WebAppContext webAppContext = new WebAppContext(webappDir, "/");
+        int port = Integer.getInteger("jetty.port", ApplicationProperties.getInteger(ConfigurationKeys.SERVER_PORT, DEFAULT_JETTY_PORT));
+
+        log.info("==================================================");
+        log.info("Start server using directory \"" + webappDir + "\" at port: " + port);
+        log.info("==================================================");
+
+        Server server = new Server(port);
         // fix slow startup time on virtual machine env.
         HashSessionIdManager hsim = new HashSessionIdManager();
         hsim.setRandom(new Random());
@@ -101,7 +104,7 @@ public class JettyStarter {
         try {
             userRealm.setConfig( ApplicationProperties.get( "realm.properties.path" ) );
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error getting properties", e);
         }
         csh.setUserRealm( userRealm  );
         

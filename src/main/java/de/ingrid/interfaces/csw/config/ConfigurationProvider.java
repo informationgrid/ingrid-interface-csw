@@ -93,7 +93,10 @@ public class ConfigurationProvider {
         if (configurationFilename == null) {
             // check if the ingrid home path is set and derive config file
             String ingridHome = System.getProperty(INGRID_HOME);
-            if (ingridHome != null) {
+            if (ingridHome == null) {
+                File f = new File("config.xml");
+                configurationFilename = f.getAbsolutePath();
+            } else {
                 File f = new File(ingridHome, "config.xml");
                 configurationFilename = f.getAbsolutePath();
             }
