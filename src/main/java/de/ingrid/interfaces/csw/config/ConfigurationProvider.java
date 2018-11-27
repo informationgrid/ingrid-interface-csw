@@ -95,6 +95,10 @@ public class ConfigurationProvider {
             String instanceDir = System.getProperty(INSTANCE_DIR);
             if (instanceDir != null) {
                 File f = new File(instanceDir, "config.xml");
+                if (f.getParentFile() != null && !f.getParentFile().exists()
+                        && !f.getParentFile().mkdirs()) {
+                    log.error("Unable to create directories for '" + this.configurationFile.getParentFile() + "'");
+                }
                 configurationFilename = f.getAbsolutePath();
             }
         }
