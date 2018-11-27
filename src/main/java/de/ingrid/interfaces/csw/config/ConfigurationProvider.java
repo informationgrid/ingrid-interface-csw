@@ -119,19 +119,19 @@ public class ConfigurationProvider {
     }
     
     public File getRecordCachePath() {
-        return new File(this.configurationFile.getParentFile(), "cache");
+        return new File(System.getProperty(INGRID_HOME), "cache");
     }
 
     public File getIndexPath() {
-        return new File(this.configurationFile.getParentFile(), "index");
+        return new File(System.getProperty(INGRID_HOME), "index");
     }
 
     public File getNewIndexPath() {
-        return new File(this.configurationFile.getParentFile(), "index_new");
+        return new File(System.getProperty(INGRID_HOME), "index_new");
     }
 
     public File getInstancesPath() {
-        return new File(this.configurationFile.getParentFile(), INSTANCE_DIR);
+        return new File(System.getProperty(INGRID_HOME), INSTANCE_DIR);
     }
     
     
@@ -143,7 +143,7 @@ public class ConfigurationProvider {
         	// since the src/main/resources path can be used
         	URL mapUrl = this.getClass().getResource("/" + this.getConfiguration().getMappingScript());
         	if (mapUrl == null)
-        		mappingScript = new File(new File(this.configurationFile.getParentFile(), "conf"), this.getConfiguration().getMappingScript());
+        		mappingScript = new File(new File(System.getProperty(INGRID_HOME), "conf"), this.getConfiguration().getMappingScript());
         	else
         		mappingScript = new File(mapUrl.getPath());
             if (!mappingScript.exists()) {
@@ -157,7 +157,7 @@ public class ConfigurationProvider {
     }
     
     public File getSchedulingPatternFile() {
-        return new File(this.configurationFile.getParentFile(), "scheduling.pattern");
+        return new File(System.getProperty(INGRID_HOME), "scheduling.pattern");
     }
     
     public File getConfigurationFile() {
