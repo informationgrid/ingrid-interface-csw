@@ -61,7 +61,7 @@ public class ConfigurationProvider {
     /**
      * The name of the system property that defines the configuration file
      */
-    private static final String CONFIGURATION_FILE_NAME_PROPERTY = "config";
+    public static final String CONFIGURATION_FILE_NAME_PROPERTY = "config";
 
     /**
      * The name of the system property that defines the ingrid home directory
@@ -69,7 +69,16 @@ public class ConfigurationProvider {
     private static final String INGRID_HOME = "ingrid_home";
 
 
+    /**
+     * This directory holds the reproducible data as index and transformed data
+     */
+    public static final String DATA_DIR = "data";
+
+    /**
+     * This directory holds the instance configuration and the instance data as the harvested data
+     */
     public static final String INSTANCE_DIR = "instances";
+
 
     /**
      * The XML configuration file
@@ -119,15 +128,15 @@ public class ConfigurationProvider {
     }
     
     public File getRecordCachePath() {
-        return new File(System.getProperty(INGRID_HOME), "cache");
+        return new File(System.getProperty(INGRID_HOME), DATA_DIR + File.separator + "cache");
     }
 
     public File getIndexPath() {
-        return new File(System.getProperty(INGRID_HOME), "index");
+        return new File(System.getProperty(INGRID_HOME), DATA_DIR + File.separator + "index");
     }
 
     public File getNewIndexPath() {
-        return new File(System.getProperty(INGRID_HOME), "index_new");
+        return new File(System.getProperty(INGRID_HOME), DATA_DIR + File.separator + "index_new");
     }
 
     public File getInstancesPath() {
@@ -157,7 +166,7 @@ public class ConfigurationProvider {
     }
     
     public File getSchedulingPatternFile() {
-        return new File(System.getProperty(INGRID_HOME), "scheduling.pattern");
+        return new File(System.getProperty(INGRID_HOME), INSTANCE_DIR + File.separator + "scheduling.pattern");
     }
     
     public File getConfigurationFile() {

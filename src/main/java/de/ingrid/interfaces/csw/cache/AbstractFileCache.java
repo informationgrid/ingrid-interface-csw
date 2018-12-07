@@ -104,7 +104,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 
 			// check if the original path exists and create it if not
 			if (!cacheLocation.exists()) {
-				cacheLocation.mkdir();
+				cacheLocation.mkdirs();
 			}
 			this.isInitialized = true;
 		}
@@ -231,7 +231,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 
 			// check if the cache path exists and create it if not
 			if (!newPath.exists()) {
-				newPath.mkdir();
+				newPath.mkdirs();
 			}
 			this.tmpPath = newPath;
 		}

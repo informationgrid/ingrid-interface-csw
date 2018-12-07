@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,6 +50,38 @@ public class Migration {
 
     public void migrate() throws IOException {
 
+        //check for legacy config files in application root, migrate to instances directory
+        Path legacyConfigPath = Paths.get( cProvider.getInstancesPath().getParentFile().getAbsolutePath(), "config.xml");
+        if (Files.exists( legacyConfigPath )) {
+            Files.createDirectories( cProvider.getInstancesPath().toPath() );
+            log.info( "Move legacy config.xml to instances directory." );
+            Files.move( legacyConfigPath, Paths.get( cProvider.getInstancesPath().getAbsolutePath(), "config.xml" ), StandardCopyOption.REPLACE_EXISTING);
+        }
+        
+        //check for legacy index directory, migrate to data directory
+        Path legacyIndexPath = Paths.get( cProvider.getInstancesPath().getParentFile().getAbsolutePath(), "index");
+        if (Files.exists( legacyIndexPath )) {
+            Files.createDirectories( cProvider.getIndexPath().getParentFile().toPath() );
+            log.info( "Move legacy index directory to data directory." );
+            Files.move( legacyIndexPath, cProvider.getIndexPath().toPath());
+        }
+
+        //check for legacy cache directory, migrate to data directory
+        Path legacyCachePath = Paths.get( cProvider.getInstancesPath().getParentFile().getAbsolutePath(), "cache");
+        if (Files.exists( legacyCachePath )) {
+            Files.createDirectories( cProvider.getRecordCachePath().getParentFile().toPath() );
+            log.info( "Move legacy cache directory to data directory." );
+            Files.move( legacyCachePath, cProvider.getRecordCachePath().toPath());
+        }
+
+        //check for legacy scheduling pattern file, migrate to data directory
+        Path legacySchedulingPattern = Paths.get( cProvider.getInstancesPath().getParent(), "scheduling.pattern" );
+        if (Files.exists( legacySchedulingPattern)) {
+            log.info( "Move legacy scheduling pattern file to instance directory." );
+            Files.move( legacySchedulingPattern, Paths.get( cProvider.getInstancesPath().getAbsolutePath(), "scheduling.pattern"));
+        }
+        
+        
         // check for instance directories in application root
         // move existing instance directories to instances directory
         Path instancesPath = Paths.get( cProvider.getInstancesPath().getAbsolutePath().toString() );
