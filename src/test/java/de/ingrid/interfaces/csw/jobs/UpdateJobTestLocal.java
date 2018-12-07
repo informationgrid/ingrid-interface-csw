@@ -44,7 +44,7 @@ import de.ingrid.interfaces.csw.tools.LuceneTools;
 /**
  * @author ingo@wemove.com
  */
-public class UpdateJobTest extends TestCase {
+public class UpdateJobTestLocal extends TestCase {
 
     private static final File CONFIGURATION_FILE_1 = new File("src/test/resources/config-updatejobtest-1iplug.xml");
     private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
@@ -168,7 +168,7 @@ public class UpdateJobTest extends TestCase {
         public Boolean call() {
             try {
                 System.out.println("Starting: " + this.name);
-                boolean result = UpdateJobTest.this.createJob(this.configFile).execute();
+                boolean result = UpdateJobTestLocal.this.createJob(this.configFile).execute();
                 System.out.println("Finished: " + this.name);
                 return result;
             } catch (Exception ex) {
