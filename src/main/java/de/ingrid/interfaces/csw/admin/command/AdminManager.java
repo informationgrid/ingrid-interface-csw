@@ -41,7 +41,7 @@ public class AdminManager {
         try (InputStream is = new FileInputStream( "conf/config.override.properties" )) {
             Properties props = new Properties();
             props.load( is );
-            String oldPassword = props.getProperty( "plugdescription.IPLUG_ADMIN_PASSWORD" );
+            String oldPassword = props.getProperty( "ingrid.admin.password" );
 
             writeEncryptedPasswordToProperties(oldPassword, props);
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class AdminManager {
     }
 
     private static void writeEncryptedPasswordToProperties(String newPassword, Properties props) throws IOException {
-        props.setProperty( "plugdescription.IPLUG_ADMIN_PASSWORD", BCrypt.hashpw(newPassword, BCrypt.gensalt()) );
+        props.setProperty( "ingrid.admin.password", BCrypt.hashpw(newPassword, BCrypt.gensalt()) );
 
         OutputStream os = new FileOutputStream( "conf/config.override.properties" );
         props.store( os, "Override configuration written by the application" );
