@@ -96,7 +96,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug</artifactId>
-      <version>3.6.2</version>
+      <version>5.0.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>commons-betwixt</groupId>
