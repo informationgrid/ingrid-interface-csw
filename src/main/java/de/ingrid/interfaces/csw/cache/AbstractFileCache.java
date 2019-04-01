@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -104,7 +104,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 
 			// check if the original path exists and create it if not
 			if (!cacheLocation.exists()) {
-				cacheLocation.mkdir();
+				cacheLocation.mkdirs();
 			}
 			this.isInitialized = true;
 		}
@@ -231,7 +231,7 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 
 			// check if the cache path exists and create it if not
 			if (!newPath.exists()) {
-				newPath.mkdir();
+				newPath.mkdirs();
 			}
 			this.tmpPath = newPath;
 		}

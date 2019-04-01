@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -61,7 +61,7 @@ public class ConfigurationProvider {
     /**
      * The name of the system property that defines the configuration file
      */
-    private static final String CONFIGURATION_FILE_NAME_PROPERTY = "config";
+    public static final String CONFIGURATION_FILE_NAME_PROPERTY = "config";
 
     /**
      * The name of the system property that defines the ingrid home directory
@@ -69,7 +69,16 @@ public class ConfigurationProvider {
     private static final String INGRID_HOME = "ingrid_home";
 
 
+    /**
+     * This directory holds the reproducible data as index and transformed data
+     */
+    public static final String DATA_DIR = "data";
+
+    /**
+     * This directory holds the instance configuration and the instance data as the harvested data
+     */
     public static final String INSTANCE_DIR = "instances";
+
 
     /**
      * The XML configuration file
@@ -92,19 +101,16 @@ public class ConfigurationProvider {
 
         if (configurationFilename == null) {
             // check if the ingrid home path is set and derive config file
-            String ingridHome = System.getProperty(INGRID_HOME);
-            if (ingridHome == null) {
-                File f = new File("config.xml");
-                configurationFilename = f.getAbsolutePath();
-            } else {
-                File f = new File(ingridHome, "config.xml");
-                configurationFilename = f.getAbsolutePath();
+            String instanceDir = new File (System.getProperty(INGRID_HOME), INSTANCE_DIR).getAbsolutePath();
+            File f = new File(instanceDir, "config.xml");
+            if (f.getParentFile() != null && !f.getParentFile().exists()
+                    && !f.getParentFile().mkdirs()) {
+                log.error("Unable to create directories for '" + instanceDir + "'");
             }
+            configurationFilename = f.getAbsolutePath();
         }
 
-        if (configurationFilename != null) {
-            this.configurationFile = new File(configurationFilename);
-        }
+        this.configurationFile = new File(configurationFilename);
 
     }
 
@@ -118,19 +124,19 @@ public class ConfigurationProvider {
     }
     
     public File getRecordCachePath() {
-        return new File(this.configurationFile.getParentFile(), "cache");
+        return new File(System.getProperty(INGRID_HOME), DATA_DIR + File.separator + "cache");
     }
 
     public File getIndexPath() {
-        return new File(this.configurationFile.getParentFile(), "index");
+        return new File(System.getProperty(INGRID_HOME), DATA_DIR + File.separator + "index");
     }
 
     public File getNewIndexPath() {
-        return new File(this.configurationFile.getParentFile(), "index_new");
+        return new File(System.getProperty(INGRID_HOME), DATA_DIR + File.separator + "index_new");
     }
 
     public File getInstancesPath() {
-        return new File(this.configurationFile.getParentFile(), INSTANCE_DIR);
+        return new File(System.getProperty(INGRID_HOME), INSTANCE_DIR);
     }
     
     
@@ -142,7 +148,7 @@ public class ConfigurationProvider {
         	// since the src/main/resources path can be used
         	URL mapUrl = this.getClass().getResource("/" + this.getConfiguration().getMappingScript());
         	if (mapUrl == null)
-        		mappingScript = new File(new File(this.configurationFile.getParentFile(), "conf"), this.getConfiguration().getMappingScript());
+        		mappingScript = new File(new File(System.getProperty(INGRID_HOME), "conf"), this.getConfiguration().getMappingScript());
         	else
         		mappingScript = new File(mapUrl.getPath());
             if (!mappingScript.exists()) {
@@ -156,7 +162,7 @@ public class ConfigurationProvider {
     }
     
     public File getSchedulingPatternFile() {
-        return new File(this.configurationFile.getParentFile(), "scheduling.pattern");
+        return new File(System.getProperty(INGRID_HOME), INSTANCE_DIR + File.separator + "scheduling.pattern");
     }
     
     public File getConfigurationFile() {
