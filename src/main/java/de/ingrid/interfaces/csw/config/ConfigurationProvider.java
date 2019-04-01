@@ -102,19 +102,15 @@ public class ConfigurationProvider {
         if (configurationFilename == null) {
             // check if the ingrid home path is set and derive config file
             String instanceDir = new File (System.getProperty(INGRID_HOME), INSTANCE_DIR).getAbsolutePath();
-            if (instanceDir != null) {
-                File f = new File(instanceDir, "config.xml");
-                if (f.getParentFile() != null && !f.getParentFile().exists()
-                        && !f.getParentFile().mkdirs()) {
-                    log.error("Unable to create directories for '" + this.configurationFile.getParentFile() + "'");
-                }
-                configurationFilename = f.getAbsolutePath();
+            File f = new File(instanceDir, "config.xml");
+            if (f.getParentFile() != null && !f.getParentFile().exists()
+                    && !f.getParentFile().mkdirs()) {
+                log.error("Unable to create directories for '" + instanceDir + "'");
             }
+            configurationFilename = f.getAbsolutePath();
         }
 
-        if (configurationFilename != null) {
-            this.configurationFile = new File(configurationFilename);
-        }
+        this.configurationFile = new File(configurationFilename);
 
     }
 
