@@ -9,3 +9,5 @@ conf/
 config.xml
 index/
 /bin/
+data/
+instances/
