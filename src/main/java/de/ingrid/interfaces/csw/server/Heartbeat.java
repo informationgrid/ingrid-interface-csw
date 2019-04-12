@@ -79,8 +79,15 @@ public class Heartbeat extends HeartBeatPlug {
         plugDescription.addToList(IngridQuery.RANKED, "ignore"); 
         PlugdescriptionSerializer pdSerializer = new PlugdescriptionSerializer();
         pdSerializer.serialize(plugDescription, pdFile);
-        BusClient busClient = BusClientFactory.createBusClient(new File("./conf/communication.xml"), this);
-        busClient.start();
+        File communicationFile = new File("./conf/communication.xml");
+
+        if (communicationFile.exists()) {
+            BusClient busClient = BusClientFactory.createBusClient(communicationFile, this);
+            busClient.start();
+        } else {
+            log.warn("Communication file does not exist. Please configure CSW-T Communication in Admin-GUI");
+        }
+
         configure( pdSerializer.deSerialize( pdFile ) );
     }
 

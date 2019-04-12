@@ -49,42 +49,45 @@ public class Migration {
     ConfigurationProvider cProvider = null;
 
     public void migrate() throws IOException {
+        Path instancesPathAbsolute = Paths.get(cProvider.getInstancesPath().getAbsolutePath());
 
         //check for legacy config files in application root, migrate to instances directory
-        Path legacyConfigPath = Paths.get( cProvider.getInstancesPath().getParentFile().getAbsolutePath(), "config.xml");
+        String parentInstancePath = instancesPathAbsolute.getParent().toString();
+        Path legacyConfigPath = Paths.get( parentInstancePath, "config.xml");
         if (Files.exists( legacyConfigPath )) {
             Files.createDirectories( cProvider.getInstancesPath().toPath() );
             log.info( "Move legacy config.xml to instances directory." );
             Files.move( legacyConfigPath, Paths.get( cProvider.getInstancesPath().getAbsolutePath(), "config.xml" ), StandardCopyOption.REPLACE_EXISTING);
         }
-        
+
         //check for legacy index directory, migrate to data directory
-        Path legacyIndexPath = Paths.get( cProvider.getInstancesPath().getParentFile().getAbsolutePath(), "index");
+        Path legacyIndexPath = Paths.get( parentInstancePath, "index");
         if (Files.exists( legacyIndexPath )) {
-            Files.createDirectories( cProvider.getIndexPath().getParentFile().toPath() );
+            Path parentIndexDir = Paths.get(cProvider.getIndexPath().getPath()).toAbsolutePath().getParent();
+            Files.createDirectories( parentIndexDir );
             log.info( "Move legacy index directory to data directory." );
             Files.move( legacyIndexPath, cProvider.getIndexPath().toPath());
         }
 
         //check for legacy cache directory, migrate to data directory
-        Path legacyCachePath = Paths.get( cProvider.getInstancesPath().getParentFile().getAbsolutePath(), "cache");
+        Path legacyCachePath = Paths.get( parentInstancePath, "cache");
         if (Files.exists( legacyCachePath )) {
-            Files.createDirectories( cProvider.getRecordCachePath().getParentFile().toPath() );
+            Path parentRecordCacheDir = Paths.get(cProvider.getIndexPath().getPath()).toAbsolutePath().getParent();
+            Files.createDirectories( parentRecordCacheDir );
             log.info( "Move legacy cache directory to data directory." );
             Files.move( legacyCachePath, cProvider.getRecordCachePath().toPath());
         }
 
         //check for legacy scheduling pattern file, migrate to data directory
-        Path legacySchedulingPattern = Paths.get( cProvider.getInstancesPath().getParent(), "scheduling.pattern" );
+        Path legacySchedulingPattern = Paths.get( instancesPathAbsolute.toString(), "scheduling.pattern" );
         if (Files.exists( legacySchedulingPattern)) {
             log.info( "Move legacy scheduling pattern file to instance directory." );
             Files.move( legacySchedulingPattern, Paths.get( cProvider.getInstancesPath().getAbsolutePath(), "scheduling.pattern"));
         }
-        
-        
+
+
         // check for instance directories in application root
         // move existing instance directories to instances directory
-        Path instancesPath = Paths.get( cProvider.getInstancesPath().getAbsolutePath().toString() );
         if (!Files.exists( cProvider.getInstancesPath().toPath() )) {
             log.info( "Create instances path." );
             Files.createDirectories( cProvider.getInstancesPath().toPath() );
@@ -93,12 +96,12 @@ public class Migration {
         Configuration conf = cProvider.reloadConfiguration();
         for (HarvesterConfiguration hc : conf.getHarvesterConfigurations()) {
             String wd = hc.getWorkingDirectory();
-            if (wd == null || wd.contains( instancesPath.toString() )) {
+            if (wd == null || wd.contains( instancesPathAbsolute.toString() )) {
                 continue;
             }
-            log.info( "Instance directory '" + wd + "' found outside instances directory '" + instancesPath + "'." );
+            log.info( "Instance directory '" + wd + "' found outside instances directory '" + instancesPathAbsolute + "'." );
             Path source = new File( wd ).toPath();
-            Path dest = Paths.get( instancesPath.toString(), FileUtils.encodeFileName( hc.getName() ) );
+            Path dest = Paths.get( instancesPathAbsolute.toString(), FileUtils.encodeFileName( hc.getName() ) );
             log.info( "Move '" + source + "' to '" + dest + "'." );
             Files.move( source, dest );
 

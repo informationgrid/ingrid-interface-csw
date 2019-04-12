@@ -22,54 +22,53 @@
  */
 package de.ingrid.interfaces.csw.admin.command;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Properties;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class AdminManager {
-    
+
+    private static Logger LOG = LogManager.getLogger(AdminManager.class);
+
     /**
      * Read the override configuration and convert the clear text password to a bcrypt-hash,
      * which is used and needed by the base-webapp v3.6.1 
      */
     private static void migratePassword() {
-        try {
-            InputStream is = new FileInputStream( "conf/config.properties" );
+        try (InputStream is = new FileInputStream( "conf/config.override.properties" )) {
             Properties props = new Properties();
             props.load( is );
             String oldPassword = props.getProperty( "ingrid.admin.password" );
-            is.close();
-            
-            props.setProperty( "ingrid.admin.password", BCrypt.hashpw(oldPassword, BCrypt.gensalt()) );
-            
-            OutputStream os = new FileOutputStream( "conf/config.override.properties" );
-            props.store( os, "Override configuration written by the application" );
-            os.close();
+
+            writeEncryptedPasswordToProperties(oldPassword, props);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error( "Could not migrate password", e );
         }
     }
-    
+
     /**
      * Read the override configuration and write a new bcrypt-hash password.
      */
     private static void resetPassword(String newPassword) {
-        try {
-            InputStream is = new FileInputStream( "conf/config.override.properties" );
+        try (InputStream is = new FileInputStream("conf/config.override.properties")) {
             Properties props = new Properties();
-            props.load( is );
-            props.setProperty( "ingrid.admin.password", BCrypt.hashpw(newPassword, BCrypt.gensalt()) );
-            
-            OutputStream os = new FileOutputStream( "conf/config.override.properties" );
-            props.store( os, "Override configuration written by the application" );
-            os.close();
+            props.load(is);
+
+            writeEncryptedPasswordToProperties(newPassword, props);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error( "Could not reset password", e );
         }
+    }
+
+    private static void writeEncryptedPasswordToProperties(String newPassword, Properties props) throws IOException {
+        props.setProperty( "ingrid.admin.password", BCrypt.hashpw(newPassword, BCrypt.gensalt()) );
+
+        OutputStream os = new FileOutputStream( "conf/config.override.properties" );
+        props.store( os, "Override configuration written by the application" );
+        os.close();
     }
 
     public static void main(String[] args) {
