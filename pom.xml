@@ -4,7 +4,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>5.0.0-SNAPSHOT</version>
+    <version>5.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
@@ -77,7 +77,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>5.0.0-SNAPSHOT</version>
+      <version>5.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -97,7 +97,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug</artifactId>
-      <version>5.0.0-SNAPSHOT</version>
+      <version>5.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-betwixt</groupId>
