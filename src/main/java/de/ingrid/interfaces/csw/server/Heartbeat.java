@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.config.CommunicationProvider;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.communication.Communication;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
@@ -55,7 +56,7 @@ public class Heartbeat extends HeartBeatPlug {
 	private static Log log = LogFactory.getLog(Heartbeat.class);
     
     private ConfigurationProvider confProvider;
-
+    
     @Autowired
     public Heartbeat(ConfigurationProvider cProvider) throws Exception {
         super( 60000, new PlugDescriptionFieldFilters( ), new DefaultMetadataInjector[0], new QueryExtensionPreProcessor[0], new StatisticPostProcessor[0] );
@@ -80,13 +81,14 @@ public class Heartbeat extends HeartBeatPlug {
         PlugdescriptionSerializer pdSerializer = new PlugdescriptionSerializer();
         pdSerializer.serialize(plugDescription, pdFile);
         File communicationFile = new File("./conf/communication.xml");
-
-        if (communicationFile.exists()) {
-            BusClient busClient = BusClientFactory.createBusClient(communicationFile, this);
-            busClient.start();
-        } else {
-            log.warn("Communication file does not exist. Please configure CSW-T Communication in Admin-GUI");
+        if (!communicationFile.exists()) {
+            CommunicationProvider communicationProvider = new CommunicationProvider();
+            communicationProvider.setConfigurationFile( communicationFile );
+            communicationProvider.write( cswtCommunication );
         }
+
+        BusClient busClient = BusClientFactory.createBusClient(communicationFile, this);
+        busClient.start();
 
         configure( pdSerializer.deSerialize( pdFile ) );
     }
