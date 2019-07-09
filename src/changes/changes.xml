@@ -29,6 +29,12 @@
   </properties>
   <body>
 
+    <release version="5.1.0" date="2019-07-09" description="Release InGrid 5.1.0">
+      <action type="add" dev="wemove">
+        Create communication.xml if not exists.
+      </action>
+    </release>
+
     <release version="5.0.0" date="2019-04-12" description="Release 5.0.0">
       <action type="update" dev="wemove" issue="1196">
         Update libraries to fix security issues and adapt to log4j2.
