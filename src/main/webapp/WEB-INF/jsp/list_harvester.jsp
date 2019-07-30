@@ -25,7 +25,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <%@page import="de.ingrid.interfaces.csw.admin.IngridPrincipal"%>
-<%@page import="de.ingrid.interfaces.csw.index.StatusProvider"%>
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>InGrid Administration</title>

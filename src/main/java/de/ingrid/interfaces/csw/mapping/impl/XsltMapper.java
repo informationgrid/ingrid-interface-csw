@@ -40,12 +40,12 @@ import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
-import de.ingrid.interfaces.csw.index.StatusProvider;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
 import de.ingrid.interfaces.csw.mapping.IPreCommitHandler;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
 import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.statusprovider.StatusProviderService;
 import de.ingrid.utils.tool.XsltUtils;
 
 /**
@@ -65,7 +65,7 @@ public class XsltMapper implements CSWRecordMapper {
 	private ConfigurationProvider configurationProvider;
 
 	@Autowired
-	private StatusProvider statusProvider;
+	private StatusProviderService statusProviderService;
 
 	/**
 	 * Used for xslt
@@ -104,7 +104,7 @@ public class XsltMapper implements CSWRecordMapper {
 
 			for (RecordCache recordCache : recordCacheList) {
 				for (Serializable cacheId : recordCache.getCachedIds()) {
-					this.statusProvider.addState("iso-mapper", "Mapping records to ISO ... [" + idx + "/" + total
+					this.statusProviderService.getDefaultStatusProvider().addState("iso-mapper", "Mapping records to ISO ... [" + idx + "/" + total
 					        + "].");
 					idx++;
 
@@ -162,13 +162,13 @@ public class XsltMapper implements CSWRecordMapper {
 	}
 
 	/**
-	 * Set the status provider.
-	 * 
-	 * @param statusProvider
-	 */
-	public void setStatusProvider(StatusProvider statusProvider) {
-		this.statusProvider = statusProvider;
-	}
+     * Set the status providerService.
+     *
+     * @param statusProviderService
+     */
+    public void setStatusProviderService(StatusProviderService statusProviderService) {
+        this.statusProviderService = statusProviderService;
+    }
 
 	/**
 	 * Map the given record to iso19139 FULL, based in an IDF record.

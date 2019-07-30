@@ -24,6 +24,8 @@ package de.ingrid.interfaces.csw.index;
 
 import org.eclipse.jdt.internal.core.Assert;
 import org.junit.Test;
+import de.ingrid.utils.statusprovider.StatusProvider;
+
 
 public class StatusProviderTest {
 

@@ -34,7 +34,7 @@ import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
 import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
-import de.ingrid.interfaces.csw.index.StatusProvider;
+import de.ingrid.utils.statusprovider.StatusProvider;
 
 /**
  * @author ingo@wemove.com

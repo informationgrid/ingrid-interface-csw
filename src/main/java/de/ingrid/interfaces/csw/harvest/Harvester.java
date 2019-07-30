@@ -29,7 +29,7 @@ import java.util.Date;
 
 import de.ingrid.interfaces.csw.Monitorable;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
-import de.ingrid.interfaces.csw.index.StatusProvider;
+import de.ingrid.utils.statusprovider.StatusProvider;
 
 /**
  * Harvester defines the interface for document harvesting implementations.

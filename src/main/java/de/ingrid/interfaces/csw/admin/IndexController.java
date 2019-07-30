@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import de.ingrid.interfaces.csw.index.StatusProvider;
+import de.ingrid.utils.statusprovider.StatusProviderService;
 
 @Controller
 public class IndexController {
@@ -48,7 +48,7 @@ public class IndexController {
     }
 
     @Autowired
-    private StatusProvider statusProvider;
+    private StatusProviderService statusProviderService;
 
     @ModelAttribute("isScheduled")
     public Boolean injectState() {
@@ -77,7 +77,7 @@ public class IndexController {
     @RequestMapping(value = TEMPLATE_INDEX_STATE_URI, method = RequestMethod.GET)
     public @ResponseBody
     StatusResponse getIndexState(ModelMap model) {
-        return new StatusResponse(_scheduler.isRunning(), statusProvider.toString());
+        return new StatusResponse(_scheduler.isRunning(), statusProviderService.getDefaultStatusProvider().toString());
     }
 
     private class StatusResponse {
