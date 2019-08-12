@@ -25,29 +25,8 @@
  */
 package de.ingrid.interfaces.csw.domain.encoding.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
-import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
-import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
-import de.ingrid.interfaces.csw.domain.constants.Namespace;
-import de.ingrid.interfaces.csw.domain.constants.Operation;
-import de.ingrid.interfaces.csw.domain.constants.ResultType;
-import de.ingrid.interfaces.csw.domain.constants.TypeName;
+import de.ingrid.interfaces.csw.domain.constants.*;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWInvalidParameterValueException;
@@ -59,6 +38,20 @@ import de.ingrid.interfaces.csw.tools.OGCFilterTools;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * XMLEncoding deals with messages defined in the XML format.
@@ -347,7 +340,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     this.query.setStartPosition(startPosition);
 
                     // extract the sort part
-                    Node sort = this.xpath.getNode(requestNode, "/csw:GetRecords/csw:Query/csw:SortBy");
+                    Node sort = this.xpath.getNode(requestNode, "/csw:GetRecords/csw:Query/ogc:SortBy");
 
                     if (sort != null) {
                         this.query.setSortBy(extractFromDocument(sort));

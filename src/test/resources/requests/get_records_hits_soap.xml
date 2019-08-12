@@ -3,15 +3,15 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<soapenv:Body>
 		<GetRecords outputFormat="text/xml" requestId="csw:1"
-			resultType="hits" xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
+			resultType="hits" xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc" service="CSW" version="2.0.2">
 			<Query typeNames="csw:dataset">
 				<Constraint version="1.1.0">
-					<Filter xmlns="http://www.opengis.net/ogc">
-						<PropertyIsEqualTo>
-							<PropertyName>Title</PropertyName>
-							<Literal>Wasser</Literal>
-						</PropertyIsEqualTo>
-					</Filter>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>Title</ogc:PropertyName>
+							<ogc:Literal>Wasser</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
 				</Constraint>
 			</Query>
 		</GetRecords>

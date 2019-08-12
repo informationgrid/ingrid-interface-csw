@@ -5,19 +5,19 @@
 	<soapenv:Body>
 		<GetRecords maxRecords="4" outputFormat="text/xml" outputSchema="csw:profile"
 			requestId="csw:1" resultType="results" startPosition="1"
-			xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
+			xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc" service="CSW" version="2.0.2">
 			<Query typeNames="csw:dataset">
 				<ElementSetName typeNames="">brief</ElementSetName>
 				<Constraint version="1.1.0"> 
-					<Filter xmlns="http://www.opengis.net/ogc">
-					</Filter>
+					<ogc:Filter>
+					</ogc:Filter>
 				</Constraint>
-				<SortBy>
-					<SortProperty>
-						<PropertyName>Identifier</PropertyName>
-						<SortOrder>ASC</SortOrder>
-					</SortProperty>
-				</SortBy>
+				<ogc:SortBy>
+					<ogc:SortProperty>
+						<ogc:PropertyName>Identifier</ogc:PropertyName>
+						<ogc:SortOrder>ASC</ogc:SortOrder>
+					</ogc:SortProperty>
+				</ogc:SortBy>
 			</Query>
 		</GetRecords>
 	</soapenv:Body>

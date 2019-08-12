@@ -4,23 +4,23 @@
 	<soapenv:Body>
 		<GetRecord maxRecords="10" outputFormat="text/xml"
 			outputSchema="csw:profile" requestId="csw:1" resultType="results" startPosition="1"
-			xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
+			xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc" service="CSW" version="2.0.2">
 			<Query typeNames="csw:dataset">
 				<ElementSetName typeNames="">brief</ElementSetName>
 				<Constraint version="1.1.0">
-					<Filter xmlns="http://www.opengis.net/ogc">
-						<Or>
-							<PropertyIsLike escape="!" singleChar="#"
+					<ogc:Filter>
+						<ogc:Or>
+							<ogc:PropertyIsLike escape="!" singleChar="#"
 								wildCard="*">
-								<PropertyName>Abstract</PropertyName>
-								<Literal>arte*</Literal>
-							</PropertyIsLike>
-							<PropertyIsEqualTo>
-								<PropertyName>Title</PropertyName>
-								<Literal>Test</Literal>
-							</PropertyIsEqualTo>
-						</Or>
-					</Filter>
+								<ogc:PropertyName>Abstract</ogc:PropertyName>
+								<ogc:Literal>arte*</ogc:Literal>
+							</ogc:PropertyIsLike>
+							<ogc:PropertyIsEqualTo>
+								<ogc:PropertyName>Title</ogc:PropertyName>
+								<ogc:Literal>Test</ogc:Literal>
+							</ogc:PropertyIsEqualTo>
+						</ogc:Or>
+					</ogc:Filter>
 				</Constraint>
 			</Query>
 		</GetRecord>
