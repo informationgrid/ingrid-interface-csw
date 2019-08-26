@@ -30,6 +30,9 @@
   <body>
 
     <release version="5.2.0-SNAPSHOT" date="2019-xx-xx" description="Release InGrid 5.2.0">
+      <action type="add" dev="wemove" issue="1219">
+          Fix problem not showing anchor tags in csw interface response.
+      </action>
       <action type="add" dev="wemove" issue="1444">
           Fix sortby feature.
       </action>
