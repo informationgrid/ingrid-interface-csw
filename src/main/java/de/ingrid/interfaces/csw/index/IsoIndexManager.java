@@ -50,6 +50,8 @@ import de.ingrid.interfaces.csw.mapping.IPreCommitHandler;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.search.Searcher;
 import de.ingrid.interfaces.csw.tools.FileUtils;
+import de.ingrid.utils.statusprovider.StatusProviderService;
+import de.ingrid.utils.statusprovider.StatusProvider;
 
 /**
  * Provides a single interface to all index / ISO cache related functionality.
@@ -76,8 +78,7 @@ public class IsoIndexManager implements IPreCommitHandler {
     private Searcher searcher;
 
     @Autowired
-    private StatusProvider statusProvider;
-
+    private StatusProviderService statusProviderService;
     /**
      * The CSWRecordMapper instance
      */
@@ -92,7 +93,7 @@ public class IsoIndexManager implements IPreCommitHandler {
         try {
             this.indexer.run(recordCacheList);
         } catch( Exception ex) {
-            this.statusProvider.addState( "error-index", "Could not index documents! Please check the logs. Old index will be used meanwhile.", StatusProvider.Classification.ERROR );
+            this.statusProviderService.getDefaultStatusProvider().addState( "error-index", "Could not index documents! Please check the logs. Old index will be used meanwhile.", StatusProvider.Classification.ERROR );
             return;
         }
         int recordCount = 0;
@@ -104,27 +105,27 @@ public class IsoIndexManager implements IPreCommitHandler {
         this.cswRecordMapper.run(recordCacheList);
         CSWRecordRepository cswRecordRepo = this.cswRecordMapper.getRecordRepository();
         log.info("Stop the searcher instance.");
-        this.statusProvider.addState("reload-index", "Reload index...");
+        this.statusProviderService.getDefaultStatusProvider().addState("reload-index", "Reload index...");
         this.stopSearcher();
         this.activateNewIndex();
         this.searcher.setRecordRepository(cswRecordRepo);
         log.info("Start the searcher instance.");
         this.startSearcher();
-        this.statusProvider.addState("reload-index", "Reload index.");
+        this.statusProviderService.getDefaultStatusProvider().addState("reload-index", "Reload index.");
 
         // remove records marked for removal
         if (this.toBeDeleted != null && this.toBeDeleted.size() > 0) {
-            this.statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting...");
+            this.statusProviderService.getDefaultStatusProvider().addState("remove-deferred", "Remove records marked as deleted during harvesting...");
             this.wipe(this.toBeDeleted);
-            this.statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting.");
+            this.statusProviderService.getDefaultStatusProvider().addState("remove-deferred", "Remove records marked as deleted during harvesting.");
         }
         if (this.toBeDeletedQueries != null && this.toBeDeletedQueries.size() > 0) {
-            this.statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting...");
+            this.statusProviderService.getDefaultStatusProvider().addState("remove-deferred", "Remove records marked as deleted during harvesting...");
             this.wipeByQuery(this.toBeDeletedQueries);
             synchronized (this) {
                 this.toBeDeletedQueries.clear();
             }
-            this.statusProvider.addState("remove-deferred", "Remove records marked as deleted during harvesting.");
+            this.statusProviderService.getDefaultStatusProvider().addState("remove-deferred", "Remove records marked as deleted during harvesting.");
         }
 
     }
@@ -269,8 +270,8 @@ public class IsoIndexManager implements IPreCommitHandler {
         this.searcher = searcher;
     }
 
-    public void setStatusProvider(StatusProvider statusProvider) {
-        this.statusProvider = statusProvider;
+    public void setStatusProviderService(StatusProviderService statusProviderService) {
+        this.statusProviderService = statusProviderService;
     }
 
     public void setCswRecordMapper(CSWRecordMapper cswRecordMapper) {
@@ -279,7 +280,7 @@ public class IsoIndexManager implements IPreCommitHandler {
     @Override
     public void beforeCommit(DocumentCache<?> cache) throws Exception {
         log.info("Stop the searcher instance.");
-        statusProvider.addState("reload-index", "Reload index...");
+        statusProviderService.getDefaultStatusProvider().addState("reload-index", "Reload index...");
         stopSearcher();
     }
 

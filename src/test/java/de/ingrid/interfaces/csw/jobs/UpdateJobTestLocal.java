@@ -33,7 +33,7 @@ import java.util.concurrent.FutureTask;
 import junit.framework.TestCase;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.index.IsoIndexManager;
-import de.ingrid.interfaces.csw.index.StatusProvider;
+import de.ingrid.utils.statusprovider.StatusProviderService;
 import de.ingrid.interfaces.csw.index.impl.LuceneIndexer;
 import de.ingrid.interfaces.csw.index.impl.ScriptedIDFRecordLuceneMapper;
 import de.ingrid.interfaces.csw.mapping.impl.CSWRecordCache;
@@ -98,14 +98,14 @@ public class UpdateJobTestLocal extends TestCase {
      */
     private UpdateJob createJob(File configFile) {
         ConfigurationProvider configProvider = new ConfigurationProvider();
-        StatusProvider statusProvider = new StatusProvider();
+        StatusProviderService statusProviderService = new StatusProviderService();
         LuceneTools luceneTools = new LuceneTools();
 
         configProvider.setConfigurationFile(configFile);
 
         UpdateJob job = new UpdateJob();
         job.setConfigurationProvider(configProvider);
-        job.setStatusProvider(statusProvider);
+        job.setStatusProviderService(statusProviderService);
 
         // set up indexer
         ScriptedIDFRecordLuceneMapper recordMapper = new ScriptedIDFRecordLuceneMapper();
@@ -116,11 +116,11 @@ public class UpdateJobTestLocal extends TestCase {
         tmpIndexPath.mkdirs();
         indexer.setIndexConfigPath(tmpIndexPath);
         indexer.setMapper(recordMapper);
-        indexer.setStatusProvider(statusProvider);
+        indexer.setStatusProviderService(statusProviderService);
         indexer.setLuceneTools(luceneTools);
 
         IsoIndexManager luceneManager = new IsoIndexManager();
-        luceneManager.setStatusProvider(statusProvider);
+        luceneManager.setStatusProviderService(statusProviderService);
 
         // set up mapper
         CSWRecordCache cache = new CSWRecordCache();
@@ -129,7 +129,7 @@ public class UpdateJobTestLocal extends TestCase {
         cache.setCachePath(cswCachePath);
         XsltMapper mapper = new XsltMapper();
         mapper.setCache(cache);
-        mapper.setStatusProvider(statusProvider);
+        mapper.setStatusProviderService(statusProviderService);
 
         // set up searcher
         LuceneSearcher searcher = new LuceneSearcher();
@@ -143,7 +143,7 @@ public class UpdateJobTestLocal extends TestCase {
         luceneManager.setSearcher(searcher);
 
         job.setIndexManager(luceneManager);
-        job.setStatusProvider(statusProvider);
+        job.setStatusProviderService(statusProviderService);
 
         return job;
     }

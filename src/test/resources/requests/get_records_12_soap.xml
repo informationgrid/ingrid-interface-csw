@@ -6,16 +6,12 @@
 		<GetRecords maxRecords="4" outputFormat="text/xml" outputSchema="csw:profile"
 			requestId="csw:1" resultType="results" startPosition="1"
 			xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc" service="CSW" version="2.0.2">
-			<Query typeNames="csw:dataset">
+			<Query typeNames="csw:service,csw:dataset">
 				<ElementSetName typeNames="">brief</ElementSetName>
-				<Constraint version="1.1.0"> 
-					<ogc:Filter>
-					</ogc:Filter>
-				</Constraint>
 				<ogc:SortBy>
 					<ogc:SortProperty>
-						<ogc:PropertyName>Identifier</ogc:PropertyName>
-						<ogc:SortOrder>ASC</ogc:SortOrder>
+						<ogc:PropertyName>title</ogc:PropertyName>
+						<ogc:SortOrder>DESC</ogc:SortOrder>
 					</ogc:SortProperty>
 				</ogc:SortBy>
 			</Query>

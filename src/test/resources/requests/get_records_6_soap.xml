@@ -5,29 +5,29 @@
 	<soapenv:Body>
 		<GetRecords maxRecords="10" outputFormat="text/xml" outputSchema="csw:profile"
 			requestId="csw:1" resultType="results" startPosition="1"
-			xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
+			xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc"  service="CSW" version="2.0.2">
 			<Query typeNames="csw:dataset">
 				<ElementSetName typeNames="">brief</ElementSetName>
 				<!-- kraken ort:darmstadt NOT (saale) -->
 				<Constraint version="1.1.0">
-					<Filter xmlns="http://www.opengis.net/ogc">
-						<And>
-							<PropertyIsEqualTo>
-								<PropertyName>AnyText</PropertyName>
-								<Literal>kraken</Literal>
-							</PropertyIsEqualTo>
-							<PropertyIsEqualTo>
-								<PropertyName>GeographicDescriptionCode</PropertyName>
-								<Literal>darmstadt</Literal>
-							</PropertyIsEqualTo>
-							<Not>
-								<PropertyIsLike escape="!" singleChar="#" wildCard="*">
-									<PropertyName>AnyText</PropertyName>
-									<Literal>saale</Literal>
-								</PropertyIsLike>
-							</Not>
-						</And>
-					</Filter>
+					<ogc:Filter>
+						<ogc:And>
+							<ogc:PropertyIsEqualTo>
+								<ogc:PropertyName>AnyText</ogc:PropertyName>
+								<ogc:Literal>kraken</ogc:Literal>
+							</ogc:PropertyIsEqualTo>
+							<ogc:PropertyIsEqualTo>
+								<ogc:PropertyName>GeographicDescriptionCode</ogc:PropertyName>
+								<ogc:Literal>darmstadt</ogc:Literal>
+							</ogc:PropertyIsEqualTo>
+							<ogc:Not>
+								<ogc:PropertyIsLike escape="!" singleChar="#" wildCard="*">
+									<ogc:PropertyName>AnyText</ogc:PropertyName>
+									<ogc:Literal>saale</ogc:Literal>
+								</ogc:PropertyIsLike>
+							</ogc:Not>
+						</ogc:And>
+					</ogc:Filter>
 				</Constraint>
 			</Query>
 		</GetRecords>

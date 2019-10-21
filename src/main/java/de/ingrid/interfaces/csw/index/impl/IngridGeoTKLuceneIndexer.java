@@ -56,7 +56,7 @@ import org.geotoolkit.lucene.index.AbstractIndexer;
 
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
-import de.ingrid.interfaces.csw.index.StatusProvider;
+import de.ingrid.utils.statusprovider.StatusProvider;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.dsc.Record;
 

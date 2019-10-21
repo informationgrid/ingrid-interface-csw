@@ -25,26 +25,8 @@
  */
 package de.ingrid.interfaces.csw.domain.encoding.impl;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.w3c.dom.Document;
-
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
-import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
-import de.ingrid.interfaces.csw.domain.constants.ConstraintLanguage;
-import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
-import de.ingrid.interfaces.csw.domain.constants.Namespace;
-import de.ingrid.interfaces.csw.domain.constants.Operation;
-import de.ingrid.interfaces.csw.domain.constants.ResultType;
-import de.ingrid.interfaces.csw.domain.constants.TypeName;
+import de.ingrid.interfaces.csw.domain.constants.*;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWInvalidParameterValueException;
@@ -54,6 +36,11 @@ import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
 import de.ingrid.interfaces.csw.tools.OGCFilterTools;
 import de.ingrid.interfaces.csw.tools.StringUtils;
+import org.w3c.dom.Document;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 
 /**
@@ -89,12 +76,12 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
     private static final String CONSTRAINT_LANGUAGE_VERSION_VALUE = "1.1.0";
 
     /** Supported operations **/
-    private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
+    private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(
             Operation.GET_CAPABILITIES,
             Operation.DESCRIBE_RECORD,
             Operation.GET_RECORDS,
             Operation.GET_RECORD_BY_ID
-    }));
+    ));
 
     @Override
     public void initialize(HttpServletRequest request, HttpServletResponse response) {
@@ -128,7 +115,7 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     SERVICE_PARAM);
         } else {
             if (!serviceParam.equals("CSW")) {
-                StringBuffer errorMsg = new StringBuffer();
+                StringBuilder errorMsg = new StringBuilder();
                 errorMsg.append("Parameter '"+SERVICE_PARAM+"' has an unsupported value.\n");
                 errorMsg.append("Supported values: CSW\n");
                 throw new CSWInvalidParameterValueException(errorMsg.toString(), SERVICE_PARAM);
@@ -210,7 +197,7 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
                 else if (operation == Operation.GET_RECORDS) {
 
                     // extract the filter constraint
-                    if (this.requestParams.containsKey(CONSTRAINT_PARAM)) {
+                    if (this.requestParams.containsKey(CONSTRAINT_PARAM) && !this.requestParams.get(CONSTRAINT_PARAM).isEmpty()) {
                         Document constraint = StringUtils.stringToDocument(this.requestParams.get(CONSTRAINT_PARAM));
 
                         // add query additional parameters from configuration
@@ -219,7 +206,7 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         for (String queryConstraint : queryConstraints) {
                             if (queryConstraint.trim().length() > 0) {
                                 String param = this.requestParams.get(queryConstraint);
-                                if (param != null && param.length() >= 0) {
+                                if (param != null && param.length() > 0) {
                                     OGCFilterTools.addPropertyIsEqual(constraint, queryConstraint, param);
                                 }
 
@@ -258,15 +245,15 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
                     // extract the maxRecords
                     if (this.requestParams.containsKey(MAXRECORDS_PARAM)) {
-                        Integer maxRecords = Integer.MAX_VALUE;
+                        int maxRecords = Integer.MAX_VALUE;
                         String maxRecordsStr = this.requestParams.get(MAXRECORDS_PARAM);
                         if (maxRecordsStr != null) {
-                            maxRecords = Integer.valueOf(maxRecordsStr);
+                            maxRecords = Integer.parseInt(maxRecordsStr);
                         }
                         maxRecords = Math.min(maxRecords, ApplicationProperties.getInteger(
                                 ConfigurationKeys.MAX_RETURNED_HITS, Integer.MAX_VALUE));
                         if (maxRecords <0) {
-                            StringBuffer errorMsg = new StringBuffer();
+                            StringBuilder errorMsg = new StringBuilder();
                             errorMsg.append("Parameter 'maxRecords' has an unsupported value.\n");
                             errorMsg.append("Supported values: positive integer\n");
                             throw new CSWInvalidParameterValueException(errorMsg.toString(), "maxRecords");
@@ -276,13 +263,13 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
                     // extract the startPosition
                     if (this.requestParams.containsKey(STARTPOSITION_PARAM)) {
-                        Integer startPosition = 1;
+                        int startPosition = 1;
                         String startPositionStr = this.requestParams.get(STARTPOSITION_PARAM);
                         if (startPositionStr != null) {
-                            startPosition = Integer.valueOf(startPositionStr);
+                            startPosition = Integer.parseInt(startPositionStr);
                         }
                         if (startPosition <=0) {
-                            StringBuffer errorMsg = new StringBuffer();
+                            StringBuilder errorMsg = new StringBuilder();
                             errorMsg.append("Parameter 'startPosition' has an unsupported value.\n");
                             errorMsg.append("Supported values: positive integer\n");
                             throw new CSWInvalidParameterValueException(errorMsg.toString(), "startPosition");
@@ -292,7 +279,43 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
                     // extract the sort part
                     if (this.requestParams.containsKey(SORTBY_PARAM)) {
-                        Document sort = StringUtils.stringToDocument(this.requestParams.get(SORTBY_PARAM));
+                        String sortParam = this.requestParams.get(SORTBY_PARAM);
+                        String[] sortParamArray= sortParam.split(",");
+                        if ((sortParamArray.length % 2) != 0) {
+                            StringBuffer errorMsg = new StringBuffer();
+                            errorMsg.append("Parameter '" + SORTBY_PARAM + "' has an unsupported value.\n");
+                            errorMsg.append("Supported values: comma separated list of field name and 'A' or 'D' as sort order\n");
+                            throw new CSWInvalidParameterValueException(errorMsg.toString(), SORTBY_PARAM);
+                        }
+
+                        String propertyName = null;
+                        String sortOrder = null;
+                        StringBuffer sortXmlStr = new StringBuffer();
+                        for (int i=0; i< sortParamArray.length; i++) {
+                            if (sortXmlStr.length() == 0) {
+                                sortXmlStr.append("<SortBy xmlns=\"http://www.opengis.net/ogc\">");
+                            }
+                            if (i % 2 == 0) {
+                                propertyName = sortParamArray[i].trim().toLowerCase();
+                            } else {
+                                sortOrder = sortParamArray[i].trim().toLowerCase();
+                                if (!sortOrder.equals("a") && !sortOrder.equals("d")) {
+                                    StringBuffer errorMsg = new StringBuffer();
+                                    errorMsg.append("Parameter '" + SORTBY_PARAM + "' has an unsupported value.\n");
+                                    errorMsg.append("Supported values: comma separated list of field name and 'A' or 'D' as sort order\n");
+                                    throw new CSWInvalidParameterValueException(errorMsg.toString(), SORTBY_PARAM);
+                                }
+                                sortXmlStr.append("<SortProperty>");
+                                sortXmlStr.append("<PropertyName>" + propertyName + "</PropertyName>");
+                                sortXmlStr.append("<SortOrder>" + (sortOrder.equals("a") ? "ASC" : "DESC" )+ "</SortOrder>");
+                                sortXmlStr.append("</SortProperty>");
+                            }
+                        }
+                        if (sortXmlStr.length() > 0) {
+                            sortXmlStr.append("</SortBy>");
+                        }
+
+                        Document sort = StringUtils.stringToDocument(sortXmlStr.toString());
                         if (sort != null) {
                             this.query.setSortBy(sort);
                         }

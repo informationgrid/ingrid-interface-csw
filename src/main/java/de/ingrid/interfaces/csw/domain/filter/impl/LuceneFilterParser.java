@@ -25,12 +25,16 @@
  */
 package de.ingrid.interfaces.csw.domain.filter.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
-
+import com.vividsolutions.jts.geom.Geometry;
+import de.ingrid.interfaces.csw.cache.AbstractFileCache;
+import de.ingrid.interfaces.csw.domain.exceptions.CSWFilterException;
+import de.ingrid.interfaces.csw.domain.filter.FilterParser;
+import de.ingrid.interfaces.csw.domain.filter.queryable.Date;
+import de.ingrid.interfaces.csw.domain.filter.queryable.Queryable;
+import de.ingrid.interfaces.csw.domain.filter.queryable.QueryableType;
+import de.ingrid.interfaces.csw.domain.query.CSWQuery;
+import de.ingrid.utils.xml.Csw202NamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.search.Filter;
@@ -49,21 +53,7 @@ import org.geotoolkit.gml.xml.v311.PointType;
 import org.geotoolkit.lucene.filter.LuceneOGCFilter;
 import org.geotoolkit.lucene.filter.SerialChainFilter;
 import org.geotoolkit.lucene.filter.SpatialQuery;
-import org.geotoolkit.ogc.xml.v110.AbstractIdType;
-import org.geotoolkit.ogc.xml.v110.BBOXType;
-import org.geotoolkit.ogc.xml.v110.BinaryComparisonOpType;
-import org.geotoolkit.ogc.xml.v110.BinaryLogicOpType;
-import org.geotoolkit.ogc.xml.v110.BinarySpatialOpType;
-import org.geotoolkit.ogc.xml.v110.ComparisonOpsType;
-import org.geotoolkit.ogc.xml.v110.DistanceBufferType;
-import org.geotoolkit.ogc.xml.v110.FilterType;
-import org.geotoolkit.ogc.xml.v110.LogicOpsType;
-import org.geotoolkit.ogc.xml.v110.PropertyIsBetweenType;
-import org.geotoolkit.ogc.xml.v110.PropertyIsLikeType;
-import org.geotoolkit.ogc.xml.v110.PropertyIsNullType;
-import org.geotoolkit.ogc.xml.v110.PropertyNameType;
-import org.geotoolkit.ogc.xml.v110.SpatialOpsType;
-import org.geotoolkit.ogc.xml.v110.UnaryLogicOpType;
+import org.geotoolkit.ogc.xml.v110.*;
 import org.geotoolkit.xml.MarshallerPool;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
@@ -73,17 +63,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.vividsolutions.jts.geom.Geometry;
-
-import de.ingrid.interfaces.csw.cache.AbstractFileCache;
-import de.ingrid.interfaces.csw.domain.exceptions.CSWFilterException;
-import de.ingrid.interfaces.csw.domain.filter.FilterParser;
-import de.ingrid.interfaces.csw.domain.filter.queryable.Date;
-import de.ingrid.interfaces.csw.domain.filter.queryable.Queryable;
-import de.ingrid.interfaces.csw.domain.filter.queryable.QueryableType;
-import de.ingrid.interfaces.csw.domain.query.CSWQuery;
-import de.ingrid.utils.xml.Csw202NamespaceContext;
-import de.ingrid.utils.xpath.XPathUtils;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A FilterParser that creates a Lucene query from an ogc filter document.
@@ -122,45 +105,47 @@ public class LuceneFilterParser implements FilterParser {
             this.filterUnmarshaller = marshallerPool.acquireUnmarshaller();
         }
 
-        if (filterDoc == null) {
-            return new SpatialQuery(defaultField);
-        }
-
-        JAXBElement<FilterType> filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
-        FilterType filter = filterEl.getValue();
-
         SpatialQuery query = null;
-        if (filter != null) {
-            Filter nullFilter = null;
-            // process logical operators like AND, OR, ...
-            if (filter.getLogicOps() != null) {
-                query = this.processLogicalOperator(filter.getLogicOps());
-            }
-            // process comparison operators: PropertyIsLike, IsNull, IsBetween,
-            // ...
-            else if (filter.getComparisonOps() != null) {
-                query = new SpatialQuery(this.processComparisonOperator(filter.getComparisonOps()), nullFilter,
-                        SerialChainFilter.AND);
-            }
-            // process spatial constraint : BBOX, Beyond, Overlaps, ...
-            else if (filter.getSpatialOps() != null) {
-                query = new SpatialQuery("", this.processSpatialOperator(filter.getSpatialOps()), SerialChainFilter.AND);
-            }
-            // process id
-            else if (filter.getId() != null) {
-                query = new SpatialQuery(this.processIDOperator(filter.getId()), nullFilter, SerialChainFilter.AND);
+
+        if (filterDoc == null) {
+            query =  new SpatialQuery(defaultField);
+        } else {
+            JAXBElement<FilterType> filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
+            FilterType filter = filterEl.getValue();
+
+            query = null;
+            if (filter != null) {
+                Filter nullFilter = null;
+                // process logical operators like AND, OR, ...
+                if (filter.getLogicOps() != null) {
+                    query = this.processLogicalOperator(filter.getLogicOps());
+                }
+                // process comparison operators: PropertyIsLike, IsNull, IsBetween,
+                // ...
+                else if (filter.getComparisonOps() != null) {
+                    query = new SpatialQuery(this.processComparisonOperator(filter.getComparisonOps()), nullFilter,
+                            SerialChainFilter.AND);
+                }
+                // process spatial constraint : BBOX, Beyond, Overlaps, ...
+                else if (filter.getSpatialOps() != null) {
+                    query = new SpatialQuery("", this.processSpatialOperator(filter.getSpatialOps()), SerialChainFilter.AND);
+                }
+                // process id
+                else if (filter.getId() != null) {
+                    query = new SpatialQuery(this.processIDOperator(filter.getId()), nullFilter, SerialChainFilter.AND);
+                }
             }
         }
 
         Document sortBy = cswQuery.getSort();
         if (sortBy != null) {
-            NodeList sortProperties = this.xpath.getNodeList(sortBy, "//csw:SortProperty");
+            NodeList sortProperties = this.xpath.getNodeList(sortBy, "//ogc:SortProperty");
             if (sortProperties != null && sortProperties.getLength() > 0) {
                 List<SortField> sortFields = new ArrayList<SortField>();
                 for (int i = 0; i < sortProperties.getLength(); i++) {
                     Node sortProperty = sortProperties.item(i);
-                    String propertyName = this.xpath.getString(sortProperty, "//csw:PropertyName");
-                    String sortOrder = this.xpath.getString(sortProperty, "//csw:SortOrder");
+                    String propertyName = this.xpath.getString(sortProperty, "//ogc:PropertyName");
+                    String sortOrder = this.xpath.getString(sortProperty, "//ogc:SortOrder");
                     if (sortOrder == null) {
                         sortOrder = "ASC";
                     }

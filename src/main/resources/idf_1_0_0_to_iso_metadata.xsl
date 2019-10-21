@@ -23,11 +23,13 @@
   -->
 
 <xsl:stylesheet version="2.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:idf="http://www.portalu.de/IDF/1.0"
-	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco"
-	xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv"
-	exclude-result-prefixes="idf xsi">
+				xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:idf="http://www.portalu.de/IDF/1.0"
+				xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco"
+				xmlns:gmx="http://www.isotc211.org/2005/gmx"
+				xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv"
+				xmlns:xlink="http://www.w3.org/1999/xlink"
+				exclude-result-prefixes="idf xsi">
 	<xsl:output method="xml" />
 	<xsl:strip-space elements="*" />
 
@@ -46,18 +48,18 @@
 			<xsl:value-of select="."/>
 		</xsl:attribute>
 	</xsl:template>
-    <!-- keep schema location in MD_Metadata, see INGRID-2306 -->
-    <xsl:template match="@xsi:schemaLocation[parent::idf:idfMdMetadata]">
-        <xsl:attribute name="xsi:schemaLocation">
-            <xsl:value-of select="."/>
-        </xsl:attribute>
-    </xsl:template>
+	<!-- keep schema location in MD_Metadata, see INGRID-2306 -->
+	<xsl:template match="@xsi:schemaLocation[parent::idf:idfMdMetadata]">
+		<xsl:attribute name="xsi:schemaLocation">
+			<xsl:value-of select="."/>
+		</xsl:attribute>
+	</xsl:template>
 
 	<xsl:template
-		match="@*|*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml' or namespace-uri() = 'http://www.isotc211.org/2005/gts' or namespace-uri() = 'http://www.isotc211.org/2005/srv') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
+			match="@*|*[(namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml' or namespace-uri() = 'http://www.isotc211.org/2005/gmx' or namespace-uri() = 'http://www.isotc211.org/2005/gts' or namespace-uri() = 'http://www.isotc211.org/2005/srv') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
 		<xsl:element name="{name(.)}" namespace="{namespace-uri(.)}">
 			<xsl:copy-of
-				select="namespace::*[name(.)!='idf' and name(.)!='srv' and name(.)!='ms' and name(.)!='csw' and name(.)!='xlink' and name(.)!='xsi' and name(.)!='xs' and name(.)!='']" />
+					select="namespace::*[name(.)!='idf' and name(.)!='srv' and name(.)!='ms' and name(.)!='csw' and name(.)!='xlink' and name(.)!='xsi' and name(.)!='xs' and name(.)!='']" />
 			<xsl:copy-of select="@*" />
 			<xsl:apply-templates />
 		</xsl:element>
@@ -82,20 +84,20 @@
 	<xsl:template match="idf:attachedToField" />
 	<!-- filter shared and common attributes -->
 	<xsl:template match="@orig-uuid" />
-    <!-- filter idf:abstract -->
-    <xsl:template match="idf:abstract" />
+	<!-- filter idf:abstract -->
+	<xsl:template match="idf:abstract" />
 
-    <!-- filter idf:keyword and transform them to gmd:keyword -->
-    <xsl:template match="idf:keyword">
-      <gco:CharacterString>
-        <xsl:apply-templates select="node()" />
-      </gco:CharacterString>
-    </xsl:template>
-    
+	<!-- filter idf:keyword and transform them to gmd:keyword -->
+	<xsl:template match="idf:keyword">
+		<gco:CharacterString>
+			<xsl:apply-templates select="node()" />
+		</gco:CharacterString>
+	</xsl:template>
+
 	<!--
-	Trim Text nodes 
+	Trim Text nodes
 	-->
- 	<xsl:template match='text()'>
+	<xsl:template match='text()'>
 		<xsl:call-template name="trim">
 			<xsl:with-param name="s" select="." />
 		</xsl:call-template>
@@ -116,12 +118,12 @@
 			<xsl:value-of select="."/>
 		</xsl:attribute>
 	</xsl:template>
-	
+
 	<xsl:template match="idf:idfOnlineResource">
 		<gmd:CI_OnlineResource>
 			<xsl:apply-templates select="@*|node()" />
 		</gmd:CI_OnlineResource>
-	</xsl:template>   
+	</xsl:template>
 	<xsl:template match="@uuid[parent::idf:idfOnlineResource]">
 		<xsl:attribute name="uuid">
 			<xsl:value-of select="."/>
@@ -132,12 +134,12 @@
 			<xsl:value-of select="."/>
 		</xsl:attribute>
 	</xsl:template>
-	
+
 	<xsl:template match="idf:idfLegalBasisConstraints">
 		<gmd:MD_LegalConstraints>
 			<xsl:apply-templates select="@*|node()" />
 		</gmd:MD_LegalConstraints>
-	</xsl:template>   
+	</xsl:template>
 	<xsl:template match="@uuid[parent::idf:idfLegalBasisConstraints]">
 		<xsl:attribute name="uuid">
 			<xsl:value-of select="."/>
@@ -177,7 +179,7 @@
 			<xsl:when test="normalize-space(substring($s, string-length($s))) = ''">
 				<xsl:call-template name="right-trim">
 					<xsl:with-param name="s"
-						select="substring($s, 1, string-length($s) - 1)" />
+									select="substring($s, 1, string-length($s) - 1)" />
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:otherwise>

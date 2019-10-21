@@ -37,7 +37,7 @@ import org.apache.commons.logging.LogFactory;
 
 import de.ingrid.interfaces.csw.Status;
 import de.ingrid.interfaces.csw.harvest.Harvester;
-import de.ingrid.interfaces.csw.index.StatusProvider;
+import de.ingrid.utils.statusprovider.StatusProvider;
 
 /**
  * Default Harvester implementation.
