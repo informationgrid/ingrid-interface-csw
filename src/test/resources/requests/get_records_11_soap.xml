@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<GetRecords maxRecords="4" outputFormat="text/xml" outputSchema="csw:profile"
+			requestId="csw:1" resultType="results" startPosition="1"
+			xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc" service="CSW" version="2.0.2">
+			<Query typeNames="csw:service,csw:dataset">
+				<ElementSetName typeNames="">brief</ElementSetName>
+				<ogc:SortBy>
+					<ogc:SortProperty>
+						<ogc:PropertyName>title</ogc:PropertyName>
+						<ogc:SortOrder>ASC</ogc:SortOrder>
+					</ogc:SortProperty>
+				</ogc:SortBy>
+			</Query>
+		</GetRecords>
+	</soapenv:Body>
+</soapenv:Envelope>
