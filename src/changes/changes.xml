@@ -29,7 +29,7 @@
   </properties>
   <body>
 
-    <release version="5.2.0-SNAPSHOT" date="2019-xx-xx" description="Release InGrid 5.2.0">
+    <release version="5.2.0" date="2019-10-21" description="Release InGrid 5.2.0">
       <action type="add" dev="wemove" issue="1219">
           Fix problem not showing anchor tags in csw interface response.
       </action>
