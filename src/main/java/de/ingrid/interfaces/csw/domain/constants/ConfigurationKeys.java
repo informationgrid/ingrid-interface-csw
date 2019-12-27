@@ -48,6 +48,7 @@ public class ConfigurationKeys {
     public static final String QUERY_PARAMETER_2_CAPABILITIES_VARIANT = "query.parameter.to.capabilities.variant";
     public static final String HARVESTER_IBUS_DATATYPES_ALLOW = "harvester.ibus.datatypes.allow";
     public static final String HARVESTER_IBUS_DATATYPES_DENY = "harvester.ibus.datatypes.deny";
+    public static final String IDF_2_FULL_PROCESSING_XSLT = "idf.to.full.processing.xslt";
     /**
      * Total timeout in ms for folder operations delete and move. This is
      * necessary on windows, because on some systems the index file resources

@@ -28,6 +28,8 @@ package de.ingrid.interfaces.csw.mapping.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +84,6 @@ public class XsltMapper implements CSWRecordMapper {
 	/**
 	 * The xslt style sheet for csw iso19139
 	 */
-	private static final String xslFull = "idf_1_0_0_to_iso_metadata.xsl";
 	private static final String xslSummary = "iso-summary.xsl";
 	private static final String xslBrief = "iso-brief.xsl";
 
@@ -179,7 +180,7 @@ public class XsltMapper implements CSWRecordMapper {
 	 */
 	public Node mapFull(Record record) throws Exception {
 		Document idfDoc = IdfUtils.getIdfDocument(record);
-		return this.xslt.transform(idfDoc, xslFull);
+		return this.xslt.transform(idfDoc, ApplicationProperties.get(ConfigurationKeys.IDF_2_FULL_PROCESSING_XSLT, "idf_1_0_0_to_iso_metadata.xsl"));
 	}
 
 	/**

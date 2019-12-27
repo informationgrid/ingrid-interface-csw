@@ -144,4 +144,10 @@ public class ApplicationProperties {
         }
         return get(propertyName);
     }
+
+    public static void setProperty(String name, String value) {
+        initialize();
+        properties.setProperty(name, value);
+    }
+
 }
