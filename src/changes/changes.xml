@@ -29,6 +29,18 @@
   </properties>
   <body>
 
+    <release version="5.3.0" date="2020-01-13" description="Release InGrid 5.3.0">
+      <action type="add" dev="wemove" issue="1554">
+          Change codelist namespace to http://standards.iso.org/iso/19139/resources/gmxCodelists.xml
+      </action>
+      <action type="add" dev="wemove" issue="1531">
+          Special csw interface transformation for partner hamburg
+      </action>
+      <action type="fix" dev="wemove">
+          Fix security issues by dependency updates
+      </action>
+    </release>
+
     <release version="5.2.0" date="2019-10-21" description="Release InGrid 5.2.0">
       <action type="add" dev="wemove" issue="1219">
           Fix problem not showing anchor tags in csw interface response.

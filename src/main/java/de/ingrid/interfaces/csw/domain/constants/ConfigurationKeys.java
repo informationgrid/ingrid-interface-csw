@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -48,6 +48,7 @@ public class ConfigurationKeys {
     public static final String QUERY_PARAMETER_2_CAPABILITIES_VARIANT = "query.parameter.to.capabilities.variant";
     public static final String HARVESTER_IBUS_DATATYPES_ALLOW = "harvester.ibus.datatypes.allow";
     public static final String HARVESTER_IBUS_DATATYPES_DENY = "harvester.ibus.datatypes.deny";
+    public static final String IDF_2_FULL_PROCESSING_XSLT = "idf.to.full.processing.xslt";
     /**
      * Total timeout in ms for folder operations delete and move. This is
      * necessary on windows, because on some systems the index file resources

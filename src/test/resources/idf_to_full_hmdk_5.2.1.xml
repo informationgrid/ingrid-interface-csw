@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idf:html xmlns:idf="http://www.portalu.de/IDF/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          idf-version="3.6.1" xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd">
+    <idf:head/>
+    <idf:body>
+        <idf:idfMdMetadata xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                           xmlns:gml="http://www.opengis.net/gml" xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                           xmlns:xlink="http://www.w3.org/1999/xlink"
+                           xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+            <gmd:fileIdentifier>
+                <gco:CharacterString>069E1872-5EF3-475E-B426-CD86F23CA61C</gco:CharacterString>
+            </gmd:fileIdentifier>
+            <gmd:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger">ger
+                </gmd:LanguageCode>
+            </gmd:language>
+            <gmd:characterSet>
+                <gmd:MD_CharacterSetCode
+                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+                        codeListValue="utf8"/>
+            </gmd:characterSet>
+            <gmd:parentIdentifier>
+                <gco:CharacterString>F9FF7B30-1F47-44BC-B0CC-208FA3AEE343</gco:CharacterString>
+            </gmd:parentIdentifier>
+            <gmd:hierarchyLevel>
+                <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                                  codeListValue="dataset">dataset
+                </gmd:MD_ScopeCode>
+            </gmd:hierarchyLevel>
+            <gmd:contact>
+                <idf:idfResponsibleParty type="100" uuid="F587BA4E-E916-464C-A3EC-ACA8BE369079">
+                    <gmd:organisationName>
+                        <gco:CharacterString>Landesbetrieb Geoinformation und Vermessung (LGV) Hamburg
+                        </gco:CharacterString>
+                    </gmd:organisationName>
+                    <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    <gmd:electronicMailAddress>
+                                        <gco:CharacterString>Info@gv.hamburg.de</gco:CharacterString>
+                                    </gmd:electronicMailAddress>
+                                </gmd:CI_Address>
+                            </gmd:address>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                    <gmd:role>
+                        <gmd:CI_RoleCode
+                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                codeListValue="pointOfContact"/>
+                    </gmd:role>
+                </idf:idfResponsibleParty>
+            </gmd:contact>
+            <gmd:dateStamp>
+                <gco:Date>2019-12-17</gco:Date>
+            </gmd:dateStamp>
+            <gmd:metadataStandardName>
+                <gco:CharacterString>ISO19115</gco:CharacterString>
+            </gmd:metadataStandardName>
+            <gmd:metadataStandardVersion>
+                <gco:CharacterString>2003/Cor.1:2006</gco:CharacterString>
+            </gmd:metadataStandardVersion>
+            <gmd:referenceSystemInfo>
+                <gmd:MD_ReferenceSystem>
+                    <gmd:referenceSystemIdentifier>
+                        <gmd:RS_Identifier>
+                            <gmd:code>
+                                <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/25832">EPSG 25832: ETRS89 / UTM Zone 32N</gmx:Anchor>
+                            </gmd:code>
+                        </gmd:RS_Identifier>
+                    </gmd:referenceSystemIdentifier>
+                </gmd:MD_ReferenceSystem>
+            </gmd:referenceSystemInfo>
+            <gmd:referenceSystemInfo>
+                <gmd:MD_ReferenceSystem>
+                    <gmd:referenceSystemIdentifier>
+                        <gmd:RS_Identifier>
+                            <gmd:code>
+                                <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/4258">EPSG 4258: ETRS89 / geographisch</gmx:Anchor>
+                            </gmd:code>
+                        </gmd:RS_Identifier>
+                    </gmd:referenceSystemIdentifier>
+                </gmd:MD_ReferenceSystem>
+            </gmd:referenceSystemInfo>
+            <gmd:identificationInfo>
+                <gmd:MD_DataIdentification
+                        uuid="https://registry.gdi-de.org/id/de.hh/7f36e1c5-0679-4346-b00f-24d57e10dd46">
+                    <gmd:citation>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>INSPIRE HH Geografische Bezeichnungen</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:alternateTitle>
+                                <gco:CharacterString>INSPIRE HH AI 3 GN</gco:CharacterString>
+                            </gmd:alternateTitle>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:DateTime>2017-11-20T00:00:00.000+01:00</gco:DateTime>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode
+                                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                codeListValue="publication"/>
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gco:CharacterString>
+                                            https://registry.gdi-de.org/id/de.hh/7f36e1c5-0679-4346-b00f-24d57e10dd46
+                                        </gco:CharacterString>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:citation>
+                    <gmd:abstract>
+                        <gco:CharacterString>Dieser Datensatz stellt die geografischen Bezeichnungen von Hamburg im
+                            INSPIRE-Zielmodell dar.
+                        </gco:CharacterString>
+                    </gmd:abstract>
+                    <gmd:pointOfContact>
+                        <idf:idfResponsibleParty type="0" uuid="F5A1078F-25C2-4111-B497-877CDCACD9D5">
+                            <gmd:organisationName>
+                                <gco:CharacterString>Landesbetrieb Geoinformation und Vermessung (LGV) Hamburg
+                                </gco:CharacterString>
+                            </gmd:organisationName>
+                            <gmd:positionName>
+                                <gco:CharacterString>Der Landesbetrieb Geoinformation und Vermessung führt im
+                                    Liegenschaftskataster (LiKa), das zugleich amtliches Verzeichnis des Grundbuches
+                                    ist, die Beschreibung und maßstabsgetreue Abbildung der Grundstücke und Gebäude. Es
+                                    stellt geodätische Bezugssysteme der Lage, Höhe und Schwere bereit, führt
+                                    Grundstücks-/bautechnische Lage- und Höhenvermessungen aus und erteilt
+                                    Auskünfte/Auszüge/Bescheinigungen über grundstücksbezogene Sachverhalte. Darüber
+                                    hinaus werden digitale geographische Basisdaten und analoge Stadt-, Verwaltungs- und
+                                    Themakarten in unterschiedlichen Maßstäben sowie Luftbilder für Kunden vorgehalten.
+
+                                    Anfahrt mit der Bahn:
+                                    bis HH-Hauptbahnhof, dann mit der S-Bahn S3 / S31 (Richtung Harburg / Neugraben /
+                                    Buxtehude / Stade) bis Bf. Wilhelmsburg
+
+                                    Auskünfte, Auszüge, Bescheinigungen, Karten- und Luftbildvertrieb
+                                    Neuenfelder Straße 19, 21109 Hamburg
+                                    Öffnungszeiten
+                                    Montag bis Freitag: 8 - 13 Uhr
+                                    Donnerstag: 8 - 16 Uhr
+                                </gco:CharacterString>
+                            </gmd:positionName>
+                            <gmd:contactInfo>
+                                <gmd:CI_Contact>
+                                    <gmd:phone>
+                                        <gmd:CI_Telephone>
+                                            <gmd:voice>
+                                                <gco:CharacterString>+49 40 4 28 28 - 0</gco:CharacterString>
+                                            </gmd:voice>
+                                            <gmd:facsimile>
+                                                <gco:CharacterString>+49 40 4 27 31 - 04 07</gco:CharacterString>
+                                            </gmd:facsimile>
+                                        </gmd:CI_Telephone>
+                                    </gmd:phone>
+                                    <gmd:address>
+                                        <gmd:CI_Address>
+                                            <gmd:deliveryPoint>
+                                                <gco:CharacterString>Neuenfelder Straße 19</gco:CharacterString>
+                                            </gmd:deliveryPoint>
+                                            <gmd:city>
+                                                <gco:CharacterString>Hamburg</gco:CharacterString>
+                                            </gmd:city>
+                                            <gmd:administrativeArea>
+                                                <gco:CharacterString>Hamburg</gco:CharacterString>
+                                            </gmd:administrativeArea>
+                                            <gmd:postalCode>
+                                                <gco:CharacterString>D-21109</gco:CharacterString>
+                                            </gmd:postalCode>
+                                            <gmd:country>
+                                                <gco:CharacterString>DEU</gco:CharacterString>
+                                            </gmd:country>
+                                            <gmd:electronicMailAddress>
+                                                <gco:CharacterString>Info@gv.hamburg.de</gco:CharacterString>
+                                            </gmd:electronicMailAddress>
+                                        </gmd:CI_Address>
+                                    </gmd:address>
+                                    <gmd:onlineResource>
+                                        <gmd:CI_OnlineResource>
+                                            <gmd:linkage>
+                                                <gmd:URL>http://www.geoinfo.hamburg.de</gmd:URL>
+                                            </gmd:linkage>
+                                        </gmd:CI_OnlineResource>
+                                    </gmd:onlineResource>
+                                </gmd:CI_Contact>
+                            </gmd:contactInfo>
+                            <gmd:role>
+                                <gmd:CI_RoleCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                        codeListValue="publisher"/>
+                            </gmd:role>
+                            <idf:hierarchyParty uuid="F5A1078F-25C2-4111-B497-877CDCACD9D5">
+                                <idf:addressOrganisationName>Landesbetrieb Geoinformation und Vermessung (LGV) Hamburg
+                                </idf:addressOrganisationName>
+                                <idf:addressType>0</idf:addressType>
+                            </idf:hierarchyParty>
+                        </idf:idfResponsibleParty>
+                    </gmd:pointOfContact>
+                    <gmd:pointOfContact>
+                        <idf:idfResponsibleParty type="2" uuid="D096E79C-AD6D-447A-BD9C-1BBBCF6153A3">
+                            <gmd:individualName>
+                                <gco:CharacterString>Kohnen, Iris, Frau</gco:CharacterString>
+                            </gmd:individualName>
+                            <gmd:organisationName>
+                                <gco:CharacterString>Landesbetrieb Geoinformation und Vermessung (LGV) Hamburg,
+                                    Geschäftsbereich Geokompetenzzentrum
+                                </gco:CharacterString>
+                            </gmd:organisationName>
+                            <gmd:contactInfo>
+                                <gmd:CI_Contact>
+                                    <gmd:phone>
+                                        <gmd:CI_Telephone>
+                                            <gmd:voice>
+                                                <gco:CharacterString>+49 40 4 28 26 - 5644</gco:CharacterString>
+                                            </gmd:voice>
+                                        </gmd:CI_Telephone>
+                                    </gmd:phone>
+                                    <gmd:address>
+                                        <gmd:CI_Address>
+                                            <gmd:deliveryPoint>
+                                                <gco:CharacterString>Neuenfelder Straße 19</gco:CharacterString>
+                                            </gmd:deliveryPoint>
+                                            <gmd:city>
+                                                <gco:CharacterString>Hamburg</gco:CharacterString>
+                                            </gmd:city>
+                                            <gmd:administrativeArea>
+                                                <gco:CharacterString>Hamburg</gco:CharacterString>
+                                            </gmd:administrativeArea>
+                                            <gmd:postalCode>
+                                                <gco:CharacterString>D-21109</gco:CharacterString>
+                                            </gmd:postalCode>
+                                            <gmd:country>
+                                                <gco:CharacterString>DEU</gco:CharacterString>
+                                            </gmd:country>
+                                            <gmd:electronicMailAddress>
+                                                <gco:CharacterString>Info@gv.hamburg.de</gco:CharacterString>
+                                            </gmd:electronicMailAddress>
+                                        </gmd:CI_Address>
+                                    </gmd:address>
+                                </gmd:CI_Contact>
+                            </gmd:contactInfo>
+                            <gmd:role>
+                                <gmd:CI_RoleCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                        codeListValue="pointOfContact"/>
+                            </gmd:role>
+                            <idf:hierarchyParty uuid="D096E79C-AD6D-447A-BD9C-1BBBCF6153A3">
+                                <idf:addressIndividualName>Kohnen, Iris, Frau</idf:addressIndividualName>
+                                <idf:addressType>2</idf:addressType>
+                            </idf:hierarchyParty>
+                            <idf:hierarchyParty uuid="6DD6F05E-1F21-11D3-8C95-0060086D3699">
+                                <idf:addressOrganisationName>Geschäftsbereich Geokompetenzzentrum
+                                </idf:addressOrganisationName>
+                                <idf:addressType>1</idf:addressType>
+                            </idf:hierarchyParty>
+                            <idf:hierarchyParty uuid="F5A1078F-25C2-4111-B497-877CDCACD9D5">
+                                <idf:addressOrganisationName>Landesbetrieb Geoinformation und Vermessung (LGV) Hamburg
+                                </idf:addressOrganisationName>
+                                <idf:addressType>0</idf:addressType>
+                            </idf:hierarchyParty>
+                        </idf:idfResponsibleParty>
+                    </gmd:pointOfContact>
+                    <gmd:resourceMaintenance>
+                        <gmd:MD_MaintenanceInformation>
+                            <gmd:maintenanceAndUpdateFrequency>
+                                <gmd:MD_MaintenanceFrequencyCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+                                        codeListValue="biannually"/>
+                            </gmd:maintenanceAndUpdateFrequency>
+                            <gmd:updateScope>
+                                <gmd:MD_ScopeCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                                        codeListValue="dataset"/>
+                            </gmd:updateScope>
+                        </gmd:MD_MaintenanceInformation>
+                    </gmd:resourceMaintenance>
+                    <gmd:graphicOverview>
+                        <gmd:MD_BrowseGraphic>
+                            <gmd:fileName>
+                                <gco:CharacterString>https://geodienste.hamburg.de/HH_WMS_INSPIRE_GN?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetMap&amp;FORMAT=image/png&amp;BBOX=562394,5932816,564194,5934216&amp;WIDTH=800&amp;HEIGHT=600&amp;STYLES=&amp;CRS=EPSG:25832&amp;LAYERS=GN.GeographicalNames</gco:CharacterString>
+                            </gmd:fileName>
+                        </gmd:MD_BrowseGraphic>
+                    </gmd:graphicOverview>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>hmbtg_09_geodaten</gco:CharacterString>
+                            </gmd:keyword>
+                            <gmd:type>
+                                <gmd:MD_KeywordTypeCode
+                                        codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode"
+                                        codeListValue="theme"/>
+                            </gmd:type>
+                            <gmd:thesaurusName>
+                                <gmd:CI_Citation>
+                                    <gmd:title>
+                                        <gco:CharacterString>HmbTG-Informationsgegenstand</gco:CharacterString>
+                                    </gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>2013-08-02</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode
+                                                        codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode"
+                                                        codeListValue="publication"/>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                </gmd:CI_Citation>
+                            </gmd:thesaurusName>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>Geodaten</gco:CharacterString>
+                            </gmd:keyword>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>hmbtg</gco:CharacterString>
+                            </gmd:keyword>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>Geografische Bezeichnungen</gco:CharacterString>
+                            </gmd:keyword>
+                            <gmd:type>
+                                <gmd:MD_KeywordTypeCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                        codeListValue="theme"/>
+                            </gmd:type>
+                            <gmd:thesaurusName>
+                                <gmd:CI_Citation>
+                                    <gmd:title>
+                                        <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                                    </gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>2008-06-01</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode
+                                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                        codeListValue="publication"/>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                </gmd:CI_Citation>
+                            </gmd:thesaurusName>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>Geoinformation</gco:CharacterString>
+                            </gmd:keyword>
+                            <gmd:keyword>
+                                <gco:CharacterString>Raumbezogene Information</gco:CharacterString>
+                            </gmd:keyword>
+                            <gmd:type>
+                                <gmd:MD_KeywordTypeCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                        codeListValue="theme"/>
+                            </gmd:type>
+                            <gmd:thesaurusName>
+                                <gmd:CI_Citation>
+                                    <gmd:title>
+                                        <gco:CharacterString>UMTHES Thesaurus</gco:CharacterString>
+                                    </gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>2009-01-15</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode
+                                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                        codeListValue="publication"/>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                </gmd:CI_Citation>
+                            </gmd:thesaurusName>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>Benannter</gco:CharacterString>
+                            </gmd:keyword>
+                            <gmd:keyword>
+                                <gco:CharacterString>Ort</gco:CharacterString>
+                            </gmd:keyword>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>inspireidentifiziert</gco:CharacterString>
+                            </gmd:keyword>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>opendata</gco:CharacterString>
+                            </gmd:keyword>
+                            <gmd:keyword>
+                                <gco:CharacterString>#opendata_hh#</gco:CharacterString>
+                            </gmd:keyword>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>Geographie, Geologie und Geobasisdaten</gco:CharacterString>
+                            </gmd:keyword>
+                            <gmd:type>
+                                <gmd:MD_KeywordTypeCode
+                                        codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode"
+                                        codeListValue="theme"/>
+                            </gmd:type>
+                            <gmd:thesaurusName>
+                                <gmd:CI_Citation>
+                                    <gmd:title>
+                                        <gco:CharacterString>OGDD-Kategorien</gco:CharacterString>
+                                    </gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>2012-11-27</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode
+                                                        codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode"
+                                                        codeListValue="publication"/>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                </gmd:CI_Citation>
+                            </gmd:thesaurusName>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            <gmd:useConstraints>
+                                <gmd:MD_RestrictionCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                        codeListValue="otherRestrictions"/>
+                            </gmd:useConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>Datenlizenz Deutschland Namensnennung 2.0</gco:CharacterString>
+                            </gmd:otherConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>Quellenvermerk: Freie und Hansestadt Hamburg, Landesbetrieb Geoinformation und Vermessung</gco:CharacterString>
+                            </gmd:otherConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>{"id":"dl-by-de/2.0","name":"Datenlizenz Deutschland Namensnennung 2.0","url":"https://www.govdata.de/dl-de/by-2-0","quelle":"Freie und Hansestadt Hamburg, Landesbetrieb Geoinformation und Vermessung"}</gco:CharacterString>
+                            </gmd:otherConstraints>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            <gmd:accessConstraints>
+                                <gmd:MD_RestrictionCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                        codeListValue="otherRestrictions">otherRestrictions
+                                </gmd:MD_RestrictionCode>
+                            </gmd:accessConstraints>
+                            <gmd:otherConstraints>
+                                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">Es gelten keine Zugriffsbeschränkungen</gmx:Anchor>
+                            </gmd:otherConstraints>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+                    <gmd:resourceConstraints>
+                        <idf:idfLegalBasisConstraints>
+                            <gmd:accessConstraints>
+                                <gmd:MD_RestrictionCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                        codeListValue="otherRestrictions">otherRestrictions
+                                </gmd:MD_RestrictionCode>
+                            </gmd:accessConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>Hamburgisches Geodateninfrastrukturgesetz (HmbGDIG)</gco:CharacterString>
+                            </gmd:otherConstraints>
+                        </idf:idfLegalBasisConstraints>
+                    </gmd:resourceConstraints>
+                    <gmd:resourceConstraints>
+                        <idf:idfLegalBasisConstraints>
+                            <gmd:accessConstraints>
+                                <gmd:MD_RestrictionCode
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                        codeListValue="otherRestrictions">otherRestrictions
+                                </gmd:MD_RestrictionCode>
+                            </gmd:accessConstraints>
+                            <gmd:otherConstraints>
+                                <gco:CharacterString>INSPIRE Richtlinie</gco:CharacterString>
+                            </gmd:otherConstraints>
+                        </idf:idfLegalBasisConstraints>
+                    </gmd:resourceConstraints>
+                    <gmd:spatialRepresentationType>
+                        <gmd:MD_SpatialRepresentationTypeCode
+                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                                codeListValue="textTable"/>
+                    </gmd:spatialRepresentationType>
+                    <gmd:language>
+                        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger"/>
+                    </gmd:language>
+                    <gmd:characterSet>
+                        <gmd:MD_CharacterSetCode
+                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+                                codeListValue="utf8"/>
+                    </gmd:characterSet>
+                    <gmd:topicCategory>
+                        <gmd:MD_TopicCategoryCode>location</gmd:MD_TopicCategoryCode>
+                    </gmd:topicCategory>
+                    <gmd:extent>
+                        <gmd:EX_Extent>
+                            <gmd:geographicElement>
+                                <gmd:EX_GeographicDescription>
+                                    <gmd:extentTypeCode>
+                                        <gco:Boolean>true</gco:Boolean>
+                                    </gmd:extentTypeCode>
+                                    <gmd:geographicIdentifier>
+                                        <gmd:MD_Identifier>
+                                            <gmd:code>
+                                                <gco:CharacterString>Hamburg (02000000)</gco:CharacterString>
+                                            </gmd:code>
+                                        </gmd:MD_Identifier>
+                                    </gmd:geographicIdentifier>
+                                </gmd:EX_GeographicDescription>
+                            </gmd:geographicElement>
+                            <gmd:geographicElement>
+                                <gmd:EX_GeographicBoundingBox>
+                                    <gmd:extentTypeCode>
+                                        <gco:Boolean>true</gco:Boolean>
+                                    </gmd:extentTypeCode>
+                                    <gmd:westBoundLongitude>
+                                        <gco:Decimal>8.420551</gco:Decimal>
+                                    </gmd:westBoundLongitude>
+                                    <gmd:eastBoundLongitude>
+                                        <gco:Decimal>10.326304</gco:Decimal>
+                                    </gmd:eastBoundLongitude>
+                                    <gmd:southBoundLatitude>
+                                        <gco:Decimal>53.394985</gco:Decimal>
+                                    </gmd:southBoundLatitude>
+                                    <gmd:northBoundLatitude>
+                                        <gco:Decimal>53.964153</gco:Decimal>
+                                    </gmd:northBoundLatitude>
+                                </gmd:EX_GeographicBoundingBox>
+                            </gmd:geographicElement>
+                        </gmd:EX_Extent>
+                    </gmd:extent>
+                </gmd:MD_DataIdentification>
+            </gmd:identificationInfo>
+            <gmd:distributionInfo>
+                <gmd:MD_Distribution>
+                    <gmd:distributionFormat>
+                        <gmd:MD_Format>
+                            <gmd:name>
+                                <gco:CharacterString>Geographical names GML Application Schema</gco:CharacterString>
+                            </gmd:name>
+                            <gmd:version>
+                                <gco:CharacterString>version 3.0; GML, version 3.2.1</gco:CharacterString>
+                            </gmd:version>
+                            <gmd:specification>
+                                <gco:CharacterString>D2.8.I.3 INSPIRE Data Specification on Geographical names -
+                                    Guidelines
+                                </gco:CharacterString>
+                            </gmd:specification>
+                        </gmd:MD_Format>
+                    </gmd:distributionFormat>
+                    <gmd:distributionFormat>
+                        <gmd:MD_Format>
+                            <gmd:name>
+                                <gco:CharacterString>GML</gco:CharacterString>
+                            </gmd:name>
+                            <gmd:version>
+                                <gco:CharacterString>3.2</gco:CharacterString>
+                            </gmd:version>
+                        </gmd:MD_Format>
+                    </gmd:distributionFormat>
+                    <gmd:transferOptions>
+                        <gmd:MD_DigitalTransferOptions>
+                            <gmd:onLine>
+                                <idf:idfOnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL>https://geodienste.hamburg.de/HH_WFS_INSPIRE_GN?SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=GetFeature&amp;typename=gn:NamedPlace</gmd:URL>
+                                    </gmd:linkage>
+                                    <gmd:applicationProfile>
+                                        <gco:CharacterString>GML</gco:CharacterString>
+                                    </gmd:applicationProfile>
+                                    <gmd:name>
+                                        <gco:CharacterString>Download WFS INSPIRE HH Geografische Bezeichnungen (GML)
+                                        </gco:CharacterString>
+                                    </gmd:name>
+                                    <gmd:function>
+                                        <gmd:CI_OnLineFunctionCode
+                                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                codeListValue="download">download
+                                        </gmd:CI_OnLineFunctionCode>
+                                    </gmd:function>
+                                    <idf:attachedToField entry-id="9990" list-id="2000">Datendownload
+                                    </idf:attachedToField>
+                                </idf:idfOnlineResource>
+                            </gmd:onLine>
+                        </gmd:MD_DigitalTransferOptions>
+                    </gmd:transferOptions>
+                    <gmd:transferOptions>
+                        <gmd:MD_DigitalTransferOptions>
+                            <gmd:onLine>
+                                <idf:idfOnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL>https://geodienste.hamburg.de/HH_WFS_INSPIRE_GN?service=WFS&amp;request=DescribeFeatureType&amp;version=2.0.0&amp;typename=gn:NamedPlace</gmd:URL>
+                                    </gmd:linkage>
+                                    <gmd:applicationProfile>
+                                        <gco:CharacterString>XSD</gco:CharacterString>
+                                    </gmd:applicationProfile>
+                                    <gmd:name>
+                                        <gco:CharacterString>Download WFS-Schemadatei INSPIRE HH Geografische
+                                            Bezeichnungen (XSD)
+                                        </gco:CharacterString>
+                                    </gmd:name>
+                                    <gmd:description>
+                                        <gco:CharacterString>Die XSD-Datei ist die Schema-Beschreibung für lokal
+                                            gespeicherte GML-Dateien, die über den Download-WFS herunter geladen werden
+                                            können.
+                                        </gco:CharacterString>
+                                    </gmd:description>
+                                    <gmd:function>
+                                        <gmd:CI_OnLineFunctionCode
+                                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                codeListValue="download">download
+                                        </gmd:CI_OnLineFunctionCode>
+                                    </gmd:function>
+                                    <idf:attachedToField entry-id="9990" list-id="2000">Datendownload
+                                    </idf:attachedToField>
+                                </idf:idfOnlineResource>
+                            </gmd:onLine>
+                        </gmd:MD_DigitalTransferOptions>
+                    </gmd:transferOptions>
+                    <gmd:transferOptions>
+                        <gmd:MD_DigitalTransferOptions>
+                            <gmd:onLine>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL>https://geodienste.hamburg.de/HH_WMS_INSPIRE_GN?REQUEST=GetCapabilities&amp;SERVICE=WMS</gmd:URL>
+                                    </gmd:linkage>
+                                    <gmd:name>
+                                        <gco:CharacterString>Dienst "WMS INSPIRE HH Geografische Bezeichnungen"
+                                            (GetCapabilities)
+                                        </gco:CharacterString>
+                                    </gmd:name>
+                                </gmd:CI_OnlineResource>
+                            </gmd:onLine>
+                        </gmd:MD_DigitalTransferOptions>
+                    </gmd:transferOptions>
+                    <gmd:transferOptions>
+                        <gmd:MD_DigitalTransferOptions>
+                            <gmd:onLine>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL>https://geodienste.hamburg.de/HH_WFS_INSPIRE_GN?REQUEST=GetCapabilities&amp;SERVICE=WFS</gmd:URL>
+                                    </gmd:linkage>
+                                    <gmd:name>
+                                        <gco:CharacterString>Dienst "WFS INSPIRE HH Geografische Bezeichnungen"
+                                            (GetCapabilities)
+                                        </gco:CharacterString>
+                                    </gmd:name>
+                                </gmd:CI_OnlineResource>
+                            </gmd:onLine>
+                        </gmd:MD_DigitalTransferOptions>
+                    </gmd:transferOptions>
+                </gmd:MD_Distribution>
+            </gmd:distributionInfo>
+            <gmd:dataQualityInfo>
+                <gmd:DQ_DataQuality>
+                    <gmd:scope>
+                        <gmd:DQ_Scope>
+                            <gmd:level>
+                                <gmd:MD_ScopeCode
+                                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_ScopeCode"
+                                        codeListValue="dataset"/>
+                            </gmd:level>
+                        </gmd:DQ_Scope>
+                    </gmd:scope>
+                    <gmd:report>
+                        <gmd:DQ_CompletenessOmission>
+                            <gmd:nameOfMeasure>
+                                <gco:CharacterString>Rate of missing items</gco:CharacterString>
+                            </gmd:nameOfMeasure>
+                            <gmd:measureIdentification>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gco:CharacterString>7</gco:CharacterString>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:measureIdentification>
+                            <gmd:measureDescription>
+                                <gco:CharacterString>completeness omission (rec_grade)</gco:CharacterString>
+                            </gmd:measureDescription>
+                            <gmd:result>
+                                <gmd:DQ_QuantitativeResult>
+                                    <gmd:valueUnit>
+                                        <gml:UnitDefinition
+                                                gml:id="unitDefinition_ID_77b6e68a-0fc3-4532-9fd2-6a9c58dd825a">
+                                            <gml:identifier codeSpace=""/>
+                                            <gml:name>percent</gml:name>
+                                            <gml:quantityType>completeness omission</gml:quantityType>
+                                            <gml:catalogSymbol>%</gml:catalogSymbol>
+                                        </gml:UnitDefinition>
+                                    </gmd:valueUnit>
+                                    <gmd:value>
+                                        <gco:Record>0</gco:Record>
+                                    </gmd:value>
+                                </gmd:DQ_QuantitativeResult>
+                            </gmd:result>
+                        </gmd:DQ_CompletenessOmission>
+                    </gmd:report>
+                    <gmd:report>
+                        <gmd:DQ_DomainConsistency>
+                            <gmd:result>
+                                <gmd:DQ_ConformanceResult>
+                                    <gmd:specification>
+                                        <gmd:CI_Citation>
+                                            <gmd:title>
+                                                <gco:CharacterString>Data Specification on Geographical Names -
+                                                    Technical Guidelines
+                                                </gco:CharacterString>
+                                            </gmd:title>
+                                            <gmd:date>
+                                                <gmd:CI_Date>
+                                                    <gmd:date>
+                                                        <gco:Date>2014-04-17</gco:Date>
+                                                    </gmd:date>
+                                                    <gmd:dateType>
+                                                        <gmd:CI_DateTypeCode
+                                                                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_DateTypeCode"
+                                                                codeListValue="publication">publication
+                                                        </gmd:CI_DateTypeCode>
+                                                    </gmd:dateType>
+                                                </gmd:CI_Date>
+                                            </gmd:date>
+                                        </gmd:CI_Citation>
+                                    </gmd:specification>
+                                    <gmd:explanation>
+                                        <gco:CharacterString>see the referenced specification</gco:CharacterString>
+                                    </gmd:explanation>
+                                    <gmd:pass>
+                                        <gco:Boolean>true</gco:Boolean>
+                                    </gmd:pass>
+                                </gmd:DQ_ConformanceResult>
+                            </gmd:result>
+                        </gmd:DQ_DomainConsistency>
+                    </gmd:report>
+                    <gmd:report>
+                        <gmd:DQ_DomainConsistency>
+                            <gmd:result>
+                                <gmd:DQ_ConformanceResult>
+                                    <gmd:specification>
+                                        <gmd:CI_Citation>
+                                            <gmd:title>
+                                                <gco:CharacterString>VERORDNUNG (EG) Nr. 1089/2010 DER KOMMISSION vom
+                                                    23. November 2010 zur Durchführung der Richtlinie 2007/2/EG des
+                                                    Europäischen Parlaments und des Rates hinsichtlich der
+                                                    Interoperabilität von Geodatensätzen und -diensten
+                                                </gco:CharacterString>
+                                            </gmd:title>
+                                            <gmd:date>
+                                                <gmd:CI_Date>
+                                                    <gmd:date>
+                                                        <gco:Date>2010-12-08</gco:Date>
+                                                    </gmd:date>
+                                                    <gmd:dateType>
+                                                        <gmd:CI_DateTypeCode
+                                                                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_DateTypeCode"
+                                                                codeListValue="publication">publication
+                                                        </gmd:CI_DateTypeCode>
+                                                    </gmd:dateType>
+                                                </gmd:CI_Date>
+                                            </gmd:date>
+                                        </gmd:CI_Citation>
+                                    </gmd:specification>
+                                    <gmd:explanation>
+                                        <gco:CharacterString>see the referenced specification</gco:CharacterString>
+                                    </gmd:explanation>
+                                    <gmd:pass>
+                                        <gco:Boolean>true</gco:Boolean>
+                                    </gmd:pass>
+                                </gmd:DQ_ConformanceResult>
+                            </gmd:result>
+                        </gmd:DQ_DomainConsistency>
+                    </gmd:report>
+                    <gmd:lineage>
+                        <gmd:LI_Lineage>
+                            <gmd:statement>
+                                <gco:CharacterString>INSPIRE Richtlinie Durchführungsbestimmungen Datenspezifikation
+                                </gco:CharacterString>
+                            </gmd:statement>
+                        </gmd:LI_Lineage>
+                    </gmd:lineage>
+                </gmd:DQ_DataQuality>
+            </gmd:dataQualityInfo>
+            <idf:superiorReference uuid="F9FF7B30-1F47-44BC-B0CC-208FA3AEE343">
+                <idf:objectName>INSPIRE Datensätze im Zielmodell Hamburg</idf:objectName>
+                <idf:objectType>0</idf:objectType>
+            </idf:superiorReference>
+            <idf:crossReference direction="IN" uuid="EA7FCDAF-0605-4EC5-820F-5FBD39B098A8">
+                <idf:objectName>WMS INSPIRE HH Geografische Bezeichnungen</idf:objectName>
+                <idf:objectType>3</idf:objectType>
+                <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Daten</idf:attachedToField>
+                <idf:serviceType>view</idf:serviceType>
+                <idf:serviceOperation>GetCapabilities</idf:serviceOperation>
+                <idf:serviceUrl>https://geodienste.hamburg.de/HH_WMS_INSPIRE_GN?</idf:serviceUrl>
+            </idf:crossReference>
+            <idf:crossReference direction="IN" uuid="F9A971A6-B61A-4C25-B7D0-DD6291392384">
+                <idf:objectName>WFS INSPIRE HH Geografische Bezeichnungen</idf:objectName>
+                <idf:objectType>3</idf:objectType>
+                <idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte Daten</idf:attachedToField>
+            </idf:crossReference>
+            <idf:abstract>
+                <gco:CharacterString>Dieser Datensatz stellt die geografischen Bezeichnungen von Hamburg im
+                    INSPIRE-Zielmodell dar.
+                </gco:CharacterString>
+            </idf:abstract>
+        </idf:idfMdMetadata>
+    </idf:body>
+</idf:html>
