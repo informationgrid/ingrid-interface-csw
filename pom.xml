@@ -142,25 +142,47 @@
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-ibus</artifactId>
+      <artifactId>ingrid-ibus-backend</artifactId>
       <version>5.4.0</version>
       <exclusions>
         <exclusion>
-          <groupId>tomcat</groupId>
-          <artifactId>jasper-compiler</artifactId>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>tomcat</groupId>
-          <artifactId>jasper-runtime</artifactId>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-elasticsearch-tools</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>commons-el</groupId>
-          <artifactId>commons-el</artifactId>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-codelist-service</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>jetty</groupId>
-          <artifactId>servlet-api</artifactId>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-ibus-frontend</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.elasticsearch.client</groupId>
+          <artifactId>transport</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-security</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-jetty</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-log4j2</artifactId>
+        </exclusion>
+
+
         <exclusion>
           <groupId>jetty</groupId>
           <artifactId>org.mortbay.jetty</artifactId>
