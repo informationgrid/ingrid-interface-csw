@@ -15,6 +15,6 @@ RUN unzip ingrid-interface-csw-*-installer.jar -d /tmp \
 USER ingrid
 
 WORKDIR /opt/ingrid/ingrid-interface-csw
-EXPOSE 8084
+EXPOSE 8080/tcp
 
 CMD /bin/sh start.sh start
