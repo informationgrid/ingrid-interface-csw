@@ -9,7 +9,7 @@ RUN unzip ingrid-interface-csw-*-installer.jar -d /tmp \
     && cp -R /tmp/ingrid-interface-csw-*/* /opt/ingrid/ingrid-interface-csw/ \
     && rm -Rf /tmp/* \
     && rm ingrid-*.jar \
-    && useradd -u 3073 ingrid
+    && useradd -u 3073 ingrid \
     && chown -R ingrid /opt/ingrid/ingrid-interface-csw
 
 USER ingrid
