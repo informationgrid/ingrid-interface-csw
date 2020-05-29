@@ -29,6 +29,12 @@
   </properties>
   <body>
 
+    <release version="5.3.10" date="2020-05-29" description="Release InGrid 5.3.10">
+      <action type="add" dev="wemove" issue="1901">
+          Make harvesting of interface csw more robust.
+      </action>
+    </release>
+
     <release version="5.3.0" date="2020-01-13" description="Release InGrid 5.3.0">
       <action type="add" dev="wemove" issue="1554">
           Change codelist namespace to http://standards.iso.org/iso/19139/resources/gmxCodelists.xml
