@@ -381,12 +381,27 @@ public class IBusHarvester extends AbstractHarvester {
                 if (log.isDebugEnabled()) {
                     log.debug( "Fetched record " + hit.getDocumentId() + ". Cache id: " + cacheId );
                 }
-            } catch (IOException e) {
-                addError( hit.getPlugId() );
-                log.warn( "Error putting record " + hit.getDocumentId() + " to cache. Does the iPlug '" + hit.getPlugId() + "' deliver IDF records?" );
             } catch (Exception e) {
                 addError( hit.getPlugId() );
-                log.error( "Error putting record " + hit.getDocumentId() + " from iPlug '" + hit.getPlugId() + "'to cache.", e );
+                // Add null as cache ID. The number of records retrieved is bound to the list of cached ids.
+                //
+                // see also line while (cacheIds.size() == request.getRecordsPerCall()) {
+                //
+                // As a result the number of records must not be altered, even in case an error in
+                // processing the results occurs, which is the case here.
+                //
+                // There was a case at HMDK where a IDF content could not be retrieved from the result Record.
+                // This resulted in a cacheIds List lower than the expected records per call which leads
+                // to an premature termination of the harvesting process.
+                cacheIds.add( null );
+                Serializable docId = null;
+                try {
+                    docId = this.cache.getCacheId(record);
+                } catch (Exception e1) {
+                    log.error("Error extracting the record id.");
+                    docId = "";
+                }
+                log.error( "Error putting record " + hit.getDocumentId() + " (docid: '" + docId + "') from iPlug '" + hit.getPlugId() + "' to cache.", e );
             }
         }
         return cacheIds;

@@ -242,7 +242,6 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 	 * Get the absolute filename of a document.
 	 * 
 	 * @param id
-	 * @param cacheOperation
 	 * @return String
 	 */
 	public String getAbsoluteFilename(Serializable id) {
@@ -310,7 +309,16 @@ public abstract class AbstractFileCache<T> implements DocumentCache<T> {
 		String filePath = this.getAbsoluteFilename(id);
 		String content = this.serializeDocument(id, document);
 
-		FileUtils.writeFile(Paths.get(filePath), content, Charset.forName("UTF-8"));
+		if (log.isDebugEnabled()) {
+			log.debug("Write file '" + Paths.get(filePath) + "' to cache.");
+		}
+
+		try  {
+			FileUtils.writeFile(Paths.get(filePath), content, Charset.forName("UTF-8"));
+		} catch (Exception e) {
+			log.error("Error writing file '" + Paths.get(filePath) + "' to cache.");
+			throw e;
+		}
 
 		return id;
 	}
