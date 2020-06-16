@@ -11,7 +11,7 @@ RUN unzip ingrid-interface-csw-*-installer.jar -d /tmp \
     && rm -Rf /tmp/* \
     && rm ingrid-*.jar \
     && useradd --user-group --system --create-home -u 3073 ingrid \
-    && echo 'ingrid:JZHkpLMQ0fjKl0X0i2oE' | chpasswd \
+    && echo 'root:JZHkpLMQ0fjKl0X0i2oE' | chpasswd \
     && chown -R ingrid /opt/ingrid/ingrid-interface-csw \
     && chmod -R u+rwX /opt/ingrid/ingrid-interface-csw
 
