@@ -4,13 +4,16 @@ ENV RUN_DIRECTLY=true
 
 ADD ingrid-interface-csw-*-installer.jar /
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN unzip ingrid-interface-csw-*-installer.jar -d /tmp \
     && mkdir -p /opt/ingrid/ingrid-interface-csw \
     && cp -R /tmp/ingrid-interface-csw-*/* /opt/ingrid/ingrid-interface-csw/ \
     && rm -Rf /tmp/* \
     && rm ingrid-*.jar \
-    && useradd -u 3073 ingrid \
-    && chown -R ingrid /opt/ingrid/ingrid-interface-csw
+    && useradd --user-group --system --create-home -u 3073 ingrid \
+    && echo 'ingrid:JZHkpLMQ0fjKl0X0i2oE' | chpasswd \
+    && chown -R ingrid /opt/ingrid/ingrid-interface-csw \
+    && chmod -R u+rwX /opt/ingrid/ingrid-interface-csw
 
 USER ingrid
 
