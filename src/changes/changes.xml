@@ -6,6 +6,15 @@
   </properties>
   <body>
 
+    <release version="5.5.0" date="2020-07-24" description="Release InGrid 5.5.0">
+      <action type="add" dev="wemove" issue="1901">
+          Make harvesting of interface csw more robust.
+      </action>
+      <action type="add" dev="wemove" issue="1898">
+          Change the container’s privilege to a non-root user.
+      </action>
+    </release>
+
     <release version="5.4.0" date="2020-04-17" description="Release InGrid 5.4.0">
       <action type="update" dev="wemove">
           Update security related jackson-databind dependency.

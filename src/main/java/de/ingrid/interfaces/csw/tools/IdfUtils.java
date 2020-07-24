@@ -63,6 +63,7 @@ public class IdfUtils {
 			}
 		}
 		else {
+			log.error("Could not retrieve the IDF content from record: " + record);
 			throw new IOException("Document contains no IDF data.");
 		}
 	}

@@ -1,16 +1,18 @@
-FROM docker-registry.wemove.com/ingrid-java
-ENV INGRID_USER=root
-ENV RUN_DIRECTLY=true
+FROM alpine AS builder
 
 ADD ingrid-interface-csw-*-installer.jar /
+RUN unzip ingrid-interface-csw-*-installer.jar -d /tmp
 
-RUN unzip ingrid-interface-csw-*-installer.jar -d /tmp \
-    && mkdir -p /opt/ingrid/ingrid-interface-csw \
-    && cp -R /tmp/ingrid-interface-csw-*/* /opt/ingrid/ingrid-interface-csw/ \
-    && rm -Rf /tmp/* \
-    && rm ingrid-*.jar
+FROM docker-registry.wemove.com/ingrid-java:jre-8-alpine
+ENV INGRID_USER=ingrid
+ENV RUN_DIRECTLY=true
+
+# user, group ingrid (1000:1000) is created in base image
+COPY --chown=1000:1000 --from=builder /tmp/ingrid-interface-csw-* /opt/ingrid/ingrid-interface-csw/
+
+USER ingrid
 
 WORKDIR /opt/ingrid/ingrid-interface-csw
-EXPOSE 8084
+EXPOSE 8080/tcp
 
 CMD /bin/sh start.sh start
