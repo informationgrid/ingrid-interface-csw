@@ -5,7 +5,11 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-
+    <release version="5.7.0" date="2021-01-18" description="Release 5.7.0">
+     <action type="add" dev="wemove" issue="2211">
+         Fix Redmine issue link generation for changes.
+     </action>
+    </release>
     <release version="5.6.0" date="2020-10-15" description="Release InGrid 5.6.0">
       <action type="update" dev="wemove" issue="1846">
           Adapt namespace for igctx
