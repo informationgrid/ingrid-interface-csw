@@ -135,7 +135,7 @@ public class MappingTest extends TestCase {
 	public void testFullHMDKSpecialTicket1531() throws Exception {
 		XsltMapper mapper = new XsltMapper();
 
-		ApplicationProperties.setProperty(ConfigurationKeys.IDF_2_FULL_PROCESSING_XSLT, "idf_1_0_0_to_iso_metadata_hmdk_5.2.1_4.6.9.xsl");
+		ApplicationProperties.setProperty(ConfigurationKeys.IDF_2_FULL_PROCESSING_XSLT, "idf_1_0_0_to_iso_metadata_hmdk_5.8.1_4.6.9.xsl");
 
 		String idfContent = new Scanner(new File("src/test/resources/idf_to_full_hmdk_5.2.1.xml")).useDelimiter("\\A").next();
 		Record record = IdfTool.createIdfRecord(idfContent, false);
