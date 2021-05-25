@@ -240,6 +240,8 @@ public class MappingTest extends TestCase {
 		assertEquals("INSPIRE Richtlinie",
 				xpath.getString(result, "//gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions'][3]/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString"));
 		assertEquals("completeness omission", xpath.getString(result, "//gml:quantityType"));
+		// check if old elements with old gml namespace are still present
+		assertEquals("completeness omission old", xpath.getNodeList(result, "//gml:quantityType").item(1).getTextContent());
 
 	}
 

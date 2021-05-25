@@ -174,6 +174,18 @@
         </xsl:choose>
     </xsl:template>
 
+	<xsl:template match="@gml:*">
+		<xsl:attribute name="gml:{local-name()}" namespace="http://www.opengis.net/gml">
+			<xsl:value-of select="." />
+		</xsl:attribute>
+	</xsl:template>
+
+	<xsl:template match="gml:*">
+		<xsl:element name="gml:{local-name()}" namespace="http://www.opengis.net/gml">
+			<xsl:apply-templates select="node() | @*" />
+		</xsl:element>
+	</xsl:template>
+
 	<xsl:template match="gml32:*">
 		<xsl:element name="gml:{local-name()}" namespace="http://www.opengis.net/gml">
 			<xsl:apply-templates select="node() | @*" />

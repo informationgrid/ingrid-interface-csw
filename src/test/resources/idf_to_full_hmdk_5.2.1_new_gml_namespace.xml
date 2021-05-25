@@ -729,6 +729,21 @@
                                         <gco:Record>0</gco:Record>
                                     </gmd:value>
                                 </gmd:DQ_QuantitativeResult>
+                                <!-- maybe an old namespace occurs -->
+                                <gmd:DQ_QuantitativeResult xmlns:gml="http://www.opengis.net/gml">
+                                    <gmd:valueUnit>
+                                        <gml:UnitDefinition
+                                                gml:id="unitDefinition_ID_77b6e68a-0fc3-7532-9fd2-6a9c58dd825a">
+                                            <gml:identifier codeSpace=""/>
+                                            <gml:name>percent</gml:name>
+                                            <gml:quantityType>completeness omission old</gml:quantityType>
+                                            <gml:catalogSymbol>%</gml:catalogSymbol>
+                                        </gml:UnitDefinition>
+                                    </gmd:valueUnit>
+                                    <gmd:value>
+                                        <gco:Record>0</gco:Record>
+                                    </gmd:value>
+                                </gmd:DQ_QuantitativeResult>
                             </gmd:result>
                         </gmd:DQ_CompletenessOmission>
                     </gmd:report>
