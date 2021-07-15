@@ -6,7 +6,7 @@
   </properties>
   <body>
 
-  <release version="5.9.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.9.0-SNAPSHOT">
+  <release version="5.9.0" date="2021-07-15" description="Release 5.9.0">
       <action type="update" dev="wemove" issue="1876">
           Update gml namespace to version 3.2
       </action>
