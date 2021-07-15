@@ -5,6 +5,13 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+
+  <release version="5.9.0" date="2021-07-15" description="Release 5.9.0">
+      <action type="update" dev="wemove" issue="1876">
+          Update gml namespace to version 3.2
+      </action>
+  </release>
+
     <release version="5.7.0" date="2021-01-18" description="Release 5.7.0">
      <action type="add" dev="wemove" issue="2211">
          Fix Redmine issue link generation for changes.

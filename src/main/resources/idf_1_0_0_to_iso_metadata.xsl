@@ -26,7 +26,7 @@
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:idf="http://www.portalu.de/IDF/1.0"
 				xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco"
 				xmlns:gmx="http://www.isotc211.org/2005/gmx"
-				xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv"
 				xmlns:igctx="https://www.ingrid-oss.eu/schemas/igctx"
 				xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -57,7 +57,7 @@
 	</xsl:template>
 
 	<xsl:template
-			match="@*|*[(namespace-uri() = 'https://www.ingrid-oss.eu/schemas/igctx' or namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml' or namespace-uri() = 'http://www.isotc211.org/2005/gmx' or namespace-uri() = 'http://www.isotc211.org/2005/gts' or namespace-uri() = 'http://www.isotc211.org/2005/srv') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
+			match="@*|*[(namespace-uri() = 'https://www.ingrid-oss.eu/schemas/igctx' or namespace-uri() = 'http://www.isotc211.org/2005/gmd' or namespace-uri() = 'http://www.isotc211.org/2005/gco' or namespace-uri() = 'http://www.opengis.net/gml/3.2' or namespace-uri() = 'http://www.isotc211.org/2005/gmx' or namespace-uri() = 'http://www.isotc211.org/2005/gts' or namespace-uri() = 'http://www.isotc211.org/2005/srv') and namespace-uri() != 'http://www.portalu.de/IDF/1.0']">
 		<xsl:element name="{name(.)}" namespace="{namespace-uri(.)}">
 			<xsl:copy-of
 					select="namespace::*[name(.)!='idf' and name(.)!='srv' and name(.)!='ms' and name(.)!='csw' and name(.)!='xlink' and name(.)!='xsi' and name(.)!='xs' and name(.)!='']" />
