@@ -281,6 +281,7 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     if (this.requestParams.containsKey(SORTBY_PARAM)) {
                         String sortParam = this.requestParams.get(SORTBY_PARAM);
                         String[] sortParamArray= sortParam.split(",");
+
                         if ((sortParamArray.length % 2) != 0) {
                             StringBuffer errorMsg = new StringBuffer();
                             errorMsg.append("Parameter '" + SORTBY_PARAM + "' has an unsupported value.\n");
