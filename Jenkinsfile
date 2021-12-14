@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'jdk8'
+    }
+
     environment {
         VERSION = readMavenPom().getVersion()
     }
