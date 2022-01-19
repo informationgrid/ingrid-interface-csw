@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -131,6 +132,7 @@ public class CommunicationProvider {
             String xml = content.toString();
             if (xml.length() > 0) {
                 XStream xstream = new XStream();
+                xstream.addPermission(AnyTypePermission.ANY);
                 this.setXStreamAliases(xstream);
                 this.configuration = (Communication) xstream.fromXML(xml);
             } else {
@@ -165,6 +167,7 @@ public class CommunicationProvider {
 
         // serialize the Configuration instance to xml
         XStream xstream = new XStream();
+        xstream.addPermission(AnyTypePermission.ANY);
         this.setXStreamAliases(xstream);
         String xml = xstream.toXML(configuration);
 

@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -150,7 +150,7 @@ public class LuceneFilterParser implements FilterParser {
                         sortOrder = "ASC";
                     }
                     // TODO determine type of sort field by queryable type
-                    sortFields.add(new SortField(propertyName + "_sort", SortField.STRING, sortOrder
+                    sortFields.add(new SortField(this.removePrefix(propertyName) + "_sort", SortField.STRING, sortOrder
                             .equalsIgnoreCase("DESC") ? true : false));
                 }
                 SortField[] a = sortFields.toArray(new SortField[0]);

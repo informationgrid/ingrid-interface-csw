@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -51,6 +51,8 @@ public final class TestRequests {
     public static final String GETRECORDS_1_BRIEF_SOAP = "src/test/resources/requests/get_records_1_brief_soap.xml";
     public static final String GETRECORDS_1_SUMMARY_SOAP = "src/test/resources/requests/get_records_1_summary_soap.xml";
     public static final String GETRECORDS_1_FULL_SOAP = "src/test/resources/requests/get_records_1_full_soap.xml";
+    public static final String GETRECORDS_2_FULL_SOAP = "src/test/resources/requests/get_records_2_full_soap.xml";
+    public static final String GETRECORDS_2_FULL_SOAP_DESC = "src/test/resources/requests/get_records_2_full_soap_desc.xml";
 
     public static final String GETRECORDS_2_SOAP = "src/test/resources/requests/get_records_2_soap.xml";
     public static final String GETRECORDS_3_SOAP = "src/test/resources/requests/get_records_3_soap.xml";
@@ -78,21 +80,21 @@ public final class TestRequests {
 
     /**
      * Get the content of a request defined in the given file.
+     *
      * @param filePath
      * @return String
      * @throws Exception
      */
     public static String getRequest(String filePath) throws Exception {
-        File requestFile = new File(filePath);
+        File requestFile = new File( filePath );
         Scanner scanner = null;
         String content = null;
         try {
-            scanner = new Scanner(requestFile);
-            scanner.useDelimiter("\\A");
+            scanner = new Scanner( requestFile );
+            scanner.useDelimiter( "\\A" );
             content = scanner.next();
             scanner.close();
-        }
-        finally {
+        } finally {
             if (scanner != null) {
                 scanner.close();
             }
