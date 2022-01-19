@@ -76,7 +76,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>5.11.0-SNAPSHOT</version>
+      <version>5.11.0</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -91,7 +91,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
-      <version>5.11.0-SNAPSHOT</version>
+      <version>5.11.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
