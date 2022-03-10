@@ -6,7 +6,7 @@
   </properties>
   <body>
 
-    <release version="5.11.0.1" date="2022-xx-xx" description="Release 5.11.0.1">
+    <release version="5.11.0.1" date="2022-03-10" description="Release 5.11.0.1">
       <action type="fix" dev="wemove" issue="3596">
         IT-Sicherheitsmängel in Docker Basis Images beseitigen
       </action>
