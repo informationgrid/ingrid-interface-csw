@@ -6,6 +6,12 @@
   </properties>
   <body>
 
+  <release version="5.9.2.4" date="2022-03-11" description="Release 5.9.2.4">
+    <action type="fix" dev="wemove" issue="3596">
+      IT-Sicherheitsmängel in Docker Basis Images beseitigen
+    </action>
+  </release>
+
   <release version="5.9.2.2" date="2021-12-12" description="Release 5.9.2.2">
       <action type="fix" dev="wemove" issue="3292">
           Kritische Sicherheitslücke Log4Shell in der weitverbreiteten Java-Logging-Bibliothek log4j
