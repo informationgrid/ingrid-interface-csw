@@ -6,6 +6,12 @@
   </properties>
   <body>
 
+    <release version="5.11.2.1" date="2022-03-11" description="Release 5.11.2.1">
+      <action type="fix" dev="wemove" issue="3596">
+        IT-Sicherheitsmängel in Docker Basis Images beseitigen
+      </action>
+    </release>
+
     <release version="5.11.0" date="2022-01-19" description="Release 5.11.0">
       <action type="update" dev="wemove" issue="1444">
           Fix sortby with prefixes
