@@ -37,7 +37,7 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <iplug.type>INTERFACE_CSW</iplug.type>
-    <spring.version>4.3.20.RELEASE</spring.version>
+    <spring.version>5.3.18</spring.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
