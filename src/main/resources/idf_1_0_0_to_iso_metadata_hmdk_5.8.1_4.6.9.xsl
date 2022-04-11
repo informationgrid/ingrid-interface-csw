@@ -157,6 +157,60 @@
 			</gmd:MD_LegalConstraints>
 		</gmd:resourceConstraints>
 	</xsl:template>
+	<xsl:template match="gmd:keyword/gco:CharacterString">
+		<gco:CharacterString>
+			<xsl:call-template name="replace-opendata-categories"><xsl:with-param name="text" select="." /></xsl:call-template>
+		</gco:CharacterString>
+	</xsl:template>
+
+	<xsl:template name="replace-opendata-categories">
+		<xsl:param name="text" />
+		<xsl:choose>
+			<xsl:when test="$text = ''" >
+				<!-- Prevent this routine from hanging -->
+				<xsl:value-of select="$text" />
+			</xsl:when>
+			<xsl:when test="$text = 'AGRI'" >
+				<xsl:value-of select="'Wirtschaft &amp; Arbeit'" />
+			</xsl:when>
+			<xsl:when test="$text = 'EDUC'" >
+				<xsl:value-of select="'Kultur, Sport &amp; Tourismus'" />
+			</xsl:when>
+			<xsl:when test="$text = 'ENVI'" >
+				<xsl:value-of select="'Umwelt &amp; Klima'" />
+			</xsl:when>
+			<xsl:when test="$text = 'ENER'" >
+				<xsl:value-of select="'Umwelt &amp; Klima'" />
+			</xsl:when>
+			<xsl:when test="$text = 'TRAN'" >
+				<xsl:value-of select="'Transport &amp; Verkehr'" />
+			</xsl:when>
+			<xsl:when test="$text = 'TECH'" >
+				<xsl:value-of select="'Bildung &amp; Wissenschaft'" />
+			</xsl:when>
+			<xsl:when test="$text = 'ECON'" >
+				<xsl:value-of select="'Wirtschaft &amp; Arbeit'" />
+			</xsl:when>
+			<xsl:when test="$text = 'SOCI'" >
+				<xsl:value-of select="'Bevölkerung'" />
+			</xsl:when>
+			<xsl:when test="$text = 'HEAL'" >
+				<xsl:value-of select="'Gesundheit'" />
+			</xsl:when>
+			<xsl:when test="$text = 'GOVE'" >
+				<xsl:value-of select="'Politik &amp; Wahlen'" />
+			</xsl:when>
+			<xsl:when test="$text = 'REGI'" >
+				<xsl:value-of select="'Öffentliche Verwaltung, Haushalt &amp; Steuern'" />
+			</xsl:when>
+			<xsl:when test="$text = 'JUST'" >
+				<xsl:value-of select="'Gesetze &amp; Justiz'" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$text" />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 
     <xsl:template name="replace-licence-codelist">
         <xsl:param name="text" />
