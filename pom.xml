@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>5.9.0</version>
+  <version>5.9.3-SNAPHSOT</version>
   <packaging>jar</packaging>
   <name>InGrid Interface CSW</name>
 
@@ -20,7 +20,7 @@
 
   <!-- ==================== REPOSITORIES ==================== -->
   <repositories>
-    <!-- Repo of parent pom needed, parent pom may not be installed locally 
+    <!-- Repo of parent pom needed, parent pom may not be installed locally
       yet -->
     <repository>
       <id>nexus</id>
