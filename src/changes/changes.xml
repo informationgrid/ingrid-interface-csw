@@ -6,6 +6,12 @@
   </properties>
   <body>
 
+  <release version="5.9.2.5" date="2022-04-21" description="Release 5.9.2.5">
+      <action type="add" dev="wemove" issue="3558">
+          Replace opendata categories
+      </action>
+  </release>
+
   <release version="5.9.2.4" date="2022-03-11" description="Release 5.9.2.4">
     <action type="fix" dev="wemove" issue="3596">
       IT-Sicherheitsmängel in Docker Basis Images beseitigen
@@ -103,7 +109,7 @@
         Added Transaction operation to capabilities.
       </action>
     </release>
-    
+
   	<release version="3.6.2.2" date="2016-07-15" description="Release 3.6.2.2">
       <action type="fix" dev="wemove" issue="REDMINE-376">
         Catch exception if communication for CSW-T could not be found.
@@ -118,7 +124,7 @@
         Do not cache CSW-T-Requests.
       </action>
     </release>
-    
+
     <release version="3.6.2" date="2016-05-13" description="Release 3.6.2">
       <action type="update" dev="wemove" issue="REDMINE-279">
         Increase file operation timeouts and increase default value from 200ms to 1 sec.
@@ -139,7 +145,7 @@
         Use encrypted password for web interface.
       </action>
     </release>
-    
+
     <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">
         <action type="update" dev="wemove">
             Optimize relative file cache paths for big amounts of files (3 characters, equally distributed even with same prefixed record ids ).
