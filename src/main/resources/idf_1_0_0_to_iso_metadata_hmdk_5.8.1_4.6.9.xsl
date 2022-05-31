@@ -171,25 +171,25 @@
 				<xsl:value-of select="$text" />
 			</xsl:when>
 			<xsl:when test="$text = 'AGRI'" >
-				<xsl:value-of select="'Wirtschaft &amp; Arbeit'" />
+				<xsl:value-of select="'Wirtschaft und Arbeit'" />
 			</xsl:when>
 			<xsl:when test="$text = 'EDUC'" >
-				<xsl:value-of select="'Kultur, Sport &amp; Tourismus'" />
+				<xsl:value-of select="'Kultur, Freizeit, Sport und Tourismus'" />
 			</xsl:when>
 			<xsl:when test="$text = 'ENVI'" >
-				<xsl:value-of select="'Umwelt &amp; Klima'" />
+				<xsl:value-of select="'Umwelt und Klima'" />
 			</xsl:when>
 			<xsl:when test="$text = 'ENER'" >
-				<xsl:value-of select="'Umwelt &amp; Klima'" />
+				<xsl:value-of select="'Umwelt und Klima'" />
 			</xsl:when>
 			<xsl:when test="$text = 'TRAN'" >
-				<xsl:value-of select="'Transport &amp; Verkehr'" />
+				<xsl:value-of select="'Transport und Verkehr'" />
 			</xsl:when>
 			<xsl:when test="$text = 'TECH'" >
-				<xsl:value-of select="'Bildung &amp; Wissenschaft'" />
+				<xsl:value-of select="'Bildung und Wissenschaft'" />
 			</xsl:when>
 			<xsl:when test="$text = 'ECON'" >
-				<xsl:value-of select="'Wirtschaft &amp; Arbeit'" />
+				<xsl:value-of select="'Wirtschaft und Arbeit'" />
 			</xsl:when>
 			<xsl:when test="$text = 'SOCI'" >
 				<xsl:value-of select="'Bevölkerung'" />
@@ -198,13 +198,13 @@
 				<xsl:value-of select="'Gesundheit'" />
 			</xsl:when>
 			<xsl:when test="$text = 'GOVE'" >
-				<xsl:value-of select="'Politik &amp; Wahlen'" />
+				<xsl:value-of select="'Politik und Wahlen'" />
 			</xsl:when>
 			<xsl:when test="$text = 'REGI'" >
-				<xsl:value-of select="'Öffentliche Verwaltung, Haushalt &amp; Steuern'" />
+				<xsl:value-of select="'Öffentliche Verwaltung, Haushalt und Steuern'" />
 			</xsl:when>
 			<xsl:when test="$text = 'JUST'" >
-				<xsl:value-of select="'Gesetze &amp; Justiz'" />
+				<xsl:value-of select="'Gesetze und Justiz'" />
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$text" />
