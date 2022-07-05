@@ -95,6 +95,42 @@
 		<xsl:variable name="codeListValue" select="@codeListValue" />
 		<gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="{$codeListValue}"></gmd:MD_RestrictionCode>
 	</xsl:template>
+	<xsl:template match="gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeList='http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode']">
+		<xsl:variable name="codeListValue" select="gmd:type/gmd:MD_KeywordTypeCode/@codeListValue" />
+		<xsl:variable name="thesaurusNode" select="./gmd:thesaurusName" />
+		<xsl:choose>
+			<xsl:when test="$thesaurusNode">
+				<gmd:MD_Keywords>
+					<xsl:apply-templates select="@*|node()"/>
+				</gmd:MD_Keywords>
+			</xsl:when>
+			<xsl:otherwise>
+				<gmd:MD_Keywords>
+					<xsl:apply-templates select="gmd:keyword" />
+					<gmd:type>
+						<gmd:MD_KeywordTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="{$codeListValue}"></gmd:MD_KeywordTypeCode>
+					</gmd:type>
+					<gmd:thesaurusName>
+						<gmd:CI_Citation>
+							<gmd:title>
+								<gco:CharacterString>OGDD-Kategorien</gco:CharacterString>
+							</gmd:title>
+							<gmd:date>
+								<gmd:CI_Date>
+									<gmd:date>
+										<gco:Date>2012-11-27</gco:Date>
+									</gmd:date>
+									<gmd:dateType>
+										<gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+									</gmd:dateType>
+								</gmd:CI_Date>
+							</gmd:date>
+						</gmd:CI_Citation>
+					</gmd:thesaurusName>
+				</gmd:MD_Keywords>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 	<xsl:template match="gmd:RS_Identifier">
 		<gmd:RS_Identifier>
 			<gmd:code>
