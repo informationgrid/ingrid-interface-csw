@@ -6,6 +6,9 @@
   </properties>
   <body>
 
+    <release version="5.14.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.14.0-SNAPSHOT">
+    </release>
+
     <release version="5.13.0" date="2022-07-21" description="Release 5.13.0">
       <action type="add" dev="wemove" issue="3558">
         Replace opendata categories
