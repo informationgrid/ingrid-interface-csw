@@ -34,6 +34,7 @@ import de.ingrid.interfaces.csw.domain.filter.queryable.Queryable;
 import de.ingrid.interfaces.csw.domain.filter.queryable.QueryableType;
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
+import de.ingrid.utils.xml.XMLUtils;
 import de.ingrid.utils.xpath.XPathUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -64,7 +65,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.TransformerException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,14 +98,19 @@ public class LuceneFilterParser implements FilterParser {
     private static final String defaultField = "metafile:doc";
 
     @Override
-    public SpatialQuery parse(CSWQuery cswQuery) throws Exception {
+    public SpatialQuery parse(CSWQuery cswQuery) throws CSWFilterException {
 
         Document filterDoc = cswQuery.getConstraint();
 
         if (this.filterUnmarshaller == null) {
-            MarshallerPool marshallerPool = new MarshallerPool(
-                    "org.geotoolkit.ogc.xml.v110:org.geotoolkit.gml.xml.v311:org.geotoolkit.gml.xml.v321");
-            this.filterUnmarshaller = marshallerPool.acquireUnmarshaller();
+            MarshallerPool marshallerPool = null;
+            try {
+                marshallerPool = new MarshallerPool(
+                        "org.geotoolkit.ogc.xml.v110:org.geotoolkit.gml.xml.v311:org.geotoolkit.gml.xml.v321");
+                this.filterUnmarshaller = marshallerPool.acquireUnmarshaller();
+            } catch (JAXBException e) {
+                throw new RuntimeException("Unable to create marshaller.");
+            }
         }
 
         SpatialQuery query = null;
@@ -110,7 +118,17 @@ public class LuceneFilterParser implements FilterParser {
         if (filterDoc == null) {
             query =  new SpatialQuery(defaultField);
         } else {
-            JAXBElement<FilterType> filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
+            JAXBElement<FilterType> filterEl;
+            try {
+                filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
+            } catch (Exception e) {
+                try {
+                    log.error("Unable to parse filter: " + XMLUtils.toString(filterDoc, true), e);
+                } catch (TransformerException ex) {
+                    throw new RuntimeException("Error converting filter constraint to text representation.");
+                }
+                throw new CSWFilterException("Unable to parse filter constraint.");
+            }
             FilterType filter = filterEl.getValue();
 
             query = null;

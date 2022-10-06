@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>5.12.0</version>
+  <version>5.12.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>InGrid Interface CSW</name>
 
@@ -37,7 +37,7 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <iplug.type>INTERFACE_CSW</iplug.type>
-    <spring.version>4.3.20.RELEASE</spring.version>
+    <spring.version>4.3.30.RELEASE</spring.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -231,7 +231,7 @@
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>jetty</artifactId>
-      <version>6.1.14</version>
+      <version>6.1.23</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -245,7 +245,7 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-crypto</artifactId>
       <!-- The version differs from base springframework! -->
-      <version>4.2.7.RELEASE</version>
+      <version>4.2.20.RELEASE</version>
     </dependency>
 
     <dependency>
