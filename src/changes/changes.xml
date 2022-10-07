@@ -8,8 +8,8 @@
 
 
     <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
-      <action type="fix" dev="wemove" issue="4352">
-          Improve logging in case of problems parsing filter query.
+      <action type="fix" dev="wemove" issue="4354">
+          Fix not thread safe parsing of filter constraints.
       </action>
     </release>
 
