@@ -93,7 +93,7 @@ public class LuceneFilterParser implements FilterParser {
     /** Tool for evaluating xpath **/
     private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
-    private Unmarshaller filterUnmarshaller;
+    private MarshallerPool marshallerPool;
 
     private static final String defaultField = "metafile:doc";
 
@@ -102,15 +102,20 @@ public class LuceneFilterParser implements FilterParser {
 
         Document filterDoc = cswQuery.getConstraint();
 
-        if (this.filterUnmarshaller == null) {
-            MarshallerPool marshallerPool = null;
+        if (this.marshallerPool == null) {
             try {
-                marshallerPool = new MarshallerPool(
+                this.marshallerPool = new MarshallerPool(
                         "org.geotoolkit.ogc.xml.v110:org.geotoolkit.gml.xml.v311:org.geotoolkit.gml.xml.v321");
-                this.filterUnmarshaller = marshallerPool.acquireUnmarshaller();
             } catch (JAXBException e) {
                 throw new RuntimeException("Unable to create marshaller.");
             }
+        }
+
+        Unmarshaller filterUnmarshaller;
+        try {
+            filterUnmarshaller = this.marshallerPool.acquireUnmarshaller();
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
         }
 
         SpatialQuery query = null;
@@ -120,7 +125,7 @@ public class LuceneFilterParser implements FilterParser {
         } else {
             JAXBElement<FilterType> filterEl;
             try {
-                filterEl = this.filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
+                filterEl = filterUnmarshaller.unmarshal(filterDoc, FilterType.class);
             } catch (Exception e) {
                 try {
                     log.error("Unable to parse filter: " + XMLUtils.toString(filterDoc, true), e);
@@ -703,7 +708,7 @@ public class LuceneFilterParser implements FilterParser {
     /**
      * Create a spatial filter for the given filter list.
      *
-     * @param operator
+     * @param logicalOperand
      * @param filters
      * @param query
      * @return Filter
