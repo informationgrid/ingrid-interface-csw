@@ -25,6 +25,10 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jmock.Mockery;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -46,6 +51,7 @@ public class GetRecordsModifiedTest extends OperationTestBase {
      * Test GetRecords by modified date GET method using KVP encoding
      * @throws Exception
      */
+    @Test
     public void testKVPGetRecordsModified() throws Exception {
         // index data:
 
@@ -131,12 +137,12 @@ public class GetRecordsModifiedTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "/").getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("GetRecordsResponse", payload.getLocalName(), "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode(responseDoc, "/csw:GetRecordsResponse/csw:SearchResults");

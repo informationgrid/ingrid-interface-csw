@@ -31,9 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.apache.lucene.analysis.Analyzer;
+import org.junit.jupiter.api.Test;
 
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
@@ -48,17 +47,18 @@ import de.ingrid.interfaces.csw.tools.LuceneTools;
 /**
  * @author ingo@wemove.com
  */
-public class IndexTest extends TestCase {
+public class IndexTest {
 
     private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
 
     private static final File MAPPING_FILE = new File("src/main/resources/idf_to_lucene.js");
 
-   
+
     /**
      * Check if MappingScript runs without any exceptions
      * @throws Exception
      */
+    @Test
     public void testMapping() throws Exception {
         // set up indexer
         ScriptedIDFRecordLuceneMapper recordMapper = new ScriptedIDFRecordLuceneMapper();

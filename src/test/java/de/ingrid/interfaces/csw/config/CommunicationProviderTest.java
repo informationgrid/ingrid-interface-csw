@@ -25,9 +25,11 @@
  */
 package de.ingrid.interfaces.csw.config;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 import de.ingrid.interfaces.csw.config.model.communication.Communication;
 import de.ingrid.interfaces.csw.config.model.communication.CommunicationClient;
 import de.ingrid.interfaces.csw.tools.FileUtils;
@@ -35,11 +37,12 @@ import de.ingrid.interfaces.csw.tools.FileUtils;
 /**
  * @author joachim@wemove.com
  */
-public class CommunicationProviderTest extends TestCase {
+public class CommunicationProviderTest {
 
     private static final File CONFIGURATION_FILE = new File("src/test/resources/communication-testcase.xml");
     private static final File CONFIGURATION_FILE_TMP = new File("communication-testcase-tmp.xml").getAbsoluteFile();
 
+    @Test
     public void testSave() throws Exception {
 
         CommunicationProvider communicationProvider = new CommunicationProvider();
@@ -62,6 +65,7 @@ public class CommunicationProviderTest extends TestCase {
 
     }
 
+    @Test
     public void testLoad() throws Exception {
 
         CommunicationProvider communicationProvider = new CommunicationProvider();

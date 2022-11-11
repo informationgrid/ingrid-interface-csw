@@ -42,8 +42,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import de.ingrid.interfaces.csw.catalog.Manager;
 import de.ingrid.interfaces.csw.catalog.impl.TestManager;
@@ -61,9 +61,8 @@ import de.ingrid.interfaces.csw.tools.SoapNamespaceContext;
 import de.ingrid.utils.xml.ConfigurableNamespaceContext;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
-import junit.framework.TestCase;
 
-public abstract class OperationTestBase extends TestCase {
+public abstract class OperationTestBase {
 
     private static final String LIVE_INDEX_PATH = "tmp/index/live";
     private static final String CSW_CACHE_PATH = "tmp/cache/csw";
@@ -81,8 +80,9 @@ public abstract class OperationTestBase extends TestCase {
         xpath = new XPathUtils(cnc);
     }
 
-    @Override
-    @Before
+    
+    @BeforeEach
+    @BeforeEach
     public void setUp() throws Exception {
         // setup searcher
         FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
@@ -125,8 +125,9 @@ public abstract class OperationTestBase extends TestCase {
         this.servletCSWT.setServerFacade(serverFacadeCSWT);
     }
 
-    @Override
-    @After
+    
+    @AfterEach
+    @AfterEach
     public void tearDown() throws Exception {
         this.searcher.stop();
     }

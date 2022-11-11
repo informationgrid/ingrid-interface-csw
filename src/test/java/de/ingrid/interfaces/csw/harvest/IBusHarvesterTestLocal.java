@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
 import de.ingrid.interfaces.csw.harvest.ibus.IBusHarvester;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
@@ -39,11 +39,12 @@ import de.ingrid.utils.statusprovider.StatusProvider;
 /**
  * @author ingo@wemove.com
  */
-public class IBusHarvesterTestLocal extends TestCase {
+public class IBusHarvesterTestLocal {
 
     private static final String COMMUNICATION_XML_PATH = "src/test/resources/communication.xml";
     private static final String CACHE_PATH = "tmp/cache";
 
+    @Test
     public void testSimple() throws Exception {
         String communicationFilename = COMMUNICATION_XML_PATH;
 

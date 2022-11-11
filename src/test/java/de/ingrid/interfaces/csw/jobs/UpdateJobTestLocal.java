@@ -25,12 +25,15 @@
  */
 package de.ingrid.interfaces.csw.jobs;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.FutureTask;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.index.IsoIndexManager;
 import de.ingrid.utils.statusprovider.StatusProviderService;
@@ -44,7 +47,7 @@ import de.ingrid.interfaces.csw.tools.LuceneTools;
 /**
  * @author ingo@wemove.com
  */
-public class UpdateJobTestLocal extends TestCase {
+public class UpdateJobTestLocal {
 
     private static final File CONFIGURATION_FILE_1 = new File("src/test/resources/config-updatejobtest-1iplug.xml");
     private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
@@ -55,6 +58,7 @@ public class UpdateJobTestLocal extends TestCase {
     private static final String TMP_INDEX_PATH = "tmp/index/tmp";
     private static final String LIVE_INDEX_PATH = "tmp/index/live";
 
+    @Test
     public void testSimple() throws Exception {
         UpdateJob job = this.createJob(CONFIGURATION_FILE_2);
         boolean result = job.execute();

@@ -28,13 +28,19 @@ package de.ingrid.interfaces.csw.domain;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 import org.jmock.Mockery;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +52,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testKVPGetRecordsRequestSimple() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -71,12 +78,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/csw:GetRecordsResponse/csw:SearchResults" );
@@ -91,6 +98,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testKVPGetRecordsRequestLike() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -116,12 +124,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/csw:GetRecordsResponse/csw:SearchResults" );
@@ -136,6 +144,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testKVPGetRecordsSortAsc() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -161,12 +170,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/csw:GetRecordsResponse/csw:SearchResults" );
@@ -195,6 +204,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testKVPGetRecordsSortDesc() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -220,12 +230,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/csw:GetRecordsResponse/csw:SearchResults" );
@@ -254,6 +264,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordsRequestSimple() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -272,12 +283,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults" );
@@ -292,6 +303,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordsRequestHits() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -310,12 +322,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records (none expected for resultType HITS)
         Node searchResult = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults" );
@@ -328,6 +340,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordsSortByAsc() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -346,12 +359,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults" );
@@ -378,6 +391,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordsSortByDesc() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -396,12 +410,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults" );
@@ -430,6 +444,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordsSortWithPrefix() throws Exception {
         StringBuffer result = new StringBuffer();
         Mockery context = new Mockery();
@@ -447,12 +462,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults" );
@@ -480,6 +495,7 @@ public class GetRecordsTest extends OperationTestBase {
      *
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordsSortWithPrefixDesc() throws Exception {
         StringBuffer result = new StringBuffer();
         Mockery context = new Mockery();
@@ -497,12 +513,12 @@ public class GetRecordsTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue( "The response length is > 0.", result.length() > 0 );
+        assertTrue( result.length() > 0 , "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument( result.toString() );
         Node payload = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body" ).getLastChild();
 
-        assertFalse( "The response is no ExceptionReport.", payload.getLocalName().equals( "Fault" ) );
-        assertEquals( "The response is a GetRecordsResponse document.", "GetRecordsResponse", payload.getLocalName() );
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
 
         // check records
         Node searchResult = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults" );

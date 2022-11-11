@@ -23,7 +23,7 @@
 package de.ingrid.interfaces.csw.tools;
 
 import org.eclipse.jdt.internal.core.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.domain.TestRequests;
@@ -36,7 +36,7 @@ public class OGCFilterToolsTest {
     private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
     @Test
-    public void testAddPropertyIsEqual() throws Exception {
+    void testAddPropertyIsEqual() throws Exception {
         String requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_1_BRIEF_SOAP);
         Node query = this.xpath.getNode(StringUtils.stringToDocument(requestStr),
                 "//csw:GetRecords/csw:Query");
