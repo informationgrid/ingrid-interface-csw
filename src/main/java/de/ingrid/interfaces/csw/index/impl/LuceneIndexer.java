@@ -109,7 +109,6 @@ public class LuceneIndexer implements Indexer {
             for (Serializable record : records) {
                 geoTKIndexer.removeDocument(record.toString());
             }
-            geoTKIndexer.optimize();
             geoTKIndexer.destroy();
         }
     }
@@ -119,7 +118,7 @@ public class LuceneIndexer implements Indexer {
         File indexPath = this.configurationProvider.getIndexPath();
         IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null, this.statusProviderService.getDefaultStatusProvider());
         List<String> ids = geoTKIndexer.removeDocumentByQuery(queryString);
-        geoTKIndexer.optimize();
+
         geoTKIndexer.destroy();
         return ids;
     }

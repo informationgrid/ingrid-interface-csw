@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.geotoolkit.index.LogicalFilterType;
 import org.geotoolkit.lucene.filter.LuceneOGCFilter;
 import org.geotoolkit.lucene.filter.SerialChainFilter;
 import org.geotoolkit.lucene.filter.SpatialQuery;
@@ -309,7 +310,7 @@ public class FilterParserTest {
         assertNull(spaQuery.getSpatialFilter());
         assertEquals(spaQuery.getSubQueries().size(), 0);
         assertEquals(spaQuery.getQuery(), "title:\"Der Hessische Landbote\"");
-        assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.NOT);
+        assertEquals(spaQuery.getLogicalOperator(), LogicalFilterType.NOT);
     }
 
 
@@ -439,7 +440,7 @@ public class FilterParserTest {
         SerialChainFilter chainFilter = (SerialChainFilter) spaQuery.getSpatialFilter();
 
         assertEquals(chainFilter.getActionType().length,  1);
-        assertEquals(chainFilter.getActionType()[0],      SerialChainFilter.AND);
+        assertEquals(chainFilter.getActionType()[0],      LogicalFilterType.AND);
         assertEquals(chainFilter.getChain().size(),       2);
 
         /**
@@ -481,8 +482,8 @@ public class FilterParserTest {
         chainFilter = (SerialChainFilter) spaQuery.getSpatialFilter();
 
         assertEquals(chainFilter.getActionType().length,  2);
-        assertEquals(chainFilter.getActionType()[0],      SerialChainFilter.OR);
-        assertEquals(chainFilter.getActionType()[1],      SerialChainFilter.OR);
+        assertEquals(chainFilter.getActionType()[0],      LogicalFilterType.OR);
+        assertEquals(chainFilter.getActionType()[1],      LogicalFilterType.OR);
         assertEquals(chainFilter.getChain().size(),       3);
 
         //we verify each filter
@@ -536,7 +537,7 @@ public class FilterParserTest {
         chainFilter = (SerialChainFilter) spaQuery.getSpatialFilter();
 
         assertEquals(chainFilter.getActionType().length,  1);
-        assertEquals(chainFilter.getActionType()[0],      SerialChainFilter.AND);
+        assertEquals(chainFilter.getActionType()[0],      LogicalFilterType.AND);
         assertEquals(chainFilter.getChain().size(),       2);
 
         //we verify each filter
@@ -545,7 +546,7 @@ public class FilterParserTest {
 
         SerialChainFilter cf2 = (SerialChainFilter) chainFilter.getChain().get(0);
         assertEquals(cf2.getActionType().length,  1);
-        assertEquals(cf2.getActionType()[0],      SerialChainFilter.OR);
+        assertEquals(cf2.getActionType()[0],      LogicalFilterType.OR);
         assertEquals(cf2.getChain().size(),       2);
 
 
@@ -596,15 +597,15 @@ public class FilterParserTest {
         chainFilter = (SerialChainFilter) spaQuery.getSpatialFilter();
 
         assertEquals(chainFilter.getActionType().length,  2);
-        assertEquals(chainFilter.getActionType()[0],      SerialChainFilter.AND);
-        assertEquals(chainFilter.getActionType()[1],      SerialChainFilter.AND);
+        assertEquals(chainFilter.getActionType()[0],      LogicalFilterType.AND);
+        assertEquals(chainFilter.getActionType()[1],      LogicalFilterType.AND);
         assertEquals(chainFilter.getChain().size(),       3);
 
         //we verify each filter
         SerialChainFilter cf1 = (SerialChainFilter) chainFilter.getChain().get(0);
         assertEquals(cf1.getChain().size(), 1);
         assertEquals(cf1.getActionType().length,  1);
-        assertEquals(cf1.getActionType()[0],      SerialChainFilter.NOT);
+        assertEquals(cf1.getActionType()[0],      LogicalFilterType.NOT);
 
         LuceneOGCFilter cf1_1 = (LuceneOGCFilter) cf1.getChain().get(0);
         assertTrue(cf1_1.getOGCFilter() instanceof Intersects);
@@ -659,20 +660,20 @@ public class FilterParserTest {
         chainFilter = (SerialChainFilter) spaQuery.getSpatialFilter();
 
         assertEquals(chainFilter.getActionType().length,  1);
-        assertEquals(chainFilter.getActionType()[0],      SerialChainFilter.AND);
+        assertEquals(chainFilter.getActionType()[0],      LogicalFilterType.AND);
         assertEquals(chainFilter.getChain().size(),       2);
 
         //we verify each filter
         cf1 = (SerialChainFilter) chainFilter.getChain().get(0);
         assertEquals(cf1.getChain().size(), 1);
         assertEquals(cf1.getActionType().length,  1);
-        assertEquals(cf1.getActionType()[0],      SerialChainFilter.NOT);
+        assertEquals(cf1.getActionType()[0],      LogicalFilterType.NOT);
         assertTrue(cf1.getChain().get(0) instanceof SerialChainFilter);
 
         SerialChainFilter cf1_cf1 =  (SerialChainFilter) cf1.getChain().get(0);
         assertEquals(cf1_cf1.getChain().size(),   2);
         assertEquals(cf1_cf1.getActionType().length,  1);
-        assertEquals(cf1_cf1.getActionType()[0],      SerialChainFilter.OR);
+        assertEquals(cf1_cf1.getActionType()[0],      LogicalFilterType.OR);
 
         assertTrue(cf1_cf1.getChain().get(0) instanceof LuceneOGCFilter);
         LuceneOGCFilter cf1_cf1_1 = (LuceneOGCFilter) cf1_cf1.getChain().get(0);
@@ -798,7 +799,7 @@ public class FilterParserTest {
         SerialChainFilter chainFilter = (SerialChainFilter) spaQuery.getSpatialFilter();
 
         assertEquals(chainFilter.getActionType().length,  1);
-        assertEquals(chainFilter.getActionType()[0],      SerialChainFilter.AND);
+        assertEquals(chainFilter.getActionType()[0],      LogicalFilterType.AND);
         assertEquals(chainFilter.getChain().size(),       2);
 
         LuceneOGCFilter f1 = (LuceneOGCFilter) chainFilter.getChain().get(0);
@@ -836,7 +837,7 @@ public class FilterParserTest {
         assertTrue(spaQuery.getSpatialFilter() != null);
         assertEquals(spaQuery.getQuery(), "(title:*VM* OR title:VM)");
         assertEquals(spaQuery.getSubQueries().size(), 0);
-        assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.OR);
+        assertEquals(spaQuery.getLogicalOperator(), LogicalFilterType.OR);
 
         assertTrue(spaQuery.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) spaQuery.getSpatialFilter();
@@ -875,13 +876,13 @@ public class FilterParserTest {
         assertTrue(spaQuery.getSpatialFilter() != null);
         assertEquals(spaQuery.getQuery(), "(title:VM)");
         assertEquals(spaQuery.getSubQueries().size(), 0);
-        assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.OR);
+        assertEquals(spaQuery.getLogicalOperator(), LogicalFilterType.OR);
 
         assertTrue(spaQuery.getSpatialFilter() instanceof SerialChainFilter);
         chainFilter = (SerialChainFilter) spaQuery.getSpatialFilter();
 
         assertEquals(chainFilter.getActionType().length,  1);
-        assertEquals(chainFilter.getActionType()[0],      SerialChainFilter.OR);
+        assertEquals(chainFilter.getActionType()[0],      LogicalFilterType.OR);
         assertEquals(chainFilter.getChain().size(),       2);
 
         f1 = (LuceneOGCFilter) chainFilter.getChain().get(0);
@@ -924,7 +925,7 @@ public class FilterParserTest {
         assertTrue(spaQuery.getSpatialFilter() != null);
         assertEquals(spaQuery.getQuery(), "metafile:doc");
         assertEquals(spaQuery.getSubQueries().size(), 1);
-        assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.AND);
+        assertEquals(spaQuery.getLogicalOperator(), LogicalFilterType.AND);
 
         assertTrue(spaQuery.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) spaQuery.getSpatialFilter();
@@ -935,7 +936,7 @@ public class FilterParserTest {
         assertTrue  (subQuery1.getSpatialFilter() != null);
         assertEquals(subQuery1.getQuery(), "(title:VM)");
         assertEquals(subQuery1.getSubQueries().size(), 0);
-        assertEquals(subQuery1.getLogicalOperator(), SerialChainFilter.OR);
+        assertEquals(subQuery1.getLogicalOperator(), LogicalFilterType.OR);
 
         assertTrue(subQuery1.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) subQuery1.getSpatialFilter();
@@ -973,13 +974,13 @@ public class FilterParserTest {
         assertNull(spaQuery.getSpatialFilter());
         assertEquals(spaQuery.getQuery(), "(metafile:doc NOT title:VMAI)");
         assertEquals(spaQuery.getSubQueries().size(), 1);
-        assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.OR);
+        assertEquals(spaQuery.getLogicalOperator(), LogicalFilterType.OR);
 
         subQuery1 = spaQuery.getSubQueries().get(0);
         assertTrue  (subQuery1.getSpatialFilter() != null);
         assertEquals(subQuery1.getQuery(), "(title:LO?Li)");
         assertEquals(subQuery1.getSubQueries().size(), 0);
-        assertEquals(subQuery1.getLogicalOperator(), SerialChainFilter.AND);
+        assertEquals(subQuery1.getLogicalOperator(), LogicalFilterType.AND);
 
         assertTrue(subQuery1.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) subQuery1.getSpatialFilter();
@@ -1044,7 +1045,7 @@ public class FilterParserTest {
         assertTrue(spaQuery.getSpatialFilter() != null);
         assertEquals(spaQuery.getQuery(), "(title:*VM*)");
         assertEquals(spaQuery.getSubQueries().size(), 2);
-        assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.AND);
+        assertEquals(spaQuery.getLogicalOperator(), LogicalFilterType.AND);
 
         assertTrue(spaQuery.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) spaQuery.getSpatialFilter();
@@ -1055,7 +1056,7 @@ public class FilterParserTest {
         assertTrue  (subQuery1.getSpatialFilter() != null);
         assertEquals(subQuery1.getQuery(), "(title:PLOUF)");
         assertEquals(subQuery1.getSubQueries().size(), 0);
-        assertEquals(subQuery1.getLogicalOperator(), SerialChainFilter.OR);
+        assertEquals(subQuery1.getLogicalOperator(), LogicalFilterType.OR);
 
         assertTrue(subQuery1.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) subQuery1.getSpatialFilter();
@@ -1066,13 +1067,13 @@ public class FilterParserTest {
         assertNull(subQuery2.getSpatialFilter());
         assertEquals(subQuery2.getQuery(), "(metafile:doc NOT title:VMAI)");
         assertEquals(subQuery2.getSubQueries().size(), 1);
-        assertEquals(subQuery2.getLogicalOperator(), SerialChainFilter.OR);
+        assertEquals(subQuery2.getLogicalOperator(), LogicalFilterType.OR);
 
         SpatialQuery subQuery2_1 = subQuery2.getSubQueries().get(0);
         assertTrue  (subQuery2_1.getSpatialFilter() != null);
         assertEquals(subQuery2_1.getQuery(), "(title:LO?Li)");
         assertEquals(subQuery2_1.getSubQueries().size(), 0);
-        assertEquals(subQuery2_1.getLogicalOperator(), SerialChainFilter.AND);
+        assertEquals(subQuery2_1.getLogicalOperator(), LogicalFilterType.AND);
 
         assertTrue(subQuery2_1.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) subQuery2_1.getSpatialFilter();
@@ -1143,13 +1144,13 @@ public class FilterParserTest {
         assertTrue(spaQuery.getSpatialFilter() != null);
         assertEquals(spaQuery.getQuery(), "(metafile:doc)");
         assertEquals(spaQuery.getSubQueries().size(), 3);
-        assertEquals(spaQuery.getLogicalOperator(), SerialChainFilter.AND);
+        assertEquals(spaQuery.getLogicalOperator(), LogicalFilterType.AND);
 
         assertTrue(spaQuery.getSpatialFilter() instanceof SerialChainFilter);
         chainFilter = (SerialChainFilter) spaQuery.getSpatialFilter();
 
         assertEquals(chainFilter.getActionType().length,  1);
-        assertEquals(chainFilter.getActionType()[0],      SerialChainFilter.NOT);
+        assertEquals(chainFilter.getActionType()[0],      LogicalFilterType.NOT);
         assertEquals(chainFilter.getChain().size(),       1);
 
         f1 = (LuceneOGCFilter) chainFilter.getChain().get(0);
@@ -1161,7 +1162,7 @@ public class FilterParserTest {
         assertNull(subQuery1.getSpatialFilter());
         assertEquals(subQuery1.getQuery(), "title:*VM*");
         assertEquals(subQuery1.getSubQueries().size(), 0);
-        assertEquals(subQuery1.getLogicalOperator(), SerialChainFilter.NOT);
+        assertEquals(subQuery1.getLogicalOperator(), LogicalFilterType.NOT);
 
 
         // second sub-query
@@ -1169,14 +1170,14 @@ public class FilterParserTest {
         assertNull(subQuery2.getSpatialFilter());
         assertEquals(subQuery2.getQuery(), "metafile:doc");
         assertEquals(subQuery2.getSubQueries().size(), 1);
-        assertEquals(subQuery2.getLogicalOperator(), SerialChainFilter.NOT);
+        assertEquals(subQuery2.getLogicalOperator(), LogicalFilterType.NOT);
 
         // second subQuery => first subQuery
         subQuery2_1 = subQuery2.getSubQueries().get(0);
         assertTrue  (subQuery2_1.getSpatialFilter() != null);
         assertEquals(subQuery2_1.getQuery(), "(title:PLOUF)");
         assertEquals(subQuery2_1.getSubQueries().size(), 0);
-        assertEquals(subQuery2_1.getLogicalOperator(), SerialChainFilter.OR);
+        assertEquals(subQuery2_1.getLogicalOperator(), LogicalFilterType.OR);
 
         assertTrue(subQuery2_1.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) subQuery2_1.getSpatialFilter();
@@ -1188,13 +1189,13 @@ public class FilterParserTest {
         assertNull(subQuery3.getSpatialFilter());
         assertEquals(subQuery3.getQuery(), "(metafile:doc NOT title:VMAI)");
         assertEquals(subQuery3.getSubQueries().size(), 1);
-        assertEquals(subQuery3.getLogicalOperator(), SerialChainFilter.OR);
+        assertEquals(subQuery3.getLogicalOperator(), LogicalFilterType.OR);
 
         SpatialQuery subQuery3_1 = subQuery3.getSubQueries().get(0);
         assertTrue  (subQuery3_1.getSpatialFilter() != null);
         assertEquals(subQuery3_1.getQuery(), "(title:LO?Li)");
         assertEquals(subQuery3_1.getSubQueries().size(), 0);
-        assertEquals(subQuery3_1.getLogicalOperator(), SerialChainFilter.AND);
+        assertEquals(subQuery3_1.getLogicalOperator(), LogicalFilterType.AND);
 
         assertTrue(subQuery3_1.getSpatialFilter() instanceof LuceneOGCFilter);
         spaFilter = (LuceneOGCFilter) subQuery3_1.getSpatialFilter();

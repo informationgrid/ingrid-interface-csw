@@ -111,8 +111,8 @@ public class LuceneSearcher implements Searcher {
 
         // CREATE new analyzer to guarantee that analyzer not closed !
         Analyzer myAnalyzer = luceneTools.createAnalyzer();
-        lis = new LuceneIndexSearcher(this.indexPath, "", myAnalyzer);
-        lis.setCacheEnabled(ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false));
+        lis = new LuceneIndexSearcher(this.indexPath.toPath(), "", myAnalyzer);
+        
         lis.setLogLevel(log.isDebugEnabled() ? Level.FINEST : (log.isInfoEnabled() ? Level.INFO
                 : (log.isWarnEnabled() ? Level.WARNING : Level.SEVERE)));
 

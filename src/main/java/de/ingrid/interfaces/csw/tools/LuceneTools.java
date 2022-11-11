@@ -74,7 +74,7 @@ public class LuceneTools {
 	 * In non spring environment we return new default analyzer (German).
 	 */
 	public Analyzer createAnalyzer() {
-		return new GermanAnalyzer();
+		return new GermanAnalyzer(Version.LUCENE_36);
 	}
 
 	/** Return existing analyzer. If not created yet, then create one ! */

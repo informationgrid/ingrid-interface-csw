@@ -30,7 +30,7 @@
     <repository>
       <id>geotoolkit</id>
       <name>Geotoolkit repository</name>
-      <url>http://maven.geotoolkit.org/</url>
+      <url>https://maven.geotoolkit.org/</url>
     </repository>
   </repositories>
 
@@ -284,19 +284,19 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.geotoolkit.pending</groupId>
+      <groupId>org.geotoolkit</groupId>
       <artifactId>geotk-spatial-lucene</artifactId>
-      <version>3.20</version>
+      <version>4.0.5</version>
     </dependency>
     <dependency>
-      <groupId>org.geotoolkit.pending</groupId>
+      <groupId>org.geotoolkit</groupId>
       <artifactId>geotk-xml-ogc</artifactId>
-      <version>3.20</version>
+      <version>4.0.5</version>
     </dependency>
     <dependency>
-      <groupId>org.geotoolkit.pending</groupId>
+      <groupId>org.geotoolkit</groupId>
       <artifactId>geotk-xml-gml</artifactId>
-      <version>3.20</version>
+      <version>4.0.5</version>
     </dependency>
     <dependency>
       <groupId>it.sauronsoftware.cron4j</groupId>

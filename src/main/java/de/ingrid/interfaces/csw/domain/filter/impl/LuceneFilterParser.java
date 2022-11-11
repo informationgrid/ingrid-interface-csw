@@ -51,11 +51,12 @@ import org.geotoolkit.gml.xml.v311.AbstractGeometryType;
 import org.geotoolkit.gml.xml.v311.EnvelopeType;
 import org.geotoolkit.gml.xml.v311.LineStringType;
 import org.geotoolkit.gml.xml.v311.PointType;
+import org.geotoolkit.index.LogicalFilterType;
 import org.geotoolkit.lucene.filter.LuceneOGCFilter;
 import org.geotoolkit.lucene.filter.SerialChainFilter;
 import org.geotoolkit.lucene.filter.SpatialQuery;
 import org.geotoolkit.ogc.xml.v110.*;
-import org.geotoolkit.xml.MarshallerPool;
+import org.apache.sis.xml.MarshallerPool;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.util.FactoryException;
@@ -64,11 +65,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.TransformerException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -105,7 +108,8 @@ public class LuceneFilterParser implements FilterParser {
         if (this.marshallerPool == null) {
             try {
                 this.marshallerPool = new MarshallerPool(
-                        "org.geotoolkit.ogc.xml.v110:org.geotoolkit.gml.xml.v311:org.geotoolkit.gml.xml.v321");
+                        JAXBContext.newInstance("org.geotoolkit.ogc.xml.v110:org.geotoolkit.gml.xml.v311:org.geotoolkit.gml.xml.v321"),
+                        new HashMap<>());
             } catch (JAXBException e) {
                 throw new RuntimeException("Unable to create marshaller.");
             }
@@ -147,15 +151,15 @@ public class LuceneFilterParser implements FilterParser {
                 // ...
                 else if (filter.getComparisonOps() != null) {
                     query = new SpatialQuery(this.processComparisonOperator(filter.getComparisonOps()), nullFilter,
-                            SerialChainFilter.AND);
+                            LogicalFilterType.AND);
                 }
                 // process spatial constraint : BBOX, Beyond, Overlaps, ...
                 else if (filter.getSpatialOps() != null) {
-                    query = new SpatialQuery("", this.processSpatialOperator(filter.getSpatialOps()), SerialChainFilter.AND);
+                    query = new SpatialQuery("", this.processSpatialOperator(filter.getSpatialOps()), LogicalFilterType.AND);
                 }
                 // process id
                 else if (filter.getId() != null) {
-                    query = new SpatialQuery(this.processIDOperator(filter.getId()), nullFilter, SerialChainFilter.AND);
+                    query = new SpatialQuery(this.processIDOperator(filter.getId()), nullFilter, LogicalFilterType.AND);
                 }
             }
         }
@@ -221,7 +225,7 @@ public class LuceneFilterParser implements FilterParser {
                 // if the sub spatial query contains both term search and
                 // spatial search we create a subQuery
                 if ((subFilter != null && !subQuery.equals(defaultField)) || sq.getSubQueries().size() != 0
-                        || (sq.getLogicalOperator() == SerialChainFilter.NOT && sq.getSpatialFilter() == null)) {
+                        || (sq.getLogicalOperator() == LogicalFilterType.NOT && sq.getSpatialFilter() == null)) {
                     subQueries.add(sq);
                     writeOperator = false;
                 } else {
@@ -273,9 +277,9 @@ public class LuceneFilterParser implements FilterParser {
                 String subQuery = sq.getQuery();
                 Filter subFilter = sq.getSpatialFilter();
 
-                if ((sq.getLogicalOperator() == SerialChainFilter.OR && subFilter != null && !subQuery
+                if ((sq.getLogicalOperator() == LogicalFilterType.OR && subFilter != null && !subQuery
                         .equals(defaultField))
-                        || (sq.getLogicalOperator() == SerialChainFilter.NOT)) {
+                        || (sq.getLogicalOperator() == LogicalFilterType.NOT)) {
                     subQueries.add(sq);
                 } else {
                     if (!subQuery.equals("")) {
@@ -293,7 +297,7 @@ public class LuceneFilterParser implements FilterParser {
             query = "";
         }
 
-        int logicalOperand = SerialChainFilter.valueOf(operator);
+        LogicalFilterType logicalOperand = SerialChainFilter.valueOf(operator);
         Filter spatialFilter = this.getSpatialFilterFromList(logicalOperand, filters, query);
         SpatialQuery response = new SpatialQuery(query, spatialFilter, logicalOperand);
         response.setSubQueries(subQueries);
@@ -713,20 +717,20 @@ public class LuceneFilterParser implements FilterParser {
      * @param query
      * @return Filter
      */
-    protected Filter getSpatialFilterFromList(int logicalOperand, List<Filter> filters, String query) {
+    protected Filter getSpatialFilterFromList(LogicalFilterType logicalOperand, List<Filter> filters, String query) {
         Filter spatialFilter = null;
         if (filters.size() == 1) {
-            if (logicalOperand == SerialChainFilter.NOT) {
-                int[] filterType = { SerialChainFilter.NOT };
+            if (logicalOperand == LogicalFilterType.NOT) {
+                LogicalFilterType[] filterType = { LogicalFilterType.NOT };
                 spatialFilter = new SerialChainFilter(filters, filterType);
                 if (query.equals("")) {
-                    logicalOperand = SerialChainFilter.AND;
+                    logicalOperand = LogicalFilterType.AND;
                 }
             } else {
                 spatialFilter = filters.get(0);
             }
         } else if (filters.size() > 1) {
-            int[] filterType = new int[filters.size() - 1];
+            LogicalFilterType[] filterType = new LogicalFilterType[filters.size() - 1];
             for (int i = 0; i < filterType.length; i++) {
                 filterType[i] = logicalOperand;
             }
