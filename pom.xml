@@ -76,7 +76,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>5.11.0</version>
+      <version>5.15.0.3324-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -91,12 +91,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
-      <version>5.11.0</version>
+      <version>5.15.0.3324-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug</artifactId>
-      <version>5.3.0</version>
+      <version>5.15.0.3324-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>commons-betwixt</groupId>
@@ -142,8 +142,8 @@
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-ibus</artifactId>
-      <version>3.6.2</version>
+      <artifactId>ingrid-ibus-backend</artifactId>
+      <version>5.15.0.3324-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>tomcat</groupId>
@@ -253,18 +253,6 @@
       <version>2.3.2</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <version>2.3.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <version>2.3.2</version>
-      <scope>provided</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.apache.lucene</groupId>
@@ -319,6 +307,11 @@
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
       <version>2.3.2</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.xml.soap</groupId>
+      <artifactId>jakarta.xml.soap-api</artifactId>
+      <version>3.0.0</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
