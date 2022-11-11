@@ -82,7 +82,6 @@ public abstract class OperationTestBase {
 
     
     @BeforeEach
-    @BeforeEach
     public void setUp() throws Exception {
         // setup searcher
         FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
@@ -126,7 +125,6 @@ public abstract class OperationTestBase {
     }
 
     
-    @AfterEach
     @AfterEach
     public void tearDown() throws Exception {
         this.searcher.stop();

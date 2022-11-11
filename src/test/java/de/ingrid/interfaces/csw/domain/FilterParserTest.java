@@ -61,13 +61,11 @@ public class FilterParserTest {
 
     
     @BeforeEach
-    @BeforeEach
     public void setUp() throws Exception {
 		this.filterParser = new LuceneFilterParser();
 	}
 
     
-    @AfterEach
     @AfterEach
     public void tearDown() throws Exception {
 	}
