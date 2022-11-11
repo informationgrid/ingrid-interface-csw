@@ -297,7 +297,7 @@ public class LuceneFilterParser implements FilterParser {
             query = "";
         }
 
-        LogicalFilterType logicalOperand = SerialChainFilter.valueOf(operator);
+        LogicalFilterType logicalOperand = LogicalFilterType.valueOf(operator.toUpperCase());
         Filter spatialFilter = this.getSpatialFilterFromList(logicalOperand, filters, query);
         SpatialQuery response = new SpatialQuery(query, spatialFilter, logicalOperand);
         response.setSubQueries(subQueries);
