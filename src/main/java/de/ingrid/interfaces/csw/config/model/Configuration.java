@@ -63,7 +63,7 @@ public class Configuration {
 	@SuppressWarnings("unchecked")
 	public <T> T createInstance(ClassConfiguration config) throws Exception {
 		Class<?> clazz = Class.forName(config.getClassName());
-		T instance = (T)clazz.newInstance();
+		T instance = (T)clazz.getDeclaredConstructor().newInstance();
 		BeanUtils.copyProperties(config, instance);
 		return instance;
 	}
