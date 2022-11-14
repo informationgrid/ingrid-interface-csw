@@ -27,16 +27,8 @@ import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.mortbay.jetty.Handler;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.security.BasicAuthenticator;
-import org.mortbay.jetty.security.Constraint;
-import org.mortbay.jetty.security.ConstraintMapping;
-import org.mortbay.jetty.security.HashUserRealm;
-import org.mortbay.jetty.security.SecurityHandler;
-import org.mortbay.jetty.servlet.HashSessionIdManager;
-import org.mortbay.jetty.servlet.ServletHolder;
-import org.mortbay.jetty.webapp.WebAppContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -50,6 +42,7 @@ import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
  * @author André Wallat
  *
  */
+@SpringBootApplication(scanBasePackages = "de.ingrid")
 public class JettyStarter {
     private static final Log log = LogFactory.getLog(JettyStarter.class);
 
@@ -59,9 +52,9 @@ public class JettyStarter {
 
 
     public static void main(String[] args) throws Exception {
-        init();
+        SpringApplication.run(JettyStarter.class, args);
     }
-    
+    /*
     private static void init() throws Exception {
         String webappDir = ApplicationProperties.get(ConfigurationKeys.SERVER_WEBAPP, DEFAULT_WEBAPP_DIR);
         WebAppContext webAppContext = new WebAppContext(webappDir, "/");
@@ -121,5 +114,5 @@ public class JettyStarter {
         csh.setConstraintMappings( cm );
         return csh;
     }
-    
+*/
 }
