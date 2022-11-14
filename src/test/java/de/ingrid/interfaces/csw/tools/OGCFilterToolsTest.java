@@ -22,7 +22,7 @@
  */
 package de.ingrid.interfaces.csw.tools;
 
-import org.eclipse.jdt.internal.core.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Node;
 
@@ -44,9 +44,8 @@ public class OGCFilterToolsTest {
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         @SuppressWarnings("unused")
         String result = StringUtils.nodeToString(query);
-        Assert.isTrue(!this.xpath.nodeExists(query, "ogc:PropertyIsEqualTo"));
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(!this.xpath.nodeExists(query, "ogc:PropertyIsEqualTo"));
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:And/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_2_SOAP);
@@ -55,8 +54,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:And/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_3_SOAP);
@@ -65,8 +63,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:And/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_4_SOAP);
@@ -75,8 +72,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:And/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_5_SOAP);
@@ -85,8 +81,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:And/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_6_SOAP);
@@ -95,8 +90,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:And/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_7_SOAP);
@@ -105,8 +99,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:And/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_8_SOAP);
@@ -115,8 +108,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:And/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_9_SOAP);
@@ -125,8 +117,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
 
         requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_10_SOAP);
@@ -135,8 +126,7 @@ public class OGCFilterToolsTest {
 
         OGCFilterTools.addPropertyIsEqual(query, "partner", "hh");
         result = StringUtils.nodeToString(query);
-        Assert
-                .isTrue(this.xpath.nodeExists(query,
+        Assertions.assertTrue(this.xpath.nodeExists(query,
                         "//ogc:Filter/ogc:PropertyIsEqualTo/ogc:PropertyName[text()='partner']"));
     }
 
