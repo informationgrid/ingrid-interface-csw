@@ -25,6 +25,7 @@ package de.ingrid.interfaces.csw.admin;
 import java.io.IOException;
 import java.util.Random;
 
+import de.ingrid.interfaces.csw.config.model.Configuration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
@@ -58,6 +59,8 @@ import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
 public class JettyStarter {
     private static final Log log = LogFactory.getLog(JettyStarter.class);
 
+    private static int DEFAULT_JETTY_PORT = 8082;
+
     public static void main(String[] args) throws Exception {
         SpringApplication.run(JettyStarter.class, args);
     }
@@ -65,7 +68,7 @@ public class JettyStarter {
     @Bean
     public ConfigurableServletWebServerFactory servletContainerFactory() {
         JettyServletWebServerFactory factory = new JettyServletWebServerFactory();
-//        factory.setPort(config.webappPort);
+        factory.setPort(ApplicationProperties.getInteger(ConfigurationKeys.SERVER_PORT, DEFAULT_JETTY_PORT));
         return factory;
     }
     /*

@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.geotoolkit.index.tree.manager.LuceneDerbySQLTreeEltMapper;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.jupiter.api.AfterEach;
@@ -86,8 +87,9 @@ public abstract class OperationTestBase {
     @BeforeEach
     public void setUp() throws Exception {
         // setup searcher
-        FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
-        FileUtils.copyDirectory(new File("src/test/resources/index"), new File(LIVE_INDEX_PATH));
+        File liveIndexPath = new File(LIVE_INDEX_PATH);
+        FileUtils.deleteDirectory(liveIndexPath);
+        FileUtils.copyDirectory(new File("src/test/resources/index"), liveIndexPath);
 
         FileUtils.deleteDirectory(new File(CSW_CACHE_PATH));
         FileUtils.copyDirectory(new File("src/test/resources/cache"), new File(CSW_CACHE_PATH));
@@ -96,10 +98,11 @@ public abstract class OperationTestBase {
         cache.setCachePath(new File(CSW_CACHE_PATH));
 
         this.searcher = new LuceneSearcher();
-        this.searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+        this.searcher.setIndexPath(liveIndexPath);
         this.searcher.setFilterParser(new LuceneFilterParser());
         this.searcher.setRecordRepository(cache);
         this.searcher.setLuceneTools(new LuceneTools());
+        LuceneDerbySQLTreeEltMapper.createTreeEltMapperWithDB(new File(liveIndexPath, "index-1337851146660").toPath());
         this.searcher.start();
 
         this.manager = new TestManager();

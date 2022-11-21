@@ -43,6 +43,7 @@ import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.geotoolkit.factory.FactoryFinder;
 import org.geotoolkit.factory.Hints;
+import org.geotoolkit.filter.DefaultFilterFactory2;
 import org.geotoolkit.filter.SpatialFilterType;
 import org.geotoolkit.geometry.jts.SRIDGenerator;
 import org.geotoolkit.geometry.jts.SRIDGenerator.Version;
@@ -90,8 +91,8 @@ public class LuceneFilterParser implements FilterParser {
     protected static final String INCORRECT_BBOX_DIM_ERROR_MSG = "The dimensions of the bounding box are incorrect: ";
     protected static final String FACTORY_BBOX_ERROR_MSG = "Factory exception while parsing spatial filter BBox: ";
 
-    protected static final FilterFactory2 FF = (FilterFactory2) FactoryFinder.getFilterFactory(new Hints(
-            Hints.FILTER_FACTORY, FilterFactory2.class));
+    protected static final FilterFactory2 FF = new DefaultFilterFactory2(); //(FilterFactory2) FactoryFinder.getFilterFactory(new Hints(
+//            Hints.FILTER_FACTORY, FilterFactory2.class));
 
     /** Tool for evaluating xpath **/
     private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
