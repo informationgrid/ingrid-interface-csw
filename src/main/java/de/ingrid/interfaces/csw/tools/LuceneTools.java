@@ -61,12 +61,14 @@ public class LuceneTools {
         // always use same analyzer, NOT new instance ! Is called in mapping process !
         Analyzer myAnalyzer = getAnalyzer();
         TokenStream ts = myAnalyzer.tokenStream(null, new StringReader(term));
+		ts.reset();
         CharTermAttribute charTermAttribute = ts.addAttribute(CharTermAttribute.class);
 
         while (ts.incrementToken()) {
             String t = charTermAttribute.toString();
             result = result + " " + t;
         }
+		ts.close();
         return result.trim();
     }
 

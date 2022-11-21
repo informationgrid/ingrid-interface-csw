@@ -235,11 +235,19 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-tomcat</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jetty</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
     </dependency>
 
     <!--<dependency>
@@ -264,6 +272,15 @@
       <artifactId>lucene-analyzers</artifactId>
       <version>3.6.2</version>
     </dependency>-->
+
+
+    <!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.16.1.1</version>
+    </dependency>
+
 
     <dependency>
       <groupId>org.apache.lucene</groupId>
@@ -345,7 +362,20 @@
       <artifactId>cglib-nodep</artifactId>
       <version>3.3.0</version>
     </dependency>
+    
+    <!-- JS support -->
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js</artifactId>
+      <version>22.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.graalvm.js</groupId>
+      <artifactId>js-scriptengine</artifactId>
+      <version>22.2.0</version>
+    </dependency>
   </dependencies>
+
 
   <!-- ==================== Build Configuration ==================== -->
   <build>

@@ -96,6 +96,7 @@ public class LuceneIndexer implements Indexer {
         IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, myAnalyzer, this.statusProviderService.getDefaultStatusProvider());
         // TODO: set log level
         geoTKIndexer.setRecordCacheList(recordCacheList);
+        geoTKIndexer.getAllIdentifiers();
         geoTKIndexer.setMapper(this.mapper);
         geoTKIndexer.createIndex();
         geoTKIndexer.destroy();

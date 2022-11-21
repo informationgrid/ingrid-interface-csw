@@ -118,7 +118,6 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
             bindings.put("log", log);
             bindings.put("XPATH", xpathUtils);
             bindings.put("luceneTools", luceneTools);
-            bindings.put("javaVersion", JAVA_VERSION);
 
             for (Entry<String, Object> entry : utils.entrySet()) {
                 bindings.put(entry.getKey(), entry.getValue());
@@ -178,6 +177,7 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
         String extension = scriptName.substring(scriptName.lastIndexOf('.') + 1, scriptName.length());
         ScriptEngineManager mgr = new ScriptEngineManager();
         this.engine = mgr.getEngineByExtension(extension);
+        engine.createBindings().put("polyglot.js.allowAllAccess", true);
         if (this.engine instanceof Compilable) {
             Compilable compilable = (Compilable) this.engine;
             try {

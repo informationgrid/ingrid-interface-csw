@@ -46,6 +46,9 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.util.Version;
+import org.apache.sis.referencing.CommonCRS;
+import org.apache.sis.referencing.crs.DefaultEngineeringCRS;
+import org.apache.sis.referencing.crs.DefaultGeographicCRS;
 import org.geotoolkit.index.IndexingException;
 import org.geotoolkit.lucene.LuceneUtils;
 import org.geotoolkit.lucene.index.AbstractIndexer;
@@ -173,13 +176,14 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
      * @param maxx
      * @param miny
      * @param maxy
-     * @param crs
+     * @param srid
      */
     public void addBoundingBox(final Document doc, final Double minx[], final Double maxx[], final Double miny[],
-            final Double maxy[], final CoordinateReferenceSystem crs) {
+            final Double maxy[], final Integer srid) {
         try {
+            
             super.addBoundingBox(doc, java.util.Arrays.asList(minx), java.util.Arrays.asList(maxx), java.util.Arrays
-                    .asList(miny), java.util.Arrays.asList(maxy), crs);
+                    .asList(miny), java.util.Arrays.asList(maxy), CommonCRS.WGS84.geographic());
         } catch (Exception e) {
             log.warn("Error adding bounding box to lucene document.");
         }
