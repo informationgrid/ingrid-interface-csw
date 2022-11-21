@@ -177,7 +177,7 @@ public class LuceneFilterParser implements FilterParser {
                         sortOrder = "ASC";
                     }
                     // TODO determine type of sort field by queryable type
-                    sortFields.add(new SortField(this.removePrefix(propertyName) + "_sort", SortField.STRING, sortOrder
+                    sortFields.add(new SortField(this.removePrefix(propertyName) + "_sort", SortField.FIELD_DOC.getType(), sortOrder
                             .equalsIgnoreCase("DESC") ? true : false));
                 }
                 SortField[] a = sortFields.toArray(new SortField[0]);

@@ -30,10 +30,10 @@ import java.io.StringReader;
 import java.util.HashSet;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +74,7 @@ public class LuceneTools {
 	 * In non spring environment we return new default analyzer (German).
 	 */
 	public Analyzer createAnalyzer() {
-		return new GermanAnalyzer(Version.LUCENE_36);
+		return new GermanAnalyzer(CharArraySet.EMPTY_SET);
 	}
 
 	/** Return existing analyzer. If not created yet, then create one ! */

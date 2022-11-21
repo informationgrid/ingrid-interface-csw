@@ -39,8 +39,8 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -210,12 +210,14 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
      */
     public List<String> removeDocumentByQuery(final String queryString) throws ParseException {
         List<String> deletedRecords = new ArrayList<String>();
+        // TODOD: !!!
+/*
         try {
-            final QueryParser parser = new QueryParser(Version.LUCENE_36, "anytext", analyzer);
+            final QueryParser parser = new QueryParser(Version.LUCENE_5_4_1.toString(), "anytext", analyzer);
 
             Query query = parser.parse(queryString);
 
-            final IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+            final IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_5_4_1.toString(), analyzer);
             final IndexWriter writer = new IndexWriter(LuceneUtils.getAppropriateDirectory(getFileDirectory()), config);
 
             LOGGER.log(logLevel, "Query:{0}", query);
@@ -238,6 +240,7 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
         } catch (IOException ex) {
             LOGGER.log(Level.WARNING, "IOException while indexing document: " + ex.getMessage(), ex);
         }
+*/
         return deletedRecords;
     }
 

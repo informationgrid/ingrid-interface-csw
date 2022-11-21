@@ -131,6 +131,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+<!--
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-backend</artifactId>
@@ -139,6 +140,10 @@
         <exclusion>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-log4j2</artifactId>
+        </exclusion
+        <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-elasticsearch-tools</artifactId>
         </exclusion>
         <exclusion>
           <groupId>tomcat</groupId>
@@ -218,6 +223,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+-->
 
 
     <dependency>
@@ -236,15 +242,39 @@
       <artifactId>spring-boot-starter-jetty</artifactId>
     </dependency>
 
-    <dependency>
+    <!--<dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-jasper</artifactId>
+    </dependency>-->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>apache-jsp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>apache-jstl</artifactId>
+    </dependency>
+
+    <!--<dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-analyzers</artifactId>
+      <version>3.6.2</version>
+    </dependency>-->
+
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-analyzers-common</artifactId>
+      <version>5.4.1</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-analyzers</artifactId>
-      <version>3.6.2</version>
+      <artifactId>lucene-queryparser</artifactId>
+      <version>5.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.jmock</groupId>
@@ -321,6 +351,14 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>2.7.5</version>
+        <configuration>
+          <!--          <jvmArguments>&#45;&#45;add-opens java.base/java.lang=ALL-UNNAMED</jvmArguments>-->
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.openrewrite.maven</groupId>
         <artifactId>rewrite-maven-plugin</artifactId>
         <version>4.35.1</version>
@@ -383,7 +421,7 @@
         <artifactId>maven-jdeprscan-plugin</artifactId>
         <version>3.0.0-alpha-1</version>
         <configuration>
-          <release>11</release>
+          <release>17</release>
         </configuration>
       </plugin>
     </plugins>

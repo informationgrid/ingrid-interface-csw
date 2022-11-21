@@ -29,6 +29,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.ImportResource;
@@ -57,6 +60,13 @@ public class JettyStarter {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(JettyStarter.class, args);
+    }
+
+    @Bean
+    public ConfigurableServletWebServerFactory servletContainerFactory() {
+        JettyServletWebServerFactory factory = new JettyServletWebServerFactory();
+//        factory.setPort(config.webappPort);
+        return factory;
     }
     /*
     private static void init() throws Exception {
