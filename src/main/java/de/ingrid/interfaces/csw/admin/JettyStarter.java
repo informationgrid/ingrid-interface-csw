@@ -29,6 +29,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -42,14 +45,15 @@ import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
  * @author André Wallat
  *
  */
+@ImportResource("/springapp-servlet.xml")
 @SpringBootApplication(scanBasePackages = "de.ingrid")
+@ComponentScan(
+        basePackages = "de.ingrid",
+        excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = "de.ingrid.ibus.IBusApplication"),
+        })
 public class JettyStarter {
     private static final Log log = LogFactory.getLog(JettyStarter.class);
-
-    private static String DEFAULT_WEBAPP_DIR    = "webapp";
-
-    private static int    DEFAULT_JETTY_PORT    = 8082;
-
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(JettyStarter.class, args);
