@@ -22,12 +22,11 @@
  */
 package de.ingrid.interfaces.csw.admin;
 
-import java.io.IOException;
-import java.util.Random;
-
-import de.ingrid.interfaces.csw.config.model.Configuration;
+import de.ingrid.interfaces.csw.config.ApplicationProperties;
+import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jetty.webapp.WebAppContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
@@ -36,18 +35,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import de.ingrid.interfaces.csw.config.ApplicationProperties;
-import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
-import de.ingrid.interfaces.csw.server.CSWServlet;
-import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
 
 /**
  * This class starts a Jetty server where the webapp will be executed.
- * @author André Wallat
  *
+ * @author André Wallat
  */
 @ImportResource("/springapp-servlet.xml")
 @SpringBootApplication(scanBasePackages = "de.ingrid")
@@ -69,6 +61,9 @@ public class JettyStarter {
     public ConfigurableServletWebServerFactory servletContainerFactory() {
         JettyServletWebServerFactory factory = new JettyServletWebServerFactory();
         factory.setPort(ApplicationProperties.getInteger(ConfigurationKeys.SERVER_PORT, DEFAULT_JETTY_PORT));
+        factory.addServerCustomizers(server -> 
+                ((WebAppContext) server.getHandler()).setWelcomeFiles(new String[]{"index.jsp"})
+        );
         return factory;
     }
     /*
