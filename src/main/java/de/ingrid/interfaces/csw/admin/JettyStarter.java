@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,6 +35,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+import static de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys.INGRID_ADMIN_PASSWORD;
 
 /**
  * This class starts a Jetty server where the webapp will be executed.
@@ -61,70 +70,45 @@ public class JettyStarter {
     public ConfigurableServletWebServerFactory servletContainerFactory() {
         JettyServletWebServerFactory factory = new JettyServletWebServerFactory();
         factory.setPort(ApplicationProperties.getInteger(ConfigurationKeys.SERVER_PORT, DEFAULT_JETTY_PORT));
-        factory.addServerCustomizers(server -> 
+        factory.addServerCustomizers(server ->
                 ((WebAppContext) server.getHandler()).setWelcomeFiles(new String[]{"index.jsp"})
         );
         return factory;
     }
-    /*
-    private static void init() throws Exception {
-        String webappDir = ApplicationProperties.get(ConfigurationKeys.SERVER_WEBAPP, DEFAULT_WEBAPP_DIR);
-        WebAppContext webAppContext = new WebAppContext(webappDir, "/");
-        int port = Integer.getInteger("jetty.port", ApplicationProperties.getInteger(ConfigurationKeys.SERVER_PORT, DEFAULT_JETTY_PORT));
 
-        log.info("==================================================");
-        log.info("Start server using directory \"" + webappDir + "\" at port: " + port);
-        log.info("==================================================");
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/login*", "/css/**", "/images/**", "/js/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/j_spring_security_check")
+                .defaultSuccessUrl("/welcome.html", true)
+                .failureUrl("/loginFailure.html")
+                .and()
+                .logout()
+                .logoutUrl("/perform_logout")
+                .deleteCookies("JSESSIONID");
+        return http.build();
+    }
 
-        Server server = new Server(port);
-        // fix slow startup time on virtual machine env.
-        HashSessionIdManager hsim = new HashSessionIdManager();
-        hsim.setRandom(new Random());
-        server.setSessionIdManager(hsim);
-        
-        Handler[] handlers = new Handler[2];
-        handlers[0] = basicSecurityHandler();
-        handlers[1] = webAppContext;
-        server.setHandlers(handlers);
-        server.start();
-        
-        WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(webAppContext
-                .getServletContext(), "org.springframework.web.servlet.FrameworkServlet.CONTEXT.springapp");
-        CSWServlet cswServlet = (CSWServlet) wac.getBean("CSWServlet");
-        CSWTServlet cswtServlet = (CSWTServlet) wac.getBean("CSWTServlet");
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        // the contexts are hardcoded here, but with apache proxies, a different access URL
-        // can be generated, to define the correct URL in the getCapabilities document
-        // the config file has to be edited (server.interface.path)
-        webAppContext.addServlet(new ServletHolder(cswServlet), "/csw");
-        webAppContext.addServlet(new ServletHolder(cswtServlet), "/csw-t");
-        server.join();
-        
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+        UserDetails admin = User.withUsername("admin")
+                .password(ApplicationProperties.get(INGRID_ADMIN_PASSWORD))
+                .roles("admin")
+                .build();
+        return new InMemoryUserDetailsManager(admin);
     }
     
-    private static SecurityHandler basicSecurityHandler() {
-        SecurityHandler csh = new SecurityHandler();
-        csh.setAuthenticator( new BasicAuthenticator());
-        HashUserRealm userRealm = new BasicHashUserRealm("UserRealm");
-        try {
-            userRealm.setConfig( ApplicationProperties.get( "realm.properties.path" ) );
-        } catch (IOException e) {
-            log.error("Error getting properties", e);
-        }
-        csh.setUserRealm( userRealm  );
-        
-        Constraint constraint = new Constraint();
-        constraint.setName(Constraint.__BASIC_AUTH);
-        constraint.setRoles(new String[]{"user"});
-        constraint.setAuthenticate(true);
-        
-        ConstraintMapping[] cm = new ConstraintMapping[1];
-        cm[0] = new ConstraintMapping();
-        cm[0].setConstraint(constraint);
-        cm[0].setPathSpec("/csw-t");
-                
-        csh.setConstraintMappings( cm );
-        return csh;
-    }
-*/
 }
