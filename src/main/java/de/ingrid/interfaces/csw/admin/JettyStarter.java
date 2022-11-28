@@ -26,6 +26,7 @@ import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.tomcat.util.scan.Constants;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -63,6 +64,8 @@ public class JettyStarter {
     private static int DEFAULT_JETTY_PORT = 8082;
 
     public static void main(String[] args) throws Exception {
+        // avoid FileNotFound exceptions by TomCat's JarScanner
+        System.setProperty(Constants.SKIP_JARS_PROPERTY, "derby*.jar,unit-api*.jar,geo*.jar,sis*.jar");
         SpringApplication.run(JettyStarter.class, args);
     }
 
