@@ -403,23 +403,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.openrewrite.maven</groupId>
-        <artifactId>rewrite-maven-plugin</artifactId>
-        <version>4.35.1</version>
-        <configuration>
-          <activeRecipes>
-            <recipe>org.openrewrite.java.migrate.UpgradeJava17</recipe>
-          </activeRecipes>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-migrate-java</artifactId>
-            <version>1.13.0</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -458,14 +441,6 @@
         <configuration>
           <defaultOriginUrl>https://github.com/informationgrid/ingrid-interface-csw</defaultOriginUrl>
           <noDeploy>true</noDeploy>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jdeprscan-plugin</artifactId>
-        <version>3.0.0-alpha-1</version>
-        <configuration>
-          <release>17</release>
         </configuration>
       </plugin>
     </plugins>
