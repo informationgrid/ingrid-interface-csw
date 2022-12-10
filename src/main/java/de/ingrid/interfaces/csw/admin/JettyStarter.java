@@ -90,6 +90,8 @@ public class JettyStarter {
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
+                .usernameParameter("j_username")
+                .passwordParameter("j_password")
                 .loginProcessingUrl("/j_spring_security_check")
                 .defaultSuccessUrl("/welcome.html", true)
                 .failureUrl("/loginFailure.html")

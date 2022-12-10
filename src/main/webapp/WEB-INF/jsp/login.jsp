@@ -66,14 +66,14 @@
 									<tr>
 										<td class="leftCol">Name:</td>
 										<td>
-										     <input value="admin" disabled="true" style="width: 200px;" type="text" name="username"/>
-										     <input value="admin" type="hidden" name="username"/>
+										     <input value="admin" disabled="true" style="width: 200px;" type="text" name="j_username"/>
+										     <input value="admin" type="hidden" name="j_username"/>
 										</td>
 									</tr>
 									<tr>
 										<td class="leftCol">Passwort:</td>
 										<td>
-										     <input style="width: 200px;" type="password" name="password" />
+										     <input style="width: 200px;" type="password" name="j_password" />
 										</td>
 									</tr>
 									<tr>
