@@ -24,6 +24,8 @@ package de.ingrid.interfaces.csw.admin;
 
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
+import de.ingrid.interfaces.csw.server.CSWServlet;
+import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.util.scan.Constants;
@@ -31,6 +33,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -114,6 +117,20 @@ public class JettyStarter {
                 .roles("admin")
                 .build();
         return new InMemoryUserDetailsManager(admin);
+    }
+
+    @Bean
+    public ServletRegistrationBean<CSWServlet> cswServlet(CSWServlet cswServlet) {
+        ServletRegistrationBean<CSWServlet> bean = new ServletRegistrationBean<>(cswServlet, "/csw/*");
+        bean.setLoadOnStartup(1);
+        return bean;
+    }
+
+    @Bean
+    public ServletRegistrationBean<CSWTServlet> cswtServlet(CSWTServlet cswtServlet) {
+        ServletRegistrationBean<CSWTServlet> bean = new ServletRegistrationBean<>(cswtServlet, "/csw-t/*");
+        bean.setLoadOnStartup(1);
+        return bean;
     }
     
 }
