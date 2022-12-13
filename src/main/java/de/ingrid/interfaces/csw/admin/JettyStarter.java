@@ -86,8 +86,9 @@ public class JettyStarter {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login*", "/css/**", "/images/**", "/js/**")
+                .antMatchers("/csw", "/login*", "/css/**", "/images/**", "/js/**")
                 .permitAll()
+                .antMatchers("csw-t").hasAnyRole("user")
                 .anyRequest()
                 .authenticated()
                 .and()
