@@ -35,10 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -214,19 +211,17 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
      */
     public List<String> removeDocumentByQuery(final String queryString) throws ParseException {
         List<String> deletedRecords = new ArrayList<String>();
-        // TODOD: !!!
-/*
         try {
-            final QueryParser parser = new QueryParser(Version.LUCENE_5_4_1.toString(), "anytext", analyzer);
+            final QueryParser parser = new QueryParser(Version.LUCENE_5_4_1.toString(), analyzer);
 
             Query query = parser.parse(queryString);
 
-            final IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_5_4_1.toString(), analyzer);
+            final IndexWriterConfig config = new IndexWriterConfig(analyzer);
             final IndexWriter writer = new IndexWriter(LuceneUtils.getAppropriateDirectory(getFileDirectory()), config);
 
             LOGGER.log(logLevel, "Query:{0}", query);
 
-            IndexReader reader = IndexReader.open(writer, false);
+            IndexReader reader = DirectoryReader.open(writer, false);
             IndexSearcher searcher = new IndexSearcher(reader);
             TopDocs docs = searcher.search(query, Integer.MAX_VALUE);
             for (ScoreDoc doc : docs.scoreDocs) {
@@ -235,7 +230,6 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
             writer.deleteDocuments(query);
 
             writer.commit();
-            searcher.close();
             reader.close();
             writer.close();
 
@@ -244,7 +238,6 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
         } catch (IOException ex) {
             LOGGER.log(Level.WARNING, "IOException while indexing document: " + ex.getMessage(), ex);
         }
-*/
         return deletedRecords;
     }
 

@@ -300,11 +300,10 @@ for (var i in transformationDescriptions) {
 		var toLowerCase = true;
 		// iterate over all xpath results
 		log.debug("Executing XPATH: " + t.xpath)
-		var nodeList = t.xpath ? XPATH.getNodeList(recordNode, t.xpath) : [];
-		log.debug("Found: " + nodeList.length + " nodes.")
-		if (nodeList && nodeList.length > 0) {
-			for (j=0; j<nodeList.length; j++ ) {
-				log.debug("Working on node: " + (j+1) + "/" + nodeList.length + ".")
+		var nodeList = t.xpath ? XPATH.getNodeList(recordNode, t.xpath) : null;
+		if (nodeList && nodeList.getLength() > 0) {
+			for (j=0; j<nodeList.getLength(); j++ ) {
+				log.debug("Working on node: " + (j+1) + "/" + nodeList.getLength() + ".")
 				value = nodeList.item(j).getTextContent().trim();
 				log.debug("Found value: " + value)
 				// check for transformation
@@ -392,7 +391,7 @@ function mapGeographicElements(recordNode) {
 		eastList = [];
 		southList = [];
 		northList = [];
-		for (i=0; i<boundingBoxes.length; i++ ) {
+		for (i=0; i<boundingBoxes.getLength(); i++ ) {
 			if (hasValue(boundingBoxes.item(i)) && hasValue(XPATH.getString(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"))) {
 				westList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"));
 				eastList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:eastBoundLongitude/gco:Decimal"));
@@ -407,7 +406,7 @@ function mapGeographicElements(recordNode) {
 function mapReferenceSystem(recordNode) {
 	var referenceSystemIdentifiers = XPATH.getNodeList(recordNode, "//gmd:referenceSystemInfo//gmd:RS_Identifier");
 	if (hasValue(referenceSystemIdentifiers)) {
-		for (i=0; i<referenceSystemIdentifiers.length; i++ ) {
+		for (i=0; i<referenceSystemIdentifiers.getLength(); i++ ) {
 			var authority = XPATH.getString(referenceSystemIdentifiers.item(i), "gmd:codeSpace/gco:CharacterString");
 			var id = XPATH.getString(referenceSystemIdentifiers.item(i), "gmd:code/gco:CharacterString");
 			var version = XPATH.getString(referenceSystemIdentifiers.item(i), "gmd:version/gco:CharacterString");
