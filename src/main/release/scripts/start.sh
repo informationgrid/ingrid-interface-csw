@@ -171,7 +171,7 @@ prepareJavaStatement()
 
     # run it
     export CLASSPATH="$CLASSPATH"
-    INGRID_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED -Dingrid_home=$INGRID_HOME $INGRID_OPTS"
+    INGRID_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED -Dpolyglot.engine.WarnInterpreterOnly=false -Dingrid_home=$INGRID_HOME $INGRID_OPTS"
 }
 
 
