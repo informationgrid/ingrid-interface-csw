@@ -42,6 +42,7 @@ public class ConfigurationKeys {
     public static final String CAPABILITIES_DOC = "capabilities";
     public static final String RECORDDESC_DOC = "describerecord";
     public static final String INGRID_ADMIN_PASSWORD = "ingrid.admin.password";
+    public static final String CSWT_USERS = "cswt.users";
     public static final String CACHE_ENABLE = "cache.enable";
     public static final String CACHE_ENABLE_HARVEST = "cache.harvest.enable";
     public static final String QUERY_PARAMETER_2_CONSTRAINTS = "query.parameter.to.constraints";

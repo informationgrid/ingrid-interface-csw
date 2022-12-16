@@ -26,8 +26,6 @@ import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.server.CSWServlet;
 import de.ingrid.interfaces.csw.server.cswt.CSWTServlet;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.util.scan.Constants;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.springframework.boot.SpringApplication;
@@ -39,15 +37,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
-
-import static de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys.INGRID_ADMIN_PASSWORD;
 
 /**
  * This class starts a Jetty server where the webapp will be executed.
@@ -62,9 +51,8 @@ import static de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys.INGRID
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = "de.ingrid.ibus.IBusApplication"),
         })
 public class JettyStarter {
-    private static final Log log = LogFactory.getLog(JettyStarter.class);
 
-    private static int DEFAULT_JETTY_PORT = 8082;
+    private static final int DEFAULT_JETTY_PORT = 8082;
 
     public static void main(String[] args) throws Exception {
         // avoid FileNotFound exceptions by TomCat's JarScanner
@@ -83,44 +71,6 @@ public class JettyStarter {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/csw", "/login*", "/css/**", "/images/**", "/js/**")
-                .permitAll()
-                .antMatchers("csw-t").hasAnyRole("user")
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login.html")
-                .usernameParameter("j_username")
-                .passwordParameter("j_password")
-                .loginProcessingUrl("/j_spring_security_check")
-                .defaultSuccessUrl("/welcome.html", true)
-                .failureUrl("/loginFailure.html")
-                .and()
-                .logout()
-                .logoutUrl("/perform_logout")
-                .deleteCookies("JSESSIONID");
-        return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails admin = User.withUsername("admin")
-                .password(ApplicationProperties.get(INGRID_ADMIN_PASSWORD))
-                .roles("admin")
-                .build();
-        return new InMemoryUserDetailsManager(admin);
-    }
-
-    @Bean
     public ServletRegistrationBean<CSWServlet> cswServlet(CSWServlet cswServlet) {
         ServletRegistrationBean<CSWServlet> bean = new ServletRegistrationBean<>(cswServlet, "/csw/*");
         bean.setLoadOnStartup(1);
@@ -133,5 +83,5 @@ public class JettyStarter {
         bean.setLoadOnStartup(1);
         return bean;
     }
-    
+
 }

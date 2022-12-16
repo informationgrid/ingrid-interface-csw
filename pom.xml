@@ -284,19 +284,7 @@
       <artifactId>derby</artifactId>
       <version>10.11.1.1</version>
     </dependency>
-
-
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-analyzers-common</artifactId>
-      <version>5.4.1</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-queryparser</artifactId>
-      <version>5.4.1</version>
-    </dependency>
+    
     <dependency>
       <groupId>org.jmock</groupId>
       <artifactId>jmock</artifactId>
