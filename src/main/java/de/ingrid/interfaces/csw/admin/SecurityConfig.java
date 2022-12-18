@@ -4,6 +4,7 @@ import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,7 +60,7 @@ public class SecurityConfig {
     @Order(0)
     SecurityFilterChain resources(HttpSecurity http) throws Exception {
         http
-                .requestMatchers((matchers) -> matchers.antMatchers("/csw", "/login*", "/css/**", "/images/**", "/js/**"))
+                .requestMatchers((matchers) -> matchers.antMatchers("/login*", "/css/**", "/images/**", "/js/**"))
                 .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
                 .requestCache().disable()
                 .securityContext().disable()
@@ -75,6 +76,10 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain generalSecurity(HttpSecurity http) throws Exception {
             http.csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/csw").permitAll()
+                    .antMatchers(HttpMethod.POST, "/csw").permitAll()
+                    .and()
                     .requestMatchers()
                     .requestMatchers(new NegatedRequestMatcher(new OrRequestMatcher(
                             new AntPathRequestMatcher("/csw-t"),
