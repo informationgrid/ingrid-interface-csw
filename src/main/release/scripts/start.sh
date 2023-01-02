@@ -171,7 +171,7 @@ prepareJavaStatement()
 
     # run it
     export CLASSPATH="$CLASSPATH"
-    INGRID_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED -Dpolyglot.engine.WarnInterpreterOnly=false -Dingrid_home=$INGRID_HOME $INGRID_OPTS"
+    INGRID_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.util=ALL-UNNAMED -Dpolyglot.engine.WarnInterpreterOnly=false -Dingrid_home=$INGRID_HOME $INGRID_OPTS"
 }
 
 

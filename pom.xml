@@ -335,7 +335,7 @@
     <dependency>
       <groupId>com.sun.xml.messaging.saaj</groupId>
       <artifactId>saaj-impl</artifactId>
-      <version>1.5.2</version>
+      <version>1.3.28</version>
     </dependency>
 
     <dependency>
@@ -400,6 +400,11 @@
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <reuseForks>false</reuseForks>
+          <argLine>
+            --add-opens java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED
+            --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp=ALL-UNNAMED
+            --add-opens java.xml/com.sun.org.apache.xerces.internal.util=ALL-UNNAMED
+          </argLine>
           <includes>
             <include>**/*Test.java</include>
           </includes>
