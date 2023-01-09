@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -118,7 +117,7 @@ public class CSWServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
             if (request.getHeader( "Keep-Alive" ) != null && request.getContentLength() == -1) {
-                Log.debug( "Ignore keep-alive request." );
+                //Log.debug( "Ignore keep-alive request." );
             } else if (request.getContentType().toLowerCase().indexOf( "application/soap+xml" ) != -1) {
                 this.serverFacade.handleSoapRequest( request, response );
             } else {

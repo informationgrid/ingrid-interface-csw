@@ -25,10 +25,15 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jmock.Mockery;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -42,6 +47,7 @@ public class GetRecordByIdTest extends OperationTestBase {
      * Test GetRecordById with SOAP method using Soap encoding
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordByIdRequestSimple() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -60,12 +66,12 @@ public class GetRecordByIdTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a GetRecordByIdResponse document.", "GetRecordByIdResponse", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("GetRecordByIdResponse", payload.getLocalName(), "The response is a GetRecordByIdResponse document.");
 
         // check records
         NodeList recordNodes = payload.getChildNodes();
@@ -78,6 +84,7 @@ public class GetRecordByIdTest extends OperationTestBase {
      * Test GetRecordById with POST method using Soap encoding getting multiple records
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordByIdRequestMultiple() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -96,12 +103,12 @@ public class GetRecordByIdTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a GetRecordByIdResponse document.", "GetRecordByIdResponse", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("GetRecordByIdResponse", payload.getLocalName(), "The response is a GetRecordByIdResponse document.");
 
         // check records
         NodeList recordNodes = payload.getChildNodes();
@@ -116,6 +123,7 @@ public class GetRecordByIdTest extends OperationTestBase {
      * Test GetRecordById with POST method using Soap encoding and invalid request
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordByIdRequestInvalid() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -134,17 +142,18 @@ public class GetRecordByIdTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-        assertTrue("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
+        assertEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
     }
 
     /**
      * Test GetRecordById with SOAP method using Soap encoding using the default elementSet
      * @throws Exception
      */
+    @Test
     public void testSoapGetRecordByIdRequestDefaultElementSet() throws Exception {
 
         // do request with elementSetName FULL first
@@ -177,6 +186,6 @@ public class GetRecordByIdTest extends OperationTestBase {
         context2.assertIsSatisfied();
 
         // check result
-        assertEquals("The response is the same as elementSetName FULL response.", result1.toString(), result2.toString());
+        assertEquals(result1.toString(), result2.toString(), "The response is the same as elementSetName FULL response.");
     }
 }

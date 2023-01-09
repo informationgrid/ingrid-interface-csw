@@ -25,9 +25,9 @@
  */
 package de.ingrid.interfaces.csw.domain.encoding.impl;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.domain.TestRequests;
@@ -51,7 +51,7 @@ public class XMLEncodingTest {
      * .
      */
     @Test
-    public void testGetQueryNode() throws Exception {
+    void testGetQueryNode() throws Exception {
         XMLEncoding encoding = new XMLEncoding();
         String requestStr = TestRequests.getRequest(TestRequests.GETRECORDS_INVALID_MAXRECORDS);
         Node requestBody = this.xpath.getNode(StringUtils.stringToDocument(requestStr), "//csw:GetRecords");
@@ -71,7 +71,7 @@ public class XMLEncodingTest {
             fail("Must throw CSWInvalidParameterValueException!");
         } catch (CSWInvalidParameterValueException e) {
         }
-    
+
     }
 
 }

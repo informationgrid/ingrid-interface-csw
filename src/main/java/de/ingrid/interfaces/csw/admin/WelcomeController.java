@@ -25,6 +25,7 @@ package de.ingrid.interfaces.csw.admin;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -36,6 +37,11 @@ import de.ingrid.interfaces.csw.admin.command.Command;
 public class WelcomeController {
 
     public WelcomeController() {
+    }
+
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/welcome.html";
     }
 
     @RequestMapping(value = "/welcome.html", method = RequestMethod.GET)

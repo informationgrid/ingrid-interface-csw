@@ -78,6 +78,14 @@ public class AdminManager {
             case "migrate_password":
                 migratePassword();
                 break;
+            case "calc_password":
+                if (args.length == 2) {
+                    String password = args[1];
+                    calcPassword(password);
+                } else {
+                    printUsage();
+                }
+                break;
             case "reset_password":
                 if (args.length == 2) {
                     String newPassword = args[1];
@@ -93,8 +101,12 @@ public class AdminManager {
             printUsage();
         }
     }
-    
+
+    private static void calcPassword(String newPassword) {
+        System.out.println("BCrypt-Password: " + BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+    }
+
     private static void printUsage() {
-        System.out.println( "Valid commands are: migrate_password, reset_password <newPassword>" );
+        System.out.println( "Valid commands are: migrate_password, reset_password <newPassword>, calc_password <password>" );
     }
 }

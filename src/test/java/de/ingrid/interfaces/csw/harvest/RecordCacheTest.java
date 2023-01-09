@@ -25,11 +25,13 @@
  */
 package de.ingrid.interfaces.csw.harvest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.Serializable;
 import java.util.Scanner;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.tools.FileUtils;
 import de.ingrid.interfaces.csw.tools.IdfUtils;
@@ -39,13 +41,14 @@ import de.ingrid.utils.idf.IdfTool;
 /**
  * @author ingo@wemove.com
  */
-public class RecordCacheTest extends TestCase {
+public class RecordCacheTest {
 
 	private static final String CACHE_PATH = "tmp/cache";
 
 	private static final File IDF_FILE = new File("src/test/resources/idf-example.xml");
 
-	public void testPut() throws Exception {
+    @Test
+    public void testPut() throws Exception {
 		try {
     	    RecordCache cache = new RecordCache();
     		cache.setCachePath(new File(CACHE_PATH));
@@ -65,7 +68,8 @@ public class RecordCacheTest extends TestCase {
             }
 		}
 	}
-	
+
+    @Test
     public void testPutRecordWithSeparator() throws Exception {
         try {
             RecordCache cache = new RecordCache();

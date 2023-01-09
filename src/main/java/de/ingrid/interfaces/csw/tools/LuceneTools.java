@@ -33,6 +33,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
 
@@ -60,12 +61,14 @@ public class LuceneTools {
         // always use same analyzer, NOT new instance ! Is called in mapping process !
         Analyzer myAnalyzer = getAnalyzer();
         TokenStream ts = myAnalyzer.tokenStream(null, new StringReader(term));
+		ts.reset();
         CharTermAttribute charTermAttribute = ts.addAttribute(CharTermAttribute.class);
 
         while (ts.incrementToken()) {
             String t = charTermAttribute.toString();
             result = result + " " + t;
         }
+		ts.close();
         return result.trim();
     }
 
@@ -73,7 +76,7 @@ public class LuceneTools {
 	 * In non spring environment we return new default analyzer (German).
 	 */
 	public Analyzer createAnalyzer() {
-		return new GermanAnalyzer(Version.LUCENE_36, new HashSet());
+		return new GermanAnalyzer(CharArraySet.EMPTY_SET);
 	}
 
 	/** Return existing analyzer. If not created yet, then create one ! */

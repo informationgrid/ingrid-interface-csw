@@ -25,12 +25,17 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hamcrest.Matchers;
 import org.jmock.Mockery;
-import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -43,6 +48,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
      * Test GetCapabilities with GET method using KVP encoding
      * @throws Exception
      */
+    @Test
     public void testKVPGetCapabilitiesRequest() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -62,14 +68,14 @@ public class GetCapabilitiesTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect capabilities document
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         assertTrue(xpath.nodeExists(responseDoc, "//ows:Title[text()='InGrid-Portal Catalog Server TEST']"));
 
         Node payload = responseDoc.getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("Capabilities", payload.getLocalName(), "The response is a Capabilities document.");
 
     }
 
@@ -77,6 +83,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
      * Test GetCapabilities with POST method using XML encoding
      * @throws Exception
      */
+    @Test
     public void testXMLPostCapabilitiesRequest() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -96,18 +103,19 @@ public class GetCapabilitiesTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect capabilities document
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = responseDoc.getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("Capabilities", payload.getLocalName(), "The response is a Capabilities document.");
     }
 
     /**
      * Test GetCapabilities with POST method using Soap encoding
      * @throws Exception
      */
+    @Test
     public void testSoapPostCapabilitiesRequest() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -127,21 +135,22 @@ public class GetCapabilitiesTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect capabilities document
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("Capabilities", payload.getLocalName(), "The response is a Capabilities document.");
     }
 
     /**
      * Test GetCapabilities with POST method using Soap encoding and invalid request
      * @throws Exception
      */
+    @Test
     public void testSoapPostCapabilitiesRequestInvalid1() throws Exception {
         Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID1);
-        Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
+        assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
                 Matchers.containsString("The operation 'GetCap' is unknown"));
     }
 
@@ -149,9 +158,10 @@ public class GetCapabilitiesTest extends OperationTestBase {
      * Test GetCapabilities with POST method using Soap encoding and invalid request
      * @throws Exception
      */
+    @Test
     public void testSoapPostCapabilitiesRequestInvalid2() throws Exception {
         Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID2);
-        Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
+        assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
                 Matchers.containsString("Attribute 'service' is not specified or has no value"));
     }
 
@@ -159,9 +169,10 @@ public class GetCapabilitiesTest extends OperationTestBase {
      * Test GetCapabilities with POST method using Soap encoding and invalid request
      * @throws Exception
      */
+    @Test
     public void testSoapPostCapabilitiesRequestInvalid3() throws Exception {
         Node responseDoc = this.testSoapPostCapabilitiesRequestInvalid(TestRequests.GETCAPINVALID3);
-        Assert.assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
+        assertThat(xpath.getString(responseDoc, "//soapenv:Detail"),
                 Matchers.containsString("Parameter 'service' has an unsupported value"));
     }
 
@@ -170,6 +181,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
      * @return Node
      * @throws Exception
      */
+    @Test
     private Node testSoapPostCapabilitiesRequestInvalid(String requestName) throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -189,11 +201,11 @@ public class GetCapabilitiesTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect capabilities document
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-        assertTrue("The response is an ExceptionReport.", payload.getLocalName().equals("Fault"));
+        assertEquals(payload.getLocalName(), "Fault", "The response is an ExceptionReport.");
         return payload;
     }
 
@@ -201,6 +213,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
      * Test GetCapabilities with GET method using KVP encoding and a variant
      * @throws Exception
      */
+    @Test
     public void testKVPGetCapabilitiesVariantRequest() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -220,13 +233,13 @@ public class GetCapabilitiesTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect capabilities document
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         assertTrue(xpath.nodeExists(responseDoc, "//ows:Title[text()='InGrid-Portal Catalog Server TEST']"));
         Node payload = responseDoc.getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a Capabilities document.", "Capabilities", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("Capabilities", payload.getLocalName(), "The response is a Capabilities document.");
     }
 
 

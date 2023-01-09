@@ -34,16 +34,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.geotoolkit.index.tree.manager.LuceneDerbySQLTreeEltMapper;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import de.ingrid.interfaces.csw.catalog.Manager;
 import de.ingrid.interfaces.csw.catalog.impl.TestManager;
@@ -61,9 +64,8 @@ import de.ingrid.interfaces.csw.tools.SoapNamespaceContext;
 import de.ingrid.utils.xml.ConfigurableNamespaceContext;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
-import junit.framework.TestCase;
 
-public abstract class OperationTestBase extends TestCase {
+public abstract class OperationTestBase {
 
     private static final String LIVE_INDEX_PATH = "tmp/index/live";
     private static final String CSW_CACHE_PATH = "tmp/cache/csw";
@@ -81,12 +83,13 @@ public abstract class OperationTestBase extends TestCase {
         xpath = new XPathUtils(cnc);
     }
 
-    @Override
-    @Before
+    
+    @BeforeEach
     public void setUp() throws Exception {
         // setup searcher
-        FileUtils.deleteDirectory(new File(LIVE_INDEX_PATH));
-        FileUtils.copyDirectory(new File("src/test/resources/index"), new File(LIVE_INDEX_PATH));
+        File liveIndexPath = new File(LIVE_INDEX_PATH);
+        FileUtils.deleteDirectory(liveIndexPath);
+        FileUtils.copyDirectory(new File("src/test/resources/index"), liveIndexPath);
 
         FileUtils.deleteDirectory(new File(CSW_CACHE_PATH));
         FileUtils.copyDirectory(new File("src/test/resources/cache"), new File(CSW_CACHE_PATH));
@@ -95,10 +98,11 @@ public abstract class OperationTestBase extends TestCase {
         cache.setCachePath(new File(CSW_CACHE_PATH));
 
         this.searcher = new LuceneSearcher();
-        this.searcher.setIndexPath(new File(LIVE_INDEX_PATH));
+        this.searcher.setIndexPath(liveIndexPath);
         this.searcher.setFilterParser(new LuceneFilterParser());
         this.searcher.setRecordRepository(cache);
         this.searcher.setLuceneTools(new LuceneTools());
+        LuceneDerbySQLTreeEltMapper.createTreeEltMapperWithDB(new File(liveIndexPath, "index-1337851146660").toPath());
         this.searcher.start();
 
         this.manager = new TestManager();
@@ -125,8 +129,8 @@ public abstract class OperationTestBase extends TestCase {
         this.servletCSWT.setServerFacade(serverFacadeCSWT);
     }
 
-    @Override
-    @After
+    
+    @AfterEach
     public void tearDown() throws Exception {
         this.searcher.stop();
     }
@@ -145,6 +149,26 @@ public abstract class OperationTestBase extends TestCase {
         public int read() throws IOException {
             return this.buf.read();
         }
+
+        @Override
+        public boolean isFinished() {
+            return false;
+        }
+
+        @Override
+        public boolean isReady() {
+            try {
+                return this.buf.ready();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        public void setReadListener(ReadListener readListener) {
+
+        }
     }
 
     /**
@@ -160,6 +184,16 @@ public abstract class OperationTestBase extends TestCase {
         @Override
         public void write(int c) throws IOException {
             this.buf.append((char)c);
+        }
+
+        @Override
+        public boolean isReady() {
+            return true;
+        }
+
+        @Override
+        public void setWriteListener(WriteListener writeListener) {
+
         }
     }
 

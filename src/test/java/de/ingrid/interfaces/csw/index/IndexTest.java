@@ -31,9 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.apache.lucene.analysis.Analyzer;
+import org.junit.jupiter.api.Test;
 
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.config.model.Configuration;
@@ -48,17 +47,17 @@ import de.ingrid.interfaces.csw.tools.LuceneTools;
 /**
  * @author ingo@wemove.com
  */
-public class IndexTest extends TestCase {
+public class IndexTest {
 
     private static final File CONFIGURATION_FILE_2 = new File("src/test/resources/config-updatejobtest-2iplugs.xml");
 
     private static final File MAPPING_FILE = new File("src/main/resources/idf_to_lucene.js");
 
-   
+
     /**
      * Check if MappingScript runs without any exceptions
-     * @throws Exception
      */
+    @Test
     public void testMapping() throws Exception {
         // set up indexer
         ScriptedIDFRecordLuceneMapper recordMapper = new ScriptedIDFRecordLuceneMapper();
@@ -69,31 +68,27 @@ public class IndexTest extends TestCase {
         ConfigurationProvider configProvider = new ConfigurationProvider();
         configProvider.setConfigurationFile( CONFIGURATION_FILE_2 );
 
-        HashMap<String, Object> utils = new HashMap<String, Object>();
+        HashMap<String, Object> utils = new HashMap<>();
         LuceneTools luceneTools = new LuceneTools();
         Analyzer myAnalyzer = luceneTools.createAnalyzer();
         utils.put("geometryMapper", new IngridGeoTKLuceneIndexer("", configProvider.getNewIndexPath(), myAnalyzer, null));
         recordMapper.setLuceneTools( luceneTools );
         
         Configuration configuration = configProvider.reloadConfiguration();
-        List<RecordCache> recordCacheList = new ArrayList<RecordCache>();
-        List<Harvester> harvesterInstanceList = new ArrayList<Harvester>();
+        List<RecordCache> recordCacheList = new ArrayList<>();
+        List<Harvester> harvesterInstanceList = new ArrayList<>();
         List<HarvesterConfiguration> harvesterConfigs = configuration.getHarvesterConfigurations();
-        RecordCache cacheInstance = null;
-        Harvester harvesterInstance = null;
+        RecordCache cacheInstance;
+        Harvester harvesterInstance;
         for (HarvesterConfiguration harvesterConfig : harvesterConfigs) {
 
-            try {
-                // set up the cache
-                RecordCacheConfiguration cacheConfig = harvesterConfig.getCacheConfiguration();
-                cacheInstance = configuration.createInstance(cacheConfig);
+            // set up the cache
+            RecordCacheConfiguration cacheConfig = harvesterConfig.getCacheConfiguration();
+            cacheInstance = configuration.createInstance(cacheConfig);
 
-                // set up the harvester
-                harvesterInstance = configuration.createInstance(harvesterConfig);
-                harvesterInstance.setCache(cacheInstance);
-            } catch (Exception e) {
-                throw(e);
-            }
+            // set up the harvester
+            harvesterInstance = configuration.createInstance(harvesterConfig);
+            harvesterInstance.setCache(cacheInstance);
 
             // add instances to lists
             recordCacheList.add(cacheInstance);

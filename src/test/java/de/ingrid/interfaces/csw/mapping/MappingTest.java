@@ -25,13 +25,17 @@
  */
 package de.ingrid.interfaces.csw.mapping;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.util.Scanner;
 
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
-import junit.framework.TestCase;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -45,11 +49,12 @@ import de.ingrid.utils.xpath.XPathUtils;
 /**
  * @author ingo@wemove.com
  */
-public class MappingTest extends TestCase {
+public class MappingTest {
 
 	private static final File IDF_FILE = new File("src/test/resources/idf-example.xml");
 
-	public void testFull() throws Exception {
+    @Test
+    public void testFull() throws Exception {
 		XsltMapper mapper = new XsltMapper();
 
 		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();
@@ -66,7 +71,8 @@ public class MappingTest extends TestCase {
 		        xpath.getString(result, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
 	}
 
-	public void testSummary() throws Exception {
+    @Test
+    public void testSummary() throws Exception {
 		XsltMapper mapper = new XsltMapper();
 
 		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();
@@ -83,7 +89,8 @@ public class MappingTest extends TestCase {
 		        xpath.getString(result, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
 	}
 
-	public void testBrief() throws Exception {
+    @Test
+    public void testBrief() throws Exception {
 		XsltMapper mapper = new XsltMapper();
 
 		String idfContent = new Scanner(IDF_FILE).useDelimiter("\\A").next();
@@ -100,7 +107,8 @@ public class MappingTest extends TestCase {
 		        xpath.getString(result, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
 	}
 
-	public void test_ISSUE_INGRID_2194() throws Exception {
+    @Test
+    public void test_ISSUE_INGRID_2194() throws Exception {
 		XsltMapper mapper = new XsltMapper();
 
 		String idfContent = new Scanner(new File("src/test/resources/81A36D07-BD83-495A-8A94-30416165C86D.xml"))
@@ -132,7 +140,8 @@ public class MappingTest extends TestCase {
 		        .contains("Basisdaten"));
 	}
 
-	public void testFullHMDKSpecialTicket1531() throws Exception {
+    @Test
+    public void testFullHMDKSpecialTicket1531() throws Exception {
 		XsltMapper mapper = new XsltMapper();
 
 		ApplicationProperties.setProperty(ConfigurationKeys.IDF_2_FULL_PROCESSING_XSLT, "idf_1_0_0_to_iso_metadata_hmdk_5.8.1_4.6.9.xsl");
@@ -187,7 +196,8 @@ public class MappingTest extends TestCase {
 	}
 
 
-	public void testFullHMDKNewGmlNamespaceTicket2505() throws Exception {
+    @Test
+    public void testFullHMDKNewGmlNamespaceTicket2505() throws Exception {
 		XsltMapper mapper = new XsltMapper();
 
 		ApplicationProperties.setProperty(ConfigurationKeys.IDF_2_FULL_PROCESSING_XSLT, "idf_1_0_0_to_iso_metadata_hmdk_5.8.1_4.6.9.xsl");

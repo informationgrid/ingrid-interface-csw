@@ -28,29 +28,25 @@ package de.ingrid.interfaces.csw.index.impl;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.index.*;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.util.Version;
-import org.geotoolkit.lucene.IndexingException;
+import org.apache.sis.referencing.CommonCRS;
+import org.apache.sis.referencing.crs.DefaultEngineeringCRS;
+import org.apache.sis.referencing.crs.DefaultGeographicCRS;
+import org.geotoolkit.index.IndexingException;
 import org.geotoolkit.lucene.LuceneUtils;
 import org.geotoolkit.lucene.index.AbstractIndexer;
 
@@ -59,6 +55,7 @@ import de.ingrid.interfaces.csw.index.RecordLuceneMapper;
 import de.ingrid.utils.statusprovider.StatusProvider;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.dsc.Record;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * @author joachim@wemove.com
@@ -80,7 +77,7 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
 
     public IngridGeoTKLuceneIndexer(String serviceID, File configDirectory, Analyzer analyzer,
             StatusProvider statusProvider) {
-        super(serviceID, configDirectory, analyzer);
+        super(serviceID, configDirectory.toPath(), analyzer);
         mapperUtils = new HashMap<String, Object>();
         mapperUtils.put("geometryMapper", this);
         this.statusProvider = statusProvider;
@@ -117,6 +114,21 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
 
         log.info("Returning " + allIdentifiers.size() + " records for indexing.");
         return allIdentifiers;
+    }
+
+    @Override
+    protected Iterator<String> getIdentifierIterator() throws IndexingException {
+        return allIdentifiers.iterator();
+    }
+
+    @Override
+    protected Iterator<Record> getEntryIterator() throws IndexingException {
+        return null;
+    }
+
+    @Override
+    protected boolean useEntryIterator() {
+        return false;
     }
 
     @Override
@@ -166,8 +178,9 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
     public void addBoundingBox(final Document doc, final Double minx[], final Double maxx[], final Double miny[],
             final Double maxy[], final Integer srid) {
         try {
+            
             super.addBoundingBox(doc, java.util.Arrays.asList(minx), java.util.Arrays.asList(maxx), java.util.Arrays
-                    .asList(miny), java.util.Arrays.asList(maxy), srid);
+                    .asList(miny), java.util.Arrays.asList(maxy), CommonCRS.WGS84.geographic());
         } catch (Exception e) {
             log.warn("Error adding bounding box to lucene document.");
         }
@@ -193,22 +206,22 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
     /**
      * This method remove documents identified by query from the index.
      * 
-     * @param query
+     * @param queryString
      * @throws ParseException
      */
     public List<String> removeDocumentByQuery(final String queryString) throws ParseException {
         List<String> deletedRecords = new ArrayList<String>();
         try {
-            final QueryParser parser = new QueryParser(Version.LUCENE_36, "anytext", analyzer);
+            final QueryParser parser = new QueryParser(Version.LUCENE_5_4_1.toString(), analyzer);
 
             Query query = parser.parse(queryString);
 
-            final IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+            final IndexWriterConfig config = new IndexWriterConfig(analyzer);
             final IndexWriter writer = new IndexWriter(LuceneUtils.getAppropriateDirectory(getFileDirectory()), config);
 
             LOGGER.log(logLevel, "Query:{0}", query);
 
-            IndexReader reader = IndexReader.open(writer, false);
+            IndexReader reader = DirectoryReader.open(writer, false);
             IndexSearcher searcher = new IndexSearcher(reader);
             TopDocs docs = searcher.search(query, Integer.MAX_VALUE);
             for (ScoreDoc doc : docs.scoreDocs) {
@@ -217,7 +230,6 @@ public class IngridGeoTKLuceneIndexer extends AbstractIndexer<Record> {
             writer.deleteDocuments(query);
 
             writer.commit();
-            searcher.close();
             reader.close();
             writer.close();
 
