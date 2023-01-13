@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>dummy-SNAPSHOT</version>
+  <version>6.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>InGrid Interface CSW</name>
 
@@ -140,8 +140,7 @@
         <exclusion>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-log4j2</artifactId>
-        </exclusion
-        <exclusion>
+        </exclusion <exclusion>
           <groupId>de.ingrid</groupId>
           <artifactId>ingrid-elasticsearch-tools</artifactId>
         </exclusion>
