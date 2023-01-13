@@ -1,11 +1,11 @@
 FROM alpine AS builder
 
 ADD ingrid-interface-csw-*-installer.jar /
-RUN unzip ingrid-interface-csw-*-installer.jar -d /tmp \
+RUN unzip -q ingrid-interface-csw-*-installer.jar -d /tmp \
     && export INSTALL_DIR=`ls -d1 /tmp/ingrid-interface-*` \
     && sed -i -r 's/(<AppenderRef.*\/>)/\1<AppenderRef ref="Console" \/>/g' $INSTALL_DIR/conf/log4j2.xml
 
-FROM docker-registry.wemove.com/ingrid-java:jre-8-slim
+FROM docker-registry.wemove.com/ingrid-java:jre-17
 ENV INGRID_USER=ingrid
 ENV RUN_DIRECTLY=true
 

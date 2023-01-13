@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -111,8 +111,8 @@ public class LuceneSearcher implements Searcher {
 
         // CREATE new analyzer to guarantee that analyzer not closed !
         Analyzer myAnalyzer = luceneTools.createAnalyzer();
-        lis = new LuceneIndexSearcher(this.indexPath, "", myAnalyzer);
-        lis.setCacheEnabled(ApplicationProperties.getBoolean(ConfigurationKeys.CACHE_ENABLE, false));
+        lis = new LuceneIndexSearcher(this.indexPath.toPath(), "", myAnalyzer);
+        
         lis.setLogLevel(log.isDebugEnabled() ? Level.FINEST : (log.isInfoEnabled() ? Level.INFO
                 : (log.isWarnEnabled() ? Level.WARNING : Level.SEVERE)));
 

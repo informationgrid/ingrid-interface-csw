@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-interface-csw
   ==================================================
-  Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2023 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -61,7 +61,7 @@
 			<br/>
 				        <div>
 				        	<p>&nbsp;</p>
-				            <form method="post" action="j_security_check" id="login">
+				            <form method="post" action="j_spring_security_check" id="login">
 					            <table id="konfigForm">
 									<tr>
 										<td class="leftCol">Name:</td>

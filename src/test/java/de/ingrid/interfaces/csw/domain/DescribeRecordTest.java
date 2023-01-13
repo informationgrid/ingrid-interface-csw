@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,10 +25,15 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jmock.Mockery;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -41,6 +46,7 @@ public class DescribeRecordTest extends OperationTestBase {
      * Test DescribeRecord with GET method using KVP encoding
      * @throws Exception
      */
+    @Test
     public void testKVPDescribeRecordRequest() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -59,18 +65,19 @@ public class DescribeRecordTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect describe record document
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = responseDoc.getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a DescribeRecordResponse document.", "DescribeRecordResponse", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("DescribeRecordResponse", payload.getLocalName(), "The response is a DescribeRecordResponse document.");
     }
 
     /**
      * Test DescribeRecord with POST method using XML encoding
      * @throws Exception
      */
+    @Test
     public void testXMLDescribeRecordRequest() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -89,18 +96,19 @@ public class DescribeRecordTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect describe record document
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = responseDoc.getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a DescribeRecordResponse document.", "DescribeRecordResponse", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("DescribeRecordResponse", payload.getLocalName(), "The response is a DescribeRecordResponse document.");
     }
 
     /**
      * Test DescribeRecord with POST method using Soap encoding
      * @throws Exception
      */
+    @Test
     public void testSoapDescribeRecordRequest() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -119,11 +127,11 @@ public class DescribeRecordTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect describe record document
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "soapenv:Envelope/soapenv:Body").getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a DescribeRecordResponse document.", "DescribeRecordResponse", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("DescribeRecordResponse", payload.getLocalName(), "The response is a DescribeRecordResponse document.");
     }
 }

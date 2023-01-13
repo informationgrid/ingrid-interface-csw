@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -118,7 +118,6 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
             bindings.put("log", log);
             bindings.put("XPATH", xpathUtils);
             bindings.put("luceneTools", luceneTools);
-            bindings.put("javaVersion", JAVA_VERSION);
 
             for (Entry<String, Object> entry : utils.entrySet()) {
                 bindings.put(entry.getKey(), entry.getValue());
@@ -178,6 +177,7 @@ public class ScriptedIDFRecordLuceneMapper implements RecordLuceneMapper {
         String extension = scriptName.substring(scriptName.lastIndexOf('.') + 1, scriptName.length());
         ScriptEngineManager mgr = new ScriptEngineManager();
         this.engine = mgr.getEngineByExtension(extension);
+        engine.createBindings().put("polyglot.js.allowAllAccess", true);
         if (this.engine instanceof Compilable) {
             Compilable compilable = (Compilable) this.engine;
             try {

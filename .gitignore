@@ -7,8 +7,8 @@ last_status.xml
 updatejob.dat
 conf/
 config.xml
-index/
 /bin/
 data/
 instances/
 *.iml
+/.idea/

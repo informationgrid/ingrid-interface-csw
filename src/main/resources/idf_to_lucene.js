@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -35,23 +35,11 @@
  * The document already has a field "docid" with the current lucene document id.
  *
  */
-if (javaVersion.indexOf( "1.8" ) === 0) {
-	load("nashorn:mozilla_compat.js");
-}
 
-importPackage(Packages.org.apache.lucene.document);
-importPackage(Packages.de.ingrid.interfaces.csw.tools);
-importPackage(Packages.de.ingrid.utils.udk);
-importPackage(Packages.de.ingrid.utils.xpath);
-importPackage(Packages.org.w3c.dom);
-importPackage(Packages.de.ingrid.interfaces.csw.index.impl);
+let Field = Java.type("org.apache.lucene.document.Field");
 
 
-
-
-if (log.isDebugEnabled()) {
-	log.debug("Mapping record "+recordId+" to lucene document");
-}
+log.debug("Mapping record "+recordId+" to lucene document");
 
 // define one-to-one mappings
 /**  each entry consists off the following possible values:
@@ -304,33 +292,20 @@ for (var i in transformationDescriptions) {
 	
 	// check for execution (special function)
 	if (hasValue(t.execute)) {
-		if (log.isDebugEnabled()) {
-			log.debug("Execute function: " + t.execute.funct.name)
-		}
+		log.debug("Execute function: " + t.execute.funct.name)
 		call_f(t.execute.funct, t.execute.params)
 	} else {
-		if (log.isDebugEnabled()) {
-			log.debug("Working on " + t.indexField)
-		}
+		log.debug("Working on " + t.indexField)
 		var tokenized = true;
 		var toLowerCase = true;
 		// iterate over all xpath results
-		if (log.isDebugEnabled()) {
-			log.debug("Executing XPATH: " + t.xpath)
-		}
-		var nodeList = XPATH.getNodeList(recordNode, t.xpath);
-		if (log.isDebugEnabled()) {
-			log.debug("Found: " + nodeList.getLength() + " nodes.")
-		}
+		log.debug("Executing XPATH: " + t.xpath)
+		var nodeList = t.xpath ? XPATH.getNodeList(recordNode, t.xpath) : null;
 		if (nodeList && nodeList.getLength() > 0) {
 			for (j=0; j<nodeList.getLength(); j++ ) {
-				if (log.isDebugEnabled()) {
-					log.debug("Working on node: " + (j+1) + "/" + nodeList.getLength() + ".")
-				}
+				log.debug("Working on node: " + (j+1) + "/" + nodeList.getLength() + ".")
 				value = nodeList.item(j).getTextContent().trim();
-				if (log.isDebugEnabled()) {
-					log.debug("Found value: " + value)
-				}
+				log.debug("Found value: " + value)
 				// check for transformation
 				if (hasValue(t.transform)) {
 					var args = new Array(value);
@@ -410,25 +385,18 @@ function transformGeneric(val, mappings, caseSensitive) {
 function mapGeographicElements(recordNode) {
 	var boundingBoxes = XPATH.getNodeList(recordNode, "//gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox");
 	if (hasValue(boundingBoxes)) {
-	    var westList, eastList, southList, northList;
-	    if (javaVersion.indexOf( "1.8" ) === 0) {
-    	    var DoubleArrayType = Java.type("java.lang.Double[]");
-            westList = new DoubleArrayType(boundingBoxes.getLength());
-            eastList = new DoubleArrayType(boundingBoxes.getLength());
-            southList = new DoubleArrayType(boundingBoxes.getLength());
-            northList = new DoubleArrayType(boundingBoxes.getLength());
-	    } else {
-	        westList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
-	        eastList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
-	        southList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
-	        northList = java.lang.reflect.Array.newInstance(java.lang.Double, boundingBoxes.getLength());
-	    }
+	    let westList, eastList, southList, northList;
+
+		westList = [];
+		eastList = [];
+		southList = [];
+		northList = [];
 		for (i=0; i<boundingBoxes.getLength(); i++ ) {
 			if (hasValue(boundingBoxes.item(i)) && hasValue(XPATH.getString(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"))) {
-				westList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal");
-				eastList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:eastBoundLongitude/gco:Decimal");
-				southList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:southBoundLatitude/gco:Decimal");
-				northList[i] = XPATH.getDouble(boundingBoxes.item(i), "gmd:northBoundLatitude/gco:Decimal");
+				westList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"));
+				eastList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:eastBoundLongitude/gco:Decimal"));
+				southList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:southBoundLatitude/gco:Decimal"));
+				northList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:northBoundLatitude/gco:Decimal"));
 			}
 		}
 		geometryMapper.addBoundingBox(document, westList, eastList, southList, northList, new java.lang.Integer(4326));
@@ -462,9 +430,7 @@ function mapHasSecurityConstraints(recordNode) {
 
 function addToDoc(field, content, tokenized) {
 	if (typeof content != "undefined" && content != null) {
-		if (log.isDebugEnabled()) {
-			log.debug("Add '" + field + "'='" + content + "' to lucene index");
-		}
+		log.debug("Add '" + field + "'='" + content + "' to lucene index");
 		var analyzed = Field.Index.ANALYZED;
 		if (!tokenized) analyzed = Field.Index.NOT_ANALYZED;
 		document.add(new Field(field, content, Field.Store.YES, analyzed));
@@ -476,14 +442,10 @@ function addToDoc(field, content, tokenized) {
 function addNumericToDoc(field, content) {
 	if (typeof content != "undefined" && content != null) {
         try {
-    		if (log.isDebugEnabled()) {
-    			log.debug("Add numeric '" + field + "'='" + content + "' to lucene index.");
-    		}
+			log.debug("Add numeric '" + field + "'='" + content + "' to lucene index.");
             document.add(new NumericField(field, Field.Store.YES, true).setDoubleValue(content));
         } catch (e) {
-            if (log.isDebugEnabled()) {
-                log.debug("Value '" + content + "' is not a number. Ignoring field '" + field + "'.");
-            }
+			log.debug("Value '" + content + "' is not a number. Ignoring field '" + field + "'.");
         }
 	}
 }

@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -29,7 +29,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 import de.ingrid.interfaces.csw.config.model.Configuration;
 import de.ingrid.interfaces.csw.config.model.HarvesterConfiguration;
 import de.ingrid.interfaces.csw.config.model.RequestDefinition;
@@ -40,12 +40,13 @@ import de.ingrid.interfaces.csw.tools.FileUtils;
 /**
  * @author ingo@wemove.com
  */
-public class ConfigurationProviderTest extends TestCase {
+public class ConfigurationProviderTest {
 
 	private static final File CONFIGURATION_FILE = new File("tmp/config.xml");
 	private static final String CACHE_PATH = "tmp/cache";
 
-	public void testSave() throws Exception {
+    @Test
+    public void testSave() throws Exception {
 
 		try {
     	    Configuration configuration = new Configuration();
@@ -101,7 +102,8 @@ public class ConfigurationProviderTest extends TestCase {
 		}
 	}
 
-	public void testRead() throws Exception {
+    @Test
+    public void testRead() throws Exception {
 		// TODO read xml
 	}
 }

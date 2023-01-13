@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,6 +25,10 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jmock.Mockery;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -46,6 +51,7 @@ public class TransactionTest extends OperationTestBase {
      * Test Transaction with with GET method using KVP encoding
      * @throws Exception
      */
+    @Test
     public void testKVPTransactionRequestSimple() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -64,17 +70,18 @@ public class TransactionTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // expect exception because KVP GET is not supported for Transaction operation
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "/").getLastChild();
 
-        assertTrue("The response is an ExceptionReport.", payload.getLocalName().equals("ExceptionReport"));
+        assertEquals(payload.getLocalName(), "ExceptionReport", "The response is an ExceptionReport.");
     }
 
     /**
      * Test GetRecords with SOAP method using Soap encoding
      * @throws Exception
      */
+    @Test
     public void testSoapTransactionRequestSimple() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -99,12 +106,12 @@ public class TransactionTest extends OperationTestBase {
         context.assertIsSatisfied();
 
         // check csw payload
-        assertTrue("The response length is > 0.", result.length() > 0);
+        assertTrue(result.length() > 0, "The response length is > 0.");
         Document responseDoc = StringUtils.stringToDocument(result.toString());
         Node payload = xpath.getNode(responseDoc, "/soapenv:Envelope/soapenv:Body").getLastChild();
 
-        assertFalse("The response is no ExceptionReport.", payload.getLocalName().equals("Fault"));
-        assertEquals("The response is a TransactionResponse document.", "TransactionResponse", payload.getLocalName());
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals("TransactionResponse", payload.getLocalName(), "The response is a TransactionResponse document.");
 
         // check summary
         Node summary = xpath.getNode(responseDoc, "/soapenv:Envelope/soapenv:Body/csw:TransactionResponse/csw:TransactionSummary");

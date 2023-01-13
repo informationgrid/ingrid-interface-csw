@@ -16,7 +16,7 @@
         <Logger name="de" level="info" additivity="false">
             <AppenderRef ref="LogFile" />
         </Logger>
-        <Logger name="org" level="warn" additivity="false">
+        <Logger name="org" level="info" additivity="false">
             <AppenderRef ref="LogFile" />
         </Logger>
         <Logger name="net" level="warn" additivity="false">

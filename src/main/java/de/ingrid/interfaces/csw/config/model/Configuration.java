@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -63,7 +63,7 @@ public class Configuration {
 	@SuppressWarnings("unchecked")
 	public <T> T createInstance(ClassConfiguration config) throws Exception {
 		Class<?> clazz = Class.forName(config.getClassName());
-		T instance = (T)clazz.newInstance();
+		T instance = (T)clazz.getDeclaredConstructor().newInstance();
 		BeanUtils.copyProperties(config, instance);
 		return instance;
 	}

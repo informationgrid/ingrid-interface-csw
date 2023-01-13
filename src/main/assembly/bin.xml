@@ -73,7 +73,7 @@
     </fileSet>
     <fileSet>
       <directory>src/main/webapp</directory>
-      <outputDirectory>${project.artifactId}-${project.version}/webapp</outputDirectory>
+      <outputDirectory>${project.artifactId}-${project.version}/public</outputDirectory>
     </fileSet>
   </fileSets>
   <dependencySets>

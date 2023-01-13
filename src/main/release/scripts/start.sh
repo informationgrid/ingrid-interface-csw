@@ -2,7 +2,7 @@
 # **************************************************-
 # ingrid-interface-csw
 # ==================================================
-# Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+# Copyright (C) 2014 - 2023 wemove digital solutions GmbH
 # ==================================================
 # Licensed under the EUPL, Version 1.1 or – as soon they will be
 # approved by the European Commission - subsequent versions of the
@@ -171,7 +171,7 @@ prepareJavaStatement()
 
     # run it
     export CLASSPATH="$CLASSPATH"
-    INGRID_OPTS="-Dingrid_home=$INGRID_HOME $INGRID_OPTS"
+    INGRID_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.util=ALL-UNNAMED -Dpolyglot.engine.WarnInterpreterOnly=false -Dingrid_home=$INGRID_HOME $INGRID_OPTS"
 }
 
 
@@ -248,8 +248,14 @@ case "$1" in
     exec "$JAVA" $INGRID_OPTS $CLASS reset_password $2
     echo "Please restart the iPlug to read updated configuration."
     ;;
+  calcPassword)
+    prepareJavaStatement
+    CLASS=de.ingrid.interfaces.csw.admin.command.AdminManager
+    exec "$JAVA" $INGRID_OPTS $CLASS calc_password $2
+    echo "Please restart the iPlug to read updated configuration."
+    ;;
   *)
-    echo "Usage: $0 {start|stop|restart|status|resetPassword <newPassword>}"
+    echo "Usage: $0 {start|stop|restart|status|resetPassword <newPassword>|calcPassword <password>}"
     exit 1
     ;;
 esac

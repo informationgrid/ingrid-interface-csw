@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,11 +25,11 @@
  */
 package de.ingrid.interfaces.csw.tools;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.io.Resource;
 
 import com.vividsolutions.jts.util.Assert;
@@ -46,7 +46,7 @@ public class FileUtilsTest {
      * .
      */
     @Test
-    public void testGetPackageContent() {
+    void testGetPackageContent() {
         Resource[] resources = null;
         try {
             resources = FileUtils.getPackageContent("classpath*:gdide_test_data/*xml");

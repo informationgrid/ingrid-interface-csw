@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -96,6 +96,7 @@ public class LuceneIndexer implements Indexer {
         IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", this.indexConfigPath, myAnalyzer, this.statusProviderService.getDefaultStatusProvider());
         // TODO: set log level
         geoTKIndexer.setRecordCacheList(recordCacheList);
+        geoTKIndexer.getAllIdentifiers();
         geoTKIndexer.setMapper(this.mapper);
         geoTKIndexer.createIndex();
         geoTKIndexer.destroy();
@@ -109,7 +110,6 @@ public class LuceneIndexer implements Indexer {
             for (Serializable record : records) {
                 geoTKIndexer.removeDocument(record.toString());
             }
-            geoTKIndexer.optimize();
             geoTKIndexer.destroy();
         }
     }
@@ -119,7 +119,7 @@ public class LuceneIndexer implements Indexer {
         File indexPath = this.configurationProvider.getIndexPath();
         IngridGeoTKLuceneIndexer geoTKIndexer = new IngridGeoTKLuceneIndexer("", indexPath, null, this.statusProviderService.getDefaultStatusProvider());
         List<String> ids = geoTKIndexer.removeDocumentByQuery(queryString);
-        geoTKIndexer.optimize();
+
         geoTKIndexer.destroy();
         return ids;
     }
