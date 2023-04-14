@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>6.0.0</version>
+  <version>6.1.0</version>
   <packaging>jar</packaging>
   <name>InGrid Interface CSW</name>
 
@@ -37,7 +37,7 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <iplug.type>INTERFACE_CSW</iplug.type>
-    <spring.version>2.7.7</spring.version>
+    <spring.version>2.7.10</spring.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -58,6 +58,20 @@
         <!-- lookup parent from repository -->
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      
+      <!-- Fix security issue => https://avd.aquasec.com/nvd/cve-2022-1471 -->
+      <dependency>
+        <groupId>org.yaml</groupId>
+        <artifactId>snakeyaml</artifactId>
+        <version>2.0</version>
+      </dependency>
+      
+      <!-- Fix security issue => https://avd.aquasec.com/nvd/cve-2015-3253 -->
+      <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-all</artifactId>
+        <version>2.4.21</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -281,7 +295,7 @@
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
-      <version>10.11.1.1</version>
+      <version>10.12.1.1</version>
     </dependency>
     
     <dependency>
