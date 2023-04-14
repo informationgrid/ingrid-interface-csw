@@ -1,4 +1,15 @@
 
+## 6.1.0 (14.04.2023)
+
+
+
+
+
+### Bugfixes
+
+* Kritische Sicherheitslücke: snakeyaml + weitere  (#4972)
+* Override-Konfiguration wird nicht eingelesen  (#4939)
+    
 ## 6.0.0 (13.01.2023)
 
 ### Features
