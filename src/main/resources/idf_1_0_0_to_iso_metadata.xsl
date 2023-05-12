@@ -88,6 +88,8 @@
 	<xsl:template match="idf:doi" />
 	<!-- filter idf:regionKey -->
 	<xsl:template match="idf:regionKey" />
+    <!-- filter idf:mapUrl -->
+    <xsl:template match="idf:mapUrl" />
 
 	<!-- filter idf:keyword and transform them to gmd:keyword -->
 	<xsl:template match="idf:keyword">
