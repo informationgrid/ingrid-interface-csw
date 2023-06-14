@@ -7,7 +7,7 @@
   <body>
 
 
-    <release version="5.15.0-SNAPSHOT" date="2022-xx-xx" description="Release 5.15.0">
+    <release version="6.0.0" date="2023-01-13" description="Release 6.0.0">
       <action type="fix" dev="wemove" issue="4354">
           Fix not thread safe parsing of filter constraints.
       </action>
