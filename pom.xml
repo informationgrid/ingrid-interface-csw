@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>6.2.0</version>
+  <version>6.3.0</version>
   <packaging>jar</packaging>
   <name>InGrid Interface CSW</name>
 
@@ -37,7 +37,7 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <iplug.type>INTERFACE_CSW</iplug.type>
-    <spring.version>2.7.10</spring.version>
+    <spring.version>2.7.14</spring.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->

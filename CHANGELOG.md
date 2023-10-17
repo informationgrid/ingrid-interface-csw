@@ -1,4 +1,11 @@
 
+## 6.3.0 (17.10.2023)
+
+
+### Bugfixes
+
+* ISO-XML Ausgabe im Datenfinder und Datenrepository nicht valide  (#5177)
+    
 ## 6.1.0 (14.04.2023)
 
 
