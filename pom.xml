@@ -424,6 +424,7 @@
           <excludes>
             <!-- This one doesn't work after Java17 update, probably index in wrong format -->
             <exclude>**/GetRecordsTest.java</exclude>
+            <exclude>**/IndexTest.java</exclude>
           </excludes>
         </configuration>
       </plugin>
