@@ -91,7 +91,10 @@ var transformationDescriptions = [
 		}, 
 		{	"indexField":"subject",
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
-		}, 
+		},
+		{	"indexField":"subject",
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmx:anchor"
+		},
 		{	"indexField":"subject_sort",
 			"tokenized":false,
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword/gco:CharacterString"
