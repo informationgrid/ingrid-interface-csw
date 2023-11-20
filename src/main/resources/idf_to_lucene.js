@@ -93,7 +93,7 @@ var transformationDescriptions = [
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
 		},
 		{	"indexField":"subject",
-			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmx:anchor"
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmx:Anchor"
 		},
 		{	"indexField":"subject_sort",
 			"tokenized":false,
@@ -102,7 +102,11 @@ var transformationDescriptions = [
 		{	"indexField":"subject_sort",
 			"tokenized":false,
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
-		}, 
+		},
+		{	"indexField":"subject_sort",
+			"tokenized":false,
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmx:Anchor"
+		},
 		{	"indexField":"title",
 			"tokenized":true,
 			"xpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"
