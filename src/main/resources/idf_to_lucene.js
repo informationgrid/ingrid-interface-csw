@@ -93,7 +93,7 @@ var transformationDescriptions = [
 			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmd:LocalisedCharacterString"
 		},
 		{	"indexField":"subject",
-			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmx:anchor"
+			"xpath":"//gmd:identificationInfo//gmd:descriptiveKeywords//gmd:keyword//gmx:Anchor"
 		},
 		{	"indexField":"subject_sort",
 			"tokenized":false,
