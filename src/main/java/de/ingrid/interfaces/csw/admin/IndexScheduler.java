@@ -167,6 +167,7 @@ public class IndexScheduler {
     }
 
     private void schedule() {
+        if (_pattern == null) return;
         if (_scheduleId == null) {
             LOG.info("scheduling indexer with pattern '" + _pattern + "'");
             _scheduleId = scheduler.schedule(_pattern, new LockRunnable(runnable));
