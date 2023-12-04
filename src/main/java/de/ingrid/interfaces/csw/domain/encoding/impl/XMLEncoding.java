@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -65,10 +65,14 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
     private List<String> acceptVersions = null;
     private CSWQuery query = null;
 
-    /** Tool for evaluating xpath **/
+    /**
+     * Tool for evaluating xpath
+     **/
     private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
-    /** Parameter xpath (namespace agnostic) **/
+    /**
+     * Parameter xpath (namespace agnostic)
+     **/
     private static String SERVICE_PARAM_XPATH = "/*/@service";
     private static String VERSION_PARAM_XPATH = "/*/@version";
     private static String DESCREC_VERSION_PARAM_XPATH = "/csw:DescribeRecord/@version";
@@ -76,14 +80,16 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
 
     private static Log log = LogFactory.getLog(XMLEncoding.class);
 
-    /** Supported operations **/
-    private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[] {
+    /**
+     * Supported operations
+     **/
+    private static List<Operation> SUPPORTED_OPERATIONS = Collections.unmodifiableList(Arrays.asList(new Operation[]{
             Operation.GET_CAPABILITIES,
             Operation.DESCRIBE_RECORD,
             Operation.GET_RECORDS,
             Operation.GET_RECORD_BY_ID
     }));
-    private static List<Operation> SUPPORTED_OPERATIONS_CSWT = Collections.unmodifiableList(Arrays.asList(new Operation[] {
+    private static List<Operation> SUPPORTED_OPERATIONS_CSWT = Collections.unmodifiableList(Arrays.asList(new Operation[]{
             Operation.TRANSACTION
     }));
 
@@ -250,7 +256,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
                     }
                     // extract the output schema
-                    String schemaUri = this.xpath.getString(requestNode, "/csw:GetRecordById/csw:OutputSchema");
+                    String schemaUri = this.xpath.getString(requestNode, "/csw:GetRecordById/@outputSchema");
                     if (schemaUri != null) {
                         this.query.setOutputSchema(Namespace.getByUri(schemaUri));
                     }
@@ -309,6 +315,11 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     if (resultTypeStr != null) {
                         this.query.setResultType(ResultType.valueOf(resultTypeStr.toUpperCase()));
                     }
+                    // extract the outputSchema
+                    String schemaUri = this.xpath.getString(requestNode, "/csw:GetRecords/@outputSchema");
+                    if (schemaUri != null) {
+                        this.query.setOutputSchema(Namespace.getByUri(schemaUri));
+                    }
 
                     // extract the maxRecords
                     Integer maxRecords = this.xpath.getInt(requestNode, "/csw:GetRecords/@maxRecords");
@@ -317,7 +328,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     }
                     maxRecords = Math.min(maxRecords, ApplicationProperties.getInteger(
                             ConfigurationKeys.MAX_RETURNED_HITS, Integer.MAX_VALUE));
-                    if (maxRecords <0) {
+                    if (maxRecords < 0) {
                         StringBuffer errorMsg = new StringBuffer();
                         errorMsg.append("Parameter 'maxRecords' has an unsupported value.\n");
                         errorMsg.append("Supported values: positive integer\n");
@@ -331,7 +342,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     if (startPosition == null) {
                         startPosition = 1;
                     }
-                    if (startPosition <=0) {
+                    if (startPosition <= 0) {
                         StringBuffer errorMsg = new StringBuffer();
                         errorMsg.append("Parameter 'startPosition' has an unsupported value.\n");
                         errorMsg.append("Supported values: positive integer\n");
@@ -383,8 +394,7 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
     /**
      * Set the request body
      *
-     * @param requestBody
-     *            The requestBody node to set
+     * @param requestBody The requestBody node to set
      */
     protected void setRequestBody(Node requestBody) {
         this.requestBody = requestBody;
