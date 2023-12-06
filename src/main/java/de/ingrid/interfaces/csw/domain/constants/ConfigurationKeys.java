@@ -50,6 +50,8 @@ public class ConfigurationKeys {
     public static final String HARVESTER_IBUS_DATATYPES_ALLOW = "harvester.ibus.datatypes.allow";
     public static final String HARVESTER_IBUS_DATATYPES_DENY = "harvester.ibus.datatypes.deny";
     public static final String IDF_2_FULL_PROCESSING_XSLT = "idf.to.full.processing.xslt";
+
+    public static final String IDF_2_FULL_PROCESSING_XSLT_OGC = "idf.to.full.processing.xslt.ogc";
     /**
      * Total timeout in ms for folder operations delete and move. This is
      * necessary on windows, because on some systems the index file resources
