@@ -29,6 +29,7 @@ import java.io.File;
 import java.util.Set;
 import java.util.logging.Level;
 
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
@@ -144,15 +145,15 @@ public class LuceneSearcher implements Searcher {
         }
 
         CSWRecordResults results = new CSWRecordResults();
-
         ElementSetName elementSetName = query.getElementSetName();
+        Namespace outputSchema = query.getOutputSchema();
+        // add output schema
+
         if (query.getIds() != null) {
-            // there are records specified by id. So we can search in the record
-            // repository
-            // directly
+            // there are records specified by id. So we can search directly in the record repository
             for (String id : query.getIds()) {
                 if (this.recordRepository.containsRecord(id)) {
-                    CSWRecord record = this.recordRepository.getRecord(id, elementSetName);
+                    CSWRecord record = this.recordRepository.getRecord(id, elementSetName, outputSchema);
                     results.add(record);
                 }
             }
@@ -188,7 +189,7 @@ public class LuceneSearcher implements Searcher {
             int endIdx = Math.min((query.getStartPosition() + query.getMaxRecords() - 1), resultIds.size());
             for (String resultId : resultIds) {
                 if (cnt >= query.getStartPosition() && cnt <= endIdx) {
-                    CSWRecord record = this.recordRepository.getRecord(resultId, elementSetName);
+                    CSWRecord record = this.recordRepository.getRecord(resultId, elementSetName, outputSchema);
                     results.add(record);
                 } else if (cnt > endIdx) {
                     break;
