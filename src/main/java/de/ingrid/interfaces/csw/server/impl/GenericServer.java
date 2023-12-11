@@ -211,11 +211,11 @@ public class GenericServer implements CSWServer {
             }
             return doc;
         } catch (CSWException ex) {
-            log.error("An error occured processing GetRecordsRequest", ex);
+            log.error("An error occurred processing GetRecordsRequest", ex);
             throw ex;
         } catch (Exception ex) {
-            log.error("An error occured processing GetRecordsRequest", ex);
-            throw new CSWException("An error occured processing GetRecordsRequest");
+            log.error("An error occurred processing GetRecordsRequest", ex);
+            throw new CSWException("An error occurred processing GetRecordsRequest");
         }
     }
 
@@ -241,11 +241,11 @@ public class GenericServer implements CSWServer {
             }
             return doc;
         } catch (CSWException ex) {
-            log.error("An error occured processing GetRecordByIdRequest", ex);
+            log.error("An error occurred processing GetRecordByIdRequest", ex);
             throw ex;
         } catch (Exception ex) {
-            log.error("An error occured processing GetRecordByIdRequest", ex);
-            throw new CSWException("An error occured processing GetRecordByIdRequest");
+            log.error("An error occurred processing GetRecordByIdRequest", ex);
+            throw new CSWException("An error occurred processing GetRecordByIdRequest");
         }
     }
 
@@ -262,11 +262,11 @@ public class GenericServer implements CSWServer {
             }
             
         } catch (CSWException ex) {
-            log.error("An error occured processing TransactionRequest", ex);
+            log.error("An error occurred processing TransactionRequest", ex);
             throw ex;
         } catch (Exception ex) {
-            log.error("An error occured processing TransactionRequest", ex);
-            throw new CSWException("An error occured processing TransactionRequest", "TransactionUnspecifiedError", "");
+            log.error("An error occurred processing TransactionRequest", ex);
+            throw new CSWException("An error occurred processing TransactionRequest", "TransactionUnspecifiedError", "");
         }
     }
 
