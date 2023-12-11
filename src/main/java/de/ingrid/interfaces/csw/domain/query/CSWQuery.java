@@ -82,7 +82,7 @@ public interface CSWQuery {
     /**
      * Set the output format
      * 
-     * @param schema
+     * @param format
      */
     public void setOutputFormat(OutputFormat format);
 
@@ -110,7 +110,7 @@ public interface CSWQuery {
     /**
      * Set the typeNames for this query
      * 
-     * @param typeName
+     * @param typeNames
      */
     public void setTypeNames(TypeName[] typeNames);
 
@@ -180,7 +180,7 @@ public interface CSWQuery {
     /**
      * Set the OGC filter (child element of Constraint node)
      * 
-     * @param filter
+     * @param constraint
      */
     public void setConstraint(Document constraint);
 
@@ -194,7 +194,7 @@ public interface CSWQuery {
     /**
      * Set the SortBy node (child element of Query node)
      * 
-     * @param filter
+     * @param sort
      */
     public void setSortBy(Document sort);
 
