@@ -117,9 +117,12 @@ public class MappingTest {
         System.out.println(xml);
 
         XPathUtils xpath = new XPathUtils(new IDFWithXSINamespaceContext());
-        assertNotNull(xpath.getString(result, "/gmd:MD_Metadata/@xsi:schemaLocation"));
         assertEquals("05F9A598-D866-11D2-AB09-00E0292DC06B",
-                xpath.getString(result, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+                xpath.getString(result, "//dc:identifier"));
+        assertEquals("Moosmonitoring (I) - Monitoring der Schwermetallbelastung in der Bundesrepublik Deutschland mit Hilfe von Moosanalysen (Moss Survey I)",
+                xpath.getString(result, "//dc:title"));
+        assertEquals("2009-04-30T00:00:00",
+                xpath.getString(result, "//dc:date"));
     }
 
     @Test
