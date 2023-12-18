@@ -146,8 +146,8 @@ public class LuceneSearcher implements Searcher {
 
         CSWRecordResults results = new CSWRecordResults();
         ElementSetName elementSetName = query.getElementSetName();
-        Namespace outputSchema = query.getOutputSchema();
         // add output schema
+        Namespace outputSchema = query.getOutputSchema();
 
         if (query.getIds() != null) {
             // there are records specified by id. So we can search directly in the record repository

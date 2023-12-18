@@ -69,6 +69,8 @@ public final class TestRequests {
     public static final String GETRECORDS_HITS_SOAP = "src/test/resources/requests/get_records_hits_soap.xml";
     public static final String GETRECORDS_OUTPUT_SCHEMA_OGC ="src/test/resources/requests/ogc_test/output_schema_getrecords.xml";
     public static final String GETRECORDS_ID_OUTPUT_SCHEMA_OGC ="src/test/resources/requests/ogc_test/output_schema_getrecords_id.xml";
+
+    public static final String GETRECORDS_OGC = "src/test/resources/requests/ogc_test/soap_get_records_ogc.xml";
     public static final String GETRECORDSINVALID_1_SOAP = "src/test/resources/requests/get_records_invalid_1_soap.xml";
     public static final String GETRECORDSINVALID_2_SOAP = "src/test/resources/requests/get_records_invalid_2_soap.xml";
     public static final String GETRECORDSINVALID_3_SOAP = "src/test/resources/requests/get_records_invalid_3_soap.xml";

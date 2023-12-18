@@ -84,6 +84,7 @@ public class GenericServer implements CSWServer {
     /** Tool for evaluating xpath **/
     private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
+    // default value
     private static final String RESPONSE_NAMESPACE = Namespace.CSW_2_0_2.getQName().getNamespaceURI();
 
     /**
@@ -158,7 +159,6 @@ public class GenericServer implements CSWServer {
 
     @Override
     public Document process(DescribeRecordRequest request) throws CSWException {
-
         final String documentKey = ConfigurationKeys.RECORDDESC_DOC;
 
         // return the cached document
@@ -191,11 +191,15 @@ public class GenericServer implements CSWServer {
             doc.getDocumentElement().appendChild(searchStatus);
 
             Element searchResults = doc.createElementNS(RESPONSE_NAMESPACE, "csw:SearchResults");
+            // set output schema
+            searchResults.setAttribute("outputSchema",
+                    request.getQuery().getOutputSchema().getQName().getNamespaceURI());
             searchResults.setAttribute("elementSet", request.getQuery().getElementSetName().name().toLowerCase());
             searchResults.setAttribute("numberOfRecordsMatched", String.valueOf(result.getTotalHits()));
             searchResults.setAttribute("numberOfRecordsReturned", String.valueOf((result.getResults() == null) ? 0
                     : result.getResults().size()));
-            int nextRecord = query.getStartPosition() + ((result.getResults() == null) ? 0 : result.getResults().size());
+            int nextRecord = query.getStartPosition() +
+                    ((result.getResults() == null) ? 0 : result.getResults().size());
             if (nextRecord > result.getTotalHits()) {
                 nextRecord = 0;
             }

@@ -74,6 +74,7 @@ public interface CSWQuery {
 
     /**
      * Get the output schema
+     * (standard is GMD)
      * 
      * @return Namespace
      */

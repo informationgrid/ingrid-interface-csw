@@ -540,4 +540,57 @@ public class GetRecordsTest extends OperationTestBase {
         }
     }
 
+    /**
+     * Test SOAP GetRecords with output schema OGC
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSoapGetRecordsOutputSchemaOgc() throws Exception {
+        StringBuffer result = new StringBuffer();
+        Mockery context = new Mockery();
+        HttpServletRequest request = context.mock( HttpServletRequest.class );
+        HttpServletResponse response = context.mock( HttpServletResponse.class );
+        String requestStr = TestRequests.getRequest( TestRequests.GETRECORDS_OGC );
+//        String requestStr = TestRequests.getRequest( TestRequests.GETRECORDS_OUTPUT_SCHEMA_OGC );
+
+        // expectations
+        this.setupDefaultSoapExpectations( context, request, response, result, requestStr );
+
+        // make request
+        CSWServlet servlet = this.getServlet();
+        servlet.doPost( request, response );
+
+        context.assertIsSatisfied();
+
+        // check csw payload
+        assertTrue( result.length() > 0 , "The response length is > 0.");
+        Document responseDoc = StringUtils.stringToDocument( result.toString() );
+        Node payload = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body" ).getLastChild();
+
+        assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
+        assertEquals( "GetRecordsResponse", payload.getLocalName() , "The response is a GetRecordsResponse document.");
+
+        // check records
+        Node searchResult = xpath.getNode( responseDoc, "/soapenv:Envelope/soapenv:Body/csw:GetRecordsResponse/csw:SearchResults" );
+        NodeList recordNodes = searchResult.getChildNodes();
+
+        // sort
+        String[] titles = new String[recordNodes.getLength()];
+        for (int i = 0; i < recordNodes.getLength(); i++) {
+            Document record = StringUtils.stringToDocument( StringUtils.nodeToString( recordNodes.item( i ) ) );
+            titles[i] = xpath.getString( record, "//gmd:title/gco:CharacterString" );
+        }
+
+        String[] sortedTitles = new String[titles.length];
+        System.arraycopy( titles, 0, sortedTitles, 0, titles.length );
+        Arrays.sort( sortedTitles, Collections.reverseOrder() );
+
+        for (int i = 0; i < titles.length; i++) {
+            assertEquals( titles[i], sortedTitles[i] );
+        }
+    }
+
+
+
 }
