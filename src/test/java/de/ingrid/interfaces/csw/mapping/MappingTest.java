@@ -131,9 +131,9 @@ public class MappingTest {
         assertEquals("nonGeographicDataset",
                 xpath.getString(result, "//dc:type"));
         // keywords
-        String[] keywords  = xpath.getStringArray(result, "//dc:subject");
-        assertTrue(ArrayUtils.contains( keywords, "Soil"));
-        assertTrue(ArrayUtils.contains( keywords, "Environmental monitoring facilities"));
+        String[] keywords = xpath.getStringArray(result, "//dc:subject");
+        assertTrue(ArrayUtils.contains(keywords, "Soil"));
+        assertTrue(ArrayUtils.contains(keywords, "Environmental monitoring facilities"));
         // modified
         assertEquals("2010-04-28",
                 xpath.getString(result, "//dct:modified"));
@@ -141,8 +141,8 @@ public class MappingTest {
         // description
         assertTrue(xpath.getString(result, "//dc:description").contains("Das Moosmonitoring (I) bildet einen Beitrag zum europäischen Projekt \"Atmospheric Heavy Metal Deposition in Europe - estimations based on moss analysis\", welches Teil des \"European Monitoring and Evaluation Program (EMEP)\" ist. Mit dem Moosmonitoring (I) wurde 1991"));
         // rights
-        String[] rights  = xpath.getStringArray(result, "//dc:rights");
-        assertTrue(ArrayUtils.contains( rights, "otherRestrictions"));
+        String[] rights = xpath.getStringArray(result, "//dc:rights");
+        assertTrue(ArrayUtils.contains(rights, "otherRestrictions"));
         // source
         assertEquals("25x25 km² Raster/Probenahmestellen, 50x50 m² Fläche.",
                 xpath.getString(result, "//dc:source"));
@@ -165,9 +165,21 @@ public class MappingTest {
         System.out.println(xml);
 
         XPathUtils xpath = new XPathUtils(new IDFWithXSINamespaceContext());
-        assertNotNull(xpath.getString(result, "/gmd:MD_Metadata/@xsi:schemaLocation"));
+        // uuid
         assertEquals("05F9A598-D866-11D2-AB09-00E0292DC06B",
-                xpath.getString(result, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+                xpath.getString(result, "//dc:identifier"));
+        // title
+        assertEquals("Moosmonitoring (I) - Monitoring der Schwermetallbelastung in der Bundesrepublik Deutschland mit Hilfe von Moosanalysen (Moss Survey I)",
+                xpath.getString(result, "//dc:title"));
+        // date
+        assertEquals("2009-04-30T00:00:00",
+                xpath.getString(result, "//dc:date"));
+
+        String[] empty = new String[0];
+        assertArrayEquals(empty, xpath.getStringArray(result, "//dc:URI"));
+        assertArrayEquals(empty, xpath.getStringArray(result, "//dc:rights"));
+        assertArrayEquals(empty, xpath.getStringArray(result, "//dc:subject"));
+        assertNull(xpath.getString(result, "//dc:description"));
     }
 
     @Test
@@ -183,9 +195,22 @@ public class MappingTest {
         System.out.println(xml);
 
         XPathUtils xpath = new XPathUtils(new IDFWithXSINamespaceContext());
-        assertNotNull(xpath.getString(result, "/gmd:MD_Metadata/@xsi:schemaLocation"));
+        // uuid
         assertEquals("05F9A598-D866-11D2-AB09-00E0292DC06B",
-                xpath.getString(result, "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString"));
+                xpath.getString(result, "//dc:identifier"));
+        // title
+        assertEquals("Moosmonitoring (I) - Monitoring der Schwermetallbelastung in der Bundesrepublik Deutschland mit Hilfe von Moosanalysen (Moss Survey I)",
+                xpath.getString(result, "//dc:title"));
+        // date
+        assertEquals("2009-04-30T00:00:00",
+                xpath.getString(result, "//dc:date"));
+        // type
+        assertEquals("nonGeographicDataset",
+                xpath.getString(result, "//dc:type"));
+
+        assertNull(xpath.getString(result, "//dct:modified"));
+        assertNull(xpath.getString(result, "//dct:modified"));
+        assertNull(xpath.getString(result, "//dc:source"));
     }
 
     @Test
