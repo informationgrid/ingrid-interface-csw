@@ -33,6 +33,7 @@ import de.ingrid.utils.idf.IdfTool;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xml.XMLUtils;
 import de.ingrid.utils.xpath.XPathUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -117,12 +118,38 @@ public class MappingTest {
         System.out.println(xml);
 
         XPathUtils xpath = new XPathUtils(new IDFWithXSINamespaceContext());
+        // uuid
         assertEquals("05F9A598-D866-11D2-AB09-00E0292DC06B",
                 xpath.getString(result, "//dc:identifier"));
+        // title
         assertEquals("Moosmonitoring (I) - Monitoring der Schwermetallbelastung in der Bundesrepublik Deutschland mit Hilfe von Moosanalysen (Moss Survey I)",
                 xpath.getString(result, "//dc:title"));
+        // date
         assertEquals("2009-04-30T00:00:00",
                 xpath.getString(result, "//dc:date"));
+        // type
+        assertEquals("nonGeographicDataset",
+                xpath.getString(result, "//dc:type"));
+        // keywords
+        String[] keywords  = xpath.getStringArray(result, "//dc:subject");
+        assertTrue(ArrayUtils.contains( keywords, "Soil"));
+        assertTrue(ArrayUtils.contains( keywords, "Environmental monitoring facilities"));
+        // modified
+        assertEquals("2010-04-28",
+                xpath.getString(result, "//dct:modified"));
+        // abstract - no abstract in this test object
+        // description
+        assertTrue(xpath.getString(result, "//dc:description").contains("Das Moosmonitoring (I) bildet einen Beitrag zum europäischen Projekt \"Atmospheric Heavy Metal Deposition in Europe - estimations based on moss analysis\", welches Teil des \"European Monitoring and Evaluation Program (EMEP)\" ist. Mit dem Moosmonitoring (I) wurde 1991"));
+        // rights
+        String[] rights  = xpath.getStringArray(result, "//dc:rights");
+        assertTrue(ArrayUtils.contains( rights, "otherRestrictions"));
+        // source
+        assertEquals("25x25 km² Raster/Probenahmestellen, 50x50 m² Fläche.",
+                xpath.getString(result, "//dc:source"));
+        // links
+        String[] urls = xpath.getStringArray(result, "//dc:URI");
+        assertTrue(ArrayUtils.contains(urls, "http://gis.uba.de/website/web/moos/karten/index.htm"));
+        assertTrue(ArrayUtils.contains(urls, "http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&ADISDB=VH&SATZNR=00039030"));
     }
 
     @Test
