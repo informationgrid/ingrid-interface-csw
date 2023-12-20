@@ -144,7 +144,7 @@ public class XsltMapper implements CSWRecordMapper {
                         log.debug("Mapping record " + cacheId + " to csw FULL with output schema OGC");
                     }
                     Node mappedFullRecordOgc = this.mapFullOgc(recordCache.get(cacheId));
-                    cswRecord = new CSWRecord(ElementSetName.FULL, Namespace.OGC, mappedFullRecord);
+                    cswRecord = new CSWRecord(ElementSetName.FULL, Namespace.OGC, mappedFullRecordOgc);
                     tmpCache.put(cswRecord);
 
                     if (log.isDebugEnabled()) {

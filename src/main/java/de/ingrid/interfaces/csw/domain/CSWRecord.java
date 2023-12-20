@@ -42,6 +42,7 @@ import de.ingrid.utils.xpath.XPathUtils;
 public class CSWRecord {
 
 	private static final String ID_XPATH = "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString";
+	private static final String ID_XPATH_OGC = "/csw:Record/dc:identifier";
 
 	private static XPathUtils xpath = new XPathUtils(new IDFNamespaceContext());
 
@@ -76,7 +77,11 @@ public class CSWRecord {
 		this.outputSchema = outputSchema;
 		this.node = node;
 		// extract record id
-		this.id = xpath.getString(node, ID_XPATH);
+		if( outputSchema == Namespace.GMD) {
+			this.id = xpath.getString(node, ID_XPATH);
+		} else {
+			this.id = xpath.getString(node, ID_XPATH_OGC);
+		}
 	}
 
 	/**
