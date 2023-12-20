@@ -3,7 +3,7 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<soapenv:Body>
-		<GetRecordById xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
+		<GetRecordById xmlns="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" outputSchema="http://www.isotc211.org/2005/gmd">
 			<Id>0C12204F-5626-4A2E-94F4-514424F093A1, 111c0076-b23f-76e5-c888-94327664111</Id>
 			<ElementSetName>full</ElementSetName>
 		</GetRecordById>
