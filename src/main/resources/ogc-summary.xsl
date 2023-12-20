@@ -40,11 +40,11 @@
     <xsl:template match="//dct:abstract"/>
     <xsl:template match="//dc:rights"/>
     <xsl:template match="//dc:URI"/>
-    <xsl:template match="//dct:modified"/>
-    <xsl:template match="//dc:source"/>
 
     <!-- Apply templates without the 'excludeElements' mode -->
     <xsl:template match="/">
-        <xsl:apply-templates select="@*|node()"/>
+        <output>
+            <xsl:apply-templates select="@*|node()"/>
+        </output>
     </xsl:template>
 </xsl:stylesheet>
