@@ -2,7 +2,7 @@
 * OGC outputSchema wird unterstützt (#5223). outputSchema muss als Attribut bei Anfragen mitgegeben werden.
   * outputSchema standard ist GMD.
   * outputSchema OGC kann als Attribut in einer GetRecords, GetRecordById als URI mitgegeben werden.
-  Bsp: <GetRecordById service="CSW" version="2.0.2" outputFormat="application/xml" outputSchema="OGC"
+  Bsp: <GetRecordById service="CSW" version="2.0.2" outputFormat="application/xml" outputSchema="http://www.opengis.net/ogc"
   * Die ausgegebenen Dokumente sind dann im OGC-Format, dublin core. Die übliche ElementSetNames sind unterstützt: full, summary, brief.
 
 
