@@ -10,8 +10,8 @@
                 <ElementSetName typeNames="">full</ElementSetName>
                 <ogc:SortBy>
                     <ogc:SortProperty>
-                        <ogc:PropertyName>apiso:title</ogc:PropertyName>
-                        <ogc:SortOrder>DESC</ogc:SortOrder>
+                        <ogc:PropertyName>title</ogc:PropertyName>
+                        <ogc:SortOrder>ASC</ogc:SortOrder>
                     </ogc:SortProperty>
                 </ogc:SortBy>
             </Query>
