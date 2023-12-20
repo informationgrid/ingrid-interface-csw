@@ -43,8 +43,6 @@
 
     <!-- Apply templates without the 'excludeElements' mode -->
     <xsl:template match="/">
-        <output>
-            <xsl:apply-templates select="@*|node()"/>
-        </output>
+        <xsl:apply-templates select="@*|node()"/>
     </xsl:template>
 </xsl:stylesheet>
