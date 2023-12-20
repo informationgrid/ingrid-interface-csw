@@ -113,7 +113,7 @@ public class XsltMapper implements CSWRecordMapper {
 
             for (RecordCache recordCache : recordCacheList) {
                 for (Serializable cacheId : recordCache.getCachedIds()) {
-                    this.statusProviderService.getDefaultStatusProvider().addState("iso-mapper", "Mapping records to ISO ... [" + idx + "/" + total
+                    this.statusProviderService.getDefaultStatusProvider().addState("iso-mapper", "Mapping records to ISO and OGC... [" + idx + "/" + total
                             + "].");
                     idx++;
 
