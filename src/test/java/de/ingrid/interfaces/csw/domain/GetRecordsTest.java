@@ -48,7 +48,7 @@ import java.util.Map;
 public class GetRecordsTest extends OperationTestBase {
 
     /**
-     * Test GetRecords with with GET method using KVP encoding
+     * Test GetRecords with GET method using KVP encoding
      *
      * @throws Exception
      */
@@ -140,7 +140,7 @@ public class GetRecordsTest extends OperationTestBase {
     }
 
     /**
-     * Test SortBy ASC in GetRecords with with GET method using KVP encoding
+     * Test SortBy ASC in GetRecords with GET method using KVP encoding
      *
      * @throws Exception
      */
@@ -200,7 +200,7 @@ public class GetRecordsTest extends OperationTestBase {
     }
 
     /**
-     * Test SortBy DESC in GetRecords with with GET method using KVP encoding
+     * Test SortBy DESC in GetRecords with GET method using KVP encoding
      *
      * @throws Exception
      */
