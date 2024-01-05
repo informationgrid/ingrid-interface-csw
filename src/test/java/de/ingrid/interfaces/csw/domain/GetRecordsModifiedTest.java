@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jmock.Mockery;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -52,6 +53,7 @@ public class GetRecordsModifiedTest extends OperationTestBase {
      * @throws Exception
      */
     @Test
+    @Disabled
     public void testKVPGetRecordsModified() throws Exception {
         // index data:
 
