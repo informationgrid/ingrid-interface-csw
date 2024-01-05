@@ -25,20 +25,21 @@
  */
 package de.ingrid.interfaces.csw.mapping.impl;
 
-import java.io.File;
-import java.io.Serializable;
-
-import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-
 import de.ingrid.interfaces.csw.cache.AbstractFileCache;
 import de.ingrid.interfaces.csw.config.ConfigurationProvider;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.tools.StringUtils;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+
+import java.io.File;
+import java.io.Serializable;
 
 /**
  * A cache that stores CSW records.
@@ -55,7 +56,7 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
 
 	@Override
 	public Serializable getCacheId(CSWRecord document) throws Exception {
-		return document.getId() + "_" + document.getElementSetName();
+		return document.getId() + "_" + document.getElementSetName() + "_" + document.getOutputSchema();
 	}
 
 	@Override
@@ -68,8 +69,9 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
 		Document document;
 		document = StringUtils.stringToDocument(str);
 		ElementSetName elementSetName = this.getElementSetNameFromCacheId(id);
-		CSWRecord record = new CSWRecord(elementSetName, document);
-		return record;
+		Namespace outputSchema = this.getOutputSchemaFromCacheId(id);
+
+		return new CSWRecord(elementSetName, outputSchema, document);
 	}
 
 	@Override
@@ -78,60 +80,88 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
 	}
 
 	/**
-	 * Get the cache id for a given id and element set name
-	 * 
-	 * @param id
-	 * @param elementSetName
+	 * Get the cache id for a given id, element set name and output schema
+	 *
+	 * @param id id of the records we are looking for
+	 * @param elementSetName set name of the record. Either: full, summary or brief
+	 * @param outputSchema desired output schema
 	 * @return Serializable
 	 */
-	protected Serializable getCacheId(Serializable id, ElementSetName elementSetName) {
-		return id + "_" + elementSetName;
+	protected Serializable getCacheId(Serializable id, ElementSetName elementSetName, Namespace outputSchema) {
+		return id + "_" + elementSetName + "_" + outputSchema;
 	}
 
 	/**
-	 * Get the record id from the given cache id
-	 * 
+	 * extract id, elementsetname and the output schema from the passed cache id
+	 *
 	 * @param cacheId
-	 * @return Serializable
+	 * @return ElementSetName
 	 */
-	protected Serializable getRecordIdFromCacheId(Serializable cacheId) {
+	protected ImmutableTriple<Serializable, ElementSetName, Namespace> extractFromCacheId(Serializable cacheId) {
 		if (cacheId != null) {
-			int pos = cacheId.toString().lastIndexOf("_");
-			return cacheId.toString().substring(0, pos);
+			String[] splitCacheId = cacheId.toString().split("_");
+			String id = splitCacheId[0];
+			String elementSetName = splitCacheId[1];
+			String outputSchema = splitCacheId[2];
+
+			return ImmutableTriple.of(id, ElementSetName.valueOf(elementSetName.toUpperCase()),
+					Namespace.valueOf(outputSchema.toUpperCase()));
 		} else {
 			throw new IllegalArgumentException("Id argument must not be null");
 		}
 	}
 
 	/**
-	 * Get the element set name from the given cache id
-	 * 
+	 * Get the id from extracted triple in extractFromCacheId
+	 *
+	 * @param cacheId
+	 * @return ElementSetName
+	 */
+	protected Serializable getRecordIdFromCacheId(Serializable cacheId) {
+		ImmutableTriple<Serializable, ElementSetName, Namespace> elements = extractFromCacheId(cacheId);
+		return elements.getLeft();
+	}
+
+	/**
+	 * Get the element set name from extracted triple in extractFromCacheId
+	 *
 	 * @param cacheId
 	 * @return ElementSetName
 	 */
 	protected ElementSetName getElementSetNameFromCacheId(Serializable cacheId) {
-		if (cacheId != null) {
-			int pos = cacheId.toString().lastIndexOf("_");
-			String elementSetNameStr = cacheId.toString().substring(pos + 1).toUpperCase();
-			return ElementSetName.valueOf(elementSetNameStr);
-		} else {
-			throw new IllegalArgumentException("Id argument must not be null");
-		}
+		ImmutableTriple<Serializable, ElementSetName, Namespace> elements = extractFromCacheId(cacheId);
+		return elements.getMiddle();
+	}
+
+	/**
+	 * Get the outputSchema from extracted triple in extractFromCacheId
+	 *
+	 * @param cacheId
+	 * @return Namespace
+	 */
+	protected Namespace getOutputSchemaFromCacheId(Serializable cacheId) {
+		ImmutableTriple<Serializable, ElementSetName, Namespace> elements = extractFromCacheId(cacheId);
+		return elements.getRight();
 	}
 
 	/**
 	 * CSWRecordRepository implementation
 	 */
-
 	@Override
-	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName) throws Exception {
-		Serializable cacheId = this.getCacheId(id, elementSetName);
+	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName, Namespace outputSchema) throws Exception {
+		Serializable cacheId = this.getCacheId(id, elementSetName, outputSchema);
 		return this.get(cacheId);
 	}
 
+
+	/**
+	 * check if the record is present in the cache with the standard values for element set name and namespace
+	 * @param id
+	 * @return
+	 */
 	@Override
 	public boolean containsRecord(String id) {
-		Serializable cacheId = this.getCacheId(id, ElementSetName.FULL);
+		Serializable cacheId = this.getCacheId(id, ElementSetName.FULL, Namespace.GMD);
 		return this.isCached(cacheId);
 	}
 
@@ -144,8 +174,8 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
 	}
 
 	@Override
-	public void removeRecord(Serializable id, ElementSetName elementSetName) {
-		Serializable cacheId = this.getCacheId(id, elementSetName);
+	public void removeRecord(Serializable id, ElementSetName elementSetName, Namespace outputSchema) {
+		Serializable cacheId = this.getCacheId(id, elementSetName, outputSchema);
 		this.remove(cacheId);
 	}
 

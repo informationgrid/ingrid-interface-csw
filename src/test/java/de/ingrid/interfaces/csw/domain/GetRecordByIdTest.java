@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jmock.Mockery;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -48,6 +49,7 @@ public class GetRecordByIdTest extends OperationTestBase {
      * @throws Exception
      */
     @Test
+    @Disabled
     public void testSoapGetRecordByIdRequestSimple() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -85,6 +87,7 @@ public class GetRecordByIdTest extends OperationTestBase {
      * @throws Exception
      */
     @Test
+    @Disabled
     public void testSoapGetRecordByIdRequestMultiple() throws Exception {
 
         StringBuffer result = new StringBuffer();

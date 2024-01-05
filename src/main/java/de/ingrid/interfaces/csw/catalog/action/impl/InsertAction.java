@@ -25,6 +25,7 @@
  */
 package de.ingrid.interfaces.csw.catalog.action.impl;
 
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -64,7 +65,7 @@ public class InsertAction extends AbstractAction implements Action {
         // TODO implement insert action
         ActionResult result = new ActionResult(this);
         // NOTE: this test implementation returns a sample record
-        result.addRecord(new CSWRecord(ElementSetName.BRIEF, getExampleRecord()));
+        result.addRecord(new CSWRecord(ElementSetName.BRIEF, Namespace.ISO, getExampleRecord()));
         return result;
     }
 

@@ -100,7 +100,7 @@ public class EditIBusHarvesterController {
 
     XMLEncoding encoding = null;
 
-    public static final String IPLUG_QUERY = "<GetRecords outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+    public static final String IPLUG_QUERY = "<GetRecords outputFormat=\"text/xml\" outputSchema=\"http://www.isotc211.org/2005/gmd\"\n"
             + "            requestId=\"csw:1\" resultType=\"results\" startPosition=\"1\" maxRecords=\"1\"\n"
             + "            xmlns=\"http://www.opengis.net/cat/csw/2.0.2\" service=\"CSW\" version=\"2.0.2\">\n"
             + "            <Query typeNames=\"csw:service,csw:dataset\">\n"

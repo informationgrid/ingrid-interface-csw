@@ -31,6 +31,7 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +106,7 @@ public class SearchTestController {
                         .parse(
                                 new InputSource(
                                         new StringReader(
-                                                "<GetRecords maxRecords=\"10\" outputFormat=\"text/xml\" outputSchema=\"csw:profile\"\n"
+                                                "<GetRecords maxRecords=\"10\" outputFormat=\"text/xml\" outputSchema=\"http://www.isotc211.org/2005/gmd\"\n"
                                                         + "            requestId=\"csw:1\" resultType=\"results\" startPosition=\"1\"\n"
                                                         + "            xmlns=\"http://www.opengis.net/cat/csw/2.0.2\" service=\"CSW\" version=\"2.0.2\">\n"
                                                         + "            <Query typeNames=\"csw:service,csw:dataset\">\n"
@@ -139,9 +140,17 @@ public class SearchTestController {
             if (results.getResults() != null) {
                 for (CSWRecord record : results.getResults()) {
                     map = new HashMap<String, String>();
-                    map.put("title", xpath.getString(record.getDocument(), "//gmd:title/gco:CharacterString"));
-                    map.put("link", baseLink.replaceAll("RECORD_ID", URLEncoder.encode(xpath.getString(record.getDocument(), "//gmd:fileIdentifier/gco:CharacterString"), "UTF-8")));
-                    map.put("abstract", xpath.getString(record.getDocument(), "//gmd:abstract/gco:CharacterString"));
+                    // displayed info xpath depends on output schema
+                    if (record.getOutputSchema() == Namespace.GMD) {
+                        map.put("title", xpath.getString(record.getDocument(), "//gmd:title/gco:CharacterString"));
+                        map.put("link", baseLink.replaceAll("RECORD_ID", URLEncoder.encode(xpath.getString(record.getDocument(), "//gmd:fileIdentifier/gco:CharacterString"), "UTF-8")));
+                        map.put("abstract", xpath.getString(record.getDocument(), "//gmd:abstract/gco:CharacterString"));
+                    } else {
+                        map.put("title", xpath.getString(record.getDocument(), "//dc:title"));
+                        map.put("link", baseLink.replaceAll("RECORD_ID", URLEncoder.encode(xpath.getString(record.getDocument(), "//dc:identifier"), "UTF-8")));
+                        map.put("abstract", xpath.getString(record.getDocument(), "//dc:abstract"));
+                    }
+
                     resultDisplayList.add(map);
                 }
             }

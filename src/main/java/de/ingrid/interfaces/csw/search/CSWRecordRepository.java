@@ -25,10 +25,11 @@
  */
 package de.ingrid.interfaces.csw.search;
 
-import java.io.Serializable;
-
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
+
+import java.io.Serializable;
 
 /**
  * Interface for repositories that contain CSW records.
@@ -36,14 +37,10 @@ import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
  * @author ingo herwig <ingo@wemove.com>
  */
 public interface CSWRecordRepository {
-
 	/**
-	 * Get the record with the given id and element set name.
-	 * 
-	 * @param id
-	 * @param elementSetName
+	 * Get the record with the given id, element set name and output schema
 	 */
-	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName) throws Exception;
+	public CSWRecord getRecord(Serializable id, ElementSetName elementSetName, Namespace outputSchema) throws Exception;
 
 	/**
 	 * Check if the record with the given id is contained in the repository.
@@ -57,6 +54,7 @@ public interface CSWRecordRepository {
 	 * 
      * @param id
      * @param elementSetName
+	 * @param outputSchema
 	 */
-	public void removeRecord(Serializable id, ElementSetName elementSetName);
+	public void removeRecord(Serializable id, ElementSetName elementSetName, Namespace outputSchema);
 }
