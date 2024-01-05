@@ -95,7 +95,7 @@ public class XMLEncodingTest {
 
         try {
             CSWQuery q = encoding.getQuery();
-            assertEquals(Namespace.OGC.getQName(), q.getOutputSchema().getQName(), "Output schema is correct");
+            assertEquals(Namespace.OGC.getQName(), q.getOutputSchema().getQName(), "Output schema is not correct");
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
@@ -116,7 +116,7 @@ public class XMLEncodingTest {
 
         try {
             CSWQuery q = encoding.getQuery();
-            assertEquals(Namespace.OGC.getQName(), q.getOutputSchema().getQName(), "Output schema is correct");
+            assertEquals(Namespace.OGC.getQName(), q.getOutputSchema().getQName(), "Output schema is not correct");
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
