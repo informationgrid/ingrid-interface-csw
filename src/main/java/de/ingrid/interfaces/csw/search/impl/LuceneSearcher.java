@@ -152,6 +152,7 @@ public class LuceneSearcher implements Searcher {
         if (query.getIds() != null) {
             // there are records specified by id. So we can search directly in the record repository
             for (String id : query.getIds()) {
+                // FIXME: containsRecord function should be called with outputSchema?
                 if (this.recordRepository.containsRecord(id)) {
                     CSWRecord record = this.recordRepository.getRecord(id, elementSetName, outputSchema);
                     results.add(record);
