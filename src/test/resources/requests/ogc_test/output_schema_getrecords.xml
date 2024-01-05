@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GetRecords
+        service="CSW"
+        version="2.0.2"
+        maxRecords="5"
+        startPosition="1"
+        resultType="results"
+        outputFormat="application/xml"
+        outputSchema="http://www.opengis.net/ogc"
+        xmlns="http://www.opengis.net/cat/csw/2.0.2"
+        xmlns:ogc="http://www.opengis.net/ogc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+    <Query typeNames="Record">
+        <ElementSetName typeNames="">full</ElementSetName>
+
+        <ogc:SortBy>
+            <ogc:SortProperty>
+                <ogc:PropertyName>title</ogc:PropertyName>
+                <ogc:SortOrder>ASC</ogc:SortOrder>
+            </ogc:SortProperty>
+        </ogc:SortBy>
+    </Query>
+</GetRecords>

@@ -2,16 +2,16 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -25,32 +25,29 @@
  */
 package de.ingrid.interfaces.csw.domain;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import de.ingrid.interfaces.csw.server.CSWServlet;
+import de.ingrid.interfaces.csw.tools.StringUtils;
 import org.hamcrest.Matchers;
 import org.jmock.Mockery;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.ingrid.interfaces.csw.server.CSWServlet;
-import de.ingrid.interfaces.csw.tools.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GetCapabilitiesTest extends OperationTestBase {
 
     /**
      * Test GetCapabilities with GET method using KVP encoding
+     *
      * @throws Exception
      */
     @Test
     public void testKVPGetCapabilitiesRequest() throws Exception {
-
         StringBuffer result = new StringBuffer();
         Mockery context = new Mockery();
         final HttpServletRequest request = context.mock(HttpServletRequest.class);
@@ -76,16 +73,15 @@ public class GetCapabilitiesTest extends OperationTestBase {
 
         assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
         assertEquals("Capabilities", payload.getLocalName(), "The response is a Capabilities document.");
-
     }
 
     /**
      * Test GetCapabilities with POST method using XML encoding
+     *
      * @throws Exception
      */
     @Test
     public void testXMLPostCapabilitiesRequest() throws Exception {
-
         StringBuffer result = new StringBuffer();
         Mockery context = new Mockery();
         final HttpServletRequest request = context.mock(HttpServletRequest.class);
@@ -113,11 +109,11 @@ public class GetCapabilitiesTest extends OperationTestBase {
 
     /**
      * Test GetCapabilities with POST method using Soap encoding
+     *
      * @throws Exception
      */
     @Test
     public void testSoapPostCapabilitiesRequest() throws Exception {
-
         StringBuffer result = new StringBuffer();
         Mockery context = new Mockery();
         final HttpServletRequest request = context.mock(HttpServletRequest.class);
@@ -145,6 +141,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 
     /**
      * Test GetCapabilities with POST method using Soap encoding and invalid request
+     *
      * @throws Exception
      */
     @Test
@@ -156,6 +153,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 
     /**
      * Test GetCapabilities with POST method using Soap encoding and invalid request
+     *
      * @throws Exception
      */
     @Test
@@ -167,6 +165,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 
     /**
      * Test GetCapabilities with POST method using Soap encoding and invalid request
+     *
      * @throws Exception
      */
     @Test
@@ -178,6 +177,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 
     /**
      * Test GetCapabilities with POST method using Soap encoding and invalid request
+     *
      * @return Node
      * @throws Exception
      */
@@ -211,6 +211,7 @@ public class GetCapabilitiesTest extends OperationTestBase {
 
     /**
      * Test GetCapabilities with GET method using KVP encoding and a variant
+     *
      * @throws Exception
      */
     @Test
@@ -241,6 +242,4 @@ public class GetCapabilitiesTest extends OperationTestBase {
         assertNotEquals(payload.getLocalName(), "Fault", "The response is no ExceptionReport.");
         assertEquals("Capabilities", payload.getLocalName(), "The response is a Capabilities document.");
     }
-
-
 }

@@ -2,16 +2,16 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -67,7 +67,10 @@ public final class TestRequests {
     public static final String GETRECORDS_12_SOAP = "src/test/resources/requests/get_records_12_soap.xml";
 
     public static final String GETRECORDS_HITS_SOAP = "src/test/resources/requests/get_records_hits_soap.xml";
+    public static final String GETRECORDS_OUTPUT_SCHEMA_OGC ="src/test/resources/requests/ogc_test/output_schema_getrecords.xml";
+    public static final String GETRECORDS_ID_OUTPUT_SCHEMA_OGC ="src/test/resources/requests/ogc_test/output_schema_getrecords_id.xml";
 
+    public static final String GETRECORDS_OGC = "src/test/resources/requests/ogc_test/soap_get_records_ogc.xml";
     public static final String GETRECORDSINVALID_1_SOAP = "src/test/resources/requests/get_records_invalid_1_soap.xml";
     public static final String GETRECORDSINVALID_2_SOAP = "src/test/resources/requests/get_records_invalid_2_soap.xml";
     public static final String GETRECORDSINVALID_3_SOAP = "src/test/resources/requests/get_records_invalid_3_soap.xml";

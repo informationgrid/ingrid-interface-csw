@@ -2,16 +2,16 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -27,6 +27,7 @@ package de.ingrid.interfaces.csw.domain;
 
 import java.io.Serializable;
 
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import org.w3c.dom.Node;
 
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
@@ -41,6 +42,7 @@ import de.ingrid.utils.xpath.XPathUtils;
 public class CSWRecord {
 
 	private static final String ID_XPATH = "/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString";
+	private static final String ID_XPATH_OGC = "/csw:Record/dc:identifier";
 
 	private static XPathUtils xpath = new XPathUtils(new IDFNamespaceContext());
 
@@ -55,6 +57,11 @@ public class CSWRecord {
 	private ElementSetName elementSetName;
 
 	/**
+	 * output schema of the element
+	 */
+	private Namespace outputSchema;
+
+	/**
 	 * The XML content of the record
 	 */
 	private Node node;
@@ -65,11 +72,16 @@ public class CSWRecord {
 	 * @param elementSetName
 	 * @param node
 	 */
-	public CSWRecord(ElementSetName elementSetName, Node node) {
+	public CSWRecord(ElementSetName elementSetName, Namespace outputSchema,  Node node) {
 		this.elementSetName = elementSetName;
+		this.outputSchema = outputSchema;
 		this.node = node;
 		// extract record id
-		this.id = xpath.getString(node, ID_XPATH);
+		if( outputSchema == Namespace.GMD) {
+			this.id = xpath.getString(node, ID_XPATH);
+		} else {
+			this.id = xpath.getString(node, ID_XPATH_OGC);
+		}
 	}
 
 	/**
@@ -89,6 +101,11 @@ public class CSWRecord {
 	public ElementSetName getElementSetName() {
 		return this.elementSetName;
 	}
+
+	/**
+	 * Get output schema of the record.
+	 */
+	public Namespace getOutputSchema() {return this.outputSchema;}
 
 	/**
 	 * Get the DOM representation of the record.

@@ -2,16 +2,16 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -25,6 +25,7 @@
  */
 package de.ingrid.interfaces.csw.catalog.action.impl;
 
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -64,7 +65,7 @@ public class InsertAction extends AbstractAction implements Action {
         // TODO implement insert action
         ActionResult result = new ActionResult(this);
         // NOTE: this test implementation returns a sample record
-        result.addRecord(new CSWRecord(ElementSetName.BRIEF, getExampleRecord()));
+        result.addRecord(new CSWRecord(ElementSetName.BRIEF, Namespace.ISO, getExampleRecord()));
         return result;
     }
 

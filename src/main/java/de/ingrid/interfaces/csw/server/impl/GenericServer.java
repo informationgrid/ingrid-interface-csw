@@ -2,16 +2,16 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -84,6 +84,7 @@ public class GenericServer implements CSWServer {
     /** Tool for evaluating xpath **/
     private XPathUtils xpath = new XPathUtils(new Csw202NamespaceContext());
 
+    // default value
     private static final String RESPONSE_NAMESPACE = Namespace.CSW_2_0_2.getQName().getNamespaceURI();
 
     /**
@@ -158,7 +159,6 @@ public class GenericServer implements CSWServer {
 
     @Override
     public Document process(DescribeRecordRequest request) throws CSWException {
-
         final String documentKey = ConfigurationKeys.RECORDDESC_DOC;
 
         // return the cached document
@@ -191,11 +191,15 @@ public class GenericServer implements CSWServer {
             doc.getDocumentElement().appendChild(searchStatus);
 
             Element searchResults = doc.createElementNS(RESPONSE_NAMESPACE, "csw:SearchResults");
+            // set output schema
+            searchResults.setAttribute("outputSchema",
+                    request.getQuery().getOutputSchema().getQName().getNamespaceURI());
             searchResults.setAttribute("elementSet", request.getQuery().getElementSetName().name().toLowerCase());
             searchResults.setAttribute("numberOfRecordsMatched", String.valueOf(result.getTotalHits()));
             searchResults.setAttribute("numberOfRecordsReturned", String.valueOf((result.getResults() == null) ? 0
                     : result.getResults().size()));
-            int nextRecord = query.getStartPosition() + ((result.getResults() == null) ? 0 : result.getResults().size());
+            int nextRecord = query.getStartPosition() +
+                    ((result.getResults() == null) ? 0 : result.getResults().size());
             if (nextRecord > result.getTotalHits()) {
                 nextRecord = 0;
             }
@@ -211,11 +215,11 @@ public class GenericServer implements CSWServer {
             }
             return doc;
         } catch (CSWException ex) {
-            log.error("An error occured processing GetRecordsRequest", ex);
+            log.error("An error occurred processing GetRecordsRequest", ex);
             throw ex;
         } catch (Exception ex) {
-            log.error("An error occured processing GetRecordsRequest", ex);
-            throw new CSWException("An error occured processing GetRecordsRequest");
+            log.error("An error occurred processing GetRecordsRequest", ex);
+            throw new CSWException("An error occurred processing GetRecordsRequest");
         }
     }
 
@@ -241,11 +245,11 @@ public class GenericServer implements CSWServer {
             }
             return doc;
         } catch (CSWException ex) {
-            log.error("An error occured processing GetRecordByIdRequest", ex);
+            log.error("An error occurred processing GetRecordByIdRequest", ex);
             throw ex;
         } catch (Exception ex) {
-            log.error("An error occured processing GetRecordByIdRequest", ex);
-            throw new CSWException("An error occured processing GetRecordByIdRequest");
+            log.error("An error occurred processing GetRecordByIdRequest", ex);
+            throw new CSWException("An error occurred processing GetRecordByIdRequest");
         }
     }
 
@@ -262,11 +266,11 @@ public class GenericServer implements CSWServer {
             }
             
         } catch (CSWException ex) {
-            log.error("An error occured processing TransactionRequest", ex);
+            log.error("An error occurred processing TransactionRequest", ex);
             throw ex;
         } catch (Exception ex) {
-            log.error("An error occured processing TransactionRequest", ex);
-            throw new CSWException("An error occured processing TransactionRequest", "TransactionUnspecifiedError", "");
+            log.error("An error occurred processing TransactionRequest", ex);
+            throw new CSWException("An error occurred processing TransactionRequest", "TransactionUnspecifiedError", "");
         }
     }
 

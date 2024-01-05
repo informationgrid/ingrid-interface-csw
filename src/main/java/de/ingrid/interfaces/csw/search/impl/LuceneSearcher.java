@@ -2,16 +2,16 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -29,6 +29,7 @@ import java.io.File;
 import java.util.Set;
 import java.util.logging.Level;
 
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
@@ -144,15 +145,16 @@ public class LuceneSearcher implements Searcher {
         }
 
         CSWRecordResults results = new CSWRecordResults();
-
         ElementSetName elementSetName = query.getElementSetName();
+        // add output schema
+        Namespace outputSchema = query.getOutputSchema();
+
         if (query.getIds() != null) {
-            // there are records specified by id. So we can search in the record
-            // repository
-            // directly
+            // there are records specified by id. So we can search directly in the record repository
             for (String id : query.getIds()) {
+                // FIXME: containsRecord function should be called with outputSchema?
                 if (this.recordRepository.containsRecord(id)) {
-                    CSWRecord record = this.recordRepository.getRecord(id, elementSetName);
+                    CSWRecord record = this.recordRepository.getRecord(id, elementSetName, outputSchema);
                     results.add(record);
                 }
             }
@@ -188,7 +190,7 @@ public class LuceneSearcher implements Searcher {
             int endIdx = Math.min((query.getStartPosition() + query.getMaxRecords() - 1), resultIds.size());
             for (String resultId : resultIds) {
                 if (cnt >= query.getStartPosition() && cnt <= endIdx) {
-                    CSWRecord record = this.recordRepository.getRecord(resultId, elementSetName);
+                    CSWRecord record = this.recordRepository.getRecord(resultId, elementSetName, outputSchema);
                     results.add(record);
                 } else if (cnt > endIdx) {
                     break;

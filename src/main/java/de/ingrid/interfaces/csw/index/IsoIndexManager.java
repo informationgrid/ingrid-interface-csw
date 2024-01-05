@@ -2,16 +2,16 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -25,24 +25,12 @@
  */
 package de.ingrid.interfaces.csw.index;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import de.ingrid.interfaces.csw.cache.DocumentCache;
 import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.CSWRecord;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.constants.ElementSetName;
+import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import de.ingrid.interfaces.csw.harvest.impl.RecordCache;
 import de.ingrid.interfaces.csw.jobs.UpdateJob;
 import de.ingrid.interfaces.csw.mapping.CSWRecordMapper;
@@ -50,8 +38,20 @@ import de.ingrid.interfaces.csw.mapping.IPreCommitHandler;
 import de.ingrid.interfaces.csw.search.CSWRecordRepository;
 import de.ingrid.interfaces.csw.search.Searcher;
 import de.ingrid.interfaces.csw.tools.FileUtils;
-import de.ingrid.utils.statusprovider.StatusProviderService;
 import de.ingrid.utils.statusprovider.StatusProvider;
+import de.ingrid.utils.statusprovider.StatusProviderService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Provides a single interface to all index / ISO cache related functionality.
@@ -214,9 +214,12 @@ public class IsoIndexManager implements IPreCommitHandler {
         this.indexer.removeDocs(ids);
         this.searcher.refresh();
         for (Serializable id : ids) {
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.GMD);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.GMD);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.GMD);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.OGC);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.OGC);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.OGC);
         }
     }
 
@@ -256,9 +259,12 @@ public class IsoIndexManager implements IPreCommitHandler {
         this.searcher.refresh();
 
         for (Serializable id : ids) {
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.GMD);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.GMD);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.GMD);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.OGC);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.OGC);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.OGC);
         }
     }
 
