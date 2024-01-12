@@ -1,9 +1,15 @@
-## 6.4.0 (xx.xx.xxxx)
-* OGC outputSchema wird unterstützt (#5223). outputSchema muss als Attribut bei Anfragen mitgegeben werden.
-  * outputSchema standard ist GMD.
-  * outputSchema OGC kann als Attribut in einer GetRecords, GetRecordById als URI mitgegeben werden.
-  Bsp: <GetRecordById service="CSW" version="2.0.2" outputFormat="application/xml" outputSchema="http://www.opengis.net/ogc"
-  * Die ausgegebenen Dokumente sind dann im OGC-Format, dublin core. Die übliche ElementSetNames sind unterstützt: full, summary, brief.
+## 7.0.0 (05.01.2024)
+
+### Features
+
+* CSW-Schnittstelle soll auch OGC Schema unterstützen (#5223)
+* Umstellung Lizenz auf EUPL Version 1.2 (#1585)
+
+### Bugfixes
+
+* Interface-CSW fährt nicht hoch wenn pattern-Datei leer ist (#5755)
+* Aktualisierung sicherheitskritischer Libraries (#5724)
+* "anchor" im Mapping Skript berücksichtigen (#5596)
 
 
 ## 6.3.0 (17.10.2023)
