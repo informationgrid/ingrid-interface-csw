@@ -99,10 +99,13 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
 	 */
 	protected ImmutableTriple<Serializable, ElementSetName, Namespace> extractFromCacheId(Serializable cacheId) {
 		if (cacheId != null) {
-			String[] splitCacheId = cacheId.toString().split("_");
-			String id = splitCacheId[0];
-			String elementSetName = splitCacheId[1];
-			String outputSchema = splitCacheId[2];
+			// quick and dirty hack - we cannot use the cleaner "split"-solution, as the ID can contain an underscore
+			String cacheIdString = cacheId.toString();
+			int elementSetNameEnd = cacheIdString.lastIndexOf("_");
+			int idEnd = cacheIdString.lastIndexOf("_", elementSetNameEnd - 1);
+			String id = cacheIdString.substring(0, idEnd);
+			String elementSetName = cacheIdString.substring(idEnd + 1, elementSetNameEnd);
+			String outputSchema = cacheIdString.substring(elementSetNameEnd + 1);
 
 			return ImmutableTriple.of(id, ElementSetName.valueOf(elementSetName.toUpperCase()),
 					Namespace.valueOf(outputSchema.toUpperCase()));
