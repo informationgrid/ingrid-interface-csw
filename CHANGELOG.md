@@ -2,7 +2,7 @@
 
 ### Features
 
-* CSW-Schnittstelle soll auch OGC Schema unterstützen (#5223)
+* CSW-Schnittstelle soll auch OGC Schema unterstützen (#5223) 
 * Umstellung Lizenz auf EUPL Version 1.2 (#1585)
 
 ### Bugfixes
