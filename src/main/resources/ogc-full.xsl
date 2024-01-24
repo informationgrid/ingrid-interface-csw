@@ -30,6 +30,7 @@
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:ows="http://www.opengis.net/ows"
                 exclude-result-prefixes="idf xsi">
     <xsl:output method="xml"/>
     <xsl:strip-space elements="*"/>
@@ -53,6 +54,7 @@
                     select="//gmd:dataQualityInfo//gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"/>
             <xsl:apply-templates
                     select="//gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | //gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource"/>
+            <xsl:apply-templates select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
         </csw:Record>
     </xsl:template>
 
@@ -132,6 +134,21 @@
         <dc:URI description="{gmd:name/gco:CharacterString}">
             <xsl:value-of select="gmd:linkage/gmd:URL"/>
         </dc:URI>
+    </xsl:template>
+    <!-- bounding box -->
+    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+        <ows:BoundingBox crs="urn:ogc:def:crs:EPSG::25832"> <!-- FIXME: welche EPSG version ? -->
+            <ows:LowerCorner>
+                <xsl:value-of select="gmd:westBoundLongitude/gco:Decimal"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="gmd:southBoundLatitude/gco:Decimal"/>
+            </ows:LowerCorner>
+            <ows:UpperCorner>
+                <xsl:value-of select="gmd:eastBoundLongitude/gco:Decimal"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="gmd:northBoundLatitude/gco:Decimal"/>
+            </ows:UpperCorner>
+        </ows:BoundingBox>
     </xsl:template>
 
 
