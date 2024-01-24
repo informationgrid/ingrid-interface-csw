@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>5223-fix</version>
+  <version>feature/5223-fix</version>
   <packaging>jar</packaging>
   <name>InGrid Interface CSW</name>
 
