@@ -29,12 +29,13 @@
                 xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 exclude-result-prefixes="idf xsi">
     <xsl:output method="xml"/>
     <xsl:strip-space elements="*"/>
 
     <xsl:template match="/">
-        <csw:Record xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:ows="http://www.opengis.net/ows">
+        <csw:Record xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:ows="http://www.opengis.net/ows" >
             <!-- Apply the following templates -->
             <xsl:apply-templates select="//gmd:fileIdentifier"/>
             <xsl:apply-templates
@@ -81,9 +82,18 @@
     </xsl:template>
     <!-- keywords -->
     <xsl:template match="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword">
-        <dc:subject>
-            <xsl:value-of select="gco:CharacterString"/>
-        </dc:subject>
+        <xsl:choose>
+            <xsl:when test="gmx:Anchor">
+                <dc:subject>
+                    <xsl:value-of select="gmx:Anchor"/>
+                </dc:subject>
+            </xsl:when>
+            <xsl:when test="gco:CharacterString">
+                <dc:subject>
+                    <xsl:value-of select="gco:CharacterString"/>
+                </dc:subject>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
     <!-- modified -->
     <xsl:template match="gmd:dateStamp">
@@ -104,9 +114,9 @@
         </dc:description>
     </xsl:template>
     <!-- rights -->
-    <xsl:template match="gmd:resourceConstraints//gmd:accessConstraints | gmd:resourceConstraints//gmd:useConstraints">
+    <xsl:template match="gmd:resourceConstraints//gmd:accessConstraints[gmd:MD_RestrictionCode[normalize-space()]] | gmd:resourceConstraints//gmd:useConstraints[gmd:MD_RestrictionCode[normalize-space()]]">
         <dc:rights>
-            <xsl:value-of select="gmd:MD_RestrictionCode"/>
+            <xsl:value-of select="normalize-space(gmd:MD_RestrictionCode)"/>
         </dc:rights>
     </xsl:template>
     <!-- source -->
