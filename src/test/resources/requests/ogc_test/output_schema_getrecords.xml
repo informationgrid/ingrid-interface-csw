@@ -4,6 +4,7 @@
         xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:ows="http://www.opengis.net/ows"
+        xmlns:ogc="http://www.opengis.net/ogc"
         outputSchema="http://www.opengis.net/cat/csw/2.0.2"
         outputFormat="application/xml"
         version="2.0.2"
@@ -21,4 +22,4 @@
             </ogc:SortProperty>
         </ogc:SortBy>
     </Query>
-</GetRecords>
+</csw:GetRecords>
