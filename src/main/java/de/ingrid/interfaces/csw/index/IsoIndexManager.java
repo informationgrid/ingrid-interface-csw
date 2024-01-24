@@ -217,9 +217,9 @@ public class IsoIndexManager implements IPreCommitHandler {
             this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.GMD);
             this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.GMD);
             this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.GMD);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.OGC);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.OGC);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.OGC);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.CSW_2_0_2);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.CSW_2_0_2);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.CSW_2_0_2);
         }
     }
 
@@ -262,9 +262,9 @@ public class IsoIndexManager implements IPreCommitHandler {
             this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.GMD);
             this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.GMD);
             this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.GMD);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.OGC);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.OGC);
-            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.OGC);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.FULL, Namespace.CSW_2_0_2);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.BRIEF, Namespace.CSW_2_0_2);
+            this.cswRecordMapper.getRecordRepository().removeRecord(id, ElementSetName.SUMMARY, Namespace.CSW_2_0_2);
         }
     }
 

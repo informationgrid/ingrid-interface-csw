@@ -144,21 +144,21 @@ public class XsltMapper implements CSWRecordMapper {
                         log.debug("Mapping record " + cacheId + " to csw FULL with output schema OGC");
                     }
                     Node mappedFullRecordOgc = this.mapFullOgc(recordCache.get(cacheId));
-                    cswRecord = new CSWRecord(ElementSetName.FULL, Namespace.OGC, mappedFullRecordOgc);
+                    cswRecord = new CSWRecord(ElementSetName.FULL, Namespace.CSW_2_0_2, mappedFullRecordOgc);
                     tmpCache.put(cswRecord);
 
                     if (log.isDebugEnabled()) {
                         log.debug("Mapping record " + cacheId + " to csw SUMMARY with output schema OGC");
                     }
                     Node mappedSummaryRecordOgc = this.mapSummaryOgc(mappedFullRecordOgc);
-                    cswRecord = new CSWRecord(ElementSetName.SUMMARY, Namespace.OGC, mappedSummaryRecordOgc);
+                    cswRecord = new CSWRecord(ElementSetName.SUMMARY, Namespace.CSW_2_0_2, mappedSummaryRecordOgc);
                     tmpCache.put(cswRecord);
 
                     if (log.isDebugEnabled()) {
                         log.debug("Mapping record " + cacheId + " to csw BRIEF with output schema OGC");
                     }
                     Node mappedBriefRecordOgc = this.mapBriefOgc(mappedFullRecordOgc);
-                    cswRecord = new CSWRecord(ElementSetName.BRIEF, Namespace.OGC, mappedBriefRecordOgc);
+                    cswRecord = new CSWRecord(ElementSetName.BRIEF, Namespace.CSW_2_0_2, mappedBriefRecordOgc);
                     tmpCache.put(cswRecord);
                 }
             }
