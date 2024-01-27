@@ -39,25 +39,25 @@
         <csw:Record xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/"
                     xmlns:geonet="http://www.fao.org/geonetwork" xmlns:ows="http://www.opengis.net/ows">
             <!-- Apply the following templates -->
-            <xsl:apply-templates select="//gmd:fileIdentifier"/>
+            <xsl:apply-templates select="//gmd:fileIdentifier"/>  <!-- uuid -->
             <xsl:apply-templates
-                    select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:CI_Date//gmd:date"/>
-            <xsl:apply-templates select="//gmd:identificationInfo//gmd:citation//gmd:title"/>
-            <xsl:apply-templates select="//gmd:hierarchyLevel"/>
-            <xsl:apply-templates select="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword"/>
-            <xsl:apply-templates select="//gmd:dateStamp"/>
-            <xsl:apply-templates select="//gmd:identificationInfo//gmd:abstract"/>
-            <xsl:apply-templates select="//gmd:identificationInfo//gmd:language"/>
+                    select="//gmd:identificationInfo//gmd:citation//gmd:CI_Date//gmd:date"/> <!-- date -->
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:citation//gmd:title"/> <!-- title -->
+            <xsl:apply-templates select="//gmd:hierarchyLevel"/> <!-- type -->
+            <xsl:apply-templates select="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword"/> <!-- keywords -->
+            <xsl:apply-templates select="//gmd:dateStamp"/> <!-- modified -->
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:abstract"/> <!-- description -->
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:language"/> <!-- language -->
             <xsl:apply-templates
-                    select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:alternateTitle"/>
+                    select="//gmd:identificationInfo//gmd:citation//gmd:alternateTitle"/> <!-- abstract -->
             <xsl:apply-templates
-                    select="//gmd:resourceConstraints//gmd:accessConstraints | //gmd:resourceConstraints//gmd:useConstraints"/>
+                    select="//gmd:resourceConstraints//gmd:accessConstraints | //gmd:resourceConstraints//gmd:useConstraints"/> <!-- rights -->
             <xsl:apply-templates
-                    select="//gmd:dataQualityInfo//gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"/>
+                    select="//gmd:dataQualityInfo//gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"/> <!-- source -->
             <xsl:apply-templates
-                    select="//gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | //gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource"/>
+                    select="//gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | //gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource"/> <!-- links -->
             <xsl:apply-templates
-                    select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
+                    select="//gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox"/> <!-- bounding box -->
         </csw:Record>
     </xsl:template>
 
@@ -68,7 +68,7 @@
         </dc:identifier>
     </xsl:template>
     <!-- date -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:CI_Date//gmd:date">
+    <xsl:template match="gmd:identificationInfo//gmd:citation//gmd:CI_Date//gmd:date">
         <dc:date>
             <xsl:value-of select="gco:DateTime"/>
         </dc:date>
@@ -117,13 +117,13 @@
         </dct:modified>
     </xsl:template>
     <!-- abstract -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:alternateTitle">
+    <xsl:template match="gmd:identificationInfo//gmd:citation//gmd:alternateTitle">
         <dct:abstract>
             <xsl:value-of select="gco:CharacterString"/>
         </dct:abstract>
     </xsl:template>
     <!-- description -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract">
+    <xsl:template match="gmd:identificationInfo//gmd:abstract">
         <dc:description>
             <xsl:value-of select="gco:CharacterString"/>
         </dc:description>
