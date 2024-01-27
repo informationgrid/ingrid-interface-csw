@@ -36,7 +36,8 @@
     <xsl:strip-space elements="*"/>
 
     <xsl:template match="/">
-        <csw:Record xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:ows="http://www.opengis.net/ows" >
+        <csw:Record xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/"
+                    xmlns:geonet="http://www.fao.org/geonetwork" xmlns:ows="http://www.opengis.net/ows">
             <!-- Apply the following templates -->
             <xsl:apply-templates select="//gmd:fileIdentifier"/>
             <xsl:apply-templates
@@ -54,7 +55,8 @@
                     select="//gmd:dataQualityInfo//gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"/>
             <xsl:apply-templates
                     select="//gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | //gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource"/>
-            <xsl:apply-templates select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
+            <xsl:apply-templates
+                    select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
         </csw:Record>
     </xsl:template>
 
@@ -78,9 +80,19 @@
     </xsl:template>
     <!-- type -->
     <xsl:template match="gmd:hierarchyLevel">
-        <dc:type>
-            <xsl:value-of select="gmd:MD_ScopeCode"/>
-        </dc:type>
+        <!-- type: might be saved as codeListValue attribute instead as text in the matching tag -->
+        <xsl:choose>
+            <xsl:when test="gmd:MD_ScopeCode!=''">
+                <dc:type>
+                    <xsl:value-of select="gmd:MD_ScopeCode"/>
+                </dc:type>
+            </xsl:when>
+            <xsl:otherwise>
+                <dc:type>
+                    <xsl:value-of select="gmd:MD_ScopeCode/@codeListValue"/>
+                </dc:type>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <!-- keywords -->
     <xsl:template match="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword">
@@ -116,7 +128,8 @@
         </dc:description>
     </xsl:template>
     <!-- rights -->
-    <xsl:template match="gmd:resourceConstraints//gmd:accessConstraints[gmd:MD_RestrictionCode[normalize-space()]] | gmd:resourceConstraints//gmd:useConstraints[gmd:MD_RestrictionCode[normalize-space()]]">
+    <xsl:template
+            match="gmd:resourceConstraints//gmd:accessConstraints[gmd:MD_RestrictionCode[normalize-space()]] | gmd:resourceConstraints//gmd:useConstraints[gmd:MD_RestrictionCode[normalize-space()]]">
         <dc:rights>
             <xsl:value-of select="normalize-space(gmd:MD_RestrictionCode)"/>
         </dc:rights>
@@ -136,8 +149,9 @@
         </dc:URI>
     </xsl:template>
     <!-- bounding box -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
-        <ows:BoundingBox crs="urn:ogc:def:crs:EPSG::25832"> <!-- FIXME: welche EPSG version ? -->
+    <xsl:template
+            match="gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+        <ows:BoundingBox crs="urn:ogc:def:crs:EPSG::4326">
             <ows:LowerCorner>
                 <xsl:value-of select="gmd:westBoundLongitude/gco:Decimal"/>
                 <xsl:text> </xsl:text>
