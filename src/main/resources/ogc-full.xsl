@@ -47,6 +47,7 @@
             <xsl:apply-templates select="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword"/>
             <xsl:apply-templates select="//gmd:dateStamp"/>
             <xsl:apply-templates select="//gmd:identificationInfo//gmd:abstract"/>
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:language"/>
             <xsl:apply-templates
                     select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:alternateTitle"/>
             <xsl:apply-templates
@@ -126,6 +127,12 @@
         <dc:description>
             <xsl:value-of select="gco:CharacterString"/>
         </dc:description>
+    </xsl:template>
+    <!-- language -->
+    <xsl:template match="gmd:identificationInfo//gmd:language">
+        <dc:language>
+            <xsl:value-of select="gmd:LanguageCode/@codeListValue"/>
+        </dc:language>
     </xsl:template>
     <!-- rights -->
     <xsl:template
