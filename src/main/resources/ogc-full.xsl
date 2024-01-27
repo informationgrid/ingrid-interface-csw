@@ -42,11 +42,11 @@
             <xsl:apply-templates select="//gmd:fileIdentifier"/>
             <xsl:apply-templates
                     select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:CI_Date//gmd:date"/>
-            <xsl:apply-templates select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:title"/>
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:citation//gmd:title"/>
             <xsl:apply-templates select="//gmd:hierarchyLevel"/>
             <xsl:apply-templates select="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword"/>
             <xsl:apply-templates select="//gmd:dateStamp"/>
-            <xsl:apply-templates select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract"/>
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:abstract"/>
             <xsl:apply-templates
                     select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:alternateTitle"/>
             <xsl:apply-templates
@@ -73,7 +73,7 @@
         </dc:date>
     </xsl:template>
     <!-- title -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:title">
+    <xsl:template match="gmd:identificationInfo//gmd:citation//gmd:title">
         <dc:title>
             <xsl:value-of select="gco:CharacterString"/>
         </dc:title>
