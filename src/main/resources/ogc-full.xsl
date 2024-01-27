@@ -46,12 +46,12 @@
             <xsl:apply-templates select="//gmd:hierarchyLevel"/> <!-- type -->
             <xsl:apply-templates select="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword"/> <!-- keywords -->
             <xsl:apply-templates select="//gmd:dateStamp"/> <!-- modified -->
-            <xsl:apply-templates select="//gmd:identificationInfo//gmd:abstract"/> <!-- description -->
-            <xsl:apply-templates select="//gmd:identificationInfo//gmd:language"/> <!-- language -->
             <xsl:apply-templates
                     select="//gmd:identificationInfo//gmd:citation//gmd:alternateTitle"/> <!-- abstract -->
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:abstract"/> <!-- description -->
             <xsl:apply-templates
                     select="//gmd:resourceConstraints//gmd:accessConstraints | //gmd:resourceConstraints//gmd:useConstraints"/> <!-- rights -->
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:language"/> <!-- language -->
             <xsl:apply-templates
                     select="//gmd:dataQualityInfo//gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"/> <!-- source -->
             <xsl:apply-templates
