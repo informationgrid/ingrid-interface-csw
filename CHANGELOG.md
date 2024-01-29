@@ -1,3 +1,13 @@
+## 7.0.1 (29.01.2024)
+
+### Bugfixes
+
+* Änderung der outputSchema URI auf http://www.opengis.net/cat/csw/2.0.2
+* Fix der Ausgabe des Record-Elements Tag
+* Fix Abruf der Records aus der Cache
+* Verbesserung der Ausgabe in OGC Schema
+
+
 ## 7.0.0 (05.01.2024)
 
 ### Features
