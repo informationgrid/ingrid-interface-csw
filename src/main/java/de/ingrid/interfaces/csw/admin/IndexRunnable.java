@@ -41,12 +41,12 @@ public class IndexRunnable implements Runnable {
             LOG.info("indexing starts");
 
             if (!updateJob.execute()) {
-                LOG.error("Could not execut update job.");
+                LOG.error("Could not execute update job.");
             }
             LOG.info("indexing ends");
 
         } catch (final Exception e) {
-            LOG.error("Could not execut update job.", e);
+            LOG.error("Could not execute update job.", e);
         }
     }
 

@@ -29,29 +29,35 @@
                 xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:ows="http://www.opengis.net/ows"
                 exclude-result-prefixes="idf xsi">
     <xsl:output method="xml"/>
     <xsl:strip-space elements="*"/>
 
     <xsl:template match="/">
-        <csw:Record>
+        <csw:Record xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/"
+                    xmlns:geonet="http://www.fao.org/geonetwork" xmlns:ows="http://www.opengis.net/ows">
             <!-- Apply the following templates -->
-            <xsl:apply-templates select="//gmd:fileIdentifier"/>
+            <xsl:apply-templates select="//gmd:fileIdentifier"/>  <!-- uuid -->
             <xsl:apply-templates
-                    select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:CI_Date//gmd:date"/>
-            <xsl:apply-templates select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:title"/>
-            <xsl:apply-templates select="//gmd:hierarchyLevel"/>
-            <xsl:apply-templates select="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword"/>
-            <xsl:apply-templates select="//gmd:dateStamp"/>
-            <xsl:apply-templates select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract"/>
+                    select="//gmd:identificationInfo//gmd:citation//gmd:CI_Date//gmd:date"/> <!-- date -->
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:citation//gmd:title"/> <!-- title -->
+            <xsl:apply-templates select="//gmd:hierarchyLevel"/> <!-- type -->
+            <xsl:apply-templates select="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword"/> <!-- keywords -->
+            <xsl:apply-templates select="//gmd:dateStamp"/> <!-- modified -->
             <xsl:apply-templates
-                    select="//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:alternateTitle"/>
+                    select="//gmd:identificationInfo//gmd:citation//gmd:alternateTitle"/> <!-- abstract -->
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:abstract"/> <!-- description -->
             <xsl:apply-templates
-                    select="//gmd:resourceConstraints//gmd:accessConstraints | //gmd:resourceConstraints//gmd:useConstraints"/>
+                    select="//gmd:resourceConstraints//gmd:accessConstraints | //gmd:resourceConstraints//gmd:useConstraints"/> <!-- rights -->
+            <xsl:apply-templates select="//gmd:identificationInfo//gmd:language"/> <!-- language -->
             <xsl:apply-templates
-                    select="//gmd:dataQualityInfo//gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"/>
+                    select="//gmd:dataQualityInfo//gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"/> <!-- source -->
             <xsl:apply-templates
-                    select="//gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | //gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource"/>
+                    select="//gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | //gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource"/> <!-- links -->
+            <xsl:apply-templates
+                    select="//gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox"/> <!-- bounding box -->
         </csw:Record>
     </xsl:template>
 
@@ -62,28 +68,47 @@
         </dc:identifier>
     </xsl:template>
     <!-- date -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:CI_Date//gmd:date">
+    <xsl:template match="gmd:identificationInfo//gmd:citation//gmd:CI_Date//gmd:date">
         <dc:date>
             <xsl:value-of select="gco:DateTime"/>
         </dc:date>
     </xsl:template>
     <!-- title -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:title">
+    <xsl:template match="gmd:identificationInfo//gmd:citation//gmd:title">
         <dc:title>
             <xsl:value-of select="gco:CharacterString"/>
         </dc:title>
     </xsl:template>
     <!-- type -->
     <xsl:template match="gmd:hierarchyLevel">
-        <dc:type>
-            <xsl:value-of select="gmd:MD_ScopeCode"/>
-        </dc:type>
+        <!-- type: might be saved as codeListValue attribute instead as text in the matching tag -->
+        <xsl:choose>
+            <xsl:when test="gmd:MD_ScopeCode!=''">
+                <dc:type>
+                    <xsl:value-of select="gmd:MD_ScopeCode"/>
+                </dc:type>
+            </xsl:when>
+            <xsl:otherwise>
+                <dc:type>
+                    <xsl:value-of select="gmd:MD_ScopeCode/@codeListValue"/>
+                </dc:type>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <!-- keywords -->
     <xsl:template match="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword">
-        <dc:subject>
-            <xsl:value-of select="gco:CharacterString"/>
-        </dc:subject>
+        <xsl:choose>
+            <xsl:when test="gmx:Anchor">
+                <dc:subject>
+                    <xsl:value-of select="gmx:Anchor"/>
+                </dc:subject>
+            </xsl:when>
+            <xsl:when test="gco:CharacterString">
+                <dc:subject>
+                    <xsl:value-of select="gco:CharacterString"/>
+                </dc:subject>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
     <!-- modified -->
     <xsl:template match="gmd:dateStamp">
@@ -92,21 +117,28 @@
         </dct:modified>
     </xsl:template>
     <!-- abstract -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation//gmd:alternateTitle">
+    <xsl:template match="gmd:identificationInfo//gmd:citation//gmd:alternateTitle">
         <dct:abstract>
             <xsl:value-of select="gco:CharacterString"/>
         </dct:abstract>
     </xsl:template>
     <!-- description -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract">
+    <xsl:template match="gmd:identificationInfo//gmd:abstract">
         <dc:description>
             <xsl:value-of select="gco:CharacterString"/>
         </dc:description>
     </xsl:template>
+    <!-- language -->
+    <xsl:template match="gmd:identificationInfo//gmd:language">
+        <dc:language>
+            <xsl:value-of select="gmd:LanguageCode/@codeListValue"/>
+        </dc:language>
+    </xsl:template>
     <!-- rights -->
-    <xsl:template match="gmd:resourceConstraints//gmd:accessConstraints | gmd:resourceConstraints//gmd:useConstraints">
+    <xsl:template
+            match="gmd:resourceConstraints//gmd:accessConstraints[gmd:MD_RestrictionCode[normalize-space()]] | gmd:resourceConstraints//gmd:useConstraints[gmd:MD_RestrictionCode[normalize-space()]]">
         <dc:rights>
-            <xsl:value-of select="gmd:MD_RestrictionCode"/>
+            <xsl:value-of select="normalize-space(gmd:MD_RestrictionCode)"/>
         </dc:rights>
     </xsl:template>
     <!-- source -->
@@ -122,6 +154,22 @@
         <dc:URI description="{gmd:name/gco:CharacterString}">
             <xsl:value-of select="gmd:linkage/gmd:URL"/>
         </dc:URI>
+    </xsl:template>
+    <!-- bounding box -->
+    <xsl:template
+            match="gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+        <ows:BoundingBox crs="urn:ogc:def:crs:EPSG::4326">
+            <ows:LowerCorner>
+                <xsl:value-of select="gmd:westBoundLongitude/gco:Decimal"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="gmd:southBoundLatitude/gco:Decimal"/>
+            </ows:LowerCorner>
+            <ows:UpperCorner>
+                <xsl:value-of select="gmd:eastBoundLongitude/gco:Decimal"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="gmd:northBoundLatitude/gco:Decimal"/>
+            </ows:UpperCorner>
+        </ows:BoundingBox>
     </xsl:template>
 
 

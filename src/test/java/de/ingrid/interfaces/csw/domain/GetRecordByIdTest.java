@@ -49,7 +49,6 @@ public class GetRecordByIdTest extends OperationTestBase {
      * @throws Exception
      */
     @Test
-    @Disabled
     public void testSoapGetRecordByIdRequestSimple() throws Exception {
 
         StringBuffer result = new StringBuffer();
@@ -87,7 +86,6 @@ public class GetRecordByIdTest extends OperationTestBase {
      * @throws Exception
      */
     @Test
-    @Disabled
     public void testSoapGetRecordByIdRequestMultiple() throws Exception {
 
         StringBuffer result = new StringBuffer();

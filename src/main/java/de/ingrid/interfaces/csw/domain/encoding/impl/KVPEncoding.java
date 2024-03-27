@@ -223,6 +223,11 @@ public class KVPEncoding extends DefaultEncoding implements CSWMessageEncoding {
                         String elementSetNameStr = this.requestParams.get(ELEMENTSETNAME_PARAM);
                         this.query.setElementSetName(ElementSetName.valueOf(elementSetNameStr.toUpperCase()));
                     }
+                    // extract the output schema
+                    if (this.requestParams.containsKey(OUTPUTSCHEMA_PARAM)) {
+                        String schemaUri = this.requestParams.get(OUTPUTSCHEMA_PARAM);
+                        this.query.setOutputSchema(Namespace.getByUri(schemaUri));
+                    }
                     // extract the typeNames
                     if (this.requestParams.containsKey(TYPENAMES_PARAM)) {
                         String typeNamesStr = this.requestParams.get(TYPENAMES_PARAM);

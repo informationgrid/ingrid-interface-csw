@@ -258,7 +258,8 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     // extract the output schema
                     String schemaUri = this.xpath.getString(requestNode, "/csw:GetRecordById/@outputSchema");
                     if (schemaUri != null) {
-                        this.query.setOutputSchema(Namespace.getByUri(schemaUri));
+                        Namespace outputSchema = validateOutputSchema(schemaUri);
+                        this.query.setOutputSchema(outputSchema);
                     }
                 } else if (operation == Operation.GET_RECORDS) {
 
@@ -317,8 +318,9 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
                     }
                     // extract the outputSchema
                     String schemaUri = this.xpath.getString(requestNode, "/csw:GetRecords/@outputSchema");
-                    if (schemaUri != null) {
-                        this.query.setOutputSchema(Namespace.getByUri(schemaUri));
+                    if (schemaUri != null ) {
+                        Namespace outputSchema = validateOutputSchema(schemaUri);
+                        this.query.setOutputSchema(outputSchema);
                     }
 
                     // extract the maxRecords
@@ -398,5 +400,19 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
      */
     protected void setRequestBody(Node requestBody) {
         this.requestBody = requestBody;
+    }
+
+    /**
+     * set the output schema to default GMD if a value is passed
+     * that is part of the namespace but is not GMD or OGC
+     * @param schemaUri
+     * @return
+     */
+    private Namespace validateOutputSchema(String schemaUri){
+        Namespace queryOutputSchema = Namespace.getByUri(schemaUri);
+        if(queryOutputSchema != Namespace.GMD && queryOutputSchema != Namespace.CSW_2_0_2){
+            queryOutputSchema = Namespace.GMD;
+            }
+        return queryOutputSchema;
     }
 }

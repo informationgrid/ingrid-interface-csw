@@ -53,7 +53,6 @@ public class GetRecordsModifiedTest extends OperationTestBase {
      * @throws Exception
      */
     @Test
-    @Disabled
     public void testKVPGetRecordsModified() throws Exception {
         // index data:
 
