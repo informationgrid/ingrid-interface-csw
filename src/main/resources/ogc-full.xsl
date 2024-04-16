@@ -171,16 +171,22 @@
             </xsl:choose>
         </xsl:variable>
 
+        <xsl:variable name="extractedProtocol" select="translate(substring-after($serviceTypeResult, ':'), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
+        <xsl:variable name="uri" select="gmd:linkage/gmd:URL" />
+
         <dc:URI>
-            <xsl:attribute name="protocol">
-                <xsl:value-of select="normalize-space($serviceTypeResult)"/>
-            </xsl:attribute>
+            <!-- add protocol if it is contained in the uri text or it is equal to csw -->
+            <xsl:if test="contains($uri, normalize-space($extractedProtocol)) or contains($uri, 'csw')">
+                <xsl:attribute name="protocol">
+                    <xsl:value-of select="normalize-space($serviceTypeResult)"/>
+                </xsl:attribute>
+            </xsl:if>
 
             <xsl:attribute name="description">
                 <xsl:value-of select="gmd:name/gco:CharacterString"/>
             </xsl:attribute>
 
-            <xsl:value-of select="gmd:linkage/gmd:URL"/>
+            <xsl:value-of select="$uri"/>
         </dc:URI>
     </xsl:template>
 
