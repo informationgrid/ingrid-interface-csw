@@ -1,4 +1,11 @@
-## 7.0.0 (05.01.2024)
+
+## 7.1.3 (04.06.2024)
+
+### Features
+
+* CSW Schnittstelle, OGC Darstellung: Erweiterung der Angabe der Links zu Diensten mit einer Protokoll Angabe (#5951)
+
+    ## 7.0.0 (05.01.2024)
 
 ### Features
 
