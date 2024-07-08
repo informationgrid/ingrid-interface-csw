@@ -1,4 +1,12 @@
-## 7.0.0 (05.01.2024)
+
+## 7.2.0 (08.07.2024)
+
+### Features
+
+* Regelmäßiges Update der Docker Images (#6300)
+* CSW Schnittstelle, OGC Darstellung: Erweiterung der Angabe der Links zu Diensten mit einer Protokoll Angabe (#5951)
+
+    ## 7.0.0 (05.01.2024)
 
 ### Features
 

@@ -31,6 +31,7 @@
                 xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:ows="http://www.opengis.net/ows"
+                xmlns:srv="http://www.isotc211.org/2005/srv"
                 exclude-result-prefixes="idf xsi">
     <xsl:output method="xml"/>
     <xsl:strip-space elements="*"/>
@@ -151,10 +152,44 @@
     <!-- links -->
     <xsl:template
             match="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource">
-        <dc:URI description="{gmd:name/gco:CharacterString}">
-            <xsl:value-of select="gmd:linkage/gmd:URL"/>
+        <!-- set service type and version  -->
+        <xsl:variable name="serviceTypeVersion" select="//srv:serviceTypeVersion/gco:CharacterString"/>
+        <!-- <xsl:variable name="serviceType" select="//srv:serviceType/gco:LocalName"/> not used for now -->
+
+        <!-- handle serviceTypeVersion: extract and remove version numbers -->
+        <xsl:variable name="serviceTypeResult">
+            <xsl:choose>
+                <!-- check if the last char of serviceType is a (version) number and call template if yes -->
+                <xsl:when test="contains('0123456789', substring($serviceTypeVersion, string-length(.)))">
+                    <xsl:call-template name="stripVersion">
+                        <xsl:with-param name="input" select="$serviceTypeVersion"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$serviceTypeVersion"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="extractedProtocol" select="translate(substring-after($serviceTypeResult, ':'), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
+        <xsl:variable name="uri" select="gmd:linkage/gmd:URL" />
+
+        <dc:URI>
+            <!-- add protocol if it is contained in the uri text or it is equal to csw -->
+            <xsl:if test="contains($uri, normalize-space($extractedProtocol)) or contains($uri, 'csw')">
+                <xsl:attribute name="protocol">
+                    <xsl:value-of select="normalize-space($serviceTypeResult)"/>
+                </xsl:attribute>
+            </xsl:if>
+
+            <xsl:attribute name="description">
+                <xsl:value-of select="gmd:name/gco:CharacterString"/>
+            </xsl:attribute>
+
+            <xsl:value-of select="$uri"/>
         </dc:URI>
     </xsl:template>
+
     <!-- bounding box -->
     <xsl:template
             match="gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox">
@@ -220,4 +255,35 @@
         </xsl:call-template>
     </xsl:template>
 
+    <!-- Strip (version) numbers and in-between dots starting from the end -->
+    <xsl:template name="stripVersion">
+        <xsl:param name="input"/>
+        <xsl:param name="output" select="''"/>
+        <xsl:choose>
+            <xsl:when test="$input != ''">
+                <!-- If there's still input, process it, start from end -->
+                <xsl:variable name="lastChar" select="substring($input, string-length($input))"/>
+                <xsl:choose>
+                    <!-- If the last character is a digit or dot, do not include it -->
+                    <xsl:when test="contains('0123456789.', $lastChar)">
+                        <xsl:call-template name="stripVersion">
+                            <xsl:with-param name="input" select="substring($input, 1, string-length($input) - 1)"/>
+                            <xsl:with-param name="output" select="$output"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <!-- If it's not a digit or dot, include it in the output and continue -->
+                    <xsl:otherwise>
+                        <xsl:call-template name="stripVersion">
+                            <xsl:with-param name="input" select="substring($input, 1, string-length($input) - 1)"/>
+                            <xsl:with-param name="output" select="concat($lastChar, $output)"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <!-- If there's no more input, output the result -->
+            <xsl:otherwise>
+                <xsl:value-of select="$output"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 </xsl:stylesheet>
