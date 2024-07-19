@@ -58,7 +58,7 @@
             <xsl:apply-templates
                     select="//gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | //gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource"/> <!-- links -->
             <xsl:apply-templates
-                    select="//gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox"/> <!-- bounding box -->
+                    select="//gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox | //gmd:identificationInfo//srv:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox"/> <!-- bounding box -->
         </csw:Record>
     </xsl:template>
 
@@ -152,6 +152,7 @@
     <!-- links -->
     <xsl:template
             match="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource">
+
         <!-- set service type and version  -->
         <xsl:variable name="serviceTypeVersion" select="//srv:serviceTypeVersion/gco:CharacterString"/>
         <!-- <xsl:variable name="serviceType" select="//srv:serviceType/gco:LocalName"/> not used for now -->
@@ -192,7 +193,7 @@
 
     <!-- bounding box -->
     <xsl:template
-            match="gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+            match="gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox | gmd:identificationInfo//srv:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox">
         <ows:BoundingBox crs="urn:ogc:def:crs:EPSG::4326">
             <ows:LowerCorner>
                 <xsl:value-of select="gmd:westBoundLongitude/gco:Decimal"/>
