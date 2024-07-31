@@ -196,14 +196,14 @@
             match="gmd:identificationInfo//gmd:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox | gmd:identificationInfo//srv:extent/gmd:EX_Extent//gmd:geographicElement/gmd:EX_GeographicBoundingBox">
         <ows:BoundingBox crs="urn:ogc:def:crs:EPSG::4326">
             <ows:LowerCorner>
-                <xsl:value-of select="gmd:westBoundLongitude/gco:Decimal"/>
-                <xsl:text> </xsl:text>
                 <xsl:value-of select="gmd:southBoundLatitude/gco:Decimal"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="gmd:westBoundLongitude/gco:Decimal"/>
             </ows:LowerCorner>
             <ows:UpperCorner>
-                <xsl:value-of select="gmd:eastBoundLongitude/gco:Decimal"/>
-                <xsl:text> </xsl:text>
                 <xsl:value-of select="gmd:northBoundLatitude/gco:Decimal"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="gmd:eastBoundLongitude/gco:Decimal"/>
             </ows:UpperCorner>
         </ows:BoundingBox>
     </xsl:template>
