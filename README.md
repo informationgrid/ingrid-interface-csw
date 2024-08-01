@@ -5,12 +5,12 @@ This software is part of the InGrid software package. The CSW interface is an im
 
 https://en.wikipedia.org/wiki/Catalog_Service_for_the_Web
 
-It indexes all connected InGrid meta data sources regulary and delivers a high performance search.
+It indexes all connected InGrid metadata sources regularly and delivers a high performance search.
 
 Features
 --------
 
-- harvests meta data from a InGrid data source into a high performance index at a certain schedule
+- harvests metadata from a InGrid data source into a high performance index at a certain schedule
 - flexible indexing functionality
 - provides a CSW AP ISO 1.0 compatible interface on the harvested data
 - add filters for narrowing results to certain data providers or data sources

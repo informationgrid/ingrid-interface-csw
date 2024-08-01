@@ -176,7 +176,7 @@
         <xsl:variable name="uri" select="gmd:linkage/gmd:URL" />
 
         <dc:URI>
-            <!-- add protocol if it is contained in the uri text or it is equal to csw -->
+            <!-- add protocol if it is contained in the uri text, or it is equal to csw -->
             <xsl:if test="contains($uri, normalize-space($extractedProtocol)) or contains($uri, 'csw')">
                 <xsl:attribute name="protocol">
                     <xsl:value-of select="normalize-space($serviceTypeResult)"/>
