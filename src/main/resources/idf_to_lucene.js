@@ -61,7 +61,7 @@ log.debug("Mapping record "+recordId+" to lucene document");
 var transformationDescriptions = [
 		
 
-        // IngGrid specific index fields
+        // InGrid specific index fields
         {	"indexField":"id",
         	"xpath":"//gmd:fileIdentifier/gco:CharacterString",
         	"tokenized":false,
