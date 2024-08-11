@@ -1,4 +1,12 @@
 
+## 7.2.2 (11.08.2024)
+
+
+### Bugfixes
+
+* CSW OGC Schnittstelle - Koordinaten in falscher Reihenfolge (#6611)
+*  OGC Schema zeigt keine BB bei Geodatendiensten (#6533)
+    
 ## 7.2.0 (08.07.2024)
 
 ### Features
