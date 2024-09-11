@@ -3,7 +3,7 @@ pipeline {
     triggers{ cron( getCronParams() ) }
 
     tools {
-        jdk 'jdk17'
+        jdk 'jdk8'
     }
 
     environment {
@@ -90,6 +90,9 @@ pipeline {
 
         stage ('SonarQube Analysis') {
             when { branch 'develop' }
+            tools {
+                    jdk 'jdk17' // for SonarQube use newer version
+                }
             steps {
                 withMaven(
                     maven: 'Maven3',
