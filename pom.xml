@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>7.0.0</version>
+    <version>6.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
@@ -381,17 +381,17 @@
       <artifactId>cglib-nodep</artifactId>
       <version>3.3.0</version>
     </dependency>
-    
+
     <!-- JS support -->
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js</artifactId>
-      <version>22.2.0</version>
+      <version>20.3.4</version>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
-      <version>22.2.0</version>
+      <version>20.3.4</version>
     </dependency>
   </dependencies>
 
@@ -413,11 +413,6 @@
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <reuseForks>false</reuseForks>
-          <argLine>
-            --add-opens java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED
-            --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp=ALL-UNNAMED
-            --add-opens java.xml/com.sun.org.apache.xerces.internal.util=ALL-UNNAMED
-          </argLine>
           <includes>
             <include>**/*Test.java</include>
           </includes>
