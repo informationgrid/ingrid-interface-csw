@@ -3,7 +3,7 @@ pipeline {
     triggers{ cron( getCronParams() ) }
 
     tools {
-        jdk 'jdk17'
+        jdk 'jdk8'
     }
 
     environment {
