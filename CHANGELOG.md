@@ -1,4 +1,13 @@
 
+## 7.3.0 (01.10.2024)
+
+
+### Bugfixes
+
+* Löschen unfertiger Indizes beim Starten (#6661)
+* CSW OGC Schnittstelle - Koordinaten in falscher Reihenfolge (#6611)
+*  OGC Schema zeigt keine BB bei Geodatendiensten (#6533)
+    
 ## 7.2.0 (08.07.2024)
 
 ### Features
