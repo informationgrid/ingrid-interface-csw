@@ -4,14 +4,14 @@
 # ==================================================
 # Copyright (C) 2014 - 2024 wemove digital solutions GmbH
 # ==================================================
-# Licensed under the EUPL, Version 1.2 or – as soon they will be
+# Licensed under the EUPL, Version 1.1 or – as soon they will be
 # approved by the European Commission - subsequent versions of the
 # EUPL (the "Licence");
 # 
 # You may not use this work except in compliance with the Licence.
 # You may obtain a copy of the Licence at:
 # 
-# https://joinup.ec.europa.eu/software/page/eupl
+# http://ec.europa.eu/idabc/eupl5
 # 
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the Licence is distributed on an "AS IS" basis,
@@ -171,7 +171,7 @@ prepareJavaStatement()
 
     # run it
     export CLASSPATH="$CLASSPATH"
-    INGRID_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp=ALL-UNNAMED --add-opens java.xml/com.sun.org.apache.xerces.internal.util=ALL-UNNAMED -Dpolyglot.engine.WarnInterpreterOnly=false -Dingrid_home=$INGRID_HOME $INGRID_OPTS"
+    INGRID_OPTS="-Dingrid_home=$INGRID_HOME $INGRID_OPTS"
 }
 
 

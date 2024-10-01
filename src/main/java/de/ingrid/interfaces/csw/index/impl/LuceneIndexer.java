@@ -4,14 +4,14 @@
  * ==================================================
  * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.2 or – as soon they will be
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * https://joinup.ec.europa.eu/software/page/eupl
+ * http://ec.europa.eu/idabc/eupl5
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+import de.ingrid.interfaces.csw.tools.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
@@ -88,7 +89,8 @@ public class LuceneIndexer implements Indexer {
 
         // delete older indexing destination
         if (this.indexConfigPath.exists()) {
-            this.indexConfigPath.delete();
+            log.info("Remove lingering index: " + this.indexConfigPath);
+            FileUtils.waitAndDelete( this.indexConfigPath.toPath(), 10000 );
         }
 
         // CREATE new analyzer ! This one will be closed by geotoolkit indexer when indexing finished !
