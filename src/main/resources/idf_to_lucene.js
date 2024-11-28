@@ -392,23 +392,23 @@ function transformGeneric(val, mappings, caseSensitive) {
 function mapGeographicElements(recordNode) {
 	var boundingBoxes = XPATH.getNodeList(recordNode, "//gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox");
 	if (hasValue(boundingBoxes)) {
-		// the correct order for CRS:84 is (lower corner) south, west and (upper corner) north, east
-	    let southList, westList, northList, eastList;
+		// follow the order of spacial lucene library: minx, maxx, miny, maxy
+	    let southList, northList, westList, eastList;
 
 		southList = [];
-		westList = [];
 		northList = [];
+		westList = [];
 		eastList = [];
 
 		for (i=0; i<boundingBoxes.getLength(); i++ ) {
 			if (hasValue(boundingBoxes.item(i)) && hasValue(XPATH.getString(boundingBoxes.item(i), "gmd:southBoundLatitude/gco:Decimal"))) {
 				southList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:southBoundLatitude/gco:Decimal"));
-				westList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"));
 				northList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:northBoundLatitude/gco:Decimal"));
+				westList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"));
 				eastList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:eastBoundLongitude/gco:Decimal"));
 			}
 		}
-		geometryMapper.addBoundingBox(document, southList, westList, northList, eastList, new java.lang.Integer(4326));
+		geometryMapper.addBoundingBox(document, southList, northList, westList, eastList, new java.lang.Integer(4326));
 	}
 }
 
