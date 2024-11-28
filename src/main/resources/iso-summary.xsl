@@ -130,10 +130,10 @@
 	
 	<xsl:template match="gmd:EX_GeographicBoundingBox">
 		<xsl:copy>
-			<xsl:apply-templates select="gmd:southBoundLatitude"/>
 			<xsl:apply-templates select="gmd:westBoundLongitude"/>
-			<xsl:apply-templates select="gmd:northBoundLatitude"/>
 			<xsl:apply-templates select="gmd:eastBoundLongitude"/>
+			<xsl:apply-templates select="gmd:southBoundLatitude"/>
+			<xsl:apply-templates select="gmd:northBoundLatitude"/>
 		</xsl:copy>
 	</xsl:template>
 	
