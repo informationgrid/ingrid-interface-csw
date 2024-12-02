@@ -1,4 +1,11 @@
 
+## 7.3.4 (02.12.2024)
+
+
+### Bugfixes
+
+* CSW liefert bei räumlicher Suche falsche Ergebnisse (in Dev) (#6819)
+    
 ## 7.3.0 (01.10.2024)
 
 
