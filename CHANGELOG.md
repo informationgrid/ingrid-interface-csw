@@ -1,4 +1,14 @@
 
+## 7.4.0 (10.01.2025)
+
+### Features
+
+* CSW Schnittstelle, OGC Darstellung: Erweiterung der Datensatzangabe um die Diensteprotokolle (#6325)
+
+### Bugfixes
+
+* CSW liefert bei räumlicher Suche falsche Ergebnisse (in Dev) (#6819)
+    
 ## 7.3.0 (01.10.2024)
 
 
