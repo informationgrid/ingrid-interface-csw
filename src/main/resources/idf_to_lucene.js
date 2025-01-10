@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2024 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2025 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -392,21 +392,23 @@ function transformGeneric(val, mappings, caseSensitive) {
 function mapGeographicElements(recordNode) {
 	var boundingBoxes = XPATH.getNodeList(recordNode, "//gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox");
 	if (hasValue(boundingBoxes)) {
-	    let westList, eastList, southList, northList;
+		// follow the order of spacial lucene library: minx, maxx, miny, maxy
+	    let southList, northList, westList, eastList;
 
-		westList = [];
-		eastList = [];
 		southList = [];
 		northList = [];
+		westList = [];
+		eastList = [];
+
 		for (i=0; i<boundingBoxes.getLength(); i++ ) {
-			if (hasValue(boundingBoxes.item(i)) && hasValue(XPATH.getString(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"))) {
-				westList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"));
-				eastList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:eastBoundLongitude/gco:Decimal"));
+			if (hasValue(boundingBoxes.item(i)) && hasValue(XPATH.getString(boundingBoxes.item(i), "gmd:southBoundLatitude/gco:Decimal"))) {
 				southList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:southBoundLatitude/gco:Decimal"));
 				northList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:northBoundLatitude/gco:Decimal"));
+				westList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:westBoundLongitude/gco:Decimal"));
+				eastList.push(XPATH.getDouble(boundingBoxes.item(i), "gmd:eastBoundLongitude/gco:Decimal"));
 			}
 		}
-		geometryMapper.addBoundingBox(document, westList, eastList, southList, northList, new java.lang.Integer(4326));
+		geometryMapper.addBoundingBox(document, southList, northList, westList, eastList, new java.lang.Integer(4326));
 	}
 }
 

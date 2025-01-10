@@ -3,7 +3,7 @@
   **************************************************-
   ingrid-interface-csw
   ==================================================
-  Copyright (C) 2014 - 2024 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2025 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -153,40 +153,21 @@
     <xsl:template
             match="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//gmd:CI_OnlineResource | gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine//idf:idfOnlineResource">
 
-        <!-- set service type and version  -->
-        <xsl:variable name="serviceTypeVersion" select="//srv:serviceTypeVersion/gco:CharacterString"/>
-        <!-- <xsl:variable name="serviceType" select="//srv:serviceType/gco:LocalName"/> not used for now -->
-
-        <!-- handle serviceTypeVersion: extract and remove version numbers -->
-        <xsl:variable name="serviceTypeResult">
-            <xsl:choose>
-                <!-- check if the last char of serviceType is a (version) number and call template if yes -->
-                <xsl:when test="contains('0123456789', substring($serviceTypeVersion, string-length(.)))">
-                    <xsl:call-template name="stripVersion">
-                        <xsl:with-param name="input" select="$serviceTypeVersion"/>
-                    </xsl:call-template>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$serviceTypeVersion"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <xsl:variable name="extractedProtocol" select="translate(substring-after($serviceTypeResult, ':'), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
-        <xsl:variable name="uri" select="gmd:linkage/gmd:URL" />
+        <xsl:variable name="uri" select="gmd:linkage/gmd:URL"/>
+        <xsl:variable name="protocol" select="gmd:protocol/gmx:Anchor"/>
 
         <dc:URI>
-            <!-- add protocol if it is contained in the uri text, or it is equal to csw -->
-            <xsl:if test="contains($uri, normalize-space($extractedProtocol)) or contains($uri, 'csw')">
-                <xsl:attribute name="protocol">
-                    <xsl:value-of select="normalize-space($serviceTypeResult)"/>
-                </xsl:attribute>
-            </xsl:if>
+            <!-- protocol attribute -->
+            <xsl:attribute name="protocol">
+                 <xsl:value-of select="$protocol"/>
+            </xsl:attribute>
 
+            <!-- description attribute -->
             <xsl:attribute name="description">
                 <xsl:value-of select="gmd:name/gco:CharacterString"/>
             </xsl:attribute>
 
+            <!-- URI value -->
             <xsl:value-of select="$uri"/>
         </dc:URI>
     </xsl:template>
