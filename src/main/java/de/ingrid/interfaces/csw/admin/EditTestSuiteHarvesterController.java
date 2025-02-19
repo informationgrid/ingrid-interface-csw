@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,9 +26,8 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +66,7 @@ public class EditTestSuiteHarvesterController {
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.GET)
     public String step1Get(final HttpSession session, final ModelMap modelMap,
-            @RequestParam(value = "id", required = false) final Integer id) throws Exception {
+                           @RequestParam(value = "id", required = false) final Integer id) throws Exception {
 
         if (id != null && id >= 0) {
             List<HarvesterConfiguration> hConfigs = cProvider.getConfiguration().getHarvesterConfigurations();
@@ -94,7 +93,7 @@ public class EditTestSuiteHarvesterController {
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.POST)
     public String step1Post(final HttpServletRequest request, final HttpSession session, final ModelMap modelMap,
-            @ModelAttribute("harvester") final TestSuiteHarvesterCommandObject harvester, final Errors errors)
+                            @ModelAttribute("harvester") final TestSuiteHarvesterCommandObject harvester, final Errors errors)
             throws Exception {
 
         if (WebUtils.hasSubmitParameter(request, "back")) {
@@ -110,7 +109,7 @@ public class EditTestSuiteHarvesterController {
         RecordCacheConfiguration rcc = new RecordCacheConfiguration();
         rcc.setCachePath(new File(harvester.getWorkingDirectory(), "records").getAbsoluteFile());
         harvester.setCacheConfiguration(rcc);
-        
+
         Configuration configuration = cProvider.getConfiguration();
         List<HarvesterConfiguration> hConfigs = configuration.getHarvesterConfigurations();
         hConfigs.set(harvester.getId(), (HarvesterConfiguration)harvester);
@@ -118,7 +117,7 @@ public class EditTestSuiteHarvesterController {
             log.debug("Save configuration to: " + cProvider.getConfigurationFile());
         }
         cProvider.write(configuration);
-        
+
 
         return "/edit_testsuite_harvester";
 

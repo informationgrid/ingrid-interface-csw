@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,10 +31,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -124,7 +124,7 @@ public class EditIBusHarvesterController {
 
     @Autowired
     private IsoIndexManager indexManager;
-    
+
     private Map<String, String[]> iplugDatatypesMap;
 
     final private static Log log = LogFactory.getLog(EditIBusHarvesterController.class);
@@ -138,7 +138,7 @@ public class EditIBusHarvesterController {
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.GET)
     public String step1Get(final HttpSession session, final ModelMap modelMap,
-            @RequestParam(value = "id", required = false) final Integer id) throws Exception {
+                           @RequestParam(value = "id", required = false) final Integer id) throws Exception {
 
         if (id != null && id >= 0) {
             List<HarvesterConfiguration> hConfigs = cProvider.getConfiguration().getHarvesterConfigurations();
@@ -165,7 +165,7 @@ public class EditIBusHarvesterController {
 
     @RequestMapping(value = TEMPLATE_EDIT_HARVESTER, method = RequestMethod.POST)
     public String step1Post(final HttpServletRequest request, final HttpSession session, final ModelMap modelMap,
-            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors)
+                            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors)
             throws Exception {
 
         if (WebUtils.hasSubmitParameter(request, "back")) {
@@ -250,7 +250,7 @@ public class EditIBusHarvesterController {
             }
             IBus bus = client.getNonCacheableIBus();
             PlugDescription[] allPlugDescriptions = bus.getAllIPlugs();
-            
+
             for (PlugDescription pd : allPlugDescriptions) {
                 iplugDatatypesMap.put( pd.getProxyServiceURL(), pd.getDataTypes() );
             }
@@ -378,7 +378,7 @@ public class EditIBusHarvesterController {
         if (enable != null && enable.length() > 0) {
             RequestDefinition rd = new RequestDefinition();
             rd.setPlugId(enable);
-            
+
             String query = "iplugs:\"" + enable + "\" ranking:score";
             // if datatype metadata is supported, then also filter by that datatype
             // since an iPlug can have multiple indices now, we do not want to fetch addresses for example
@@ -386,7 +386,7 @@ public class EditIBusHarvesterController {
                 query += " datatype:metadata";
             }
             rd.setQueryString(query);
-            
+
             if (harvester.getRequestDefinitions() == null) {
                 harvester.setRequestDefinitions(new ArrayList<RequestDefinition>());
             }

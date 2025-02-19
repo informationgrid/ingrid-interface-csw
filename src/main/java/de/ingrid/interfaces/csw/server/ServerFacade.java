@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,9 +28,8 @@ package de.ingrid.interfaces.csw.server;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,9 +64,9 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
  * ServerFacade processes all server requests. It instantiates the appropriate
  * CSWMessageEncoding and CSWRequest instances and acts as mediator between the
  * servlet and the CSWServer.
- * 
+ *
  * @author ingo herwig <ingo@wemove.com>
- * 
+ *
  */
 @Service
 public class ServerFacade {
@@ -80,14 +79,14 @@ public class ServerFacade {
     @Autowired
     private CSWServer cswServerImpl;
 
-    
+
     public ServerFacade() {
         super();
     }
 
     /**
      * Set the csw server implementation
-     * 
+     *
      * @param cswServerImpl
      */
     public void setCswServerImpl(CSWServer cswServerImpl) {
@@ -96,7 +95,7 @@ public class ServerFacade {
 
     /**
      * Handle a GET Request
-     * 
+     *
      * @param request
      * @param response
      * @throws CSWException
@@ -107,7 +106,7 @@ public class ServerFacade {
 
     /**
      * Handle a POST Request
-     * 
+     *
      * @param request
      * @param response
      * @throws CSWException
@@ -118,7 +117,7 @@ public class ServerFacade {
 
     /**
      * Handle a SOAP Request
-     * 
+     *
      * @param request
      * @param response
      * @throws CSWException
@@ -126,7 +125,7 @@ public class ServerFacade {
     public void handleSoapRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         this.handleRequest(RequestType.SOAP, request, response);
     }
-    
+
     /**
      * Free all resources.
      */
@@ -137,7 +136,7 @@ public class ServerFacade {
 
     /**
      * Generic request method
-     * 
+     *
      * @param type
      * @param request
      * @throws CSWException
@@ -182,12 +181,12 @@ public class ServerFacade {
             if (this.cswServerImpl == null) {
                 throw new RuntimeException("ServerFacade is not configured properly: cswServerImpl is not set.");
             }
-            
+
 
             // perform the requested operation
             Document result = null;
             if (operation == Operation.GET_CAPABILITIES) {
-                String variant = request.getParameter(ApplicationProperties.get(ConfigurationKeys.QUERY_PARAMETER_2_CAPABILITIES_VARIANT, "")); 
+                String variant = request.getParameter(ApplicationProperties.get(ConfigurationKeys.QUERY_PARAMETER_2_CAPABILITIES_VARIANT, ""));
                 result = this.cswServerImpl.process((GetCapabilitiesRequest) requestImpl, variant);
             } else if (operation == Operation.DESCRIBE_RECORD) {
                 result = this.cswServerImpl.process((DescribeRecordRequest) requestImpl);
@@ -220,7 +219,7 @@ public class ServerFacade {
     /**
      * Get the CSWMesageEncoding implementation for a given request type from
      * the server configuration
-     * 
+     *
      * @param type
      *            The request type
      * @return The CSWMesageEncoding instance
@@ -228,7 +227,7 @@ public class ServerFacade {
     private CSWMessageEncoding getMessageEncodingInstance(RequestType type) {
 
         CSWMessageEncoding encoding = null;
-        
+
         if (type.equals(RequestType.GET)) {
             encoding = new KVPEncoding();
         } else if (type.equals(RequestType.POST)) {
@@ -246,14 +245,14 @@ public class ServerFacade {
     /**
      * Get the CSWRequest implementation for a given request type from the
      * server configuration
-     * 
+     *
      * @param operation
      *            The operation
      * @return The CSWRequest instance
      */
     private CSWRequest getRequestInstance(Operation operation) {
         CSWRequest request = null;
-        
+
         if (operation.equals(Operation.GET_CAPABILITIES)) {
             request = new GetCapabilitiesRequestImpl();
         } else if (operation.equals(Operation.DESCRIBE_RECORD)) {
@@ -268,7 +267,7 @@ public class ServerFacade {
             log.error("No request implementation found for operation: " + operation);
             throw new RuntimeException("No request implementation found for operation: " + operation);
         }
-        
+
         return request;
     }
 }

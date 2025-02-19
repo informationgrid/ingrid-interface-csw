@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,9 +28,8 @@ package de.ingrid.interfaces.csw.server.cswt;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +54,9 @@ import de.ingrid.interfaces.csw.tools.StringUtils;
  * ServerFacade processes all server requests. It instantiates the appropriate
  * CSWMessageEncoding and CSWRequest instances and acts as mediator between the
  * servlet and the CSWServer.
- * 
+ *
  * @author ingo herwig <ingo@wemove.com>
- * 
+ *
  */
 @Service
 public class ServerFacadeCSWT {
@@ -70,14 +69,14 @@ public class ServerFacadeCSWT {
     @Autowired
     private CSWTServer cswtServerImpl;
 
-    
+
     public ServerFacadeCSWT() {
         super();
     }
 
     /**
      * Set the csw server implementation
-     * 
+     *
      * @param cswServerImpl
      */
     public void setCswServerImpl(CSWTServer cswServerImpl) {
@@ -86,7 +85,7 @@ public class ServerFacadeCSWT {
 
     /**
      * Handle a GET Request
-     * 
+     *
      * @param request
      * @param response
      * @throws CSWException
@@ -97,7 +96,7 @@ public class ServerFacadeCSWT {
 
     /**
      * Handle a POST Request
-     * 
+     *
      * @param request
      * @param response
      * @throws CSWException
@@ -108,7 +107,7 @@ public class ServerFacadeCSWT {
 
     /**
      * Handle a SOAP Request
-     * 
+     *
      * @param request
      * @param response
      * @throws CSWException
@@ -116,7 +115,7 @@ public class ServerFacadeCSWT {
     public void handleSoapRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         this.handleRequest(RequestType.SOAP, request, response);
     }
-    
+
     /**
      * Free all resources.
      */
@@ -127,7 +126,7 @@ public class ServerFacadeCSWT {
 
     /**
      * Generic request method
-     * 
+     *
      * @param type
      * @param request
      * @throws CSWException
@@ -172,7 +171,7 @@ public class ServerFacadeCSWT {
             if (this.cswtServerImpl == null) {
                 throw new RuntimeException("ServerFacade is not configured properly: cswServerImpl is not set.");
             }
-            
+
 
             // perform the requested operation
             Document result = null;
@@ -201,7 +200,7 @@ public class ServerFacadeCSWT {
     /**
      * Get the CSWMesageEncoding implementation for a given request type from
      * the server configuration
-     * 
+     *
      * @param type
      *            The request type
      * @return The CSWMesageEncoding instance
@@ -209,7 +208,7 @@ public class ServerFacadeCSWT {
     private CSWMessageEncoding getMessageEncodingInstance(RequestType type) {
 
         CSWMessageEncoding encoding = null;
-        
+
         if (type.equals(RequestType.GET)) {
             encoding = new KVPEncoding();
         } else if (type.equals(RequestType.POST)) {
@@ -227,21 +226,21 @@ public class ServerFacadeCSWT {
     /**
      * Get the CSWRequest implementation for a given request type from the
      * server configuration
-     * 
+     *
      * @param operation
      *            The operation
      * @return The CSWRequest instance
      */
     private CSWRequest getRequestInstance(Operation operation) {
         CSWRequest request = null;
-        
+
         if (operation.equals(Operation.TRANSACTION)) {
             request = new TransactionRequestImpl();
         } else {
             log.error("No request implementation found for operation: " + operation);
             throw new RuntimeException("No request implementation found for operation: " + operation);
         }
-        
+
         return request;
     }
 }

@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,10 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ public class CSWTIBusController {
 
     @Autowired
     LuceneSearcher searcher;
-    
+
     @Autowired
     Heartbeat hearbeat;
 
@@ -110,7 +110,7 @@ public class CSWTIBusController {
 
     @RequestMapping(value = TEMPLATE_CSWT_COMMUNICATION, method = RequestMethod.POST)
     public String step2Post(final HttpServletRequest request, final HttpSession session, final ModelMap modelMap,
-            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors)
+                            @ModelAttribute("harvester") final IBusHarvesterCommandObject harvester, final Errors errors)
             throws Exception {
 
         if (_validatorStep2.validate(errors).hasErrors()) {
@@ -123,15 +123,15 @@ public class CSWTIBusController {
             communicationProvider.write(communication);
             harvester.setCommunicationXml(communicationProvider.getConfigurationFile().getAbsolutePath());
             updateAndSaveConfiguration(communication);
-            
-            
+
+
             BusClient busClient = BusClientFactory.getBusClient();
             if (busClient == null) {
                 this.hearbeat.setupCommunication();
             } else {
                 busClient.restart();
             }
-            
+
         } catch (Exception e) {
             log.error("Error creating communication configuration.", e);
             errors.reject("harvester.ibus.communication.couldnotcreate");

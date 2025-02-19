@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,8 +33,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import javax.annotation.PostConstruct;
-
+import jakarta.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +91,7 @@ public class IndexScheduler {
                 LOG.info("index scheduler is still busy");
             }
         }
-        
+
     }
 
     @Autowired
@@ -100,8 +99,8 @@ public class IndexScheduler {
         this.runnable = runnable;
         scheduler = new Scheduler();
     }
-    
-    
+
+
     @PostConstruct
     public void init() {
         _patternFile = configurationProvider.getSchedulingPatternFile();
@@ -110,7 +109,7 @@ public class IndexScheduler {
             schedule();
         }
     }
-    
+
 
     public void setPattern(final String pattern) {
         _pattern = pattern;
@@ -137,7 +136,7 @@ public class IndexScheduler {
     public boolean isStarted() {
         return scheduler.isStarted();
     }
-    
+
     public boolean isRunning() {
         if (!scheduler.isStarted()) {
             return false;
@@ -149,9 +148,9 @@ public class IndexScheduler {
         }
         return false;
     }
-    
+
     public boolean triggerManually() {
-        
+
         try {
             if (!isRunning()) {
                 if (!scheduler.isStarted()) {

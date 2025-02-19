@@ -30,14 +30,14 @@
     <repository>
       <id>geotoolkit</id>
       <name>Geotoolkit repository</name>
-      <url>https://maven.geotoolkit.org/</url>
+      <url>https://nexus.geomatys.com/repository/geotoolkit</url>
     </repository>
   </repositories>
 
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <iplug.type>INTERFACE_CSW</iplug.type>
-    <spring.version>2.7.17</spring.version>
+    <spring.version>3.4.2</spring.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -46,7 +46,7 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.20</version>
+        <version>1.4.21</version>
       </dependency>
 
       <dependency>
@@ -59,14 +59,14 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      
+
       <!-- Fix security issue => https://avd.aquasec.com/nvd/cve-2022-1471 -->
       <dependency>
         <groupId>org.yaml</groupId>
         <artifactId>snakeyaml</artifactId>
         <version>2.0</version>
       </dependency>
-      
+
       <!-- Fix security issue => https://avd.aquasec.com/nvd/cve-2015-3253 -->
       <dependency>
         <groupId>org.codehaus.groovy</groupId>
@@ -81,7 +81,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>7.0.0</version>
+      <version>7.5.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -101,7 +101,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug</artifactId>
-      <version>7.0.0</version>
+      <version>7.5.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>commons-betwixt</groupId>
@@ -267,28 +267,22 @@
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
-    <!--<dependency>
-      <groupId>org.apache.tomcat.embed</groupId>
-      <artifactId>tomcat-embed-jasper</artifactId>
-    </dependency>-->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-    </dependency>
+    <!-- JSP support -->
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>apache-jsp</artifactId>
+      <version>11.0.21</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>apache-jstl</artifactId>
+      <version>11.0.0</version>
     </dependency>
-
-    <!--<dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-analyzers</artifactId>
-      <version>3.6.2</version>
-    </dependency>-->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.1.0</version>
+    </dependency>
 
 
     <!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
@@ -297,7 +291,7 @@
       <artifactId>derby</artifactId>
       <version>10.14.2.0</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jmock</groupId>
       <artifactId>jmock</artifactId>

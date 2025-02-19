@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,9 +27,8 @@ package de.ingrid.interfaces.csw.domain.encoding;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
 
 import de.ingrid.interfaces.csw.domain.constants.Operation;
@@ -42,14 +41,14 @@ import de.ingrid.interfaces.csw.domain.query.CSWQuery;
  * different formats of csw messages, for example requests that are
  * defined in key value pairs via the HTTP Get method or SOAP
  * messages sent via the HTTP POST method.
- * 
+ *
  * All format specific information retrieval and formatting is
  * handled in CSWMessageEncoding implementations.
- * 
+ *
  * @author ingo herwig <ingo@wemove.com>
  */
 public interface CSWMessageEncoding {
-    
+
     public static enum Type {
         CSW,
         CSWT
@@ -138,7 +137,6 @@ public interface CSWMessageEncoding {
 
 	/**
 	 * Write an exception to the response.
-	 * @param exception
 	 * @throws Exception
 	 */
 	void reportError(Exception e) throws Exception;

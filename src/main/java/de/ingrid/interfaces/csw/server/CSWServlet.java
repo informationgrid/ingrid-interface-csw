@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,12 +28,11 @@ package de.ingrid.interfaces.csw.server;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +42,7 @@ import de.ingrid.interfaces.csw.migration.Migration;
  * The CSW Servlet. Entry point for incoming requests. Dispatches the requests
  * according to method and content type and delegates all processing to
  * ServerFacade
- * 
+ *
  * @author ingo herwig <ingo@wemove.com>
  */
 @Service
@@ -86,17 +85,13 @@ public class CSWServlet extends HttpServlet {
 
     /**
      * Set the server facade
-     * 
+     *
      * @param serverFacade
      */
     public void setServerFacade(ServerFacade serverFacade) {
         this.serverFacade = serverFacade;
     }
 
-    /**
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
     @Override
     public final void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         if (this.serverFacade == null) {
@@ -109,10 +104,6 @@ public class CSWServlet extends HttpServlet {
         }
     }
 
-    /**
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
@@ -130,7 +121,7 @@ public class CSWServlet extends HttpServlet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.servlet.GenericServlet#destroy()
      */
     @Override
