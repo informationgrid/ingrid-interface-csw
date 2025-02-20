@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,13 +34,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.geotoolkit.index.tree.manager.LuceneDerbySQLTreeEltMapper;
 import org.jmock.Expectations;
@@ -83,7 +82,7 @@ public abstract class OperationTestBase {
         xpath = new XPathUtils(cnc);
     }
 
-    
+
     @BeforeEach
     public void setUp() throws Exception {
         // setup searcher
@@ -117,19 +116,19 @@ public abstract class OperationTestBase {
 
         this.servlet = new CSWServlet();
         this.servlet.setServerFacade(serverFacade);
-        
+
         // create cswt servlet
         GenericServerCSWT serverCSWT = new GenericServerCSWT();
         serverCSWT.setSearcher(this.searcher);
         serverCSWT.setManager(manager);
-        
+
         ServerFacadeCSWT serverFacadeCSWT = new ServerFacadeCSWT();
         serverFacadeCSWT.setCswServerImpl(serverCSWT);
         this.servletCSWT = new CSWTServlet();
         this.servletCSWT.setServerFacade(serverFacadeCSWT);
     }
 
-    
+
     @AfterEach
     public void tearDown() throws Exception {
         this.searcher.stop();
@@ -204,7 +203,7 @@ public abstract class OperationTestBase {
     protected CSWServlet getServlet() {
         return this.servlet;
     }
-    
+
     protected CSWTServlet getCSWTServlet() {
         return this.servletCSWT;
     }
@@ -220,8 +219,8 @@ public abstract class OperationTestBase {
      * @throws IOException
      */
     protected void setupDefaultGetExpectations(Mockery context, final HttpServletRequest request,
-            final HttpServletResponse response, StringBuffer result, final String requestStr,
-            Map<String, String> additionalParams) throws IOException {
+                                               final HttpServletResponse response, StringBuffer result, final String requestStr,
+                                               Map<String, String> additionalParams) throws IOException {
         final ServletOutputStream sos = new TestServletOutputStream(result);
         final List<String> fixedParameters = Arrays.asList(new String[]{"SERVICE", "REQUEST", "version", "partner"});
         final List<String> parameters = new ArrayList<String>(fixedParameters);
@@ -319,7 +318,7 @@ public abstract class OperationTestBase {
             final HttpServletResponse response, StringBuffer result, String requestStr) throws IOException {
     	setupDefaultSoapExpectations(context, request, response, result, requestStr, null);
     }
-    
+
     /**
      * Set up default expectations for soap requests.
      * @param context
