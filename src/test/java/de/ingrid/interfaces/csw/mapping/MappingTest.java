@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,6 +36,7 @@ import de.ingrid.utils.xpath.XPathUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.io.File;
@@ -49,6 +50,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MappingTest {
 
     private static final File IDF_FILE = new File("src/test/resources/idf-example.xml");
+    private static final File OGC_TEST = new File("src/test/resources/test_file_ogc_protocol.xml");
 
     @Test
     public void testFull() throws Exception {
@@ -360,6 +362,33 @@ public class MappingTest {
         assertEquals("completeness omission old", xpath.getNodeList(result, "//gml:quantityType").item(1).getTextContent());
 
     }
+
+    // test for #6325
+    // check the coupled service is extracted correctly into the URI protocol attribute
+    @Test
+    public void testServiceProtocol() throws Exception {
+        XsltMapper mapper = new XsltMapper();
+
+        String idfContent = new Scanner(OGC_TEST).useDelimiter("\\A").next();
+        Record record = IdfTool.createIdfRecord(idfContent, false);
+        Node result = mapper.mapFullOgc(record);
+
+        String xml = XMLUtils.toString((Document) result);
+        System.out.println("\nTest extraction of protocol value in OGC full mapping\n");
+        System.out.println(xml);
+
+        XPathUtils xpath = new XPathUtils(new IDFWithXSINamespaceContext());
+        // uuid - we are dealing with the right file
+        assertEquals("5f3e052d-3238-495c-ab78-edaf08b36749",
+                xpath.getString(result, "//dc:identifier"));
+
+        // check the protocol values
+        assertEquals("OGC Web Map Service",
+                xpath.getNodeList(result, "//dc:URI").item(0).getAttributes().item(1).getNodeValue());
+        assertEquals("OGC Web Feature Service",
+                xpath.getNodeList(result, "//dc:URI").item(1).getAttributes().item(1).getNodeValue());
+    }
+
 
     public class IDFWithXSINamespaceContext extends IDFNamespaceContext {
         public String getNamespaceURI(String prefix) {

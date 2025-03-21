@@ -1,4 +1,11 @@
 
+## 7.5.0 (21.03.2025)
+
+### Features
+
+* Tests für OGC-Darstellung in CSW-Schnittstelle (#7162)
+
+    
 ## 7.4.0 (10.01.2025)
 
 ### Features

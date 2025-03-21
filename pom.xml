@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>7.4.0</version>
+  <version>7.5.0</version>
   <packaging>jar</packaging>
   <name>InGrid Interface CSW</name>
 
@@ -37,7 +37,7 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <iplug.type>INTERFACE_CSW</iplug.type>
-    <spring.version>2.7.17</spring.version>
+    <spring.version>2.7.18</spring.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -46,7 +46,7 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.20</version>
+        <version>1.4.21</version>
       </dependency>
 
       <dependency>
@@ -59,14 +59,14 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      
+
       <!-- Fix security issue => https://avd.aquasec.com/nvd/cve-2022-1471 -->
       <dependency>
         <groupId>org.yaml</groupId>
         <artifactId>snakeyaml</artifactId>
         <version>2.0</version>
       </dependency>
-      
+
       <!-- Fix security issue => https://avd.aquasec.com/nvd/cve-2015-3253 -->
       <dependency>
         <groupId>org.codehaus.groovy</groupId>
@@ -297,7 +297,7 @@
       <artifactId>derby</artifactId>
       <version>10.14.2.0</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.jmock</groupId>
       <artifactId>jmock</artifactId>
