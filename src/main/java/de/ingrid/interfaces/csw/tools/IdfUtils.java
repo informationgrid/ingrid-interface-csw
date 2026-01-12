@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2025 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2026 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -39,13 +39,14 @@ import de.ingrid.utils.xpath.XPathUtils;
 
 public class IdfUtils {
 
-	private static final String ID_XPATH = "idf:html/idf:body/idf:idfMdMetadata/gmd:fileIdentifier/gco:CharacterString";
+    private static final String ID_XPATH = "idf:html/idf:body/idf:idfMdMetadata/gmd:fileIdentifier/gco:CharacterString";
+    private static final String ID_ADDRESS_XPATH = "idf:html/idf:body/idf:idfResponsibleParty/@uuid";
 
     final protected static Log log = LogFactory.getLog(IdfUtils.class);
-    
+
     static final XPathUtils XPATH = new XPathUtils(new IDFNamespaceContext());
-	
-	/**
+
+    /**
 	 * Extract the idf document from the given record. Throws an exception
 	 * if there is not idf content.
 	 * @param record
@@ -76,6 +77,9 @@ public class IdfUtils {
 	 */
 	public static Serializable getRecordId(Document document) throws Exception {
 		Serializable id = XPATH.getString(document, ID_XPATH);
+        if (id == null) {
+            id = XPATH.getString(document, ID_ADDRESS_XPATH);
+        }
 		return id;
 	}
 

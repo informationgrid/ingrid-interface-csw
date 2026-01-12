@@ -1,4 +1,11 @@
 
+## 8.2.0 (12.01.2026)
+
+
+### Bugfixes
+
+* Support für Adressen im ISO-Format von der CSW-Schnittstelle (#8451)
+    
 ## 7.5.0 (21.03.2025)
 
 ### Features

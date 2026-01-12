@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-interface-csw
  * ==================================================
- * Copyright (C) 2014 - 2025 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2026 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -62,7 +62,16 @@ public class CSWRecordCache extends AbstractFileCache<CSWRecord> implements CSWR
 //		if (document.getOutputSchema() == Namespace.CSW_2_0_2){
 //			return document.getId() + "_" + document.getElementSetName() + "_" + document.getOutputSchema();
 //		}
-        return document.getId() + "_" + document.getElementSetName() + "_" + document.getOutputSchema();
+        String uuid = null;
+        if (document.getId() != null) uuid = document.getId().toString();
+
+        if (uuid == null) {
+            // get from address
+            try {
+                uuid = (document.getDocument().getFirstChild()).getAttributes().getNamedItem("uuid").getTextContent();
+            } catch (Exception ignored) {}
+        }
+        return uuid + "_" + document.getElementSetName() + "_" + document.getOutputSchema();
     }
 
     @Override
