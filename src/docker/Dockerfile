@@ -1,9 +1,10 @@
 FROM alpine AS builder
 
 ADD ingrid-interface-csw-*-installer.jar /
-RUN unzip ingrid-interface-csw-*-installer.jar -d /tmp \
+RUN unzip -qq ingrid-interface-csw-*-installer.jar -d /tmp \
     && export INSTALL_DIR=`ls -d1 /tmp/ingrid-interface-*` \
-    && sed -i -r 's/(<AppenderRef.*\/>)/\1<AppenderRef ref="Console" \/>/g' $INSTALL_DIR/conf/log4j2.xml
+    && sed -i -r 's/(<AppenderRef.*\/>)/\1<AppenderRef ref="Console" \/>/g' $INSTALL_DIR/conf/log4j2.xml \
+    && echo 'echo '\''export INGRID_OPTS="$INGRID_OPTS -Dfile.encoding=UTF8 -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=30"'\''' > $INSTALL_DIR/env.sh
 
 FROM docker-registry.wemove.com/ingrid-java:jre-8-slim
 ENV INGRID_USER=ingrid
