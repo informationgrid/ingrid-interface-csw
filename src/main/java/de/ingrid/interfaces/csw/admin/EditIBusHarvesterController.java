@@ -33,7 +33,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.parsers.DocumentBuilderFactory;
+
+import de.ingrid.interfaces.csw.tools.SecureXml;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
@@ -96,8 +97,6 @@ public class EditIBusHarvesterController {
     @Autowired
     LuceneSearcher searcher;
 
-    DocumentBuilderFactory df = null;
-
     XMLEncoding encoding = null;
 
     public static final String IPLUG_QUERY = "<GetRecords outputFormat=\"text/xml\" outputSchema=\"http://www.isotc211.org/2005/gmd\"\n"
@@ -130,8 +129,6 @@ public class EditIBusHarvesterController {
     final private static Log log = LogFactory.getLog(EditIBusHarvesterController.class);
 
     public EditIBusHarvesterController() {
-        df = DocumentBuilderFactory.newInstance();
-        df.setNamespaceAware(true);
         encoding = new XMLEncoding();
         iplugDatatypesMap = new HashMap<String, String[]>();
     }
@@ -306,7 +303,7 @@ public class EditIBusHarvesterController {
                             rdco.setDataSourceName(pd.getDataSourceName());
                             rdco.setIsCurrentlyRegistered(true);
                             String q = IPLUG_QUERY.replaceAll("PATTERN_PLUG_ID", rdco.getPlugId());
-                            Document queryDocument = df.newDocumentBuilder()
+                            Document queryDocument = SecureXml.newDocumentBuilder(true)
                                     .parse(new InputSource(new StringReader(q)));
                             try {
                                 CSWRecordResults results = searcher.search((new XMLEncoding()).getQuery(queryDocument
@@ -336,7 +333,7 @@ public class EditIBusHarvesterController {
                         RequestDefinitionCommandObject rdco = new RequestDefinitionCommandObject(rd);
                         rdco.setIsCurrentlyRegistered(false);
                         String q = IPLUG_QUERY.replaceAll("PATTERN_PLUG_ID", rdco.getPlugId());
-                        Document queryDocument = df.newDocumentBuilder().parse(new InputSource(new StringReader(q)));
+                        Document queryDocument = SecureXml.newDocumentBuilder(true).parse(new InputSource(new StringReader(q)));
                         // in case no index exists, we need to catch this error
                         try {
                             CSWRecordResults results = searcher.search((new XMLEncoding()).getQuery(queryDocument

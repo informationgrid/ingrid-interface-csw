@@ -31,8 +31,6 @@ import java.io.StringWriter;
 import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -68,17 +66,7 @@ public class StringUtils {
 	private static ThreadLocal<DocumentBuilder> threadLocalDocumentBuilder = new ThreadLocal<DocumentBuilder>() {
 		@Override
 		public DocumentBuilder initialValue() {
-			DocumentBuilderFactory domFactory = DocumentBuilderFactory
-					.newInstance();
-			domFactory.setNamespaceAware(true);
-			DocumentBuilder builder;
-			try {
-				builder = domFactory.newDocumentBuilder();
-				return builder;
-			} catch (ParserConfigurationException e) {
-				new RuntimeException("Error creating DocumentBuilder", e);
-			}
-			return null;
+			return SecureXml.newDocumentBuilder(true);
 		}
 	};
 	
@@ -111,6 +99,8 @@ public class StringUtils {
 	public static Document stringToDocument(String string) throws SAXException, IOException {
 		DocumentBuilder builder = threadLocalDocumentBuilder.get();
 		builder.reset();
+		// reset() drops callbacks installed when the builder was created
+		SecureXml.harden(builder);
 		Document doc = builder.parse(new InputSource(new StringReader(string)));
 		return doc;
 	}

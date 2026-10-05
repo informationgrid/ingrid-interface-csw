@@ -26,6 +26,7 @@
 package de.ingrid.interfaces.csw.domain.encoding.impl;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -48,6 +49,7 @@ import de.ingrid.interfaces.csw.config.ApplicationProperties;
 import de.ingrid.interfaces.csw.domain.constants.ConfigurationKeys;
 import de.ingrid.interfaces.csw.domain.encoding.CSWMessageEncoding;
 import de.ingrid.interfaces.csw.domain.exceptions.CSWException;
+import de.ingrid.interfaces.csw.tools.SecureXml;
 
 /**
  * Soap12Encoding deals with messages defined in the SOAP 1.2 format.
@@ -76,6 +78,11 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 	@Override
 	protected Node extractRequestBody(HttpServletRequest request) {
 		try {
+			// Buffer the body so a hardened parser can reject external entities
+			// before SAAJ reads the same bytes.
+			byte[] payload = readFully(request.getInputStream());
+			SecureXml.newDocumentBuilder(true).parse(new ByteArrayInputStream(payload));
+
 			// get the envelope and body of the SOAP request
 			MessageFactory msgFactory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
 
@@ -92,7 +99,7 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 			}
 
 			// create the soap message
-			SOAPMessage soapMessage = msgFactory.createMessage(headers, request.getInputStream());
+			SOAPMessage soapMessage = msgFactory.createMessage(headers, new ByteArrayInputStream(payload));
 			SOAPBody body = soapMessage.getSOAPBody();
 
 			// get the request body
@@ -170,6 +177,16 @@ public class Soap12Encoding extends XMLEncoding implements CSWMessageEncoding {
 			errorXmlMsg = new CSWException(e.getMessage(), "NoApplicableCode", null).toSoapExceptionReport();
 		}
 		this.writeResponse(errorXmlMsg);
+	}
+
+	private static byte[] readFully(InputStream input) throws java.io.IOException {
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		byte[] chunk = new byte[4096];
+		int read;
+		while ((read = input.read(chunk)) != -1) {
+			buffer.write(chunk, 0, read);
+		}
+		return buffer.toByteArray();
 	}
 
 	/**

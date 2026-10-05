@@ -35,6 +35,7 @@ import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedExcept
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
 import de.ingrid.interfaces.csw.tools.OGCFilterTools;
+import de.ingrid.interfaces.csw.tools.SecureXml;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
@@ -130,10 +131,8 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
      * @return Element
      */
     protected Node extractRequestBody(HttpServletRequest request) {
-        DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
-        df.setNamespaceAware(true);
         try {
-            Document requestDocument = df.newDocumentBuilder().parse(request.getInputStream());
+            Document requestDocument = SecureXml.newDocumentBuilder(true).parse(request.getInputStream());
             return requestDocument.getDocumentElement();
         } catch (Exception e) {
             throw new RuntimeException("Error parsing request: ", e);

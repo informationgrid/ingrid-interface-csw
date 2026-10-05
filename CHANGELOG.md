@@ -1,4 +1,18 @@
 
+## 8.4.1.1 (01.10.2026)
+
+
+### Bugfixes
+
+* `idf:objectAttribute` wird bei der Transformation nach ISO-Metadaten aus dem IDF gefiltert
+
+## 8.4.1 (23.09.2026)
+
+
+### Bugfixes
+
+* ISO-Schemenvalidierungsfehler in der GDI-DE Testsuite schlägt bei Datengrundlage/Herkunft fehl (#9351)
+    
 ## 8.2.0 (12.01.2026)
 
 
