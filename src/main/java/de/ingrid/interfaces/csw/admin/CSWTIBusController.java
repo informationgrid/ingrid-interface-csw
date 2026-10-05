@@ -31,6 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import de.ingrid.interfaces.csw.tools.SecureXml;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +85,7 @@ public class CSWTIBusController {
     final private static Log log = LogFactory.getLog(CSWTIBusController.class);
 
     public CSWTIBusController() {
-        df = DocumentBuilderFactory.newInstance();
+        df = SecureXml.newDocumentBuilderFactory();
         df.setNamespaceAware(true);
         encoding = new XMLEncoding();
     }
