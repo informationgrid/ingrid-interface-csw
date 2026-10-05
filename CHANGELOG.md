@@ -1,3 +1,10 @@
+## 8.5.0
+
+
+### Bugfixes
+
+* Fix XXE and SSRF problem with parsing XML files (#9560)
+
 
 ## 8.4.1.1 (01.10.2026)
 
