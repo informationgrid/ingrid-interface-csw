@@ -33,6 +33,7 @@ import java.lang.reflect.Proxy;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
@@ -69,7 +70,7 @@ public class XmlRequestParsingTest {
     void rejectsExternalEntityOnXmlPost() throws Exception {
         Path secret = Files.createTempFile("csw-entity", ".txt");
         String marker = "csw-entity-marker";
-        Files.writeString(secret, marker);
+        Files.write(secret, marker.getBytes(StandardCharsets.UTF_8));
         try {
             String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                     + "<!DOCTYPE GetCapabilities [<!ENTITY ext SYSTEM \"" + secret.toUri() + "\">]>"
@@ -91,7 +92,7 @@ public class XmlRequestParsingTest {
     void rejectsExternalEntityInKvpConstraint() throws Exception {
         Path secret = Files.createTempFile("csw-entity", ".txt");
         String marker = "csw-entity-marker";
-        Files.writeString(secret, marker);
+        Files.write(secret, marker.getBytes(StandardCharsets.UTF_8));
         try {
             String xml = "<?xml version=\"1.0\"?>"
                     + "<!DOCTYPE Filter [<!ENTITY ext SYSTEM \"" + secret.toUri() + "\">]>"
@@ -106,7 +107,8 @@ public class XmlRequestParsingTest {
 
     @Test
     void parsesSoapRequestBody() throws Exception {
-        String soap = Files.readString(Path.of("src/test/resources/requests/get_capabilities_invalid_4_soap.xml"));
+        byte[] soapBytes = Files.readAllBytes(Paths.get("src/test/resources/requests/get_capabilities_invalid_4_soap.xml"));
+        String soap = new String(soapBytes, StandardCharsets.UTF_8);
 
         Node body = new Soap12Encoding().extractRequestBody(requestWithBody(soap, "application/soap+xml"));
 
@@ -119,7 +121,7 @@ public class XmlRequestParsingTest {
     void rejectsExternalEntityOnSoapPost() throws Exception {
         Path secret = Files.createTempFile("csw-entity", ".txt");
         String marker = "csw-entity-marker";
-        Files.writeString(secret, marker);
+        Files.write(secret, marker.getBytes(StandardCharsets.UTF_8));
         try {
             String soap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                     + "<!DOCTYPE soapenv:Envelope [<!ENTITY ext SYSTEM \"" + secret.toUri() + "\">]>"
@@ -138,7 +140,7 @@ public class XmlRequestParsingTest {
 
     private static HttpServletRequest requestWithBody(String body, String contentType) {
         byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
-        Map<String, String> headers = Map.of("Content-Type", contentType);
+        Map<String, String> headers = Collections.singletonMap("Content-Type", contentType);
         return (HttpServletRequest) Proxy.newProxyInstance(
                 HttpServletRequest.class.getClassLoader(),
                 new Class<?>[] { HttpServletRequest.class },
