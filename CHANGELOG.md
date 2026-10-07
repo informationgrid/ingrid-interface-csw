@@ -1,4 +1,15 @@
-## 8.5.0
+
+## 8.5.0 (07.10.2026)
+
+### Features
+
+* Schwachstelle CSW Interface (#9560)
+* Erstellung von RPM Paketen für RHEL 10 für InGrid Komponenten (#9371)
+
+### Bugfixes
+
+* ISO-Schemenvalidierungsfehler in der GDI-DE Testsuite schlägt bei Datengrundlage/Herkunft fehl (#9351)
+    ## 8.5.0
 
 
 ### Bugfixes
