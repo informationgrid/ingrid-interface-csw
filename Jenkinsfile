@@ -88,6 +88,61 @@ pipeline {
             }
         }
 
+        stage ('Build RPM') {
+            when { expression { return shouldBuildDevOrRelease() } }
+            agent {
+                docker {
+                    image 'docker-registry.wemove.com/ingrid-rpmbuilder'
+                    reuseNode true
+                }
+            }
+            steps {
+                script {
+                    sh "sed -i 's/^Version:.*/Version: ${determineRpmVersion()}/' rpm/ingrid-interface-csw.spec"
+                    sh "sed -i 's/^Release:.*/Release: ${determineRpmReleasePart()}/' rpm/ingrid-interface-csw.spec"
+
+                    // Prepare build
+                    sh "mkdir -p ./target/rpms /root/rpmbuild/SPECS"
+                    sh """
+                        cp ${WORKSPACE}/rpm/ingrid-interface-csw.spec /root/rpmbuild/SPECS/ingrid-interface-csw.spec &&
+                        rpmbuild -bb /root/rpmbuild/SPECS/ingrid-interface-csw.spec
+                    """
+
+                    withCredentials([
+                            file(credentialsId: 'ingrid-rpm-public', variable: 'RPM_PUBLIC_KEY'),
+                            file(credentialsId: 'ingrid-rpm-private', variable: 'RPM_PRIVATE_KEY'),
+                            string(credentialsId: 'ingrid-rpm-passphrase', variable: 'RPM_SIGN_PASSPHRASE')
+                        ]) {
+                        sh 'gpg --batch --import $RPM_PUBLIC_KEY'
+                        sh 'gpg --batch --import $RPM_PRIVATE_KEY'
+                        sh "mkdir -p ./target/rpms/ingrid"
+                        sh "cp -r /root/rpmbuild/RPMS/noarch/* ${WORKSPACE}/target/rpms/ingrid/"
+                        sh "expect /rpm-sign.exp ${WORKSPACE}/target/rpms/ingrid/*.rpm"
+
+                        archiveArtifacts artifacts: 'target/rpms/ingrid/ingrid-interface-csw-*.rpm', fingerprint: true
+                    }
+                }
+            }
+        }
+
+        stage('Deploy RPM') {
+            when { expression { return shouldBuildDevOrRelease() } }
+            steps {
+                script {
+                    def repoType = env.TAG_NAME ? "rpm-ingrid-releases" : "rpm-ingrid-snapshots"
+                    sh "mv target/bom.json target/ingrid-interface-csw-${determineRpmVersion()}.sbom.json"
+                    archiveArtifacts artifacts: "target/*.sbom.json", fingerprint: true
+
+                    withCredentials([usernamePassword(credentialsId: '9623a365-d592-47eb-9029-a2de40453f68', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh '''
+                            curl -f --user $USERNAME:$PASSWORD --upload-file target/rpms/ingrid/*.rpm https://nexus.informationgrid.eu/repository/''' + repoType + '''/
+                            curl -f --user $USERNAME:$PASSWORD --upload-file target/*.sbom.json https://nexus.informationgrid.eu/repository/''' + repoType + '''/
+                        '''
+                    }
+                }
+            }
+        }
+
         stage ('SonarQube Analysis') {
             when { branch 'develop' }
             tools {
@@ -135,5 +190,38 @@ def getCronParams() {
     }
     else {
         return ''
+    }
+}
+
+def shouldBuildDevOrRelease() {
+    // If no tag is being built OR it is the first build of a tag
+    boolean isTag = env.TAG_NAME != null && env.TAG_NAME.trim() != ''
+    return !isTag || (isTag && currentBuild.number == 1)
+}
+
+def determineVersion() {
+    if (env.TAG_NAME) {
+        if (env.TAG_NAME.startsWith("RPM-")) { // e.g. RPM-8.0.0-0.1SNAPSHOT
+            def lastDashIndex = env.TAG_NAME.lastIndexOf("-")
+            return env.TAG_NAME.substring(4, lastDashIndex)
+        }
+        return env.TAG_NAME
+    } else {
+        return env.BRANCH_NAME.replaceAll('/', '_')
+    }
+}
+
+def determineRpmVersion() {
+    return determineVersion().replaceAll('-', '_')
+}
+
+def determineRpmReleasePart() {
+    if (env.TAG_NAME) {
+        if (env.TAG_NAME.startsWith("RPM-")) {
+            return env.TAG_NAME.substring(env.TAG_NAME.lastIndexOf("-") + 1)
+        }
+        return '1'
+    } else {
+        return 'SNAPSHOT'
     }
 }

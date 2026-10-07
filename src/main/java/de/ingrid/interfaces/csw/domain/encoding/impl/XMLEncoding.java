@@ -4,14 +4,14 @@
  * ==================================================
  * Copyright (C) 2014 - 2026 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -35,6 +35,7 @@ import de.ingrid.interfaces.csw.domain.exceptions.CSWOperationNotSupportedExcept
 import de.ingrid.interfaces.csw.domain.query.CSWQuery;
 import de.ingrid.interfaces.csw.domain.query.impl.GenericQuery;
 import de.ingrid.interfaces.csw.tools.OGCFilterTools;
+import de.ingrid.interfaces.csw.tools.SecureXml;
 import de.ingrid.interfaces.csw.tools.StringUtils;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
@@ -130,10 +131,8 @@ public class XMLEncoding extends DefaultEncoding implements CSWMessageEncoding {
      * @return Element
      */
     protected Node extractRequestBody(HttpServletRequest request) {
-        DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
-        df.setNamespaceAware(true);
         try {
-            Document requestDocument = df.newDocumentBuilder().parse(request.getInputStream());
+            Document requestDocument = SecureXml.newDocumentBuilder(true).parse(request.getInputStream());
             return requestDocument.getDocumentElement();
         } catch (Exception e) {
             throw new RuntimeException("Error parsing request: ", e);

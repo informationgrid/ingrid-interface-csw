@@ -4,14 +4,14 @@
  * ==================================================
  * Copyright (C) 2014 - 2026 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -30,6 +30,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import de.ingrid.interfaces.csw.tools.SecureXml;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -83,7 +85,7 @@ public class CSWTIBusController {
     final private static Log log = LogFactory.getLog(CSWTIBusController.class);
 
     public CSWTIBusController() {
-        df = DocumentBuilderFactory.newInstance();
+        df = SecureXml.newDocumentBuilderFactory();
         df.setNamespaceAware(true);
         encoding = new XMLEncoding();
     }

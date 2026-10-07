@@ -1,4 +1,36 @@
 
+## 8.5.0 (07.10.2026)
+
+### Features
+
+* Schwachstelle CSW Interface (#9560)
+* Erstellung von RPM Paketen für RHEL 10 für InGrid Komponenten (#9371)
+
+### Bugfixes
+
+* ISO-Schemenvalidierungsfehler in der GDI-DE Testsuite schlägt bei Datengrundlage/Herkunft fehl (#9351)
+    ## 8.5.0
+
+
+### Bugfixes
+
+* Fix XXE and SSRF problem with parsing XML files (#9560)
+
+
+## 8.4.1.1 (01.10.2026)
+
+
+### Bugfixes
+
+* `idf:objectAttribute` wird bei der Transformation nach ISO-Metadaten aus dem IDF gefiltert
+
+## 8.4.1 (23.09.2026)
+
+
+### Bugfixes
+
+* ISO-Schemenvalidierungsfehler in der GDI-DE Testsuite schlägt bei Datengrundlage/Herkunft fehl (#9351)
+    
 ## 8.2.0 (12.01.2026)
 
 

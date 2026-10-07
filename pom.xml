@@ -3,11 +3,11 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>6.0.0</version>
+    <version>8.5.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-interface-csw</artifactId>
-  <version>8.4.0</version>
+  <version>8.5.0</version>
   <packaging>jar</packaging>
   <name>InGrid Interface CSW</name>
 
@@ -452,6 +452,19 @@
           <defaultOriginUrl>https://github.com/informationgrid/ingrid-interface-csw</defaultOriginUrl>
           <noDeploy>true</noDeploy>
         </configuration>
+      </plugin>
+
+      <plugin>
+          <groupId>org.cyclonedx</groupId>
+          <artifactId>cyclonedx-maven-plugin</artifactId>
+          <executions>
+              <execution>
+                  <phase>package</phase>
+                  <goals>
+                      <goal>makeAggregateBom</goal>
+                  </goals>
+              </execution>
+          </executions>
       </plugin>
     </plugins>
   </build>

@@ -4,14 +4,14 @@
  * ==================================================
  * Copyright (C) 2014 - 2026 wemove digital solutions GmbH
  * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
  * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  * 
- * http://ec.europa.eu/idabc/eupl5
+ * https://joinup.ec.europa.eu/software/page/eupl
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilderFactory;
+import de.ingrid.interfaces.csw.tools.SecureXml;
 
 import de.ingrid.interfaces.csw.domain.constants.Namespace;
 import org.apache.commons.logging.Log;
@@ -90,19 +90,16 @@ public class SearchTestController {
         
         modelMap.addAttribute("query", query);
 
-        DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
-        df.setNamespaceAware(true);
         Document queryDocument = null;
         try {
-            queryDocument = df.newDocumentBuilder().parse(new InputSource(new StringReader(query)));
+            queryDocument = SecureXml.newDocumentBuilder(true).parse(new InputSource(new StringReader(query)));
         } catch (Exception e) {
             try {
             	if (log.isDebugEnabled()) {
                 	log.debug("Exception building queryDocument via DocumentBuilderFactory (query '" + query + "'):" + e.getMessage());            		
                 	log.debug("We set up own queryDocument");            		
             	}
-                queryDocument = df
-                        .newDocumentBuilder()
+                queryDocument = SecureXml.newDocumentBuilder(true)
                         .parse(
                                 new InputSource(
                                         new StringReader(
