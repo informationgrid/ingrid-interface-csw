@@ -1,4 +1,11 @@
 
+## 8.4.2 (21.10.2026)
+
+### Features
+
+* Schwachstelle CSW Interface (#9560)
+
+    
 ## 8.4.2
 
 
